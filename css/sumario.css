@@ -89,3 +89,16 @@ footer a {
 footer a:hover {
   text-decoration: underline;
 }
+/* ===== Neutralizar Tufte (importante) ===== */
+body.sumario-page {
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  background-color: white !important;
+}
+
+body.sumario-page * {
+  max-width: 100% !important;
+  box-sizing: border-box;
+}
