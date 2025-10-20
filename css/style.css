@@ -8,12 +8,14 @@
 
 html, body { height: 100%; }
 
+/* ---- Ajuste para centralizar páginas dos capítulos ---- */
 body {
-  margin: 0;
-  background: #ffffff !important;
-  color: var(--fg);
-  overflow: hidden;
+  max-width: 1000px !important;
+  margin: 0 auto !important;
+  padding-left: 40px;
+  padding-right: 40px;
 }
+
 
 .autor {
   font-size: 14px;
@@ -45,21 +47,45 @@ h1 {
   font-size: clamp(26px, 5.6vw, 48px);
   font-weight: 700;
 }
-
-.nav-capitulos {
-  margin-top: 40px;
-  line-height: 1.8;
+/* ---- Navegação entre capítulos ---- */
+.nav-links {
+  margin-top: 60px;
+  padding-top: 25px;
+  border-top: 1px solid #bfbfbf;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 16px;
+  font-family: Georgia, serif;
 }
 
-.nav-capitulos a {
+.nav-links a {
   color: #333;
   text-decoration: none;
-  border-bottom: 1px solid #aaa;
+  padding: 6px 8px;
+  border-bottom: 1px solid transparent;
 }
 
-.nav-capitulos a:hover {
-  color: black;
-  border-bottom: 1px solid black;
+.nav-links a:hover {
+  border-bottom: 1px solid #000;
+}
+
+.nav-links .anterior {
+  flex: 1;
+  text-align: left;
+}
+
+.nav-links .sumario {
+  flex: 1;
+  text-align: center;
+}
+
+.nav-links .proximo {
+  flex: 1;
+  text-align: right;
 }
 
 .cta {
@@ -79,6 +105,23 @@ body.index-page {
   width: 100% !important;
   max-width: 100% !important;
 }
+
+/* Impede quebra de linha nas expressões KaTeX dos sliders */
+.kg-slider-row, .param-row, .slider-row, .kg-slider {
+  white-space: nowrap !important;
+}
+
+.katex {
+  white-space: nowrap !important;
+}
+
+/* Opcional: deixa as expressões alinhadas com os sliders */
+.kg-slider-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 
 .cta:hover { transform: translateY(-1px); opacity: 0.95; }
 .cta:active { transform: translateY(0); opacity: 0.9; }
