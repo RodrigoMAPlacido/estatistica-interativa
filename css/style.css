@@ -72,6 +72,20 @@ h1 {
   font-weight: 700;
   transition: transform .12s ease, opacity .12s ease;
 }
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;   /* Melhor que height fixa */
+  overflow: hidden;    /* mantém seu controle original */
+}
 
+/* Ajuste no container central */
+.hero {
+  height: auto;         /* remove o bloqueio vertical */
+  padding: 24px;
+  display: grid;
+  place-items: center;
+}
 .cta:hover { transform: translateY(-1px); opacity: 0.95; }
 .cta:active { transform: translateY(0); opacity: 0.9; }
