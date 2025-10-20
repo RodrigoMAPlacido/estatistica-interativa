@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Estatística Interativa — Abertura</title>
+
+  <!-- Estilo do projeto (Tufte/KGJS com KaTeX embutido) -->
+  <link href="kgjs/kg-tufte.0.4.0_ODE.css" rel="stylesheet" type="text/css" />
+  <link href="css/style.css" rel="stylesheet">
+  <link href="css/animations.css" rel="stylesheet">
+
+</head>
+<body>
+
+  <!-- Fundo com equações (KaTeX renderiza essas fórmulas) -->
+  <div class="bg-math" aria-hidden="true">
+    <!-- distribua pelos cantos e meio -->
+    <div class="eq" style="top: 8%; left: 6%; animation-delay: .0s;">$$\bar{x}=\frac{1}{n}\sum_{i=1}^{n}x_i$$</div>
+    <div class="eq" style="top: 18%; right: 8%; animation-delay: .6s;">$$\sigma=\sqrt{\frac{\sum_{i=1}^{n}(x_i-\mu)^2}{n}}$$</div>
+    <div class="eq" style="top: 34%; left: 16%; animation-delay: 1.2s;">$$P(A\mid B)=\frac{P(A\cap B)}{P(B)}$$</div>
+    <div class="eq" style="top: 48%; right: 14%; animation-delay: 1.8s;">$$E(X)=\sum_{i} x_i\,p_i$$</div>
+    <div class="eq" style="bottom: 24%; left: 10%; animation-delay: 2.4s;">$$Z=\frac{X-\mu}{\sigma}$$</div>
+    <div class="eq" style="bottom: 10%; right: 12%; animation-delay: 3.0s;">$$\operatorname{Var}(X)=E(X^2)-[E(X)]^2$$</div>
+  </div>
+
+  <!-- Cartão de boas-vindas -->
+  <main class="hero" role="main">
+    <section class="card" aria-label="Abertura do livro">
+      <h1>Estatística Interativa</h1>
+      <p class="autor">por Rodrigo Plácido</p>
+      <a class="cta" href="sumario.html" aria-label="Ir para o sumário do livro">Entrar no Livro</a>
+    </section>
+  </main>
+
+  <!-- KGJS (inclui KaTeX no seu setup) -->
+  <script src="kgjs/kg.0.4.0_ODE.js"></script>
+  <script>
+    // Renderiza KaTeX nos elementos do fundo
+    renderMathInElement(document.body, {
+      delimiters: [
+        {left: "$$", right: "$$", display: true},
+        {left: "$",  right: "$",  display: false}
+      ]
+    });
+  </script>
+</body>
+</html>

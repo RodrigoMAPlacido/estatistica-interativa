@@ -1,0 +1,91 @@
+/* ===== Layout Geral do Sumário ===== */
+body {
+  margin: 0;
+  background: #fff;
+  display: flex;
+  justify-content: center;   /* Centraliza horizontalmente */
+  align-items: flex-start;    /* Alinha o conteúdo um pouco mais em cima */
+  min-height: 100vh;          /* Ocupa a altura toda */
+  padding-top: 40px;
+}
+
+.content-wrapper {
+  max-width: 900px;
+  width: 90%;
+  padding: 30px;
+  background: rgba(255,255,255,0.96);
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  position: relative;
+  z-index: 2;
+}
+
+
+h1 {
+  font-size: 34px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.intro {
+  color: #555;
+  text-align: center;
+  margin-bottom: 35px;
+  font-size: 18px;
+}
+
+/* ===== Títulos de Partes ===== */
+.part {
+  font-size: 22px;
+  font-weight: 600;
+  margin-top: 30px;
+  color: #222;
+  border-left: 4px solid #444;
+  padding-left: 10px;
+}
+
+/* ===== GRID dos Cards ===== */
+.cards {
+  margin-top: 15px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 16px;
+}
+
+/* ===== Card ===== */
+.card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  transition: all 0.2s ease-in-out;
+  border: 1px solid rgba(0,0,0,0.07);
+}
+
+.card a {
+  text-decoration: none;
+  display: block;
+  padding: 14px 18px;
+  font-weight: 500;
+  color: #111;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+/* ===== Footer ===== */
+footer {
+  text-align: center;
+  margin-top: 40px;
+}
+
+footer a {
+  text-decoration: none;
+  color: #333;
+  font-size: 16px;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}

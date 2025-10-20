@@ -1,0 +1,23 @@
+/* ---------- Animações das Equações ---------- */
+.bg-math {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.bg-math .eq {
+  position: absolute;
+  font-size: clamp(14px, 2.2vw, 24px);
+  line-height: 1.2;
+  color: var(--muted);
+  opacity: 0.65;
+  animation: float 12s ease-in-out infinite;
+}
+
+/* Animação suave */
+@keyframes float {
+  0%   { transform: translateY(0px);   opacity: 0.58; }
+  50%  { transform: translateY(-40px); opacity: 0.72; }
+  100% { transform: translateY(0px);   opacity: 0.58; }
+}
