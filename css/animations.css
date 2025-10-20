@@ -1,20 +1,19 @@
-/* Impede que as fórmulas empurrem o layout */
+/* ---------- Animações das Equações ---------- */
 .bg-math {
-  position: absolute;
+  position: absolute; /* <-- era fixed, isso que destruía o layout */
   inset: 0;
-  z-index: -1;
+  z-index: -1;        /* <-- empurra pro fundo de verdade */
   pointer-events: none;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
 }
 
 .bg-math .eq {
-  white-space: nowrap;
-  font-size: 20px;  /* diminui um pouco pra não bagunçar */
-  color: rgba(0, 0, 0, 0.35);
+  position: absolute;
+  font-size: clamp(14px, 2.2vw, 24px);
+  line-height: 1.2;
+  color: var(--muted);
+  opacity: 0.45;
+  animation: float 12s ease-in-out infinite;
 }
-
 
 /* Animação suave */
 @keyframes float {
