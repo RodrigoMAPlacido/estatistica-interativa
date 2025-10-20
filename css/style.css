@@ -97,6 +97,14 @@ body {
   justify-content: center;
   align-items: center;
 }
+.page-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .cta:hover { transform: translateY(-1px); opacity: 0.95; }
 .cta:active { transform: translateY(0); opacity: 0.9; }
