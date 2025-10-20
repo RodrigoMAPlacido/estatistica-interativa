@@ -72,39 +72,6 @@ h1 {
   font-weight: 700;
   transition: transform .12s ease, opacity .12s ease;
 }
-/* ===== Correção definitiva da centralização ===== */
-
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  position: relative;
-  overflow: hidden;
-}
-
-/* Fundo matemático no plano de trás */
-.bg-math {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
-
-/* Conteúdo principal na frente */
-.hero {
-  z-index: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.page-wrapper {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 .cta:hover { transform: translateY(-1px); opacity: 0.95; }
 .cta:active { transform: translateY(0); opacity: 0.9; }

@@ -1,19 +1,20 @@
-/* ---------- Animações das Equações ---------- */
+/* Impede que as fórmulas empurrem o layout */
 .bg-math {
-  position: fixed;
+  position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: -1;
   pointer-events: none;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 .bg-math .eq {
-  position: absolute;
-  font-size: clamp(14px, 2.2vw, 24px);
-  line-height: 1.2;
-  color: var(--muted);
-  opacity: 0.65;
-  animation: float 12s ease-in-out infinite;
+  white-space: nowrap;
+  font-size: 20px;  /* diminui um pouco pra não bagunçar */
+  color: rgba(0, 0, 0, 0.35);
 }
+
 
 /* Animação suave */
 @keyframes float {
