@@ -2,26 +2,119 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=0.8">
-  <meta property="og:type" content="website" />
   <title>Capítulo 1 — Introdução à Estatística</title>
-  <link href="../../css/style.css" rel="stylesheet">
-  <!-- CSS do KGJS ODE -->
-  <link href="../../kgjs/kg-tufte.0.4.0_ODE.css" rel="stylesheet" type="text/css">
+
+<script>
+  fetch("../../head.html")
+    .then(res => res.text())
+    .then(data => document.head.innerHTML += data);
+</script>
+
+
 
 </head>
 
-<body>
 
-  <h1>Capítulo 1 — Introdução à Estatística</h1>
+<body class="textbook loading">
 
-  <p>Uma <strong>variável aleatória discreta</strong> é aquela que assume um número finito ou contável de valores possíveis...</p>
 
-  <p>Teste de KaTeX: $x^2 + y^2 = z^2$</p>
 
-  <figure class="fullwidth clearfix" style="page-break-inside: avoid;">
-    <div class="kg-container" src="modelos/estat.yml"></div>
-  </figure>
+<h1>Capítulo 1 — Introdução à Estatística</h1>
+
+<p class="subtitle">O que você vai aprender</p>
+<ul>
+  <li>Compreender o que é estatística e suas aplicações</li>
+  <li>Diferenciar população, amostra, parâmetro e estatística</li>
+  <li>Classificar tipos de dados</li>
+  <li>Identificar níveis de mensuração</li>
+</ul>
+
+<hr>
+
+<h2>1. Introdução</h2>
+<p><span class="newthought">Vivemos em um mundo movido por dados.</span> 
+Eles estão em pesquisas eleitorais, relatórios econômicos, análises médicas e
+ciência moderna. Mas como transformar dados em informação confiável?
+É aqui que entra a estatística.</p>
+
+<blockquote>
+  "Sem dados, você é apenas mais uma pessoa com opinião."<br>
+  <footer>— W. Edwards Deming</footer>
+</blockquote>
+
+<hr>
+
+<h2>2. Conceitos Fundamentais</h2>
+
+<p class="subtitle">Dados</p>
+<p>
+  <strong>Dados</strong> são informações obtidas por observação, contagem ou medição.
+  <span class="sidenote">Exemplos: altura de pessoas, número de filhos por família, renda mensal.</span>
+</p>
+
+<p class="subtitle">População e Amostra</p>
+<p>
+  <strong>População:</strong> conjunto completo de elementos estudados.<br>
+  <strong>Amostra:</strong> subconjunto da população usado no estudo.
+</p>
+
+<figure>
+  <img src="imagens/populacao_amostra.png">
+  <figcaption>Exemplo simples de população (todos os clientes de um banco) e amostra (100 clientes).</figcaption>
+</figure>
+
+<hr>
+
+<h2>3. Tipos de Dados</h2>
+<p class="subtitle">Qualitativos vs. Quantitativos</p>
+<ul>
+  <li><strong>Qualitativos:</strong> classificações, categorias (ex: gênero, cor dos olhos)</li>
+  <li><strong>Quantitativos:</strong> valores numéricos (ex: idade, salário)</li>
+</ul>
+
+<figure class="fullwidth">
+  <div class="kg-container" src="modelos/distribuicao.yml"></div>
+  <figcaption>Distribuição de frequência interativa.</figcaption>
+</figure>
+
+<hr>
+
+<h2>4. Níveis de Mensuração</h2>
+<ul>
+  <li><strong>Nominal</strong> – categorias sem ordem (profissão, estado civil)</li>
+  <li><strong>Ordinal</strong> – categorias ordenáveis (satisfação: bom, regular, ruim)</li>
+  <li><strong>Intervalar</strong> – diferenças fazem sentido, sem zero absoluto (temperatura em °C)</li>
+  <li><strong>Razão</strong> – comparação de razões faz sentido, zero natural (altura, renda)</li>
+</ul>
+
+<hr>
+
+<h2>5. Exemplos</h2>
+<p class="subtitle">Exemplo 1 — População e Amostra</p>
+<p>
+Uma pesquisa entrevistou 1000 estudantes universitários sobre hábitos de leitura.
+A população é <strong>todos os estudantes universitários</strong>, e a amostra é <strong>os 1000 entrevistados</strong>.
+</p>
+
+<hr>
+
+<h2>6. Exercícios</h2>
+<ol>
+  <li>Dê dois exemplos de população e duas amostras possíveis.</li>
+  <li>Classifique os dados: “nível de colesterol” e “marca de celular”.</li>
+</ol>
+
+<hr>
+
+<h2>Resumo do Capítulo</h2>
+<ul>
+  <li>Estatística transforma dados em informação.</li>
+  <li>População é o todo; amostra é uma parte.</li>
+  <li>Dados podem ser qualitativos ou quantitativos.</li>
+  <li>Há quatro níveis de mensuração.</li>
+</ul>
+
+
 <div class="nav-links">
   <a class="sumario" href="../../sumario.html">Voltar ao Sumário</a>
   <a class="proximo" href="../cap2-distribuicoes-de-frequencia-e-graficos/index.html">Próximo capítulo →</a>
@@ -29,17 +122,5 @@
 
 </body>
 
-<!-- KGJS -->
-<script src="../../kgjs/kg.0.4.0_ODE.js"></script>
-
-<!-- KaTeX (que já vem embutido no KGJS) -->
-<script>
-  renderMathInElement(document.body, {
-    delimiters: [
-      {left: "$$", right: "$$", display: true},
-      {left: "$", right: "$", display: false}
-    ]
-  });
-</script>
 
 </html>

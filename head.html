@@ -1,0 +1,50 @@
+<!-- ======================= -->
+<!-- HEAD GLOBAL DO PROJETO -->
+<!-- ======================= -->
+
+<!-- Charset e responsividade -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=0.8">
+
+<!-- SEO básico -->
+<meta name="author" content="Rodrigo Plácido">
+<meta name="description" content="Livro interativo para aprender estatística do zero com gráficos dinâmicos e visualização intuitiva.">
+
+<!-- Open Graph (quando compartilhar links) -->
+<meta property="og:title" content="Estatística Interativa">
+<meta property="og:description" content="Livro interativo para aprender estatística do zero com gráficos dinâmicos.">
+<meta property="og:image" content="../../imagens/capa-og.png">
+<meta property="og:url" content="https://rodrigomaplacido.github.io/estatistica-interativa/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Estatística Interativa">
+<meta name="twitter:description" content="Livro interativo com gráficos dinâmicos.">
+<meta name="twitter:image" content="../../imagens/capa-og.png">
+
+<!-- Favicon do site -->
+<link rel="icon" type="image/svg+xml" href="../../imagens/ei-logo.svg">
+
+<!-- CSS global -->
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../css/animations.css">
+<link rel="stylesheet" href="../../kgjs/kg-tufte.0.4.0_ODE.css">
+
+<!-- Scripts do KGJS -->
+<script src="../../kgjs/kg.0.4.0_ODE.js"></script>
+
+<!-- KaTeX -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    if (typeof renderMathInElement !== "undefined") {
+      renderMathInElement(document.body, {
+        delimiters: [
+          { left: "$$", right: "$$", display: true },
+          { left: "$", right: "$", display: false }
+        ]
+      });
+    }
+  });
+</script>
