@@ -12,6 +12,7 @@ html, body { height: 100%; }
 body {
   max-width: 1000px !important;
   margin: 0 auto !important;
+  background-color: white !important;
   padding-left: 40px;
   padding-right: 40px;
 }
@@ -110,7 +111,9 @@ body.index-page {
 .kg-slider-row, .param-row, .slider-row, .kg-slider {
   white-space: nowrap !important;
 }
-
+.kg-container {
+  background-color: white !important; /* opcional */
+}
 .katex {
   white-space: nowrap !important;
 }
