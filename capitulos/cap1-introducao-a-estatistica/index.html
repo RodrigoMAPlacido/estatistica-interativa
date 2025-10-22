@@ -15,7 +15,7 @@
 </head>
 
 
-<body class="textbook loading">
+<body class="textbook">
 <!-- Capítulo 1 — Introdução à Estatística (versão revisada, com numeração explícita) -->
 
 <h1>Capítulo 1 — Introdução à Estatística</h1>
@@ -92,6 +92,37 @@
 <p>
   Formalmente, dados consistem em coleções de observações, tais como contagens, medições, classificações ou respostas de pesquisas.
 </p>
+
+<figure class="table" style="width: 38%;">
+  <table>
+    <thead>
+      <tr>
+        <th>Estudante</th>
+        <th>Horas de estudo (h)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>2</td></tr>
+      <tr><td>2</td><td>4</td></tr>
+      <tr><td>3</td><td>1</td></tr>
+      <tr><td>4</td><td>3</td></tr>
+      <tr><td>5</td><td>2</td></tr>
+      <tr><td>6</td><td>5</td></tr>
+      <tr><td>7</td><td>2</td></tr>
+    </tbody>
+  </table>
+  <figcaption style=" white-space: nowrap; display: block; margin-left: 20px;">
+    Tabela 1. Horas de estudo observadas
+  </figcaption>
+</figure>
+
+
+<p>
+  Esses valores formam um conjunto de <strong>dados brutos</strong>, pois cada número representa
+  uma <strong>observação</strong> coletada sobre o fenômeno de interesse: o tempo dedicado ao estudo
+  diário por cada estudante.
+</p>
+
 
 <h3>2.2 Unidade estatística e variável</h3>
 <p>
@@ -403,6 +434,17 @@
 </div>
 
 </body>
+<!-- KGJS -->
+<script src="../../kgjs/kg.0.4.0_ODE.js"></script>
 
+<!-- KaTeX (que já vem embutido no KGJS) -->
+<script>
+  renderMathInElement(document.body, {
+    delimiters: [
+      {left: "$$", right: "$$", display: true},
+      {left: "$", right: "$", display: false}
+    ]
+  });
+</script>
 
 </html>
