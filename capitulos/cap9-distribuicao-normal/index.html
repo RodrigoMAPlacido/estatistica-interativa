@@ -1,25 +1,19 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8">
-  
-  
-  <title>Capítulo 9 — Distribuição Normal</title>
-  
-  
-  
+  <!-- Define título dinâmico da página -->
+  <script>
+    window.pageTitle = "Capítulo 9 — Distribuição Normal";
+  </script>
 
-<script>
-  fetch("../../head.html")
-    .then(res => res.text())
-    .then(data => document.head.innerHTML += data);
-</script>
-
-
-
+  <!-- Head global -->
+  <div include-html="../../partials/head.html"></div>
 </head>
 
 <body class="textbook loading">
+
+  <!-- Header global -->
+  <div include-html="../../partials/header.html"></div>
 
   <h1>Capítulo 9 — Distribuição Normal</h1>
 
@@ -30,25 +24,19 @@
   <figure class="fullwidth clearfix" style="page-break-inside: avoid;">
     <div class="kg-container" src="modelos/estat.yml"></div>
   </figure>
-<div class="nav-links">
-  <a class="anterior" href="../cap8-distribuicoes-discretas/index.html">← Capítulo Anterior</a>
-  <a class="sumario" href="../../sumario.html">Voltar ao Sumário</a>
-  <a class="proximo" href="../cap10-intervalos-de-confianca/index.html">Próximo capítulo →</a>
-</div>
+  
+<!-- Navegação -->
+  <div class="nav-links">
+    <a class="anterior" href="../cap8-distribuicoes-discretas/">← Capítulo Anterior</a>
+    <a class="sumario" href="../../sumario.html">Voltar ao Sumário</a>
+    <a class="proximo" href="../cap10-intervalos-de-confianca/">Próximo capítulo →</a>
+  </div>
 
+  <!-- Footer global -->
+  <div include-html="../../partials/footer.html"></div>
+
+  <!-- Scripts globais -->
+  <div include-html="../../partials/body.html"></div>
+  <script src="../../js/main.js"></script>
 </body>
-
-<!-- KGJS -->
-<script src="../../kgjs/kg.0.4.0_ODE.js"></script>
-
-<!-- KaTeX (que já vem embutido no KGJS) -->
-<script>
-  renderMathInElement(document.body, {
-    delimiters: [
-      {left: "$$", right: "$$", display: true},
-      {left: "$", right: "$", display: false}
-    ]
-  });
-</script>
-
 </html>
