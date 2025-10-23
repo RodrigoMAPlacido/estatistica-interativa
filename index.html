@@ -1,36 +1,18 @@
 ﻿<!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Estatística Interativa — Abertura</title>
+<head include-html="partials/head.html">
 
-  <!-- Open Graph para capa de link -->
-  <meta property="og:title" content="Estatística Interativa">
-  <meta property="og:description" content="Livro interativo com gráficos dinâmicos para aprender estatística do zero.">
-  <meta property="og:image" content="https://rodrigomaplacido.github.io/estatistica-interativa/imagens/capa-og.png">
-  <meta property="og:url" content="https://rodrigomaplacido.github.io/estatistica-interativa/">
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="pt_BR">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Estatística Interativa">
-  <meta name="twitter:description" content="Livro interativo com gráficos dinâmicos para aprender estatística do zero.">
-  <meta name="twitter:image" content="https://rodrigomaplacido.github.io/estatistica-interativa/imagens/capa-og.png">
+  <!-- CSS específico desta página -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="kgjs/kg-tufte.0.4.0_ODE.css">
 
-  <!-- CSS -->
-  <link href="css/style.css" rel="stylesheet">
-  <link href="css/animations.css" rel="stylesheet">
-  <link href="kgjs/kg-tufte.0.4.0_ODE.css" rel="stylesheet" type="text/css" />
 </head>
 
-<body class="index-page">
+<body class="index-page loading">
 
-
-  <!-- Fundo com equações (KaTeX renderiza essas fórmulas) -->
+  <!-- Fundo animado de equações -->
   <div class="bg-math" aria-hidden="true">
-    <!-- distribua pelos cantos e meio -->
     <div class="eq" style="top: 8%; left: 6%; animation-delay: .0s;">$$\bar{x}=\frac{1}{n}\sum_{i=1}^{n}x_i$$</div>
     <div class="eq" style="top: 18%; right: 8%; animation-delay: .6s;">$$\sigma=\sqrt{\frac{\sum_{i=1}^{n}(x_i-\mu)^2}{n}}$$</div>
     <div class="eq" style="top: 34%; left: 16%; animation-delay: 1.2s;">$$P(A\mid B)=\frac{P(A\cap B)}{P(B)}$$</div>
@@ -39,25 +21,20 @@
     <div class="eq" style="bottom: 10%; right: 12%; animation-delay: 3.0s;">$$\operatorname{Var}(X)=E(X^2)-[E(X)]^2$$</div>
   </div>
 
-  <!-- Cartão de boas-vindas -->
-  <main class="hero" role="main">
-    <section class="card" aria-label="Abertura do livro">
+  <!-- Conteúdo principal -->
+  <main class="hero">
+    <section class="card">
       <h1>Estatística Interativa</h1>
       <p class="autor">por Rodrigo Plácido</p>
-      <a class="cta" href="sumario.html" aria-label="Ir para o sumário do livro">Entrar no Livro</a>
+      <a class="cta" href="sumario.html">Entrar no Livro</a>
     </section>
   </main>
 
-  <!-- KGJS (inclui KaTeX no seu setup) -->
-  <script src="kgjs/kg.0.4.0_ODE.js"></script>
-  <script>
-    // Renderiza KaTeX nos elementos do fundo
-    renderMathInElement(document.body, {
-      delimiters: [
-        {left: "$$", right: "$$", display: true},
-        {left: "$",  right: "$",  display: false}
-      ]
-    });
-  </script>
+  <!-- Footer global -->
+  <div include-html="partials/footer.html"></div>
+
+  <!-- Scripts globais (KGJS, Math, main.js) -->
+  <div include-html="partials/body.html"></div>
+
 </body>
 </html>

@@ -1,0 +1,22 @@
+<!-- partials/body.html -->
+
+<!-- KGJS (já inclui KaTeX) -->
+<script src="https://rodrigomaplacido.github.io/estatistica-interativa/kgjs/kg.0.4.0_ODE.js"></script>
+
+<!-- Inicializa KaTeX e gráficos KGJS -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    if (typeof renderMathInElement === "function") {
+      renderMathInElement(document.body, {
+        delimiters: [
+          { left: "$$", right: "$$", display: true },
+          { left: "$", right: "$", display: false }
+        ]
+      });
+    }
+    if (typeof loadGraphs === "function") loadGraphs();
+  });
+</script>
+
+<!-- Script principal -->
+<script src="https://rodrigomaplacido.github.io/estatistica-interativa/js/main.js"></script>
