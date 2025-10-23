@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!-- Define título dinâmico da página -->
+  <script>
+    window.pageTitle = "Título do Capítulo Aqui";
+  </script>
+
+  <!-- Head global -->
+  <div include-html="../../partials/head.html"></div>
+</head>
+
+<body class="textbook loading">
+
+  <!-- Header global -->
+  <div include-html="../../partials/header.html"></div>
+
+  <!-- Título do capítulo -->
+  <h1>Título do Capítulo Aqui</h1>
+
+  <!-- Subtítulo opcional -->
+  <p class="subtitle">Objetivos de aprendizagem</p>
+  <ul>
+    <li>Escreva aqui o primeiro objetivo de aprendizagem.</li>
+    <li>Outro objetivo aqui.</li>
+    <li>Mais um objetivo, se necessário.</li>
+  </ul>
+
+  <hr>
+
+  <!-- Conteúdo do capítulo -->
+  <h2>1. Seção inicial do capítulo</h2>
+  <p>
+    Escreva aqui o conteúdo do capítulo. Este é apenas um modelo inicial.
+    Você pode inserir fórmulas como $$x^2 + y^2 = z^2$$ e elas serão renderizadas automaticamente.
+  </p>
+
+  <h2>2. Nova seção</h2>
+  <p>
+    Continue aqui seu conteúdo.
+  </p>
+
+  <!-- Navegação -->
+  <div class="nav-links">
+    <a class="sumario" href="../../sumario.html">← Voltar ao Sumário</a>
+    <a class="proximo" href="../capX-proximo-capitulo/">Próximo capítulo →</a>
+  </div>
+
+  <!-- Footer global -->
+  <div include-html="../../partials/footer.html"></div>
+
+  <!-- Scripts globais -->
+  <div include-html="../../partials/body.html"></div>
+  <script src="../../js/main.js"></script>
+</body>
+</html>

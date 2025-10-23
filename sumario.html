@@ -1,28 +1,23 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sumário — Estatística Interativa</title>
-  <link href="css/sumario.css" rel="stylesheet">
-  <link href="css/animations.css" rel="stylesheet">
-  <link href="kgjs/kg-tufte.0.4.0_ODE.css" rel="stylesheet" type="text/css" />
+<head include-html="partials/sumario.html"></head>
 
-</head>
-<body class="sumario-page">
+<body class="sumario-page loading">
+
+  <!-- Header global -->
+  <div include-html="partials/header.html"></div>
 
   <!-- Fundo com equações -->
-    <div class="bg-math" aria-hidden="true">
+  <div class="bg-math" aria-hidden="true">
     <div class="eq" style="top: 8%; left: 6%; animation-delay: .0s;">$$\bar{x}=\frac{1}{n}\sum_{i=1}^{n}x_i$$</div>
     <div class="eq" style="top: 18%; right: 8%; animation-delay: .6s;">$$\sigma=\sqrt{\frac{\sum_{i=1}^{n}(x_i-\mu)^2}{n}}$$</div>
     <div class="eq" style="top: 34%; left: 16%; animation-delay: 1.2s;">$$P(A\mid B)=\frac{P(A\cap B)}{P(B)}$$</div>
     <div class="eq" style="top: 48%; right: 14%; animation-delay: 1.8s;">$$E(X)=\sum_{i} x_i p_i$$</div>
     <div class="eq" style="bottom: 24%; left: 10%; animation-delay: 2.4s;">$$Z=\frac{X-\mu}{\sigma}$$</div>
     <div class="eq" style="bottom: 10%; right: 12%; animation-delay: 3.0s;">$$Var(X)=E(X^2)-[E(X)]^2$$</div>
-    </div>
+  </div>
 
-
-  <!-- Painel branco -->
+  <!-- Painel do sumário -->
   <div class="content-wrapper">
     <h1>Sumário — Estatística Interativa</h1>
     <p class="intro">Navegue pelos capítulos deste livro interativo e explore a estatística de forma intuitiva.</p>
@@ -66,14 +61,11 @@
     </footer>
   </div>
 
-  <script src="kgjs/kg.0.4.0_ODE.js"></script>
-  <script>
-    renderMathInElement(document.body, {
-      delimiters: [
-        { left: "$$", right: "$$", display: true },
-        { left: "$",  right: "$",  display: false }
-      ]
-    });
-  </script>
+  <!-- Footer global -->
+  <div include-html="partials/footer.html"></div>
+
+  <!-- Scripts globais (KGJS + KaTeX via main.js) -->
+  <div include-html="partials/body.html"></div>
+  <script src="js/main.js"></script>
 </body>
 </html>

@@ -196,6 +196,18 @@ body.textbook figure.table figcaption {
   float: none;
   width: 100%;
 }
+/* Estado inicial: escondido antes de carregar (evita FOUC) */
+body.loading {
+  visibility: hidden;
+  opacity: 0;
+}
+
+/* Estado final: mostra com fade-in */
+body.ready {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.4s ease-in;
+}
 
 /* Responsivo */
 @media (max-width: 900px) {

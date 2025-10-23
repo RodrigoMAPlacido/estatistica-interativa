@@ -1,70 +1,101 @@
-/**
- * includeHTML()
- * Carrega trechos HTML reutilizáveis (partials) e injeta na página.
- * Após carregar todos os includes, ativa scripts e revela o conteúdo.
- */
+// js/main.js
+// Carrega partials, executa <script> internos, espera o KGJS ficar pronto
+// e então renderiza KaTeX (se disponível) e os gráficos. Sem loaders de KaTeX.
 
-function includeHTML() {
-  const elements = document.querySelectorAll("[include-html]");
-  let loaded = 0;
-  const total = elements.length;
-  const scriptPromises = [];
+(function () {
+  function includeHTML(done) {
+    const nodes = document.querySelectorAll("[include-html]");
+    const total = nodes.length;
+    if (!total) return done?.();
 
-  elements.forEach(el => {
-    const file = el.getAttribute("include-html");
+    let loaded = 0;
+    const scriptPromises = [];
 
-    fetch(file)
-      .then(response => {
-        if (!response.ok) throw new Error("Erro ao carregar " + file);
-        return response.text();
-      })
-      .then(data => {
-        el.innerHTML = data;
-        el.removeAttribute("include-html");
-        loaded++;
+    nodes.forEach(el => {
+      const file = el.getAttribute("include-html");
+      fetch(file)
+        .then(r => {
+          if (!r.ok) throw new Error("Erro ao carregar " + file);
+          return r.text();
+        })
+        .then(html => {
+          el.innerHTML = html;
+          el.removeAttribute("include-html");
 
-        // Executa scripts que vierem dentro do include
-        el.querySelectorAll("script").forEach(oldScript => {
-          const newScript = document.createElement("script");
-          if (oldScript.src) {
-            newScript.src = oldScript.src;
-            scriptPromises.push(new Promise(resolve => {
-              newScript.onload = resolve;
-              newScript.onerror = resolve;
-            }));
-          } else {
-            newScript.textContent = oldScript.textContent;
-          }
-          document.body.appendChild(newScript);
-          oldScript.remove();
-        });
-
-        // Quando todos os partials terminaram de carregar
-        if (loaded === total) {
-          Promise.all(scriptPromises).then(() => {
-            console.log("✅ Partials carregados com sucesso");
-
-            // Render KaTeX (vem pelo KGJS)
-            if (typeof renderMathInElement === "function") {
-              renderMathInElement(document.body, {
-                delimiters: [
-                  { left: "$$", right: "$$", display: true },
-                  { left: "$", right: "$", display: false }
-                ]
-              });
+          // Executa <script> vindos do include
+          el.querySelectorAll("script").forEach(old => {
+            const s = document.createElement("script");
+            if (old.src) {
+              s.src = old.src;
+              scriptPromises.push(
+                new Promise(res => {
+                  s.onload = res;
+                  s.onerror = res;
+                })
+              );
+            } else {
+              s.textContent = old.textContent;
             }
-
-            // Renderiza gráficos KGJS (se houver)
-            if (typeof loadGraphs === "function") loadGraphs();
-
-            // Remove classe de loading para evitar FOUC
-            document.body.classList.remove("loading");
-            document.body.classList.add("ready");
+            document.body.appendChild(s);
+            old.remove();
           });
-        }
-      })
-      .catch(err => console.error("❌ includeHTML error:", err));
-  });
-}
+        })
+        .catch(err => {
+          console.error("❌ includeHTML:", err);
+        })
+        .finally(() => {
+          loaded++;
+          if (loaded === total) {
+            Promise.all(scriptPromises).then(() => done?.());
+          }
+        });
+    });
+  }
 
-document.addEventListener("DOMContentLoaded", includeHTML);
+  // Espera o KGJS expor algo (p.ex. loadGraphs) por até 3s
+  function waitForKGJS(cb, deadline = Date.now() + 3000) {
+    if (typeof window.loadGraphs === "function" || typeof window.renderMathInElement === "function") {
+      cb();
+      return;
+    }
+    if (Date.now() > deadline) {
+      console.warn("⚠️ KGJS não foi detectado (seguindo mesmo assim).");
+      cb();
+      return;
+    }
+    setTimeout(() => waitForKGJS(cb, deadline), 60);
+  }
+
+  function renderPage() {
+    // KaTeX via KGJS (se existir)
+    if (typeof window.renderMathInElement === "function") {
+      window.renderMathInElement(document.body, {
+        delimiters: [
+          { left: "$$", right: "$$", display: true },
+          { left: "$",  right: "$",  display: false }
+        ]
+      });
+      console.log("✅ KaTeX renderizado");
+    } else {
+      console.log("ℹ️ KaTeX não encontrado (ok se a página não usa fórmulas).");
+    }
+
+    // Gráficos do KGJS (se existir)
+    if (typeof window.loadGraphs === "function") {
+      try { window.loadGraphs(); } catch (e) { console.error(e); }
+      console.log("✅ Gráficos (KGJS) prontos");
+    }
+
+    // Evita FOUC
+    document.body.classList.remove("loading");
+    document.body.classList.add("ready");
+    console.log("✅ Página pronta");
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    includeHTML(() => {
+      console.log("✅ Includes carregados");
+      waitForKGJS(renderPage);
+    });
+  });
+})();

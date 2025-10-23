@@ -57,7 +57,6 @@ h1 {
   background: white;
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  transition: all 0.2s ease-in-out;
   border: 1px solid rgba(0,0,0,0.07);
 }
 
@@ -101,4 +100,16 @@ body.sumario-page {
 body.sumario-page * {
   max-width: 100% !important;
   box-sizing: border-box;
+}
+/* Estado inicial: escondido antes de carregar (evita FOUC) */
+body.loading {
+  visibility: hidden;
+  opacity: 0;
+}
+
+/* Estado final: mostra com fade-in */
+body.ready {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.4s ease-in;
 }
