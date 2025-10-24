@@ -201,12 +201,10 @@ body.loading {
   visibility: hidden;
   opacity: 0;
 }
-
-/* Estado final: mostra com fade-in */
 body.ready {
   visibility: visible;
   opacity: 1;
-  transition: opacity 0.4s ease-in;
+  transition: opacity 0.35s ease-in-out;
 }
 
 /* Responsivo */

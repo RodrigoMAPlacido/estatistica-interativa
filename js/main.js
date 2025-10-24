@@ -2,10 +2,12 @@
 // Carrega partials, executa scripts internos, espera KGJS/KaTeX e evita FOUC
 
 (function () {
-
   // ✅ Garante proteção anti-FOUC no começo do carregamento
-  document.body.classList.add("loading");
+  if (!document.body.classList.contains("loading")) {
+    document.body.classList.add("loading");
+  }
 
+  // ===== 1. INCLUDE HTML (header, footer etc.) =====
   function includeHTML(done) {
     const nodes = document.querySelectorAll("[include-html]");
     const total = nodes.length;
@@ -25,16 +27,15 @@
           el.innerHTML = html;
           el.removeAttribute("include-html");
 
+          // Executa <script> vindos dos includes
           el.querySelectorAll("script").forEach(old => {
             const s = document.createElement("script");
             if (old.src) {
               s.src = old.src;
-              scriptPromises.push(
-                new Promise(res => {
-                  s.onload = res;
-                  s.onerror = res;
-                })
-              );
+              scriptPromises.push(new Promise(res => {
+                s.onload = res;
+                s.onerror = res;
+              }));
             } else {
               s.textContent = old.textContent;
             }
@@ -42,9 +43,7 @@
             old.remove();
           });
         })
-        .catch(err => {
-          console.error("❌ includeHTML:", err);
-        })
+        .catch(err => console.error("❌ includeHTML:", err))
         .finally(() => {
           loaded++;
           if (loaded === total) {
@@ -54,57 +53,55 @@
     });
   }
 
-  function waitForKGJS(cb, deadline = Date.now() + 3000) {
-    if (typeof window.loadGraphs === "function" || typeof window.renderMathInElement === "function") {
-      cb();
-      return;
+  // ===== 2. GARANTE KGJS/KaTeX =====
+  function waitForKGJS(cb, deadline = Date.now() + 3500) {
+    if (window.loadGraphs || window.renderMathInElement) {
+      return cb();
     }
     if (Date.now() > deadline) {
-      console.warn("⚠️ KGJS não foi detectado (seguindo mesmo assim).");
-      cb();
-      return;
+      console.warn("⚠️ KGJS demorou, seguindo assim mesmo.");
+      return cb();
     }
-    setTimeout(() => waitForKGJS(cb, deadline), 60);
+    setTimeout(() => waitForKGJS(cb, deadline), 80);
   }
 
+  // ===== 3. RENDERIZA PÁGINA =====
   function renderPage() {
-    if (typeof window.renderMathInElement === "function") {
-      window.renderMathInElement(document.body, {
+    // Render matemática (KaTeX)
+    if (typeof renderMathInElement === "function") {
+      renderMathInElement(document.body, {
         delimiters: [
           { left: "$$", right: "$$", display: true },
-          { left: "$",  right: "$",  display: false }
+          { left: "$", right: "$", display: false }
         ]
       });
-      console.log("✅ KaTeX renderizado");
     }
 
-    if (typeof window.loadGraphs === "function") {
-      try { window.loadGraphs(); } catch (e) { console.error(e); }
-      console.log("✅ Gráficos KGJS carregados");
+    // Render gráficos KGJS
+    if (typeof loadGraphs === "function") {
+      try { loadGraphs(); } catch (e) { console.error(e); }
     }
 
-    // ✅ Libera a página (anti-FOUC)
+    // ✅ Libera página com Anti-FOUC suave
     requestAnimationFrame(() => {
       document.body.classList.remove("loading");
       document.body.classList.add("ready");
-      console.log("✅ Página pronta");
     });
   }
 
+  // ===== 4. FLUXO GERAL =====
   document.addEventListener("DOMContentLoaded", () => {
     includeHTML(() => {
-      console.log("✅ Includes carregados");
       waitForKGJS(renderPage);
     });
   });
 
-  // ✅ Fallback anti-FOUC
+  // ===== 5. FAIL-SAFE =====
   setTimeout(() => {
     if (!document.body.classList.contains("ready")) {
       document.body.classList.remove("loading");
       document.body.classList.add("ready");
-      console.warn("⚠️ Fallback anti-FOUC ativado");
+      console.warn("⚠️ Fail-Safe Anti-FOUC ativado.");
     }
-  }, 4000);
-
+  }, 5000);
 })();
