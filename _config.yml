@@ -1,0 +1,6 @@
+title: "Estatística Interativa"
+markdown: kramdown
+
+# Caminhos
+url: "https://rodrigomaplacido.github.io"
+baseurl: "/estatistica-interativa"   # <-- IMPORTANTE para funcionar no GitHub Pages

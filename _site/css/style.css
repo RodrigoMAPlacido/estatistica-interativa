@@ -1,0 +1,215 @@
+﻿/* ---------- Layout Base do Projeto ---------- */
+:root {
+  --fg: #111827;
+  --muted: #4b5563;
+  --accent: #1f2937;
+  --accentFg: #ffffff;
+}
+
+html, body {
+  height: 100%;
+}
+
+/* ===== PÁGINA INICIAL (CAPA) ===== */
+body.index-page {
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  background-color: white !important;
+}
+
+.hero {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.card {
+  text-align: center;
+  padding: 40px 28px;
+  border-radius: 14px;
+}
+
+.cta {
+  display: inline-block;
+  padding: 12px 18px;
+  border-radius: 10px;
+  background: var(--accent);
+  color: var(--accentFg);
+  text-decoration: none;
+  font-weight: 700;
+  transition: transform .12s ease, opacity .12s ease;
+}
+
+.cta:hover { transform: translateY(-1px); opacity: 0.95; }
+.cta:active { transform: translateY(0); opacity: 0.9; }
+
+/* Autor abaixo de título */
+.autor {
+  font-size: 14px;
+  color: #555;
+  margin-top: 4px;
+  font-style: italic;
+  text-align: right;
+  max-width: 260px;
+  margin-left: auto;
+}
+
+/* --------- NAV ENTRE CAPÍTULOS --------- */
+.nav-links {
+  margin-top: 60px;
+  padding-top: 25px;
+  border-top: 1px solid #bfbfbf;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 16px;
+  font-family: Georgia, serif;
+}
+
+.nav-links a {
+  color: #333;
+  text-decoration: none;
+  padding: 6px 8px;
+  border-bottom: 1px solid transparent;
+}
+
+.nav-links a:hover {
+  border-bottom: 1px solid #000;
+}
+
+.nav-links .anterior { flex: 1; text-align: left; }
+.nav-links .sumario { flex: 1; text-align: center; }
+.nav-links .proximo { flex: 1; text-align: right; }
+
+/* ===== CORREÇÃO DO KGJS ===== */
+.kg-slider-row, .param-row, .slider-row, .kg-slider {
+  white-space: nowrap !important;
+}
+.kg-container {
+  background-color: white !important;
+}
+.katex {
+  white-space: nowrap !important;
+}
+.kg-slider-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ===============================
+   LAYOUT DO LIVRO (CAPÍTULOS)
+   =============================== */
+
+body.textbook {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 60px 32px 40px 32px;
+  line-height: 1.7;
+  background: white !important;
+  font-family: et-book, "Palatino Linotype", serif;
+  color: #222;
+}
+
+/* Títulos */
+body.textbook h1 {
+  font-size: 2.6rem;
+  font-weight: 400;
+  margin-top: 0;
+  margin-bottom: 1.8rem;
+  line-height: 1.2;
+}
+
+body.textbook h2 {
+  font-size: 1.9rem;
+  font-weight: 400;
+  margin-top: 3.5rem;
+  margin-bottom: 1.2rem;
+  line-height: 1.35;
+}
+
+/* Subtítulo interno */
+body.textbook .subtitle {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #555;
+  margin-top: 2.2rem;
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Parágrafos */
+body.textbook p {
+  max-width: 780px;
+  margin-bottom: 1.4rem;
+  font-size: 1.13rem;
+}
+
+/* Primeira frase destacada */
+body.textbook .newthought {
+  font-variant: small-caps;
+  font-size: 1.28rem;
+  letter-spacing: 0.03em;
+}
+
+/* ======== TABELAS AJUSTADAS ======== */
+body.textbook figure.table {
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+body.textbook figure.table table {
+  border-collapse: collapse;
+  font-size: 1.15rem;
+}
+
+body.textbook figure.table th,
+body.textbook figure.table td {
+  padding: 6px 14px;
+  border-bottom: 1px solid #ddd;
+}
+
+body.textbook figure.table th {
+  border-bottom: 2px solid #555;
+  font-weight: bold;
+}
+
+body.textbook figure.table figcaption {
+  display: table-caption;
+  caption-side: bottom;
+  text-align: center;
+  margin-top: 8px;
+  font-style: italic;
+  float: none;
+  width: 100%;
+}
+/* Estado inicial: escondido antes de carregar (evita FOUC) */
+body.loading {
+  visibility: hidden;
+  opacity: 0;
+}
+body.ready {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.35s ease-in-out;
+}
+
+/* Responsivo */
+@media (max-width: 900px) {
+  body.textbook figure.table {
+    width: 85%;
+  }
+}

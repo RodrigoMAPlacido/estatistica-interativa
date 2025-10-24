@@ -1,44 +1,28 @@
-﻿<!DOCTYPE html>
-<html lang="pt-BR">
-<head partial-head="partials/head.html"></head>
+---
+layout: default
+title: Estatística Interativa
+bodyClass: index-page loading
+---
 
-<body class="index-page loading">
+<!-- Fundo animado com equações -->
+<div class="bg-math" aria-hidden="true">
+  <div class="eq" style="top: 8%; left: 6%;">$$\bar{x}=\frac{1}{n}\sum_{i=1}^{n}x_i$$</div>
+  <div class="eq" style="top: 18%; right: 8%;">$$\sigma=\sqrt{\frac{\sum_{i=1}^{n}(x_i-\mu)^2}{n}}$$</div>
+  <div class="eq" style="top: 34%; left: 16%;">$$P(A\mid B)=\frac{P(A\cap B)}{P(B)}$$</div>
+  <div class="eq" style="top: 48%; right: 14%;">$$E(X)=\sum_i x_i\,p_i$$</div>
+  <div class="eq" style="bottom: 24%; left: 10%;">$$Z=\frac{X-\mu}{\sigma}$$</div>
+  <div class="eq" style="bottom: 10%; right: 12%;">$$\mathrm{Var}(X)=E(X^2)-[E(X)]^2$$</div>
+</div>
 
-  <!-- CSS do projeto -->
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/animations.css">
-  <link rel="stylesheet" href="kgjs/kg-tufte.0.4.0_ODE.css">
+<!-- Hero -->
+<main class="hero">
+  <section class="card">
+    <h1>Estatística Interativa</h1>
+    <p class="autor">por Rodrigo Plácido</p>
+    <a class="cta" href="sumario.html">Entrar no Livro</a>
+  </section>
+</main>
 
-  <!-- Header -->
-  <div include-html="partials/header.html"></div>
-
-  <!-- Fundo animado com equações -->
-  <div class="bg-math" aria-hidden="true">
-    <div class="eq" style="top: 8%; left: 6%;">$$\bar{x}=\frac{1}{n}\sum_{i=1}^{n}x_i$$</div>
-    <div class="eq" style="top: 18%; right: 8%;">$$\sigma=\sqrt{\frac{\sum_{i=1}^{n}(x_i-\mu)^2}{n}}$$</div>
-    <div class="eq" style="top: 34%; left: 16%;">$$P(A\mid B)=\frac{P(A\cap B)}{P(B)}$$</div>
-    <div class="eq" style="top: 48%; right: 14%;">$$E(X)=\sum_i x_i\,p_i$$</div>
-    <div class="eq" style="bottom: 24%; left: 10%;">$$Z=\frac{X-\mu}{\sigma}$$</div>
-    <div class="eq" style="bottom: 10%; right: 12%;">$$\mathrm{Var}(X)=E(X^2)-[E(X)]^2$$</div>
-  </div>
-
-  <!-- Hero -->
-  <main class="hero">
-    <section class="card">
-      <h1>Estatística Interativa</h1>
-      <p class="autor">por Rodrigo Plácido</p>
-      <a class="cta" href="sumario.html">Entrar no Livro</a>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <div include-html="partials/footer.html"></div>
-
-  <!-- Body scripts -->
-  <div include-html="partials/body.html"></div>
-
-  <!-- Scripts principais -->
-  <script src="js/main.js"></script>
-  <script src="js/effects-equation.js"></script>
-</body>
-</html>
+<!-- Scripts principais -->
+<script src="js/main.js"></script>
+<script src="js/effects-equation.js"></script>

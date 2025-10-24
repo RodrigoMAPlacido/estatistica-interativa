@@ -1,0 +1,39 @@
+<!-- _includes/head.html -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=0.8">
+
+<title>{{ page.title }} | Estatística Interativa</title>
+
+<!-- Anti-FOUC -->
+<style>
+  body.loading { visibility: hidden; opacity: 0 }
+  body.ready { visibility: visible; opacity: 1; transition: opacity .35s ease-in-out }
+</style>
+
+<!-- SEO -->
+<meta name="author" content="Rodrigo Plácido">
+<meta name="description" content="Livro interativo para aprender estatística do zero com visualização intuitiva e gráficos dinâmicos.">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="{{ '/imagens/ei-logo.svg' | relative_url }}">
+
+<!-- CSS principal do projeto -->
+{% if page.custom_css %}
+  <link rel="stylesheet" href="{{ page.custom_css | relative_url }}">
+{% else %}
+  <link rel="stylesheet" href="{{ '/css/style.css' | relative_url }}">
+{% endif %}
+<link rel="stylesheet" href="{{ '/css/animations.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/kgjs/kg-tufte.0.4.0_ODE.css' | relative_url }}">
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  renderMathInElement(document.body, {
+    delimiters: [
+      {left: "$$", right: "$$", display: true},
+      {left: "\\(", right: "\\)", display: false},
+      {left: "$", right: "$", display: false}
+    ]
+  });
+});
+</script>

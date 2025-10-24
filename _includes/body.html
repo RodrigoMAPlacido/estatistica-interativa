@@ -1,0 +1,15 @@
+<!-- _includes/body-end.html -->
+
+<!-- KGJS -->
+<script src="https://rodrigomaplacido.github.io/estatistica-interativa/kgjs/kg.0.4.0_ODE.js"></script>
+
+<!-- Script global do site -->
+<script src="{{ '/js/main.js' | relative_url }}"></script>
+
+<!-- Remove loading (anti-FOUC) -->
+<script>
+  window.addEventListener('load', function () {
+    document.body.classList.remove('loading');
+    document.body.classList.add('ready');
+  });
+</script>

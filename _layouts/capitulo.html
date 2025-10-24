@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <title>{{ page.title }} | Estatística Interativa</title>
+  {% include head.html %}
+</head>
+
+<body class="textbook loading">
+
+  {% include header.html %}
+
+  <main class="content">
+    <h1>{{ page.title }}</h1> <!-- ✅ agora o título aparece -->
+    {{ content }}
+  </main>
+
+  <div class="nav-links">
+    {% if page.anterior %}
+      <a class="anterior" href="{{ page.anterior | relative_url }}">← Capítulo Anterior</a>
+    {% endif %}
+    <a class="sumario" href="{{ '/sumario.html' | relative_url }}">Voltar ao Sumário</a>
+    {% if page.proximo %}
+      <a class="proximo" href="{{ page.proximo | relative_url }}">Próximo capítulo →</a>
+    {% endif %}
+  </div>
+
+  {% include footer.html %}
+  {% include body.html %}
+</body>
+</html>

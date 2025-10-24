@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <title>Capítulo 1 — Introdução à Estatística | Estatística Interativa</title>
+  <!-- _includes/head.html -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=0.8">
+
+<title>Capítulo 1 — Introdução à Estatística | Estatística Interativa</title>
+
+<!-- Anti-FOUC -->
+<style>
+  body.loading { visibility: hidden; opacity: 0 }
+  body.ready { visibility: visible; opacity: 1; transition: opacity .35s ease-in-out }
+</style>
+
+<!-- SEO -->
+<meta name="author" content="Rodrigo Plácido">
+<meta name="description" content="Livro interativo para aprender estatística do zero com visualização intuitiva e gráficos dinâmicos.">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="/estatistica-interativa/imagens/ei-logo.svg">
+
+<!-- CSS principal do projeto -->
+
+  <link rel="stylesheet" href="/estatistica-interativa/css/style.css">
+
+<link rel="stylesheet" href="/estatistica-interativa/css/animations.css">
+<link rel="stylesheet" href="/estatistica-interativa/kgjs/kg-tufte.0.4.0_ODE.css">
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  renderMathInElement(document.body, {
+    delimiters: [
+      {left: "$$", right: "$$", display: true},
+      {left: "\\(", right: "\\)", display: false},
+      {left: "$", right: "$", display: false}
+    ]
+  });
+});
+</script>
+
+</head>
+
+<body class="textbook loading">
+
+  
+
+  <main class="content">
+    <h1>Capítulo 1 — Introdução à Estatística</h1> <!-- ✅ agora o título aparece -->
+    <p class="subtitle">Objetivos de aprendizagem</p>
+<ul>
+  <li>Compreender a natureza e o papel da Estatística como método científico para produzir conhecimento descritivo ou inferencial.</li>
+  <li>Distinguir corretamente os conceitos fundamentais: dados, unidade estatística, variável, população, amostra, parâmetro e estatística.</li>
+  <li>Diferenciar os domínios da disciplina: estatística descritiva e estatística inferencial.</li>
+  <li>Reconhecer a importância da obtenção de dados e dos planos de amostragem para a validade das conclusões.</li>
+  <li>Entender a relação entre variabilidade, incerteza e probabilidade no raciocínio estatístico.</li>
+</ul>
+
+<hr>
+
+<h2>1. Introdução</h2>
+
+<p>
+  <span class="newthought">A definição introdutória comum nos livros-texto descreve a estatística</span>
+  como a ciência que planeja estudos e experimentos, obtém dados e os organiza, resume, apresenta, analisa e interpreta
+  com o propósito de fundamentar conclusões. Em sua forma operacional, essa definição destaca o papel central da estatística
+  na produção de conhecimento empírico e na tomada de decisão baseada em evidência. No entanto, a origem conceitual da estatística
+  é mais profunda e remonta a finalidades distintas das que hoje orientam seu desenvolvimento científico.
+</p>
+
+<p>
+  Na Antiguidade — e de forma mais sistemática no Império Romano —, a atividade que hoje chamamos de estatística consistia
+  na coleta organizada de informações demográficas, fiscais e militares com a finalidade direta de administrar e manter
+  o poder político. Daí a origem etimológica do termo: <em>status</em>, em latim, significa literalmente “Estado”, e designava aquilo
+  que era do interesse da administração pública. A estatística, em seu uso inicial, era uma técnica de governo aplicada ao
+  levantamento de nascimentos, mortes, propriedades, impostos e efetivos militares — um instrumento burocrático de contagem
+  e descrição, e não ainda uma disciplina científica estruturada.
+</p>
+
+<p>
+  A transformação da estatística em disciplina científica ocorreu apenas a partir dos séculos XVII e XVIII, quando o avanço
+  da matemática e da teoria das probabilidades permitiu integrar formalmente o tratamento da incerteza aos estudos baseados
+  em dados. <strong>John Graunt</strong> inaugurou a análise sistemática de registros populacionais ao identificar regularidades em
+  em registros de mortalidade na população. <strong>Abraham de Moivre</strong> e <strong>Carl Friedrich Gauss</strong> contribuíram com resultados fundamentais da probabilidade,
+  incluindo a formulação da distribuição normal. No século XIX, <strong>Francis Galton</strong> e <strong>Karl Pearson</strong> estabeleceram a base da
+  análise de correlação e regressão, permitindo o estudo estruturado de relações entre variáveis.
+</p>
+
+<p>
+  Esse desenvolvimento histórico integrou o raciocínio matemático ao estudo dos dados empíricos, e a estatística deixou de ser
+  mero registro administrativo para constituir um corpo metodológico orientado pela investigação científica. Contudo, para que
+  sua natureza seja plenamente compreendida, é necessário esclarecer o que constitui seu objeto fundamental de estudo.
+  Antes de distinguir técnicas e métodos, é preciso responder a perguntas conceituais essenciais: <em>o que são dados?</em>
+  <em>o que caracteriza uma observação?</em> <em>em que sentido informações numéricas representam fenômenos reais?</em>
+  É a essas questões que se dedica a próxima seção.
+</p>
+
+<hr>
+
+<h2>2. Os objetos da Estatística</h2>
+
+<p>
+  A estatística é frequentemente associada a cálculos e representações numéricas, mas sua base não é aritmética:
+  ela repousa sobre conceitos fundamentais que permitem transformar observações do mundo real em informação útil.
+  Antes de distinguir métodos ou técnicas, é necessário esclarecer os elementos que constituem o objeto de estudo
+  desta disciplina: <strong>dados, variáveis, unidades de observação, população, amostra, parâmetros e estatísticas</strong>.
+  Esses conceitos estruturam o raciocínio estatístico e são indispensáveis para compreender como se formulam conclusões
+  a partir de informações empíricas.
+</p>
+
+<h3>2.1 Dados</h3>
+<p>
+  Dados são registros de observações sobre características de elementos de interesse. Em estatística,
+  os dados não são considerados pela sua natureza isolada, mas pela função que desempenham na construção de conhecimento.
+  Um dado adquire significado apenas quando analisado dentro de um <em>contexto</em> e associado a uma <em>questão</em>
+  de investigação. Assim, a estatística não trabalha com números por si mesmos, mas com representações numéricas de
+  fenômenos observáveis.
+</p>
+<p>
+  Formalmente, dados consistem em coleções de observações, tais como contagens, medições, classificações ou respostas de pesquisas.
+</p>
+
+<figure class="table" style="width: 38%;">
+  <table>
+    <thead>
+      <tr>
+        <th>Estudante</th>
+        <th>Horas de estudo (h)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>2</td></tr>
+      <tr><td>2</td><td>4</td></tr>
+      <tr><td>3</td><td>1</td></tr>
+      <tr><td>4</td><td>3</td></tr>
+      <tr><td>5</td><td>2</td></tr>
+      <tr><td>6</td><td>5</td></tr>
+      <tr><td>7</td><td>2</td></tr>
+    </tbody>
+  </table>
+  <figcaption style=" white-space: nowrap; display: block;">
+    Tabela 1. Horas de estudo observadas
+  </figcaption>
+</figure>
+
+
+<p>
+  Esses valores formam um conjunto de <strong>dados brutos</strong>, pois cada número representa
+  uma <strong>observação</strong> coletada sobre o fenômeno de interesse: no caso acima, tempo dedicado ao estudo
+  diário por cada estudante.
+</p>
+
+
+<h3>2.2 Unidade estatística e variável</h3>
+<p>
+  <strong>Unidade estatística</strong> (ou unidade de observação) é o elemento individual sobre o qual os dados
+  são coletados. Pode ser uma pessoa, uma empresa, um país, um experimento, uma célula biológica ou qualquer entidade
+  definida pela questão de estudo. Cada unidade estatística é observada em relação a uma ou mais características,
+  chamadas <strong>variáveis</strong>.
+</p>
+<p>
+  Uma <strong>variável</strong> é qualquer atributo que pode assumir diferentes valores entre as unidades observadas.
+  Exemplos incluem idade, renda, pressão arterial, nível de escolaridade ou tempo de reação em um estudo experimental.
+  O conceito de variável é essencial, pois é sobre ela que se realiza a análise estatística: descrevê-la, compará-la,
+  modelá-la e, eventualmente, explicar suas variações.
+</p>
+
+<h3>2.3 População e amostra</h3>
+<p>
+  <strong>População</strong> é o conjunto completo de unidades estatísticas sobre as quais se deseja obter conhecimento.
+  Em muitos casos, esse conjunto é grande demais para ser observado integralmente, ou sua observação é inviável por razões
+  de custo, tempo ou acesso. Por isso, em estatística, é comum trabalhar com uma <strong>amostra</strong>, ou seja,
+  um subconjunto da população selecionado segundo algum critério definido.
+</p>
+<p>
+  O objetivo da análise estatística não é apenas descrever a amostra, mas utilizar a informação nela contida para dizer
+  algo sobre a população como um todo. Essa passagem de parte para o todo caracteriza o problema central da inferência
+  estatística.
+</p>
+
+<h3>2.4 Parâmetro e estatística</h3>
+<p>
+  <strong>Parâmetros</strong> são medidas que descrevem características da população, como a média real de uma variável,
+  sua variância ou proporção. Como geralmente não é possível observar toda a população, os parâmetros são, em regra,
+  desconhecidos. Para estimá-los, calculam-se medidas correspondentes na amostra, chamadas <strong>estatísticas</strong>.
+  Exemplos incluem a média amostral, a proporção amostral e o desvio padrão amostral.
+</p>
+<p>
+  Assim, estatísticas são ferramentas de aproximação para parâmetros. Elas sintetizam a informação disponível na amostra
+  e servem como base para conclusões sobre a população. A precisão dessa aproximação depende da forma como a amostra
+  foi obtida e da variabilidade presente nos dados.
+</p>
+
+<h3>2.5 Variabilidade e incerteza</h3>
+<p>
+  A variabilidade é um traço essencial dos fenômenos empíricos: observações repetidas raramente produzem resultados
+  idênticos. Essa variação pode decorrer de diferenças naturais entre unidades observadas, de imprecisões de mensuração
+  ou de fatores não controlados. A consequência direta da variabilidade é a <strong>incerteza</strong>: mesmo com dados,
+  o conhecimento é sempre parcial. A função da estatística é justamente lidar com essa incerteza de forma estruturada,
+  fornecendo métodos para quantificá-la e controlá-la.
+</p>
+
+<p>
+  Com os elementos fundamentais agora estabelecidos — dados, variáveis, populações, amostras, parâmetros e estatísticas —,
+  torna-se possível avançar para a compreensão da estrutura interna da disciplina. Na próxima seção, distinguiremos seus
+  dois domínios centrais: a estatística descritiva e a estatística inferencial.
+</p>
+
+<hr>
+
+<h2>3. Estatística descritiva e estatística inferencial</h2>
+
+<p>
+  Tendo definidos os objetos fundamentais da estatística — dados, variáveis, unidades de observação, população, amostra,
+  parâmetros e estatísticas —, é possível compreender como a disciplina se estrutura metodologicamente. A atividade
+  estatística não consiste apenas em calcular medidas numéricas, mas em transformar dados em conhecimento. Essa transformação
+  ocorre em duas etapas intelectuais distintas e complementares: a <strong>estatística descritiva</strong> e a
+  <strong>estatística inferencial</strong>.
+</p>
+
+<h3>3.1 Estatística descritiva</h3>
+<p>
+  A estatística descritiva organiza, resume e apresenta os dados observados de modo informativo. Seu propósito é revelar
+  padrões, identificar comportamentos típicos e expor a estrutura dos dados sem ultrapassar os limites do que foi coletado.
+  Para isso, utiliza tabelas, gráficos e medidas-resumo, como média, mediana, amplitude, variância e quartis. Esses instrumentos
+  permitem reduzir a complexidade dos dados, tornando-os compreensíveis sem distorcer sua essência.
+</p>
+<p>
+  Embora frequentemente vista como etapa preliminar, a estatística descritiva possui valor próprio: uma descrição bem construída
+  não apenas organiza os dados, mas também orienta a formulação de hipóteses, revela anomalias e sugere relações dignas de
+  investigação. Em outras palavras, ela constitui a base empírica sobre a qual qualquer inferência deve ser construída.
+</p>
+
+<h3>3.2 Estatística inferencial</h3>
+<p>
+  A estatística inferencial vai além da descrição e busca formular conclusões que se estendam da amostra para a população.
+  Como normalmente não é possível observar todos os elementos de interesse, trabalha-se com uma parte dos dados e tenta-se,
+  a partir dela, estimar parâmetros desconhecidos ou testar proposições sobre a população. Esse processo envolve incerteza e,
+  por isso, exige métodos que permitam avaliar a precisão e a confiabilidade das conclusões.
+</p>
+<p>
+  Para lidar com a incerteza de forma controlada, a estatística inferencial fundamenta-se na teoria das probabilidades.
+  A inferência estatística não afirma verdades absolutas, mas conclusões respaldadas pelo grau de evidência fornecido pelos
+  dados. Ela oferece ferramentas formais como <em>estimação pontual</em>, <em>intervalos de confiança</em> e
+  <em>testes de hipóteses</em>, que permitem quantificar a incerteza associada ao raciocínio indutivo.
+</p>
+
+<h3>3.3 Complementaridade entre descrição e inferência</h3>
+<p>
+  Os dois domínios da estatística não são independentes nem concorrentes, mas complementares. A descrição fornece a estrutura
+  empírica dos dados e evita inferências precipitadas; a inferência oferece generalização e fundamenta decisões em face da
+  incerteza. Nenhuma inferência pode ser considerada válida sem adequada análise descritiva preliminar, e nenhuma descrição
+  é suficiente, por si só, para produzir conhecimento científico generalizável.
+</p>
+<p>
+  Em síntese, a estatística descritiva responde à pergunta <em>“o que os dados revelam?”</em>, enquanto a estatística
+  inferencial responde <em>“o que podemos concluir a partir deles?”</em>. A integração adequada entre ambas constitui
+  a base do pensamento estatístico rigoroso.
+</p>
+
+<hr>
+
+<h2>4. Obtenção de dados: estudos observacionais e experimentais</h2>
+
+<p>
+  Todo estudo estatístico começa com dados, mas a validade das conclusões depende essencialmente de <strong>como</strong> esses dados são obtidos.
+  A análise estatística não pode corrigir falhas graves de obtenção de dados; por isso, compreender o processo que os origina
+  é parte indispensável do pensamento estatístico rigoroso. Em termos gerais, existem duas formas fundamentais de obtenção de
+  dados: por meio de <strong>estudos observacionais</strong> e de <strong>estudos experimentais</strong>.
+</p>
+
+<h3>4.1 Estudos observacionais</h3>
+<p>
+  Em um estudo observacional, o pesquisador registra características dos elementos estudados sem exercer qualquer intervenção
+  ou controle sobre eles. Os dados são coletados tal como os fatos ocorrem naturalmente, sem manipulação das condições
+  do fenômeno analisado. Exemplos incluem pesquisas demográficas, estudos epidemiológicos não intervencionistas e levantamentos
+  econômicos.
+</p>
+<p>
+  A principal vantagem desse tipo de estudo é sua viabilidade prática: ele permite analisar fenômenos que não podem ser
+  manipulados diretamente, seja por limitações éticas, financeiras ou logísticas. No entanto, sua limitação fundamental
+  é a dificuldade de estabelecer relações de causa e efeito, pois fatores não observados podem influenciar os resultados,
+  gerando vieses e confundimentos.
+</p>
+
+<h3>4.2 Estudos experimentais</h3>
+<p>
+  Em um estudo experimental, o pesquisador intervém deliberadamente no sistema observado, controlando variáveis e aplicando
+  tratamentos a fim de analisar seus efeitos. As unidades experimentais são divididas em grupos — frequentemente
+  um grupo de tratamento e um grupo de controle — e comparações são estabelecidas para verificar o impacto de uma intervenção.
+</p>
+<p>
+  Essa abordagem oferece maior capacidade de identificar relações causais, especialmente quando associada a métodos rigorosos
+  de controle, como a aleatorização e o mascaramento (ou cegamento). No entanto, experimentos podem ser inviáveis em muitos
+  contextos e estão sujeitos a limitações práticas e éticas, sobretudo em ciências humanas, medicina e economia.
+</p>
+
+<h3>4.3 Qualidade dos dados e validade das conclusões</h3>
+<p>
+  Independentemente do tipo de estudo, a obtenção de dados está sujeita a fontes de erro que podem comprometer os resultados
+  de uma análise estatística. Entre as principais fontes de erro, destacam-se: <strong>erro de amostragem</strong>
+  (quando a amostra não representa adequadamente a população), <strong>erro de mensuração</strong> (imprecisão dos instrumentos
+  ou falhas no registro) e <strong>viés</strong> (de seleção, de resposta ou de não resposta). A identificação e o controle desses
+  erros são fundamentais para garantir a validade das conclusões.
+</p>
+<p>
+  Assim, antes de qualquer procedimento inferencial, é necessário avaliar a origem dos dados, a adequação do plano de coleta
+  e a confiabilidade das informações obtidas. Sem qualidade na base empírica, não há inferência estatística confiável.
+  Na próxima seção, passaremos a discutir a noção de <strong>amostragem</strong>, que estabelece a ponte entre os dados
+  coletados e as conclusões sobre a população.
+</p>
+
+<hr>
+
+<h2>5. Amostragem e representatividade</h2>
+
+<p>
+  Como visto anteriormente, em grande parte das investigações estatísticas não é possível observar toda a população de
+  interesse. Por essa razão, trabalha-se com uma <strong>amostra</strong>, ou seja, um subconjunto de unidades selecionadas
+  com o objetivo de representar o todo. A validade de qualquer conclusão estatística depende diretamente do modo como essa
+  amostra é obtida. Não se trata apenas de quantidade de dados, mas de <em>qualidade de evidência</em>.
+</p>
+
+<h3>5.1 O problema da representatividade</h3>
+<p>
+  Uma amostra é considerada <strong>representativa</strong> quando reflete, de maneira adequada, as principais características
+  da população da qual foi extraída. Caso contrário, os resultados obtidos a partir da amostra podem conduzir a conclusões
+  enganosas. Assim, o problema central da amostragem não é simplesmente coletar dados, mas coletar dados que sustentem
+  inferências confiáveis.
+</p>
+<p>
+  Dois fatores influenciam diretamente a representatividade: a forma de seleção das unidades amostrais e o tamanho da amostra.
+  Amostras grandes podem ser inúteis se forem mal selecionadas, enquanto amostras pequenas podem ser suficientes se forem bem
+  planejadas. Em estatística, a quantidade de dados jamais substitui a boa metodologia de coleta.
+</p>
+
+<h3>5.2 Erro amostral e viés</h3>
+<p>
+  Toda amostra está sujeita a <strong>erro amostral</strong>, isto é, à diferença natural que pode existir entre os resultados
+  observados na amostra e os verdadeiros valores populacionais. Esse erro é inerente ao processo de amostragem e não pode ser
+  eliminado, apenas reduzido ou quantificado por meio de métodos probabilísticos.
+</p>
+<p>
+  Diferente do erro amostral, que é inevitável, o <strong>viés</strong> resulta de falhas no processo de coleta de dados. Ele surge
+  quando a amostra é selecionada de modo sistematicamente distorcido, favorecendo alguns grupos ou excluindo outros.
+  Esse tipo de erro compromete a validade das conclusões e não pode ser corrigido com cálculos posteriores.
+  Em pesquisa estatística, um dado enviesado é pior do que a ausência de dados.
+</p>
+
+<h3>5.3 Planos de amostragem</h3>
+<p>
+  Existem diferentes estratégias para selecionar amostras. Elas podem ser divididas em dois grandes grupos:
+  <strong>amostragem probabilística</strong> e <strong>amostragem não probabilística</strong>.
+</p>
+
+  <li><strong>Amostragem probabilística</strong>: cada unidade da população possui uma probabilidade conhecida e diferente de zero de ser selecionada.
+      Esse tipo de amostragem permite controlar o erro amostral e fundamenta a inferência estatística. Exemplos incluem amostragem
+      aleatória simples, estratificada, sistemática e por conglomerados.</li>
+  <li><strong>Amostragem não probabilística</strong>: a seleção das unidades não segue um esquema probabilístico formal. É utilizada quando o acesso
+      à população é restrito ou quando há interesse exploratório inicial. Exemplos incluem amostragem por conveniência, por julgamento
+      e amostragem voluntária. Embora útil em alguns contextos, esse tipo de amostragem não permite inferências seguras sobre a população.</li>
+
+<p>
+  A escolha do plano de amostragem é uma decisão metodológica central em qualquer pesquisa. Não se trata de uma etapa
+  meramente operacional, mas de uma escolha que determina os limites e a confiabilidade das conclusões que poderão ser
+  alcançadas. Sem uma amostra adequadamente planejada, a inferência estatística carece de fundamento.
+</p>
+
+<p>
+  Na próxima seção, aprofundaremos a relação entre amostragem e inferência, mostrando como as estatísticas calculadas a
+  partir de dados amostrais podem ser usadas para estimar parâmetros populacionais e formular conclusões sob incerteza.
+</p>
+
+<hr>
+
+<h2>6. O problema da inferência e o papel da probabilidade</h2>
+
+<p>
+  A partir das seções anteriores, tornou-se claro que a estatística não se limita ao tratamento mecânico de dados:
+  ela constitui um método de raciocínio voltado à extração de conhecimento a partir de informação parcial.
+  Essa limitação de informação decorre do fato de que, na quase totalidade das investigações, trabalha-se com amostras
+  e não com populações inteiras. Como consequência, as conclusões estatísticas estão inevitavelmente sujeitas
+  à <strong>incerteza</strong>.
+</p>
+
+<p>
+  Essa incerteza tem origem na <strong>variabilidade</strong> dos fenômenos empíricos. Mesmo sob as mesmas condições,
+  diferentes unidades estatísticas podem apresentar resultados distintos, tanto por diferenças naturais quanto por
+  fatores não observados. Além disso, dois pesquisadores que coletam amostras distintas da mesma população podem obter
+  resultados diferentes. O resultado observado na amostra não coincide necessariamente com o parâmetro populacional
+  que se deseja estimar. Surge, assim, o <strong>problema central da estatística</strong>:
+  <em>como tirar conclusões válidas a partir de informação limitada e sujeita a variação?</em>
+</p>
+
+<p>
+  A resposta a esse problema exige uma linguagem formal capaz de quantificar a incerteza e avaliar a credibilidade de
+  diferentes conclusões. Essa linguagem é fornecida pela <strong>probabilidade</strong>. A teoria das probabilidades
+  não é um apêndice da estatística, mas seu alicerce inferencial. É por meio dela que se define o conceito de
+  <em>erro</em>, que se mede o <em>grau de confiança</em> de uma afirmação e que se estabelece o nível de
+  <em>evidência estatística</em> necessário para sustentar ou rejeitar uma hipótese.
+</p>
+
+<p>
+  Em termos gerais, a inferência estatística procura estimar parâmetros desconhecidos e testar proposições
+  sobre populações com base em amostras. Essas conclusões não são definitivas, mas formuladas com um certo grau de
+  probabilidade de estarem corretas. Dessa forma, a estatística não elimina a incerteza — <em>ela a incorpora ao próprio
+  processo lógico de decisão</em>, tornando explícitos os riscos envolvidos e permitindo decisões racionais
+  fundamentadas em evidência.
+</p>
+
+<p>
+  Com isso, completa-se a base conceitual que orienta toda a disciplina. Os capítulos seguintes desenvolverão, de forma
+  sistemática, os métodos de análise que permitem organizar, resumir e interpretar dados, bem como formular inferências
+  fundamentadas sobre populações. O próximo passo consiste em compreender como os dados são apresentados e descritos,
+  pois toda inferência começa pela análise cuidadosa da informação observada.
+</p>
+
+<hr>
+
+<h2>Conclusão do capítulo</h2>
+
+<p>
+  Este capítulo estabeleceu os alicerces conceituais da Estatística. Partimos de sua formação histórica e chegamos à sua
+  formulação moderna como método para produzir conhecimento sob incerteza. Definimos os objetos fundamentais — dados,
+  variáveis, unidades de observação, populações, amostras, parâmetros e estatísticas —, distinguimos os domínios de
+  atuação — estatística descritiva e inferencial — e discutimos a importância da obtenção de dados e dos planos de
+  amostragem para a validade das conclusões. Por fim, apresentamos o problema central da inferência e o papel da
+  probabilidade como linguagem formal para quantificar incerteza. A partir daqui, avançaremos para a organização e
+  descrição de dados, etapa necessária para toda análise subsequente.
+</p>
+
+<hr>
+
+<h2>Referências</h2>
+
+<p>
+  BUSSAB, Wilton de Oliveira; MORETTIN, Pedro Alberto. <strong>Estatística básica</strong>. 10. ed. São Paulo: SaraivaUni, 2023.
+</p>
+<p>
+  LARSON, Ron; FARBER, Betsy. <strong>Estatística aplicada</strong>. 6. ed. Tradução José Fernando Pereira Gonçalves; Revisão técnica Manoel Henrique Salgado. São Paulo: Pearson Education do Brasil, 2015.
+</p>
+<p>
+  TRIOLA, Mario F. <strong>Introdução à estatística</strong>. 12. ed. Tradução e revisão técnica Ana Maria Lima de Farias, Vera Regina Lima de Farias e Flores. Rio de Janeiro: LTC — Livros Técnicos e Científicos Editora, 2017.
+</p>
+<p>
+  HEUMANN, Christian; SCHOMAKER, Michael; SHALABH. Introduction to Statistics and Data Analysis: With Exercises, Solutions and Applications in R. 2. ed. Cham: Springer Nature Switzerland AG, 2022
+</p>
+<p>
+  MOOD, Alexander McFarlane; GRAYBILL, Franklin A.; BOES, Duane C. Introduction to the theory of statistics. New York: McGraw-Hill, 1974.
+</p>
+<p>
+  SAVAGE, Leonard J. The Foundations of Statistics. 2. ed. rev. New York: Dover Publications, 1972.
+</p>
+<p>
+  WARE, William B.; FERRON, John M.; MILLER, Barbara M. Introductory Statistics: A Conceptual Approach Using R. New York: Routledge, 2013.
+</p>
+
+  </main>
+
+  <div class="nav-links">
+    
+    <a class="sumario" href="/estatistica-interativa/sumario.html">Voltar ao Sumário</a>
+    
+      <a class="proximo" href="/estatistica-interativa/capitulos/cap2-distribuicoes-de-frequencia-e-graficos/">Próximo capítulo →</a>
+    
+  </div>
+
+  
+  <!-- _includes/body-end.html -->
+
+<!-- KGJS -->
+<script src="https://rodrigomaplacido.github.io/estatistica-interativa/kgjs/kg.0.4.0_ODE.js"></script>
+
+<!-- Script global do site -->
+<script src="/estatistica-interativa/js/main.js"></script>
+
+<!-- Remove loading (anti-FOUC) -->
+<script>
+  window.addEventListener('load', function () {
+    document.body.classList.remove('loading');
+    document.body.classList.add('ready');
+  });
+</script>
+
+</body>
+</html>
