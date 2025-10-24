@@ -1,8 +1,11 @@
 // js/main.js
-// Carrega partials, executa <script> internos, espera o KGJS ficar pronto
-// e então renderiza KaTeX (se disponível) e os gráficos. Sem loaders de KaTeX.
+// Carrega partials, executa scripts internos, espera KGJS/KaTeX e evita FOUC
 
 (function () {
+
+  // ✅ Garante proteção anti-FOUC no começo do carregamento
+  document.body.classList.add("loading");
+
   function includeHTML(done) {
     const nodes = document.querySelectorAll("[include-html]");
     const total = nodes.length;
@@ -22,7 +25,6 @@
           el.innerHTML = html;
           el.removeAttribute("include-html");
 
-          // Executa <script> vindos do include
           el.querySelectorAll("script").forEach(old => {
             const s = document.createElement("script");
             if (old.src) {
@@ -52,7 +54,6 @@
     });
   }
 
-  // Espera o KGJS expor algo (p.ex. loadGraphs) por até 3s
   function waitForKGJS(cb, deadline = Date.now() + 3000) {
     if (typeof window.loadGraphs === "function" || typeof window.renderMathInElement === "function") {
       cb();
@@ -67,7 +68,6 @@
   }
 
   function renderPage() {
-    // KaTeX via KGJS (se existir)
     if (typeof window.renderMathInElement === "function") {
       window.renderMathInElement(document.body, {
         delimiters: [
@@ -76,20 +76,19 @@
         ]
       });
       console.log("✅ KaTeX renderizado");
-    } else {
-      console.log("ℹ️ KaTeX não encontrado (ok se a página não usa fórmulas).");
     }
 
-    // Gráficos do KGJS (se existir)
     if (typeof window.loadGraphs === "function") {
       try { window.loadGraphs(); } catch (e) { console.error(e); }
-      console.log("✅ Gráficos (KGJS) prontos");
+      console.log("✅ Gráficos KGJS carregados");
     }
 
-    // Evita FOUC
-    document.body.classList.remove("loading");
-    document.body.classList.add("ready");
-    console.log("✅ Página pronta");
+    // ✅ Libera a página (anti-FOUC)
+    requestAnimationFrame(() => {
+      document.body.classList.remove("loading");
+      document.body.classList.add("ready");
+      console.log("✅ Página pronta");
+    });
   }
 
   document.addEventListener("DOMContentLoaded", () => {
@@ -98,4 +97,14 @@
       waitForKGJS(renderPage);
     });
   });
+
+  // ✅ Fallback anti-FOUC
+  setTimeout(() => {
+    if (!document.body.classList.contains("ready")) {
+      document.body.classList.remove("loading");
+      document.body.classList.add("ready");
+      console.warn("⚠️ Fallback anti-FOUC ativado");
+    }
+  }, 4000);
+
 })();

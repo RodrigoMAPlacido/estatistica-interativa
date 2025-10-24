@@ -17,3 +17,10 @@
     if (typeof loadGraphs === "function") loadGraphs();
   });
 </script>
+
+<script>
+  // Quando tudo estiver carregado
+  window.addEventListener("load", () => {
+    document.body.classList.add("ready");
+  });
+</script>
