@@ -1,8 +1,17 @@
 ﻿<!DOCTYPE html>
 <html lang="pt-BR">
-<head include-html="partials/head.html"></head>
+<head>
+  <!-- Partial com META TAGS -->
+  <div include-html="partials/head.html"></div>
+
+  <!-- CSS do projeto -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="kgjs/kg-tufte.0.4.0_ODE.css">
+</head>
 
 <body class="index-page loading">
+  <!-- Header -->
   <div include-html="partials/header.html"></div>
 
   <!-- Fundo animado com equações -->
@@ -24,8 +33,13 @@
     </section>
   </main>
 
+  <!-- Footer -->
   <div include-html="partials/footer.html"></div>
 
+  <!-- Partial que carrega KGJS -->
+  <div include-html="partials/body.html"></div>
+
+  <!-- Motor central do site (includes, KaTeX, gráficos, anti-FOUC) -->
   <script src="js/main.js"></script>
 </body>
 </html>

@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head include-html="partials/sumario.html"></head>
+<head>
+  <!-- META tags -->
+  <div include-html="partials/head.html"></div>
+
+  <!-- CSS do projeto -->
+  <link rel="stylesheet" href="css/sumario.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="kgjs/kg-tufte.0.4.0_ODE.css">
+</head>
 
 <body class="sumario-page loading">
 
@@ -17,7 +25,7 @@
     <div class="eq" style="bottom: 10%; right: 12%; animation-delay: 3.0s;">$$Var(X)=E(X^2)-[E(X)]^2$$</div>
   </div>
 
-  <!-- Painel do sumário -->
+  <!-- Conteúdo do sumário -->
   <div class="content-wrapper">
     <h1>Sumário — Estatística Interativa</h1>
     <p class="intro">Navegue pelos capítulos deste livro interativo e explore a estatística de forma intuitiva.</p>
@@ -61,11 +69,13 @@
     </footer>
   </div>
 
-  <!-- Footer global -->
+  <!-- Footer -->
   <div include-html="partials/footer.html"></div>
 
-  <!-- Scripts globais (KGJS + KaTeX via main.js) -->
+  <!-- KGJS -->
   <div include-html="partials/body.html"></div>
+
+  <!-- Motor principal -->
   <script src="js/main.js"></script>
 </body>
 </html>

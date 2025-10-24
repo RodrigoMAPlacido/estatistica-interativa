@@ -1,35 +1,15 @@
-<!-- ================= HEAD GLOBAL ================= -->
+<!-- partials/head.html -->
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-<!-- ===== Anti-FOUC ===== -->
-<style>
-  body.loading {
-    visibility: hidden;
-    opacity: 0;
-  }
-  body.ready {
-    visibility: visible;
-    opacity: 1;
-    transition: opacity 0.35s ease-in-out;
-  }
-</style>
-
-<!-- ===== Responsividade ===== -->
+<!-- Responsividade -->
 <meta name="viewport" content="width=device-width, initial-scale=0.8">
 
-<!-- ===== Título dinâmico ===== -->
-<script>
-  document.title = window.pageTitle
-    ? window.pageTitle + " | Estatística Interativa"
-    : "Estatística Interativa";
-</script>
-
-<!-- ===== SEO ===== -->
+<!-- SEO -->
 <meta name="author" content="Rodrigo Plácido">
 <meta name="description" content="Livro interativo para aprender estatística do zero com visualização intuitiva e gráficos dinâmicos.">
 
-<!-- ===== Open Graph ===== -->
+<!-- Open Graph (para redes sociais) -->
 <meta property="og:title" content="Estatística Interativa">
 <meta property="og:description" content="Livro interativo com visualização intuitiva e gráficos dinâmicos.">
 <meta property="og:image" content="https://rodrigomaplacido.github.io/estatistica-interativa/imagens/capa-og.png">
@@ -37,43 +17,5 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
 
-<!-- ===== Twitter ===== -->
+<!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
-
-<!-- ===== Base de caminhos (index vs capítulos) ===== -->
-<script>
-  (function() {
-    var isChapter = /\/capitulos\//.test(location.pathname);
-    window.BASE_PATH = isChapter ? "../../" : "./";
-
-    // ===== Favicon (SVG + fallback PNG + Apple) =====
-    [
-      { rel: "icon", type: "image/svg+xml", href: "imagens/ei-logo.svg" },
-      { rel: "icon", type: "image/png", href: "imagens/ei-logo.png" },
-      { rel: "apple-touch-icon", href: "imagens/ei-logo.png" }
-    ].forEach(link => {
-      var el = document.createElement("link");
-      Object.assign(el, link);
-      el.href = window.BASE_PATH + link.href;
-      document.head.appendChild(el);
-    });
-
-    // ===== CSS =====
-    [
-      "css/style.css",
-      "css/animations.css",
-      "kgjs/kg-tufte.0.4.0_ODE.css"
-    ].forEach(path => {
-      var link = document.createElement("link");
-      link.rel = "stylesheet";
-      link.href = window.BASE_PATH + path;
-      document.head.appendChild(link);
-    });
-
-    // ===== KGJS (também traz KaTeX) =====
-    var kg = document.createElement("script");
-    kg.src = window.BASE_PATH + "kgjs/kg.0.4.0_ODE.js";
-    kg.defer = true;
-    document.head.appendChild(kg);
-  })();
-</script>

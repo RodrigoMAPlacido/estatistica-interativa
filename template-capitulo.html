@@ -1,19 +1,26 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <!-- Define título dinâmico da página -->
+  <!-- Define título dinâmico do capítulo -->
   <script>
     window.pageTitle = "Título do Capítulo Aqui";
   </script>
 
-  <!-- Head global -->
+  <!-- Meta tags globais -->
   <div include-html="../../partials/head.html"></div>
+
+  <!-- CSS do projeto -->
+  <link rel="stylesheet" href="../../css/style.css">
+  <link rel="stylesheet" href="../../css/animations.css">
+  <link rel="stylesheet" href="../../kgjs/kg-tufte.0.4.0_ODE.css">
 </head>
 
 <body class="textbook loading">
 
   <!-- Header global -->
   <div include-html="../../partials/header.html"></div>
+
+  <!-- ==================== CONTEÚDO DO CAPÍTULO ==================== -->
 
   <!-- Título do capítulo -->
   <h1>Título do Capítulo Aqui</h1>
@@ -28,29 +35,28 @@
 
   <hr>
 
-  <!-- Conteúdo do capítulo -->
-  <h2>1. Seção inicial do capítulo</h2>
+  <!-- Conteúdo -->
+  <h2>1. Seção inicial</h2>
   <p>
-    Escreva aqui o conteúdo do capítulo. Este é apenas um modelo inicial.
-    Você pode inserir fórmulas como $$x^2 + y^2 = z^2$$ e elas serão renderizadas automaticamente.
+    Escreva aqui o conteúdo do capítulo. Fórmulas como $$x^2 + y^2 = z^2$$ serão renderizadas automaticamente.
   </p>
 
   <h2>2. Nova seção</h2>
-  <p>
-    Continue aqui seu conteúdo.
-  </p>
+  <p>Continue aqui seu conteúdo.</p>
 
-  <!-- Navegação -->
+  <!-- ==================== NAVEGAÇÃO ENTRE CAPÍTULOS ==================== -->
   <div class="nav-links">
     <a class="sumario" href="../../sumario.html">← Voltar ao Sumário</a>
-    <a class="proximo" href="../capX-proximo-capitulo/">Próximo capítulo →</a>
+    <a class="proximo" href="../capX-proximo-capitulo/index.html">Próximo capítulo →</a>
   </div>
 
   <!-- Footer global -->
   <div include-html="../../partials/footer.html"></div>
 
-  <!-- Scripts globais -->
+  <!-- Carrega KGJS -->
   <div include-html="../../partials/body.html"></div>
+
+  <!-- Script controlador -->
   <script src="../../js/main.js"></script>
 </body>
 </html>
