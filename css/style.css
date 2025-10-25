@@ -221,3 +221,17 @@ body.index-page {
     width: 85%;
   }
 }
+/* ===== Correções de legibilidade no mobile ===== */
+@media (max-width: 768px) {
+  html { font-size: 15px; }              /* base menor */
+  body.textbook {
+    padding-left: 14px;                  /* mais largura útil */
+    padding-right: 14px;
+    padding-top: 28px;                   /* opcional */
+    line-height: 1.6;
+  }
+  body.textbook p {
+    font-size: 1rem;                     /* ~15–16px */
+    text-align: justify;
+  }
+}
