@@ -206,6 +206,13 @@ body.ready {
   opacity: 1;
   transition: opacity 0.35s ease-in-out;
 }
+/* Desativa scroll apenas na página inicial */
+body.index-page {
+  overflow: hidden;
+  height: 100vh;        /* impede scroll vertical */
+  touch-action: none;   /* bloqueia arraste no mobile */
+  overscroll-behavior: none; /* elimina bounce-effect */
+}
 
 /* Responsivo */
 @media (max-width: 900px) {

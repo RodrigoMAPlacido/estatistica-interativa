@@ -27,8 +27,8 @@
       const dx = rect.left + rect.width / 2 - mouseX;
       const dy = rect.top + rect.height / 2 - mouseY;
       const dist = Math.sqrt(dx * dx + dy * dy);
-      const maxDist = 230;
-      const force = active && dist < maxDist ? (maxDist - dist) / maxDist : 0;
+      const maxDist = 430;
+      const force = active && dist < maxDist ? ((maxDist - dist) / maxDist) * 1.8 : 0;
 
       const targetX = active ? (dx / dist) * force * -45 : 0;
       const targetY = active ? (dy / dist) * force * -45 : 0;
