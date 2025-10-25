@@ -218,7 +218,7 @@ body.index-page {
 /* Responsivo */
 @media (max-width: 900px) {
   body.textbook figure.table {
-    width: 85%;
+    width: 75%;
   }
 }
 /* ===== Correções de legibilidade no mobile ===== */
