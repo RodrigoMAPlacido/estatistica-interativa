@@ -151,6 +151,7 @@ body.textbook .subtitle {
 body.textbook p {
   max-width: 780px;
   margin-bottom: 1.4rem;
+  text-align: justify;
   font-size: 1.13rem;
 }
 
