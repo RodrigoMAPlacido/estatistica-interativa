@@ -27,14 +27,24 @@
 <!-- Favicon -->
 <link rel="icon" type="image/svg+xml" href="{{ '/imagens/ei-logo.svg' | relative_url }}">
 
-<!-- CSS principal -->
+<!-- Escolha do layout CSS -->
+{% if page.use_tufte %}
+  <!-- Usando layout Tufte -->
+  <link rel="stylesheet" href="{{ '/kgjs/kg-tufte.0.4.0_ODE.css' | relative_url }}">
+{% else %}
+  <!-- Usando layout normal -->
+  <link rel="stylesheet" href="{{ '/kgjs/kg.0.4.0_ODE.css' | relative_url }}">
+{% endif %}
+
+<!-- CSS adicional para gráficos e animações (comum a todos) -->
+<link rel="stylesheet" href="{{ '/css/animations.css' | relative_url }}">
+
+<!-- CSS opcional específico de página -->
 {% if page.custom_css %}
   <link rel="stylesheet" href="{{ page.custom_css | relative_url }}">
-{% else %}
-  <link rel="stylesheet" href="{{ '/css/style.css' | relative_url }}">
+  {% else %}
+<link rel="stylesheet" href="{{ '/css/style.css' | relative_url }}">
 {% endif %}
-<link rel="stylesheet" href="{{ '/css/animations.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/kgjs/kg-tufte.0.4.0_ODE.css' | relative_url }}">
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {

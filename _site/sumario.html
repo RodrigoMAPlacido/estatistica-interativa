@@ -30,12 +30,19 @@
 <!-- Favicon -->
 <link rel="icon" type="image/svg+xml" href="/estatistica-interativa/imagens/ei-logo.svg">
 
-<!-- CSS principal -->
+<!-- Escolha do layout CSS -->
+
+  <!-- Usando layout Tufte -->
+  <link rel="stylesheet" href="/estatistica-interativa/kgjs/kg-tufte.0.4.0_ODE.css">
+
+
+<!-- CSS adicional para gráficos e animações (comum a todos) -->
+<link rel="stylesheet" href="/estatistica-interativa/css/animations.css">
+
+<!-- CSS opcional específico de página -->
 
   <link rel="stylesheet" href="/estatistica-interativa/css/sumario.css">
-
-<link rel="stylesheet" href="/estatistica-interativa/css/animations.css">
-<link rel="stylesheet" href="/estatistica-interativa/kgjs/kg-tufte.0.4.0_ODE.css">
+  
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
@@ -59,17 +66,7 @@
 <body class="sumario-page loading">
   
 
-  <!-- Fundo com equações -->
-<div class="bg-math" aria-hidden="true">
-  <div class="eq" style="top: 8%; left: 6%;">$$\bar{x}=\frac{1}{n}\sum_{i=1}^{n}x_i$$</div>
-  <div class="eq" style="top: 18%; right: 8%;">$$\sigma=\sqrt{\frac{\sum_{i=1}^{n}(x_i-\mu)^2}{n}}$$</div>
-  <div class="eq" style="top: 34%; left: 16%;">$$P(A\mid B)=\frac{P(A\cap B)}{P(B)}$$</div>
-  <div class="eq" style="top: 48%; right: 14%;">$$E(X)=\sum_{i} x_i p_i$$</div>
-  <div class="eq" style="bottom: 24%; left: 10%;">$$Z=\frac{X-\mu}{\sigma}$$</div>
-  <div class="eq" style="bottom: 10%; right: 12%;">$$Var(X)=E(X^2)-[E(X)]^2$$</div>
-</div>
-
-<!-- Conteúdo -->
+  <!-- Conteúdo -->
 <div class="content-wrapper">
   <h1>Sumário — Estatística Interativa</h1>
   <p class="intro">Navegue pelos capítulos deste livro interativo e explore a estatística de forma intuitiva.</p>
