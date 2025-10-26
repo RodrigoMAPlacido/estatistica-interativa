@@ -6,9 +6,7 @@
   --accentFg: #ffffff;
 }
 
-html, body {
-  height: 100%;
-}
+html, body { height: 100%; }
 
 /* ===== PÁGINA INICIAL (CAPA) ===== */
 body.index-page {
@@ -17,6 +15,10 @@ body.index-page {
   width: 100% !important;
   max-width: 100% !important;
   background-color: white !important;
+  overflow: hidden;          /* impede scroll vertical na capa */
+  height: 100vh;
+  touch-action: none;
+  overscroll-behavior: none;
 }
 
 .hero {
@@ -28,11 +30,7 @@ body.index-page {
   padding: 24px;
 }
 
-.card {
-  text-align: center;
-  padding: 40px 28px;
-  border-radius: 14px;
-}
+.card { text-align: center; padding: 40px 28px; border-radius: 14px; }
 
 .cta {
   display: inline-block;
@@ -44,11 +42,10 @@ body.index-page {
   font-weight: 700;
   transition: transform .12s ease, opacity .12s ease;
 }
-
 .cta:hover { transform: translateY(-1px); opacity: 0.95; }
 .cta:active { transform: translateY(0); opacity: 0.9; }
 
-/* Autor abaixo de título */
+/* Autor abaixo de título (pág. inicial) */
 .autor {
   font-size: 14px;
   color: #555;
@@ -73,42 +70,21 @@ body.index-page {
   font-size: 16px;
   font-family: Georgia, serif;
 }
-
-.nav-links a {
-  color: #333;
-  text-decoration: none;
-  padding: 6px 8px;
-  border-bottom: 1px solid transparent;
-}
-
-.nav-links a:hover {
-  border-bottom: 1px solid #000;
-}
-
+.nav-links a { color: #333; text-decoration: none; padding: 6px 8px; border-bottom: 1px solid transparent; }
+.nav-links a:hover { border-bottom: 1px solid #000; }
 .nav-links .anterior { flex: 1; text-align: left; }
-.nav-links .sumario { flex: 1; text-align: center; }
-.nav-links .proximo { flex: 1; text-align: right; }
+.nav-links .sumario  { flex: 1; text-align: center; }
+.nav-links .proximo  { flex: 1; text-align: right; }
 
-/* ===== CORREÇÃO DO KGJS ===== */
-.kg-slider-row, .param-row, .slider-row, .kg-slider {
-  white-space: nowrap !important;
-}
-.kg-container {
-  background-color: white !important;
-}
-.katex {
-  white-space: nowrap !important;
-}
-.kg-slider-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
+/* ===== KGJS / KaTeX (base) ===== */
+.kg-slider-row, .param-row, .slider-row, .kg-slider { white-space: nowrap !important; }
+.kg-container { background-color: white !important; }
+.katex { white-space: nowrap !important; } /* liberado no mobile */
+.kg-slider-row { display: flex; align-items: center; gap: 12px; }
 
 /* ===============================
    LAYOUT DO LIVRO (CAPÍTULOS)
    =============================== */
-
 body.textbook {
   max-width: 900px;
   margin: 0 auto;
@@ -127,7 +103,6 @@ body.textbook h1 {
   margin-bottom: 1.8rem;
   line-height: 1.2;
 }
-
 body.textbook h2 {
   font-size: 1.9rem;
   font-weight: 400;
@@ -162,76 +137,204 @@ body.textbook .newthought {
   letter-spacing: 0.03em;
 }
 
-/* ======== TABELAS AJUSTADAS ======== */
+/* ===== TABELAS (desktop centralizado, sem esticar) ===== */
 body.textbook figure.table {
-  display: table;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  display: block;
+  width: auto;
+  max-width: 780px;           /* igual aos parágrafos */
+  margin: 2rem auto;          /* centraliza a figura */
+  transform: translateX(-34px); /* ajuste fino do alinhamento à esquerda */
   text-align: center;
 }
-
 body.textbook figure.table table {
+  width: auto;                /* evita esticar */
+  margin: 0 auto;             /* centraliza a própria tabela */
+  display: inline-table;      /* encolhe para o conteúdo */
+  table-layout: auto;
+  font-size: 1.05rem;
   border-collapse: collapse;
-  font-size: 1.15rem;
+  min-width: 360px;
 }
-
-body.textbook figure.table th,
-body.textbook figure.table td {
-  padding: 6px 14px;
-  border-bottom: 1px solid #ddd;
-}
-
-body.textbook figure.table th {
-  border-bottom: 2px solid #555;
-  font-weight: bold;
-}
-
-body.textbook figure.table figcaption {
-  display: table-caption;
-  caption-side: bottom;
+body.textbook figure.table thead th {
+  font-weight: 700;
+  border-bottom: 2px solid #6b7280;
+  padding: 8px 10px;
   text-align: center;
-  margin-top: 8px;
-  font-style: italic;
-  float: none;
-  width: 100%;
+  white-space: normal;
 }
-/* Estado inicial: escondido antes de carregar (evita FOUC) */
-body.loading {
-  visibility: hidden;
-  opacity: 0;
+body.textbook figure.table tbody td {
+  border-bottom: 1px solid #e5e7eb;
+  padding: 7px 10px;
+  text-align: center;
+  white-space: nowrap;
 }
-body.ready {
-  visibility: visible;
-  opacity: 1;
-  transition: opacity 0.35s ease-in-out;
-}
-/* Desativa scroll apenas na página inicial */
-body.index-page {
-  overflow: hidden;
-  height: 100vh;        /* impede scroll vertical */
-  touch-action: none;   /* bloqueia arraste no mobile */
-  overscroll-behavior: none; /* elimina bounce-effect */
+body.textbook figure.table tbody tr:last-child td { border-bottom: 1px solid #e5e7eb; }
+body.textbook figure.table figcaption { display: block; margin-top: 8px; font-style: italic; text-align: center; }
+
+/* ===== Anti-FOUC ===== */
+body.loading { visibility: hidden; opacity: 0; }
+body.ready   { visibility: visible; opacity: 1; transition: opacity 0.35s ease-in-out; }
+
+/* ===== MOBILE (até 768px) ===== */
+@media (max-width: 768px) {
+  html { font-size: 14px; }
+  body.textbook {
+    max-width: 100%;
+    padding: 12px 10px;
+    line-height: 1.5;
+    background: #fff;
+  }
+
+  /* Títulos compactos */
+  body.textbook h1 { font-size: 2rem; line-height: 1.22; margin: 0 0 .8rem; }
+  body.textbook h2 { font-size: 1.5rem; line-height: 1.25; margin: 1.2rem 0 .6rem; }
+  body.textbook h3 { font-size: 1rem; margin: 1rem 0 .5rem; }
+
+  /* Parágrafos/listas */
+  body.textbook p { font-size: 0.96rem; margin-bottom: .8rem; text-justify: inter-word; hyphens: auto; }
+  body.textbook ul, body.textbook ol { font-size: 0.96rem; margin: 0 0 .8rem 16px; padding-left: 0; }
+  body.textbook li { margin-bottom: .35rem; text-align: justify; hyphens: auto; }
+
+  /* Imagens/SVG fluidos */
+  body.textbook img, body.textbook svg { max-width: 100%; height: auto; display: block; margin: .6rem auto; }
+
+  /* Tabelas no mobile: elegantes e sem esticar */
+  body.textbook figure.table {
+    width: 90%;
+    margin: 1rem auto;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    transform: none;          /* sem deslocar no mobile */
+    max-width: 100%;
+  }
+  body.textbook figure.table table { width: 100%; font-size: 0.92rem; min-width: 300px; }
+  body.textbook figure.table thead th { white-space: normal; padding: 6px 8px; border-bottom: 2px solid #6b7280; }
+  body.textbook figure.table tbody td { padding: 5px 8px; border-bottom: 1px solid #e5e7eb; white-space: nowrap; }
+  body.textbook figure.table figcaption { font-size: 0.88rem; margin-top: .4rem; }
 }
 
-/* Responsivo */
-@media (max-width: 900px) {
-  body.textbook figure.table {
-    width: 70%;
-  }
+/* ===== Refinamento editorial das tabelas ===== */
+body.textbook figure.table { margin-top: 1.6rem; margin-bottom: 2rem; }
+body.textbook figure.table figcaption { margin-top: 0.4rem; font-size: 0.95rem; color: #444; }
+
+/* ===== KaTeX — tamanhos maiores (fora e dentro do KG) ===== */
+/* Desktop */
+body.textbook .katex,
+body.textbook .kg-container .katex {
+  font-size: 1.12em !important;      /* inline */
 }
-/* ===== Correções de legibilidade no mobile ===== */
+body.textbook .katex-display,
+body.textbook .kg-container .katex-display {
+  font-size: 1.24em !important;      /* $$ display $$ */
+  margin: .8rem 0;
+}
+
+/* Mobile (ligeiramente menor para caber bem) */
 @media (max-width: 768px) {
-  html { font-size: 15px; }              /* base menor */
-  body.textbook {
-    padding-left: 14px;                  /* mais largura útil */
-    padding-right: 14px;
-    padding-top: 28px;                   /* opcional */
-    line-height: 1.6;
+  body.textbook .katex,
+  body.textbook .kg-container .katex {
+    font-size: 1.06em !important;
   }
-  body.textbook p {
-    font-size: 1rem;                     /* ~15–16px */
-    text-align: justify;
+  body.textbook .katex-display,
+  body.textbook .kg-container .katex-display {
+    font-size: 1.14em !important;
   }
 }
+
+/* Leves ajustes de frações/expoentes para não “estourar” */
+body.textbook .katex .mfrac,
+body.textbook .kg-container .katex .mfrac { font-size: 0.98em !important; }
+body.textbook .katex .msupsub,
+body.textbook .kg-container .katex .msupsub { font-size: 0.96em !important; }
+
+/* ===== KGJS — overrides fortes para MOBILE ===== */
+@media (max-width: 768px) {
+
+  /* Container confortável */
+  body.textbook .kg-container {
+    max-width: 100% !important;
+    margin: 0 -6px !important;
+    padding: 8px 6px !important;
+    background: #fff !important;
+    border-radius: 8px;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Mídias dentro do KG */
+  body.textbook .kg-container canvas,
+  body.textbook .kg-container svg,
+  body.textbook .kg-container img {
+    max-width: 100% !important;
+    width: 100% !important;
+    height: auto !important;
+    display: block !important;
+  }
+
+  /* Sliders podem quebrar linha */
+  body.textbook .kg-container .kg-slider-row,
+  body.textbook .kg-container .param-row,
+  body.textbook .kg-container .slider-row {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px 12px !important;
+    align-items: center !important;
+    white-space: normal !important; /* desfaz nowrap */
+  }
+  body.textbook .kg-container .kg-slider { min-width: 220px !important; flex: 1 1 100% !important; }
+  body.textbook .kg-container .kg-slider-row label,
+  body.textbook .kg-container .kg-slider-row .value,
+  body.textbook .kg-container .param-row label { font-size: 0.92rem !important; }
+}
+
+/* ===== KGJS – ajustes leves desktop ===== */
+@media (min-width: 769px) {
+  body.textbook .kg-container [style*="width:"] { max-width: 100% !important; }
+  body.textbook .kg-container { overflow-x: visible !important; }
+}
+
+/* ===== Zoom por bloco KG (robusto) ===== */
+/* Use no HTML: <figure class="kg-zoom" style="--kg-zoom-desktop:0.90; --kg-zoom-mobile:0.88"> */
+
+.kg-zoom .kg-container {
+  width: 100%;
+  /* Chrome/Edge/Safari (desktop) — funciona muito bem e não colapsa layout */
+  zoom: var(--kg-zoom-desktop, 0.92);
+}
+
+/* Mobile: normalmente não precisa de zoom. Se quiser, ative aqui. */
+@media (max-width: 768px) {
+  .kg-zoom .kg-container {
+    zoom: var(--kg-zoom-mobile, 1); /* 1 = sem zoom; ex.: 0.86 para “zoom out” */
+  }
+}
+
+/* Fallback para navegadores sem suporte a `zoom` (ex.: Firefox) */
+@supports not (zoom: 1) {
+  .kg-zoom .kg-container {
+    /* mantém o container ocupando espaço normal */
+    transform-origin: top left;
+  }
+
+  @media (min-width: 769px) {
+    .kg-zoom .kg-container > * {
+      transform: scale(var(--kg-scale-desktop, 0.92));
+      transform-origin: top left;
+      /* compensa a escala para não cortar conteúdo */
+      width: calc(100% / var(--kg-scale-desktop, 0.92)) !important;
+      display: inline-block;
+    }
+    .kg-zoom .kg-container { overflow: auto; }
+  }
+
+  @media (max-width: 768px) {
+    .kg-zoom .kg-container > * {
+      transform: scale(var(--kg-scale-mobile, 0.86));
+      transform-origin: top left;
+      width: calc(100% / var(--kg-scale-mobile, 0.86)) !important;
+      display: inline-block;
+    }
+    .kg-zoom .kg-container { overflow: auto; }
+  }
+}
+
