@@ -1,0 +1,99 @@
+<!-- imagens/populacao-amostra-animada.svg -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 360" width="820" height="360" role="img" aria-labelledby="title desc">
+  <title id="title">Amostra como subconjunto da população — fade in/out simultâneo em loop</title>
+  <desc id="desc">População em cinza; retângulo destaca a amostra; ícones da amostra ficam azuis com fade-in/out e pausa.</desc>
+
+  <style>
+    :root{
+      --pop-fill:#B8BEC6;
+      --pop-stroke:#8C939C;
+      --pop-bg:#F5F7FA;
+      --blue:#1F6FEB;
+      --text:#334155;
+      --cycle:5s;
+    }
+    text{font-family:Inter,Arial,Helvetica,sans-serif;letter-spacing:.15px}
+    .dot{ fill:var(--pop-fill); }
+
+    /* timeline: 0–20% in, 20–70% on, 70–90% out, 90–100% pausa */
+    @keyframes fadeWindow{ 0%{opacity:0} 20%{opacity:1} 70%{opacity:1} 90%{opacity:0} 100%{opacity:0} }
+    @keyframes sampleFill{ 0%{fill:var(--pop-fill)} 20%{fill:var(--blue)} 70%{fill:var(--blue)} 90%{fill:var(--pop-fill)} 100%{fill:var(--pop-fill)} }
+
+    .sampleRect{
+      opacity:0; fill:none; stroke:var(--blue); stroke-width:3; rx:18;
+      animation:fadeWindow var(--cycle) cubic-bezier(.2,.7,.2,1) infinite;
+    }
+    .sampleLabel{
+      opacity:0; fill:var(--blue);
+      animation:fadeWindow var(--cycle) ease infinite;
+    }
+    .dot.inSample{
+      animation:fadeWindow var(--cycle) ease infinite, sampleFill var(--cycle) linear infinite;
+    }
+
+    @media (prefers-reduced-motion:reduce){
+      .sampleRect,.sampleLabel,.dot.inSample{animation:none!important}
+      .sampleRect,.sampleLabel{opacity:1}
+      .dot.inSample{opacity:1;fill:var(--blue)}
+    }
+  </style>
+
+  <!-- ===== ÍCONES (busto) ===== -->
+  <defs>
+    <g id="busto-base">
+      <circle cx="0" cy="-3" r="5"/>
+      <path d="M -8,4 Q 0,0 8,4 L 8,8 Q 0,10 -8,8 Z"/>
+    </g>
+    <g id="busto-cabelo">
+      <use href="#busto-base"/>
+      <path d="M -6,-6 Q 0,-10 6,-6 L 6,-5 Q 0,-8 -6,-5 Z"/>
+    </g>
+    <g id="busto-careca">
+      <use href="#busto-base"/>
+      <path d="M -3,-9 Q 0,-10 3,-9" fill="none"/>
+    </g>
+  </defs>
+
+  <!-- Contêiner da População -->
+  <rect x="40" y="60" width="740" height="240" rx="22" fill="var(--pop-bg)" stroke="var(--pop-stroke)" stroke-width="2"/>
+  <text x="60" y="92" font-size="24" fill="var(--text)">População</text>
+
+  <!-- População (mesmas posições; scale está no g interno) -->
+  <g>
+    <g transform="translate(120,180)"><g transform="scale(1.7)"><use class="dot" href="#busto-cabelo"/></g></g>
+    <g transform="translate(170,130)"><g transform="scale(1.7)"><use class="dot" href="#busto-careca"/></g></g>
+    <g transform="translate(205,210)"><g transform="scale(1.7)"><use class="dot" href="#busto-cabelo"/></g></g>
+    <g transform="translate(265,165)"><g transform="scale(1.7)"><use class="dot" href="#busto-careca"/></g></g>
+    <g transform="translate(315,115)"><g transform="scale(1.7)"><use class="dot" href="#busto-cabelo"/></g></g>
+    <g transform="translate(365,235)"><g transform="scale(1.7)"><use class="dot" href="#busto-careca"/></g></g>
+    <g transform="translate(420,150)"><g transform="scale(1.7)"><use class="dot" href="#busto-cabelo"/></g></g>
+    <g transform="translate(470,205)"><g transform="scale(1.7)"><use class="dot" href="#busto-careca"/></g></g>
+    <g transform="translate(490,190)"><g transform="scale(1.7)"><use class="dot" href="#busto-cabelo"/></g></g>
+    <g transform="translate(525,120)"><g transform="scale(1.7)"><use class="dot" href="#busto-careca"/></g></g>
+    <g transform="translate(535,160)"><g transform="scale(1.7)"><use class="dot" href="#busto-cabelo"/></g></g>
+    <g transform="translate(575,205)"><g transform="scale(1.7)"><use class="dot" href="#busto-careca"/></g></g>
+    <g transform="translate(575,245)"><g transform="scale(1.7)"><use class="dot" href="#busto-cabelo"/></g></g>
+    <g transform="translate(620,175)"><g transform="scale(1.7)"><use class="dot" href="#busto-careca"/></g></g>
+    <g transform="translate(630,170)"><g transform="scale(1.7)"><use class="dot" href="#busto-cabelo"/></g></g>
+    <g transform="translate(660,220)"><g transform="scale(1.7)"><use class="dot" href="#busto-careca"/></g></g>
+    <g transform="translate(690,210)"><g transform="scale(1.7)"><use class="dot" href="#busto-cabelo"/></g></g>
+  </g>
+
+  <!-- Amostra -->
+  <rect class="sampleRect" x="450" y="90" width="260" height="180"/>
+  <text class="sampleLabel" x="580" y="118" font-size="22">Amostra</text>
+
+  <!-- Seleção (mesmas posições; scale no g interno) -->
+  <g>
+    <g transform="translate(470,205)"><g transform="scale(1.7)"><use class="dot inSample" href="#busto-careca"/></g></g>
+    <g transform="translate(490,190)"><g transform="scale(1.7)"><use class="dot inSample" href="#busto-cabelo"/></g></g>
+    <g transform="translate(525,120)"><g transform="scale(1.7)"><use class="dot inSample" href="#busto-careca"/></g></g>
+    <g transform="translate(535,160)"><g transform="scale(1.7)"><use class="dot inSample" href="#busto-cabelo"/></g></g>
+    <g transform="translate(575,205)"><g transform="scale(1.7)"><use class="dot inSample" href="#busto-careca"/></g></g>
+    <g transform="translate(575,245)"><g transform="scale(1.7)"><use class="dot inSample" href="#busto-cabelo"/></g></g>
+    <g transform="translate(620,175)"><g transform="scale(1.7)"><use class="dot inSample" href="#busto-careca"/></g></g>
+    <g transform="translate(630,170)"><g transform="scale(1.7)"><use class="dot inSample" href="#busto-cabelo"/></g></g>
+    <g transform="translate(660,220)"><g transform="scale(1.7)"><use class="dot inSample" href="#busto-careca"/></g></g>
+    <g transform="translate(690,210)"><g transform="scale(1.7)"><use class="dot inSample" href="#busto-cabelo"/></g></g>
+  </g>
+</svg>

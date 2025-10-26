@@ -41,7 +41,7 @@ proximo: /capitulos/cap2-distribuicoes-de-frequencia-e-graficos/
   A estatística é frequentemente associada a cálculos e representações numéricas, mas sua base não é aritmética:
   ela repousa sobre conceitos fundamentais que permitem transformar observações do mundo real em informação útil.
   Antes de distinguir métodos ou técnicas, é necessário esclarecer os elementos que constituem o objeto de estudo
-  desta disciplina: <strong>dados, variáveis, unidades de observação, população, amostra, parâmetros e estatísticas</strong>.
+  desta disciplina: <strong>dados, população, amostra, parâmetros e estatísticas</strong>.
   Esses conceitos estruturam o raciocínio estatístico e são indispensáveis para compreender como se formulam conclusões
   a partir de informações empíricas.
 </p>
@@ -54,80 +54,95 @@ proximo: /capitulos/cap2-distribuicoes-de-frequencia-e-graficos/
   de investigação. Assim, a estatística não trabalha com números por si mesmos, mas com representações numéricas de
   fenômenos observáveis.
 </p>
+
 <p>
-  Formalmente, dados consistem em coleções de observações, tais como contagens, medições, classificações ou respostas de pesquisas.
+  Formalmente, dados consistem em coleções de observações, tais como contagens, medições, classificações ou respostas
+  de pesquisas. A tabela a seguir apresenta um exemplo simples de dados obtidos por medição: o registro da temperatura ao
+  longo de um dia em determinada cidade.
 </p>
 
 <figure class="table" style="width: 38%;">
   <table>
     <thead>
       <tr>
-        <th>Estudante</th>
-        <th>Horas de estudo (h)</th>
+        <th>Horário (h)</th>
+        <th>Temperatura (ºC)</th>
       </tr>
     </thead>
     <tbody>
-      <tr><td>1</td><td>2</td></tr>
-      <tr><td>2</td><td>4</td></tr>
-      <tr><td>3</td><td>1</td></tr>
-      <tr><td>4</td><td>3</td></tr>
-      <tr><td>5</td><td>2</td></tr>
-      <tr><td>6</td><td>5</td></tr>
-      <tr><td>7</td><td>2</td></tr>
+      <tr><td>7:00</td><td>18</td></tr>
+      <tr><td>9:00</td><td>20</td></tr>
+      <tr><td>12:00</td><td>25</td></tr>
+      <tr><td>15:00</td><td>27</td></tr>
+      <tr><td>18:00</td><td>22</td></tr>
+      <tr><td>21:00</td><td>19</td></tr>
     </tbody>
   </table>
-  <figcaption style=" white-space: nowrap; display: block;">
-    Tabela 1. Horas de estudo observadas
+  <figcaption style="white-space: nowrap; display: block; text-align:center;">
+    Tabela 1. Temperaturas registradas ao longo do dia
   </figcaption>
 </figure>
 
 <p>
-  Esses valores formam um conjunto de <strong>dados brutos</strong>, pois cada número representa
-  uma <strong>observação</strong> coletada sobre o fenômeno de interesse: no caso acima, tempo dedicado ao estudo
-  diário por cada estudante.
+  Cada valor na tabela é uma observação produzida pela medição de um fenômeno: a temperatura do ar em diferentes horários.
+  Conjuntos como esse representam o ponto de partida de uma análise estatística. Antes de qualquer tratamento, organização
+  ou cálculo, essas observações são simplesmente valores coletados — o que chamaremos mais adiante de <em>dados brutos</em>.
+  A partir deles, a análise estatística buscará resumir informações, identificar padrões e responder perguntas de interesse,
+  como: <em>em que período do dia fez mais calor? ou qual foi a temperatura média desse dia?</em>
+</p>
+<p>
+  Entretanto, na maioria das situações, os dados coletados não representam todos os elementos possíveis de interesse, mas
+  apenas uma parte deles. Para compreender de onde os dados vêm e o alcance das conclusões que podemos tirar a partir deles,
+  é necessário introduzir mais dois conceitos: <strong>população</strong> e <strong>amostra</strong>.
 </p>
 
-<h3>2.2 Unidade estatística e variável</h3>
+<h3>2.2 População e amostra</h3>
+
 <p>
-  <strong>Unidade estatística</strong> (ou unidade de observação) é o elemento individual sobre o qual os dados
-  são coletados. Pode ser uma pessoa, uma empresa, um país, um experimento, uma célula biológica ou qualquer entidade
-  definida pela questão de estudo. Cada unidade estatística é observada em relação a uma ou mais características,
-  chamadas <strong>variáveis</strong>.
-</p>
-<p>
-  Uma <strong>variável</strong> é qualquer atributo que pode assumir diferentes valores entre as unidades observadas.
-  Exemplos incluem idade, renda, pressão arterial, nível de escolaridade ou tempo de reação em um estudo experimental.
-  O conceito de variável é essencial, pois é sobre ela que se realiza a análise estatística: descrevê-la, compará-la,
-  modelá-la e, eventualmente, explicar suas variações.
+Em estatística, chama-se <strong>população</strong> o conjunto completo de elementos sobre os quais se deseja obter informação. A natureza dessa população depende do contexto da investigação: pode ser formada por pessoas, empresas, medições físicas, resultados de testes ou qualquer outro tipo de unidade observável relevante para o estudo.
 </p>
 
-<h3>2.3 População e amostra</h3>
 <p>
-  <strong>População</strong> é o conjunto completo de unidades estatísticas sobre as quais se deseja obter conhecimento.
-  Em muitos casos, esse conjunto é grande demais para ser observado integralmente, ou sua observação é inviável por razões
-  de custo, tempo ou acesso. Por isso, em estatística, é comum trabalhar com uma <strong>amostra</strong>, ou seja,
-  um subconjunto da população selecionado segundo algum critério definido.
+Na prática, entretanto, raramente é possível observar toda a população. Em muitos casos, ela é demasiado extensa, dispersa ou de acesso limitado. Por essa razão, trabalha-se frequentemente com uma <strong>amostra</strong>, isto é, um subconjunto da população selecionado para fins de estudo. O objetivo é que essa amostra represente adequadamente a população, preservando suas características essenciais.
 </p>
-<p>
-  O objetivo da análise estatística não é apenas descrever a amostra, mas utilizar a informação nela contida para dizer
-  algo sobre a população como um todo. Essa passagem de parte para o todo caracteriza o problema central da inferência
-  estatística.
+<p style="text-align:center;">
+  <img src="../../imagens/populacao-amostra.svg" width="85%" alt="Representação de população e amostra">
+</p>
+<p style="text-align:center; font-size:13px;">
+  <em>Figura 1. A amostra como subconjunto da população</em>
 </p>
 
-<h3>2.4 Parâmetro e estatística</h3>
 <p>
-  <strong>Parâmetros</strong> são medidas que descrevem características da população, como a média real de uma variável,
-  sua variância ou proporção. Como geralmente não é possível observar toda a população, os parâmetros são, em regra,
-  desconhecidos. Para estimá-los, calculam-se medidas correspondentes na amostra, chamadas <strong>estatísticas</strong>.
-  Exemplos incluem a média amostral, a proporção amostral e o desvio padrão amostral.
-</p>
-<p>
-  Assim, estatísticas são ferramentas de aproximação para parâmetros. Elas sintetizam a informação disponível na amostra
-  e servem como base para conclusões sobre a população. A precisão dessa aproximação depende da forma como a amostra
-  foi obtida e da variabilidade presente nos dados.
+A distinção entre população e amostra é fundamental porque determina o alcance das conclusões que podem ser obtidas a partir de um conjunto de dados. A partir da amostra, extraem-se medidas que descrevem os dados observados e, através de técnicas <strong>estatísticas</strong>, essas medidas podem ser utilizadas como aproximações das características reais — ou <strong>parâmetros</strong> — da população.  
 </p>
 
-<h3>2.5 Variabilidade e incerteza</h3>
+<h3>2.3 Parâmetro e estatística</h3>
+
+<p>
+Ao estudar uma população, frequentemente buscamos quantificar alguma de suas características, como o valor médio, a variabilidade ou a proporção de indivíduos com determinado atributo. Quando essa medida descreve a <strong>totalidade</strong> da população, ela recebe o nome de <strong>parâmetro</strong>. O parâmetro representa uma característica verdadeira do conjunto completo, mas, na prática, raramente é conhecido, pois sua obtenção exigiria observar todos os elementos da população.
+</p>
+
+<p>
+A <strong>Figura 2</strong> ilustra essa ideia de forma simples. Considere que a população representada é composta por dois tipos de indivíduos: alguns têm cabelo e outros são carecas. Suponha que o objetivo seja descobrir <strong>qual é a proporção de indivíduos carecas na população</strong>. Esse valor corresponde a um <strong>parâmetro populacional</strong>, pois descreve uma característica real da população. No entanto, como seria inviável contar todos os indivíduos, recorremos a uma <strong>amostra</strong> — um subconjunto da população — para coletar dados e fazer uma estimativa.
+</p>
+
+<p>
+A medida calculada com base nos <em>dados observados</em> na amostra recebe o nome de <strong>estatística</strong>. No exemplo da Figura 2, essa estatística seria a proporção de indivíduos carecas na amostra. Note que, diferentemente do parâmetro, que é fixo (embora desconhecido), a estatística pode variar conforme a amostra escolhida, pois depende apenas dos elementos que foram selecionados para compô-la.
+</p>
+
+<p style="text-align:center;">
+  <img src="../../imagens/parametro-estatistica.svg" width="85%" alt="Parâmetro e Estatística">
+</p>
+<p style="text-align:center; font-size:13px;">
+  <em>Figura 2. Exemplo de relação entre população, amostra, parâmetro e estatística</em>
+</p>
+
+<p>
+Assim, enquanto os <strong>parâmetros</strong> descrevem características verdadeiras da população, as <strong>estatísticas</strong> constituem aproximações empíricas baseadas em amostras. Essa distinção é fundamental, pois estabelece o elo entre a informação disponível — proveniente da amostra — e o objetivo final de uma análise estatística: compreender a população. Com essa base conceitual, podemos avançar para a etapa de organização e descrição dos dados.
+</p>
+
+
+<h3>2.4 Variabilidade e incerteza</h3>
 <p>
   A variabilidade é um traço essencial dos fenômenos empíricos: observações repetidas raramente produzem resultados
   idênticos. Essa variação pode decorrer de diferenças naturais entre unidades observadas, de imprecisões de mensuração
@@ -381,9 +396,6 @@ proximo: /capitulos/cap2-distribuicoes-de-frequencia-e-graficos/
 </p>
 <p>
   TRIOLA, Mario F. <strong>Introdução à estatística</strong>. 12. ed. Tradução e revisão técnica Ana Maria Lima de Farias, Vera Regina Lima de Farias e Flores. Rio de Janeiro: LTC — Livros Técnicos e Científicos Editora, 2017.
-</p>
-<p>
-  HEUMANN, Christian; SCHOMAKER, Michael; SHALABH. Introduction to Statistics and Data Analysis: With Exercises, Solutions and Applications in R. 2. ed. Cham: Springer Nature Switzerland AG, 2022
 </p>
 <p>
   MOOD, Alexander McFarlane; GRAYBILL, Franklin A.; BOES, Duane C. Introduction to the theory of statistics. New York: McGraw-Hill, 1974.

@@ -1,0 +1,123 @@
+<!-- imagens/populacao-amostra-animada.svg -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 360" width="820" height="360" role="img" aria-labelledby="title desc">
+  <title id="title">Amostra como subconjunto da população — fade in/out simultâneo em loop</title>
+  <desc id="desc">
+    População em cinza sempre visível. Retângulo da amostra (contorno), rótulo "Amostra" e os pontos selecionados
+    aparecem juntos com fade-in, permanecem visíveis, somem com fade-out e aguardam 1s. Loop contínuo.
+  </desc>
+
+  <style>
+    :root{
+      --pop-fill:#B8BEC6;
+      --pop-stroke:#8C939C;
+      --pop-bg:#F5F7FA;
+      --blue:#1F6FEB;
+      --text:#334155;
+      --cycle:5s; 
+    }
+    text{font-family:Inter,Arial,Helvetica,sans-serif;letter-spacing:.15px}
+
+    /* População base (sempre visível em cinza) */
+    .dot{ fill:var(--pop-fill); }
+
+    /* Janela de visibilidade sincronizada (fade-in/out simultâneo) 
+       0–20%  : fade-in (2s)
+       20–70% : visível (5s)
+       70–90% : fade-out (2s)
+       90–100%: pausa invisível (1s)
+    */
+    @keyframes fadeWindow{
+      0%   { opacity:0 }
+      20%  { opacity:1 }
+      70%  { opacity:1 }
+      90%  { opacity:0 }
+      100% { opacity:0 }
+    }
+
+    /* Cor dos pontos amostrados muda sincronizada à janela:
+       cinza → azul (durante visível) → cinza
+    */
+    @keyframes sampleFill{
+      0%   { fill:var(--pop-fill) }
+      20%  { fill:var(--blue) }
+      70%  { fill:var(--blue) }
+      90%  { fill:var(--pop-fill) }
+      100% { fill:var(--pop-fill) }
+    }
+
+    /* Aplicações das animações */
+    .sampleRect{
+      opacity:0;
+      fill:none;
+      stroke:var(--blue);
+      stroke-width:3;
+      rx:18;
+      animation:fadeWindow var(--cycle) cubic-bezier(.2,.7,.2,1) infinite;
+    }
+    .sampleLabel{
+      opacity:0;
+      fill:var(--blue);
+      animation:fadeWindow var(--cycle) ease infinite;
+    }
+    .dot.inSample{
+      animation:
+        fadeWindow var(--cycle) ease infinite,     /* opacidade dos pontos amostrados */
+        sampleFill var(--cycle) linear infinite;   /* transição de cor cinza ↔ azul */
+      /* opcional: leve escala no in/out para suavidade extra */
+      transform-origin:center;
+    }
+
+    /* Acessibilidade: reduz movimento */
+    @media (prefers-reduced-motion:reduce){
+      .sampleRect,.sampleLabel,.dot.inSample{animation:none!important}
+      .sampleRect{opacity:1}
+      .sampleLabel{opacity:1}
+      .dot.inSample{opacity:1; fill:var(--blue)}
+    }
+  </style>
+
+  <!-- Contêiner da População (sempre visível) -->
+  <rect x="40" y="60" width="740" height="240" rx="22" fill="var(--pop-bg)" stroke="var(--pop-stroke)" stroke-width="2"/>
+  <text x="60" y="92" font-size="24" fill="var(--text)">População</text>
+
+  <!-- Pontos da população (sempre visíveis em cinza) -->
+  <g>
+    <circle class="dot" cx="120" cy="180" r="9"/>
+    <circle class="dot" cx="170" cy="130" r="9"/>
+    <circle class="dot" cx="205" cy="210" r="9"/>
+    <circle class="dot" cx="265" cy="165" r="9"/>
+    <circle class="dot" cx="315" cy="115" r="9"/>
+    <circle class="dot" cx="365" cy="235" r="9"/>
+    <circle class="dot" cx="420" cy="150" r="9"/>
+    <circle class="dot" cx="470" cy="205" r="9"/>
+    <circle class="dot" cx="490" cy="190" r="9"/>
+    <circle class="dot" cx="525" cy="120" r="9"/>
+    <circle class="dot" cx="535" cy="160" r="9"/>
+    <circle class="dot" cx="575" cy="205" r="9"/>
+    <circle class="dot" cx="575" cy="245" r="9"/>
+    <circle class="dot" cx="620" cy="175" r="9"/>
+    <circle class="dot" cx="630" cy="170" r="9"/>
+    <circle class="dot" cx="660" cy="220" r="9"/>
+    <circle class="dot" cx="690" cy="210" r="9"/>
+  </g>
+
+  <!-- Retângulo da Amostra (um pouco maior; fundo transparente) -->
+  <rect class="sampleRect" x="450" y="90" width="260" height="180"/>
+
+  <!-- Rótulo da amostra (sincronizado) -->
+  <text class="sampleLabel" x="580" y="118" font-size="22">Amostra</text>
+
+  <!-- Mesmos pontos marcados como "amostra" para ganhar fade + mudança de cor -->
+  <g>
+    <circle class="dot inSample" cx="470" cy="205" r="9"/>
+    <circle class="dot inSample" cx="490" cy="190" r="9"/>
+    <circle class="dot inSample" cx="525" cy="120" r="9"/>
+    <circle class="dot inSample" cx="535" cy="160" r="9"/>
+    <circle class="dot inSample" cx="575" cy="205" r="9"/>
+    <circle class="dot inSample" cx="575" cy="245" r="9"/>
+    <circle class="dot inSample" cx="620" cy="175" r="9"/>
+    <circle class="dot inSample" cx="630" cy="170" r="9"/>
+    <circle class="dot inSample" cx="660" cy="220" r="9"/>
+    <circle class="dot inSample" cx="690" cy="210" r="9"/>
+  </g>
+</svg>
