@@ -1,5 +1,5 @@
 <!-- imagens/populacao-amostra-animada.svg -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 360" width="820" height="360" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 360" width="820" height="360" role="img" aria-labelledby="title desc" style="background:#ffffff">
   <title id="title">Amostra como subconjunto da população — fade in/out simultâneo em loop</title>
   <desc id="desc">
     População em cinza sempre visível. Retângulo da amostra (contorno), rótulo "Amostra" e os pontos selecionados
@@ -10,22 +10,20 @@
     :root{
       --pop-fill:#B8BEC6;
       --pop-stroke:#8C939C;
-      --pop-bg:#F5F7FA;
-      --blue:#1F6FEB;
+      --pop-bg:#FFFFFF;    /* fundo do painel em branco */
+      --blue:#000000;      /* cor da amostra agora em PRETO */
       --text:#334155;
       --cycle:5s; 
     }
-    text{font-family:Inter,Arial,Helvetica,sans-serif;letter-spacing:.15px}
+
+    /* Fonte do site aplicada globalmente ao SVG */
+    svg{ font-family:"et-book","Etbook Sans","EB Garamond",Georgia,serif; color:var(--text); }
+    text{  font-weight:700; letter-spacing:.13px }
 
     /* População base (sempre visível em cinza) */
     .dot{ fill:var(--pop-fill); }
 
-    /* Janela de visibilidade sincronizada (fade-in/out simultâneo) 
-       0–20%  : fade-in (2s)
-       20–70% : visível (5s)
-       70–90% : fade-out (2s)
-       90–100%: pausa invisível (1s)
-    */
+    /* Janela de visibilidade sincronizada (fade-in/out simultâneo)  */
     @keyframes fadeWindow{
       0%   { opacity:0 }
       20%  { opacity:1 }
@@ -34,12 +32,10 @@
       100% { opacity:0 }
     }
 
-    /* Cor dos pontos amostrados muda sincronizada à janela:
-       cinza → azul (durante visível) → cinza
-    */
+    /* Cor dos pontos amostrados muda para PRETO durante a janela */
     @keyframes sampleFill{
       0%   { fill:var(--pop-fill) }
-      20%  { fill:var(--blue) }
+      20%  { fill:var(--blue) }   /* preto */
       70%  { fill:var(--blue) }
       90%  { fill:var(--pop-fill) }
       100% { fill:var(--pop-fill) }
@@ -49,21 +45,20 @@
     .sampleRect{
       opacity:0;
       fill:none;
-      stroke:var(--blue);
+      stroke:var(--blue);         /* preto */
       stroke-width:3;
       rx:18;
       animation:fadeWindow var(--cycle) cubic-bezier(.2,.7,.2,1) infinite;
     }
     .sampleLabel{
       opacity:0;
-      fill:var(--blue);
+      fill:var(--blue);           /* preto */
       animation:fadeWindow var(--cycle) ease infinite;
     }
     .dot.inSample{
       animation:
         fadeWindow var(--cycle) ease infinite,     /* opacidade dos pontos amostrados */
-        sampleFill var(--cycle) linear infinite;   /* transição de cor cinza ↔ azul */
-      /* opcional: leve escala no in/out para suavidade extra */
+        sampleFill var(--cycle) linear infinite;   /* transição cinza ↔ PRETO */
       transform-origin:center;
     }
 
@@ -72,9 +67,10 @@
       .sampleRect,.sampleLabel,.dot.inSample{animation:none!important}
       .sampleRect{opacity:1}
       .sampleLabel{opacity:1}
-      .dot.inSample{opacity:1; fill:var(--blue)}
+      .dot.inSample{opacity:1; fill:var(--blue)}   /* preto estático */
     }
   </style>
+
 
   <!-- Contêiner da População (sempre visível) -->
   <rect x="40" y="60" width="740" height="240" rx="22" fill="var(--pop-bg)" stroke="var(--pop-stroke)" stroke-width="2"/>
@@ -101,13 +97,13 @@
     <circle class="dot" cx="690" cy="210" r="9"/>
   </g>
 
-  <!-- Retângulo da Amostra (um pouco maior; fundo transparente) -->
+  <!-- Retângulo da Amostra (preto; fundo transparente) -->
   <rect class="sampleRect" x="450" y="90" width="260" height="180"/>
 
-  <!-- Rótulo da amostra (sincronizado) -->
+  <!-- Rótulo da amostra (preto) -->
   <text class="sampleLabel" x="580" y="118" font-size="22">Amostra</text>
 
-  <!-- Mesmos pontos marcados como "amostra" para ganhar fade + mudança de cor -->
+  <!-- Pontos da amostra (ficam pretos na janela) -->
   <g>
     <circle class="dot inSample" cx="470" cy="205" r="9"/>
     <circle class="dot inSample" cx="490" cy="190" r="9"/>

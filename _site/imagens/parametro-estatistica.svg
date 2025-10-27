@@ -1,42 +1,58 @@
 <!-- imagens/populacao-amostra-animada.svg -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 360" width="820" height="360" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 360" width="820" height="360" role="img" aria-labelledby="title desc" style="background:#ffffff">
   <title id="title">Amostra como subconjunto da população — fade in/out simultâneo em loop</title>
-  <desc id="desc">População em cinza; retângulo destaca a amostra; ícones da amostra ficam azuis com fade-in/out e pausa.</desc>
+  <desc id="desc">População em cinza; retângulo destaca a amostra; ícones da amostra ficam PRETOS com fade-in/out e pausa.</desc>
 
   <style>
     :root{
       --pop-fill:#B8BEC6;
       --pop-stroke:#8C939C;
-      --pop-bg:#F5F7FA;
-      --blue:#1F6FEB;
+      --pop-bg:#FFFFFF;   /* painel branco */
+      --ink:#000000;      /* cor da amostra (preto) */
       --text:#334155;
       --cycle:5s;
     }
-    text{font-family:Inter,Arial,Helvetica,sans-serif;letter-spacing:.15px}
+
+    /* Fonte do site aplicada globalmente */
+    svg{ font-family:"et-book","Etbook Sans","EB Garamond",Georgia,serif; color:var(--text); font-synthesis:weight; }
+    text{ letter-spacing:.15px }
+    .bold{ font-weight:700; }
+
+    /* População base (sempre visível em cinza) */
     .dot{ fill:var(--pop-fill); }
 
     /* timeline: 0–20% in, 20–70% on, 70–90% out, 90–100% pausa */
-    @keyframes fadeWindow{ 0%{opacity:0} 20%{opacity:1} 70%{opacity:1} 90%{opacity:0} 100%{opacity:0} }
-    @keyframes sampleFill{ 0%{fill:var(--pop-fill)} 20%{fill:var(--blue)} 70%{fill:var(--blue)} 90%{fill:var(--pop-fill)} 100%{fill:var(--pop-fill)} }
+    @keyframes fadeWindow{
+      0%{opacity:0} 20%{opacity:1} 70%{opacity:1} 90%{opacity:0} 100%{opacity:0}
+    }
+    /* Cor dos ícones da amostra muda para PRETO durante a janela */
+    @keyframes sampleFill{
+      0%{fill:var(--pop-fill)} 20%{fill:var(--ink)} 70%{fill:var(--ink)} 90%{fill:var(--pop-fill)} 100%{fill:var(--pop-fill)}
+    }
 
     .sampleRect{
-      opacity:0; fill:none; stroke:var(--blue); stroke-width:3; rx:18;
+      opacity:0; fill:none; stroke:var(--ink); stroke-width:3; rx:18;
       animation:fadeWindow var(--cycle) cubic-bezier(.2,.7,.2,1) infinite;
     }
     .sampleLabel{
-      opacity:0; fill:var(--blue);
+      opacity:0; fill:var(--ink);
       animation:fadeWindow var(--cycle) ease infinite;
     }
     .dot.inSample{
       animation:fadeWindow var(--cycle) ease infinite, sampleFill var(--cycle) linear infinite;
+      transform-origin:center;
     }
 
+    /* Acessibilidade: reduz movimento */
     @media (prefers-reduced-motion:reduce){
       .sampleRect,.sampleLabel,.dot.inSample{animation:none!important}
       .sampleRect,.sampleLabel{opacity:1}
-      .dot.inSample{opacity:1;fill:var(--blue)}
+      .dot.inSample{opacity:1; fill:var(--ink)}
     }
   </style>
+
+  <!-- Fundo total para exportar com branco -->
+  <rect x="0" y="0" width="100%" height="100%" fill="#ffffff"/>
 
   <!-- ===== ÍCONES (busto) ===== -->
   <defs>
@@ -56,7 +72,7 @@
 
   <!-- Contêiner da População -->
   <rect x="40" y="60" width="740" height="240" rx="22" fill="var(--pop-bg)" stroke="var(--pop-stroke)" stroke-width="2"/>
-  <text x="60" y="92" font-size="24" fill="var(--text)">População</text>
+  <text class="bold" x="60" y="92" font-size="24" fill="var(--text)">População</text>
 
   <!-- População (mesmas posições; scale está no g interno) -->
   <g>
@@ -81,7 +97,7 @@
 
   <!-- Amostra -->
   <rect class="sampleRect" x="450" y="90" width="260" height="180"/>
-  <text class="sampleLabel" x="580" y="118" font-size="22">Amostra</text>
+  <text class="sampleLabel bold" x="580" y="118" font-size="22">Amostra</text>
 
   <!-- Seleção (mesmas posições; scale no g interno) -->
   <g>
