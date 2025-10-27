@@ -1,4 +1,9 @@
-﻿/* ========== Variáveis Globais ========== */
+﻿/* =========================================================
+   ESTATÍSTICA INTERATIVA — CSS PRINCIPAL (limpo e separado)
+   Obs.: Deixe o CSS do KG/KaTeX em arquivo à parte.
+   ========================================================= */
+
+/* ========== Variáveis Globais ========== */
 :root {
   --fg: #111827;
   --muted: #4b5563;
@@ -11,22 +16,23 @@
   --border-medium: #6b7280;
 }
 
-/* ========== Base Layout ========== */
+/* ========== Base/Reset mínimo ========== */
 html, body { height: 100%; }
+body.loading { visibility: hidden; opacity: 0; }
+body.ready   { visibility: visible; opacity: 1; transition: opacity .35s ease-in-out; }
 
-/* Página Inicial */
+/* ========== Página Inicial (Index) ========== */
 body.index-page {
   padding-left: 0;
   margin-left: 0;
   width: 100%;
   max-width: 100%;
-  background-color: white;
-  overflow: hidden;
+  background: #fff;
+  overflow: hidden;          /* capa sem scroll */
   height: 100vh;
   touch-action: none;
   overscroll-behavior: none;
 }
-
 .hero {
   position: relative;
   z-index: 1;
@@ -35,13 +41,7 @@ body.index-page {
   place-items: center;
   padding: 24px;
 }
-
-.card {
-  text-align: center;
-  padding: 40px 28px;
-  border-radius: 14px;
-}
-
+.card { text-align: center; padding: 40px 28px; border-radius: 14px; }
 .cta {
   display: inline-block;
   padding: 12px 18px;
@@ -52,9 +52,8 @@ body.index-page {
   font-weight: 700;
   transition: transform .12s ease, opacity .12s ease;
 }
-.cta:hover { transform: translateY(-1px); opacity: 0.95; }
-.cta:active { transform: translateY(0); opacity: 0.9; }
-
+.cta:hover { transform: translateY(-1px); opacity: .95; }
+.cta:active { transform: translateY(0); opacity: .9; }
 .autor {
   font-size: 14px;
   color: #555;
@@ -67,15 +66,13 @@ body.index-page {
 
 /* ========== Navegação Entre Capítulos ========== */
 .nav-links {
-  margin-top: 60px;
+  margin: 60px auto 0;
   padding-top: 25px;
   border-top: 1px solid #bfbfbf;
   display: flex;
   justify-content: space-between;
   align-items: center;
   max-width: var(--max-width);
-  margin-left: auto;
-  margin-right: auto;
   font-size: 16px;
   font-family: Georgia, serif;
 }
@@ -85,22 +82,10 @@ body.index-page {
   padding: 6px 8px;
   border-bottom: 1px solid transparent;
 }
-.nav-links a:hover { border-bottom: 1px solid #000; }
+.nav-links a:hover { border-bottom-color: #000; }
 .nav-links .anterior { flex: 1; text-align: left; }
-.nav-links .sumario { flex: 1; text-align: center; }
-.nav-links .proximo { flex: 1; text-align: right; }
-
-/* ========== KaTeX/KGJS Base ========== */
-.kg-slider-row,
-.param-row,
-.slider-row,
-.kg-slider,
-.katex {
-  white-space: nowrap;
-}
-
-.kg-container { background-color: white; }
-.kg-slider-row { display: flex; align-items: center; gap: 12px; }
+.nav-links .sumario  { flex: 1; text-align: center; }
+.nav-links .proximo  { flex: 1; text-align: right; }
 
 /* ========== Layout do Livro (Capítulos) ========== */
 body.textbook {
@@ -108,7 +93,7 @@ body.textbook {
   margin: 0 auto;
   padding: 60px 32px 40px;
   line-height: 1.7;
-  background: white;
+  background: #fff;
   font-family: et-book, "Palatino Linotype", serif;
   color: var(--text-color);
 }
@@ -128,52 +113,43 @@ body.textbook h2 {
 }
 body.textbook h3 {
   font-size: 1.4rem;
-  font-weight: 700;
-  margin: 2.3rem 0 1rem 1rem;
+  font-weight: 700;           /* pedido: negrito */
+  margin: 2.3rem 0 1rem 1rem; /* pedido: leve recuo à esquerda */
   line-height: 1.35;
 }
-
 body.textbook .subtitle {
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: 700;
   color: #555;
-  margin: 2.2rem 0 0.4rem;
-  letter-spacing: 0.04em;
+  margin: 2.2rem 0 .4rem;
+  letter-spacing: .04em;
   text-transform: uppercase;
 }
 
-/* Parágrafos e Listas */
-body.textbook p {
+/* Texto e listas */
+body.textbook p,
+body.textbook li {
   max-width: var(--content-width);
-  margin-bottom: 1.4rem;
   text-align: justify;
-  font-size: 1.13rem;
 }
+body.textbook p  { font-size: 1.13rem; margin-bottom: 1.4rem; }
+body.textbook li { margin-bottom: .8rem; }
 
 body.textbook .newthought {
   font-variant: small-caps;
   font-size: 1.28rem;
-  letter-spacing: 0.03em;
-}
-
-body.textbook li {
-  max-width: var(--content-width);
-  margin-bottom: .8rem;
-  text-align: justify;
+  letter-spacing: .03em;
 }
 
 /* ========== Tabelas ========== */
 body.textbook figure.table {
   display: block;
-  width: auto;
   max-width: var(--content-width);
   margin: 2rem auto;
-  transform: translateX(-34px);
   text-align: center;
+  transform: translateX(-34px); /* mantém alinhamento fino ao texto, como no original */
 }
-
 body.textbook figure.table table {
-  width: auto;
   margin: 0 auto;
   display: inline-table;
   table-layout: auto;
@@ -181,7 +157,6 @@ body.textbook figure.table table {
   border-collapse: collapse;
   min-width: 360px;
 }
-
 body.textbook figure.table thead th {
   font-weight: 700;
   border-bottom: 2px solid var(--border-medium);
@@ -189,18 +164,12 @@ body.textbook figure.table thead th {
   text-align: center;
   white-space: normal;
 }
-
 body.textbook figure.table tbody td {
   border-bottom: 1px solid var(--border-light);
   padding: 7px 10px;
   text-align: center;
   white-space: nowrap;
 }
-
-body.textbook figure.table tbody tr:last-child td {
-  border-bottom: 1px solid var(--border-light);
-}
-
 body.textbook figure.table figcaption {
   display: block;
   margin-top: 8px;
@@ -209,77 +178,62 @@ body.textbook figure.table figcaption {
 }
 
 /* ========== Figuras ========== */
-body.textbook figure.figure,
-body.textbook .figure {
+body.textbook .figure,
+body.textbook figure.figure {
   display: block;
-  width: auto;
   max-width: var(--content-width);
   margin: 2rem auto 1.2rem;
   text-align: center;
 }
-
-body.textbook figure.figure > img,
-body.textbook .figure > img {
+body.textbook .figure > img,
+body.textbook figure.figure > img {
   display: block;
   margin: 0 auto;
   max-width: 100%;
   height: auto;
 }
-
-body.textbook figure.figure > figcaption,
-body.textbook .figure > figcaption {
+body.textbook .figure > figcaption,
+body.textbook figure.figure > figcaption {
   font-style: italic;
   font-size: 1.3rem;
-  margin-top: 0.1rem;
+  margin-top: .1rem;          /* desktop: legenda bem próxima da imagem/svg */
   color: #444;
 }
 
-/* ========== Anti-FOUC ========== */
-body.loading { visibility: hidden; opacity: 0; }
-body.ready {
-  visibility: visible;
-  opacity: 1;
-  transition: opacity 0.35s ease-in-out;
-}
+/* ========== Integração leve KaTeX/KGJS (tamanhos) ========== */
+.kg-container { background: #fff; }
+.kg-slider-row { display: flex; align-items: center; gap: 12px; }
+.kg-slider-row, .param-row, .slider-row, .kg-slider, .katex { white-space: nowrap; }
 
-/* ========== KaTeX Tamanhos ========== */
 body.textbook .katex,
-body.textbook .kg-container .katex {
-  font-size: 1.12em;
-}
-
+body.textbook .kg-container .katex { font-size: 1.12em; }
 body.textbook .katex-display,
-body.textbook .kg-container .katex-display {
-  font-size: 1.24em;
-  margin: .8rem 0;
-}
-
+body.textbook .kg-container .katex-display { font-size: 1.24em; margin: .8rem 0; }
 body.textbook .katex .mfrac,
-body.textbook .kg-container .katex .mfrac {
-  font-size: 0.98em;
-}
-
+body.textbook .kg-container .katex .mfrac { font-size: .98em; }
 body.textbook .katex .msupsub,
-body.textbook .kg-container .katex .msupsub {
-  font-size: 0.96em;
-}
+body.textbook .kg-container .katex .msupsub { font-size: .96em; }
 
-/* ========== Zoom KG ========== */
-.kg-zoom .kg-container {
-  width: 100%;
-  zoom: var(--kg-zoom-desktop, 0.92);
-}
-
+/* ========== Zoom KG (com fallback para Firefox) ========== */
+.kg-zoom .kg-container { width: 100%; zoom: var(--kg-zoom-desktop, .92); }
 @supports not (zoom: 1) {
-  .kg-zoom .kg-container {
+  .kg-zoom .kg-container { transform-origin: top left; }
+  .kg-zoom .kg-container > * {
+    transform: scale(var(--kg-scale-desktop, .92));
     transform-origin: top left;
+    width: calc(100% / var(--kg-scale-desktop, .92));
+    display: inline-block;
   }
 }
 
-/* ========== RESPONSIVO MOBILE (≤768px) ========== */
+/* =========================================================
+   RESPONSIVO
+   ========================================================= */
+
+/* ========== Mobile (≤768px) ========== */
 @media (max-width: 768px) {
   html { font-size: 14px; }
-  
+
   body.textbook {
     max-width: 100%;
     padding: 12px 10px;
@@ -289,30 +243,20 @@ body.textbook .kg-container .katex .msupsub {
   /* Títulos */
   body.textbook h1 { font-size: 2rem; line-height: 1.22; margin: 0 0 .8rem; }
   body.textbook h2 { font-size: 1.5rem; line-height: 1.25; margin: 1.2rem 0 .6rem; }
-  body.textbook h3 { font-size: 1rem; margin: 2.5rem 0.4rem .3rem; }
+  body.textbook h3 { font-size: 1rem; margin: 2.5rem .4rem .3rem; }
 
   /* Texto */
-  body.textbook p {
-    font-size: 0.96rem;
-    margin-bottom: .8rem;
-    text-justify: inter-word;
-    hyphens: auto;
-  }
-
+  body.textbook p,
   body.textbook ul,
   body.textbook ol {
-    font-size: 0.96rem;
-    margin: 0 0 .8rem 16px;
-    padding-left: 0;
+    font-size: .96rem;
+    margin-bottom: .8rem;
   }
+  body.textbook p { text-justify: inter-word; hyphens: auto; }
+  body.textbook ul, body.textbook ol { margin: 0 0 .8rem 16px; padding-left: 0; }
+  body.textbook li { margin-bottom: .35rem; text-align: left; hyphens: auto; }
 
-  body.textbook li {
-    margin-bottom: .35rem;
-    text-align: left;
-    hyphens: auto;
-  }
-
-  /* Mídias */
+  /* Mídias genéricas */
   body.textbook img,
   body.textbook svg {
     max-width: 100%;
@@ -330,61 +274,45 @@ body.textbook .kg-container .katex .msupsub {
     transform: none;
     max-width: 100%;
   }
-
   body.textbook figure.table table {
     width: 100%;
-    font-size: 0.92rem;
+    font-size: .92rem;
     min-width: 300px;
   }
-
   body.textbook figure.table thead th {
     white-space: normal;
     padding: 6px 8px;
     border-bottom: 2px solid var(--border-medium);
   }
-
   body.textbook figure.table tbody td {
     padding: 5px 8px;
     border-bottom: 1px solid var(--border-light);
     white-space: nowrap;
   }
-
   body.textbook figure.table figcaption {
-    font-size: 0.88rem;
+    font-size: .88rem;
     margin-top: .4rem;
   }
 
   /* Figuras */
-  body.textbook .figure {
+  body.textbook .figure,
+  body.textbook figure.figure {
     max-width: 100%;
-    transform: none;
     margin: 1.2rem auto;
-    padding: 0;
+  }
+  body.textbook .figure > figcaption,
+  body.textbook figure.figure > figcaption {
+    font-size: .8rem;
+    margin-top: .1rem; /* mobile: mantém legenda próxima */
   }
 
-  body.textbook .figure > img {
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  body.textbook figure.figure > figcaption,
-  body.textbook .figure > figcaption {
-    font-size: 0.8rem;
-    margin-top: 0.1rem;
-  }
-
-  /* KaTeX Mobile */
+  /* KaTeX mobile */
   body.textbook .katex,
-  body.textbook .kg-container .katex {
-    font-size: 1.06em;
-  }
-
+  body.textbook .kg-container .katex { font-size: 1.06em; }
   body.textbook .katex-display,
-  body.textbook .kg-container .katex-display {
-    font-size: 1.14em;
-  }
+  body.textbook .kg-container .katex-display { font-size: 1.14em; }
 
-  /* KGJS Container */
+  /* KG Container mobile */
   body.textbook .kg-container {
     max-width: 100%;
     margin: 0 -6px;
@@ -394,7 +322,6 @@ body.textbook .kg-container .katex .msupsub {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
-
   body.textbook .kg-container canvas,
   body.textbook .kg-container svg,
   body.textbook .kg-container img {
@@ -414,72 +341,48 @@ body.textbook .kg-container .katex .msupsub {
     align-items: center;
     white-space: normal;
   }
-
-  body.textbook .kg-container .kg-slider {
-    min-width: 220px;
-    flex: 1 1 100%;
-  }
-
+  body.textbook .kg-container .kg-slider { min-width: 220px; flex: 1 1 100%; }
   body.textbook .kg-container .kg-slider-row label,
   body.textbook .kg-container .kg-slider-row .value,
-  body.textbook .kg-container .param-row label {
-    font-size: 0.92rem;
-  }
+  body.textbook .kg-container .param-row label { font-size: .92rem; }
 
-  /* Zoom Mobile */
-  .kg-zoom .kg-container {
-    zoom: var(--kg-zoom-mobile, 1);
-  }
-
+  /* Zoom KG mobile + fallback */
+  .kg-zoom .kg-container { zoom: var(--kg-zoom-mobile, 1); }
   @supports not (zoom: 1) {
     .kg-zoom .kg-container > * {
-      transform: scale(var(--kg-scale-mobile, 0.86));
+      transform: scale(var(--kg-scale-mobile, .86));
       transform-origin: top left;
-      width: calc(100% / var(--kg-scale-mobile, 0.86));
+      width: calc(100% / var(--kg-scale-mobile, .86));
       display: inline-block;
     }
     .kg-zoom .kg-container { overflow: auto; }
   }
 }
 
-/* ========== DESKTOP ESPECÍFICO (>768px) ========== */
+/* ========== Desktop específico (>768px) ========== */
 @media (min-width: 769px) {
-  body.textbook .kg-container [style*="width:"] {
-    max-width: 100%;
-  }
-  
-  body.textbook .kg-container {
-    overflow-x: visible;
-  }
+  body.textbook .kg-container { overflow-x: visible; }
+  body.textbook .kg-container [style*="width:"] { max-width: 100%; }
 
   /* Controle de tamanho das figuras no desktop */
-  body.textbook .figure {
+  body.textbook .figure,
+  body.textbook figure.figure {
     max-width: 620px !important;
-    transform: translateX(-54px);
+    transform: translateX(-54px); /* mantém alinhamento com a coluna de texto */
   }
-
-  body.textbook .figure > img {
+  body.textbook .figure > img,
+  body.textbook figure.figure > img {
     max-width: 100%;
     width: 100%;
   }
-
-  body.textbook .figure > figcaption {
-    margin-top: 0.1rem !important;
-  }
-
-  @supports not (zoom: 1) {
-    .kg-zoom .kg-container > * {
-      transform: scale(var(--kg-scale-desktop, 0.92));
-      transform-origin: top left;
-      width: calc(100% / var(--kg-scale-desktop, 0.92));
-      display: inline-block;
-    }
-    .kg-zoom .kg-container { overflow: auto; }
+  body.textbook .figure > figcaption,
+  body.textbook figure.figure > figcaption {
+    margin-top: .1rem !important; /* legenda mais colada no desktop */
   }
 }
 
+/* Larguras maiores */
 @media (min-width: 900px) {
-  body.textbook .figure {
-    max-width: 820px;
-  }
+  body.textbook .figure,
+  body.textbook figure.figure { max-width: 820px; }
 }
