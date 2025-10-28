@@ -114,21 +114,14 @@
 </p>
 
 <h3>2.1 Dados</h3>
-<p>
-  Dados são registros de observações sobre características de elementos de interesse. Em estatística,
-  os dados não são considerados pela sua natureza isolada, mas pela função que desempenham na construção de conhecimento.
-  Um dado adquire significado apenas quando analisado dentro de um <em>contexto</em> e associado a uma <em>questão</em>
-  de investigação. Assim, a estatística não trabalha com números por si mesmos, mas com representações numéricas de
-  fenômenos observáveis.
-</p>
+<p> Do ponto de vista formal, dados são resultados de um processo de observação e descrição de um determinado fenômeno de interesse. Eles podem surgir de <strong>contagens</strong> 
+  (número de clientes atendidos por hora), <strong>medições</strong> (altura de indivíduos, temperatura, tempo), <strong>
+  classificações</strong> (estado civil, tipo sanguíneo) ou <strong>respostas</strong> de pesquisa (opiniões ou avaliações). 
+  Esses registros descrevem algum aspecto do fenômeno estudado e constituem a matéria-prima da análise estatística.</p>
+  
+  <p>A tabela a seguir apresenta um exemplo simples de dados obtidos por medição: o registro da temperatura ao longo de um dia em determinada cidade. </p>
 
-<p>
-  Formalmente, dados consistem em coleções de observações, tais como contagens, medições, classificações ou respostas
-  de pesquisas. A tabela a seguir apresenta um exemplo simples de dados obtidos por medição: o registro da temperatura ao
-  longo de um dia em determinada cidade.
-</p>
-
-<figure class="table" >
+  <figure class="table" >
   <table>
     <thead>
       <tr>
@@ -152,7 +145,7 @@
 <p>
   Cada valor na tabela é uma observação produzida pela medição de um fenômeno: a temperatura do ar em diferentes horários.
   Conjuntos como esse representam o ponto de partida de uma análise estatística. Antes de qualquer tratamento, organização
-  ou cálculo, essas observações são simplesmente valores coletados — o que chamaremos mais adiante de <em>dados brutos</em>.
+  ou cálculo, essas observações são simplesmente valores coletados.
   A partir deles, a análise estatística buscará resumir informações, identificar padrões e responder perguntas de interesse,
   como: <em>em que período do dia fez mais calor? ou qual foi a temperatura média desse dia?</em>
 </p>
@@ -165,11 +158,11 @@
 <h3>2.2 População e amostra</h3>
 
 <p>
-Em estatística, chama-se <strong>população</strong> o conjunto completo de elementos sobre os quais se deseja obter informação. A natureza dessa população depende do contexto da investigação: pode ser formada por pessoas, empresas, medições físicas, resultados de testes ou qualquer outro tipo de unidade observável relevante para o estudo.
+Em estatística, chama-se <strong>população o conjunto completo de elementos sobre os quais se deseja obter informação</strong>. A natureza dessa população depende do contexto da investigação: pode ser formada por pessoas, empresas, medições físicas, resultados de testes ou qualquer outro tipo de unidade observável relevante para o estudo.
 </p>
 
 <p>
-Na prática, entretanto, raramente é possível observar toda a população. Em muitos casos, ela é demasiado extensa, dispersa ou de acesso limitado. Por essa razão, trabalha-se frequentemente com uma <strong>amostra</strong>, isto é, um subconjunto da população selecionado para fins de estudo. O objetivo é que essa amostra represente adequadamente a população, preservando suas características essenciais.
+Na prática, entretanto, raramente é possível observar toda a população. Em muitos casos, ela é demasiado extensa, dispersa ou de acesso limitado. Por essa razão, trabalha-se frequentemente com uma <strong>amostra</strong>, isto é, <strong>um subconjunto da população selecionado para fins de estudo</strong>.
 </p>
 
 <figure class="figure">
@@ -178,61 +171,97 @@ Na prática, entretanto, raramente é possível observar toda a população. Em 
 </figure>
 
 
-<p>
-A distinção entre população e amostra é fundamental porque determina o alcance das conclusões que podem ser obtidas a partir de um conjunto de dados. A partir da amostra, extraem-se medidas que descrevem os dados observados e, através de técnicas <strong>estatísticas</strong>, essas medidas podem ser utilizadas como aproximações das características reais — ou <strong>parâmetros</strong> — da população.  
-</p>
+<p>A distinção entre população e amostra é fundamental porque, na prática, quase sempre se trabalha com dados amostrais para tirar conclusões sobre uma população. A partir de uma amostra, extraem-se medidas descritivas, que resumem os dados observados. Em seguida, com o uso de <strong>métodos estatísticos</strong>, essas medidas são utilizadas para inferir características verdadeiras —ou <strong>parâmetros</strong>— da população. </p>
 
 <h3>2.3 Parâmetro e estatística</h3>
 
 <p>
-Ao estudar uma população, frequentemente buscamos quantificar alguma de suas características, como o valor médio, a variabilidade ou a proporção de indivíduos com determinado atributo. Quando essa medida descreve a <strong>totalidade</strong> da população, ela recebe o nome de <strong>parâmetro</strong>. O parâmetro representa uma característica verdadeira do conjunto completo, mas, na prática, raramente é conhecido, pois sua obtenção exigiria observar todos os elementos da população.
+Chama-se <strong>parâmetro</strong> qualquer medida numérica que descreve uma característica da população. Exemplos de parâmetros incluem a média populacional, a proporção populacional ou o grau de variabilidade de uma característica. Trata-se sempre de um valor fixo para cada população, ainda que normalmente desconhecido.
 </p>
 
 <p>
-A <strong>Figura 2</strong> ilustra essa ideia de forma simples. Considere que a população representada é composta por dois tipos de indivíduos: alguns têm cabelo e outros são carecas. Suponha que o objetivo seja descobrir <strong>qual é a proporção de indivíduos carecas na população</strong>. Esse valor corresponde a um <strong>parâmetro populacional</strong>, pois descreve uma característica real da população. No entanto, como seria inviável contar todos os indivíduos, recorremos a uma <strong>amostra</strong> — um subconjunto da população — para coletar dados e fazer uma estimativa.
+A Figura 2 abaixo ilustra esse conceito de forma mais intuitiva. Suponha que uma população seja formada por dois grupos de indivíduos: aqueles com cabelo e aqueles sem cabelo. Nosso objetivo é descobrir <strong>qual é a proporção de indivíduos carecas na população</strong>. Esse valor corresponde a um <strong>parâmetro populacional</strong>, pois representa uma característica verdadeira da população. Entretanto, como geralmente é inviável analisar todos os indivíduos, selecionamos uma <strong>amostra</strong> — isto é, um subconjunto da população — para coletar dados a respeito da característica sendo investigada e, com base neles, construir uma estimativa para o parâmetro de interesse.
 </p>
 
-<p>
-A medida calculada com base nos <em>dados observados</em> na amostra recebe o nome de <strong>estatística</strong>. No exemplo da Figura 2, essa estatística seria a proporção de indivíduos carecas na amostra. Note que, diferentemente do parâmetro, que é fixo (embora desconhecido), a estatística pode variar conforme a amostra escolhida, pois depende apenas dos elementos que foram selecionados para compô-la.
-</p>
 <figure class="figure">
   <img src="../../imagens/parametro-estatistica.svg" alt="Parâmetro e Estatística">
   <figcaption>Figura 2. Exemplo de relação entre população, amostra, parâmetro e estatística</figcaption>
 </figure>
 
 <p>
-Assim, enquanto os <strong>parâmetros</strong> descrevem características verdadeiras da população, as <strong>estatísticas</strong> constituem aproximações empíricas baseadas em amostras. Essa distinção é fundamental, pois estabelece o elo entre a informação disponível — proveniente da amostra — e o objetivo final de uma análise estatística: compreender a população. Com essa base conceitual, podemos avançar para a etapa de organização e descrição dos dados.
-</p>
-
-
-<h3>2.4 Variabilidade e incerteza</h3>
-<p>
-  A variabilidade é um traço essencial dos fenômenos empíricos: observações repetidas raramente produzem resultados
-  idênticos. Essa variação pode decorrer de diferenças naturais entre unidades observadas, de imprecisões de mensuração
-  ou de fatores não controlados. A consequência direta da variabilidade é a <strong>incerteza</strong>: mesmo com dados,
-  o conhecimento é sempre parcial. A função da estatística é justamente lidar com essa incerteza de forma estruturada,
-  fornecendo métodos para quantificá-la e controlá-la.
+A medida calculada a partir dos <em>dados observados</em> na amostra recebe o nome de <strong>estatística</strong>. No exemplo da Figura 2, a proporção de indivíduos carecas encontrada na amostra é uma estatística. Diferentemente do parâmetro, a estatística pode variar de uma amostra para outra, pois depende apenas dos elementos selecionados na coleta de dados. Essa variabilidade é natural em estudos amostrais e pode ser controlada por meio de técnicas de amostragem, permitindo construir estimativas confiáveis para os parâmetros desconhecidos da população.
 </p>
 
 <p>
-  Com os elementos fundamentais agora estabelecidos — dados, variáveis, populações, amostras, parâmetros e estatísticas —,
-  torna-se possível avançar para a compreensão da estrutura interna da disciplina. Na próxima seção, distinguiremos seus
-  dois domínios centrais: a estatística descritiva e a estatística inferencial.
+Em resumo, enquanto os <strong>parâmetros</strong> descrevem características verdadeiras da população, porém desconhecidas, as <strong>estatísticas</strong> são valores calculados a partir de amostras e utilizados para <strong>estimar esses parâmetros</strong>. Essa distinção é fundamental: toda inferência estatística começa com dados amostrais e tem como objetivo final obter informações sobre a população.
 </p>
 
 <hr>
 
-<h2>3. Estatística descritiva e estatística inferencial</h2>
+<h2>3. Classificação dos Dados </h2>
+
+<p> Antes de serem analisados, os dados precisam ser corretamente classificados. Essa classificação é necessária porque o tipo de dado determina quais representações gráficas podem ser utilizadas, quais medidas estatísticas fazem sentido (como média ou mediana) e quais métodos de análise são válidos. Em outras palavras, a forma como tratamos e interpretamos os dados depende diretamente de sua natureza. Por isso, a Estatística organiza os dados em categorias, distinguindo-os quanto ao seu conteúdo (qualitativo ou quantitativo) e quanto ao nível de mensuração utilizado para registrá-los (nominal, ordinal, intervalar ou de razão). </p>
+
+<h3>3.1 Dados qualitativos e quantitativos</h3> <p> Uma das formas mais básicas de classificar dados é diferenciá-los de acordo com a natureza da informação que representam. Nesse sentido, os dados podem ser divididos em duas categorias principais: <strong>dados qualitativos</strong> e <strong>dados quantitativos</strong>. </p> <div class="box-definicao"> <strong>Definição</strong> <ul> <li><strong>Dados qualitativos</strong>: descrevem características, atributos ou categorias, sem envolver contagem ou mensuração numérica. Exemplos: estado civil, cor dos olhos, profissão, nacionalidade.</li> <li><strong>Dados quantitativos</strong>: são expressos numericamente e resultam de contagem ou medição. Exemplos: idade, salário, número de filhos, distância percorrida.</li> </ul> </div> <p> Enquanto os dados qualitativos classificam ou identificam elementos sem utilizar valores numéricos, os dados quantitativos permitem a realização de operações matemáticas, como soma, média e variação. Essa distinção é essencial, pois determina não apenas como os dados serão organizados, mas também quais ferramentas estatísticas podem ser utilizadas na análise. </p>
+<h3>3.2 Níveis de mensuração</h3> <p> Além de identificar se os dados são qualitativos ou quantitativos, também é necessário determinar o <strong>nível de mensuração</strong> em que eles foram registrados. O nível de mensuração indica <em>como</em> uma variável foi medida ou classificada e, por consequência, define <strong>quais operações matemáticas e estatísticas podem ser aplicadas</strong>. Os quatro níveis de mensuração, do mais simples ao mais informativo, são: <strong>nominal</strong>, <strong>ordinal</strong>, <strong>intervalar</strong> e <strong>de razão</strong>. </p> <div class="box-definicao"> <strong>Definição</strong> <ul> <li><strong>Nível nominal:</strong> os dados apenas classificam elementos em categorias sem indicar ordem. Exemplos: sexo, cor dos olhos, estado civil.</li> <li><strong>Nível ordinal:</strong> os dados permitem estabelecer uma ordem ou hierarquia entre categorias, mas sem medir a intensidade das diferenças. Exemplos: grau de instrução, posição em um ranking.</li> <li><strong>Nível intervalar:</strong> permite comparar diferenças entre valores, mas não possui um zero absoluto. Exemplos: temperatura em °C ou °F, anos do calendário.</li> <li><strong>Nível de razão:</strong> além de permitir comparar diferenças, possui zero absoluto e permite operações como razão e proporção. Exemplos: idade, renda, peso, altura.</li> </ul> </div> <p> Quanto maior o nível de mensuração, maior a quantidade de informações contidas nos dados e mais sofisticados podem ser os procedimentos estatísticos utilizados. Por exemplo, não faz sentido calcular uma média para dados nominais, mas isso é totalmente válido para dados de razão. </p>
+<h3>3.3 Coleta de Dados e Planejamento de Experimentos</h3>
 
 <p>
-  Tendo definidos os objetos fundamentais da estatística — dados, variáveis, unidades de observação, população, amostra,
+O objetivo de um estudo estatístico é coletar dados relevantes e utilizá-los para sustentar conclusões. A qualidade dessas conclusões depende, antes de tudo, da qualidade do planejamento: que problema está sendo investigado, qual é a população de interesse, como a amostra será selecionada, de que modo as medidas serão obtidas e quais fontes de viés precisam ser controladas. Planejar bem é garantir que os dados reflitam o fenômeno estudado, e não artefatos do processo de coleta.
+</p>
+
+<p>
+O planejamento inicia pela definição clara do problema e das variáveis envolvidas, seguida da identificação da população e dos critérios de inclusão da amostra. Em seguida decide-se o tipo de estudo (observacional ou experimental), escolhe-se o método de coleta (por exemplo, pesquisa ou simulação) e registram-se os procedimentos com suficiente detalhe para permitir replicação. Somente depois disso se passa à coleta em si.
+</p>
+
+<p>
+Em um <strong>estudo observacional</strong>, o pesquisador observa e mede características tal como ocorrem, sem intervir no processo que as gera. Esse desenho é adequado quando intervenções não são possíveis, são eticamente delicadas ou custosas. Observacionais respondem bem a perguntas descritivas (como é, com que frequência ocorre, como se distribui), mas têm limitações para estabelecer relações causais, pois fatores não controlados podem estar associados simultaneamente à exposição e ao desfecho.
+</p>
+
+<p>
+Em um <strong>experimento</strong>, aplica-se deliberadamente um <em>tratamento</em> a parte dos indivíduos e compara-se suas respostas às de um <em>grupo de controle</em>, que não recebe o tratamento (ou recebe um placebo). Esse arranjo aumenta a capacidade de isolar efeitos causais, desde que três pilares sejam respeitados: <em>controle</em>, <em>aleatorização</em> e <em>replicação</em>. Controle significa manter constantes — tanto quanto possível — as condições que não são foco do estudo; aleatorização é o sorteio que decide quem recebe o tratamento e quem integra o controle, reduzindo vieses de seleção; replicação é a repetição do experimento em tamanho suficiente para que os resultados não dependam do acaso.
+</p>
+
+<p>
+Em contextos clínicos ou sociais, é comum empregar <strong>placebo</strong> no grupo de controle, isto é, um tratamento inerte, indistinguível do ativo, para captar o efeito psicológico de “estar sendo tratado”. Para evitar que expectativas de participantes e pesquisadores alterem o comportamento de resposta, pode-se usar <em>cego</em> (o participante não sabe a qual grupo pertence) ou <em>duplo-cego</em> (participante e equipe que aplica/coleta dados desconhecem a alocação). Esses procedimentos reduzem vieses de mensuração e interpretação.
+</p>
+
+<p>
+Outra estratégia de desenho é o <strong>pareamento</strong> (ou emparelhamento), no qual indivíduos são agrupados em pares com características semelhantes (por exemplo, idade e sexo) e, dentro de cada par, um é aleatoriamente designado ao tratamento e o outro ao controle. O pareamento melhora a comparabilidade entre grupos quando há forte heterogeneidade em variáveis prognósticas.
+</p>
+
+<p>
+Quanto aos <strong>métodos de coleta</strong>, duas modalidades frequentes são a <em>simulação</em> e a <em>pesquisa</em>. Simulações reproduzem, com modelos computacionais ou físicos, condições de um processo difícil, perigoso ou caro de observar diretamente — por exemplo, colisões automotivas com manequins. Pesquisas, por sua vez, obtêm informações de pessoas ou organizações por questionários, entrevistas, formulários on-line ou registros administrativos. O desenho do questionário deve ser cuidadoso, evitando perguntas tendenciosas e assegurando linguagem clara e escalas de resposta apropriadas ao nível de mensuração da variável.
+</p>
+
+<p>
+Do ponto de vista amostral, um <strong>censo</strong> mede todos os elementos da população, fornecendo quadro completo, porém com alto custo e, muitas vezes, inviável. Mais comum é a <strong>amostragem</strong>, que mede apenas parte da população. Toda inferência baseada em amostra está sujeita a <em>erro de amostragem</em>, a diferença entre as estatísticas amostrais e os verdadeiros parâmetros populacionais que decorre do sorteio dos elementos. Para que a amostra seja representativa, recorre-se a planos probabilísticos.
+</p>
+
+<p>
+A <strong>amostragem aleatória simples</strong> dá a cada elemento chances iguais de ser selecionado, usualmente por sorteio com números aleatórios. Outras variações úteis incluem: <em>amostragem estratificada</em>, quando a população é dividida em estratos homogêneos (por exemplo, faixa etária) e amostras são sorteadas dentro de cada estrato para garantir cobertura; <em>amostragem por conglomerados</em>, quando unidades naturais em grupo (escolas, domicílios) são sorteadas e todos (ou uma subamostra) dentro delas são observados, ganhando eficiência logística; e <em>amostragem sistemática</em>, que seleciona elementos em saltos regulares após um início aleatório. A escolha do plano afeta custos, precisão e a viabilidade operacional do estudo.
+</p>
+
+<p>
+Dois aspectos finais merecem atenção. Primeiro, o <strong>tamanho da amostra</strong>: amostras muito pequenas tendem a produzir estimativas instáveis e testes com baixo poder; amostras excessivamente grandes podem ser dispendiosas e detectar diferenças irrelevantes na prática. Segundo, as <strong>variáveis de confusão</strong>: fatores associados simultaneamente ao tratamento e ao desfecho que distorcem as estimativas de efeito. Elas devem ser prevenidas no desenho (aleatorização, controle, pareamento) e tratadas na análise (estratificação ou modelagem).
+</p>
+
+<p>
+Em síntese, coletar bem é planejar com rigor: definir claramente o problema e a população, escolher o desenho adequado (observacional ou experimental), adotar métodos de coleta compatíveis com o objeto de estudo, selecionar amostras probabilísticas e instituir procedimentos de controle, aleatorização e replicação. Esses cuidados tornam os dados confiáveis e, por consequência, as conclusões estatísticas sólidas.
+</p>
+<hr>
+
+<h2>4. Estatística descritiva e estatística inferencial</h2>
+
+<p>
+  Tendo definidos os objetos fundamentais da estatística — dados, população, amostra,
   parâmetros e estatísticas —, é possível compreender como a disciplina se estrutura metodologicamente. A atividade
   estatística não consiste apenas em calcular medidas numéricas, mas em transformar dados em conhecimento. Essa transformação
   ocorre em duas etapas intelectuais distintas e complementares: a <strong>estatística descritiva</strong> e a
   <strong>estatística inferencial</strong>.
 </p>
 
-<h3>3.1 Estatística descritiva</h3>
+<h3>4.1 Estatística descritiva</h3>
 <p>
   A estatística descritiva organiza, resume e apresenta os dados observados de modo informativo. Seu propósito é revelar
   padrões, identificar comportamentos típicos e expor a estrutura dos dados sem ultrapassar os limites do que foi coletado.
@@ -245,7 +274,7 @@ Assim, enquanto os <strong>parâmetros</strong> descrevem características verda
   investigação. Em outras palavras, ela constitui a base empírica sobre a qual qualquer inferência deve ser construída.
 </p>
 
-<h3>3.2 Estatística inferencial</h3>
+<h3>4.2 Estatística inferencial</h3>
 <p>
   A estatística inferencial vai além da descrição e busca formular conclusões que se estendam da amostra para a população.
   Como normalmente não é possível observar todos os elementos de interesse, trabalha-se com uma parte dos dados e tenta-se,
@@ -259,136 +288,9 @@ Assim, enquanto os <strong>parâmetros</strong> descrevem características verda
   <em>testes de hipóteses</em>, que permitem quantificar a incerteza associada ao raciocínio indutivo.
 </p>
 
-<h3>3.3 Complementaridade entre descrição e inferência</h3>
-<p>
-  Os dois domínios da estatística não são independentes nem concorrentes, mas complementares. A descrição fornece a estrutura
-  empírica dos dados e evita inferências precipitadas; a inferência oferece generalização e fundamenta decisões em face da
-  incerteza. Nenhuma inferência pode ser considerada válida sem adequada análise descritiva preliminar, e nenhuma descrição
-  é suficiente, por si só, para produzir conhecimento científico generalizável.
-</p>
-<p>
-  Em síntese, a estatística descritiva responde à pergunta <em>“o que os dados revelam?”</em>, enquanto a estatística
-  inferencial responde <em>“o que podemos concluir a partir deles?”</em>. A integração adequada entre ambas constitui
-  a base do pensamento estatístico rigoroso.
-</p>
-
 <hr>
 
-<h2>4. Obtenção de dados: estudos observacionais e experimentais</h2>
-
-<p>
-  Todo estudo estatístico começa com dados, mas a validade das conclusões depende essencialmente de <strong>como</strong> esses dados são obtidos.
-  A análise estatística não pode corrigir falhas graves de obtenção de dados; por isso, compreender o processo que os origina
-  é parte indispensável do pensamento estatístico rigoroso. Em termos gerais, existem duas formas fundamentais de obtenção de
-  dados: por meio de <strong>estudos observacionais</strong> e de <strong>estudos experimentais</strong>.
-</p>
-
-<h3>4.1 Estudos observacionais</h3>
-<p>
-  Em um estudo observacional, o pesquisador registra características dos elementos estudados sem exercer qualquer intervenção
-  ou controle sobre eles. Os dados são coletados tal como os fatos ocorrem naturalmente, sem manipulação das condições
-  do fenômeno analisado. Exemplos incluem pesquisas demográficas, estudos epidemiológicos não intervencionistas e levantamentos
-  econômicos.
-</p>
-<p>
-  A principal vantagem desse tipo de estudo é sua viabilidade prática: ele permite analisar fenômenos que não podem ser
-  manipulados diretamente, seja por limitações éticas, financeiras ou logísticas. No entanto, sua limitação fundamental
-  é a dificuldade de estabelecer relações de causa e efeito, pois fatores não observados podem influenciar os resultados,
-  gerando vieses e confundimentos.
-</p>
-
-<h3>4.2 Estudos experimentais</h3>
-<p>
-  Em um estudo experimental, o pesquisador intervém deliberadamente no sistema observado, controlando variáveis e aplicando
-  tratamentos a fim de analisar seus efeitos. As unidades experimentais são divididas em grupos — frequentemente
-  um grupo de tratamento e um grupo de controle — e comparações são estabelecidas para verificar o impacto de uma intervenção.
-</p>
-<p>
-  Essa abordagem oferece maior capacidade de identificar relações causais, especialmente quando associada a métodos rigorosos
-  de controle, como a aleatorização e o mascaramento (ou cegamento). No entanto, experimentos podem ser inviáveis em muitos
-  contextos e estão sujeitos a limitações práticas e éticas, sobretudo em ciências humanas, medicina e economia.
-</p>
-
-<h3>4.3 Qualidade dos dados e validade das conclusões</h3>
-<p>
-  Independentemente do tipo de estudo, a obtenção de dados está sujeita a fontes de erro que podem comprometer os resultados
-  de uma análise estatística. Entre as principais fontes de erro, destacam-se: <strong>erro de amostragem</strong>
-  (quando a amostra não representa adequadamente a população), <strong>erro de mensuração</strong> (imprecisão dos instrumentos
-  ou falhas no registro) e <strong>viés</strong> (de seleção, de resposta ou de não resposta). A identificação e o controle desses
-  erros são fundamentais para garantir a validade das conclusões.
-</p>
-<p>
-  Assim, antes de qualquer procedimento inferencial, é necessário avaliar a origem dos dados, a adequação do plano de coleta
-  e a confiabilidade das informações obtidas. Sem qualidade na base empírica, não há inferência estatística confiável.
-  Na próxima seção, passaremos a discutir a noção de <strong>amostragem</strong>, que estabelece a ponte entre os dados
-  coletados e as conclusões sobre a população.
-</p>
-
-<hr>
-
-<h2>5. Amostragem e representatividade</h2>
-
-<p>
-  Como visto anteriormente, em grande parte das investigações estatísticas não é possível observar toda a população de
-  interesse. Por essa razão, trabalha-se com uma <strong>amostra</strong>, ou seja, um subconjunto de unidades selecionadas
-  com o objetivo de representar o todo. A validade de qualquer conclusão estatística depende diretamente do modo como essa
-  amostra é obtida. Não se trata apenas de quantidade de dados, mas de <em>qualidade de evidência</em>.
-</p>
-
-<h3>5.1 O problema da representatividade</h3>
-<p>
-  Uma amostra é considerada <strong>representativa</strong> quando reflete, de maneira adequada, as principais características
-  da população da qual foi extraída. Caso contrário, os resultados obtidos a partir da amostra podem conduzir a conclusões
-  enganosas. Assim, o problema central da amostragem não é simplesmente coletar dados, mas coletar dados que sustentem
-  inferências confiáveis.
-</p>
-<p>
-  Dois fatores influenciam diretamente a representatividade: a forma de seleção das unidades amostrais e o tamanho da amostra.
-  Amostras grandes podem ser inúteis se forem mal selecionadas, enquanto amostras pequenas podem ser suficientes se forem bem
-  planejadas. Em estatística, a quantidade de dados jamais substitui a boa metodologia de coleta.
-</p>
-
-<h3>5.2 Erro amostral e viés</h3>
-<p>
-  Toda amostra está sujeita a <strong>erro amostral</strong>, isto é, à diferença natural que pode existir entre os resultados
-  observados na amostra e os verdadeiros valores populacionais. Esse erro é inerente ao processo de amostragem e não pode ser
-  eliminado, apenas reduzido ou quantificado por meio de métodos probabilísticos.
-</p>
-<p>
-  Diferente do erro amostral, que é inevitável, o <strong>viés</strong> resulta de falhas no processo de coleta de dados. Ele surge
-  quando a amostra é selecionada de modo sistematicamente distorcido, favorecendo alguns grupos ou excluindo outros.
-  Esse tipo de erro compromete a validade das conclusões e não pode ser corrigido com cálculos posteriores.
-  Em pesquisa estatística, um dado enviesado é pior do que a ausência de dados.
-</p>
-
-<h3>5.3 Planos de amostragem</h3>
-<p>
-  Existem diferentes estratégias para selecionar amostras. Elas podem ser divididas em dois grandes grupos:
-  <strong>amostragem probabilística</strong> e <strong>amostragem não probabilística</strong>.
-</p>
-<ul>
-  <li><strong>Amostragem probabilística</strong>: cada unidade da população possui uma probabilidade conhecida e diferente de zero de ser selecionada.
-      Esse tipo de amostragem permite controlar o erro amostral e fundamenta a inferência estatística. Exemplos incluem amostragem
-      aleatória simples, estratificada, sistemática e por conglomerados.</li>
-  <li><strong>Amostragem não probabilística</strong>: a seleção das unidades não segue um esquema probabilístico formal. É utilizada quando o acesso
-      à população é restrito ou quando há interesse exploratório inicial. Exemplos incluem amostragem por conveniência, por julgamento
-      e amostragem voluntária. Embora útil em alguns contextos, esse tipo de amostragem não permite inferências seguras sobre a população.</li>
-</ul>
-
-<p>
-  A escolha do plano de amostragem é uma decisão metodológica central em qualquer pesquisa. Não se trata de uma etapa
-  meramente operacional, mas de uma escolha que determina os limites e a confiabilidade das conclusões que poderão ser
-  alcançadas. Sem uma amostra adequadamente planejada, a inferência estatística carece de fundamento.
-</p>
-
-<p>
-  Na próxima seção, aprofundaremos a relação entre amostragem e inferência, mostrando como as estatísticas calculadas a
-  partir de dados amostrais podem ser usadas para estimar parâmetros populacionais e formular conclusões sob incerteza.
-</p>
-
-<hr>
-
-<h2>6. O problema da inferência e o papel da probabilidade</h2>
+<h2>5. O problema da inferência e o papel da probabilidade</h2>
 
 <p>
   A partir das seções anteriores, tornou-se claro que a estatística não se limita ao tratamento mecânico de dados:
@@ -432,7 +334,7 @@ Assim, enquanto os <strong>parâmetros</strong> descrevem características verda
 
 <hr>
 
-<h2>7. Conclusão do capítulo</h2>
+<h2>6. Conclusão do capítulo</h2>
 
 <p>
   Este capítulo estabeleceu os alicerces conceituais da Estatística. Partimos de sua formação histórica e chegamos à sua
