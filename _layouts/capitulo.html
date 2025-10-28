@@ -37,16 +37,25 @@
     const btnUp = document.getElementById('scroll-up');
     const btnDown = document.getElementById('scroll-down');
 
-    // Mostra/oculta com fade conforme a rolagem
-    const toggleButtons = () => {
-      if (window.scrollY > 160) {
-        scrollBtns.classList.add('show');
-      } else {
-        scrollBtns.classList.remove('show');
-      }
-    };
+    function toggleButtons() {
+      const scrollY = window.scrollY;
+      const viewportHeight = window.innerHeight;
+      const pageHeight = document.documentElement.scrollHeight;
+      const nearBottom = scrollY + viewportHeight >= pageHeight - 120; // margem antes do final
 
-    // Scroll suave (respeita prefers-reduced-motion)
+      if (scrollY < 160) {
+        // No topo: esconde
+        scrollBtns.classList.remove('show');
+      } else if (nearBottom) {
+        // Perto do rodapé: fade-out
+        scrollBtns.classList.remove('show');
+      } else {
+        // Meio da página: mostra normal
+        scrollBtns.classList.add('show');
+      }
+    }
+
+    // Respeita acessibilidade
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const behavior = prefersReduced ? 'auto' : 'smooth';
 
@@ -58,11 +67,10 @@
       window.scrollTo({ top: document.documentElement.scrollHeight, behavior });
     });
 
-    // Inicializa e escuta rolagem
+    // Listener
     toggleButtons();
     window.addEventListener('scroll', toggleButtons, { passive: true });
   })();
 </script>
-
 </body>
 </html>
