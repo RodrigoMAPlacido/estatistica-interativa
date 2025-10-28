@@ -116,5 +116,43 @@
   });
 </script>
 
+<!-- Botões de scroll (mobile, discretos) -->
+<div class="scroll-buttons" aria-hidden="true">
+  <button id="scroll-up" aria-label="Voltar ao topo" title="Topo">↑</button>
+  <button id="scroll-down" aria-label="Ir para o fim" title="Fim">↓</button>
+</div>
+<script>
+  (function () {
+    const scrollBtns = document.querySelector('.scroll-buttons');
+    const btnUp = document.getElementById('scroll-up');
+    const btnDown = document.getElementById('scroll-down');
+
+    // Mostra/oculta com fade conforme a rolagem
+    const toggleButtons = () => {
+      if (window.scrollY > 160) {
+        scrollBtns.classList.add('show');
+      } else {
+        scrollBtns.classList.remove('show');
+      }
+    };
+
+    // Scroll suave (respeita prefers-reduced-motion)
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const behavior = prefersReduced ? 'auto' : 'smooth';
+
+    btnUp.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior });
+    });
+
+    btnDown.addEventListener('click', () => {
+      window.scrollTo({ top: document.documentElement.scrollHeight, behavior });
+    });
+
+    // Inicializa e escuta rolagem
+    toggleButtons();
+    window.addEventListener('scroll', toggleButtons, { passive: true });
+  })();
+</script>
+
 </body>
 </html>
