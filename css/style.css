@@ -141,43 +141,103 @@ body.textbook .newthought {
   letter-spacing: .03em;
 }
 
-/* ========== Tabelas ========== */
+/* =========================================================
+   TABELAS
+   ========================================================= */
+
+/* Tabelas textuais (explicativas) — padrão */
 body.textbook figure.table {
   display: block;
   max-width: var(--content-width);
   margin: 2rem auto;
   text-align: center;
-  transform: translateX(-34px); /* mantém alinhamento fino ao texto, como no original */
+  transform: translateX(-34px); /* mantém alinhamento fino ao texto */
 }
 body.textbook figure.table table {
-  margin: 0 auto;
-  display: inline-table;
-  table-layout: auto;
-  font-size: 1.05rem;
+  width: 100%;
   border-collapse: collapse;
-  min-width: 360px;
+  table-layout: fixed;          /* proporção editorial */
+  font-size: 1.05rem;
+  margin: 0 auto;
 }
-body.textbook figure.table thead th {
-  font-weight: 700;
-  border-bottom: 2px solid var(--border-medium);
-  padding: 8px 10px;
-  text-align: center;
+body.textbook figure.table th,
+body.textbook figure.table td {
+  padding: 10px 14px;
+  vertical-align: top;
+  text-align: left;
+  line-height: 1.55;
   white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
-body.textbook figure.table tbody td {
+body.textbook figure.table th {
+  font-weight: 600;
+  border-bottom: 2px solid var(--border-medium);
+}
+body.textbook figure.table td {
   border-bottom: 1px solid var(--border-light);
-  padding: 7px 10px;
-  text-align: center;
-  white-space: nowrap;
+  font-size: 1.05rem;
 }
+body.textbook figure.table td em {
+  font-style: italic;
+  color: var(--muted);
+}
+/* Larguras proporcionais APENAS para tabelas textuais */
+body.textbook figure.table:not(.data) th:nth-child(1),
+body.textbook figure.table:not(.data) td:nth-child(1) { width: 24%; }
+body.textbook figure.table:not(.data) th:nth-child(2),
+body.textbook figure.table:not(.data) td:nth-child(2) { width: 44%; }
+body.textbook figure.table:not(.data) th:nth-child(3),
+body.textbook figure.table:not(.data) td:nth-child(3) { width: 32%; }
 body.textbook figure.table figcaption {
   display: block;
   margin-top: 8px;
   font-style: italic;
   text-align: center;
+  color: var(--muted);
+  font-size: .95rem;
 }
 
-/* ========== Figuras ========== */
+/* Tabelas de dados numéricos (medições) — centralizadas */
+body.textbook figure.table.data {
+  transform: none;              /* remove recuo das textuais */
+  text-align: center;
+  margin: 2rem auto;
+}
+body.textbook figure.table.data table {
+  margin: 0 auto;               /* centraliza */
+  display: inline-table;        /* largura proporcional ao conteúdo */
+  border-collapse: collapse;
+  table-layout: auto;
+  font-size: 1.05rem;
+  width: auto;
+  min-width: 320px;
+}
+body.textbook figure.table.data th,
+body.textbook figure.table.data td {
+  padding: 8px 12px;
+  text-align: center;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--border-light);
+  white-space: nowrap;          /* valores numéricos em linha */
+}
+body.textbook figure.table.data th {
+  font-weight: 600;
+  border-bottom: 2px solid var(--border-medium);
+}
+body.textbook figure.table.data tr:hover td {
+  background-color: #f9fafb;    /* destaque leve opcional */
+}
+body.textbook figure.table.data figcaption {
+  font-style: italic;
+  font-size: .95rem;
+  margin-top: .4rem;
+  color: var(--muted);
+}
+
+/* =========================================================
+   FIGURAS
+   ========================================================= */
 body.textbook .figure,
 body.textbook figure.figure {
   display: block;
@@ -196,7 +256,7 @@ body.textbook .figure > figcaption,
 body.textbook figure.figure > figcaption {
   font-style: italic;
   font-size: 1.3rem;
-  margin-top: .1rem;          /* desktop: legenda bem próxima da imagem/svg */
+  margin-top: .1rem;          /* desktop: legenda próxima */
   color: #444;
 }
 
@@ -265,13 +325,13 @@ body.textbook .kg-container .katex .msupsub { font-size: .96em; }
     margin: .6rem auto;
   }
 
-  /* Tabelas */
+  /* Tabelas (overrides mobile) */
   body.textbook figure.table {
     width: 90%;
     margin: 1rem auto;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    transform: none;
+    transform: none;            /* remove recuo no mobile */
     max-width: 100%;
   }
   body.textbook figure.table table {
@@ -284,9 +344,14 @@ body.textbook .kg-container .katex .msupsub { font-size: .96em; }
     padding: 6px 8px;
     border-bottom: 2px solid var(--border-medium);
   }
-  body.textbook figure.table tbody td {
+  /* para textuais, permitir quebra; para .data, manter nowrap */
+  body.textbook figure.table tbody td { 
     padding: 5px 8px;
     border-bottom: 1px solid var(--border-light);
+    white-space: normal;
+  }
+  body.textbook figure.table.data td,
+  body.textbook figure.table.data th {
     white-space: nowrap;
   }
   body.textbook figure.table figcaption {
@@ -303,7 +368,7 @@ body.textbook .kg-container .katex .msupsub { font-size: .96em; }
   body.textbook .figure > figcaption,
   body.textbook figure.figure > figcaption {
     font-size: .8rem;
-    margin-top: .1rem; /* mobile: mantém legenda próxima */
+    margin-top: .1rem;
   }
 
   /* KaTeX mobile */
@@ -368,7 +433,7 @@ body.textbook .kg-container .katex .msupsub { font-size: .96em; }
   body.textbook .figure,
   body.textbook figure.figure {
     max-width: 620px !important;
-    transform: translateX(-54px); /* mantém alinhamento com a coluna de texto */
+    transform: translateX(-54px); /* alinhamento com a coluna */
   }
   body.textbook .figure > img,
   body.textbook figure.figure > img {
@@ -377,7 +442,7 @@ body.textbook .kg-container .katex .msupsub { font-size: .96em; }
   }
   body.textbook .figure > figcaption,
   body.textbook figure.figure > figcaption {
-    margin-top: .1rem !important; /* legenda mais colada no desktop */
+    margin-top: .1rem !important;
   }
 }
 
@@ -386,6 +451,7 @@ body.textbook .kg-container .katex .msupsub { font-size: .96em; }
   body.textbook .figure,
   body.textbook figure.figure { max-width: 820px; }
 }
+
 /* ===== BOTÕES DE SCROLL (discretos, mobile) ===== */
 .scroll-buttons {
   position: fixed;
@@ -402,55 +468,41 @@ body.textbook .kg-container .katex .msupsub { font-size: .96em; }
   transform: translateY(6px);
   transition: opacity 0.25s ease, visibility 0.25s ease, transform 0.25s ease;
 }
-
 .scroll-buttons.show {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
 }
-
 .scroll-buttons button {
-  width: 44px;              /* área mínima confortável para toque */
-  height: 44px;
-  /* ↓↓↓ ALTERAÇÕES AQUI ↓↓↓ */
-  border: 1px solid rgba(255, 255, 255, 0.12);    /* borda sutil p/ fundo escuro */
-  border-radius: 8px;                              /* quadrado suave */
-  background: rgba(31, 41, 55, 0.55);             /* var(--accent) com ~85% opacidade */
-  color: var(--accentFg, #ffffff);                /* ícone/texto claro */
-  /* ↑↑↑ FIM DAS ALTERAÇÕES ↑↑↑ */
-
+  width: 44px; height: 44px;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  background: rgba(31,41,55,0.55);
+  color: var(--accentFg, #fff);
   font-size: 1.15rem;
   font-weight: 700;
   line-height: 1;
   display: grid;
   place-items: center;
   padding: 0;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.06); /* sombra bem leve */
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
   opacity: 0.95;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
-  transition: opacity 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  transition: opacity .2s ease, transform .2s ease, box-shadow .2s ease;
 }
-
 .scroll-buttons button:active {
   transform: translateY(1px);
   box-shadow: 0 0 0 rgba(0,0,0,0.0);
 }
+.scroll-buttons button:hover { opacity: 1; }
 
-.scroll-buttons button:hover {
-  opacity: 1;
-}
+/* Só aparece no desktop desativado */
+@media (min-width: 769px) { .scroll-buttons { display: none; } }
 
-/* Só aparece no mobile */
-@media (min-width: 769px) {
-  .scroll-buttons { display: none; }
-}
-
-/* Acessibilidade: reduz animações se o usuário preferir */
+/* Acessibilidade: reduz animações */
 @media (prefers-reduced-motion: reduce) {
   .scroll-buttons,
   .scroll-buttons.show,
-  .scroll-buttons button {
-    transition: none !important;
-  }
+  .scroll-buttons button { transition: none !important; }
 }

@@ -1,0 +1,91 @@
+<!-- imagens/dados-nominais-animado.svg -->
+<svg viewBox="0 0 1500 750" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Exemplos de Dados Nominais (animado)</title>
+  <desc id="desc">
+    Diagrama hierárquico com o título "Nominal" fixo e as categorias que surgem e desaparecem em loop.
+  </desc>
+
+  <style>
+    :root {
+      --stroke: #111827;
+      --text: #111827;
+      --font: "et-book", "ETBook", "Georgia", serif;
+      --cycle: 8s;
+    }
+
+    text {
+      font-family: var(--font);
+      fill: var(--text);
+    }
+
+    rect, line {
+      stroke: var(--stroke);
+      fill: none;
+    }
+
+    /* ===== ANIMAÇÃO ===== */
+    @keyframes fadeCycle {
+      0%, 15%   { opacity: 0; }
+      25%, 75%  { opacity: 1; }
+      90%, 100% { opacity: 0; }
+    }
+
+    .anim {
+      opacity: 0;
+      animation: fadeCycle var(--cycle) linear infinite;
+    }
+
+    tspan { x: 0; dy: 1.2em; }
+  </style>
+
+  <!-- Box NOMINAL -->
+  <rect x="480" y="67" width="540" height="210" stroke-width="3" rx="15" />
+  <text x="750" y="190" font-size="80" font-weight="700" text-anchor="middle">NOMINAL</text>
+  
+  <!-- Grupo animado -->
+  <g class="anim">
+
+    <!-- Linha vertical do NOMINAL -->
+    <line x1="750" y1="277" x2="750" y2="410" stroke-width="3" />
+    
+    <!-- Linha horizontal -->
+    <line x1="250" y1="410" x2="1250" y2="410" stroke-width="3" />
+    
+    <!-- Linhas verticais -->
+    <line x1="250" y1="410" x2="250" y2="520" stroke-width="3" />
+    <line x1="580" y1="410" x2="580" y2="520" stroke-width="3" />
+    <line x1="920" y1="410" x2="920" y2="520" stroke-width="3" />
+    <line x1="1250" y1="410" x2="1250" y2="520" stroke-width="3" />
+
+    <!-- Setas -->
+    <polygon points="250,520 240,505 260,505" fill="#111827" />
+    <polygon points="580,520 570,505 590,505" fill="#111827" />
+    <polygon points="920,520 910,505 930,505" fill="#111827" />
+    <polygon points="1250,520 1240,505 1260,505" fill="#111827" />
+    
+    <!-- Box SEXO -->
+    <rect x="100" y="550" width="300" height="110" stroke-width="3" rx="15" />
+    <text x="250" y="620" font-size="46" font-weight="500" text-anchor="middle">SEXO</text>
+    
+    <!-- Box COR DOS OLHOS -->
+    <rect x="430" y="550" width="300" height="110" stroke-width="3" rx="15" />
+    <text x="580" y="595" font-size="44" font-weight="500" text-anchor="middle">
+      <tspan x="580" dy="0">COR DOS</tspan>
+      <tspan x="580" dy="1.3em">OLHOS</tspan>
+    </text>
+    
+    <!-- Box NACIONALIDADE -->
+    <rect x="770" y="550" width="300" height="110" stroke-width="3" rx="15" />
+    <text x="920" y="595" font-size="44" font-weight="500" text-anchor="middle">
+    <tspan x="920" dy="0">NACIONALI</tspan>
+    <tspan x="920" dy="1.3em">DADE</tspan>
+    </text>
+
+    <!-- Box ESTADO CIVIL -->
+    <rect x="1100" y="550" width="300" height="110" stroke-width="3" rx="15" />
+    <text x="1250" y="595" font-size="44" font-weight="500" text-anchor="middle">
+      <tspan x="1250" dy="0">ESTADO</tspan>
+      <tspan x="1250" dy="1.3em">CIVIL</tspan>
+    </text>
+  </g>
+</svg>

@@ -1,0 +1,97 @@
+<!-- imagens/quantitativas-discreta-continua.svg -->
+<svg viewBox="0 0 1500 750" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Variáveis Quantitativas — Discretas vs Contínuas</title>
+  <desc id="desc">Discretas com pontos que surgem em sequência; contínuas com uma bolinha que se move na reta.</desc>
+
+  <style>
+    :root{
+      --stroke:#111827;
+      --text:#111827;
+      --font:"et-book","ETBook","Georgia",serif;
+    }
+
+    text{ font-family:var(--font); fill:var(--text); }
+    rect, line{ stroke:var(--stroke); fill:none; }
+
+    .box{ stroke-width:3; rx:15 }
+    .title{ font-weight:700 }
+    .label{ font-size:44px; font-weight:500; text-anchor:middle }
+
+    /* ---- animação: pontos discretos “popam” em sequência ---- */
+    @keyframes popPt{
+      0%   { opacity:0; transform:scale(.6); }
+      20%  { opacity:1; transform:scale(1); }
+      80%  { opacity:1; transform:scale(1); }
+      100% { opacity:0; transform:scale(.6); }
+    }
+    .dot{
+      fill:var(--stroke);
+      r:10;
+      opacity:0;
+      animation:popPt 2.2s ease-in-out infinite;
+    }
+  </style>
+
+  <!-- Título -->
+  <rect x="480" y="60" width="540" height="120" class="box"/>
+  <text x="750" y="130" font-size="55" class="title" text-anchor="middle">QUANTITATIVAS</text>
+
+  <!-- Tronco -->
+  <line x1="750" y1="180" x2="750" y2="280" stroke-width="3"/>
+  <line x1="220" y1="280" x2="1280" y2="280" stroke-width="3"/>
+
+  <!-- DISCRETAS -->
+  <line x1="380" y1="280" x2="380" y2="370" stroke-width="3"/>
+  <rect x="230" y="370" width="300" height="110" class="box"/>
+  <text x="380" y="435" class="label">DISCRETAS</text>
+
+  <!-- Reta numérica (discretas) -->
+  <line x1="180" y1="540" x2="580" y2="540" stroke-width="3"/>
+  <line x1="220" y1="525" x2="220" y2="555"/>
+  <line x1="300" y1="525" x2="300" y2="555"/>
+  <line x1="380" y1="525" x2="380" y2="555"/>
+  <line x1="460" y1="525" x2="460" y2="555"/>
+  <line x1="540" y1="525" x2="540" y2="555"/>
+
+  <!-- Pontos discretos (animados em sequência; delays diferentes) -->
+  <circle class="dot" cx="220" cy="540" style="animation-delay:0s"/>
+  <circle class="dot" cx="300" cy="540" style="animation-delay:.25s"/>
+  <circle class="dot" cx="380" cy="540" style="animation-delay:.50s"/>
+  <circle class="dot" cx="460" cy="540" style="animation-delay:.75s"/>
+  <circle class="dot" cx="540" cy="540" style="animation-delay:1.00s"/>
+
+  <!-- CONTÍNUAS -->
+  <line x1="1120" y1="280" x2="1120" y2="370" stroke-width="3"/>
+  <rect x="970" y="370" width="300" height="110" class="box"/>
+  <text x="1120" y="435" class="label">CONTÍNUAS</text>
+
+  <!-- Reta numérica (contínuas) -->
+  <line x1="840" y1="540" x2="1400" y2="540" stroke-width="3"/>
+  <line x1="860" y1="525" x2="860" y2="555"/>
+  <line x1="980" y1="525" x2="980" y2="555"/>
+  <line x1="1100" y1="525" x2="1100" y2="555"/>
+  <line x1="1220" y1="525" x2="1220" y2="555"/>
+  <line x1="1340" y1="525" x2="1340" y2="555"/>
+
+  <!-- Bolinha que se move (vai e volta) -->
+  <circle cx="860" cy="540" r="10" fill="#111827">
+    <animate attributeName="cx"
+             values="860; 1400; 860"
+             keyTimes="0; .5; 1"
+             dur="4s"
+             calcMode="spline"
+             keySplines="0.42 0 0.58 1; 0.42 0 0.58 1"
+             repeatCount="indefinite"/>
+  </circle>
+
+  <!-- Exemplos -->
+  <text x="380" y="600" class="label" font-size="36">
+    <tspan x="380" dy="0">número de filhos</tspan>
+    <tspan x="380" dy="1.3em">defeitos em lote</tspan>
+  </text>
+
+  <text x="1120" y="600" class="label" font-size="36">
+    <tspan x="1120" dy="0">altura • peso</tspan>
+    <tspan x="1120" dy="1.3em">tempo • renda</tspan>
+  </text>
+</svg>

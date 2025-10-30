@@ -1,0 +1,59 @@
+<!-- imagens/tipos-variaveis-loop.svg -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 300" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+  <defs>
+    <style>
+      .title { font-family: et-book, ETBook, ETBembo, Georgia, serif; font-size:20px; font-weight:600; fill:#1f2937; text-anchor:middle; }
+      .label { font-family: et-book, ETBook, ETBembo, Georgia, serif; font-size:18px; font-weight:600; fill:#1f2937; text-anchor:middle; }
+      .oval  { fill:#fff; stroke:#1f2937; stroke-width:2; }
+      .shaft { stroke:#1f2937; stroke-width:5; stroke-linecap:round; fill:none; }
+      .head  { fill:#1f2937; }
+    </style>
+  </defs>
+
+  <!-- Nó central -->
+  <g transform="translate(410,90)">
+    <ellipse rx="140" ry="48" class="oval"/>
+    <text class="title" y="6">TIPOS DE VARIÁVEIS</text>
+  </g>
+
+  <!-- Elipses inferiores (afastadas nas diagonais; entram após setas) -->
+  <!-- esquerda: antes (230,210) → agora (212,218) -->
+  <g transform="translate(212,218)" opacity="0">
+    <ellipse rx="160" ry="42" class="oval"/>
+    <text class="label" y="6">QUALITATIVAS</text>
+    <animate attributeName="opacity" dur="6s" begin="0.8s" repeatCount="indefinite"
+             values="0;1;1;0;0" keyTimes="0;0.25;0.70;0.85;1"/>
+  </g>
+
+  <!-- direita: antes (590,210) → agora (608,218) -->
+  <g transform="translate(608,218)" opacity="0">
+    <ellipse rx="160" ry="42" class="oval"/>
+    <text class="label" y="6">QUANTITATIVAS</text>
+    <animate attributeName="opacity" dur="6s" begin="1.0s" repeatCount="indefinite"
+             values="0;1;1;0;0" keyTimes="0;0.25;0.70;0.85;1"/>
+  </g>
+
+  <!-- Setas (retas, simétricas; ponta quase encostando) -->
+  <!-- Esquerda -->
+  <g opacity="0">
+    <!-- haste -->
+    <path class="shaft" d="M 360 140 L 280 170"/>
+    <!-- ponta: base no fim da haste; leve margem até a elipse (~2–3px) -->
+    <g transform="translate(280,170) rotate(160)">
+      <polygon class="head" points="21,0 0,-8 0,8"/>
+    </g>
+    <animate attributeName="opacity" dur="6s" begin="0s" repeatCount="indefinite"
+             values="0;1;1;0;0" keyTimes="0;0.18;0.65;0.82;1"/>
+  </g>
+
+  <!-- Direita -->
+  <g opacity="0">
+    <path class="shaft" d="M 460 140 L 540 170"/>
+    <g transform="translate(540,170) rotate(20)">
+      <polygon class="head" points="21,0 0,-8 0,8"/>
+    </g>
+    <animate attributeName="opacity" dur="6s" begin="0.2s" repeatCount="indefinite"
+             values="0;1;1;0;0" keyTimes="0;0.18;0.65;0.82;1"/>
+  </g>
+</svg>
+

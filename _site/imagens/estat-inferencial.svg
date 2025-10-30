@@ -1,0 +1,204 @@
+<!-- imagens/estatistica-inferencial-animada.svg -->
+<svg viewBox="0 0 1500 750" xmlns="http://www.w3.org/2000/svg" role="graphics-document" aria-labelledby="title desc">
+  <title id="title">Estatística Inferencial — animação didática (CSS only)</title>
+  <desc id="desc">Amostragem, intervalo de confiança e teste de hipótese com animações via CSS (sem SMIL).</desc>
+
+  <defs>
+    <!-- Definição de uma linha de 8 pontos para reutilização -->
+    <g id="dot-row">
+      <circle cx="0"   cy="0" r="5"/>
+      <circle cx="40"  cy="0" r="5"/>
+      <circle cx="80"  cy="0" r="5"/>
+      <circle cx="120" cy="0" r="5"/>
+      <circle cx="160" cy="0" r="5"/>
+      <circle cx="200" cy="0" r="5"/>
+      <circle cx="240" cy="0" r="5"/>
+      <circle cx="280" cy="0" r="5"/>
+    </g>
+
+    <style>
+      :root{
+        --stroke:#111827; --text:#111827;
+        --font:"et-book","ETBook","Georgia",serif;
+        --cycle:8s;
+      }
+      text{ font-family:var(--font); fill:var(--text); user-select:none }
+      .stroke{ stroke:var(--stroke); fill:none; stroke-linecap:round; stroke-linejoin:round }
+      .box{ stroke-width:3; rx:15 }
+      .panel{ stroke-width:2; rx:12 }
+      .title{ font-weight:700; font-size:45px; text-anchor:middle }
+      .label{ font-size:36px; font-weight:500; text-anchor:middle }
+      .tick{ stroke-width:2 }
+
+      /* ===== FASES DA ANIMAÇÃO (ajustadas para transições mais suaves) =====
+         - Amostragem:     0%–22%
+         - Intervalo IC:   28%–74%
+         - Teste hipótese: 36%–74%
+         Limpeza:          88%–100%
+      */
+
+      /* ===== AMOSTRAGEM (0–22%) ===== */
+      @keyframes scanX { 
+        0%{transform:translateX(0)} 
+        50%{transform:translateX(220px)} 
+        100%{transform:translateX(0)} 
+      }
+      .scanner{ animation:scanX var(--cycle) cubic-bezier(.42,0,.58,1) infinite }
+
+      @keyframes popDot {
+        0%,20%{opacity:0; transform:scale(.6)}
+        28%,72%{opacity:1; transform:scale(1)}
+        88%,100%{opacity:0; transform:scale(.6)}
+      }
+      .sample-dot{ fill:var(--stroke); opacity:0; animation:popDot var(--cycle) ease-in-out infinite }
+
+      @keyframes growLine {
+        0%,22%{stroke-dashoffset:160; opacity:0}
+        36%,72%{stroke-dashoffset:0; opacity:1}
+        90%,100%{stroke-dashoffset:160; opacity:0}
+      }
+      .grow{ stroke-dasharray:160; stroke-dashoffset:160; animation:growLine var(--cycle) ease-in-out infinite }
+
+      /* ===== INTERVALO DE CONFIANÇA (28–74%) ===== */
+      @keyframes fade { 
+        0%,20%{opacity:0} 
+        28%,74%{opacity:1} 
+        88%,100%{opacity:0} 
+      }
+      .ic{ opacity:0; animation:fade var(--cycle) ease-in-out infinite }
+      @keyframes scaleIC { 
+        0%{transform:scaleX(0)} 
+        28%{transform:scaleX(1)} 
+        74%{transform:scaleX(1)} 
+        100%{transform:scaleX(0)} 
+      }
+      .icbar{ transform-origin:50% 50%; transform-box:fill-box; animation:scaleIC var(--cycle) ease-in-out infinite }
+
+      @keyframes pulse { 0%,100%{opacity:.45} 50%{opacity:1} }
+      .mean{ animation:pulse 2.2s ease-in-out infinite }
+
+      /* ===== TESTE DE HIPÓTESE (36–74%) ===== */
+      @keyframes draw { 
+        0%,20%{stroke-dashoffset:540; opacity:.9} 
+        36%,74%{stroke-dashoffset:0; opacity:1} 
+        88%,100%{stroke-dashoffset:540; opacity:.9} 
+      }
+      .draw{ stroke-dasharray:540; stroke-dashoffset:540; animation:draw var(--cycle) ease-in-out infinite }
+
+      @keyframes blink { 0%,20%,100%{opacity:.2} 40%,60%{opacity:.55} }
+      .crit{ opacity:.2; animation:blink 3s ease-in-out infinite }
+
+      @keyframes slideP { 
+        0%{transform:translateX(0)} 
+        50%{transform:translateX(-180px)} 
+        100%{transform:translateX(0)} 
+      }
+      .pArrow{ animation:slideP var(--cycle) cubic-bezier(.42,0,.58,1) infinite }
+    </style>
+
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#111827"/>
+    </marker>
+  </defs>
+
+  <!-- TÍTULO -->
+  <g>
+    <rect x="520" y="60" width="460" height="110" class="box stroke"/>
+    <text x="750" y="110" class="title">ESTATÍSTICA</text>
+    <text x="750" y="155" class="title">INFERENCIAL</text>
+  </g>
+
+  <!-- CONECTORES (mais espaço abaixo do título) -->
+  <g class="stroke" stroke-width="3">
+    <line x1="750" y1="170" x2="750" y2="260"/>
+    <line x1="100" y1="260" x2="1400" y2="260"/>
+    <line x1="290"  y1="260" x2="290"  y2="280"/>
+    <line x1="750"  y1="260" x2="750"  y2="280"/>
+    <line x1="1210" y1="260" x2="1210" y2="280"/>
+  </g>
+
+  <!-- ===== PAINEL 1: AMOSTRAGEM ===== -->
+  <g aria-label="Processo de amostragem: seleção aleatória de elementos de uma população">
+    <rect x="100" y="280" width="380" height="380" class="panel stroke"/>
+    <text x="290" y="330" class="label">AMOSTRAGEM</text>
+
+    <!-- População com margem interna -->
+    <rect x="150" y="370" width="280" height="200" class="stroke" rx="8"/>
+    <g fill="#111827" transform="translate(165,385)">
+      <use href="#dot-row" y="0"/>
+      <use href="#dot-row" y="35"/>
+      <use href="#dot-row" y="70"/>
+      <use href="#dot-row" y="105"/>
+      <use href="#dot-row" y="140"/>
+      <use href="#dot-row" y="175"/>
+    </g>
+
+    <!-- Janela de escaneamento (dentro da área segura) -->
+    <g class="scanner" transform="translate(0,10)">
+      <rect x="160" y="380" width="120" height="120" class="stroke" rx="10"/>
+      <circle class="sample-dot" cx="185" cy="405" r="6" style="animation-delay:.20s"/>
+      <circle class="sample-dot" cx="205" cy="440" r="6" style="animation-delay:.40s"/>
+      <circle class="sample-dot" cx="240" cy="470" r="6" style="animation-delay:.60s"/>
+      <circle class="sample-dot" cx="265" cy="420" r="6" style="animation-delay:.80s"/>
+      <circle class="sample-dot" cx="245" cy="380" r="6" style="animation-delay:1.00s"/>
+    </g>
+
+    <!-- Linha → “estatística (amostra)” -->
+    <line x1="300" y1="530" x2="420" y2="530" class="stroke grow" stroke-width="3" marker-end="url(#arrow)"/>
+    <text x="360" y="555" font-size="20" text-anchor="middle">estatística (amostra)</text>
+  </g>
+
+  <!-- ===== PAINEL 2: INTERVALO DE CONFIANÇA ===== -->
+  <g aria-label="Intervalo de confiança centrado na média amostral x̄, com 95% de confiança">
+    <rect x="560" y="280" width="380" height="380" class="panel stroke"/>
+    <text x="750" y="325" class="label">INTERVALO</text>
+    <text x="750" y="360" class="label">DE CONFIANÇA</text>
+
+    <!-- Eixo com mais espaço acima/abaixo -->
+    <line x1="620" y1="570" x2="880" y2="570" class="stroke"/>
+    <line x1="660" y1="555" x2="660" y2="585" class="stroke tick"/>
+    <line x1="750" y1="555" x2="750" y2="585" class="stroke tick"/>
+    <line x1="840" y1="555" x2="840" y2="585" class="stroke tick"/>
+
+    <!-- Média centralizada -->
+    <g class="mean">
+      <line x1="750" y1="530" x2="750" y2="610" class="stroke"/>
+      <circle cx="750" cy="570" r="6" fill="#111827"/>
+      <text x="750" y="520" font-size="26" text-anchor="middle">x̄</text>
+    </g>
+
+    <!-- IC (barra) -->
+    <g class="ic">
+      <rect x="700" y="566" width="100" height="8" fill="#111827" class="icbar"/>
+      <line x1="700" y1="555" x2="700" y2="585" class="stroke"/>
+      <line x1="800" y1="555" x2="800" y2="585" class="stroke"/>
+      <text x="750" y="540" font-size="20" text-anchor="middle">IC (95%)</text>
+    </g>
+  </g>
+
+  <!-- ===== PAINEL 3: TESTE DE HIPÓTESE ===== -->
+  <g aria-label="Teste de hipótese: curva normal com regiões críticas e p-valor">
+    <rect x="1020" y="280" width="380" height="380" class="panel stroke"/>
+    <text x="1210" y="330" class="label">TESTE DE HIPÓTESE</text>
+
+    <!-- Curva normal com mais espaço -->
+    <path d="M1070,570 C1110,430 1310,430 1350,570" class="stroke draw" stroke-width="3"/>
+
+    <!-- Regiões críticas (ajustadas para não tocar bordas) -->
+    <path d="M1070,570 C1090,510 1120,480 1150,470 L1150,570 Z" fill="#111827" class="crit"/>
+    <path d="M1350,570 C1330,510 1300,480 1270,470 L1270,570 Z" fill="#111827" class="crit"/>
+
+    <!-- Eixo e μ₀ -->
+    <line x1="1070" y1="570" x2="1350" y2="570" class="stroke"/>
+    <line x1="1210" y1="530" x2="1210" y2="610" class="stroke"/>
+    <text x="1210" y="520" text-anchor="middle" font-size="22">μ₀</text>
+
+    <!-- Seta do p-valor (reposicionada para não sobrepor) -->
+    <g class="pArrow">
+      <line x1="1335" y1="555" x2="1285" y2="500" class="stroke" marker-end="url(#arrow)"/>
+      <text x="1335" y="550" font-size="22">p</text>
+    </g>
+
+    <text x="1210" y="630" font-size="22" text-anchor="middle">comparar p com α</text>
+  </g>
+</svg>

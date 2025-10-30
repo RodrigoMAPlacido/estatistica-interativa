@@ -54,7 +54,7 @@ proximo: /capitulos/cap2-distribuicoes-de-frequencia-e-graficos/
   
   <p>A tabela a seguir apresenta um exemplo simples de dados obtidos por medição: o registro da temperatura ao longo de um dia em determinada cidade. </p>
 
-  <figure class="table" >
+  <figure class="table data" >
   <table>
     <thead>
       <tr>
@@ -135,57 +135,91 @@ Em resumo, enquanto os <strong>parâmetros</strong> descrevem características v
 
 <p> Antes de serem analisados, os dados precisam ser corretamente classificados. Essa classificação é necessária porque o tipo de dado determina quais representações gráficas podem ser utilizadas, quais medidas estatísticas fazem sentido (como média ou mediana) e quais métodos de análise são válidos. Em outras palavras, a forma como tratamos e interpretamos os dados depende diretamente de sua natureza. Por isso, a Estatística organiza os dados em categorias, distinguindo-os quanto ao seu conteúdo (qualitativo ou quantitativo) e quanto ao nível de mensuração utilizado para registrá-los (nominal, ordinal, intervalar ou de razão). </p>
 
-<h3>3.1 Dados qualitativos e quantitativos</h3> <p> Uma das formas mais básicas de classificar dados é diferenciá-los de acordo com a natureza da informação que representam. Nesse sentido, os dados podem ser divididos em duas categorias principais: <strong>dados qualitativos</strong> e <strong>dados quantitativos</strong>. </p> <div class="box-definicao"> <strong>Definição</strong> <ul> <li><strong>Dados qualitativos</strong>: descrevem características, atributos ou categorias, sem envolver contagem ou mensuração numérica. Exemplos: uso de óculos, cor dos olhos, profissão, nacionalidade.</li>
+
+
+<h3>3.1 Dados qualitativos e quantitativos</h3>
+
+
+
+<p> Uma das formas mais básicas de classificar dados é diferenciá-los de acordo com a natureza da informação que representam. Nesse sentido, os dados podem ser divididos em duas categorias principais: <strong>dados qualitativos</strong> e <strong>dados quantitativos</strong>. </p> 
+
+<figure class="figure figure--inline">
+  <img src="../../imagens/tipos-variaveis.svg" alt="Tipos de variáveis: qualitativas e quantitativas">
+</figure>
+
+<div class="box-definicao"> <strong>Definição</strong> <ul> <li><strong>Dados qualitativos</strong>: descrevem características, atributos ou categorias, sem envolver contagem ou mensuração numérica. Exemplos: uso de óculos, cor dos olhos, profissão, nacionalidade.</li>
 <li><strong>Dados quantitativos</strong>: são expressos numericamente e resultam de contagem ou medição. Exemplos: idade, salário e número de filhos.</li> </ul> 
 </div> <p> Enquanto os dados qualitativos classificam ou identificam elementos sem utilizar valores numéricos, os dados quantitativos permitem a realização de operações matemáticas, como soma, média e variação. Essa distinção é essencial, pois determina não apenas como os dados serão organizados, mas também quais ferramentas estatísticas podem ser utilizadas na análise. </p>
 
 
-<h3>3.2 Níveis de mensuração</h3> <p> Além de identificar se os dados são qualitativos ou quantitativos, também é necessário determinar o <strong>nível de mensuração</strong> em que eles foram registrados. O nível de mensuração indica <em>como</em> uma variável foi medida ou classificada e, por consequência, define <strong>quais operações matemáticas e estatísticas podem ser aplicadas</strong>. Os quatro níveis de mensuração, do mais simples ao mais informativo, são: <strong>nominal</strong>, <strong>ordinal</strong>, <strong>intervalar</strong> e <strong>de razão</strong>. </p> <div class="box-definicao"> <strong>Definição</strong> <ul> <li><strong>Nível nominal:</strong> os dados apenas classificam elementos em categorias sem indicar ordem. Exemplos: sexo, cor dos olhos, estado civil.</li> <li><strong>Nível ordinal:</strong> os dados permitem estabelecer uma ordem ou hierarquia entre categorias, mas sem medir a intensidade das diferenças. Exemplos: grau de instrução, posição em um ranking.</li> <li><strong>Nível intervalar:</strong> permite comparar diferenças entre valores, mas não possui um zero absoluto. Exemplos: temperatura em °C ou °F, anos do calendário.</li> <li><strong>Nível de razão:</strong> além de permitir comparar diferenças, possui zero absoluto e permite operações como razão e proporção. Exemplos: idade, renda, peso, altura.</li> </ul> </div> <p> Quanto maior o nível de mensuração, maior a quantidade de informações contidas nos dados e mais sofisticados podem ser os procedimentos estatísticos utilizados. Por exemplo, não faz sentido calcular uma média para dados nominais, mas isso é totalmente válido para dados de razão. </p>
-<h3>3.3 Coleta de Dados e Planejamento de Experimentos</h3>
+
+<h3>3.2 Níveis de mensuração</h3>
 
 <p>
-O objetivo de um estudo estatístico é coletar dados relevantes e utilizá-los para sustentar conclusões. A qualidade dessas conclusões depende, antes de tudo, da qualidade do planejamento: que problema está sendo investigado, qual é a população de interesse, como a amostra será selecionada, de que modo as medidas serão obtidas e quais fontes de viés precisam ser controladas. Planejar bem é garantir que os dados reflitam o fenômeno estudado, e não artefatos do processo de coleta.
+Além de identificar se os dados são <strong>qualitativos</strong> ou <strong>quantitativos</strong>, é necessário compreender o <strong>nível de mensuração</strong> em que foram registrados. O nível de mensuração indica <em>como</em> uma variável foi medida ou classificada e determina o <strong>tipo de informação que os dados oferecem</strong>, bem como <strong>quais operações matemáticas ou estatísticas</strong> podem ser aplicadas de forma válida.
 </p>
 
 <p>
-O planejamento inicia pela definição clara do problema e das variáveis envolvidas, seguida da identificação da população e dos critérios de inclusão da amostra. Em seguida decide-se o tipo de estudo (observacional ou experimental), escolhe-se o método de coleta (por exemplo, pesquisa ou simulação) e registram-se os procedimentos com suficiente detalhe para permitir replicação. Somente depois disso se passa à coleta em si.
+A classificação mais conhecida foi proposta por <strong>S. S. Stevens (1946)</strong> e distingue quatro níveis principais: <em>nominal</em>, <em>ordinal</em>, <em>intervalar</em> e <em>de razão</em>. Eles se diferenciam quanto à natureza da informação fornecida e à possibilidade de ordenar valores, calcular diferenças ou estabelecer proporções. Embora essa tipologia seja amplamente utilizada, <strong>não existe um padrão universal e rígido</strong> — sua aplicação depende do contexto e da forma como os dados foram coletados ou codificados.
+</p>
+
+<figure class="figure figure--inline">
+  <img src="../../imagens/niveis-mensuracao.svg" alt="Níveis de mensuração: nominal, ordinal, intervalar e razão">
+</figure>
+
+<p>
+O <strong>nível nominal</strong> é o mais simples. Nesse caso, os valores de uma variável representam apenas <strong>categorias distintas</strong>, sem qualquer relação de ordem ou hierarquia. Quando números são utilizados, funcionam apenas como rótulos identificadores, sem valor quantitativo. Exemplos típicos incluem o <em>sexo</em>, a <em>cor dos olhos</em>, a <em>nacionalidade</em> e o <em>estado civil</em>. Essas variáveis são chamadas de <strong>qualitativas nominais</strong>, pois servem exclusivamente para classificar os elementos observados.
+</p>
+<figure class="figure figure--inline">
+  <img src="../../imagens/nominal.svg" alt="Nível Nominal">
+</figure>
+<p>
+O <strong>nível ordinal</strong> acrescenta uma <strong>ordem entre as categorias</strong>, embora as diferenças entre elas não possam ser mensuradas. É possível afirmar que uma categoria é “maior” ou “menor” que outra, mas não determinar <em>quanto</em> difere. Exemplos incluem o <em>grau de instrução</em> (fundamental, médio, superior), a <em>classe social</em> (baixa, média, alta) e o <em>grau de satisfação</em> (insatisfeito, neutro, satisfeito). Essas variáveis são geralmente <strong>qualitativas ordinais</strong>, pois expressam atributos não numéricos que podem ser hierarquizados.
+</p>
+<figure class="figure figure--inline">
+  <img src="../../imagens/quali-ordinal.svg" alt="Qualitativo Ordinal">
+</figure>
+<p>
+O <strong>nível ordinal</strong> também pode ser aplicado a variáveis originalmente quantitativas. Isso ocorre quando seus valores são <strong>agrupados em faixas ou intervalos ordenados</strong>. Por exemplo, uma variável de <em>renda</em>, que em sua forma original é <strong>quantitativa de razão</strong>, pode ser reorganizada em categorias como <em>“até R$ 2.000”</em>, <em>“de R$ 2.001 a R$ 6.000”</em> e <em>“acima de R$ 6.000”</em>. O mesmo vale para a <em>idade</em>, que pode ser registrada de forma contínua (em anos exatos) ou agrupada em faixas como <em>“0–17”</em>, <em>“18–35”</em>, <em>“36–59”</em> e <em>“60+”</em>. Assim, o que define a escala ordinal <strong>não é o tipo de fenômeno observado</strong>, mas a <strong>estrutura ordenada das categorias criadas</strong> pelo processo de mensuração.
 </p>
 
 <p>
-Em um <strong>estudo observacional</strong>, o pesquisador observa e mede características tal como ocorrem, sem intervir no processo que as gera. Esse desenho é adequado quando intervenções não são possíveis, são eticamente delicadas ou custosas. Observacionais respondem bem a perguntas descritivas (como é, com que frequência ocorre, como se distribui), mas têm limitações para estabelecer relações causais, pois fatores não controlados podem estar associados simultaneamente à exposição e ao desfecho.
+O <strong>nível intervalar</strong> caracteriza-se pelo fato de que os valores podem ser ordenados e as diferenças entre eles possuem significado numérico real. Nesse nível, é possível calcular médias e intervalos, pois a distância entre dois valores consecutivos é constante. Entretanto, o <strong>zero é arbitrário</strong>, funcionando apenas como referência, sem representar ausência da característica medida. Por essa razão, operações de multiplicação ou divisão não são interpretáveis. Um exemplo clássico é a <em>temperatura em graus Celsius</em>: a diferença entre 20 °C e 30 °C é igual à diferença entre 10 °C e 20 °C, mas 0 °C não indica ausência de calor, apenas o ponto de congelamento da água definido por convenção.
+</p>
+<figure class="figure figure--inline">
+  <img src="../../imagens/intervalar.svg" alt="Nível Intervalar">
+</figure>
+<p>
+
+<p>
+  O <strong>nível de razão</strong> reúne todas as propriedades do nível intervalar e se distingue pela existência de um
+  <strong>zero absoluto</strong> — ponto que indica a ausência completa da característica observada.
+  Essa propriedade permite estabelecer <em>relações de proporção</em> entre valores (por exemplo, afirmar que
+  um valor é o dobro ou a metade de outro). Nesse nível, todas as operações aritméticas são significativas:
+  soma, subtração, multiplicação e divisão.
 </p>
 
 <p>
-Em um <strong>experimento</strong>, aplica-se deliberadamente um <em>tratamento</em> a parte dos indivíduos e compara-se suas respostas às de um <em>grupo de controle</em>, que não recebe o tratamento (ou recebe um placebo). Esse arranjo aumenta a capacidade de isolar efeitos causais, desde que três pilares sejam respeitados: <em>controle</em>, <em>aleatorização</em> e <em>replicação</em>. Controle significa manter constantes — tanto quanto possível — as condições que não são foco do estudo; aleatorização é o sorteio que decide quem recebe o tratamento e quem integra o controle, reduzindo vieses de seleção; replicação é a repetição do experimento em tamanho suficiente para que os resultados não dependam do acaso.
+  São exemplos típicos de variáveis em nível de razão: <em>peso</em>, <em>altura</em>, <em>renda</em>, <em>idade</em> e
+  <em>distância</em> — grandezas em que o valor zero representa a inexistência do que se mede.
 </p>
 
+<ul>
+  <li><strong>Discretas</strong>: resultam de contagens inteiras, como o número de filhos ou de defeitos em um lote.</li>
+  <li><strong>Contínuas</strong>: resultam de medições e podem assumir infinitos valores dentro de um intervalo, como altura ou peso.</li>
+</ul>
+<figure class="figure figure--inline">
+  <img src="../../imagens/discreta-continua.svg" alt="Nível Intervalar">
+</figure>
 <p>
-Em contextos clínicos ou sociais, é comum empregar <strong>placebo</strong> no grupo de controle, isto é, um tratamento inerte, indistinguível do ativo, para captar o efeito psicológico de “estar sendo tratado”. Para evitar que expectativas de participantes e pesquisadores alterem o comportamento de resposta, pode-se usar <em>cego</em> (o participante não sabe a qual grupo pertence) ou <em>duplo-cego</em> (participante e equipe que aplica/coleta dados desconhecem a alocação). Esses procedimentos reduzem vieses de mensuração e interpretação.
+<p>
+  A distinção entre variáveis <strong>discretas</strong> e <strong>contínuas</strong> não constitui um novo nível de mensuração,
+  mas um <em>refinamento</em> dentro das variáveis quantitativas. As discretas expressam quantidades contáveis e finitas,
+  enquanto as contínuas representam grandezas que variam de forma contínua. Em ambos os casos, o nível de mensuração é
+  geralmente o de razão — exceto em situações específicas, como a <em>temperatura em graus Celsius</em>, cujo zero é
+  arbitrário (apenas referência) e, portanto, classificada como <strong>intervalar</strong>.
 </p>
 
-<p>
-Outra estratégia de desenho é o <strong>pareamento</strong> (ou emparelhamento), no qual indivíduos são agrupados em pares com características semelhantes (por exemplo, idade e sexo) e, dentro de cada par, um é aleatoriamente designado ao tratamento e o outro ao controle. O pareamento melhora a comparabilidade entre grupos quando há forte heterogeneidade em variáveis prognósticas.
-</p>
-
-<p>
-Quanto aos <strong>métodos de coleta</strong>, duas modalidades frequentes são a <em>simulação</em> e a <em>pesquisa</em>. Simulações reproduzem, com modelos computacionais ou físicos, condições de um processo difícil, perigoso ou caro de observar diretamente — por exemplo, colisões automotivas com manequins. Pesquisas, por sua vez, obtêm informações de pessoas ou organizações por questionários, entrevistas, formulários on-line ou registros administrativos. O desenho do questionário deve ser cuidadoso, evitando perguntas tendenciosas e assegurando linguagem clara e escalas de resposta apropriadas ao nível de mensuração da variável.
-</p>
-
-<p>
-Do ponto de vista amostral, um <strong>censo</strong> mede todos os elementos da população, fornecendo quadro completo, porém com alto custo e, muitas vezes, inviável. Mais comum é a <strong>amostragem</strong>, que mede apenas parte da população. Toda inferência baseada em amostra está sujeita a <em>erro de amostragem</em>, a diferença entre as estatísticas amostrais e os verdadeiros parâmetros populacionais que decorre do sorteio dos elementos. Para que a amostra seja representativa, recorre-se a planos probabilísticos.
-</p>
-
-<p>
-A <strong>amostragem aleatória simples</strong> dá a cada elemento chances iguais de ser selecionado, usualmente por sorteio com números aleatórios. Outras variações úteis incluem: <em>amostragem estratificada</em>, quando a população é dividida em estratos homogêneos (por exemplo, faixa etária) e amostras são sorteadas dentro de cada estrato para garantir cobertura; <em>amostragem por conglomerados</em>, quando unidades naturais em grupo (escolas, domicílios) são sorteadas e todos (ou uma subamostra) dentro delas são observados, ganhando eficiência logística; e <em>amostragem sistemática</em>, que seleciona elementos em saltos regulares após um início aleatório. A escolha do plano afeta custos, precisão e a viabilidade operacional do estudo.
-</p>
-
-<p>
-Dois aspectos finais merecem atenção. Primeiro, o <strong>tamanho da amostra</strong>: amostras muito pequenas tendem a produzir estimativas instáveis e testes com baixo poder; amostras excessivamente grandes podem ser dispendiosas e detectar diferenças irrelevantes na prática. Segundo, as <strong>variáveis de confusão</strong>: fatores associados simultaneamente ao tratamento e ao desfecho que distorcem as estimativas de efeito. Elas devem ser prevenidas no desenho (aleatorização, controle, pareamento) e tratadas na análise (estratificação ou modelagem).
-</p>
-
-<p>
-Em síntese, coletar bem é planejar com rigor: definir claramente o problema e a população, escolher o desenho adequado (observacional ou experimental), adotar métodos de coleta compatíveis com o objeto de estudo, selecionar amostras probabilísticas e instituir procedimentos de controle, aleatorização e replicação. Esses cuidados tornam os dados confiáveis e, por consequência, as conclusões estatísticas sólidas.
-</p>
 <hr>
 
 <h2>4. Estatística descritiva e estatística inferencial</h2>
@@ -205,6 +239,9 @@ Em síntese, coletar bem é planejar com rigor: definir claramente o problema e 
   Para isso, utiliza tabelas, gráficos e medidas-resumo, como média, mediana, amplitude, variância e quartis. Esses instrumentos
   permitem reduzir a complexidade dos dados, tornando-os compreensíveis sem distorcer sua essência.
 </p>
+<figure class="figure figure--inline">
+  <img src="../../imagens/estat-descritiva.svg" alt="Estatística Descritiva">
+</figure>
 <p>
   Embora frequentemente vista como etapa preliminar, a estatística descritiva possui valor próprio: uma descrição bem construída
   não apenas organiza os dados, mas também orienta a formulação de hipóteses, revela anomalias e sugere relações dignas de
@@ -218,6 +255,9 @@ Em síntese, coletar bem é planejar com rigor: definir claramente o problema e 
   a partir dela, estimar parâmetros desconhecidos ou testar proposições sobre a população. Esse processo envolve incerteza e,
   por isso, exige métodos que permitam avaliar a precisão e a confiabilidade das conclusões.
 </p>
+<figure class="figure figure--inline">
+  <img src="../../imagens/estat-inferencial.svg" alt="Estatística Inferencial">
+</figure>
 <p>
   Para lidar com a incerteza de forma controlada, a estatística inferencial fundamenta-se na teoria das probabilidades.
   A inferência estatística não afirma verdades absolutas, mas conclusões respaldadas pelo grau de evidência fornecido pelos
@@ -236,7 +276,9 @@ Em síntese, coletar bem é planejar com rigor: definir claramente o problema e 
   e não com populações inteiras. Como consequência, as conclusões estatísticas estão inevitavelmente sujeitas
   à <strong>incerteza</strong>.
 </p>
-
+<figure class="figure figure--inline">
+  <img src="../../imagens/inferencia.svg" alt="Inferencia">
+</figure>
 <p>
   Essa incerteza tem origem na <strong>variabilidade</strong> dos fenômenos empíricos. Mesmo sob as mesmas condições,
   diferentes unidades estatísticas podem apresentar resultados distintos, tanto por diferenças naturais quanto por

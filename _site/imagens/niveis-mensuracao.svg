@@ -1,0 +1,73 @@
+<!-- imagens/niveis-de-mensuracao.svg -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 230" width="1100" height="230"
+     role="img" aria-labelledby="title desc" style="background:transparent">
+  <title id="title">Níveis de mensuração — animação com pausa</title>
+  <desc id="desc">
+    Quatro retângulos amplos e altos (Nominal, Ordinal, Intervalar e Razão) com texto grande,
+    que aparecem com fade-in, permanecem visíveis por 3 segundos e somem juntos em loop contínuo.
+  </desc>
+
+  <style>
+    :root {
+      --ink:#1f2937;
+      --card:transparent;
+      --cycle:9s;
+      --easing:cubic-bezier(.25,.1,.25,1);
+    }
+
+    text {
+      font-family:"et-book","ETBembo",Georgia,serif;
+      fill:var(--ink);
+      font-size:32px;
+      font-weight:600;
+      text-anchor:middle;
+      dominant-baseline:middle;
+      letter-spacing:.5px;
+    }
+
+    rect {
+      fill:var(--card);
+      stroke:var(--ink);
+      stroke-width:2.2;
+      rx:20; ry:20;
+    }
+
+    .card {
+      opacity:0;
+      animation:fadeCycle var(--cycle) var(--easing) infinite both;
+    }
+
+    @keyframes fadeCycle {
+      0%   {opacity:0;}
+      20%  {opacity:1;}
+      55%  {opacity:1;}   /* pausa (~3 s) */
+      80%  {opacity:0;}   /* fade-out simultâneo */
+      100% {opacity:0;}
+    }
+
+    @media (prefers-reduced-motion:reduce){
+      .card{animation:none;opacity:1;}
+    }
+  </style>
+
+  <!-- blocos proporcionais -->
+  <g class="card" transform="translate(30,50)">
+    <rect width="220" height="110"/>
+    <text x="110" y="55">NOMINAL</text>
+  </g>
+
+  <g class="card" transform="translate(290,50)">
+    <rect width="220" height="110"/>
+    <text x="110" y="55">ORDINAL</text>
+  </g>
+
+  <g class="card" transform="translate(550,50)">
+    <rect width="250" height="110"/> <!-- mais larga -->
+    <text x="125" y="55">INTERVALAR</text>
+  </g>
+
+  <g class="card" transform="translate(840,50)">
+    <rect width="180" height="110"/> <!-- ligeiramente menor -->
+    <text x="90" y="55">RAZÃO</text>
+  </g>
+</svg>
