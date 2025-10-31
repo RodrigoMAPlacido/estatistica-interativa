@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 300 150"
+   width="300"
+   height="150"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="bell_curve2.svg"
+   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="3.3533333"
+     inkscape:cx="101.39165"
+     inkscape:cy="75.000001"
+     inkscape:window-width="1366"
+     inkscape:window-height="705"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <style
+     id="style1">
+    path, line {
+      stroke: #111827;
+      fill: none;
+      stroke-width: 1.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+  </style>
+  <line
+     x1="30"
+     y1="120"
+     x2="270"
+     y2="120"
+     id="line2"
+     style="fill:#ff0000" />
+  <path
+     id="path2"
+     style="fill:#111827;fill-opacity:1"
+     d="M 212.625 91.097656 L 212.625 120 L 270 120 C 246.90468 120 228.22874 107.37564 212.625 91.097656 z M 87.078125 91.408203 C 71.534753 107.53606 52.948378 120 30 120 L 87.078125 120 L 87.078125 91.408203 z " />
+  <!-- eixo -->
+  <line
+     x1="30"
+     y1="120"
+     x2="270"
+     y2="120"
+     id="line1" />
+  <!-- curva arqueada (centralizada e maior) -->
+  <path
+     d="M30,120 C 95,120 125,20 150,20 C 175,20 205,120 270,120"
+     id="path1" />
+</svg>
