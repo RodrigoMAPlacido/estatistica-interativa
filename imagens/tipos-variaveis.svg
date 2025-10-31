@@ -1,59 +1,130 @@
-<!-- imagens/tipos-variaveis-loop.svg -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 300" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+<!-- ===========================================
+   TIPOS DE VARIÁVEIS — traçado + preenchimento (reverse, em ondas)
+   =========================================== -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 300" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="title desc">
+  <title id="title">Tipos de Variáveis — animação em ondas</title>
+  <desc id="desc">Elipse central estática; texto central desenha e preenche; depois setas; depois elipses inferiores e seus textos. Loop reversível.</desc>
+
   <defs>
     <style>
-      .title { font-family: et-book, ETBook, ETBembo, Georgia, serif; font-size:20px; font-weight:600; fill:#1f2937; text-anchor:middle; }
-      .label { font-family: et-book, ETBook, ETBembo, Georgia, serif; font-size:18px; font-weight:600; fill:#1f2937; text-anchor:middle; }
-      .oval  { fill:#fff; stroke:#1f2937; stroke-width:2; }
-      .shaft { stroke:#1f2937; stroke-width:5; stroke-linecap:round; fill:none; }
-      .head  { fill:#1f2937; }
+      :root{
+        --ink:#1f2937;
+        --bg:#ffffff;
+        --font:"et-book","ETBembo","Georgia",serif;
+        --cycle:8s;
+        --easing:ease-in-out;
+      }
+
+      .title,.label{
+        font-family:var(--font);
+        fill:var(--ink);
+        font-weight:600;
+        text-anchor:middle;
+        dominant-baseline:middle;
+        letter-spacing:.4px;
+        user-select:none;
+      }
+      .title{ font-size:20px; }
+      .label{ font-size:18px; }
+
+      .oval{
+        fill:none;
+        stroke:var(--ink);
+        stroke-width:2;
+      }
+
+      .shaft{ stroke:var(--ink); stroke-width:5; stroke-linecap:round; fill:none; }
+      .head{ fill:var(--ink); }
+
+      /* === Animações === */
+      @keyframes drawLineSym {
+        0%   { stroke-dashoffset:700; opacity:0; }
+        10%  { opacity:1; }
+        45%  { stroke-dashoffset:0; opacity:1; }
+        55%  { stroke-dashoffset:0; opacity:1; }
+        90%  { stroke-dashoffset:700; opacity:1; }
+        100% { stroke-dashoffset:700; opacity:0; }
+      }
+
+      @keyframes fillTextSym {
+        0%,18%   { fill:transparent; }
+        34%,66%  { fill:var(--ink); }
+        92%,100% { fill:transparent; }
+      }
+
+      @keyframes headSyncSym {
+        0%,15%   { opacity:0; }
+        35%,85%  { opacity:1; }
+        100%     { opacity:0; }
+      }
+
+      .drawn {
+        stroke-dasharray:700;
+        stroke-dashoffset:700;
+        animation: drawLineSym var(--cycle) var(--easing) infinite alternate both;
+        animation-delay: var(--delay, 0s);
+      }
+
+      .text-stroke-fill {
+        stroke:var(--ink);
+        stroke-width:.8;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        fill:transparent;
+        stroke-dasharray:700;
+        stroke-dashoffset:700;
+        animation:
+          drawLineSym var(--cycle) var(--easing) infinite alternate both,
+          fillTextSym var(--cycle) var(--easing) infinite alternate both;
+        animation-delay: var(--delay, 0s), var(--delay, 0s);
+      }
+
+      .fade-sync {
+        animation: headSyncSym var(--cycle) var(--easing) infinite alternate both;
+        animation-delay: var(--delay, 0s);
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        .drawn,.text-stroke-fill,.fade-sync{
+          animation:none; opacity:1;
+        }
+        .text-stroke-fill{ fill:var(--ink); stroke-dashoffset:0; }
+      }
     </style>
   </defs>
 
-  <!-- Nó central -->
-  <g transform="translate(410,90)">
-    <ellipse rx="140" ry="48" class="oval"/>
-    <text class="title" y="6">TIPOS DE VARIÁVEIS</text>
-  </g>
-
-  <!-- Elipses inferiores (afastadas nas diagonais; entram após setas) -->
-  <!-- esquerda: antes (230,210) → agora (212,218) -->
-  <g transform="translate(212,218)" opacity="0">
-    <ellipse rx="160" ry="42" class="oval"/>
-    <text class="label" y="6">QUALITATIVAS</text>
-    <animate attributeName="opacity" dur="6s" begin="0.8s" repeatCount="indefinite"
-             values="0;1;1;0;0" keyTimes="0;0.25;0.70;0.85;1"/>
-  </g>
-
-  <!-- direita: antes (590,210) → agora (608,218) -->
-  <g transform="translate(608,218)" opacity="0">
-    <ellipse rx="160" ry="42" class="oval"/>
-    <text class="label" y="6">QUANTITATIVAS</text>
-    <animate attributeName="opacity" dur="6s" begin="1.0s" repeatCount="indefinite"
-             values="0;1;1;0;0" keyTimes="0;0.25;0.70;0.85;1"/>
-  </g>
-
-  <!-- Setas (retas, simétricas; ponta quase encostando) -->
-  <!-- Esquerda -->
-  <g opacity="0">
-    <!-- haste -->
-    <path class="shaft" d="M 360 140 L 280 170"/>
-    <!-- ponta: base no fim da haste; leve margem até a elipse (~2–3px) -->
-    <g transform="translate(280,170) rotate(160)">
-      <polygon class="head" points="21,0 0,-8 0,8"/>
+  <g id="scene" transform="translate(0,0) scale(1)">
+    <!-- Elipse central estática -->
+    <g id="center" transform="translate(410,70) scale(1)">
+      <ellipse rx="140" ry="48" class="oval"/>
+      <text class="title text-stroke-fill" y="6" style="--delay:0s">TIPOS DE VARIÁVEIS</text>
     </g>
-    <animate attributeName="opacity" dur="6s" begin="0s" repeatCount="indefinite"
-             values="0;1;1;0;0" keyTimes="0;0.18;0.65;0.82;1"/>
-  </g>
 
-  <!-- Direita -->
-  <g opacity="0">
-    <path class="shaft" d="M 460 140 L 540 170"/>
-    <g transform="translate(540,170) rotate(20)">
-      <polygon class="head" points="21,0 0,-8 0,8"/>
+<!-- Setas -->
+
+<!-- Esquerda -->
+<g id="arrow-left" transform="translate(300,155) rotate(140)" style="--delay:.35s">
+  <!-- haste: termina em (0,0), onde fica a ponta -->
+  <path class="shaft drawn" d="M -50 0 L 0 0"/> <!-- Tamanho da seta -->
+  <!-- ponta: alinhada ao +x local; rotação do grupo define a direção real -->
+  <polygon class="head fade-sync" points="21,0 0,-8 0,8"/>
+</g>
+
+<!-- Direita -->
+<g id="arrow-right" transform="translate(525,155) rotate(40)" style="--delay:.45s">
+  <path class="shaft drawn" d="M -50 0 L 0 0"/> <!-- Tamanho da seta -->
+  <polygon class="head fade-sync" points="21,0 0,-8 0,8"/>
+</g>
+
+    <!-- Elipses inferiores animadas -->
+    <g id="left-oval" transform="translate(212,218) scale(1)" style="--delay:.70s">
+      <ellipse rx="160" ry="42" class="oval drawn"/>
+      <text class="label text-stroke-fill" y="6">QUALITATIVAS</text>
     </g>
-    <animate attributeName="opacity" dur="6s" begin="0.2s" repeatCount="indefinite"
-             values="0;1;1;0;0" keyTimes="0;0.18;0.65;0.82;1"/>
+
+    <g id="right-oval" transform="translate(608,218) scale(1)" style="--delay:.85s">
+      <ellipse rx="160" ry="42" class="oval drawn"/>
+      <text class="label text-stroke-fill" y="6">QUANTITATIVAS</text>
+    </g>
   </g>
 </svg>
-

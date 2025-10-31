@@ -1,73 +1,116 @@
-<!-- imagens/niveis-de-mensuracao.svg -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 230" width="1100" height="230"
-     role="img" aria-labelledby="title desc" style="background:transparent">
-  <title id="title">Níveis de mensuração — animação com pausa</title>
+<!-- ===========================================
+   NÍVEIS DE MENSURAÇÃO — traçado + preenchimento (com reverse)
+   =========================================== -->
+<svg viewBox="0 0 1100 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc" style="background:transparent">
+  <title id="title">Níveis de mensuração — traçado com preenchimento (reverse)</title>
   <desc id="desc">
-    Quatro retângulos amplos e altos (Nominal, Ordinal, Intervalar e Razão) com texto grande,
-    que aparecem com fade-in, permanecem visíveis por 3 segundos e somem juntos em loop contínuo.
+    Cada retângulo e seu texto são “desenhados” com traçado, seguram um tempo e saem no sentido reverso.
+    Loop contínuo, sem piscar no ponto de virada.
   </desc>
 
-  <style>
-    :root {
-      --ink:#1f2937;
-      --card:transparent;
-      --cycle:9s;
-      --easing:cubic-bezier(.25,.1,.25,1);
-    }
+  <defs>
+    <style>
+      :root {
+        --ink: #1f2937;
+        --card: transparent;
+        --cycle: 7s;
+        --easing: ease-in-out;
+      }
 
-    text {
-      font-family:"et-book","ETBembo",Georgia,serif;
-      fill:var(--ink);
-      font-size:32px;
-      font-weight:600;
-      text-anchor:middle;
-      dominant-baseline:middle;
-      letter-spacing:.5px;
-    }
+      /* ---------- Estilos base ---------- */
+      rect {
+        fill: var(--card);
+        stroke: var(--ink);
+        stroke-width: 2.2;
+        rx: 20; ry: 20;
+      }
 
-    rect {
-      fill:var(--card);
-      stroke:var(--ink);
-      stroke-width:2.2;
-      rx:20; ry:20;
-    }
+      text {
+        font-family: "et-book", "ETBembo", Georgia, serif;
+        font-size: 32px;
+        font-weight: 600;
+        text-anchor: middle;
+        dominant-baseline: middle;
+        letter-spacing: .5px;
+        stroke: var(--ink);
+        stroke-width: 0.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        fill: transparent;
+      }
 
-    .card {
-      opacity:0;
-      animation:fadeCycle var(--cycle) var(--easing) infinite both;
-    }
+@keyframes drawLineSym {
+  0%   { stroke-dashoffset: 700; opacity: 0; }
+  8%   { opacity: 1; }
+  44%  { stroke-dashoffset: 0;   opacity: 1; }  /* fim da entrada */
+  53%  { stroke-dashoffset: 0;   opacity: 1; }  /* pausa curta */
+  96%  { stroke-dashoffset: 700; opacity: 1; }  /* saída (reverse) */
+  100% { stroke-dashoffset: 700; opacity: 0; }  /* sem “plateau” no fim */
+}
 
-    @keyframes fadeCycle {
-      0%   {opacity:0;}
-      20%  {opacity:1;}
-      55%  {opacity:1;}   /* pausa (~3 s) */
-      80%  {opacity:0;}   /* fade-out simultâneo */
-      100% {opacity:0;}
-    }
+@keyframes fillTextSym {
+  0%,18%   { fill: transparent; }
+  34%,66%  { fill: var(--ink); }    /* preenchido no miolo */
+  92%,100% { fill: transparent; }   /* some perto do fim (sem segurar) */
+}
 
-    @media (prefers-reduced-motion:reduce){
-      .card{animation:none;opacity:1;}
-    }
-  </style>
+      /* Aplicação: alterna ida/volta automaticamente */
+      .drawn {
+        stroke-dasharray: 700;
+        stroke-dashoffset: 700;
+        animation-name: drawLineSym;
+        animation-duration: var(--cycle);
+        animation-timing-function: var(--easing);
+        animation-iteration-count: infinite;
+        animation-direction: alternate;   /* reverse automático */
+        animation-fill-mode: both;        /* mantém estado no pivot */
+      }
 
-  <!-- blocos proporcionais -->
-  <g class="card" transform="translate(30,50)">
-    <rect width="220" height="110"/>
-    <text x="110" y="55">NOMINAL</text>
-  </g>
+      .text-anim {
+        stroke-dasharray: 700;
+        stroke-dashoffset: 700;
+        animation:
+          drawLineSym var(--cycle) var(--easing) infinite alternate both,
+          fillTextSym var(--cycle) var(--easing) infinite alternate both;
+      }
 
-  <g class="card" transform="translate(290,50)">
-    <rect width="220" height="110"/>
-    <text x="110" y="55">ORDINAL</text>
-  </g>
+      @media (prefers-reduced-motion: reduce) {
+        .drawn, .text-anim {
+          animation: none;
+          stroke-dashoffset: 0;
+          opacity: 1;
+          fill: var(--ink);
+        }
+      }
+    </style>
+  </defs>
 
-  <g class="card" transform="translate(550,50)">
-    <rect width="250" height="110"/> <!-- mais larga -->
-    <text x="125" y="55">INTERVALAR</text>
-  </g>
+  <!-- ========== 3. OBJETOS SVG ========== -->
+  <g id="scene" transform="translate(0,0) scale(1)">
+    <g id="cards" transform="translate(30,50) scale(1)">
+      <!-- NOMINAL -->
+      <g transform="translate(0,0)">
+        <rect width="220" height="110" class="drawn"/>
+        <text x="110" y="55" class="text-anim">NOMINAL</text>
+      </g>
 
-  <g class="card" transform="translate(840,50)">
-    <rect width="180" height="110"/> <!-- ligeiramente menor -->
-    <text x="90" y="55">RAZÃO</text>
+      <!-- ORDINAL -->
+      <g transform="translate(260,0)">
+        <rect width="220" height="110" class="drawn"/>
+        <text x="110" y="55" class="text-anim">ORDINAL</text>
+      </g>
+
+      <!-- INTERVALAR -->
+      <g transform="translate(520,0)">
+        <rect width="250" height="110" class="drawn"/>
+        <text x="125" y="55" class="text-anim">INTERVALAR</text>
+      </g>
+
+      <!-- RAZÃO -->
+      <g transform="translate(830,0)">
+        <rect width="180" height="110" class="drawn"/>
+        <text x="90" y="55" class="text-anim">RAZÃO</text>
+      </g>
+    </g>
   </g>
 </svg>

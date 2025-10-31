@@ -1,91 +1,164 @@
-<!-- imagens/dados-nominais-animado.svg -->
+<!-- ===========================================
+   DADOS NOMINAIS — traçado + preenchimento (reverse, em ondas)
+   =========================================== -->
 <svg viewBox="0 0 1500 750" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
   <title id="title">Exemplos de Dados Nominais (animado)</title>
-  <desc id="desc">
-    Diagrama hierárquico com o título "Nominal" fixo e as categorias que surgem e desaparecem em loop.
-  </desc>
+  <desc id="desc">Título NOMINAL fixo; linhas surgem; depois setas; depois cartões (SEXO, COR DOS OLHOS, NACIONALIDADE, ESTADO CIVIL) com traçado e texto preenchendo. Loop reversível.</desc>
 
+<!-- ====== Cabeçalho / Estilo (ajustado) ====== -->
+<defs>
   <style>
-    :root {
-      --stroke: #111827;
-      --text: #111827;
-      --font: "et-book", "ETBook", "Georgia", serif;
-      --cycle: 8s;
+    :root{
+      --ink:#111827;
+      --font:"et-book","ETBook","Georgia",serif;
+      --cycle:8s;
+      --easing:ease-in-out;
     }
 
-    text {
-      font-family: var(--font);
-      fill: var(--text);
+    text{ font-family:var(--font); fill:var(--ink); user-select:none; }
+    tspan{ x:0; dy:1.25em; }
+
+    .stroke{ stroke:var(--ink); fill:none; stroke-linecap:round; stroke-linejoin:round; }
+    .thick{ stroke-width:3; }
+    .box{ stroke-width:3; rx:15; }
+
+    /* ==== animações em um único ciclo (sem alternate) ==== */
+    @keyframes drawLineSym{
+      /* Entrada (desenha) */
+      0%   { stroke-dashoffset:1200; opacity:0; }
+      10%  { opacity:1; }
+      42%  { stroke-dashoffset:0;   opacity:1; }
+
+      /* Pausa breve “no topo” */
+      58%  { stroke-dashoffset:0;   opacity:1; }
+
+      /* Saída (apaga) */
+      90%  { stroke-dashoffset:1200; opacity:1; }
+      100% { stroke-dashoffset:1200; opacity:0; }
     }
 
-    rect, line {
-      stroke: var(--stroke);
-      fill: none;
+    /* Preenchimento do texto só no miolo para não “bater” com outros traços */
+    @keyframes fillTextSym{
+      0%,13%   { fill:transparent; }
+      36%,64%  { fill:var(--ink); }
+      80%,100% { fill:transparent; }
     }
 
-    /* ===== ANIMAÇÃO ===== */
-    @keyframes fadeCycle {
-      0%, 15%   { opacity: 0; }
-      25%, 75%  { opacity: 1; }
-      90%, 100% { opacity: 0; }
+    @keyframes headSyncSym{
+      0%,15%   { opacity:0; }
+      35%,85%  { opacity:1; }
+      100%     { opacity:0; }
     }
 
-    .anim {
-      opacity: 0;
-      animation: fadeCycle var(--cycle) linear infinite;
+    .drawn{
+      stroke-dasharray:1200;
+      stroke-dashoffset:1200;
+      animation: drawLineSym var(--cycle) var(--easing) infinite both;
+      animation-delay: var(--delay,0s);
     }
 
-    tspan { x: 0; dy: 1.2em; }
+      .text-anim{
+        stroke:var(--ink);
+        stroke-width:.95;
+        fill:transparent;
+        stroke-dasharray:900;
+        stroke-dashoffset:900;
+        animation:
+          drawLineSym var(--cycle) var(--easing) infinite alternate both,
+          fillTextSym var(--cycle) var(--easing) infinite alternate both;
+        animation-delay: var(--delay,0s), var(--delay,0s);
+      }
+    .head{
+      fill:var(--ink);
+      animation: headSyncSym var(--cycle) var(--easing) infinite both;
+      animation-delay: var(--delay,0s);
+    }
+
+    @media (prefers-reduced-motion:reduce){
+      .drawn,.text-anim,.head{ animation:none; opacity:1; }
+      .text-anim{ fill:var(--ink); stroke-dashoffset:0; }
+    }
   </style>
+</defs>
 
-  <!-- Box NOMINAL -->
-  <rect x="480" y="67" width="540" height="210" stroke-width="3" rx="15" />
-  <text x="750" y="190" font-size="80" font-weight="700" text-anchor="middle">NOMINAL</text>
-  
-  <!-- Grupo animado -->
-  <g class="anim">
+  <!-- ========== 2) OBJETOS (com translate/scale fáceis) ========== -->
+  <g id="scene" transform="translate(0,0) scale(1)">
 
-    <!-- Linha vertical do NOMINAL -->
-    <line x1="750" y1="277" x2="750" y2="410" stroke-width="3" />
-    
-    <!-- Linha horizontal -->
-    <line x1="250" y1="410" x2="1250" y2="410" stroke-width="3" />
-    
-    <!-- Linhas verticais -->
-    <line x1="250" y1="410" x2="250" y2="520" stroke-width="3" />
-    <line x1="580" y1="410" x2="580" y2="520" stroke-width="3" />
-    <line x1="920" y1="410" x2="920" y2="520" stroke-width="3" />
-    <line x1="1250" y1="410" x2="1250" y2="520" stroke-width="3" />
+    <!-- Topo estático -->
+    <rect x="480" y="67" width="540" height="210" class="stroke box"/>
+    <g style="--delay: 0s"><text x="750" y="190" font-size="80" font-weight="700" text-anchor="middle" class="text-anim">NOMINAL</text> </g>
 
-    <!-- Setas -->
-    <polygon points="250,520 240,505 260,505" fill="#111827" />
-    <polygon points="580,520 570,505 590,505" fill="#111827" />
-    <polygon points="920,520 910,505 930,505" fill="#111827" />
-    <polygon points="1250,520 1240,505 1260,505" fill="#111827" />
-    
-    <!-- Box SEXO -->
-    <rect x="100" y="550" width="300" height="110" stroke-width="3" rx="15" />
-    <text x="250" y="620" font-size="46" font-weight="500" text-anchor="middle">SEXO</text>
-    
-    <!-- Box COR DOS OLHOS -->
-    <rect x="430" y="550" width="300" height="110" stroke-width="3" rx="15" />
-    <text x="580" y="595" font-size="44" font-weight="500" text-anchor="middle">
-      <tspan x="580" dy="0">COR DOS</tspan>
-      <tspan x="580" dy="1.3em">OLHOS</tspan>
-    </text>
-    
-    <!-- Box NACIONALIDADE -->
-    <rect x="770" y="550" width="300" height="110" stroke-width="3" rx="15" />
-    <text x="920" y="595" font-size="44" font-weight="500" text-anchor="middle">
-    <tspan x="920" dy="0">NACIONALI</tspan>
-    <tspan x="920" dy="1.3em">DADE</tspan>
-    </text>
+    <!-- Grupo animado em ondas -->
+    <g id="diagram" transform="translate(0,0) scale(1)">
 
-    <!-- Box ESTADO CIVIL -->
-    <rect x="1100" y="550" width="300" height="110" stroke-width="3" rx="15" />
-    <text x="1250" y="595" font-size="44" font-weight="500" text-anchor="middle">
-      <tspan x="1250" dy="0">ESTADO</tspan>
-      <tspan x="1250" dy="1.3em">CIVIL</tspan>
-    </text>
+      <!-- Fase 1: tronco e barra -->
+      <g style="--delay:0s">
+        <line x1="750" y1="277" x2="750" y2="410" class="stroke thick drawn"/>
+        <line x1="250" y1="410" x2="1250" y2="410" class="stroke thick drawn"/>
+      </g>
+
+      <!-- Fase 2: ramos verticais -->
+      <g style="--delay:.18s">
+        <line x1="250"  y1="410" x2="250"  y2="520" class="stroke thick drawn"/>
+        <line x1="580"  y1="410" x2="580"  y2="520" class="stroke thick drawn"/>
+        <line x1="920"  y1="410" x2="920"  y2="520" class="stroke thick drawn"/>
+        <line x1="1250" y1="410" x2="1250" y2="520" class="stroke thick drawn"/>
+      </g>
+
+      <!-- Fase 3: setas (agregadas por grupo) -->
+      <g style="--delay:.32s">
+        <!-- 250 -->
+        <g transform="translate(250,520) rotate(90)" >
+          <polygon class="head" points="21,0 0,-8 0,8"/>
+        </g>
+        <!-- 580 -->
+        <g transform="translate(580,520) rotate(90)">
+          <polygon class="head" points="21,0 0,-8 0,8"/>
+        </g>
+        <!-- 920 -->
+        <g transform="translate(920,520) rotate(90)">
+          <polygon class="head" points="21,0 0,-8 0,8"/>
+        </g>
+        <!-- 1250 -->
+        <g transform="translate(1250,520) rotate(90)">
+          <polygon class="head" points="21,0 0,-8 0,8"/>
+        </g>
+      </g>
+
+      <!-- Fase 4: cartões + textos (delays escalonados) -->
+      <!-- SEXO -->
+      <g style="--delay:.48s">
+        <rect x="100" y="550" width="300" height="110" class="stroke box drawn"/>
+        <text x="250" y="620" font-size="46" font-weight="500" text-anchor="middle" class="text-anim">SEXO</text>
+      </g>
+
+      <!-- COR DOS OLHOS -->
+      <g style="--delay:.62s">
+        <rect x="430" y="550" width="300" height="110" class="stroke box drawn"/>
+        <text x="580" y="595" font-size="44" font-weight="500" text-anchor="middle" class="text-anim">
+          <tspan x="580" dy="0">COR DOS</tspan>
+          <tspan x="580" dy="1.3em">OLHOS</tspan>
+        </text>
+      </g>
+
+      <!-- NACIONALIDADE -->
+      <g style="--delay:.76s">
+        <rect x="770" y="550" width="300" height="110" class="stroke box drawn"/>
+        <text x="920" y="595" font-size="44" font-weight="500" text-anchor="middle" class="text-anim">
+          <tspan x="920" dy="0">NACIONALI</tspan>
+          <tspan x="920" dy="1.3em">DADE</tspan>
+        </text>
+      </g>
+
+      <!-- ESTADO CIVIL -->
+      <g style="--delay:.90s">
+        <rect x="1100" y="550" width="300" height="110" class="stroke box drawn"/>
+        <text x="1250" y="595" font-size="44" font-weight="500" text-anchor="middle" class="text-anim">
+          <tspan x="1250" dy="0">ESTADO</tspan>
+          <tspan x="1250" dy="1.3em">CIVIL</tspan>
+        </text>
+      </g>
+
+    </g>
   </g>
 </svg>
