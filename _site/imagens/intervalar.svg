@@ -84,7 +84,7 @@
     <!-- Topo: caixa + título (caixa estática, texto animado) -->
     <rect x="480" y="67" width="540" height="210" class="u-stroke u-box"/>
     <g style="--delay:0s">
-      <text x="750" y="190" font-size="70" font-weight="700" class="a-text u-center">INTERVALAR</text>
+      <text x="750" y="190" font-size="65" font-weight="700" class="a-text u-center">INTERVALAR</text>
     </g>
 
     <!-- Diagrama em ondas (linhas -> setas -> cartões) -->
