@@ -1,124 +1,128 @@
 <!-- ===========================================
-   DADOS ORDINAIS — (base do NOMINAL, rótulos trocados)
-   Traçado + preenchimento (reverse) em ondas
+   DADOS ORDINAIS — padrão unificado (u-*/a-*)
+   Traçado + preenchimento em ondas (sem alternate nos strokes globais)
    =========================================== -->
 <svg viewBox="0 0 1500 750" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
   <title id="title">Exemplos de Dados Ordinais (animado)</title>
-  <desc id="desc">Caixa e título “ORDINAL” no topo; linhas/galhos, setas e cartões com rótulos: Grau de instrução, Classe social, Grau de satisfação, Nível de dor. Animação tipo traçado surgindo com reverse.</desc>
+  <desc id="desc">Caixa e título “ORDINAL” no topo; tronco+barra e ramos com traçado a-draw; setas com fade; cartões com contorno a-draw e textos a-text. Mesmas classes e manipulação do padrão unificado.</desc>
 
-<!-- ====== Cabeçalho / Estilo (ajustado) ====== -->
-<defs>
-  <style>
-    :root{
-      --ink:#111827;
-      --font:"et-book","ETBook","Georgia",serif;
-      --cycle:8s;
-      --easing:ease-in-out;
-    }
+  <defs>
+    <style>
+      :root{
+        /* paleta / tipografia */
+        --ink:#111827;
+        --font:"et-book","ETBook","Georgia",serif;
 
-    text{ font-family:var(--font); fill:var(--ink); user-select:none; }
-    tspan{ x:0; dy:1.25em; }
+        /* tempo/easing unificados */
+        --cycle:8s;
+        --ease:ease-in-out;
 
-    .stroke{ stroke:var(--ink); fill:none; stroke-linecap:round; stroke-linejoin:round; }
-    .thick{ stroke-width:3; }
-    .box{ stroke-width:3; rx:15; }
-
-    /* ==== animações em um único ciclo (sem alternate) ==== */
-    @keyframes drawLineSym{
-      /* Entrada (desenha) */
-      0%   { stroke-dashoffset:1200; opacity:0; }
-      10%  { opacity:1; }
-      42%  { stroke-dashoffset:0;   opacity:1; }
-
-      /* Pausa breve “no topo” */
-      58%  { stroke-dashoffset:0;   opacity:1; }
-
-      /* Saída (apaga) */
-      90%  { stroke-dashoffset:1200; opacity:1; }
-      100% { stroke-dashoffset:1200; opacity:0; }
-    }
-
-    /* Preenchimento do texto só no miolo para não “bater” com outros traços */
-    @keyframes fillTextSym{
-      0%,13%   { fill:transparent; }
-      36%,64%  { fill:var(--ink); }
-      80%,100% { fill:transparent; }
-    }
-
-    @keyframes headSyncSym{
-      0%,15%   { opacity:0; }
-      35%,85%  { opacity:1; }
-      100%     { opacity:0; }
-    }
-
-    .drawn{
-      stroke-dasharray:1200;
-      stroke-dashoffset:1200;
-      animation: drawLineSym var(--cycle) var(--easing) infinite both;
-      animation-delay: var(--delay,0s);
-    }
-
-      .text-anim{
-        stroke:var(--ink);
-        stroke-width:.95;
-        fill:transparent;
-        stroke-dasharray:900;
-        stroke-dashoffset:900;
-        animation:
-          drawLineSym var(--cycle) var(--easing) infinite alternate both,
-          fillTextSym var(--cycle) var(--easing) infinite alternate both;
-        animation-delay: var(--delay,0s), var(--delay,0s);
+        /* dash grande para evitar “risquinho” */
+        --dash:1400;
+        --dashText:900;
       }
-    .head{
-      fill:var(--ink);
-      animation: headSyncSym var(--cycle) var(--easing) infinite both;
-      animation-delay: var(--delay,0s);
-    }
 
-    @media (prefers-reduced-motion:reduce){
-      .drawn,.text-anim,.head{ animation:none; opacity:1; }
-      .text-anim{ fill:var(--ink); stroke-dashoffset:0; }
-    }
-  </style>
-</defs>
+      /* ===== utilitárias (u-*) ===== */
+      text{ font-family:var(--font); fill:var(--ink); user-select:none; letter-spacing:.13px }
+      .u-stroke{ stroke:var(--ink); fill:none; stroke-linecap:round; stroke-linejoin:round }
+      .u-box{ stroke-width:3; rx:15 }
+      .u-thick{ stroke-width:3 }
+      .u-center{ text-anchor:middle }
+      .u-bold{ font-weight:700 }
+      .u-ns{ vector-effect:non-scaling-stroke }
 
-  <!-- ====== Objetos (translate/scale prontos) ====== -->
+      /* ===== traçado padrão (tronco/ramos/caixas): a-draw ===== */
+      @keyframes k-drawLine{
+        0%   { stroke-dashoffset:var(--dash); opacity:0; }
+        10%  { opacity:1; }
+        42%  { stroke-dashoffset:0;          opacity:1; }
+        58%  { stroke-dashoffset:0;          opacity:1; }
+        90%  { stroke-dashoffset:var(--dash); opacity:1; }
+        100% { stroke-dashoffset:var(--dash); opacity:0; }
+      }
+      .a-draw{
+        stroke-dasharray:var(--dash);
+        stroke-dashoffset:var(--dash);
+        animation:k-drawLine var(--cycle) var(--ease) infinite both;
+        animation-delay:var(--delay,0s);
+      }
+
+      /* ===== textos com stroke+fill sincronizados: a-text ===== */
+      @keyframes k-textStroke{
+        0%   { stroke-dashoffset:var(--dashText); opacity:0; }
+        10%  { opacity:1; }
+        45%  { stroke-dashoffset:0;   opacity:1; }
+        55%  { stroke-dashoffset:0;   opacity:1; }
+        90%  { stroke-dashoffset:var(--dashText); opacity:1; }
+        100% { stroke-dashoffset:var(--dashText); opacity:0; }
+      }
+      @keyframes k-textFill{
+        0%,13%   { fill:transparent; }
+        36%,64%  { fill:var(--ink); }
+        80%,100% { fill:transparent; }
+      }
+      .a-text{
+        stroke:var(--ink); stroke-width:.95; stroke-linecap:round; stroke-linejoin:round;
+        fill:transparent;
+        stroke-dasharray:var(--dashText); stroke-dashoffset:var(--dashText);
+        animation:
+          k-textStroke var(--cycle) var(--ease) infinite both,
+          k-textFill   var(--cycle) var(--ease) infinite both;
+        animation-delay:var(--delay,0s), var(--delay,0s);
+      }
+
+      /* ===== pontas de seta sincronizadas: a-head ===== */
+      @keyframes k-head{
+        0%,15%{opacity:0}
+        35%,85%{opacity:1}
+        100%{opacity:0}
+      }
+      .a-head{ fill:var(--ink); animation:k-head var(--cycle) var(--ease) infinite both; animation-delay:var(--delay,0s) }
+
+      @media (prefers-reduced-motion:reduce){
+        .a-draw,.a-text,.a-head{ animation:none !important; opacity:1 }
+        .a-text{ fill:var(--ink); stroke-dashoffset:0 }
+      }
+    </style>
+  </defs>
+
+  <!-- ===== CENA ===== -->
   <g id="scene" transform="translate(0,0) scale(1)">
 
-    <!-- Topo: caixa + título (estáticos como no NOMINAL original) -->
-    <rect x="480" y="67" width="540" height="210" class="stroke box"/>
-    <g style="--delay: 0s"><text x="750" y="190" font-size="80" font-weight="700" text-anchor="middle" class="text-anim">ORDINAL</text> </g>
+    <!-- Topo: caixa + título -->
+    <rect x="480" y="67" width="540" height="210" class="u-stroke u-box"/>
+    <text x="750" y="190" font-size="80" class="u-center u-bold a-text" style="--delay:0s">ORDINAL</text>
 
-    <!-- Diagrama com ondas (linhas -> setas -> cartões) -->
-    <g id="diagram" transform="translate(0,0) scale(1)">
+    <!-- Diagrama (tronco -> ramos -> setas -> cartões) -->
+    <g id="diagram">
 
       <!-- Tronco + barra -->
       <g style="--delay:.12s">
-        <line x1="750" y1="277" x2="750" y2="410" class="stroke thick drawn"/>
-        <line x1="250" y1="410" x2="1250" y2="410" class="stroke thick drawn"/>
+        <line x1="750" y1="277" x2="750" y2="410" class="u-stroke u-thick a-draw"/>
+        <line x1="250" y1="410" x2="1250" y2="410" class="u-stroke u-thick a-draw"/>
       </g>
 
       <!-- Ramos verticais -->
       <g style="--delay:.26s">
-        <line x1="250"  y1="410" x2="250"  y2="520" class="stroke thick drawn"/>
-        <line x1="580"  y1="410" x2="580"  y2="520" class="stroke thick drawn"/>
-        <line x1="920"  y1="410" x2="920"  y2="520" class="stroke thick drawn"/>
-        <line x1="1250" y1="410" x2="1250" y2="520" class="stroke thick drawn"/>
+        <line x1="250"  y1="410" x2="250"  y2="520" class="u-stroke u-thick a-draw"/>
+        <line x1="580"  y1="410" x2="580"  y2="520" class="u-stroke u-thick a-draw"/>
+        <line x1="920"  y1="410" x2="920"  y2="520" class="u-stroke u-thick a-draw"/>
+        <line x1="1250" y1="410" x2="1250" y2="520" class="u-stroke u-thick a-draw"/>
       </g>
 
-      <!-- Setas (pontas apenas, sincronizadas ao ciclo) -->
+      <!-- Setas (pontas) -->
       <g style="--delay:.38s">
-        <polygon class="head" points="250,520 240,505 260,505"/>
-        <polygon class="head" points="580,520 570,505 590,505"/>
-        <polygon class="head" points="920,520 910,505 930,505"/>
-        <polygon class="head" points="1250,520 1240,505 1260,505"/>
+        <polygon class="a-head" points="250,520 240,505 260,505"/>
+        <polygon class="a-head" points="580,520 570,505 590,505"/>
+        <polygon class="a-head" points="920,520 910,505 930,505"/>
+        <polygon class="a-head" points="1250,520 1240,505 1260,505"/>
       </g>
 
-      <!-- Cartões + rótulos trocados para ORDINAL -->
+      <!-- Cartões + rótulos (contorno a-draw; texto a-text) -->
       <!-- Grau de instrução -->
       <g style="--delay:.52s">
-        <rect x="100" y="550" width="300" height="110" class="stroke box drawn"/>
-        <text x="250" y="595" font-size="40" font-weight="500" text-anchor="middle" class="text-anim">
+        <rect x="100" y="550" width="300" height="110" class="u-stroke u-box a-draw"/>
+        <text x="250" y="595" font-size="40" class="u-center a-text">
           <tspan x="250" dy="0">GRAU DE</tspan>
           <tspan x="250" dy="1.3em">INSTRUÇÃO</tspan>
         </text>
@@ -126,8 +130,8 @@
 
       <!-- Classe social -->
       <g style="--delay:.66s">
-        <rect x="430" y="550" width="300" height="110" class="stroke box drawn"/>
-        <text x="580" y="595" font-size="40" font-weight="500" text-anchor="middle" class="text-anim">
+        <rect x="430" y="550" width="300" height="110" class="u-stroke u-box a-draw"/>
+        <text x="580" y="595" font-size="40" class="u-center a-text">
           <tspan x="580" dy="0">CLASSE</tspan>
           <tspan x="580" dy="1.3em">SOCIAL</tspan>
         </text>
@@ -135,8 +139,8 @@
 
       <!-- Grau de satisfação -->
       <g style="--delay:.80s">
-        <rect x="770" y="550" width="300" height="110" class="stroke box drawn"/>
-        <text x="920" y="595" font-size="40" font-weight="500" text-anchor="middle" class="text-anim">
+        <rect x="770" y="550" width="300" height="110" class="u-stroke u-box a-draw"/>
+        <text x="920" y="595" font-size="40" class="u-center a-text">
           <tspan x="920" dy="0">GRAU DE</tspan>
           <tspan x="920" dy="1.3em">SATISFAÇÃO</tspan>
         </text>
@@ -144,8 +148,8 @@
 
       <!-- Nível de dor -->
       <g style="--delay:.94s">
-        <rect x="1100" y="550" width="300" height="110" class="stroke box drawn"/>
-        <text x="1250" y="595" font-size="40" font-weight="500" text-anchor="middle" class="text-anim">
+        <rect x="1100" y="550" width="300" height="110" class="u-stroke u-box a-draw"/>
+        <text x="1250" y="595" font-size="40" class="u-center a-text">
           <tspan x="1250" dy="0">NÍVEL DE</tspan>
           <tspan x="1250" dy="1.3em">DOR</tspan>
         </text>

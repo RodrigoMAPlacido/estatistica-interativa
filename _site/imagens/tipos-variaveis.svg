@@ -1,94 +1,77 @@
 <!-- ===========================================
-   TIPOS DE VARIÁVEIS — traçado + preenchimento (reverse, em ondas)
+   TIPOS DE VARIÁVEIS — padrão unificado (u-*/a-*)
    =========================================== -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 300" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="title desc">
   <title id="title">Tipos de Variáveis — animação em ondas</title>
-  <desc id="desc">Elipse central estática; texto central desenha e preenche; depois setas; depois elipses inferiores e seus textos. Loop reversível.</desc>
+  <desc id="desc">Elipse central estática; texto central desenha e preenche; depois setas; depois elipses inferiores e seus textos. Loop.</desc>
 
   <defs>
     <style>
+      /* ============ Variáveis globais ============ */
       :root{
-        --ink:#1f2937;
-        --bg:#ffffff;
+        --ink:#1f2937;                         /* mantém tua paleta */
         --font:"et-book","ETBembo","Georgia",serif;
         --cycle:8s;
-        --easing:ease-in-out;
+        --ease:ease-in-out;
+        --dash:4000;                           /* evita “risquinho” */
+        --dashText:900;
       }
 
-      .title,.label{
-        font-family:var(--font);
-        fill:var(--ink);
-        font-weight:600;
-        text-anchor:middle;
-        dominant-baseline:middle;
-        letter-spacing:.4px;
-        user-select:none;
-      }
-      .title{ font-size:20px; }
-      .label{ font-size:18px; }
+      /* ============ Base ============ */
+      text{ font-family:var(--font); fill:var(--ink); user-select:none; }
+      .u-center{ text-anchor:middle; dominant-baseline:middle; }
+      .u-stroke{ stroke:var(--ink); fill:none; stroke-linecap:round; stroke-linejoin:round; }
+      .u-thick{ stroke-width:3; }              /* para setas/linhas fortes */
+      .u-head{ fill:var(--ink); }              /* ponta da seta */
 
-      .oval{
-        fill:none;
-        stroke:var(--ink);
-        stroke-width:2;
-      }
-
-      .shaft{ stroke:var(--ink); stroke-width:5; stroke-linecap:round; fill:none; }
-      .head{ fill:var(--ink); }
-
-      /* === Animações === */
-      @keyframes drawLineSym {
-        0%   { stroke-dashoffset:700; opacity:0; }
+      /* ============ Animações (a-*) ============ */
+      /* traçado tipo tronco/ramo */
+      @keyframes k-drawLine{
+        0%   { stroke-dashoffset:var(--dash); opacity:0; }
         10%  { opacity:1; }
-        45%  { stroke-dashoffset:0; opacity:1; }
-        55%  { stroke-dashoffset:0; opacity:1; }
-        90%  { stroke-dashoffset:700; opacity:1; }
-        100% { stroke-dashoffset:700; opacity:0; }
+        42%  { stroke-dashoffset:0;          opacity:1; }
+        58%  { stroke-dashoffset:0;          opacity:1; }
+        90%  { stroke-dashoffset:var(--dash); opacity:1; }
+        100% { stroke-dashoffset:var(--dash); opacity:0; }
+      }
+      .a-draw{
+        stroke-dasharray:var(--dash);
+        stroke-dashoffset:var(--dash);
+        animation:k-drawLine var(--cycle) var(--ease) infinite both;
+        animation-delay:var(--delay,0s);
       }
 
-      @keyframes fillTextSym {
+      /* texto com stroke + fill */
+      @keyframes k-textStroke{
+        0%   { stroke-dashoffset:var(--dashText); opacity:0; }
+        10%  { opacity:1; }
+        45%  { stroke-dashoffset:0;   opacity:1; }
+        55%  { stroke-dashoffset:0;   opacity:1; }
+        90%  { stroke-dashoffset:var(--dashText); opacity:1; }
+        100% { stroke-dashoffset:var(--dashText); opacity:0; }
+      }
+      @keyframes k-textFill{
         0%,18%   { fill:transparent; }
         34%,66%  { fill:var(--ink); }
         92%,100% { fill:transparent; }
       }
-
-      @keyframes headSyncSym {
-        0%,15%   { opacity:0; }
-        35%,85%  { opacity:1; }
-        100%     { opacity:0; }
-      }
-
-      .drawn {
-        stroke-dasharray:700;
-        stroke-dashoffset:700;
-        animation: drawLineSym var(--cycle) var(--easing) infinite alternate both;
-        animation-delay: var(--delay, 0s);
-      }
-
-      .text-stroke-fill {
-        stroke:var(--ink);
-        stroke-width:.8;
-        stroke-linecap:round;
-        stroke-linejoin:round;
-        fill:transparent;
-        stroke-dasharray:700;
-        stroke-dashoffset:700;
+      .a-text{
+        stroke:var(--ink); stroke-width:.9; fill:transparent;
+        stroke-dasharray:var(--dashText); stroke-dashoffset:var(--dashText);
         animation:
-          drawLineSym var(--cycle) var(--easing) infinite alternate both,
-          fillTextSym var(--cycle) var(--easing) infinite alternate both;
-        animation-delay: var(--delay, 0s), var(--delay, 0s);
+          k-textStroke var(--cycle) var(--ease) infinite both,
+          k-textFill   var(--cycle) var(--ease) infinite both;
+        animation-delay:var(--delay,0s), var(--delay,0s);
       }
 
-      .fade-sync {
-        animation: headSyncSym var(--cycle) var(--easing) infinite alternate both;
-        animation-delay: var(--delay, 0s);
-      }
+      /* fade sincronizado (ponta da seta) */
+      @keyframes k-fadeSeq{ 0%,15%{opacity:0} 35%,85%{opacity:1} 100%{opacity:0} }
+      .a-fade{ animation:k-fadeSeq var(--cycle) var(--ease) infinite both; animation-delay:var(--delay,0s); }
 
+      /* acessibilidade */
       @media (prefers-reduced-motion:reduce){
-        .drawn,.text-stroke-fill,.fade-sync{
-          animation:none; opacity:1;
-        }
-        .text-stroke-fill{ fill:var(--ink); stroke-dashoffset:0; }
+        .a-draw,.a-text,.a-fade{ animation:none; opacity:1; stroke-dashoffset:0; }
+        .a-text{ fill:var(--ink); }
       }
     </style>
   </defs>
@@ -96,35 +79,34 @@
   <g id="scene" transform="translate(0,0) scale(1)">
     <!-- Elipse central estática -->
     <g id="center" transform="translate(410,70) scale(1)">
-      <ellipse rx="140" ry="48" class="oval"/>
-      <text class="title text-stroke-fill" y="6" style="--delay:0s">TIPOS DE VARIÁVEIS</text>
+      <ellipse rx="140" ry="48" class="u-stroke" style="stroke-width:2"/>
+      <text class="a-text u-center" y="6" font-size="25" style="--delay:0s">TIPOS DE DADOS</text>
     </g>
 
-<!-- Setas -->
+    <!-- Setas -->
+    <!-- Esquerda -->
+    <g id="arrow-left" transform="translate(300,155) rotate(140)" style="--delay:.35s">
+      <!-- haste (traçado animado) -->
+      <path class="u-stroke u-thick a-draw" d="M -50 0 L 0 0"/>
+      <!-- ponta (fade sincronizado) -->
+      <polygon class="u-head a-fade" points="21,0 0,-8 0,8"/>
+    </g>
 
-<!-- Esquerda -->
-<g id="arrow-left" transform="translate(300,155) rotate(140)" style="--delay:.35s">
-  <!-- haste: termina em (0,0), onde fica a ponta -->
-  <path class="shaft drawn" d="M -50 0 L 0 0"/> <!-- Tamanho da seta -->
-  <!-- ponta: alinhada ao +x local; rotação do grupo define a direção real -->
-  <polygon class="head fade-sync" points="21,0 0,-8 0,8"/>
-</g>
-
-<!-- Direita -->
-<g id="arrow-right" transform="translate(525,155) rotate(40)" style="--delay:.45s">
-  <path class="shaft drawn" d="M -50 0 L 0 0"/> <!-- Tamanho da seta -->
-  <polygon class="head fade-sync" points="21,0 0,-8 0,8"/>
-</g>
+    <!-- Direita -->
+    <g id="arrow-right" transform="translate(525,155) rotate(40)" style="--delay:.45s">
+      <path class="u-stroke u-thick a-draw" d="M -50 0 L 0 0"/>
+      <polygon class="u-head a-fade" points="21,0 0,-8 0,8"/>
+    </g>
 
     <!-- Elipses inferiores animadas -->
     <g id="left-oval" transform="translate(212,218) scale(1)" style="--delay:.70s">
-      <ellipse rx="160" ry="42" class="oval drawn"/>
-      <text class="label text-stroke-fill" y="6">QUALITATIVAS</text>
+      <ellipse rx="160" ry="42" class="u-stroke a-draw" style="stroke-width:2"/>
+      <text class="a-text u-center" font-size="25" y="6">QUALITATIVAS</text>
     </g>
 
     <g id="right-oval" transform="translate(608,218) scale(1)" style="--delay:.85s">
-      <ellipse rx="160" ry="42" class="oval drawn"/>
-      <text class="label text-stroke-fill" y="6">QUANTITATIVAS</text>
+      <ellipse rx="160" ry="42" class="u-stroke a-draw" style="stroke-width:2"/>
+      <text class="a-text u-center" font-size="25" y="6">QUANTITATIVAS</text>
     </g>
   </g>
 </svg>

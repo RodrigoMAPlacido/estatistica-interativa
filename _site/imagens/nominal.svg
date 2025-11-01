@@ -1,141 +1,128 @@
 <!-- ===========================================
-   DADOS NOMINAIS — traçado + preenchimento (reverse, em ondas)
+   DADOS NOMINAIS — padrão unificado (u-*/a-*)
    =========================================== -->
 <svg viewBox="0 0 1500 750" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
   <title id="title">Exemplos de Dados Nominais (animado)</title>
-  <desc id="desc">Título NOMINAL fixo; linhas surgem; depois setas; depois cartões (SEXO, COR DOS OLHOS, NACIONALIDADE, ESTADO CIVIL) com traçado e texto preenchendo. Loop reversível.</desc>
+  <desc id="desc">Título NOMINAL; linhas surgem; depois setas; depois cartões (SEXO, COR DOS OLHOS, NACIONALIDADE, ESTADO CIVIL) com traçado e texto preenchendo. Loop.</desc>
 
-<!-- ====== Cabeçalho / Estilo (ajustado) ====== -->
-<defs>
-  <style>
-    :root{
-      --ink:#111827;
-      --font:"et-book","ETBook","Georgia",serif;
-      --cycle:8s;
-      --easing:ease-in-out;
-    }
-
-    text{ font-family:var(--font); fill:var(--ink); user-select:none; }
-    tspan{ x:0; dy:1.25em; }
-
-    .stroke{ stroke:var(--ink); fill:none; stroke-linecap:round; stroke-linejoin:round; }
-    .thick{ stroke-width:3; }
-    .box{ stroke-width:3; rx:15; }
-
-    /* ==== animações em um único ciclo (sem alternate) ==== */
-    @keyframes drawLineSym{
-      /* Entrada (desenha) */
-      0%   { stroke-dashoffset:1200; opacity:0; }
-      10%  { opacity:1; }
-      42%  { stroke-dashoffset:0;   opacity:1; }
-
-      /* Pausa breve “no topo” */
-      58%  { stroke-dashoffset:0;   opacity:1; }
-
-      /* Saída (apaga) */
-      90%  { stroke-dashoffset:1200; opacity:1; }
-      100% { stroke-dashoffset:1200; opacity:0; }
-    }
-
-    /* Preenchimento do texto só no miolo para não “bater” com outros traços */
-    @keyframes fillTextSym{
-      0%,13%   { fill:transparent; }
-      36%,64%  { fill:var(--ink); }
-      80%,100% { fill:transparent; }
-    }
-
-    @keyframes headSyncSym{
-      0%,15%   { opacity:0; }
-      35%,85%  { opacity:1; }
-      100%     { opacity:0; }
-    }
-
-    .drawn{
-      stroke-dasharray:1200;
-      stroke-dashoffset:1200;
-      animation: drawLineSym var(--cycle) var(--easing) infinite both;
-      animation-delay: var(--delay,0s);
-    }
-
-      .text-anim{
-        stroke:var(--ink);
-        stroke-width:.95;
-        fill:transparent;
-        stroke-dasharray:900;
-        stroke-dashoffset:900;
-        animation:
-          drawLineSym var(--cycle) var(--easing) infinite alternate both,
-          fillTextSym var(--cycle) var(--easing) infinite alternate both;
-        animation-delay: var(--delay,0s), var(--delay,0s);
+  <defs>
+    <style>
+      /* ============ Variáveis globais ============ */
+      :root{
+        --ink:#111827;
+        --font:"et-book","ETBook","Georgia",serif;
+        --cycle:8s;
+        --ease:ease-in-out;
+        --dash:4000;     /* dash grande para evitar artefatos */
+        --dashText:900;  /* comprimento virtual p/ texto */
       }
-    .head{
-      fill:var(--ink);
-      animation: headSyncSym var(--cycle) var(--easing) infinite both;
-      animation-delay: var(--delay,0s);
-    }
 
-    @media (prefers-reduced-motion:reduce){
-      .drawn,.text-anim,.head{ animation:none; opacity:1; }
-      .text-anim{ fill:var(--ink); stroke-dashoffset:0; }
-    }
-  </style>
-</defs>
+      /* ============ Base/utilitárias (u-*) ============ */
+      text{ font-family:var(--font); fill:var(--ink); user-select:none; }
+      tspan{ x:0; dy:1.25em; }
+      .u-stroke{ stroke:var(--ink); fill:none; stroke-linecap:round; stroke-linejoin:round; }
+      .u-thick{ stroke-width:3; }
+      .u-box{ stroke-width:3; rx:15; }
+      .u-center{ text-anchor:middle; }
+      .u-head{ fill:var(--ink); }
 
-  <!-- ========== 2) OBJETOS (com translate/scale fáceis) ========== -->
+      /* ============ Animações (a-*) ============ */
+      /* traçado tipo tronco/ramo */
+      @keyframes k-drawLine{
+        0%   { stroke-dashoffset:var(--dash); opacity:0; }
+        10%  { opacity:1; }
+        42%  { stroke-dashoffset:0;          opacity:1; }
+        58%  { stroke-dashoffset:0;          opacity:1; }
+        90%  { stroke-dashoffset:var(--dash); opacity:1; }
+        100% { stroke-dashoffset:var(--dash); opacity:0; }
+      }
+      .a-draw{
+        stroke-dasharray:var(--dash);
+        stroke-dashoffset:var(--dash);
+        animation:k-drawLine var(--cycle) var(--ease) infinite both;
+        animation-delay:var(--delay,0s);
+      }
+
+      /* texto com stroke + fill sincronizados */
+      @keyframes k-textStroke{
+        0%   { stroke-dashoffset:var(--dashText); opacity:0; }
+        10%  { opacity:1; }
+        45%  { stroke-dashoffset:0;   opacity:1; }
+        55%  { stroke-dashoffset:0;   opacity:1; }
+        90%  { stroke-dashoffset:var(--dashText); opacity:1; }
+        100% { stroke-dashoffset:var(--dashText); opacity:0; }
+      }
+      @keyframes k-textFill{
+        0%,13%   { fill:transparent; }
+        36%,64%  { fill:var(--ink); }
+        80%,100% { fill:transparent; }
+      }
+      .a-text{
+        stroke:var(--ink); stroke-width:.95; fill:transparent;
+        stroke-dasharray:var(--dashText); stroke-dashoffset:var(--dashText);
+        animation:
+          k-textStroke var(--cycle) var(--ease) infinite both,
+          k-textFill   var(--cycle) var(--ease) infinite both;
+        animation-delay:var(--delay,0s), var(--delay,0s);
+      }
+
+      /* fade sincronizado (pontas de seta) */
+      @keyframes k-fadeSeq{ 0%,15%{opacity:0} 35%,85%{opacity:1} 100%{opacity:0} }
+      .a-fade{ animation:k-fadeSeq var(--cycle) var(--ease) infinite both; animation-delay:var(--delay,0s); }
+
+      /* acessibilidade */
+      @media (prefers-reduced-motion:reduce){
+        .a-draw,.a-text,.a-fade{ animation:none; opacity:1; stroke-dashoffset:0; }
+        .a-text{ fill:var(--ink); }
+      }
+    </style>
+  </defs>
+
+  <!-- ========== OBJETOS ========== -->
   <g id="scene" transform="translate(0,0) scale(1)">
 
-    <!-- Topo estático -->
-    <rect x="480" y="67" width="540" height="210" class="stroke box"/>
-    <g style="--delay: 0s"><text x="750" y="190" font-size="80" font-weight="700" text-anchor="middle" class="text-anim">NOMINAL</text> </g>
+    <!-- Topo -->
+    <rect x="480" y="67" width="540" height="210" class="u-stroke u-box"/>
+    <g style="--delay:0s">
+      <text x="750" y="190" font-size="80" font-weight="700" class="a-text u-center">NOMINAL</text>
+    </g>
 
     <!-- Grupo animado em ondas -->
     <g id="diagram" transform="translate(0,0) scale(1)">
 
       <!-- Fase 1: tronco e barra -->
       <g style="--delay:0s">
-        <line x1="750" y1="277" x2="750" y2="410" class="stroke thick drawn"/>
-        <line x1="250" y1="410" x2="1250" y2="410" class="stroke thick drawn"/>
+        <line x1="750" y1="277" x2="750" y2="410" class="u-stroke u-thick a-draw"/>
+        <line x1="250" y1="410" x2="1250" y2="410" class="u-stroke u-thick a-draw"/>
       </g>
 
       <!-- Fase 2: ramos verticais -->
       <g style="--delay:.18s">
-        <line x1="250"  y1="410" x2="250"  y2="520" class="stroke thick drawn"/>
-        <line x1="580"  y1="410" x2="580"  y2="520" class="stroke thick drawn"/>
-        <line x1="920"  y1="410" x2="920"  y2="520" class="stroke thick drawn"/>
-        <line x1="1250" y1="410" x2="1250" y2="520" class="stroke thick drawn"/>
+        <line x1="250"  y1="410" x2="250"  y2="520" class="u-stroke u-thick a-draw"/>
+        <line x1="580"  y1="410" x2="580"  y2="520" class="u-stroke u-thick a-draw"/>
+        <line x1="920"  y1="410" x2="920"  y2="520" class="u-stroke u-thick a-draw"/>
+        <line x1="1250" y1="410" x2="1250" y2="520" class="u-stroke u-thick a-draw"/>
       </g>
 
-      <!-- Fase 3: setas (agregadas por grupo) -->
+      <!-- Fase 3: setas (pontas) -->
       <g style="--delay:.32s">
-        <!-- 250 -->
-        <g transform="translate(250,520) rotate(90)" >
-          <polygon class="head" points="21,0 0,-8 0,8"/>
-        </g>
-        <!-- 580 -->
-        <g transform="translate(580,520) rotate(90)">
-          <polygon class="head" points="21,0 0,-8 0,8"/>
-        </g>
-        <!-- 920 -->
-        <g transform="translate(920,520) rotate(90)">
-          <polygon class="head" points="21,0 0,-8 0,8"/>
-        </g>
-        <!-- 1250 -->
-        <g transform="translate(1250,520) rotate(90)">
-          <polygon class="head" points="21,0 0,-8 0,8"/>
-        </g>
+        <g transform="translate(250,520) rotate(90)"><polygon class="u-head a-fade" points="21,0 0,-8 0,8"/></g>
+        <g transform="translate(580,520) rotate(90)"><polygon class="u-head a-fade" points="21,0 0,-8 0,8"/></g>
+        <g transform="translate(920,520) rotate(90)"><polygon class="u-head a-fade" points="21,0 0,-8 0,8"/></g>
+        <g transform="translate(1250,520) rotate(90)"><polygon class="u-head a-fade" points="21,0 0,-8 0,8"/></g>
       </g>
 
-      <!-- Fase 4: cartões + textos (delays escalonados) -->
+      <!-- Fase 4: cartões + textos -->
       <!-- SEXO -->
       <g style="--delay:.48s">
-        <rect x="100" y="550" width="300" height="110" class="stroke box drawn"/>
-        <text x="250" y="620" font-size="46" font-weight="500" text-anchor="middle" class="text-anim">SEXO</text>
+        <rect x="100" y="550" width="300" height="110" class="u-stroke u-box a-draw"/>
+        <text x="250" y="620" font-size="46" font-weight="500" class="a-text u-center">SEXO</text>
       </g>
 
       <!-- COR DOS OLHOS -->
       <g style="--delay:.62s">
-        <rect x="430" y="550" width="300" height="110" class="stroke box drawn"/>
-        <text x="580" y="595" font-size="44" font-weight="500" text-anchor="middle" class="text-anim">
+        <rect x="430" y="550" width="300" height="110" class="u-stroke u-box a-draw"/>
+        <text x="580" y="595" font-size="44" font-weight="500" class="a-text u-center">
           <tspan x="580" dy="0">COR DOS</tspan>
           <tspan x="580" dy="1.3em">OLHOS</tspan>
         </text>
@@ -143,8 +130,8 @@
 
       <!-- NACIONALIDADE -->
       <g style="--delay:.76s">
-        <rect x="770" y="550" width="300" height="110" class="stroke box drawn"/>
-        <text x="920" y="595" font-size="44" font-weight="500" text-anchor="middle" class="text-anim">
+        <rect x="770" y="550" width="300" height="110" class="u-stroke u-box a-draw"/>
+        <text x="920" y="595" font-size="44" font-weight="500" class="a-text u-center">
           <tspan x="920" dy="0">NACIONALI</tspan>
           <tspan x="920" dy="1.3em">DADE</tspan>
         </text>
@@ -152,8 +139,8 @@
 
       <!-- ESTADO CIVIL -->
       <g style="--delay:.90s">
-        <rect x="1100" y="550" width="300" height="110" class="stroke box drawn"/>
-        <text x="1250" y="595" font-size="44" font-weight="500" text-anchor="middle" class="text-anim">
+        <rect x="1100" y="550" width="300" height="110" class="u-stroke u-box a-draw"/>
+        <text x="1250" y="595" font-size="44" font-weight="500" class="a-text u-center">
           <tspan x="1250" dy="0">ESTADO</tspan>
           <tspan x="1250" dy="1.3em">CIVIL</tspan>
         </text>

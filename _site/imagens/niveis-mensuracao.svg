@@ -1,116 +1,100 @@
 <!-- ===========================================
-   NÍVEIS DE MENSURAÇÃO — traçado + preenchimento (com reverse)
+   NÍVEIS DE MENSURAÇÃO — padrão unificado (u-*/a-*)
    =========================================== -->
 <svg viewBox="0 0 1100 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc" style="background:transparent">
-  <title id="title">Níveis de mensuração — traçado com preenchimento (reverse)</title>
-  <desc id="desc">
-    Cada retângulo e seu texto são “desenhados” com traçado, seguram um tempo e saem no sentido reverso.
-    Loop contínuo, sem piscar no ponto de virada.
-  </desc>
+  <title id="title">Níveis de mensuração — traçado com preenchimento</title>
+  <desc id="desc">Quatro cartões (Nominal, Ordinal, Intervalar, Razão). Retângulos usam o traçado padrão de linhas; textos desenham e preenchem com o mesmo esquema do restante das figuras.</desc>
 
   <defs>
     <style>
-      :root {
-        --ink: #1f2937;
-        --card: transparent;
-        --cycle: 7s;
-        --easing: ease-in-out;
+      :root{
+        --ink:#1f2937;
+        --font:"et-book","ETBembo","Georgia",serif;
+        --cycle:8s;
+        --ease:ease-in-out;
+        --dash:4000;     /* maior que o perímetro de qualquer cartão */
+        --dashText:900;  /* comprimento “virtual” do texto */
       }
 
-      /* ---------- Estilos base ---------- */
-      rect {
-        fill: var(--card);
-        stroke: var(--ink);
-        stroke-width: 2.2;
-        rx: 20; ry: 20;
+      /* ===== Base/utilitários ===== */
+      text{ font-family:var(--font); fill:var(--ink); user-select:none; }
+      .u-stroke{ stroke:var(--ink); fill:none; stroke-linecap:round; stroke-linejoin:round; }
+      .u-center{ text-anchor:middle; dominant-baseline:middle; }
+      .u-card{ stroke-width:2.2; rx:20; ry:20; }
+
+      /* ===== Traçado tipo tronco/ramo (linhas/contornos) ===== */
+      @keyframes k-drawLine{
+        0%   { stroke-dashoffset:var(--dash); opacity:0; }
+        10%  { opacity:1; }
+        42%  { stroke-dashoffset:0;          opacity:1; }
+        58%  { stroke-dashoffset:0;          opacity:1; }
+        90%  { stroke-dashoffset:var(--dash); opacity:1; }
+        100% { stroke-dashoffset:var(--dash); opacity:0; }
+      }
+      .a-draw{
+        stroke-dasharray:var(--dash);
+        stroke-dashoffset:var(--dash);
+        animation:k-drawLine var(--cycle) var(--ease) infinite both;
+        animation-delay:var(--delay,0s);
       }
 
-      text {
-        font-family: "et-book", "ETBembo", Georgia, serif;
-        font-size: 32px;
-        font-weight: 600;
-        text-anchor: middle;
-        dominant-baseline: middle;
-        letter-spacing: .5px;
-        stroke: var(--ink);
-        stroke-width: 0.8;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-        fill: transparent;
+      /* ===== Texto com stroke + fill sincronizados ===== */
+      @keyframes k-textStroke{
+        0%   { stroke-dashoffset:var(--dashText); opacity:0; }
+        10%  { opacity:1; }
+        45%  { stroke-dashoffset:0;   opacity:1; }
+        55%  { stroke-dashoffset:0;   opacity:1; }
+        90%  { stroke-dashoffset:var(--dashText); opacity:1; }
+        100% { stroke-dashoffset:var(--dashText); opacity:0; }
       }
-
-@keyframes drawLineSym {
-  0%   { stroke-dashoffset: 700; opacity: 0; }
-  8%   { opacity: 1; }
-  44%  { stroke-dashoffset: 0;   opacity: 1; }  /* fim da entrada */
-  53%  { stroke-dashoffset: 0;   opacity: 1; }  /* pausa curta */
-  96%  { stroke-dashoffset: 700; opacity: 1; }  /* saída (reverse) */
-  100% { stroke-dashoffset: 700; opacity: 0; }  /* sem “plateau” no fim */
-}
-
-@keyframes fillTextSym {
-  0%,18%   { fill: transparent; }
-  34%,66%  { fill: var(--ink); }    /* preenchido no miolo */
-  92%,100% { fill: transparent; }   /* some perto do fim (sem segurar) */
-}
-
-      /* Aplicação: alterna ida/volta automaticamente */
-      .drawn {
-        stroke-dasharray: 700;
-        stroke-dashoffset: 700;
-        animation-name: drawLineSym;
-        animation-duration: var(--cycle);
-        animation-timing-function: var(--easing);
-        animation-iteration-count: infinite;
-        animation-direction: alternate;   /* reverse automático */
-        animation-fill-mode: both;        /* mantém estado no pivot */
+      @keyframes k-textFill{
+        0%,18%   { fill:transparent; }
+        34%,66%  { fill:var(--ink); }
+        92%,100% { fill:transparent; }
       }
-
-      .text-anim {
-        stroke-dasharray: 700;
-        stroke-dashoffset: 700;
+      .a-text{
+        font-size:32px; font-weight:600; letter-spacing:.5px;
+        stroke:var(--ink); stroke-width:.8; stroke-linecap:round; stroke-linejoin:round;
+        fill:transparent;
+        stroke-dasharray:var(--dashText); stroke-dashoffset:var(--dashText);
         animation:
-          drawLineSym var(--cycle) var(--easing) infinite alternate both,
-          fillTextSym var(--cycle) var(--easing) infinite alternate both;
+          k-textStroke var(--cycle) var(--ease) infinite both,
+          k-textFill   var(--cycle) var(--ease) infinite both;
+        animation-delay:var(--delay,0s), var(--delay,0s);
       }
 
-      @media (prefers-reduced-motion: reduce) {
-        .drawn, .text-anim {
-          animation: none;
-          stroke-dashoffset: 0;
-          opacity: 1;
-          fill: var(--ink);
-        }
+      /* ===== Acessibilidade ===== */
+      @media (prefers-reduced-motion:reduce){
+        .a-draw,.a-text{ animation:none; stroke-dashoffset:0; opacity:1; }
+        .a-text{ fill:var(--ink); }
       }
     </style>
   </defs>
 
-  <!-- ========== 3. OBJETOS SVG ========== -->
-  <g id="scene" transform="translate(0,0) scale(1)">
-    <g id="cards" transform="translate(30,50) scale(1)">
-      <!-- NOMINAL -->
-      <g transform="translate(0,0)">
-        <rect width="220" height="110" class="drawn"/>
-        <text x="110" y="55" class="text-anim">NOMINAL</text>
-      </g>
+  <!-- ===== Cartões ===== -->
+  <g id="cards" transform="translate(30,50)">
+    <!-- NOMINAL -->
+    <g style="--delay:0s">
+      <rect x="0"   y="0" width="220" height="110" class="u-stroke u-card a-draw"/>
+      <text x="110" y="55" class="u-center a-text">NOMINAL</text>
+    </g>
 
-      <!-- ORDINAL -->
-      <g transform="translate(260,0)">
-        <rect width="220" height="110" class="drawn"/>
-        <text x="110" y="55" class="text-anim">ORDINAL</text>
-      </g>
+    <!-- ORDINAL -->
+    <g style="--delay:.12s">
+      <rect x="260" y="0" width="220" height="110" class="u-stroke u-card a-draw"/>
+      <text x="370" y="55" class="u-center a-text">ORDINAL</text>
+    </g>
 
-      <!-- INTERVALAR -->
-      <g transform="translate(520,0)">
-        <rect width="250" height="110" class="drawn"/>
-        <text x="125" y="55" class="text-anim">INTERVALAR</text>
-      </g>
+    <!-- INTERVALAR -->
+    <g style="--delay:.24s">
+      <rect x="520" y="0" width="250" height="110" class="u-stroke u-card a-draw"/>
+      <text x="645" y="55" class="u-center a-text">INTERVALAR</text>
+    </g>
 
-      <!-- RAZÃO -->
-      <g transform="translate(830,0)">
-        <rect width="180" height="110" class="drawn"/>
-        <text x="90" y="55" class="text-anim">RAZÃO</text>
-      </g>
+    <!-- RAZÃO -->
+    <g style="--delay:.36s">
+      <rect x="830" y="0" width="180" height="110" class="u-stroke u-card a-draw"/>
+      <text x="920" y="55" class="u-center a-text">RAZÃO</text>
     </g>
   </g>
 </svg>

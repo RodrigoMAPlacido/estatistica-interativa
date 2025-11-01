@@ -1,124 +1,9 @@
-<!-- imagens/populacao-amostra-animada.svg -->
+<!-- ===========================================
+   AMOSTRA COMO SUBCONJUNTO — padrão unificado (u-*/a-*)
+   =========================================== -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 360" width="820" height="360" role="img" aria-labelledby="title desc" style="background:#ffffff">
-  <title id="title">Amostra como subconjunto da população — traçado cíclico (sem sobreposição)</title>
-  <desc id="desc">População fixa em cinza. Retângulo “Amostra” desenha e desdesenha o traço (sem fade), texto com traço+fill, e ícones da amostra entram depois — tudo no mesmo ciclo.</desc>
-
-  <defs>
-    <style>
-      :root{
-        /* Paleta e fontes */
-        --pop-fill:#B8BEC6;  /* cor dos bustos da população */
-        --pop-stroke:#8C939C;
-        --pop-bg:#FFFFFF;
-        --ink:#000000;       /* traço/label/amostra em preto */
-        --text:#334155;
-        --font:"et-book","Etbook Sans","EB Garamond",Georgia,serif;
-
-        /* Tempo e easing: igual aos outros arquivos “unificados” */
-        --cycle:8s;
-        --easing:ease-in-out;
-
-        /* Delays em ondas (caixa -> label -> ícones) */
-        --delay-rect:  0s;
-        --delay-label: .10s;
-        --delay-dots:  .70s;
-
-        /* Comprimento de traço (parametrizáveis) */
-        --dash-box: 1100; /* perímetro da caixa ~880; 1100 dá folga */
-        --dash-text: 700;
-      }
-
-      /* Base tipográfica */
-      svg{ font-family:var(--font); color:var(--text); font-synthesis:weight; }
-      text{ letter-spacing:.15px }
-      .bold{ font-weight:700; }
-      .stroke-ns{ vector-effect:non-scaling-stroke; }
-
-      /* ====== Keyframes cíclicos (sem alternate) ====== */
-
-      /* Caixa: só stroke-dashoffset (sem mexer em opacity) */
-      @keyframes drawBoxCycle{
-        0%   { stroke-dashoffset: var(--dash-box); }
-        42%  { stroke-dashoffset: 0; }
-        58%  { stroke-dashoffset: 0; }     /* pequena pausa no topo */
-        100% { stroke-dashoffset: var(--dash-box); }
-      }
-
-      /* Traço do texto (com leve fade-in/out para não “piscar” no pivot) */
-      @keyframes drawLineCycle{
-        0%   { stroke-dashoffset: var(--dash-text); opacity:0; }
-        10%  { opacity:1; }
-        45%  { stroke-dashoffset: 0; opacity:1; }
-        55%  { stroke-dashoffset: 0; opacity:1; }
-        90%  { stroke-dashoffset: var(--dash-text); opacity:1; }
-        100% { stroke-dashoffset: var(--dash-text); opacity:0; }
-      }
-
-      /* Fill do texto no miolo do ciclo */
-      @keyframes fillTextCycle{
-        0%,10%   { fill:transparent; }
-        24%,66%  { fill:var(--ink); }
-        92%,100% { fill:transparent; }
-      }
-
-      /* Ícones da amostra: entram com opacidade e mudam para preto no miolo */
-      @keyframes dotOpacityCycle{
-        0%,15%   { opacity:0; }
-        35%,85%  { opacity:1; }
-        100%     { opacity:0; }
-      }
-      @keyframes sampleFillCycle{
-        0%,18%   { fill:var(--pop-fill); }
-        34%,66%  { fill:var(--ink); }
-        92%,100% { fill:var(--pop-fill); }
-      }
-
-      /* ====== Aplicação ====== */
-
-      .sampleRect{
-        fill:none;
-        stroke:var(--ink);
-        stroke-width:3;
-        rx:18;
-        stroke-dasharray: var(--dash-box);
-        stroke-dashoffset: var(--dash-box);
-        animation: drawBoxCycle var(--cycle) var(--easing) infinite both;
-        animation-delay: var(--delay-rect);
-      }
-
-      .sampleLabel{
-        stroke:var(--ink);
-        stroke-width:.9;
-        stroke-linecap:round;
-        stroke-linejoin:round;
-        fill:transparent;
-        stroke-dasharray: var(--dash-text);
-        stroke-dashoffset: var(--dash-text);
-        animation:
-          drawLineCycle var(--cycle) var(--easing) infinite both,
-          fillTextCycle var(--cycle) var(--easing) infinite both;
-        animation-delay: var(--delay-label), var(--delay-label);
-      }
-
-      .dot{ fill:var(--pop-fill); } /* população fixa */
-      .dot.inSample{
-        /* mesma cadência do resto, só que com delay da “onda” */
-        animation:
-          dotOpacityCycle var(--cycle) var(--easing) infinite both,
-          sampleFillCycle var(--cycle) var(--easing) infinite both;
-        animation-delay: var(--delay-dots), var(--delay-dots);
-      }
-
-      @media (prefers-reduced-motion:reduce){
-        .sampleRect,.sampleLabel,.dot.inSample{ animation:none !important; opacity:1; }
-        .sampleLabel{ fill:var(--ink); stroke-dashoffset:0; }
-        .dot.inSample{ fill:var(--ink); }
-      }
-    </style>
-  </defs>
-
-  <!-- Fundo total branco (export estável) -->
-  <rect x="0" y="0" width="100%" height="100%" fill="#ffffff"/>
+  <title id="title">Amostra como subconjunto da população — traçado cíclico (padrão unificado)</title>
+  <desc id="desc">População fixa em cinza. Retângulo “Amostra” com traçado animado no padrão u-*/a-*; texto com stroke+fill sincronizados; ícones da amostra entram e mudam de cor no miolo do ciclo.</desc>
 
   <!-- ===== ÍCONES (busto) ===== -->
   <defs>
@@ -136,45 +21,134 @@
     </g>
   </defs>
 
-  <!-- Contêiner da População -->
-  <rect x="40" y="60" width="740" height="240" rx="22" fill="var(--pop-bg)" stroke="var(--pop-stroke)" stroke-width="2" class="stroke-ns"/>
-  <text class="bold" x="60" y="92" font-size="24" fill="var(--text)">População</text>
+  <defs>
+    <style>
+      /* ===== Variáveis ===== */
+      :root{
+        --ink:#111827;
+        --font:"et-book","ETBook","Georgia",serif;
 
-  <!-- População (sempre visível) -->
+        --pop-fill:#B8BEC6;
+        --pop-stroke:#8C939C;
+        --pop-bg:#FFFFFF;
+
+        --cycle:8s;
+        --ease:ease-in-out;
+        --dash:1400;      /* > perímetro da caixa da amostra */
+        --dashText:900;   /* comprimento virtual p/ texto */
+      }
+
+      /* ===== Base/utilitárias (u-*) ===== */
+      text{ font-family:var(--font); fill:var(--ink); user-select:none; letter-spacing:.15px }
+      .u-stroke{ stroke:var(--ink); fill:none; stroke-linecap:round; stroke-linejoin:round; }
+      .u-box{ stroke-width:3; rx:18; }
+      .u-center{ text-anchor:middle; }
+      .u-bold{ font-weight:700; }
+      .u-pop{ fill:var(--pop-fill); }
+      .u-ns{ vector-effect:non-scaling-stroke; }
+
+      /* ===== Traçado padrão tronco/ramo (a-*) ===== */
+      @keyframes k-drawLine{
+        0%   { stroke-dashoffset:var(--dash); opacity:0; }
+        10%  { opacity:1; }
+        42%  { stroke-dashoffset:0;          opacity:1; }
+        58%  { stroke-dashoffset:0;          opacity:1; }
+        90%  { stroke-dashoffset:var(--dash); opacity:1; }
+        100% { stroke-dashoffset:var(--dash); opacity:0; }
+      }
+      .a-draw{
+        stroke-dasharray:var(--dash);
+        stroke-dashoffset:var(--dash);
+        animation:k-drawLine var(--cycle) var(--ease) infinite both;
+        animation-delay:var(--delay,0s);
+      }
+
+      /* ===== Texto com stroke + fill sincronizados ===== */
+      @keyframes k-textStroke{
+        0%   { stroke-dashoffset:var(--dashText); opacity:0; }
+        10%  { opacity:1; }
+        45%  { stroke-dashoffset:0;   opacity:1; }
+        55%  { stroke-dashoffset:0;   opacity:1; }
+        90%  { stroke-dashoffset:var(--dashText); opacity:1; }
+        100% { stroke-dashoffset:var(--dashText); opacity:0; }
+      }
+      @keyframes k-textFill{
+        0%,10%   { fill:transparent; }
+        24%,66%  { fill:var(--ink); }
+        92%,100% { fill:transparent; }
+      }
+      .a-text{
+        stroke:var(--ink); stroke-width:.9; stroke-linecap:round; stroke-linejoin:round;
+        fill:transparent;
+        stroke-dasharray:var(--dashText); stroke-dashoffset:var(--dashText);
+        animation:
+          k-textStroke var(--cycle) var(--ease) infinite both,
+          k-textFill   var(--cycle) var(--ease) infinite both;
+        animation-delay:var(--delay,0s), var(--delay,0s);
+      }
+
+      /* ===== Dots da amostra (fade + recolor) ===== */
+      @keyframes k-dotOpacity{ 0%,15%{opacity:0} 35%,85%{opacity:1} 100%{opacity:0} }
+      @keyframes k-dotFill{ 0%,18%{fill:var(--pop-fill)} 34%,66%{fill:var(--ink)} 92%,100%{fill:var(--pop-fill)} }
+      .a-dot{
+        animation:
+          k-dotOpacity var(--cycle) var(--ease) infinite both,
+          k-dotFill    var(--cycle) var(--ease) infinite both;
+        animation-delay:var(--delay,0s), var(--delay,0s);
+      }
+
+      /* ===== Acessibilidade ===== */
+      @media (prefers-reduced-motion:reduce){
+        .a-draw,.a-text,.a-dot{ animation:none; opacity:1; }
+        .a-text{ fill:var(--ink); stroke-dashoffset:0; }
+      }
+    </style>
+  </defs>
+
+  <!-- ===== Fundo e moldura População ===== -->
+  <rect x="0" y="0" width="100%" height="100%" fill="#ffffff"/>
+  <rect x="40" y="60" width="740" height="240" rx="22" fill="var(--pop-bg)" stroke="var(--pop-stroke)" stroke-width="2" class="u-ns"/>
+  <text x="60" y="92" font-size="24" class="u-bold" fill="#334155">População</text>
+
+  <!-- ===== População fixa ===== -->
   <g>
-    <g transform="translate(120,180)"><g transform="scale(1.7)"><use class="dot" href="#busto-cabelo"/></g></g>
-    <g transform="translate(170,130)"><g transform="scale(1.7)"><use class="dot" href="#busto-careca"/></g></g>
-    <g transform="translate(205,210)"><g transform="scale(1.7)"><use class="dot" href="#busto-cabelo"/></g></g>
-    <g transform="translate(265,165)"><g transform="scale(1.7)"><use class="dot" href="#busto-careca"/></g></g>
-    <g transform="translate(315,115)"><g transform="scale(1.7)"><use class="dot" href="#busto-cabelo"/></g></g>
-    <g transform="translate(365,235)"><g transform="scale(1.7)"><use class="dot" href="#busto-careca"/></g></g>
-    <g transform="translate(420,150)"><g transform="scale(1.7)"><use class="dot" href="#busto-cabelo"/></g></g>
-    <g transform="translate(470,205)"><g transform="scale(1.7)"><use class="dot" href="#busto-careca"/></g></g>
-    <g transform="translate(490,190)"><g transform="scale(1.7)"><use class="dot" href="#busto-cabelo"/></g></g>
-    <g transform="translate(525,120)"><g transform="scale(1.7)"><use class="dot" href="#busto-careca"/></g></g>
-    <g transform="translate(535,160)"><g transform="scale(1.7)"><use class="dot" href="#busto-cabelo"/></g></g>
-    <g transform="translate(575,205)"><g transform="scale(1.7)"><use class="dot" href="#busto-careca"/></g></g>
-    <g transform="translate(575,245)"><g transform="scale(1.7)"><use class="dot" href="#busto-cabelo"/></g></g>
-    <g transform="translate(620,175)"><g transform="scale(1.7)"><use class="dot" href="#busto-careca"/></g></g>
-    <g transform="translate(630,170)"><g transform="scale(1.7)"><use class="dot" href="#busto-cabelo"/></g></g>
-    <g transform="translate(660,220)"><g transform="scale(1.7)"><use class="dot" href="#busto-careca"/></g></g>
-    <g transform="translate(690,210)"><g transform="scale(1.7)"><use class="dot" href="#busto-cabelo"/></g></g>
+    <g transform="translate(120,180)"><g transform="scale(1.7)"><use class="u-pop" href="#busto-cabelo"/></g></g>
+    <g transform="translate(170,130)"><g transform="scale(1.7)"><use class="u-pop" href="#busto-careca"/></g></g>
+    <g transform="translate(205,210)"><g transform="scale(1.7)"><use class="u-pop" href="#busto-cabelo"/></g></g>
+    <g transform="translate(265,165)"><g transform="scale(1.7)"><use class="u-pop" href="#busto-careca"/></g></g>
+    <g transform="translate(315,115)"><g transform="scale(1.7)"><use class="u-pop" href="#busto-cabelo"/></g></g>
+    <g transform="translate(365,235)"><g transform="scale(1.7)"><use class="u-pop" href="#busto-careca"/></g></g>
+    <g transform="translate(420,150)"><g transform="scale(1.7)"><use class="u-pop" href="#busto-cabelo"/></g></g>
+    <g transform="translate(470,205)"><g transform="scale(1.7)"><use class="u-pop" href="#busto-careca"/></g></g>
+    <g transform="translate(490,190)"><g transform="scale(1.7)"><use class="u-pop" href="#busto-cabelo"/></g></g>
+    <g transform="translate(525,120)"><g transform="scale(1.7)"><use class="u-pop" href="#busto-careca"/></g></g>
+    <g transform="translate(535,160)"><g transform="scale(1.7)"><use class="u-pop" href="#busto-cabelo"/></g></g>
+    <g transform="translate(575,205)"><g transform="scale(1.7)"><use class="u-pop" href="#busto-careca"/></g></g>
+    <g transform="translate(575,245)"><g transform="scale(1.7)"><use class="u-pop" href="#busto-cabelo"/></g></g>
+    <g transform="translate(620,175)"><g transform="scale(1.7)"><use class="u-pop" href="#busto-careca"/></g></g>
+    <g transform="translate(630,170)"><g transform="scale(1.7)"><use class="u-pop" href="#busto-cabelo"/></g></g>
+    <g transform="translate(660,220)"><g transform="scale(1.7)"><use class="u-pop" href="#busto-careca"/></g></g>
+    <g transform="translate(690,210)"><g transform="scale(1.7)"><use class="u-pop" href="#busto-cabelo"/></g></g>
   </g>
 
-  <!-- Amostra: caixa + label + ícones (com delays em ondas) -->
-  <rect class="sampleRect" x="450" y="90" width="260" height="180"/>
-  <text class="sampleLabel bold" x="580" y="118" font-size="22">Amostra</text>
+  <!-- ===== Amostra (padrão unificado) ===== -->
+  <!-- Caixa com traçado padrão -->
+  <rect x="450" y="90" width="260" height="180" class="u-stroke u-box a-draw" style="--delay:0s"/>
 
-  <g>
-    <g transform="translate(470,205)"><g transform="scale(1.7)"><use class="dot inSample" href="#busto-careca"/></g></g>
-    <g transform="translate(490,190)"><g transform="scale(1.7)"><use class="dot inSample" href="#busto-cabelo"/></g></g>
-    <g transform="translate(525,120)"><g transform="scale(1.7)"><use class="dot inSample" href="#busto-careca"/></g></g>
-    <g transform="translate(535,160)"><g transform="scale(1.7)"><use class="dot inSample" href="#busto-cabelo"/></g></g>
-    <g transform="translate(575,205)"><g transform="scale(1.7)"><use class="dot inSample" href="#busto-careca"/></g></g>
-    <g transform="translate(575,245)"><g transform="scale(1.7)"><use class="dot inSample" href="#busto-cabelo"/></g></g>
-    <g transform="translate(620,175)"><g transform="scale(1.7)"><use class="dot inSample" href="#busto-careca"/></g></g>
-    <g transform="translate(630,170)"><g transform="scale(1.7)"><use class="dot inSample" href="#busto-cabelo"/></g></g>
-    <g transform="translate(660,220)"><g transform="scale(1.7)"><use class="dot inSample" href="#busto-careca"/></g></g>
-    <g transform="translate(690,210)"><g transform="scale(1.7)"><use class="dot inSample" href="#busto-cabelo"/></g></g>
+  <!-- Label com stroke+fill sincronizados -->
+  <text x="590" y="118" font-size="22" class="u-center u-bold a-text" style="--delay:.10s">Amostra</text>
+
+  <!-- Ícones de amostra: entram depois (onda) -->
+  <g style="--delay:.70s">
+    <g transform="translate(470,205)"><g transform="scale(1.7)"><use class="a-dot" href="#busto-careca"/></g></g>
+    <g transform="translate(490,190)"><g transform="scale(1.7)"><use class="a-dot" href="#busto-cabelo"/></g></g>
+    <g transform="translate(525,120)"><g transform="scale(1.7)"><use class="a-dot" href="#busto-careca"/></g></g>
+    <g transform="translate(535,160)"><g transform="scale(1.7)"><use class="a-dot" href="#busto-cabelo"/></g></g>
+    <g transform="translate(575,205)"><g transform="scale(1.7)"><use class="a-dot" href="#busto-careca"/></g></g>
+    <g transform="translate(575,245)"><g transform="scale(1.7)"><use class="a-dot" href="#busto-cabelo"/></g></g>
+    <g transform="translate(620,175)"><g transform="scale(1.7)"><use class="a-dot" href="#busto-careca"/></g></g>
+    <g transform="translate(630,170)"><g transform="scale(1.7)"><use class="a-dot" href="#busto-cabelo"/></g></g>
+    <g transform="translate(660,220)"><g transform="scale(1.7)"><use class="a-dot" href="#busto-careca"/></g></g>
+    <g transform="translate(690,210)"><g transform="scale(1.7)"><use class="a-dot" href="#busto-cabelo"/></g></g>
   </g>
 </svg>

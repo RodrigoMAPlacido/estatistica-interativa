@@ -1,159 +1,138 @@
-<!-- imagens/populacao-amostra-animada.svg -->
+<!-- ===========================================
+   AMOSTRA ⟵ POPULAÇÃO — padrão unificado (u-*/a-*)
+   =========================================== -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 360" width="820" height="360" role="img" aria-labelledby="title desc" style="background:#ffffff">
   <title id="title">Amostra como subconjunto da população — traçado cíclico sem sobreposição</title>
-  <desc id="desc">População fixa em cinza. Retângulo “Amostra” desenha e “desdesenha” o traço (sem fade), texto com traço+preenchimento, e pontos entram depois — tudo no mesmo ciclo, sem alternate, evitando sobreposição.</desc>
+  <desc id="desc">População fixa em cinza. Caixa “Amostra” com traçado padrão a-draw (sem fade), texto com stroke+fill (a-text) e pontos que entram depois (a-dot), tudo no mesmo ciclo e com as mesmas variáveis globais.</desc>
 
   <defs>
     <style>
       :root{
-        --ink:#1f2937;
-        --font:"et-book","ETBembo","Georgia",serif;
-        --cycle:8s;
-        --easing:ease-in-out;
+        /* paleta e tipografia */
+        --ink:#111827;
+        --font:"et-book","ETBook","Georgia",serif;
 
+        /* tempo/easing unificados */
+        --cycle:8s;
+        --ease:ease-in-out;
+
+        /* dash “grande” p/ evitar risquinho fantasma */
+        --dash:1400;
+        --dashText:900;
+
+        /* população */
         --pop-fill:#B8BEC6;
         --pop-stroke:#8C939C;
         --pop-bg:#FFFFFF;
 
-        --sample:#000000;
-
-        --delay-rect: 0s;   /* caixa primeiro */
-        --delay-label:.10s; /* rótulo depois  */
-        --delay-dots: .70s; /* pontos por último */
-
-        /* Perímetro de segurança para o retângulo (parametrizável) */
-        --dash-box: 1100;
-        --dash-text: 700;
+        /* atrasos em ondas */
+        --delay-rect:0s;
+        --delay-label:.10s;
+        --delay-dots:.70s;
       }
 
-      text{ font-family:var(--font); fill:var(--ink); font-weight:700; letter-spacing:.13px; user-select:none; }
-      .stroke-ns{ vector-effect:non-scaling-stroke; }
-      .box{ stroke-width:3; rx:18; }
+      /* ===== base utilitária: u-* ===== */
+      text{ font-family:var(--font); fill:var(--ink); user-select:none; letter-spacing:.13px }
+      .u-stroke{ stroke:var(--ink); fill:none; stroke-linecap:round; stroke-linejoin:round }
+      .u-box{ stroke-width:3; rx:18 }
+      .u-center{ text-anchor:middle }
+      .u-bold{ font-weight:700 }
+      .u-ns{ vector-effect:non-scaling-stroke }
 
-      /* ===== Keyframes CÍCLICOS (sem alternate) ===== */
-
-      /* Caixa: só traçado (sem opacidade); ida (desenha) -> pausa -> volta (desdesenha) */
-      @keyframes drawBoxCycle {
-        0%   { stroke-dashoffset: var(--dash-box); }
-        42%  { stroke-dashoffset: 0; }
-        58%  { stroke-dashoffset: 0; }   /* pequena pausa no topo */
-        100% { stroke-dashoffset: var(--dash-box); }
-      }
-
-      /* Traço do texto: com opacidade suave para não “piscar” no pivot */
-      @keyframes drawLineCycle {
-        0%   { stroke-dashoffset: var(--dash-text); opacity:0; }
+      /* ===== traçado padrão (tronco/ramos): a-draw ===== */
+      @keyframes k-drawLine{
+        0%   { stroke-dashoffset:var(--dash); opacity:0; }
         10%  { opacity:1; }
-        45%  { stroke-dashoffset: 0; opacity:1; }
-        55%  { stroke-dashoffset: 0; opacity:1; }
-        90%  { stroke-dashoffset: var(--dash-text); opacity:1; }
-        100% { stroke-dashoffset: var(--dash-text); opacity:0; }
+        42%  { stroke-dashoffset:0;          opacity:1; }
+        58%  { stroke-dashoffset:0;          opacity:1; }
+        90%  { stroke-dashoffset:var(--dash); opacity:1; }
+        100% { stroke-dashoffset:var(--dash); opacity:0; }
+      }
+      .a-draw{
+        stroke-dasharray:var(--dash);
+        stroke-dashoffset:var(--dash);
+        animation:k-drawLine var(--cycle) var(--ease) infinite both;
+        animation-delay:var(--delay,0s);
       }
 
-      /* Preenchimento do texto no miolo do ciclo */
-      @keyframes fillTextCycle {
+      /* ===== texto com stroke+fill sincronizados: a-text ===== */
+      @keyframes k-textStroke{
+        0%   { stroke-dashoffset:var(--dashText); opacity:0; }
+        10%  { opacity:1; }
+        45%  { stroke-dashoffset:0;   opacity:1; }
+        55%  { stroke-dashoffset:0;   opacity:1; }
+        90%  { stroke-dashoffset:var(--dashText); opacity:1; }
+        100% { stroke-dashoffset:var(--dashText); opacity:0; }
+      }
+      @keyframes k-textFill{
         0%,10%   { fill:transparent; }
-        24%,66%  { fill:var(--sample); }
+        24%,66%  { fill:var(--ink); }
         92%,100% { fill:transparent; }
       }
-
-      /* Pontos: opacidade e cor sincronizadas com o mesmo ciclo */
-      @keyframes dotOpacityCycle {
-        0%,15%   { opacity:0; }
-        35%,85%  { opacity:1; }
-        100%     { opacity:0; }
-      }
-      @keyframes sampleFillCycle {
-        0%,10%   { fill:var(--pop-fill); }
-        24%,66%  { fill:var(--sample); }
-        92%,100% { fill:var(--pop-fill); }
-      }
-
-      /* ===== Aplicações ===== */
-
-      /* Caixa (sem fade), sem alternate */
-      .drawn-box{
-        stroke:var(--sample);
-        fill:none;
-        stroke-width:3;
-        stroke-dasharray: var(--dash-box);
-        stroke-dashoffset: var(--dash-box);
-        animation: drawBoxCycle var(--cycle) var(--easing) infinite both;
-        animation-delay: var(--delay-rect);
-        opacity:1;
-      }
-
-      /* Texto “Amostra”: traço + fill, sem alternate */
-      .text-stroke-fill{
-        stroke:var(--sample);
-        stroke-width:.9;
-        stroke-linecap:round;
-        stroke-linejoin:round;
+      .a-text{
+        stroke:var(--ink); stroke-width:.9; stroke-linecap:round; stroke-linejoin:round;
         fill:transparent;
-        stroke-dasharray: var(--dash-text);
-        stroke-dashoffset: var(--dash-text);
+        stroke-dasharray:var(--dashText); stroke-dashoffset:var(--dashText);
         animation:
-          drawLineCycle var(--cycle) var(--easing) infinite both,
-          fillTextCycle var(--cycle) var(--easing) infinite both;
-        animation-delay: var(--delay-label), var(--delay-label);
+          k-textStroke var(--cycle) var(--ease) infinite both,
+          k-textFill   var(--cycle) var(--ease) infinite both;
+        animation-delay:var(--delay,0s), var(--delay,0s);
       }
 
-      /* Pontos (onda seguinte), sem alternate */
-      .sample-dot{
+      /* ===== pontos da amostra: a-dot (opacidade + recolor) ===== */
+      @keyframes k-dotOpacity{ 0%,15%{opacity:0} 35%,85%{opacity:1} 100%{opacity:0} }
+      @keyframes k-dotFill{ 0%,10%{fill:var(--pop-fill)} 24%,66%{fill:var(--ink)} 92%,100%{fill:var(--pop-fill)} }
+      .a-dot{
         animation:
-          dotOpacityCycle  var(--cycle) var(--easing) infinite both,
-          sampleFillCycle  var(--cycle) var(--easing) infinite both;
-        animation-delay: var(--delay-dots), var(--delay-dots);
+          k-dotOpacity var(--cycle) var(--ease) infinite both,
+          k-dotFill    var(--cycle) var(--ease) infinite both;
+        animation-delay:var(--delay,0s), var(--delay,0s);
       }
 
       @media (prefers-reduced-motion:reduce){
-        .drawn-box,.text-stroke-fill,.sample-dot{ animation:none !important; opacity:1; }
-        .text-stroke-fill{ fill:var(--sample); stroke-dashoffset:0; }
-        .sample-dot{ fill:var(--sample); }
+        .a-draw,.a-text,.a-dot{ animation:none !important; opacity:1 }
+        .a-text{ fill:var(--ink); stroke-dashoffset:0 }
       }
     </style>
   </defs>
 
-  <g id="scene" transform="translate(0,0) scale(1)">
-    <!-- Painel da População -->
-    <g id="panel">
-      <rect x="40" y="60" width="740" height="240" rx="22"
-            fill="var(--pop-bg)" stroke="var(--pop-stroke)" stroke-width="2" class="stroke-ns"/>
-      <text x="60" y="92" font-size="24">População</text>
+  <!-- fundo sólido para export estável -->
+  <rect x="0" y="0" width="100%" height="100%" fill="#ffffff"/>
 
-      <!-- Pontos da população -->
-      <g id="population-dots" fill="var(--pop-fill)">
-        <circle cx="120" cy="180" r="9"/><circle cx="170" cy="130" r="9"/><circle cx="205" cy="210" r="9"/>
-        <circle cx="265" cy="165" r="9"/><circle cx="315" cy="115" r="9"/><circle cx="365" cy="235" r="9"/>
-        <circle cx="420" cy="150" r="9"/><circle cx="470" cy="205" r="9"/><circle cx="490" cy="190" r="9"/>
-        <circle cx="525" cy="120" r="9"/><circle cx="535" cy="160" r="9"/><circle cx="575" cy="205" r="9"/>
-        <circle cx="575" cy="245" r="9"/><circle cx="620" cy="175" r="9"/><circle cx="630" cy="170" r="9"/>
-        <circle cx="660" cy="220" r="9"/><circle cx="690" cy="210" r="9"/>
-      </g>
+  <!-- painel/população -->
+  <g id="panel">
+    <rect x="40" y="60" width="740" height="240" rx="22"
+          fill="var(--pop-bg)" stroke="var(--pop-stroke)" stroke-width="2" class="u-ns"/>
+    <text x="60" y="92" font-size="24" class="u-bold" fill="#334155">População</text>
 
-      <!-- Amostra -->
-      <g id="sample">
-        <!-- Retângulo com traçado cíclico (sem fade) -->
-        <rect x="450" y="90" width="260" height="180"
-              class="box drawn-box stroke-ns"/>
+    <!-- pontos da população (estáticos) -->
+    <g fill="var(--pop-fill)">
+      <circle cx="120" cy="180" r="9"/><circle cx="170" cy="130" r="9"/><circle cx="205" cy="210" r="9"/>
+      <circle cx="265" cy="165" r="9"/><circle cx="315" cy="115" r="9"/><circle cx="365" cy="235" r="9"/>
+      <circle cx="420" cy="150" r="9"/><circle cx="470" cy="205" r="9"/><circle cx="490" cy="190" r="9"/>
+      <circle cx="525" cy="120" r="9"/><circle cx="535" cy="160" r="9"/><circle cx="575" cy="205" r="9"/>
+      <circle cx="575" cy="245" r="9"/><circle cx="620" cy="175" r="9"/><circle cx="630" cy="170" r="9"/>
+      <circle cx="660" cy="220" r="9"/><circle cx="690" cy="210" r="9"/>
+    </g>
 
-        <!-- Rótulo com traço + preenchimento -->
-        <text x="580" y="118" font-size="22" class="text-stroke-fill">Amostra</text>
+    <!-- amostra: caixa (a-draw), rótulo (a-text) e pontos (a-dot) -->
+    <rect x="450" y="90" width="260" height="180"
+          class="u-stroke u-box a-draw u-ns" style="--delay:var(--delay-rect)"/>
 
-        <!-- Pontos (entram na onda seguinte) -->
-        <g id="sample-dots" fill="var(--pop-fill)">
-          <circle class="sample-dot" cx="470" cy="205" r="9"/>
-          <circle class="sample-dot" cx="490" cy="190" r="9"/>
-          <circle class="sample-dot" cx="525" cy="120" r="9"/>
-          <circle class="sample-dot" cx="535" cy="160" r="9"/>
-          <circle class="sample-dot" cx="575" cy="205" r="9"/>
-          <circle class="sample-dot" cx="575" cy="245" r="9"/>
-          <circle class="sample-dot" cx="620" cy="175" r="9"/>
-          <circle class="sample-dot" cx="630" cy="170" r="9"/>
-          <circle class="sample-dot" cx="660" cy="220" r="9"/>
-          <circle class="sample-dot" cx="690" cy="210" r="9"/>
-        </g>
-      </g>
+    <text x="590" y="118" font-size="22"
+          class="u-center u-bold a-text" style="--delay:var(--delay-label)">Amostra</text>
+
+    <g style="--delay:var(--delay-dots)">
+      <circle class="a-dot" cx="470" cy="205" r="9"/>
+      <circle class="a-dot" cx="490" cy="190" r="9"/>
+      <circle class="a-dot" cx="525" cy="120" r="9"/>
+      <circle class="a-dot" cx="535" cy="160" r="9"/>
+      <circle class="a-dot" cx="575" cy="205" r="9"/>
+      <circle class="a-dot" cx="575" cy="245" r="9"/>
+      <circle class="a-dot" cx="620" cy="175" r="9"/>
+      <circle class="a-dot" cx="630" cy="170" r="9"/>
+      <circle class="a-dot" cx="660" cy="220" r="9"/>
+      <circle class="a-dot" cx="690" cy="210" r="9"/>
     </g>
   </g>
 </svg>
