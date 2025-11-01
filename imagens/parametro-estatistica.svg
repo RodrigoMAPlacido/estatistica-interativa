@@ -1,57 +1,123 @@
 <!-- imagens/populacao-amostra-animada.svg -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 360" width="820" height="360" role="img" aria-labelledby="title desc" style="background:#ffffff">
-  <title id="title">Amostra como subconjunto da população — fade in/out simultâneo em loop</title>
-  <desc id="desc">População em cinza; retângulo destaca a amostra; ícones da amostra ficam PRETOS com fade-in/out e pausa.</desc>
+  <title id="title">Amostra como subconjunto da população — traçado cíclico (sem sobreposição)</title>
+  <desc id="desc">População fixa em cinza. Retângulo “Amostra” desenha e desdesenha o traço (sem fade), texto com traço+fill, e ícones da amostra entram depois — tudo no mesmo ciclo.</desc>
 
-  <style>
-    :root{
-      --pop-fill:#B8BEC6;
-      --pop-stroke:#8C939C;
-      --pop-bg:#FFFFFF;   /* painel branco */
-      --ink:#000000;      /* cor da amostra (preto) */
-      --text:#334155;
-      --cycle:5s;
-    }
+  <defs>
+    <style>
+      :root{
+        /* Paleta e fontes */
+        --pop-fill:#B8BEC6;  /* cor dos bustos da população */
+        --pop-stroke:#8C939C;
+        --pop-bg:#FFFFFF;
+        --ink:#000000;       /* traço/label/amostra em preto */
+        --text:#334155;
+        --font:"et-book","Etbook Sans","EB Garamond",Georgia,serif;
 
-    /* Fonte do site aplicada globalmente */
-    svg{ font-family:"et-book","Etbook Sans","EB Garamond",Georgia,serif; color:var(--text); font-synthesis:weight; }
-    text{ letter-spacing:.15px }
-    .bold{ font-weight:700; }
+        /* Tempo e easing: igual aos outros arquivos “unificados” */
+        --cycle:8s;
+        --easing:ease-in-out;
 
-    /* População base (sempre visível em cinza) */
-    .dot{ fill:var(--pop-fill); }
+        /* Delays em ondas (caixa -> label -> ícones) */
+        --delay-rect:  0s;
+        --delay-label: .10s;
+        --delay-dots:  .70s;
 
-    /* timeline: 0–20% in, 20–70% on, 70–90% out, 90–100% pausa */
-    @keyframes fadeWindow{
-      0%{opacity:0} 20%{opacity:1} 70%{opacity:1} 90%{opacity:0} 100%{opacity:0}
-    }
-    /* Cor dos ícones da amostra muda para PRETO durante a janela */
-    @keyframes sampleFill{
-      0%{fill:var(--pop-fill)} 20%{fill:var(--ink)} 70%{fill:var(--ink)} 90%{fill:var(--pop-fill)} 100%{fill:var(--pop-fill)}
-    }
+        /* Comprimento de traço (parametrizáveis) */
+        --dash-box: 1100; /* perímetro da caixa ~880; 1100 dá folga */
+        --dash-text: 700;
+      }
 
-    .sampleRect{
-      opacity:0; fill:none; stroke:var(--ink); stroke-width:3; rx:18;
-      animation:fadeWindow var(--cycle) cubic-bezier(.2,.7,.2,1) infinite;
-    }
-    .sampleLabel{
-      opacity:0; fill:var(--ink);
-      animation:fadeWindow var(--cycle) ease infinite;
-    }
-    .dot.inSample{
-      animation:fadeWindow var(--cycle) ease infinite, sampleFill var(--cycle) linear infinite;
-      transform-origin:center;
-    }
+      /* Base tipográfica */
+      svg{ font-family:var(--font); color:var(--text); font-synthesis:weight; }
+      text{ letter-spacing:.15px }
+      .bold{ font-weight:700; }
+      .stroke-ns{ vector-effect:non-scaling-stroke; }
 
-    /* Acessibilidade: reduz movimento */
-    @media (prefers-reduced-motion:reduce){
-      .sampleRect,.sampleLabel,.dot.inSample{animation:none!important}
-      .sampleRect,.sampleLabel{opacity:1}
-      .dot.inSample{opacity:1; fill:var(--ink)}
-    }
-  </style>
+      /* ====== Keyframes cíclicos (sem alternate) ====== */
 
-  <!-- Fundo total para exportar com branco -->
+      /* Caixa: só stroke-dashoffset (sem mexer em opacity) */
+      @keyframes drawBoxCycle{
+        0%   { stroke-dashoffset: var(--dash-box); }
+        42%  { stroke-dashoffset: 0; }
+        58%  { stroke-dashoffset: 0; }     /* pequena pausa no topo */
+        100% { stroke-dashoffset: var(--dash-box); }
+      }
+
+      /* Traço do texto (com leve fade-in/out para não “piscar” no pivot) */
+      @keyframes drawLineCycle{
+        0%   { stroke-dashoffset: var(--dash-text); opacity:0; }
+        10%  { opacity:1; }
+        45%  { stroke-dashoffset: 0; opacity:1; }
+        55%  { stroke-dashoffset: 0; opacity:1; }
+        90%  { stroke-dashoffset: var(--dash-text); opacity:1; }
+        100% { stroke-dashoffset: var(--dash-text); opacity:0; }
+      }
+
+      /* Fill do texto no miolo do ciclo */
+      @keyframes fillTextCycle{
+        0%,10%   { fill:transparent; }
+        24%,66%  { fill:var(--ink); }
+        92%,100% { fill:transparent; }
+      }
+
+      /* Ícones da amostra: entram com opacidade e mudam para preto no miolo */
+      @keyframes dotOpacityCycle{
+        0%,15%   { opacity:0; }
+        35%,85%  { opacity:1; }
+        100%     { opacity:0; }
+      }
+      @keyframes sampleFillCycle{
+        0%,18%   { fill:var(--pop-fill); }
+        34%,66%  { fill:var(--ink); }
+        92%,100% { fill:var(--pop-fill); }
+      }
+
+      /* ====== Aplicação ====== */
+
+      .sampleRect{
+        fill:none;
+        stroke:var(--ink);
+        stroke-width:3;
+        rx:18;
+        stroke-dasharray: var(--dash-box);
+        stroke-dashoffset: var(--dash-box);
+        animation: drawBoxCycle var(--cycle) var(--easing) infinite both;
+        animation-delay: var(--delay-rect);
+      }
+
+      .sampleLabel{
+        stroke:var(--ink);
+        stroke-width:.9;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        fill:transparent;
+        stroke-dasharray: var(--dash-text);
+        stroke-dashoffset: var(--dash-text);
+        animation:
+          drawLineCycle var(--cycle) var(--easing) infinite both,
+          fillTextCycle var(--cycle) var(--easing) infinite both;
+        animation-delay: var(--delay-label), var(--delay-label);
+      }
+
+      .dot{ fill:var(--pop-fill); } /* população fixa */
+      .dot.inSample{
+        /* mesma cadência do resto, só que com delay da “onda” */
+        animation:
+          dotOpacityCycle var(--cycle) var(--easing) infinite both,
+          sampleFillCycle var(--cycle) var(--easing) infinite both;
+        animation-delay: var(--delay-dots), var(--delay-dots);
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        .sampleRect,.sampleLabel,.dot.inSample{ animation:none !important; opacity:1; }
+        .sampleLabel{ fill:var(--ink); stroke-dashoffset:0; }
+        .dot.inSample{ fill:var(--ink); }
+      }
+    </style>
+  </defs>
+
+  <!-- Fundo total branco (export estável) -->
   <rect x="0" y="0" width="100%" height="100%" fill="#ffffff"/>
 
   <!-- ===== ÍCONES (busto) ===== -->
@@ -62,8 +128,7 @@
     </g>
     <g id="busto-cabelo">
       <use href="#busto-base"/>
-      <path d="M -6,-6 Q 0,-10 6,-6 L 6,-5 Q 0,-8 -6,-5 Z" fill="#4A5568" stroke="#2D3748" 
-        stroke-width="0.8"/>
+      <path d="M -6,-6 Q 0,-10 6,-6 L 6,-5 Q 0,-8 -6,-5 Z" fill="#4A5568" stroke="#2D3748" stroke-width="0.8"/>
     </g>
     <g id="busto-careca">
       <use href="#busto-base"/>
@@ -72,10 +137,10 @@
   </defs>
 
   <!-- Contêiner da População -->
-  <rect x="40" y="60" width="740" height="240" rx="22" fill="var(--pop-bg)" stroke="var(--pop-stroke)" stroke-width="2"/>
+  <rect x="40" y="60" width="740" height="240" rx="22" fill="var(--pop-bg)" stroke="var(--pop-stroke)" stroke-width="2" class="stroke-ns"/>
   <text class="bold" x="60" y="92" font-size="24" fill="var(--text)">População</text>
 
-  <!-- População (mesmas posições; scale está no g interno) -->
+  <!-- População (sempre visível) -->
   <g>
     <g transform="translate(120,180)"><g transform="scale(1.7)"><use class="dot" href="#busto-cabelo"/></g></g>
     <g transform="translate(170,130)"><g transform="scale(1.7)"><use class="dot" href="#busto-careca"/></g></g>
@@ -96,11 +161,10 @@
     <g transform="translate(690,210)"><g transform="scale(1.7)"><use class="dot" href="#busto-cabelo"/></g></g>
   </g>
 
-  <!-- Amostra -->
+  <!-- Amostra: caixa + label + ícones (com delays em ondas) -->
   <rect class="sampleRect" x="450" y="90" width="260" height="180"/>
   <text class="sampleLabel bold" x="580" y="118" font-size="22">Amostra</text>
 
-  <!-- Seleção (mesmas posições; scale no g interno) -->
   <g>
     <g transform="translate(470,205)"><g transform="scale(1.7)"><use class="dot inSample" href="#busto-careca"/></g></g>
     <g transform="translate(490,190)"><g transform="scale(1.7)"><use class="dot inSample" href="#busto-cabelo"/></g></g>
