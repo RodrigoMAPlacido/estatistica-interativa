@@ -122,10 +122,7 @@
       <!-- COR DOS OLHOS -->
       <g style="--delay:.62s">
         <rect x="430" y="550" width="300" height="110" class="u-stroke u-box a-draw"/>
-        <text x="580" y="595" font-size="44" font-weight="500" class="a-text u-center">
-          <tspan x="580" dy="0">COR DOS</tspan>
-          <tspan x="580" dy="1.3em">OLHOS</tspan>
-        </text>
+        <text x="580" y="620" font-size="46" font-weight="500" class="a-text u-center">CPF</text>
       </g>
 
       <!-- NACIONALIDADE -->

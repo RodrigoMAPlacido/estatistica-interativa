@@ -150,8 +150,8 @@
       <g style="--delay:.94s">
         <rect x="1100" y="550" width="300" height="110" class="u-stroke u-box a-draw"/>
         <text x="1250" y="595" font-size="40" class="u-center a-text">
-          <tspan x="1250" dy="0">NÍVEL DE</tspan>
-          <tspan x="1250" dy="1.3em">DOR</tspan>
+          <tspan x="1250" dy="0">GRAU DE</tspan>
+          <tspan x="1250" dy="1.3em">DIFICULDADE</tspan>
         </text>
       </g>
 
