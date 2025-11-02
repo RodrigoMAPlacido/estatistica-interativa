@@ -136,7 +136,7 @@
   <rect x="450" y="90" width="260" height="180" class="u-stroke u-box a-draw" style="--delay:0s"/>
 
   <!-- Label com stroke+fill sincronizados -->
-  <text x="590" y="118" font-size="22" class="u-center u-bold a-text" style="--delay:.10s">Amostra</text>
+  <text x="650" y="118" font-size="22" class="u-center u-bold a-text" style="--delay:.10s">Amostra</text>
 
   <!-- Ícones de amostra: entram depois (onda) -->
   <g style="--delay:.70s">

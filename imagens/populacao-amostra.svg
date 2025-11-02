@@ -119,7 +119,7 @@
     <rect x="450" y="90" width="260" height="180"
           class="u-stroke u-box a-draw u-ns" style="--delay:var(--delay-rect)"/>
 
-    <text x="590" y="118" font-size="22"
+    <text x="650" y="118" font-size="22"
           class="u-center u-bold a-text" style="--delay:var(--delay-label)">Amostra</text>
 
     <g style="--delay:var(--delay-dots)">
