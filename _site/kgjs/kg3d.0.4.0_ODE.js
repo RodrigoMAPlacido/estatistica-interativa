@@ -63124,14 +63124,14 @@ var KGAuthor;
             topGraphDef.position = {
                 "x": 0.15,
                 "y": 0.025,
-                "width": 0.8,
-                "height": 0.4
+                "width": 0.5,
+                "height": 0.5
             };
             bottomGraphDef.position = {
                 "x": 0.15,
                 "y": 0.525,
-                "width": 0.8,
-                "height": 0.4
+                "width": 0.5,
+                "height": 0.5
             };
             var topGraph = new KGAuthor.Graph(topGraphDef), bottomGraph = new KGAuthor.Graph(bottomGraphDef);
             topGraph.subObjects.forEach(function (obj) { obj.addSecondGraph(bottomGraph); });
@@ -63152,14 +63152,14 @@ var KGAuthor;
             topGraphDef.position = {
                 "x": 0.15,
                 "y": 0.025,
-                "width": 0.738,
-                "height": 0.4
+                "width": 0.45,
+                "height": 0.45
             };
             bottomGraphDef.position = {
                 "x": 0.15,
                 "y": 0.525,
-                "width": 0.738,
-                "height": 0.4
+                "width": 0.45,
+                "height": 0.45
             };
             var topGraph = new KGAuthor.Graph(topGraphDef), bottomGraph = new KGAuthor.Graph(bottomGraphDef), sidebar = new KGAuthor.Sidebar(sidebarDef);
             topGraph.subObjects.forEach(function (obj) { obj.addSecondGraph(bottomGraph); });
