@@ -15,12 +15,30 @@
   let kgEnsureAttempts = 0;
 
   const hasKGContainers = () => document.querySelector(".kg-container") !== null;
+  const getKGContainerNode = (view) => (
+    view && view.div && typeof view.div.node === "function" ? view.div.node() : null
+  );
+  function resolveScaleFromDataset(dataset) {
+    if (!dataset) {
+      return 1;
+    }
+    let scale = 1;
+    const attrScale = parseFloat(dataset.kgScale || "");
+    if (!Number.isNaN(attrScale) && attrScale > 0) {
+      scale = attrScale;
+    }
+    const attrMobileScale = parseFloat(dataset.kgMobileScale || "");
+    if (window.innerWidth <= 768 && !Number.isNaN(attrMobileScale) && attrMobileScale > 0) {
+      scale = attrMobileScale;
+    }
+    return scale;
+  }
 
   function applyContainerAspect(view) {
     if (!view || typeof view.updateDimensions !== "function") {
       return;
     }
-    const container = view.div && typeof view.div.node === "function" ? view.div.node() : null;
+    const container = getKGContainerNode(view);
     if (!container) {
       return;
     }
@@ -39,6 +57,37 @@
     }
     if (view.aspectRatio !== targetAspect) {
       view.aspectRatio = targetAspect;
+    }
+  }
+
+  function applyContainerScale(view) {
+    if (!view || !view.svgContainerDiv || typeof view.svgContainerDiv.node !== "function") {
+      return;
+    }
+    const container = getKGContainerNode(view);
+    if (!container) {
+      return;
+    }
+    const svgDiv = view.svgContainerDiv.node();
+    const dataset = container.dataset || {};
+    const scale = resolveScaleFromDataset(dataset);
+    const hasTransform = svgDiv.style.transform && svgDiv.style.transform !== "none";
+
+    if (hasTransform) {
+      svgDiv.style.transform = "";
+    }
+    svgDiv.style.transformOrigin = "top left";
+
+    const baseHeight = svgDiv.offsetHeight;
+
+    if (scale !== 1) {
+      svgDiv.style.transform = `scale(${scale})`;
+    } else {
+      svgDiv.style.transform = "";
+    }
+
+    if (baseHeight > 0) {
+      view.div.style("height", `${baseHeight * scale}px`);
     }
   }
 
@@ -72,6 +121,7 @@
     window.views.forEach((view) => {
       applyContainerAspect(view);
       view.updateDimensions();
+      applyContainerScale(view);
     });
   }
 
