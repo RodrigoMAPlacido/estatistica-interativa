@@ -63118,13 +63118,13 @@ var KGAuthor;
             topGraphDef.position = {
                 "x": 0.15,
                 "y": 0.025,
-                "width": 0.45,
+                "width": 0.65,
                 "height": 0.45
             };
             bottomGraphDef.position = {
                 "x": 0.15,
                 "y": 0.525,
-                "width": 0.45,
+                "width": 0.65,
                 "height": 0.45
             };
             var topGraph = new KGAuthor.Graph(topGraphDef), bottomGraph = new KGAuthor.Graph(bottomGraphDef), sidebar = new KGAuthor.Sidebar(sidebarDef);
