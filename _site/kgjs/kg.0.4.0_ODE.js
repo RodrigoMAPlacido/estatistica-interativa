@@ -63088,16 +63088,16 @@ var KGAuthor;
             var l = _this;
             var topGraphDef = def['topGraph'], bottomGraphDef = def['bottomGraph'];
             topGraphDef.position = {
-                "x": 0.15,
+                "x": 0.25,
                 "y": 0.025,
-                "width": 0.5,
-                "height": 0.5
+                "width": 0.45,
+                "height": 0.45
             };
             bottomGraphDef.position = {
-                "x": 0.15,
+                "x": 0.25,
                 "y": 0.525,
-                "width": 0.5,
-                "height": 0.5
+                "width": 0.45,
+                "height": 0.45
             };
             var topGraph = new KGAuthor.Graph(topGraphDef), bottomGraph = new KGAuthor.Graph(bottomGraphDef);
             topGraph.subObjects.forEach(function (obj) { obj.addSecondGraph(bottomGraph); });

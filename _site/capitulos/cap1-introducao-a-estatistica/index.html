@@ -74,7 +74,7 @@
     <p class="subtitle">Objetivos de aprendizagem</p>
 <ul>
   <li>Compreender a natureza e o papel da Estatística como método científico para produzir conhecimento descritivo ou inferencial.</li>
-  <li>Distinguir corretamente os conceitos fundamentais: dados, população, amostra, parâmetro e estatística.</li>
+  <li>Distinguir corretamente os conceitos fundamentais: variável, dados, população, amostra, parâmetro e estatística.</li>
   <li>Diferenciar os domínios da disciplina: estatística descritiva e estatística inferencial.</li>
   <li>Reconhecer a importância da obtenção de dados e dos planos de amostragem para a validade das conclusões.</li>
   <li>Entender a relação entre variabilidade, incerteza e probabilidade no raciocínio estatístico.</li>
@@ -108,20 +108,57 @@
   A estatística é frequentemente associada a cálculos e representações numéricas, mas sua base não é aritmética:
   ela repousa sobre conceitos fundamentais que permitem transformar observações do mundo real em informação útil.
   Antes de distinguir métodos ou técnicas, é necessário esclarecer os elementos que constituem o objeto de estudo
-  desta disciplina: <strong>dados, população, amostra, parâmetros e estatísticas</strong>.
+  desta disciplina: <strong>variável, dados, população, amostra, parâmetros e estatísticas</strong>.
   Esses conceitos estruturam o raciocínio estatístico e são indispensáveis para compreender como se formulam conclusões
   a partir de informações empíricas.
 </p>
 
-<h3>2.1 Dados</h3>
-<p> Do ponto de vista formal, dados são resultados de um processo de observação e descrição de um determinado fenômeno de interesse. Eles podem surgir de <strong>contagens</strong> 
-  (número de clientes atendidos por hora), <strong>medições</strong> (altura de indivíduos, temperatura, tempo), <strong>
-  classificações</strong> (estado civil, tipo sanguíneo) ou <strong>respostas</strong> de pesquisa (opiniões ou avaliações). 
-  Esses registros descrevem algum aspecto do fenômeno estudado e constituem a matéria-prima da análise estatística.</p>
-  
-  <p>A tabela a seguir apresenta um exemplo simples de dados obtidos por medição: o registro da temperatura ao longo de um dia em determinada cidade. </p>
+<h3>2.1 Variável</h3>
+<p>
+  Em estatística, chama-se <strong>variável</strong> qualquer característica dos elementos de uma população ou amostra que
+  possa assumir <strong>diferentes valores</strong>. É aquilo que se observa, mede ou classifica em cada unidade estudada
+  e que pode variar de um indivíduo para outro. Exemplos incluem qualidades (como estado civil ou meio de transporte)
+  e quantidades (como idade, renda ou tempo de viagem).
+</p>
 
-  <figure class="table data" >
+<p>
+  As variáveis podem ser classificadas de acordo com a natureza dos valores que assumem. O diagrama a seguir mostra a divisão
+  fundamental entre os dois grandes tipos de variáveis: <strong>qualitativas</strong> e <strong>quantitativas</strong>.
+</p>
+
+<figure class="figure figure--inline">
+  <img src="../../imagens/tipos-variaveis.svg" alt="Tipos de tipos-variaveis: qualitativas e quantitativas">
+</figure>
+
+<p>
+  As <strong>variáveis qualitativas</strong> expressam atributos ou categorias que não envolvem medições numéricas.
+  Elas descrevem características, estados ou classificações, como sexo, cor dos olhos, profissão ou meio de transporte.
+  Seus valores são, portanto, <em>nomes</em> ou <em>categorias</em>.
+</p>
+
+<p>
+  Já as <strong>variáveis quantitativas</strong> representam grandezas mensuráveis, expressas em números,
+  permitindo realizar operações aritméticas significativas. Exemplos incluem idade, renda, peso, altura e tempo.
+  Esse tipo de variável indica <em>quanto</em> de uma determinada característica está presente em cada unidade observada.
+</p>
+
+
+<h3>2.2 Dados</h3>
+<p>
+  Do ponto de vista formal, os <strong>dados</strong> são os <strong>registros observados das variáveis</strong> em cada unidade analisada.
+  Cada dado representa o valor assumido por uma variável em um indivíduo, objeto ou caso estudado.
+  Esses valores podem resultar de <strong>contagens</strong> (número de clientes atendidos por hora),
+  <strong>medições</strong> (altura, temperatura, tempo), <strong>classificações</strong> (estado civil, tipo sanguíneo)
+  ou <strong>respostas</strong> de pesquisa (opiniões ou avaliações).
+  Em conjunto, formam o conjunto de observações que servirá de base para a análise estatística.
+</p>
+
+
+<p>
+  A tabela a seguir apresenta um exemplo simples de dados obtidos por medição: o registro da temperatura ao longo de um dia em determinada cidade.
+</p>
+
+<figure class="figure table data">
   <table>
     <thead>
       <tr>
@@ -141,13 +178,12 @@
   <figcaption>Tabela 1. Temperaturas registradas ao longo do dia</figcaption>
 </figure>
 
-
 <p>
   Cada valor na tabela é uma observação produzida pela medição de um fenômeno: a temperatura do ar em diferentes horários.
   Conjuntos como esse representam o ponto de partida de uma análise estatística. Antes de qualquer tratamento, organização
   ou cálculo, essas observações são simplesmente valores coletados.
   A partir deles, a análise estatística buscará resumir informações, identificar padrões e responder perguntas de interesse,
-  como: <em>em que período do dia fez mais calor? ou qual foi a temperatura média desse dia?</em>
+  como: <em>em que período do dia fez mais calor?</em> ou <em>qual foi a temperatura média desse dia?</em>
 </p>
 <p>
   Entretanto, na maioria das situações, os dados coletados não representam todos os elementos possíveis de interesse, mas
@@ -155,14 +191,15 @@
   é necessário introduzir mais dois conceitos: <strong>população</strong> e <strong>amostra</strong>.
 </p>
 
-<h3>2.2 População e amostra</h3>
-
+<h3>2.3 População e amostra</h3>
 <p>
-Em estatística, chama-se <strong>população o conjunto completo de elementos sobre os quais se deseja obter informação</strong>. A natureza dessa população depende do contexto da investigação: pode ser formada por pessoas, empresas, medições físicas, resultados de testes ou qualquer outro tipo de unidade observável relevante para o estudo.
+  Em estatística, chama-se <strong>população</strong> o conjunto completo de elementos sobre os quais se deseja obter informação.
+  A natureza dessa população depende do contexto da investigação: pode ser formada por pessoas, empresas, medições físicas,
+  resultados de testes ou qualquer outro tipo de unidade observável relevante para o estudo.
 </p>
-
 <p>
-Na prática, entretanto, raramente é possível observar toda a população. Em muitos casos, ela é demasiado extensa, dispersa ou de acesso limitado. Por essa razão, trabalha-se frequentemente com uma <strong>amostra</strong>, isto é, <strong>um subconjunto da população selecionado para fins de estudo</strong>.
+  Na prática, entretanto, raramente é possível observar toda a população. Em muitos casos, ela é demasiado extensa, dispersa ou de acesso limitado.
+  Por essa razão, trabalha-se frequentemente com uma <strong>amostra</strong>, isto é, <strong>um subconjunto da população selecionado para fins de estudo</strong>.
 </p>
 
 <figure class="figure">
@@ -170,17 +207,23 @@ Na prática, entretanto, raramente é possível observar toda a população. Em 
   <figcaption>Figura 1. A amostra como subconjunto da população</figcaption>
 </figure>
 
-
-<p>A distinção entre população e amostra é fundamental porque, na prática, quase sempre se trabalha com dados amostrais para tirar conclusões sobre uma população. A partir de uma amostra, extraem-se medidas descritivas, que resumem os dados observados. Em seguida, com o uso de <strong>métodos estatísticos</strong>, essas medidas são utilizadas para inferir características verdadeiras —ou <strong>parâmetros</strong>— da população. </p>
-
-<h3>2.3 Parâmetro e estatística</h3>
-
 <p>
-Chama-se <strong>parâmetro</strong> qualquer medida numérica que descreve uma característica da população. Exemplos de parâmetros incluem a média populacional, a proporção populacional ou o grau de variabilidade de uma característica. Trata-se sempre de um valor fixo para cada população, ainda que normalmente desconhecido.
+  A distinção entre população e amostra é fundamental porque, na prática, quase sempre se trabalha com dados amostrais para tirar conclusões sobre uma população.
+  A partir de uma amostra, extraem-se medidas descritivas, que resumem os dados observados. Em seguida, com o uso de <strong>métodos estatísticos</strong>,
+  essas medidas são utilizadas para inferir características verdadeiras — ou <strong>parâmetros</strong> — da população.
 </p>
 
+<h3>2.4 Parâmetro e estatística</h3>
 <p>
-A Figura 2 abaixo ilustra esse conceito de forma mais intuitiva. Suponha que uma população seja formada por dois grupos de indivíduos: aqueles com cabelo e aqueles sem cabelo. Nosso objetivo é descobrir <strong>qual é a proporção de indivíduos carecas na população</strong>. Esse valor corresponde a um <strong>parâmetro populacional</strong>, pois representa uma característica verdadeira da população. Entretanto, como geralmente é inviável analisar todos os indivíduos, selecionamos uma <strong>amostra</strong> — isto é, um subconjunto da população — para coletar dados a respeito da característica sendo investigada e, com base neles, construir uma estimativa para o parâmetro de interesse.
+  Chama-se <strong>parâmetro</strong> qualquer medida numérica que descreve uma característica da população. Exemplos incluem a média populacional,
+  a proporção populacional e medidas de variabilidade. Trata-se de um valor fixo para a população, ainda que, em geral, desconhecido.
+</p>
+<p>
+  A Figura 2 abaixo ilustra esse conceito de forma intuitiva. Suponha que uma população seja formada por dois grupos de indivíduos:
+  aqueles com cabelo e aqueles sem cabelo. Nosso objetivo é descobrir <strong>qual é a proporção de indivíduos carecas na população</strong>.
+  Esse valor corresponde a um <strong>parâmetro populacional</strong>, pois representa uma característica verdadeira da população.
+  Entretanto, como geralmente é inviável analisar todos os indivíduos, seleciona-se uma <strong>amostra</strong> — isto é, um subconjunto da população —
+  para coletar dados a respeito da característica investigada e, com base neles, construir uma estimativa para o parâmetro de interesse.
 </p>
 
 <figure class="figure">
@@ -189,18 +232,17 @@ A Figura 2 abaixo ilustra esse conceito de forma mais intuitiva. Suponha que uma
 </figure>
 
 <p>
-A medida calculada a partir dos <em>dados observados</em> na amostra recebe o nome de <strong>estatística</strong>. No exemplo da Figura 2, a proporção de indivíduos carecas encontrada na amostra é uma estatística. Diferentemente do parâmetro, a estatística pode variar de uma amostra para outra, pois depende apenas dos elementos selecionados na coleta de dados. Essa variabilidade é natural em estudos amostrais e pode ser controlada por meio de técnicas de amostragem, permitindo construir estimativas confiáveis para os parâmetros desconhecidos da população.
-</p>
-
-<p>
-Em resumo, enquanto os <strong>parâmetros</strong> descrevem características verdadeiras da população, porém desconhecidas, as <strong>estatísticas</strong> são valores calculados a partir de amostras e utilizados para <strong>estimar esses parâmetros</strong>. Essa distinção é fundamental: toda inferência estatística começa com dados amostrais e tem como objetivo final obter informações sobre a população.
+  A medida calculada a partir dos <em>dados observados</em> na amostra recebe o nome de <strong>estatística</strong>.
+  Diferentemente do parâmetro, que é fixo para a população, a estatística pode <strong>variar de amostra para amostra</strong>,
+  pois depende apenas dos elementos selecionados na coleta de dados. Essa variabilidade é natural em estudos amostrais
+  e, por meio de métodos apropriados, permite <strong>estimar</strong> os parâmetros desconhecidos da população.
 </p>
 
 <hr>
 
 <h2>3. Classificação dos Dados </h2>
 
-<p> Antes de serem analisados, os dados precisam ser corretamente classificados. Essa classificação é necessária porque o tipo de dado determina quais representações gráficas podem ser utilizadas, quais medidas estatísticas fazem sentido (como média ou mediana) e quais métodos de análise são válidos. Em outras palavras, a forma como tratamos e interpretamos os dados depende diretamente de sua natureza. Por isso, a Estatística organiza os dados em categorias, distinguindo-os quanto ao seu conteúdo (qualitativo ou quantitativo) e quanto ao nível de mensuração utilizado para registrá-los (nominal, ordinal, intervalar ou de razão). </p>
+<p> Antes de serem analisados, os dados precisam ser corretamente classificados. Essa classificação é necessária porque o tipo de dado determina quais representações gráficas podem ser utilizadas, quais medidas estatísticas fazem sentido (como média ou mediana) e quais métodos de análise são válidos. Em outras palavras, a forma como tratamos e interpretamos os dados depende diretamente de sua natureza. Por isso, a Estatística organiza os dados — assim como nos tipos de variáveis — em categorias, distinguindo-os quanto ao seu conteúdo (qualitativo ou quantitativo) e quanto ao nível de mensuração utilizado para registrá-los (nominal, ordinal, intervalar ou de razão). </p>
 
 
 
@@ -211,7 +253,7 @@ Em resumo, enquanto os <strong>parâmetros</strong> descrevem características v
 <p> Uma das formas mais básicas de classificar dados é diferenciá-los de acordo com a natureza da informação que representam. Nesse sentido, os dados podem ser divididos em duas categorias principais: <strong>dados qualitativos</strong> e <strong>dados quantitativos</strong>. </p> 
 
 <figure class="figure figure--inline">
-  <img src="../../imagens/tipos-variaveis.svg" alt="Tipos de variáveis: qualitativas e quantitativas">
+  <img src="../../imagens/tipos-dados.svg" alt="Tipos de dados: qualitativas e quantitativas">
 </figure>
 
 <div class="box-definicao"> <strong>Definição</strong> <ul> <li><strong>Dados qualitativos</strong>: descrevem características, atributos ou categorias, sem envolver contagem ou mensuração numérica. Exemplos: uso de óculos, cor dos olhos, profissão, nacionalidade.</li>
@@ -378,7 +420,10 @@ O <strong>nível intervalar</strong> caracteriza-se pelo fato de que os valores 
 
 <hr>
 
-<h2>8. Referências</h2>
+<h2>7. Referências</h2>
+<p>
+  FÁVERO, Luiz Paulo; BELFIORE, Patrícia. Manual de análise de dados: estatística e modelagem multivariada com Excel®, SPSS® e Stata®. 1. ed. Rio de Janeiro: Elsevier, 2017.
+</p>
 <p>
   MAGALHÃES, Marcos Nascimento; LIMA, Antonio Carlos Pedroso de. Noções de Probabilidade e Estatística. 7. ed., 1. reimpr. São Paulo: Editora da Universidade de São Paulo, 2011.
 </p>
@@ -418,7 +463,7 @@ O <strong>nível intervalar</strong> caracteriza-se pelo fato de que os valores 
   <!-- _includes/body-end.html -->
 
 <!-- KGJS -->
-<script src="https://rodrigomaplacido.github.io/estatistica-interativa/kgjs/kg.0.4.0_ODE.js"></script>
+<script src="/estatistica-interativa/kgjs/kg.0.4.0_ODE.js"></script>
 
 <!-- Script global do site -->
 <script src="/estatistica-interativa/js/main.js"></script>

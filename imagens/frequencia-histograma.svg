@@ -1,0 +1,160 @@
+<!-- ===========================================
+   REPRESENTAÇÕES GRÁFICAS — Tabela + Barras
+   Padrão unificado (u-*/a-*) — CSS-only animations
+   Frequências usadas: [16, 9, 18, 13, 6, 3] (Total = 65)
+   =========================================== -->
+<svg viewBox="0 0 1500 780" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Distribuições e Representações Gráficas</title>
+  <desc id="desc">Título como gráfico de barras animado; tabela de variáveis qualitativas discretas à esquerda; gráfico de barras à direita com as mesmas frequências.</desc>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --font:"et-book","ETBook","Georgia",serif;
+        --cycle:7s;
+        --ease:ease-in-out;
+      }
+      /* Base */
+      text{ font-family:var(--font); fill:var(--ink); user-select:none; }
+      .u-stroke{ stroke:var(--ink); fill:none; stroke-linecap:round; stroke-linejoin:round; }
+      .u-panel{ stroke-width:2; rx:12; }
+      .label{ font-size:34px; font-weight:600; text-anchor:middle; }
+      .small{ font-size:18px }
+
+      /* ====== Animações ====== */
+      /* Tabela: realce de linha */
+      @keyframes rowHi{ 0%,10%{opacity:0} 15%,25%{opacity:.18} 30%,100%{opacity:0} }
+      .row-hi{ fill:var(--ink); opacity:0 }
+      .r1{ animation:rowHi 6s var(--ease) infinite 0s }
+      .r2{ animation:rowHi 6s var(--ease) infinite .6s }
+      .r3{ animation:rowHi 6s var(--ease) infinite 1.2s }
+      .r4{ animation:rowHi 6s var(--ease) infinite 1.8s }
+      .r5{ animation:rowHi 6s var(--ease) infinite 2.4s }
+      .r6{ animation:rowHi 6s var(--ease) infinite 3.0s }
+
+      /* Barras (título e gráfico): crescer a partir da base */
+      @keyframes grow{
+        0%{ transform:scaleY(0) }
+        18%,82%{ transform:scaleY(1) }
+        100%{ transform:scaleY(0) }
+      }
+      .bar{
+        fill:var(--ink);
+        transform-box: fill-box;     /* garante que a origem se refere ao retângulo */
+        transform-origin: bottom;    /* crescer pela base */
+        transform:scaleY(0);
+      }
+      /* defasagens para o gráfico principal */
+      .b1{ animation:grow var(--cycle) var(--ease) infinite 0s }
+      .b2{ animation:grow var(--cycle) var(--ease) infinite .15s }
+      .b3{ animation:grow var(--cycle) var(--ease) infinite .30s }
+      .b4{ animation:grow var(--cycle) var(--ease) infinite .45s }
+      .b5{ animation:grow var(--cycle) var(--ease) infinite .60s }
+      .b6{ animation:grow var(--cycle) var(--ease) infinite .75s }
+
+      /* título: mesma animação, outro ritmo */
+      .tb{ animation:grow 5.5s var(--ease) infinite }
+      .tb.d1{ animation-delay:.0s }
+      .tb.d2{ animation-delay:.08s }
+      .tb.d3{ animation-delay:.16s }
+      .tb.d4{ animation-delay:.24s }
+      .tb.d5{ animation-delay:.32s }
+
+      /* Acessibilidade */
+      @media (prefers-reduced-motion:reduce){
+        .row-hi{ animation:none; opacity:.12 }
+        .bar, .tb{ animation:none; transform:scaleY(1) }
+      }
+    </style>
+  </defs>
+
+  <!-- ======= PAINEL ESQUERDO: TABELA (qualitativas discretas) ======= -->
+  <g id="panel-table" transform="translate(-140,-200) scale(1.2)">
+    <rect x="120" y="230" width="540" height="510" class="u-panel u-stroke"/>
+    <text x="390" y="280" class="label">Distribuição de Frequências</text>
+
+    <!-- Cabeçalho -->
+    <line x1="160" y1="340" x2="620" y2="340" class="u-stroke" style="stroke-width:2"/>
+    <g font-size="20" font-weight="700">
+      <text x="175" y="328">Categoria</text>
+      <text x="455" y="328" text-anchor="end">Frequência</text>
+      <text x="610" y="328" text-anchor="end">%</text>
+    </g>
+
+    <!-- Linhas da tabela -->
+    <g class="u-stroke">
+      <line x1="160" y1="380" x2="620" y2="380"/>
+      <line x1="160" y1="420" x2="620" y2="420"/>
+      <line x1="160" y1="460" x2="620" y2="460"/>
+      <line x1="160" y1="500" x2="620" y2="500"/>
+      <line x1="160" y1="540" x2="620" y2="540"/>
+      <line x1="160" y1="580" x2="620" y2="580"/>
+      <line x1="160" y1="620" x2="620" y2="620"/>
+      <line x1="160" y1="660" x2="620" y2="660"/>
+    </g>
+
+    <!-- Destaques (loop) -->
+    <rect x="160" y="350" width="460" height="30" class="row-hi r1"/>
+    <rect x="160" y="390" width="460" height="30" class="row-hi r2"/>
+    <rect x="160" y="430" width="460" height="30" class="row-hi r3"/>
+    <rect x="160" y="470" width="460" height="30" class="row-hi r4"/>
+    <rect x="160" y="510" width="460" height="30" class="row-hi r5"/>
+    <rect x="160" y="550" width="460" height="30" class="row-hi r6"/>
+
+    <!-- Dados (A..F | total=65 | 1 casa decimal nas %) -->
+    <g font-size="19">
+      <text x="175" y="372">A</text> <text x="455" y="372" text-anchor="end">16</text> <text x="610" y="372" text-anchor="end">24,6%</text>
+      <text x="175" y="412">B</text> <text x="455" y="412" text-anchor="end">9</text>  <text x="610" y="412" text-anchor="end">13,8%</text>
+      <text x="175" y="452">C</text> <text x="455" y="452" text-anchor="end">18</text> <text x="610" y="452" text-anchor="end">27,7%</text>
+      <text x="175" y="492">D</text> <text x="455" y="492" text-anchor="end">13</text> <text x="610" y="492" text-anchor="end">20,0%</text>
+      <text x="175" y="532">E</text> <text x="455" y="532" text-anchor="end">6</text>  <text x="610" y="532" text-anchor="end">9,2%</text>
+      <text x="175" y="572">F</text> <text x="455" y="572" text-anchor="end">3</text>  <text x="610" y="572" text-anchor="end">4,6%</text>
+
+      <text x="175" y="652" font-weight="700">Total</text>
+      <text x="455" y="652" text-anchor="end" font-weight="700">65</text>
+      <text x="610" y="652" text-anchor="end" font-weight="700">100%</text>
+    </g>
+  </g>
+
+  <!-- ======= PAINEL DIREITO: GRÁFICO DE BARRAS (coerente com a tabela) ======= -->
+  <g id="panel-bars" transform="translate(-220,-200) scale(1.2)">
+    <rect x="840" y="230" width="580" height="510" class="u-panel u-stroke"/>
+    <text x="1128" y="280" class="label">Gráfico de barras</text>
+    <text x="1128" y="308" class="small" text-anchor="middle">Frequência Absoluta</text>
+
+    <!-- Eixos -->
+    <g class="u-stroke" style="stroke-width:2.5">
+      <line x1="890" y1="670" x2="1380" y2="670"/>
+      <line x1="890" y1="670" x2="890" y2="400"/>
+    </g>
+
+    <!-- Grades e rótulos Y (5 em 5) -->
+    <g class="u-stroke small" opacity=".5">
+      <line x1="890" y1="620" x2="1380" y2="620"/><text x="872" y="624" text-anchor="end">5</text>
+      <line x1="890" y1="570" x2="1380" y2="570"/><text x="872" y="574" text-anchor="end">10</text>
+      <line x1="890" y1="520" x2="1380" y2="520"/><text x="872" y="524" text-anchor="end">15</text>
+      <line x1="890" y1="470" x2="1380" y2="470"/><text x="872" y="474" text-anchor="end">20</text>
+      <line x1="890" y1="420" x2="1380" y2="420"/><text x="872" y="424" text-anchor="end">25</text>
+    </g>
+
+    <!-- Barras (largura 56) — y = 670 - (10 * freq) -->
+    <!-- 16→160, 9→90, 18→180, 13→130, 6→60, 3→30 -->
+    <rect x="914"  y="510" width="56" height="160" class="bar b1"/>
+    <rect x="994"  y="580" width="56" height="90"  class="bar b2"/>
+    <rect x="1074" y="490" width="56" height="180" class="bar b3"/>
+    <rect x="1154" y="540" width="56" height="130" class="bar b4"/>
+    <rect x="1234" y="610" width="56" height="60"  class="bar b5"/>
+    <rect x="1314" y="640" width="56" height="30"  class="bar b6"/>
+
+    <!-- Rótulos das categorias -->
+    <g class="small">
+      <text x="942"  y="695" text-anchor="middle">A</text>
+      <text x="1022" y="695" text-anchor="middle">B</text>
+      <text x="1102" y="695" text-anchor="middle">C</text>
+      <text x="1182" y="695" text-anchor="middle">D</text>
+      <text x="1262" y="695" text-anchor="middle">E</text>
+      <text x="1342" y="695" text-anchor="middle">F</text>
+    </g>
+  </g>
+</svg>

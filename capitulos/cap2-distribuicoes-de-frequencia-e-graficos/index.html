@@ -4,9 +4,295 @@ title: Capítulo 2 — Distribuições de Frequência e Gráficos
 anterior: /capitulos/cap1-introducao-a-estatistica/
 proximo: /capitulos/cap3-medidas-de-tendencia-central/
 ---
+  <p class="subtitle">Objetivos de aprendizagem</p>
+  <ul>
+    <li>Compreender a necessidade de organizar dados em distribuições de frequência para revelar padrões e tendências.</li>
+    <li>Aprender a construir tabelas de frequência simples e expandidas, com ponto médio, frequência relativa e acumulada.</li>
+    <li>Reconhecer os principais tipos de representações gráficas: histograma, polígono de frequência e ogiva.</li>
+    <li>Interpretar corretamente a informação expressa em tabelas e gráficos estatísticos.</li>
+  </ul>
 
+  <hr>
+<h2>1. Introdução</h2>
+
+<p> 
+  <span class="newthought">No capítulo anterior, consolidamos os conceitos essenciais que sustentam o pensamento estatístico</span> — a natureza dos dados e seus tipos, a distinção entre população e amostra e a relação entre parâmetros e estatísticas. A partir desse conjunto de fundamentos, damos agora o passo seguinte: compreender como transformar dados brutos em estruturas organizadas que tornem possível enxergar padrões, comparações e regularidades de forma clara e sistemática.
+</p>
+<p>
+  Em muitas situações reais, o pesquisador coleta uma grande quantidade de observações — resultados de medições, contagens,
+  questionários ou experimentos — que, em seu estado bruto, formam uma lista desordenada de números ou categorias. Embora essa
+  listagem contenha toda a informação necessária, ela é de difícil interpretação, dificultando a identificação de tendências,
+  comparações ou padrões de comportamento. Por essa razão, a etapa seguinte do trabalho estatístico é a <strong>organização dos dados</strong> — um processo de transformação que converte registros dispersos em estruturas ordenadas, capazes de revelar, de forma sintética e visualmente inteligível, as principais características do fenômeno estudado.
+<p>
+  Essa organização é feita por meio das <strong>distribuições de frequência</strong> — tabelas que agrupam dados semelhantes em classes ou categorias —
+  e das <strong>representações gráficas</strong>, que convertem informações numéricas em formas visuais intuitivas, como barras, linhas e áreas.
+  Essas ferramentas pertencem ao domínio da <em>estatística descritiva</em>, cujo objetivo é condensar e comunicar dados de maneira
+  compreensível sem perder o rigor científico. Em outras palavras, elas permitem <em>ver</em> a estrutura oculta nos números, tornando perceptíveis
+  relações e regularidades que, de outro modo, permaneceriam invisíveis.
+</p>
 <figure class="figure figure--inline">
-  <img src="../../imagens/construcao.svg" alt="construção">
+  <img src="../../imagens/frequencia-histograma.svg" alt="Tabela de Frequência e Histograma">
 </figure>
 
 
+<p>
+  Nas próximas seções, exploraremos esse processo de forma gradual. Começaremos com a <strong>definição formal de uma distribuição de frequência</strong>,
+  aprendendo como agrupar observações em intervalos de classe, calcular frequências e interpretar tabelas. Em seguida, ampliaremos esse
+  quadro para incluir medidas complementares — como frequências relativas e acumuladas — e, por fim, representaremos graficamente os resultados
+  por meio de histogramas, polígonos e ogivas. O objetivo é desenvolver não apenas a técnica de construção dessas representações,
+  mas a <strong>leitura crítica</strong> que permite extrair delas informações significativas sobre o comportamento dos dados.
+</p>
+
+  <hr>
+
+<h2>2. Distribuições de Frequência e Gráficos de Representação</h2>
+
+<p>
+  Uma <strong>distribuição de frequência</strong> é uma forma sistemática de organizar os dados observados em uma pesquisa ou experimento,
+  agrupando-os conforme o número de vezes que cada valor ou intervalo de valores ocorre, de modo a revelar
+  <strong>como as observações se distribuem</strong> ao longo dos possíveis resultados da variável estudada.
+  Essa estrutura permite visualizar <strong>a concentração e a dispersão dos dados</strong>,
+  tornando evidente onde há maior incidência de valores e onde eles são mais escassos.</p>
+
+<p>
+Uma tabela de distribuição de frequências é composta pelos seguintes cálculos:
+</p>
+ <ol type="I">
+    <li>
+      <strong>Frequência absoluta ($F_{i}$):</strong>
+      número de vezes que cada valor ou categoria aparece na amostra.
+    </li>
+
+    <li>
+      <strong>Frequência relativa ($Fr_{i}$):</strong>
+      porcentagem que cada valor representa em relação ao total de observações.
+    </li>
+
+    <li>
+      <strong>Frequência acumulada ($F_{ac}$):</strong>
+      soma das frequências absolutas até o valor ou categoria analisada.
+    </li>
+
+    <li>
+      <strong>Frequência relativa acumulada ($Fr_{ac}$):</strong>
+      porcentagem acumulada das observações até o valor ou categoria analisada.
+    </li>
+  </ol>
+
+  <p>
+  A construção de uma tabela de distribuição de frequência varia de acordo com a natureza dos dados — podendo seguir procedimentos distintos
+  para variáveis <strong>qualitativas</strong> ou <strong>quantitativas</strong>.
+</p>
+
+<h3>2.1 Distribuição de Frequência de Variáveis Qualitativas</h3>
+
+<p>
+  No caso de variáveis <strong>qualitativas</strong>, a distribuição de frequência organiza as observações em <strong>categorias</strong> que representam
+  diferentes modalidades do fenômeno estudado. A tabela apresenta, para cada categoria, o número de ocorrências observadas (<strong>frequência absoluta</strong>),
+  a sua <strong>frequência relativa</strong> (percentual em relação ao total de respostas) e a <strong>frequência acumulada</strong>,
+  quando há uma ordenação lógica entre as categorias (por exemplo, em escalas de satisfação).
+  Esse tipo de distribuição é especialmente útil para visualizar a predominância de determinadas categorias
+  e comparar proporções entre grupos de respostas.
+</p>
+
+<p>
+  A tabela a seguir representa a <strong>distribuição de frequência</strong> obtida em uma pesquisa sobre o <strong>meio de transporte utilizado para ir ao trabalho</strong>,
+  considerando uma amostra de 20 pessoas. Nela, observa-se o número absoluto de respostas para cada categoria,
+  bem como sua proporção em relação ao total de participantes.
+</p>
+
+<figure class="figure table data">
+  <table>
+    <thead>
+      <tr>
+        <th>Meio de transporte</th>
+        <th>Frequência Absoluta $(F_{i})$</th>
+        <th>Frequência Relativa $(Fr_{i})$</th>
+        <th>Frequência Acumulada $(F_{ac})$</th>
+        <th>Frequência Relativa Acumulada $(Fr_{ac})$</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Carro</td>
+        <td>8</td>
+        <td>40%</td>
+        <td>8</td>
+        <td>40%</td>
+
+      </tr>
+      <tr>
+        <td>Ônibus</td>
+        <td>6</td>
+        <td>30%</td>
+        <td>14</td>
+        <td>70%</td>
+
+      </tr>
+      <tr>
+        <td>Bicicleta</td>
+        <td>4</td>
+        <td>20%</td>
+        <td>18</td>
+        <td>90%</td>
+
+      </tr>
+      <tr>
+        <td>Metrô</td>
+        <td>2</td>
+        <td>10%</td>
+        <td>20</td>
+        <td>100%</td>
+
+      </tr>
+      <tr class="total">
+        <td><strong>Total</strong></td>
+        <td><strong>20</strong></td>
+        <td><strong>100%</strong></td>
+        <td><strong>20</strong></td>
+        <td><strong>100%</strong></td>
+
+      </tr>
+    </tbody>
+  </table>
+  <figcaption>
+    Tabela 1. Distribuição de frequência do meio de transporte utilizado para ir ao trabalho.
+  </figcaption>
+</figure>
+
+<p>
+  Nota-se que o <strong>carro</strong> é o meio de transporte mais utilizado, correspondendo a 40% das respostas,
+  seguido pelo <strong>ônibus</strong> (30%), pela <strong>bicicleta</strong> (20%) e pelo <strong>metrô</strong> (10%).
+  Essa forma de apresentação facilita a identificação das categorias mais frequentes e constitui a base
+  para representações gráficas, como o <strong>gráfico de barras</strong> ou o <strong>gráfico de setores</strong>.
+</p>
+<figure class="figure figure--inline">
+  <img src="../../imagens/graficos-setores-barras.svg" alt="Gráficos: Setores e de Barras">
+</figure>
+
+<p>
+  Agora que você compreendeu como a tabela resume os dados, veja como essa mesma informação pode ser representada graficamente.
+  Experimente ajustar as frequências e observe como o gráfico muda — <strong>tente você mesmo!</strong>
+</p>
+
+<figure class="fullwidth clearfix" style="page-break-inside:avoid;">
+  <div class="kg-container kg-fill" src="modelos/barras-setores.yml" data-kg-mobile-aspect="1"></div>
+</figure>
+  <h2>3. Distribuições expandidas</h2>
+
+  <p>
+    Além da frequência absoluta \(f\), podemos adicionar outras colunas que enriquecem a interpretação:
+    o <strong>ponto médio</strong>, a <strong>frequência relativa</strong> e a <strong>frequência acumulada</strong>.
+  </p>
+
+  <ul>
+    <li><strong>Ponto médio:</strong> \(m = \frac{\text{limite inferior} + \text{limite superior}}{2}\)</li>
+    <li><strong>Frequência relativa:</strong> \(f_r = \frac{f}{n}\)</li>
+    <li><strong>Frequência acumulada:</strong> soma progressiva das frequências.</li>
+  </ul>
+
+  <p>
+    Essas medidas permitem comparar proporções entre classes e entender a distribuição geral dos dados. A soma das frequências relativas deve ser igual a 1,
+    e a última frequência acumulada corresponde ao total de observações \(n\).
+  </p>
+
+  <!-- <figure class="figure">
+    <img src="../../imagens/tabela-frequencia-expandida.svg" alt="Distribuição de frequência expandida">
+    <figcaption>Distribuição de frequência com ponto médio e frequências relativa e acumulada.</figcaption>
+  </figure> -->
+
+  <hr>
+
+  <h2>4. Gráficos de distribuições de frequência</h2>
+
+  <p>
+    Os gráficos são representações visuais que traduzem as informações das tabelas em formas facilmente perceptíveis.
+    Os principais tipos são o <strong>histograma</strong>, o <strong>polígono de frequência</strong> e a <strong>ogiva</strong>.
+  </p>
+
+  <h3>4.1 Histograma</h3>
+  <p>
+    É um gráfico de barras encostadas, no qual a base de cada barra corresponde a uma classe e sua altura à frequência da classe.
+    Ele mostra a forma geral da distribuição dos dados.
+  </p>
+
+  <h3>4.2 Polígono de frequência</h3>
+  <p>
+    Constrói-se unindo, por segmentos de reta, os pontos que representam os pontos médios das classes em função de suas frequências.
+    O polígono de frequência enfatiza a continuidade entre as classes.
+  </p>
+
+  <h3>4.3 Ogiva</h3>
+  <p>
+    Também chamada de <em>gráfico de frequência acumulada</em>, a ogiva mostra o número ou a proporção de valores que estão abaixo
+    de cada limite superior de classe. É útil para análises cumulativas.
+  </p>
+
+  <!-- <figure class="figure">
+    <img src="../../imagens/histograma-poligono-ogiva.svg" alt="Histogramas, polígonos e ogivas">
+    <figcaption>Três formas de representar graficamente uma distribuição de frequência.</figcaption>
+  </figure> -->
+
+  <hr>
+
+  <h2>5. Uso de tecnologia</h2>
+
+  <p>
+    Ferramentas como o <strong>Excel</strong>, o <strong>Minitab</strong> e a <strong>TI-84 Plus</strong>
+    permitem gerar tabelas e gráficos automaticamente a partir dos dados inseridos. 
+    No entanto, esses programas apenas aplicam os mesmos princípios manuais estudados aqui:
+    definem classes, calculam frequências e constroem os gráficos correspondentes.
+  </p>
+
+  <!-- <figure class="figure">
+    <img src="../../imagens/histogramas-software.svg" alt="Histogramas em Excel, Minitab e TI-84">
+    <figcaption>Exemplos de histogramas gerados por diferentes ferramentas.</figcaption>
+  </figure> -->
+
+  <hr>
+
+  <h2>6. Exercícios de fixação</h2>
+
+  <p>
+    Resolva as questões a seguir para consolidar o conteúdo estudado. Elas envolvem desde a construção de tabelas de frequência até a interpretação de gráficos.
+  </p>
+
+  <ol>
+    <li>Explique por que a organização dos dados em classes facilita a análise estatística.</li>
+    <li>Diferencie frequência absoluta, relativa e acumulada.</li>
+    <li>Construa uma distribuição de frequência para o conjunto de dados proposto pelo professor.</li>
+    <li>Desenhe o histograma e o polígono de frequência correspondentes.</li>
+    <li>Analise a ogiva e descreva o comportamento acumulativo dos dados.</li>
+  </ol>
+
+<hr>
+
+<h2>8. Referências</h2>
+<p>
+  FÁVERO, Luiz Paulo; BELFIORE, Patrícia. Manual de análise de dados: estatística e modelagem multivariada com Excel®, SPSS® e Stata®. 1. ed. Rio de Janeiro: Elsevier, 2017.
+</p>
+<p>
+  MAGALHÃES, Marcos Nascimento; LIMA, Antonio Carlos Pedroso de. Noções de Probabilidade e Estatística. 7. ed., 1. reimpr. São Paulo: Editora da Universidade de São Paulo, 2011.
+</p>
+<p>
+  SARTORIS, Alexandre. Estatística e introdução à econometria. 2. ed. São Paulo: Saraiva, 2013.
+</p>
+<p>
+  BUSSAB, Wilton de Oliveira; MORETTIN, Pedro Alberto. <strong>Estatística básica</strong>. 10. ed. São Paulo: SaraivaUni, 2023.
+</p>
+<p>
+  LARSON, Ron; FARBER, Betsy. <strong>Estatística aplicada</strong>. 6. ed. Tradução José Fernando Pereira Gonçalves; Revisão técnica Manoel Henrique Salgado. São Paulo: Pearson Education do Brasil, 2015.
+</p>
+<p>
+  TRIOLA, Mario F. <strong>Introdução à estatística</strong>. 12. ed. Tradução e revisão técnica Ana Maria Lima de Farias, Vera Regina Lima de Farias e Flores. Rio de Janeiro: LTC — Livros Técnicos e Científicos Editora, 2017.
+</p>
+<p>
+  MOOD, Alexander McFarlane; GRAYBILL, Franklin A.; BOES, Duane C. Introduction to the theory of statistics. New York: McGraw-Hill, 1974.
+</p>
+<p>
+  SAVAGE, Leonard J. The Foundations of Statistics. 2. ed. rev. New York: Dover Publications, 1972.
+</p>
+<p>
+  WARE, William B.; FERRON, John M.; MILLER, Barbara M. Introductory Statistics: A Conceptual Approach Using R. New York: Routledge, 2013.
+</p>
