@@ -1,0 +1,48 @@
+# =========================================================
+#  ESTATÍSTICA INTERATIVA — .gitignore
+#  Ignora arquivos temporários, builds e caches locais
+# =========================================================
+
+# --- Diretórios gerados automaticamente ---
+_site/
+.jekyll-cache/
+.sass-cache/
+.tmp/
+.cache/
+dist/
+
+# --- Node e TypeScript ---
+node_modules/
+*.log
+*.tsbuildinfo
+
+# --- Python (bundle.py e scripts auxiliares) ---
+__pycache__/
+*.pyc
+*.pyo
+
+# --- Sistema e IDEs ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# --- Arquivos temporários do editor ---
+*~
+*.swp
+*.swo
+
+# --- Compilações locais do KGJS ---
+kgjs/bundle.js
+kgjs/bundle.min.js
+kgjs/bundle.js.map
+
+# --- Logs e backups ---
+log/
+*.bak
+*.tmp
+*.old
+
+# --- GitHub Pages (se usar branch gh-pages) ---
+# (comente esta linha se o _site for usado como origem do deploy)
+# /docs/
