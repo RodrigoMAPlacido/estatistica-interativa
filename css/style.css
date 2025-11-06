@@ -15,7 +15,7 @@
   --figure-desktop-width:640px;
   --figure-desktop-offset:54px;
   --border-light:#e5e7eb;
-  --border-medium:#6b7280;
+  --border-medium:#153168;
 }
 
 /* ========== Base mínima ========== */
@@ -170,7 +170,7 @@ figure.figure.table.data tbody td:not(:first-child){white-space:nowrap}
 
 /* tamanhos KaTeX (leves) */
 body.textbook .katex{font-size:1.12em}
-body.textbook .katex-display{font-size:1.2em; margin: 0 0}
+body.textbook .katex-display{font-size:1.2em}
 
 /* Linha de sliders (simples e adaptável) */
 .kg-slider-row{display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px}
@@ -242,12 +242,12 @@ body.textbook .katex-display{font-size:1.2em; margin: 0 0}
     max-width:100%;
     height:auto;
     display:block;
-    margin:.55rem auto
+    margin: 0 auto
   }
   .figure,
   figure.figure{
     max-width:100%;
-    margin:1rem auto
+    margin:0 auto
   }
   .figure > figcaption,
   figure.figure > figcaption{
@@ -367,3 +367,4 @@ body.textbook .katex-display{font-size:1.2em; margin: 0 0}
   .scroll-buttons.show,
   .scroll-buttons button{transition:none !important}
 }
+
