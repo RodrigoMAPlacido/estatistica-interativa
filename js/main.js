@@ -1,145 +1,11 @@
 // =========================================================
-// main.js – versão limpa para Jekyll (sem include via JS)
+// main.js — versão limpa e enxuta (sem interferir no KGJS)
 // =========================================================
 
 (function () {
 
   /* ---------------- 0. Anti-FOUC ---------------- */
   document.body.classList.add("loading");
-
-  /* ---------------- KGJS resize helpers ---------------- */
-  const KG_RESIZE_RETRY_DELAY = 180;
-  const KG_RESIZE_MAX_RETRIES = 8;
-  let kgResizeRaf = 0;
-  let kgEnsureTimer = 0;
-  let kgEnsureAttempts = 0;
-
-  const hasKGContainers = () => document.querySelector(".kg-container") !== null;
-  const getKGContainerNode = (view) => (
-    view && view.div && typeof view.div.node === "function" ? view.div.node() : null
-  );
-  function resolveScaleFromDataset(dataset) {
-    if (!dataset) {
-      return 1;
-    }
-    let scale = 1;
-    const attrScale = parseFloat(dataset.kgScale || "");
-    if (!Number.isNaN(attrScale) && attrScale > 0) {
-      scale = attrScale;
-    }
-    const attrMobileScale = parseFloat(dataset.kgMobileScale || "");
-    if (window.innerWidth <= 768 && !Number.isNaN(attrMobileScale) && attrMobileScale > 0) {
-      scale = attrMobileScale;
-    }
-    return scale;
-  }
-
-  function applyContainerAspect(view) {
-    if (!view || typeof view.updateDimensions !== "function") {
-      return;
-    }
-    const container = getKGContainerNode(view);
-    if (!container) {
-      return;
-    }
-    const data = container.dataset || {};
-    if (!view.__baseAspectRatio) {
-      view.__baseAspectRatio = view.aspectRatio;
-    }
-    let targetAspect = view.__baseAspectRatio;
-    const attrAspect = parseFloat(data.kgAspect || "");
-    if (!Number.isNaN(attrAspect) && attrAspect > 0) {
-      targetAspect = attrAspect;
-    }
-    const attrMobile = parseFloat(data.kgMobileAspect || "");
-    if (window.innerWidth <= 768 && !Number.isNaN(attrMobile) && attrMobile > 0) {
-      targetAspect = attrMobile;
-    }
-    if (view.aspectRatio !== targetAspect) {
-      view.aspectRatio = targetAspect;
-    }
-  }
-
-  function applyContainerScale(view) {
-    if (!view || !view.svgContainerDiv || typeof view.svgContainerDiv.node !== "function") {
-      return;
-    }
-    const container = getKGContainerNode(view);
-    if (!container) {
-      return;
-    }
-    const svgDiv = view.svgContainerDiv.node();
-    const dataset = container.dataset || {};
-    const scale = resolveScaleFromDataset(dataset);
-    const hasTransform = svgDiv.style.transform && svgDiv.style.transform !== "none";
-
-    if (hasTransform) {
-      svgDiv.style.transform = "";
-    }
-    svgDiv.style.transformOrigin = "top left";
-
-    const baseHeight = svgDiv.offsetHeight;
-
-    if (scale !== 1) {
-      svgDiv.style.transform = `scale(${scale})`;
-    } else {
-      svgDiv.style.transform = "";
-    }
-
-    if (baseHeight > 0) {
-      view.div.style("height", `${baseHeight * scale}px`);
-    }
-  }
-
-  function resizeKGViews() {
-    if (!hasKGContainers()) {
-      kgEnsureAttempts = 0;
-      if (kgEnsureTimer) {
-        clearTimeout(kgEnsureTimer);
-        kgEnsureTimer = 0;
-      }
-      return;
-    }
-    if (!Array.isArray(window.views) || window.views.length === 0) {
-      if (kgEnsureAttempts < KG_RESIZE_MAX_RETRIES) {
-        kgEnsureAttempts += 1;
-        if (kgEnsureTimer) {
-          clearTimeout(kgEnsureTimer);
-        }
-        kgEnsureTimer = window.setTimeout(() => {
-          kgEnsureTimer = 0;
-          resizeKGViews();
-        }, KG_RESIZE_RETRY_DELAY);
-      }
-      return;
-    }
-    kgEnsureAttempts = 0;
-    if (kgEnsureTimer) {
-      clearTimeout(kgEnsureTimer);
-      kgEnsureTimer = 0;
-    }
-    window.views.forEach((view) => {
-      applyContainerAspect(view);
-      view.updateDimensions();
-      applyContainerScale(view);
-    });
-  }
-
-  function scheduleKGResize() {
-    if (!hasKGContainers()) {
-      return;
-    }
-    if (kgResizeRaf) {
-      cancelAnimationFrame(kgResizeRaf);
-    }
-    kgResizeRaf = window.requestAnimationFrame(() => {
-      kgResizeRaf = 0;
-      resizeKGViews();
-    });
-  }
-
-  window.addEventListener("resize", scheduleKGResize, { passive: true });
-  window.addEventListener("orientationchange", scheduleKGResize);
 
   /* ---------------- 1. Define título automático ---------------- */
   function setDynamicTitle() {
@@ -168,6 +34,7 @@
 
   /* ---------------- 3. Renderização final ---------------- */
   function renderPage() {
+    // Renderiza fórmulas
     if (typeof renderMathInElement === "function") {
       renderMathInElement(document.body, {
         delimiters: [
@@ -176,13 +43,13 @@
         ]
       });
     }
+
+    // Carrega gráficos KGJS normalmente
     if (typeof loadGraphs === "function") {
       try { loadGraphs(); } catch (err) { console.error(err); }
     }
-    if (hasKGContainers()) {
-      scheduleKGResize();
-      window.setTimeout(scheduleKGResize, 240);
-    }
+
+    // Marca corpo como pronto
     document.body.classList.remove("loading");
     document.body.classList.add("ready");
   }

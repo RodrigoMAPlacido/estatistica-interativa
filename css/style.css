@@ -1,4 +1,4 @@
-﻿/* =========================================================
+/* =========================================================
    ESTATÍSTICA INTERATIVA — CSS PRINCIPAL (depurado)
    Observação: CSS do KG/KaTeX em arquivo separado.
    ========================================================= */
@@ -89,7 +89,7 @@ body.textbook{
 body.textbook h1{font-size:2.6rem; font-weight:400; line-height:1.2; margin:0 0 1.8rem}
 body.textbook h2{font-size:1.9rem; font-weight:400; line-height:1.35; margin:3.5rem 0 1.2rem}
 body.textbook h3{font-size:1.4rem; font-weight:700; line-height:1.35; margin:2.3rem 0 1rem 1rem}
-body.textbook .subtitle{font-size:1rem; font-weight:700; color:#555; margin:2rem 0 .4rem; letter-spacing:.04em; text-transform:uppercase}
+body.textbook .subtitle{font-size:1rem; font-weight:700; color:#555; margin:1rem 0 0; letter-spacing:.04em; text-transform:uppercase}
 
 /* Texto e listas */
 body.textbook p, body.textbook li{max-width:var(--content-width); text-align:justify}
@@ -153,7 +153,7 @@ figure.figure.table.data tbody td:not(:first-child){white-space:nowrap}
   margin:0 auto;
   padding:var(--kg-padding);
   background:#fff;
-  border-radius:8px;
+  border-radius:6px;
   overflow-x:auto;
   -webkit-overflow-scrolling:touch
 }
@@ -170,7 +170,7 @@ figure.figure.table.data tbody td:not(:first-child){white-space:nowrap}
 
 /* tamanhos KaTeX (leves) */
 body.textbook .katex{font-size:1.12em}
-body.textbook .katex-display{font-size:1.2em; margin:.8rem 0}
+body.textbook .katex-display{font-size:1.2em; margin: 0 0}
 
 /* Linha de sliders (simples e adaptável) */
 .kg-slider-row{display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px}
@@ -207,61 +207,165 @@ body.textbook .katex-display{font-size:1.2em; margin:.8rem 0}
    RESPONSIVO
    ========================================================= */
 @media (max-width:768px){
-  html{font-size:14px}
-  body.textbook{max-width:100%; padding:12px 10px; line-height:1.5}
 
-  body.textbook h1{font-size:2rem; line-height:1.22; margin:0 0 .8rem}
-  body.textbook h2{font-size:1.5rem; line-height:1.25; margin:1.2rem 0 .6rem}
-  body.textbook h3{font-size:1rem; margin:2.5rem .4rem .3rem}
+  /* Escala mais contida para se aproximar de ~80% */
+  html{font-size:12px}
+  body.textbook{max-width:100%; padding:10px 10px; line-height:1.5}
 
-  body.textbook p, body.textbook ul, body.textbook ol{font-size:.96rem; margin-bottom:.8rem}
+  /* Títulos menos altos no mobile */
+  body.textbook h1{font-size:1.8rem; line-height:1.22; margin:0 0 .7rem}
+  body.textbook h2{font-size:1.6rem; line-height:1.24; margin:1.1rem 0 .5rem}
+  body.textbook h3{font-size:1rem; margin:2.5rem .5rem 1rem}
+
+  /* Texto e listas ~10% menores */
+  body.textbook p,
+  body.textbook ul,
+  body.textbook ol{
+    font-size:.9rem;
+    margin-bottom:.75rem
+  }
   body.textbook p{text-justify:inter-word; hyphens:auto}
-  body.textbook ul, body.textbook ol{margin:0 0 .8rem 16px; padding-left:0}
-  body.textbook li{margin-bottom:.35rem; text-align:left; hyphens:auto}
+  body.textbook ul,
+  body.textbook ol{
+    margin:1.5rem 0 1.5rem 16px;
+    padding-left:0
+  }
+  body.textbook li{
+    margin-bottom:.5rem;
+    text-align:left;
+    hyphens:auto
+  }
 
-  body.textbook img, body.textbook svg{max-width:100%; height:auto; display:block; margin:.6rem auto}
-  .figure, figure.figure{max-width:100%; margin:1.2rem auto}
-  .figure > figcaption, figure.figure > figcaption{font-size:.82rem; margin-top:.1rem}
+  /* Imagens e figuras ocupam largura total */
+  body.textbook img,
+  body.textbook svg{
+    max-width:100%;
+    height:auto;
+    display:block;
+    margin:.55rem auto
+  }
+  .figure,
+  figure.figure{
+    max-width:100%;
+    margin:1rem auto
+  }
+  .figure > figcaption,
+  figure.figure > figcaption{
+    font-size:.78rem;
+    margin-top:.08rem
+  }
+
+  /* Navegação entre capítulos compacta no mobile */
+  .nav-links{
+    font-size:14px;
+    margin:40px auto 0;
+    padding-top:18px
+  }
 
   /* Tabelas: cabem na tela com quebra no cabeçalho */
-  figure.figure.table{width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch}
-  figure.figure.table table{font-size:.92rem}
-  figure.figure.table thead th{white-space:normal; word-break:break-word; hyphens:auto; padding:6px 8px}
+  figure.figure.table{
+    width:100%;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch
+  }
+  figure.figure.table table{font-size:.8rem}
+  figure.figure.table thead th{
+    white-space:normal;
+    font-size:.7rem;
+    word-break:break-word;
+    hyphens:auto;
+    padding:6px 8px
+  }
   figure.figure.table tbody td{padding:5px 8px}
   figure.figure.table.data tbody td:not(:first-child){white-space:nowrap}
 
-  /* KaTeX */
-  body.textbook .katex{font-size:1.06em}
-  body.textbook .katex-display{font-size:1.14em}
+  /* KaTeX proporcional ao texto */
+  body.textbook .katex{font-size:1.2em}
+  body.textbook .katex-display{font-size:1.3em}
+}
+/* =========================================================
+   KGJS — Ajuste real de tamanho (wrapper controla o espaço)
+   ========================================================= */
 
-  /* KGJS containers */
-  .kg-container{
-    --kg-current-width:var(--kg-mobile-max-width);
-    --kg-padding:10px 6px;
-    margin:0 -6px;
+.kg-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;         /* aumenta o tamanho real do gráfico */
+  max-width: 620px;   /* trava o limite em telas largas */
+  margin: 1rem auto 1rem;
+  transform: scale(1); /* opcional: remove resquícios */
+  transform-origin: top center;
+}
+
+.kg-container {
+  width: 100%;
+  max-width: 100%;
+  overflow: visible;
+}
+
+.kg-container svg {
+  width: 100% !important;
+  height: auto !important;
+  display: block;
+}
+
+/* =============================
+   MOBILE — ajuste proporcional
+   ============================= */
+@media (max-width: 768px) {
+  /* Centralização e ajuste fino do gráfico */
+  .kg-wrapper {
+    width: 115%;
+    max-width: none;
+    margin: 1.2rem auto 2.5rem;
+    transform: translateX(-7.3%);
   }
 }
+
+
 
 /* =========================================================
    Botões de scroll (mobile)
    ========================================================= */
 .scroll-buttons{
-  position:fixed; bottom:calc(16px + env(safe-area-inset-bottom)); right:16px;
-  display:flex; flex-direction:column; gap:8px; z-index:1000;
-  opacity:0; visibility:hidden; transform:translateY(6px);
+  position:fixed;
+  bottom:calc(16px + env(safe-area-inset-bottom));
+  right:16px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  z-index:1000;
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(6px);
   transition:opacity .25s ease, visibility .25s ease, transform .25s ease
 }
 .scroll-buttons.show{opacity:1; visibility:visible; transform:none}
 .scroll-buttons button{
-  width:44px; height:44px; border:1px solid rgba(255,255,255,.12); border-radius:8px;
-  background:rgba(31,41,55,.55); color:var(--accentFg); font-size:1.15rem; font-weight:700;
-  display:grid; place-items:center; line-height:1; padding:0; box-shadow:0 1px 2px rgba(0,0,0,.06);
-  opacity:.95; -webkit-tap-highlight-color:transparent; touch-action:manipulation;
+  width:44px;
+  height:44px;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:8px;
+  background:rgba(31,41,55,.55);
+  color:var(--accentFg);
+  font-size:1.15rem;
+  font-weight:700;
+  display:grid;
+  place-items:center;
+  line-height:1;
+  padding:0;
+  box-shadow:0 1px 2px rgba(0,0,0,.06);
+  opacity:.95;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
   transition:opacity .2s ease, transform .2s ease, box-shadow .2s ease
 }
 .scroll-buttons button:hover{opacity:1}
 .scroll-buttons button:active{transform:translateY(1px); box-shadow:none}
 @media (min-width:769px){.scroll-buttons{display:none}}
 @media (prefers-reduced-motion:reduce){
-  .scroll-buttons, .scroll-buttons.show, .scroll-buttons button{transition:none !important}
+  .scroll-buttons,
+  .scroll-buttons.show,
+  .scroll-buttons button{transition:none !important}
 }
