@@ -1,0 +1,345 @@
+schema: EconSchema
+aspectRatio: 1
+
+params:
+  # Frequências absolutas
+  - name: F_carro
+    value: 8
+    min: 1
+    max: 10
+    round: 0.01
+
+  - name: F_onibus
+    value: 6
+    min: 1
+    max: 10
+    round: 0.01
+
+  - name: F_bicicleta
+    value: 4
+    min: 1
+    max: 10
+    round: 0.01
+
+  - name: F_metro
+    value: 2
+    min: 1
+    max: 10
+    round: 0.01
+
+calcs:
+  # Total e proporções
+  total: "(params.F_carro + params.F_onibus + params.F_bicicleta + params.F_metro)"
+
+  prop_carro: "(params.F_carro / calcs.total)"
+  prop_onibus: "(params.F_onibus / calcs.total)"
+  prop_bicicleta: "(params.F_bicicleta / calcs.total)"
+  prop_metro: "(params.F_metro / calcs.total)"
+
+  per_carro: "(params.F_carro * 100/ calcs.total)"
+  per_onibus: "(params.F_onibus * 100/ calcs.total)"
+  per_bicicleta: "(params.F_bicicleta * 100/ calcs.total)"
+  per_metro: "(params.F_metro * 100/ calcs.total)"
+
+  # Ângulos em radianos (sentido anti-horário, iniciando em zero)
+  ang_carro: "(2 * 3.14159 * calcs.prop_carro)"
+  ang_onibus: "(2 * 3.14159 * calcs.prop_onibus)"
+  ang_bicicleta: "(2 * 3.14159 * calcs.prop_bicicleta)"
+  ang_metro: "(2 * 3.14159 * calcs.prop_metro)"
+
+  # Ângulos cumulativos (delimitadores dos setores)
+  ang_end_metro: "calcs.ang_metro"
+  ang_end_bicicleta: "(calcs.ang_metro + calcs.ang_bicicleta)"
+  ang_end_onibus: "(calcs.ang_metro + calcs.ang_bicicleta + calcs.ang_onibus)"
+  ang_end_carro: "(calcs.ang_metro + calcs.ang_bicicleta + calcs.ang_onibus + calcs.ang_carro)"
+
+  # Coordenadas dos pontos finais de cada setor (raio = 3, centro = [5,5])
+  x_end_carro: "(5 + 3 * cos(calcs.ang_end_carro))"
+  y_end_carro: "(5 + 3 * sin(calcs.ang_end_carro))"
+  
+  x_end_onibus: "(5 + 3 * cos(calcs.ang_end_onibus))"
+  y_end_onibus: "(5 + 3 * sin(calcs.ang_end_onibus))"
+  
+  x_end_bicicleta: "(5 + 3 * cos(calcs.ang_end_bicicleta))"
+  y_end_bicicleta: "(5 + 3 * sin(calcs.ang_end_bicicleta))"
+  
+  x_end_metro: "(5 + 3 * cos(calcs.ang_end_metro))"
+  y_end_metro: "(5 + 3 * sin(calcs.ang_end_metro))"
+
+  # Ângulos em graus para labels
+  ang_graus_carro: "(360 * calcs.prop_carro)"
+  ang_graus_onibus: "(360 * calcs.prop_onibus)"
+  ang_graus_bicicleta: "(360 * calcs.prop_bicicleta)"
+  ang_graus_metro: "(360 * calcs.prop_metro)"
+
+layout:
+  TwoVerticalGraphs:
+    topGraph:
+      xAxis:
+        min: 0
+        max: 4.2
+        ticks: 0
+      yAxis:
+        min: 0
+        max: 9
+      objects:
+        - Line:
+            strokeWidth: 0.5
+            point: [0,8]
+            point2: [4.2,8]
+            min: 0
+            max: 8
+            color: grey
+
+        - Line:
+            strokeWidth: 0.5
+            point: [0,6]
+            point2: [4.2,6]
+            min: 0
+            max: 8
+            color: grey
+
+        - Line:
+            strokeWidth: 0.5
+            point: [0,4]
+            point2: [4.2,4]
+            min: 0
+            max: 8
+            color: grey
+
+        - Line:
+            strokeWidth: 0.5
+            point: [0,2]
+            point2: [4.2,2]
+            min: 0
+            max: 8
+            color: grey
+
+        - Rectangle:
+            x1: 0.2
+            x2: 1.0
+            y1: 0
+            y2: params.F_carro
+            fill: "'#111827'"
+            opacity: 1
+            drag:
+              - directions: y
+                param: F_carro
+                expression: "(drag.y)"
+
+        - Rectangle:
+            x1: 1.2
+            x2: 2.0
+            y1: 0
+            y2: params.F_onibus
+            fill: "'#111827'"
+            opacity: 1
+            drag:
+              - directions: y
+                param: F_onibus
+                expression: "(drag.y)"
+
+        - Rectangle:
+            x1: 2.2
+            x2: 3.0
+            y1: 0
+            y2: params.F_bicicleta
+            fill: "'#111827'"
+            opacity: 1
+            drag:
+              - directions: y
+                param: F_bicicleta
+                expression: "(drag.y)"
+
+        - Rectangle:
+            x1: 3.2
+            x2: 4.0
+            y1: 0
+            y2: params.F_metro
+            fill: "'#111827'"
+            opacity: 1
+            drag:
+              - directions: y
+                param: F_metro
+                expression: "(drag.y)"
+
+        # Rótulos das categorias
+        - Segment:
+            a: [0.6, 0]
+            b: [0.6, 0]
+            color: "'#111827'"
+            label:
+              text: "'\\\\bf{Carro}'"
+              position: t
+              fontSize: 7
+
+        - Segment:
+            a: [1.6, 0]
+            b: [1.6, 0]
+            color: "'#111827'"
+            label:
+              text: "'\\\\bf{Ônibus}'"
+              position: t
+              fontSize: 7
+
+        - Segment:
+            a: [2.6, 0]
+            b: [2.6, 0]
+            color: "'#111827'"
+            label:
+              text: "'\\\\bf{Bicicleta}'"
+              position: t
+              fontSize: 7
+
+        - Segment:
+            a: [3.6, 0]
+            b: [3.6, 0]
+            color: "'#111827'"
+            label:
+              text: "'\\\\bf{Metrô}'"
+              position: t
+              fontSize: 7
+
+
+    bottomGraph:
+      xAxis:
+        min: 0
+        max: 10
+        ticks: 0
+        show: false
+      yAxis:
+        min: 0
+        max: 10
+        ticks: 0
+        show: false
+      objects:
+        # Círculo base
+        - Circle:
+            coordinates: [5, 6]
+            r: 3
+            opacity: 0
+
+        # Setor — Metrô
+        - Curve:
+            parametricFunction:
+              xFunction: "5 + 3*cos(t)"
+              yFunction: "6 + 3*sin(t)"
+              min: 0
+              max: "calcs.ang_end_metro"
+            color: "'#9ca3af'"
+            strokeWidth: 2
+            fillBetween:
+              xBase: "5"
+              yBase: "6"
+              fill: "'#9ca3af'"
+              opacity: 1
+
+        # Setor — Bicicleta
+        - Curve:
+            parametricFunction:
+              xFunction: "5 + 3*cos(t)"
+              yFunction: "6 + 3*sin(t)"
+              min: "calcs.ang_end_metro"
+              max: "calcs.ang_end_bicicleta"
+            color: "'#6b7280'"
+            strokeWidth: 2
+            fillBetween:
+              xBase: "5"
+              yBase: "6"
+              fill: "'#6b7280'"
+              opacity: 1
+
+        # Setor — Ônibus
+        - Curve:
+            parametricFunction:
+              xFunction: "5 + 3*cos(t)"
+              yFunction: "6 + 3*sin(t)"
+              min: "calcs.ang_end_bicicleta"
+              max: "calcs.ang_end_onibus"
+            color: "'#374151'"
+            strokeWidth: 2
+            fillBetween:
+              xBase: "5"
+              yBase: "6"
+              fill: "'#374151'"
+              opacity: 1
+
+
+        # Setor — Carro
+        - Curve:
+            parametricFunction:
+              xFunction: "5 + 3*cos(t)"
+              yFunction: "6 + 3*sin(t)"
+              min: "calcs.ang_end_onibus"
+              max: "calcs.ang_end_carro"
+            color: "'#111827'"
+            strokeWidth: 2
+            fillBetween:
+              xBase: "5"
+              yBase: "6"
+              fill: "'#111827'"
+              opacity: 1
+
+        - Rectangle:
+            x1: 0.2
+            x2: 0.6
+            y1: 1.2
+            y2: 1.6
+            fill: "'#111827'"
+            opacity: 1
+
+        - Label:
+            coordinates: [0.5,1.4]
+            text: "`\\\\bf{Carro}\\\\ — \\\\  ${calcs.per_carro.toFixed(0)} \\\\% \\\\ (${params.F_carro.toFixed(0)})`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 7
+            position: l
+
+        - Rectangle:
+            x1: 0.2
+            x2: 0.6
+            y1: 0.4
+            y2: 0.8
+            fill: "'#6b7280'"
+            opacity: 1
+
+        - Label:
+            coordinates: [0.5,0.6]
+            text: "`\\\\bf{Bicicleta}\\\\ — \\\\  ${calcs.per_bicicleta.toFixed(0)} \\\\% \\\\ (${params.F_bicicleta.toFixed(0)})`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 7
+            position: l
+
+        - Rectangle:
+            x1: 6.2
+            x2: 6.6
+            y1: 1.2
+            y2: 1.6
+            fill: "'#374151'"
+            opacity: 1
+
+        - Label:
+            coordinates: [6.5,1.4]
+            text: "`\\\\bf{Ônibus}\\\\ — \\\\  ${calcs.per_onibus.toFixed(0)} \\\\% \\\\ (${params.F_onibus.toFixed(0)})`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 7
+            position: l
+
+        - Rectangle:
+            x1: 6.2
+            x2: 6.6
+            y1: 0.4
+            y2: 0.8
+            fill: "'#9ca3af'"
+            opacity: 1
+
+        - Label:
+            coordinates: [6.5,0.6]
+            text: "`\\\\bf{Metrô}\\\\ — \\\\  ${calcs.per_metro.toFixed(0)} \\\\% \\\\ (${params.F_metro.toFixed(0)})`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 7
+            position: l

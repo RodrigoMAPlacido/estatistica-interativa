@@ -61937,17 +61937,6 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 var KG;
 (function (KG) {
     /*
@@ -62009,7 +61998,7 @@ var KG;
 var KGAuthor;
 (function (KGAuthor) {
     // ============================================================
-    // Core parsing utilities
+    // Core parsing
     // ============================================================
     function extractTypeAndDef(def) {
         if (def.hasOwnProperty('type')) {
@@ -62035,7 +62024,7 @@ var KGAuthor;
     }
     KGAuthor.parse = parse;
     // ============================================================
-    // Expression manipulation and helper utilities
+    // Helpers matemáticos / strings (iguais ao original)
     // ============================================================
     function getDefinitionProperty(def) {
         if (typeof def == 'string') {
@@ -62160,7 +62149,7 @@ var KGAuthor;
     }
     KGAuthor.quadraticRootDef = quadraticRootDef;
     function paramName(def) {
-        if (typeof (def) == 'string') {
+        if (typeof def == 'string') {
             return def.replace('params.', '');
         }
         else {
@@ -62169,7 +62158,7 @@ var KGAuthor;
     }
     KGAuthor.paramName = paramName;
     // ============================================================
-    // [ADDED] Extended curve factory — now supports ODE systems
+    // curvesFromFunctions - compatível com KGAuthor e ODE
     // ============================================================
     function curvesFromFunctions(fns, def, graph) {
         return fns.map(function (fn) {
@@ -62180,26 +62169,33 @@ var KGAuthor;
                 fn.max = curveDef.max;
             if (fn.hasOwnProperty('show'))
                 curveDef.show = fn.show;
-            // Function type detection
-            if (fn.hasOwnProperty('parametric')) {
-                curveDef.parametricFunction = fn;
+            // Garante model para as funções derivadas deste def
+            fn.model = fn.model || curveDef.model || (graph && graph.model);
+            // 🔧 Ajuste importante: garante que o model seja repassado ao sistema ODE
+            if (fn.dxdt && fn.dydt) {
+                fn.model = fn.model || (graph && graph.model);
+                curveDef.ODESystemFunction = fn;
+                curveDef.model = fn.model; // ✅ essencial — evita "missing model"
             }
-            else if (fn.hasOwnProperty('dxdt') && fn.hasOwnProperty('dydt')) {
-                curveDef.ODESystemFunction = fn; // [ADDED] ODE case
+            else if (fn.xFunction && fn.yFunction) {
+                curveDef.parametricFunction = fn;
             }
             else {
                 curveDef.univariateFunction = fn;
             }
-            return new KGAuthor.Curve(curveDef, graph);
+            // Retorna um objeto KG.Curve com tipo KGAuthor.Curve (para o TS)
+            var kgaCurve = new KG.Curve(curveDef);
+            Object.setPrototypeOf(kgaCurve, KGAuthor.Curve.prototype);
+            return kgaCurve;
         });
     }
     KGAuthor.curvesFromFunctions = curvesFromFunctions;
     // ============================================================
-    // Visual and interaction utilities
+    // Outros helpers visuais / parseFn
     // ============================================================
     function makeDraggable(def) {
         if (def.hasOwnProperty('draggable') && !def.hasOwnProperty('drag')) {
-            if ((def.draggable == true) || (def.draggable == 'true')) {
+            if (def.draggable === true || def.draggable === 'true') {
                 def.drag = [];
                 if (def.x == "params." + paramName(def.x)) {
                     def.drag.push({ horizontal: paramName(def.x) });
@@ -62241,12 +62237,11 @@ var KGAuthor;
         return "(" + target.split(search).join(replacement) + ")";
     }
     KGAuthor.replaceVariable = replaceVariable;
-    // ============================================================
-    // Function and fill parsing utilities
-    // ============================================================
+    // mapeia authoring -> estruturas internas
     function parseFn(def, authorName, codeName) {
+        // caso clássico: fn / xFn,yFn -> univariada/paramétrica
         if (!def.hasOwnProperty(codeName) && def.hasOwnProperty(authorName)) {
-            if (codeName == 'parametricFunction') {
+            if (codeName === 'parametricFunction') {
                 def.parametricFunction = {
                     xFunction: def.xFn,
                     yFunction: def.yFn,
@@ -62264,6 +62259,10 @@ var KGAuthor;
                     samplePoints: def.samplePoints
                 };
             }
+        }
+        // garante model numa definição direta de ODESystemFunction (se usada)
+        if (codeName === 'ODESystemFunction' && def.ODESystemFunction) {
+            def.ODESystemFunction.model = def.ODESystemFunction.model || def.model;
         }
     }
     KGAuthor.parseFn = parseFn;
@@ -63090,14 +63089,14 @@ var KGAuthor;
             topGraphDef.position = {
                 "x": 0.35,
                 "y": 0.025,
-                "width": 0.45,
-                "height": 0.45
+                "width": 0.5,
+                "height": 0.5
             };
             bottomGraphDef.position = {
                 "x": 0.35,
-                "y": 0.525,
-                "width": 0.45,
-                "height": 0.45
+                "y": 0.575,
+                "width": 0.5,
+                "height": 0.5
             };
             var topGraph = new KGAuthor.Graph(topGraphDef), bottomGraph = new KGAuthor.Graph(bottomGraphDef);
             topGraph.subObjects.forEach(function (obj) { obj.addSecondGraph(bottomGraph); });
@@ -63116,15 +63115,15 @@ var KGAuthor;
             var l = _this;
             var topGraphDef = def['topGraph'], bottomGraphDef = def['bottomGraph'], sidebarDef = def['sidebar'];
             topGraphDef.position = {
-                "x": 0.45,
+                "x": 0.35,
                 "y": 0.025,
-                "width": 0.65,
+                "width": 0.45,
                 "height": 0.45
             };
             bottomGraphDef.position = {
-                "x": 0.45,
-                "y": 0.525,
-                "width": 0.65,
+                "x": 0.35,
+                "y": 0.55,
+                "width": 0.45,
                 "height": 0.45
             };
             var topGraph = new KGAuthor.Graph(topGraphDef), bottomGraph = new KGAuthor.Graph(bottomGraphDef), sidebar = new KGAuthor.Sidebar(sidebarDef);
@@ -63967,7 +63966,7 @@ var KGAuthor;
         function Curve(def, graph) {
             var _this = this;
             def = KGAuthor.setStrokeColor(def);
-            // [UNCHANGED]: parse basic function types
+            // parse básico
             KGAuthor.parseFn(def, 'fn', 'univariateFunction');
             KGAuthor.parseFn(def, 'xFn', 'parametricFunction');
             _this = _super.call(this, def, graph) || this;
@@ -63979,22 +63978,39 @@ var KGAuthor;
             // [ADDED] ODE support: instantiate ODESystemFunction if defined
             // ============================================================
             if (def.hasOwnProperty('ODESystemFunction')) {
-                // Ensure the model exists before constructing
-                if (!def.ODESystemFunction.model && def.model) {
-                    def.ODESystemFunction.model = def.model;
+                // ============================================================
+                // 🔧 Robust model propagation
+                // ============================================================
+                var graphModel = (graph && graph.model) ||
+                    (def.graph && def.graph.model) ||
+                    def.model ||
+                    (typeof window !== 'undefined' && window.model);
+                // ✅ Garante que o model do ODE herde do gráfico, se disponível
+                if (!def.ODESystemFunction.model && graphModel) {
+                    def.ODESystemFunction.model = graphModel;
                 }
-                else if (!def.ODESystemFunction.model) {
-                    console.warn("ODESystemFunction missing model — check the parsing process.");
+                // ✅ Também propaga o mesmo model para o próprio def (consistência)
+                if (!def.model && def.ODESystemFunction.model) {
+                    def.model = def.ODESystemFunction.model;
                 }
+                // ============================================================
+                // 🧩 Instancia o sistema ODE com model garantido
+                // ============================================================
                 try {
-                    c.ODESystemFunction = new KG.ODESystemFunction(def.ODESystemFunction);
+                    if (!def.ODESystemFunction.model) {
+                        console.warn("⚠️ ODESystemFunction missing model — could not attach graph model (postponed).");
+                    }
+                    else {
+                        c.ODESystemFunction = new KG.ODESystemFunction(def.ODESystemFunction);
+                        console.log("✅ ODESystemFunction successfully created with model:", !!def.ODESystemFunction.model);
+                    }
                 }
                 catch (e) {
-                    console.error("Error creating ODESystemFunction:", e);
+                    console.error("❌ Error creating ODESystemFunction:", e);
                 }
             }
             // ============================================================
-            // [UNCHANGED] Areas below and above the curve
+            // Areas below and above the curve (inalterado)
             // ============================================================
             if (def.hasOwnProperty('areaBelow')) {
                 KG.setDefaults(def.areaBelow, { color: def.color });
@@ -64012,7 +64028,13 @@ var KGAuthor;
                 c.subObjects.push(new KGAuthor.Area(def.areaAbove, graph));
             }
             // ============================================================
-            // [UNCHANGED] Label handling
+            // [NEW] Área paramétrica fillBetween (para curvas paramétricas)
+            // ============================================================
+            if (def.hasOwnProperty('fillBetween')) {
+                KGAuthor.parseFn(def, 'fillBetween', 'fillBetween');
+            }
+            // ============================================================
+            // Label handling (inalterado)
             // ============================================================
             if (def.hasOwnProperty('label')) {
                 var labelDef = KGAuthor.copyJSON(def);
@@ -64042,7 +64064,7 @@ var KGAuthor;
             return _this;
         }
         // ============================================================
-        // [UNCHANGED] Function mapping helpers
+        // Helpers (inalterados)
         // ============================================================
         Curve.prototype.yOfX = function (x) {
             return "(" + KGAuthor.replaceVariable(this.def.univariateFunction.fn, '(x)', "(" + x + ")") + ")";
@@ -64062,9 +64084,6 @@ var KGAuthor;
                 KGAuthor.replaceVariable(this.def.parametricFunction.yFunction, '(t)', "(" + t + ")")
             ];
         };
-        // ============================================================
-        // [UNCHANGED] Parsing logic for points and calculation
-        // ============================================================
         Curve.prototype.parseSelf = function (parsedData) {
             var c = this;
             parsedData = _super.prototype.parseSelf.call(this, parsedData);
@@ -68184,6 +68203,9 @@ var KG;
 /// <reference path="../kg.ts" />
 var KG;
 (function (KG) {
+    // ============================================================
+    // Utilitário: gera identificadores únicos
+    // ============================================================
     function randomString(length) {
         var text = "KGID_";
         var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -68193,17 +68215,49 @@ var KG;
         return text;
     }
     KG.randomString = randomString;
+    // ============================================================
+    // Classe principal: UpdateListener
+    // ============================================================
     var UpdateListener = /** @class */ (function () {
+        // ============================================================
+        // 🔧 Construtor com proteção contra model indefinido
+        // ============================================================
         function UpdateListener(def) {
             def.constants = (def.constants || []).concat(['model', 'updatables', 'name']);
             var ul = this;
             ul.def = def;
+            // Copia as propriedades definidas
             def.constants.forEach(function (c) {
                 ul[c] = isNaN(parseFloat(def[c])) ? def[c] : +def[c];
             });
             ul.id = randomString(10);
-            ul.model.addUpdateListener(this);
+            // ============================================================
+            // 🧩 Proteção: model pode não existir ainda no ciclo inicial
+            // ============================================================
+            if (def.model) {
+                ul.model = def.model;
+                ul.model.addUpdateListener(ul);
+            }
+            else {
+                console.warn("\u26A0\uFE0F UpdateListener initialized without model: " + ul.constructor.name);
+                // tenta usar o modelo global, se disponível
+                var globalModel = (typeof window !== "undefined" && window.model)
+                    ? window.model
+                    : undefined;
+                if (globalModel) {
+                    ul.model = globalModel;
+                    globalModel.addUpdateListener(ul);
+                    console.info("\u2705 UpdateListener fallback: global model attached (" + ul.constructor.name + ").");
+                }
+                else {
+                    // mantém indefinido, mas sem quebrar a execução
+                    ul.model = undefined;
+                }
+            }
         }
+        // ============================================================
+        // Atualização de arrays (recursiva)
+        // ============================================================
         UpdateListener.prototype.updateArray = function (a) {
             var u = this;
             return a.map(function (d) {
@@ -68212,7 +68266,13 @@ var KG;
                 }
                 else {
                     var initialValue = d;
-                    var newValue = u.model.evaluate(d);
+                    var newValue = void 0;
+                    if (u.model && typeof u.model.evaluate === 'function') {
+                        newValue = u.model.evaluate(d);
+                    }
+                    else {
+                        newValue = d;
+                    }
                     if (initialValue != newValue) {
                         u.hasChanged = true;
                     }
@@ -68220,6 +68280,9 @@ var KG;
                 }
             });
         };
+        // ============================================================
+        // Atualiza uma propriedade com base na definição original
+        // ============================================================
         UpdateListener.prototype.updateDef = function (name) {
             var u = this;
             if (u.def.hasOwnProperty(name)) {
@@ -68228,16 +68291,24 @@ var KG;
                     u[name] = u.updateArray(d);
                 }
                 else {
-                    var newValue = u.model.evaluate(d);
+                    var newValue = void 0;
+                    if (u.model && typeof u.model.evaluate === 'function') {
+                        newValue = u.model.evaluate(d);
+                    }
+                    else {
+                        newValue = d;
+                    }
                     if (initialValue != newValue) {
                         u.hasChanged = true;
                         u[name] = newValue;
                     }
                 }
-                //console.log(u.constructor['name'],name,'changed from',initialValue,'to',u[name]);
             }
             return u;
         };
+        // ============================================================
+        // Atualização principal (chamada a cada ciclo do model)
+        // ============================================================
         UpdateListener.prototype.update = function (force) {
             var u = this;
             u.hasChanged = !!force;
@@ -68590,15 +68661,25 @@ var KG;
 /// <reference path="../kg.ts" />
 var KG;
 (function (KG) {
+    // ============================================================
+    // ODESystemFunction
+    // ============================================================
     var ODESystemFunction = /** @class */ (function (_super) {
         __extends(ODESystemFunction, _super);
-        function ODESystemFunction(def) {
-            var _this = _super.call(this, def) || this;
-            // ---- Main data ----
+        function ODESystemFunction(def, model) {
+            var _this = 
+            // ============================================================
+            // Precisa chamar super() primeiro — regra do TS
+            // ============================================================
+            _super.call(this, def) || this;
+            // dados principais
             _this.data = [];
             _this.dots = [];
-            // Version number (used by Curve to detect real changes)
+            // versão (para Curve detectar mudanças)
             _this.version = 0;
+            // ------------------------------------------------------------
+            // Defaults específicos do ODE
+            // ------------------------------------------------------------
             KG.setDefaults(def, {
                 steps: 400,
                 dt: 0.05,
@@ -68611,6 +68692,27 @@ var KG;
                 movingDotColor: "red",
                 movingDotRadius: 5
             });
+            // ------------------------------------------------------------
+            // Fallback seguro do model
+            // ------------------------------------------------------------
+            var graphModel = undefined;
+            if (def.graph && def.graph.model) {
+                graphModel = def.graph.model;
+            }
+            var globalModel = undefined;
+            if (typeof window !== "undefined" && window.model) {
+                globalModel = window.model;
+            }
+            if (!_this.model) {
+                // se UpdateListener não tiver setado, tenta completar aqui
+                _this.model = def.model || model || graphModel || globalModel;
+            }
+            if (!_this.model) {
+                console.warn("⚠️ ODESystemFunction: missing model — using literal values only.");
+            }
+            // ------------------------------------------------------------
+            // Definições básicas
+            // ------------------------------------------------------------
             _this.dxdtDef = def.dxdt;
             _this.dydtDef = def.dydt;
             _this.steps = def.steps;
@@ -68618,63 +68720,72 @@ var KG;
             _this.initial = def.initial || [0, 0];
             _this.lastInitial = [NaN, NaN];
             _this.lastParams = {};
-            // --- Dynamic evaluation of visual attributes (supports params.*) ---
-            _this.showDots = _this.evaluateExpr(def.showDots, def.model);
-            _this.dotSpacing = _this.evaluateExpr(def.dotSpacing, def.model);
-            _this.dotRadius = _this.evaluateExpr(def.dotRadius, def.model);
-            _this.dotColor = _this.evaluateExpr(def.dotColor, def.model);
-            _this.animation = _this.evaluateExpr(def.animation, def.model);
-            _this.speed = _this.evaluateExpr(def.speed, def.model);
-            _this.movingDotColor = _this.evaluateExpr(def.movingDotColor, def.model);
-            _this.movingDotRadius = _this.evaluateExpr(def.movingDotRadius, def.model);
-            console.log("ODESystemFunction created");
+            // ------------------------------------------------------------
+            // Atributos visuais avaliados (usando model se existir)
+            // ------------------------------------------------------------
+            _this.showDots = _this.evaluateExpr(def.showDots, _this.model);
+            _this.dotSpacing = _this.evaluateExpr(def.dotSpacing, _this.model);
+            _this.dotRadius = _this.evaluateExpr(def.dotRadius, _this.model);
+            _this.dotColor = _this.evaluateExpr(def.dotColor, _this.model);
+            _this.animation = _this.evaluateExpr(def.animation, _this.model);
+            _this.speed = _this.evaluateExpr(def.speed, _this.model);
+            _this.movingDotColor = _this.evaluateExpr(def.movingDotColor, _this.model);
+            _this.movingDotRadius = _this.evaluateExpr(def.movingDotRadius, _this.model);
+            console.log("ODESystemFunction created with model:", _this.model ? "OK" : "MISSING");
             return _this;
         }
         // ============================================================
-        // 1. Generic evaluator for expressions (params, calcs, colors)
-        //    (public so Curve can synchronize fn.animation)
+        // 1. Avaliação genérica de expressões (params, calcs, colors)
         // ============================================================
         ODESystemFunction.prototype.evaluateExpr = function (expr, model) {
-            if (expr === undefined || expr === null)
+            if (expr === undefined || expr === null) {
                 return expr;
-            if (typeof expr === "boolean" || typeof expr === "number")
+            }
+            // valores já numéricos / booleanos não dependem de model
+            if (typeof expr === "boolean" || typeof expr === "number") {
                 return expr;
+            }
+            // se não há model válido, não tenta avaliar expressão dinâmica
+            if (!model || !model.currentParamValues || !model.currentCalcValues || !model.currentColors) {
+                return expr;
+            }
             if (typeof expr === "string") {
                 var trimmed = expr.trim();
-                // 1. Protects literals and color strings
-                if (trimmed.startsWith("'") || trimmed.startsWith('"') || // already quoted string
-                    trimmed.startsWith('#') || // hex color
-                    trimmed.startsWith('rgb') || trimmed.startsWith('hsl') // rgb(), rgba(), hsl()
-                ) {
-                    return trimmed.replace(/^['"]|['"]$/g, ''); // remove outer quotes if any
+                // literais / cores
+                if (trimmed.charAt(0) === "'" || trimmed.charAt(0) === '"' ||
+                    trimmed.charAt(0) === "#" ||
+                    trimmed.indexOf("rgb") === 0 ||
+                    trimmed.indexOf("hsl") === 0) {
+                    // remove aspas externas, se existirem
+                    return trimmed.replace(/^['"]|['"]$/g, '');
                 }
-                // 2. Try to evaluate as a JavaScript expression (e.g., params.a + params.b)
                 try {
                     var f = new Function("params", "calcs", "colors", "with(params){with(calcs){with(colors){return " + expr + ";}}}");
                     return f(model.currentParamValues, model.currentCalcValues, model.currentColors);
                 }
                 catch (e) {
-                    console.warn("Error evaluating expression:", expr, e);
-                    return expr; // literal fallback
+                    console.warn("Error evaluating expression in ODESystemFunction:", expr, e);
+                    return expr;
                 }
             }
             return expr;
         };
         // ============================================================
-        // 2. Derivatives and RK4 solver
+        // 2. Derivadas e passo RK4
         // ============================================================
         ODESystemFunction.prototype.deriv = function (state, scope) {
-            var dx = 0, dy = 0;
+            var dx = 0;
+            var dy = 0;
             try {
-                dx = this.dxdtCompiled.evaluate(__assign({ x: state.x, y: state.y }, scope.params));
+                dx = this.dxdtCompiled.evaluate({ x: state.x, y: state.y, params: scope.params });
             }
-            catch (_a) {
+            catch (e) {
                 dx = 0;
             }
             try {
-                dy = this.dydtCompiled.evaluate(__assign({ x: state.x, y: state.y }, scope.params));
+                dy = this.dydtCompiled.evaluate({ x: state.x, y: state.y, params: scope.params });
             }
-            catch (_b) {
+            catch (e) {
                 dy = 0;
             }
             return { dx: dx, dy: dy };
@@ -68693,10 +68804,14 @@ var KG;
             };
         };
         // ============================================================
-        // 3. Data and dots generation
+        // 3. Geração de trajetória e pontos
         // ============================================================
         ODESystemFunction.prototype.generateData = function () {
             var fn = this;
+            if (!fn.model || !fn.model.currentParamValues) {
+                console.warn("ODESystemFunction.generateData called without valid model.");
+                return fn.data || [];
+            }
             fn.scope = {
                 params: fn.model.currentParamValues,
                 calcs: fn.model.currentCalcValues,
@@ -68705,46 +68820,62 @@ var KG;
             var params = fn.scope.params;
             var x0 = (params["px"] != null) ? params["px"] : fn.initial[0];
             var y0 = (params["py"] != null) ? params["py"] : fn.initial[1];
-            fn.dxdtCompiled = math.compile(fn.updateFunctionString(fn.dxdtDef, fn.scope));
-            fn.dydtCompiled = math.compile(fn.updateFunctionString(fn.dydtDef, fn.scope));
+            var dxStr = fn.updateFunctionString(fn.dxdtDef, fn.scope);
+            var dyStr = fn.updateFunctionString(fn.dydtDef, fn.scope);
+            if (dxStr === null || dyStr === null) {
+                console.warn("ODESystemFunction.generateData: invalid dxdt/dydt.");
+                return fn.data || [];
+            }
+            fn.dxdtCompiled = math.compile(dxStr);
+            fn.dydtCompiled = math.compile(dyStr);
             var data = [];
             var state = { x: x0, y: y0 };
-            data.push(__assign({}, state));
+            data.push({ x: state.x, y: state.y });
             for (var i = 0; i < fn.steps; i++) {
-                state = this.rk4Step(state, fn.scope, fn.dt);
-                data.push(__assign({}, state));
+                state = fn.rk4Step(state, fn.scope, fn.dt);
+                data.push({ x: state.x, y: state.y });
             }
-            this.data = data;
-            this.version = (this.version || 0) + 1; // increments version when data changes
-            console.log("generateData(): " + data.length + " points generated. v=" + this.version);
+            fn.data = data;
+            fn.version = (fn.version || 0) + 1;
+            console.log("ODESystemFunction.generateData:", data.length, "points; v=", fn.version);
             return data;
         };
         ODESystemFunction.prototype.generateDots = function () {
             if (!this.showDots || !this.data || this.data.length === 0) {
                 return [];
             }
-            var dotSpacing = this.dotSpacing || 10;
+            var spacing = this.dotSpacing || 10;
             var dots = [];
-            if (dotSpacing < 1) {
-                var totalSteps = this.data.length;
-                dotSpacing = Math.max(1, Math.floor(totalSteps * dotSpacing));
+            if (spacing < 1) {
+                var total = this.data.length;
+                spacing = Math.max(1, Math.floor(total * spacing));
             }
-            for (var i = 0; i < this.data.length; i += dotSpacing) {
+            for (var i = 0; i < this.data.length; i += spacing) {
                 dots.push(this.data[i]);
             }
             this.dots = dots;
-            console.log("generateDots(): " + dots.length + " dots created (spacing=" + dotSpacing + ")");
+            console.log("ODESystemFunction.generateDots:", dots.length, "dots (spacing=", spacing, ")");
             return dots;
         };
+        // ============================================================
+        // 4. evaluate(t): retorna ponto ao longo da trajetória
+        // ============================================================
         ODESystemFunction.prototype.evaluate = function (t) {
+            if (!this.data || this.data.length === 0) {
+                return { x: this.initial[0], y: this.initial[1] };
+            }
             var i = Math.min(Math.floor(t / this.dt), this.data.length - 1);
             return this.data[i];
         };
         // ============================================================
-        // 4. Update
+        // 5. Update reativo
         // ============================================================
         ODESystemFunction.prototype.update = function (force) {
             var fn = _super.prototype.update.call(this, force);
+            if (!fn.model || !fn.model.currentParamValues) {
+                fn.hasChanged = false;
+                return fn;
+            }
             fn.scope = {
                 params: fn.model.currentParamValues,
                 calcs: fn.model.currentCalcValues,
@@ -68757,8 +68888,17 @@ var KG;
                 fn.lastInitial[0] !== x0 ||
                 fn.lastInitial[1] !== y0;
             var changedParams = !fn.lastParams ||
-                Object.keys(params).some(function (k) { return params[k] !== fn.lastParams[k]; });
-            // --- re-evaluate dynamic properties ---
+                (function () {
+                    for (var k in params) {
+                        if (params.hasOwnProperty(k)) {
+                            if (fn.lastParams[k] !== params[k]) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                })();
+            // reavalia atributos visuais (seguro se model existir)
             fn.showDots = fn.evaluateExpr(fn.showDots, fn.model);
             fn.dotSpacing = fn.evaluateExpr(fn.dotSpacing, fn.model);
             fn.dotRadius = fn.evaluateExpr(fn.dotRadius, fn.model);
@@ -68769,13 +68909,20 @@ var KG;
             fn.movingDotRadius = fn.evaluateExpr(fn.movingDotRadius, fn.model);
             if (force || changedInitial || changedParams || !fn.data || fn.data.length === 0) {
                 fn.lastInitial = [x0, y0];
-                fn.lastParams = __assign({}, params);
-                fn.data = fn.generateData();
-                if (fn.showDots)
+                fn.lastParams = {};
+                for (var key in params) {
+                    if (params.hasOwnProperty(key)) {
+                        fn.lastParams[key] = params[key];
+                    }
+                }
+                fn.generateData();
+                if (fn.showDots) {
                     fn.generateDots();
+                }
                 fn.hasChanged = true;
-                if (fn.graph)
+                if (fn.graph) {
                     fn.graph.hasChanged = true;
+                }
             }
             else {
                 fn.hasChanged = false;
@@ -69564,48 +69711,57 @@ var KG;
 (function (KG) {
     var Curve = /** @class */ (function (_super) {
         __extends(Curve, _super);
-        // ============================================================
-        // Constructor
-        // ============================================================
         function Curve(def) {
-            var _this = 
-            // [MODIFIED]: In the original version, super(def) was called at the end.
-            // Here it is called first to ensure ViewObject initialization occurs early.
-            _super.call(this, def) || this;
-            // [UNCHANGED]: Set default visual parameters
+            var _this = this;
+            // IMPORTANTE:
+            // Mantém o padrão original: cria as funções ANTES do super(def),
+            // para que elas sejam registradas como listeners antes da Curve.
+            var univariateFunction;
+            var parametricFunction;
+            var odeSystemFunction;
             KG.setDefaults(def, {
                 interpolation: 'curveBasis',
                 strokeWidth: 2
             });
             KG.setProperties(def, 'constants', ['interpolation']);
-            // [ADDED]: Instantiate the animation controller
-            _this.odeAnimator = new KG.AnimationODE();
-            // [MODIFIED]: Unified initialization of the supported function types.
             if (def.univariateFunction) {
                 def.univariateFunction.model = def.model;
-                _this.univariateFunction = new KG.UnivariateFunction(def.univariateFunction);
+                univariateFunction = new KG.UnivariateFunction(def.univariateFunction);
+                KG.setProperties(def, 'updatables', []);
             }
             else if (def.parametricFunction) {
                 def.parametricFunction.model = def.model;
-                _this.parametricFunction = new KG.ParametricFunction(def.parametricFunction);
+                parametricFunction = new KG.ParametricFunction(def.parametricFunction);
+                KG.setProperties(def, 'updatables', []);
             }
-            else if (def.ODESystemFunction) { // [ADDED]
+            else if (def.ODESystemFunction) {
                 def.ODESystemFunction.model = def.model;
-                _this.odeSystemFunction = new KG.ODESystemFunction(def.ODESystemFunction);
+                odeSystemFunction = new KG.ODESystemFunction(def.ODESystemFunction);
+                KG.setProperties(def, 'updatables', []);
+            }
+            _this = _super.call(this, def) || this;
+            var curve = _this;
+            if (univariateFunction) {
+                curve.univariateFunction = univariateFunction;
+            }
+            else if (parametricFunction) {
+                curve.parametricFunction = parametricFunction;
+            }
+            else if (odeSystemFunction) {
+                curve.odeSystemFunction = odeSystemFunction;
+                curve.odeAnimator = new KG.AnimationODE();
             }
             return _this;
         }
         // ============================================================
-        // 1. Create SVG elements
+        // 1. Cria elementos SVG
         // ============================================================
         Curve.prototype.draw = function (layer) {
             var curve = this;
-            // [MODIFIED]: Allow fallback to d3.curveLinear if interpolation is invalid
             curve.dataLine = d3.line()
                 .curve(d3[curve.interpolation] || d3.curveLinear)
                 .x(function (d) { return curve.xScale.scale(d.x); })
                 .y(function (d) { return curve.yScale.scale(d.y); });
-            // [UNCHANGED]: Create root SVG group and main paths
             curve.rootElement = layer.append('g');
             curve.dragPath = curve.rootElement.append('path')
                 .attr('stroke-width', '20px')
@@ -69613,60 +69769,128 @@ var KG;
                 .style('fill', 'none');
             curve.path = curve.rootElement.append('path')
                 .style('fill', 'none');
-            // [ADDED]: Pre-create group where ODE dots will be drawn
-            curve.rootElement.append('g').attr('class', 'ode-dots-group');
-            // [ADDED]: Optional asynchronous initial redraw to ensure DOM availability
-            setTimeout(function () {
-                try {
-                    curve.redraw();
-                }
-                catch (e) { /* ignore first redraw errors */ }
-            }, 0);
+            // acessibilidade original
+            curve.addScreenReaderDescriptions(curve.path);
+            curve.path.on("focus", function () { curve.dragPath.style('fill', 'yellow'); });
+            curve.path.on("blur", function () { curve.dragPath.style('fill', 'none'); });
+            // grupo opcional para animação ODE
+            if (curve.odeSystemFunction) {
+                curve.rootElement.append('g').attr('class', 'ode-dots-group');
+            }
+            // SEM setTimeout/redraw aqui; quem manda é o ciclo de update do Model.
             return curve.addClipPathAndArrows().addInteraction();
         };
         // ============================================================
-        // 2. Redraw (includes AnimationODE for ODEs)
+        // 2. Redesenho
         // ============================================================
         Curve.prototype.redraw = function () {
             var curve = this;
-            // [UNCHANGED]: Univariate function redraw
+            // univariada
             if (curve.univariateFunction) {
                 var fn = curve.univariateFunction;
                 var scale = fn.ind === 'y' ? curve.yScale : curve.xScale;
                 fn.generateData(scale.domainMin, scale.domainMax);
+                curve.dragPath.data([fn.data]).attr('d', curve.dataLine);
                 curve.path.data([fn.data]).attr('d', curve.dataLine);
             }
-            // [UNCHANGED]: Parametric function redraw
+            // paramétrica
             if (curve.parametricFunction) {
                 var fn = curve.parametricFunction;
                 fn.generateData();
+                curve.dragPath.data([fn.data]).attr('d', curve.dataLine);
                 curve.path.data([fn.data]).attr('d', curve.dataLine);
+                // ============================================================
+                // fillBetween: área preenchida (somente se definido no YAML)
+                // ============================================================
+                var def = curve.def;
+                if (def.fillBetween) {
+                    var fb = def.fillBetween;
+                    // Remove preenchimento anterior, se houver
+                    curve.rootElement.selectAll(".parametric-fill").remove();
+                    // Gera pontos da curva (já escalonados)
+                    var data = fn.data.map(function (p) { return [
+                        curve.xScale.scale(p.x),
+                        curve.yScale.scale(p.y)
+                    ]; });
+                    // Avalia ponto base (centro)
+                    var xBase = math.evaluate(fb.xBase, {
+                        params: fn.model.currentParamValues,
+                        calcs: fn.model.currentCalcValues
+                    });
+                    var yBase = math.evaluate(fb.yBase, {
+                        params: fn.model.currentParamValues,
+                        calcs: fn.model.currentCalcValues
+                    });
+                    // Fecha o polígono (curva + ponto base)
+                    var polygonPoints = data
+                        .map(function (p) { return p.join(","); })
+                        .concat(curve.xScale.scale(xBase) + "," + curve.yScale.scale(yBase))
+                        .join(" ");
+                    // ============================================================
+                    // Resolve cor para aceitar '#HEX', "'#HEX'" ou colors.nome
+                    // ============================================================
+                    var scope_1 = {
+                        params: fn.model.currentParamValues,
+                        calcs: fn.model.currentCalcValues,
+                        colors: fn.model.currentColors
+                    };
+                    var resolveColor = function (v) {
+                        if (typeof v !== 'string')
+                            return v;
+                        var s = v.trim();
+                        // remove aspas externas simples ou duplas
+                        if ((s.startsWith("'") && s.endsWith("'")) || (s.startsWith('"') && s.endsWith('"'))) {
+                            return s.slice(1, -1);
+                        }
+                        // tenta avaliar expressões tipo colors.carro
+                        try {
+                            return window.math ? window.math.evaluate(s, scope_1) : s;
+                        }
+                        catch (_a) {
+                            return s;
+                        }
+                    };
+                    var fillColor = resolveColor(fb.fill || def.fill || def.color || "#22c55e");
+                    var opacity = (fb.opacity !== undefined ? fb.opacity : 0.4);
+                    // Adiciona polígono com classe identificadora
+                    curve.rootElement.append("polygon")
+                        .attr("class", "parametric-fill")
+                        .attr("points", polygonPoints)
+                        .attr("fill", fillColor)
+                        .attr("opacity", opacity);
+                }
             }
-            // [ADDED]: ODE-based function redraw with animation
-            if (curve.odeSystemFunction) {
+            // ODE
+            if (curve.odeSystemFunction && curve.odeAnimator) {
                 var fn = curve.odeSystemFunction;
-                this.odeAnimator.update(curve, fn);
-                curve.path.data([fn.data]).attr('d', curve.dataLine);
+                // gera trajetória + animação
+                curve.odeAnimator.update(curve, fn);
+                if (fn.data) {
+                    curve.dragPath.data([fn.data]).attr('d', curve.dataLine);
+                    curve.path.data([fn.data]).attr('d', curve.dataLine);
+                }
             }
             curve.drawStroke(curve.path);
             return curve;
         };
         // ============================================================
-        // 3. Logical update and change tracking
+        // 3. Update lógico
         // ============================================================
         Curve.prototype.update = function (force) {
             var curve = _super.prototype.update.call(this, force);
-            var needsRedraw = false;
-            // [MODIFIED]: Unified change detection including ODE function
-            if (force ||
-                (curve.univariateFunction && curve.univariateFunction.hasChanged) ||
-                (curve.parametricFunction && curve.parametricFunction.hasChanged) ||
-                (curve.odeSystemFunction && curve.odeSystemFunction.hasChanged) // [ADDED]
-            ) {
-                needsRedraw = true;
+            // Mantém lógica original:
+            // só reage às funções se a própria curva NÃO mudou.
+            if (!curve.hasChanged) {
+                if (curve.univariateFunction && curve.univariateFunction.hasChanged) {
+                    curve.redraw();
+                }
+                if (curve.parametricFunction && curve.parametricFunction.hasChanged) {
+                    curve.redraw();
+                }
+                if (curve.odeSystemFunction && curve.odeSystemFunction.hasChanged) {
+                    curve.redraw();
+                }
             }
-            if (needsRedraw)
-                curve.redraw();
             return curve;
         };
         return Curve;

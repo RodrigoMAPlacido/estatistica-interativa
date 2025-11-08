@@ -294,7 +294,7 @@ body.textbook .katex-display{font-size:1.2em; margin: 0 0}
   width: 100%;         /* aumenta o tamanho real do gráfico */
   max-width: 620px;   /* trava o limite em telas largas */
   margin: 1rem auto 1rem;
-  transform: scale(1); /* opcional: remove resquícios */
+  transform: scale(1) translateX(-80px); /* opcional: remove resquícios */
   transform-origin: top center;
 }
 
