@@ -1,0 +1,63 @@
+/* =========================================================
+   ESTATÍSTICA INTERATIVA — CSS DA HOMEPAGE
+   (Isolado dos capítulos; inclui variáveis e base mínimas)
+   ========================================================= */
+
+/* 1) Variáveis necessárias (espelham style.css) */
+:root {
+  --fg:#111827;
+  --muted:#4b5563;
+  --accent:#1f2937;
+  --accentFg:#fff;
+  --text:#222;
+}
+
+/* 2) Base mínima */
+html, body { height:100%; }
+body {
+  color:var(--text);
+  background:#fff;
+  -webkit-text-size-adjust:100%;
+}
+body.loading { visibility:hidden; opacity:0; }
+body.ready { visibility:visible; opacity:1; transition:opacity .35s ease; }
+
+/* 3) Homepage (capa) */
+body.index-page {
+  margin:0; padding:0;
+  width:100%; max-width:100%;
+  background:#fff;
+  overflow:hidden;
+  height:100vh;
+  touch-action:none;
+  overscroll-behavior:none;
+}
+
+.hero {
+  position:relative;
+  z-index:1;
+  height:100%;
+  display:grid;
+  place-items:center;
+  padding:24px;
+}
+
+/* Botões e autoria */
+.card { text-align:center; padding:40px 28px; border-radius:14px; }
+.cta {
+  display:inline-block;
+  padding:12px 18px;
+  border-radius:10px;
+  background:var(--accent);
+  color:var(--accentFg);
+  text-decoration:none;
+  font-weight:700;
+  transition:transform .12s ease, opacity .12s ease;
+}
+.cta:hover { transform:translateY(-1px); opacity:.95; }
+.cta:active { transform:none; opacity:.9; }
+.autor {
+  font-size:14px; color:#555; margin-top:4px; font-style:italic;
+  text-align:right; max-width:260px; margin-left:auto;
+}
+

@@ -1,5 +1,5 @@
 /* =========================================================
-   ESTATÍSTICA INTERATIVA — CSS PRINCIPAL (DEPURADO E MODULAR)
+   ESTATÍSTICA INTERATIVA — CSS PRINCIPAL (DEPURADO E ORGANIZADO)
    ========================================================= */
 
 /* =========================================================
@@ -32,48 +32,11 @@ body.loading { visibility:hidden; opacity:0; }
 body.ready { visibility:visible; opacity:1; transition:opacity .35s ease; }
 
 /* =========================================================
-   3. CAPA (index-page)
+   3. DESKTOP (padrão)
+   Ordem: Navegação → Livro → Figuras/Tabelas → KG/KaTeX → Utilitários
    ========================================================= */
-body.index-page {
-  margin:0; padding:0;
-  width:100%; max-width:100%;
-  background:#fff;
-  overflow:hidden;
-  height:100vh;
-  touch-action:none;
-  overscroll-behavior:none;
-}
-.hero {
-  position:relative;
-  z-index:1;
-  height:100%;
-  display:grid;
-  place-items:center;
-  padding:24px;
-}
 
-/* Botões e autoria */
-.card { text-align:center; padding:40px 28px; border-radius:14px; }
-.cta {
-  display:inline-block;
-  padding:12px 18px;
-  border-radius:10px;
-  background:var(--accent);
-  color:var(--accentFg);
-  text-decoration:none;
-  font-weight:700;
-  transition:transform .12s ease, opacity .12s ease;
-}
-.cta:hover { transform:translateY(-1px); opacity:.95; }
-.cta:active { transform:none; opacity:.9; }
-.autor {
-  font-size:14px; color:#555; margin-top:4px; font-style:italic;
-  text-align:right; max-width:260px; margin-left:auto;
-}
-
-/* =========================================================
-   4. NAVEGAÇÃO ENTRE CAPÍTULOS
-   ========================================================= */
+/* 3.1 Navegação entre capítulos */
 .nav-links {
   margin:60px auto 0;
   padding-top:25px;
@@ -93,37 +56,8 @@ body.index-page {
 .nav-links .anterior { flex:1; text-align:left; }
 .nav-links .sumario  { flex:1; text-align:center; }
 .nav-links .proximo  { flex:1; text-align:right; }
-/* =========================================================
-   4.1 NAVEGAÇÃO ENTRE CAPÍTULOS — AJUSTE MOBILE
-   ========================================================= */
-@media (max-width: 768px) {
 
-  .nav-links {
-    margin-top: 10px;
-    padding-top: 5px;
-    font-size: 1.1rem;              /* reduz o tamanho da fonte */
-    gap: 4px;                      /* reduz o espaçamento */
-  }
-
-  .nav-links a {
-    padding: 4px 4px;              /* diminui a área dos links */
-  }
-
-  .nav-links .anterior,
-  .nav-links .sumario,
-  .nav-links .proximo {
-    flex: 1;
-    text-align: center;
-  }
-
-  /* opcional: reduz leve espaçamento vertical */
-  .nav-links .anterior { text-align: left; }
-  .nav-links .proximo  { text-align: right; }
-}
-
-/* =========================================================
-   5. LAYOUT DO LIVRO (body.textbook)
-   ========================================================= */
+/* 3.2 Layout do livro */
 body.textbook {
   max-width:var(--max-width);
   margin:0 auto;
@@ -165,9 +99,7 @@ body.textbook .newthought {
   font-variant:small-caps; font-size:1.28rem; letter-spacing:.03em;
 }
 
-/* =========================================================
-   6. FIGURAS E SVGs (não-KG)
-   ========================================================= */
+/* 3.3 Figuras e SVGs (não-KG) */
 figure.figure,
 .figure {
   display:block;
@@ -180,21 +112,19 @@ figure.figure > img,
 figure.figure > svg,
 .figure > img,
 .figure > svg {
-  display: block;
-  margin: 0 auto;
-  width: 50%;              /* reduz tamanho em ~10% no desktop */
-  max-width: 700px;        /* trava um teto confortável */
-  height: auto;
+  display:block;
+  margin:0 auto;
+  width:50%;
+  max-width:700px;
+  height:auto;
 
-  /* Nitidez e renderização vetorial */
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
-  text-rendering: geometricPrecision;
-  shape-rendering: geometricPrecision;
-  vector-effect: non-scaling-stroke;
-  backface-visibility: hidden;
+  image-rendering:-webkit-optimize-contrast;
+  image-rendering:crisp-edges;
+  text-rendering:geometricPrecision;
+  shape-rendering:geometricPrecision;
+  vector-effect:non-scaling-stroke;
+  backface-visibility:hidden;
 }
-
 
 figure.figure > figcaption,
 .figure > figcaption {
@@ -203,96 +133,65 @@ figure.figure > figcaption,
   margin-top:.1rem;
   color:#444;
 }
-/* =========================================================
-   7. TABELAS — AJUSTE AUTOMÁTICO E RESPONSIVO
-   ========================================================= */
+
+/* 3.4 Tabelas (responsivo automático) */
 figure.figure.table {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 2rem auto;
-  overflow-x: auto;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  margin:2rem auto;
+  overflow-x:auto;
 }
 
 figure.figure.table table {
-  border-collapse: collapse;
-  table-layout: auto;            /* permite colunas ajustarem à largura */
-  width: 90%;                   /* ocupa todo o container */
-  max-width: 100%;
-  font-size: 1.05rem;
-  margin: 1.5rem auto;
-  word-wrap: break-word;
+  border-collapse:collapse;
+  table-layout:auto;
+  width:90%;
+  max-width:100%;
+  font-size:1.05rem;
+  margin:1.5rem auto;
+  word-wrap:break-word;
 }
 
 figure.figure.table th,
 figure.figure.table td {
-  padding: 8px 10px;
-  border-bottom: 1px solid var(--border-light);
-  text-align: center;
-  line-height: 1.45;
-  white-space: normal;           /* permite quebra automática */
+  padding:8px 10px;
+  border-bottom:1px solid var(--border-light);
+  text-align:center;
+  line-height:1.45;
+  white-space:normal;
 }
 
 figure.figure.table thead th {
-  font-weight: 600;
-  border-bottom: 2px solid var(--border-medium);
-  hyphens: auto;                 /* quebra de sílabas */
+  font-weight:600;
+  border-bottom:2px solid var(--border-medium);
+  hyphens:auto;
 }
 
 figure.figure.table figcaption {
-  display: block;
-  margin: 0.6rem auto 0;
-  text-align: center;
-  font-style: italic;
-  color: var(--muted);
-  font-size: 0.9rem;
-  max-width: 95%;
+  display:block;
+  margin:0.6rem auto 0;
+  text-align:center;
+  font-style:italic;
+  color:var(--muted);
+  font-size:0.9rem;
+  max-width:95%;
 }
 
-/* =========================================================
-   TABELAS — MOBILE
-   ========================================================= */
-@media (max-width: 768px) {
-  figure.figure.table {
-    width: 100%;
-    overflow-x: hidden;          /* remove scroll horizontal */
-    margin: 1.5rem auto;
-  }
-
-  figure.figure.table table {
-    font-size: 0.8rem;
-    table-layout: fixed;         /* força colunas mais estreitas */
-    word-break: break-word;
-  }
-
-  figure.figure.table th,
-  figure.figure.table td {
-    padding: 6px 4px;
-    white-space: normal;
-  }
-
-  figure.figure.table thead th {
-    font-size: 0.7rem;
-  }
-}
-
-/* =========================================================
-   8. KGJS E KATEX
-   ========================================================= */
+/* 3.5 KGJS e KaTeX */
 .kg-container {
   --kg-max-width: var(--content-width);
   --kg-padding: 8px 6px;
-  width: 100%;
-  margin: 0 auto;
-  padding: var(--kg-padding);
-  background: #fff;
-  border-radius: 6px;
+  width:100%;
+  margin:0 auto;
+  padding:var(--kg-padding);
+  background:#fff;
+  border-radius:6px;
 
-  /* 🔧 impede que o scroll do mouse "prenda" dentro do KG */
-  overflow: visible;
-  overscroll-behavior: contain;
-  -webkit-overflow-scrolling: auto;
-  pointer-events: auto;
+  overflow:visible;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:auto;
+  pointer-events:auto;
 }
 
 .kg-container canvas,
@@ -318,118 +217,13 @@ body.textbook .katex-display { font-size:1.2em; margin:0 0; }
   margin:0 0 0 0;
 }
 
-/* =========================================================
-   9. VERSÕES RESPONSIVAS DE KG (mobile x desktop)
-   ========================================================= */
-
-/* Esconde por padrão ambos */
+/* Versões responsivas de KG */
 .kg-mobile,
-.kg-desktop {
-  display: none;
-}
+.kg-desktop { display:none; }
+@media (min-width:769px) { .kg-desktop { display:block; } }
+@media (max-width:768px) { .kg-mobile  { display:block; } }
 
-/* Mostra a versão desktop */
-@media (min-width: 769px) {
-  .kg-desktop {
-    display: block;
-  }
-}
-
-/* Mostra a versão mobile */
-@media (max-width: 768px) {
-  .kg-mobile {
-    display: block;
-  }
-}
-
-/* =========================================================
-   10. RESPONSIVO (mobile)
-   ========================================================= */
-@media (max-width:768px) {
-  html { font-size:12px; }
-  body.textbook { max-width:100%; padding:10px 10px; line-height:1.5; }
-
-  body.textbook h1 { font-size:1.8rem; line-height:1.22; margin:0 0 .7rem; }
-  body.textbook h2 { font-size:1.6rem; line-height:1.24; margin:1.1rem 0 .5rem; }
-  body.textbook h3 { font-size:1rem; margin:2.5rem .5rem 1rem; }
-
-  body.textbook p,
-  body.textbook ul {
-    font-size:.9rem;
-    margin-bottom:.75rem;
-  }
-  body.textbook ol {
-    font-size:.9rem;
-    margin: 2rem 0.3rem 2rem 1.5rem;
-  }
-
-/* =========================================================
-   FIGURAS E ANIMAÇÕES SVG — RESPONSIVAS
-   ========================================================= */
-
-/* regra geral */
-figure {
-  display: block;
-  width: 100%;
-  max-width: 100%;
-  margin: 1.5rem auto;
-  text-align: center;
-}
-
-/* imagens e SVGs dentro da figure */
-figure img,
-figure svg {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-width: 100%;
-  margin: 0 auto;
-}
-
-/* =====================================
-   AJUSTE FINO APENAS PARA O MOBILE
-   ===================================== */
-@media (max-width: 768px) {
-
-  /* ===== FIGURAS E SVGs ===== */
-  figure {
-    margin: 1.2rem 0;
-    padding: 0;
-  }
-
-  figure img,
-  figure svg {
-    width: 95vw;                 /* ocupa quase toda a viewport */
-    max-width: none;
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%); /* centraliza perfeitamente */
-  }
-
-  /* ===== KGJS (layout especial no mobile) ===== */
-  .kg-wrapper.kg-mobile {
-    width: 125%;
-    max-width: none;
-    margin: 1.2rem auto 2.5rem;
-    position: relative;
-    left: -28.5%;
-    transform: none;
-  }
-
-
-  /* ===== KaTeX ===== */
-  body.textbook .katex,
-  body.textbook .katex-display {
-    font-size: 1em !important;     /* reduz proporcionalmente */
-    overflow-wrap: anywhere;
-  }
-}
-
-}
-
-/* =========================================================
-   11. BOTÕES DE SCROLL (mobile)
-   ========================================================= */
+/* 3.6 Botões de scroll (visível apenas no mobile via media abaixo) */
 .scroll-buttons {
   position:fixed;
   bottom:calc(16px + env(safe-area-inset-bottom));
@@ -462,11 +256,72 @@ figure svg {
   touch-action:manipulation;
   transition:opacity .2s ease, transform .2s ease, box-shadow .2s ease;
 }
-.scroll-buttons button:hover { opacity:1; }
-.scroll-buttons button:active { transform:translateY(1px); box-shadow:none; }
 @media (min-width:769px) { .scroll-buttons { display:none; } }
 @media (prefers-reduced-motion:reduce) {
   .scroll-buttons,
   .scroll-buttons.show,
   .scroll-buttons button { transition:none !important; }
 }
+
+/* =========================================================
+   4. MOBILE (<=768px) — mesma ordem do Desktop
+   ========================================================= */
+@media (max-width:768px) {
+
+  /* 4.1 Navegação */
+  .nav-links {
+    margin-top:10px;
+    padding-top:5px;
+    font-size:1.1rem;
+    gap:4px;
+  }
+  .nav-links a { padding:4px 4px; }
+  .nav-links .anterior,
+  .nav-links .sumario,
+  .nav-links .proximo { flex:1; text-align:center; }
+  .nav-links .anterior { text-align:left; }
+  .nav-links .proximo  { text-align:right; }
+
+  /* 4.2 Livro */
+  html { font-size:12px; }
+  body.textbook { max-width:100%; padding:10px 10px; line-height:1.5; }
+
+  body.textbook h1 { font-size:1.8rem; line-height:1.22; margin:0 0 .7rem; }
+  body.textbook h2 { font-size:1.6rem; line-height:1.24; margin:1.1rem 0 .5rem; }
+  body.textbook h3 { font-size:1rem; margin:2.5rem .5rem 1rem; }
+
+  body.textbook p,
+  body.textbook ul { font-size:.9rem; margin-bottom:.75rem; }
+  body.textbook ol { font-size:.9rem; margin:2rem 0.3rem 2rem 1.5rem; }
+
+  /* 4.3 Figuras e SVGs */
+  figure { margin:1.2rem 0; padding:0; }
+  figure img,
+  figure svg {
+    width:95vw;
+    max-width:none;
+    position:relative;
+    left:50%;
+    transform:translateX(-50%);
+  }
+
+  /* 4.4 Tabelas */
+  figure.figure.table { width:100%; overflow-x:hidden; margin:1.5rem auto; }
+  figure.figure.table table { font-size:0.8rem; table-layout:fixed; word-break:break-word; }
+  figure.figure.table th,
+  figure.figure.table td { padding:6px 4px; white-space:normal; }
+  figure.figure.table thead th { font-size:0.7rem; }
+
+  /* 4.5 KGJS e KaTeX */
+  .kg-wrapper.kg-mobile {
+    width:125%;
+    max-width:none;
+    margin:1.2rem auto 2.5rem;
+    position:relative;
+    left:-28.5%;
+    transform:none;
+  }
+  body.textbook .katex,
+  body.textbook .katex-display { font-size:1em !important; overflow-wrap:anywhere; }
+}
+
