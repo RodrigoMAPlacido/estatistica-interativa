@@ -30,8 +30,9 @@
       const maxDist = 430;
       const force = active && dist < maxDist ? ((maxDist - dist) / maxDist) * 1.8 : 0;
 
-      const targetX = active ? (dx / dist) * force * -45 : 0;
-      const targetY = active ? (dy / dist) * force * -45 : 0;
+      const hasForce = active && dist !== 0;
+      const targetX = hasForce ? (dx / dist) * force * -45 : 0;
+      const targetY = hasForce ? (dy / dist) * force * -45 : 0;
 
       // LERP (interpolação linear) para fluidez
       const e = state.get(eq);
