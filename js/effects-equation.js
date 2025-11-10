@@ -1,4 +1,4 @@
-// js/effects-bgmath.js
+// Efeito interativo das equações no background
 (function () {
   const eqs = document.querySelectorAll(".bg-math .eq");
   if (!eqs.length) return;
