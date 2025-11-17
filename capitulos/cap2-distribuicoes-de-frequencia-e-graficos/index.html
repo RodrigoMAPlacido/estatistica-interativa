@@ -15,16 +15,26 @@ proximo: /capitulos/cap3-medidas-de-tendencia-central/
   <hr>
 <h2>1. Introdução</h2>
 
-<p> 
-  <span class="newthought">No capítulo anterior, consolidamos os conceitos essenciais que sustentam o pensamento estatístico</span> — a natureza dos dados e seus tipos, a distinção entre população e amostra e a relação entre parâmetros e estatísticas. A partir desse conjunto de fundamentos, damos agora o passo seguinte: compreender como transformar dados brutos em estruturas organizadas que tornem possível enxergar padrões, comparações e regularidades de forma clara e sistemática.
+<p>
+  <span class="newthought">No capítulo anterior,</span> estabelecemos os fundamentos necessários para qualquer análise 
+  estatística. Definimos o que é uma <strong>variável</strong> e como ela descreve uma 
+  característica das unidades observadas; distinguimos os <strong>dados</strong> como os valores 
+  efetivamente registrados; classificamos esses dados em <strong>qualitativos</strong> ou 
+  <strong>quantitativos</strong>; e examinamos os <strong>níveis de mensuração</strong> que 
+  determinam o tipo de informação que cada dado é capaz de fornecer — se apenas diferencia categorias, 
+  se permite ordenação, se possui diferenças numericamente interpretáveis ou se admite comparações 
+  proporcionais. Conjuntamente, esses conceitos definem <em>quais relações</em> podem ser estabelecidas 
+  entre os valores observados e, portanto, <em>como</em> os dados devem ser organizados para que a análise 
+  seja coerente e informativa.
 </p>
 
 <p>
-  Em muitas situações reais, o pesquisador coleta uma grande quantidade de observações — resultados de medições, contagens, questionários ou experimentos — que, em seu estado bruto, formam uma lista desordenada de números ou categorias. Embora essa listagem contenha toda a informação necessária, ela é de difícil interpretação, dificultando a identificação de tendências, comparações ou padrões de comportamento. Por essa razão, a etapa seguinte do trabalho estatístico é a <strong>organização dos dados</strong> — um processo de transformação que converte registros dispersos em estruturas ordenadas, capazes de revelar, de forma sintética e visualmente inteligível, as principais características do fenômeno estudado.
-</p>
-
-<p>
-  Essa organização é feita por meio das <strong>distribuições de frequência</strong> — tabelas que agrupam dados semelhantes em classes ou categorias — e das <strong>representações gráficas</strong>, que convertem informações numéricas em formas visuais intuitivas, como barras, linhas e áreas. Essas ferramentas pertencem ao domínio da <em>estatística descritiva</em>, cujo objetivo é condensar e comunicar dados de maneira compreensível sem perder o rigor científico. Em outras palavras, elas permitem <em>ver</em> a estrutura oculta nos números, tornando perceptíveis relações e regularidades que, de outro modo, permaneceriam invisíveis.
+  Com essa base conceitual estabelecida, avançamos agora para a etapa seguinte: transformar um conjunto de 
+  dados brutos — muitas vezes desorganizado, extenso ou repetitivo — em uma forma que revele sua 
+  <strong>estrutura</strong>. É nesse ponto que entram as <strong>distribuições de frequência</strong> 
+  e as <strong>representações gráficas</strong>, ferramentas que sintetizam os dados de modo a tornar 
+  visíveis padrões, comparações e tendências que permanecem ocultos quando as informações são apresentadas 
+  apenas como uma lista longa de observações.
 </p>
 
 <figure>
@@ -32,39 +42,62 @@ proximo: /capitulos/cap3-medidas-de-tendencia-central/
 </figure>
 
 <p>
-  Nas próximas seções, exploraremos esse processo de forma gradual. Começaremos com a <strong>definição formal de uma distribuição de frequência</strong>, aprendendo como agrupar observações em intervalos de classe, calcular frequências e interpretar tabelas. Em seguida, ampliaremos esse quadro para incluir medidas complementares — como frequências relativas e acumuladas — e, por fim, representaremos graficamente os resultados por meio de histogramas, polígonos e ogivas. O objetivo é desenvolver não apenas a técnica de construção dessas representações, mas a <strong>leitura crítica</strong> que permite extrair delas informações significativas sobre o comportamento dos dados.
+  A forma como uma distribuição de frequências é construída decorre diretamente da natureza dos 
+  dados estabelecida no capítulo anterior. Nos dados <strong>qualitativos</strong>, a construção se 
+  baseia na contagem das <em>categorias</em> observadas, pois cada valor identifica um grupo distinto. 
+  Já nos dados <strong>quantitativos</strong>, sobretudo quando apresentam ampla variação ou muitos 
+  valores possíveis, a organização requer a definição de <em>intervalos</em> ou classes que agrupem 
+  observações semelhantes. Essas diferenças estruturais não alteram o propósito central da distribuição 
+  de frequências: revelar o padrão dos dados de forma clara, comparável e adequada ao tipo de informação 
+  que eles são capazes de fornecer.
 </p>
+
+<p>
+  Este capítulo, portanto, marca a transição entre compreender a natureza dos dados e 
+  <em>interpretar</em> a sua distribuição. Ao longo das próximas seções, examinaremos como 
+  construir tabelas de frequências para diferentes tipos de dados e como representá-las por meio 
+  de gráficos adequados — desde gráficos de barras e setores até histogramas, polígonos de 
+  frequência e ogivas. Essas ferramentas constituem o ponto de partida para análises mais profundas 
+  e fornecem a base visual e numérica para as medidas estatísticas que estudaremos nos capítulos 
+  seguintes.
+</p>
+
+
   <hr>
 
 <h2>2. Distribuições de Frequência e Gráficos de Representação</h2>
 
 <p>
-  Uma <strong>distribuição de frequência</strong> é uma forma sistemática de organizar os dados observados em uma pesquisa ou experimento,
-  agrupando-os conforme o número de vezes que cada valor ou intervalo de valores ocorre, de modo a revelar
-  <strong>como as observações se distribuem</strong> ao longo dos possíveis resultados da variável estudada.
-  Essa estrutura permite visualizar <strong>a concentração e a dispersão dos dados</strong>,
-  tornando evidente onde há maior incidência de valores e onde eles são mais escassos.</p>
+  A <strong>distribuição de frequência</strong> é uma forma estruturada de organizar os dados observados,
+  registrando <em>quantas vezes</em> cada categoria, valor ou intervalo aparece no conjunto analisado.
+  Esse procedimento transforma uma lista de observações brutas em um quadro sintético que revela 
+  <strong>como os dados se distribuem</strong> ao longo dos possíveis resultados da variável, destacando 
+  padrões essenciais como concentrações, dispersões e irregularidades. Ao tornar explícita a 
+  <strong>incidência relativa dos valores</strong>, a distribuição de frequência constitui a base para 
+  representações gráficas e para as medidas descritivas estudadas nos capítulos seguintes.
+</p>
+
 
 <p>
 Uma tabela de distribuição de frequências é composta pelos seguintes cálculos:
 </p>
  <ol type="I">
-    <li>
+    <li class="lista">
       <strong>Frequência absoluta ($F_{i}$):</strong>
       número de vezes que cada valor ou categoria aparece na amostra.
     </li>
 
-    <li>
+    <li class="lista">
       <strong>Frequência relativa ($Fr_{i}$):</strong>
       porcentagem que cada valor representa em relação ao total de observações.
     </li>
 
-    <li>
+    <li class="lista">
       <strong>Frequência acumulada ($F_{ac}$):</strong>
       soma das frequências absolutas até o valor ou categoria analisada.
     </li>
 
-    <li>
+    <li class="lista">
       <strong>Frequência relativa acumulada ($Fr_{ac}$):</strong>
       porcentagem acumulada das observações até o valor ou categoria analisada.
     </li>
@@ -163,9 +196,11 @@ Uma tabela de distribuição de frequências é composta pelos seguintes cálcul
 </figure>
 
 <p>
-  Agora que você compreendeu como a tabela resume os dados, veja como essa mesma informação pode ser representada graficamente.
-  Experimente ajustar as frequências e observe como o gráfico muda — <strong>tente você mesmo!</strong>
+  Para solidificar o entendimento da distribuição obtida, podemos representar essas mesmas informações de 
+  forma visual. Ajuste as frequências e observe como o gráfico reage — essa exploração ajuda a perceber, 
+  de imediato, como cada variação nos dados altera o formato da distribuição.
 </p>
+
 <figure class="figure fullwidth" style="page-break-inside: avoid;">
 <!-- Versão para desktop -->
 <div class="kg-wrapper kg-desktop">
@@ -180,6 +215,110 @@ Uma tabela de distribuição de frequências é composta pelos seguintes cálcul
 </div>
 </figure>
 
+<h3>2.2 Distribuição de Frequência de Variáveis Quantitativas</h3>
+
+<p>
+  Para variáveis <strong>quantitativas</strong>, a construção de uma distribuição de frequência segue a mesma
+  lógica fundamental utilizada no caso das variáveis qualitativas: registrar quantas vezes cada valor aparece.
+  No entanto, como os valores numéricos podem assumir uma grande variedade de resultados — muitas vezes sem
+  repetições — a forma de organização precisa ser adaptada. Em vez de listar cada valor individualmente, o que
+  produziria tabelas extensas e pouco informativas, agrupa-se o conjunto de dados em <strong>classes</strong> ou
+  <strong>intervalos de valores</strong>. Esses intervalos reúnem observações semelhantes e permitem identificar
+  a distribuição geral dos dados de maneira mais clara.
+</p>
+
+<p>
+  A construção dessas classes envolve algumas decisões importantes: o número de intervalos, sua largura
+  (ou amplitude), os limites inferior e superior de cada classe e a forma como os valores são distribuídos
+  entre elas. Métodos como a regra de <em>Sturges</em> ou a escolha empírica baseada na dispersão dos dados podem
+  orientar essa etapa, mas o princípio essencial é garantir que as classes sejam <strong>contínuas,
+  não sobrepostas</strong> e <strong>abrangentes</strong> o suficiente para incluir todas as observações.
+</p>
+
+<p>
+  Uma vez definidas as classes, calcula-se para cada uma delas a <strong>frequência absoluta</strong> (o número de
+  observações pertencentes ao intervalo), a <strong>frequência relativa</strong> (a proporção em relação ao total
+  de dados) e, quando necessário, a <strong>frequência acumulada</strong>. Diferentemente das variáveis
+  qualitativas nominais, aqui a frequência acumulada sempre faz sentido, pois os intervalos seguem uma ordem
+  numérica natural.
+</p>
+
+<p>
+  Para ilustrar esse procedimento, considere a variável <strong>tempo diário de estudo</strong> (em horas),
+  medida em uma turma com vinte estudantes. Após organizar os valores e definir classes de mesma largura,
+  obtém-se a distribuição apresentada na tabela a seguir.
+</p>
+
+<figure class="figure table">
+  <table>
+    <thead>
+      <tr>
+        <th>Classe (horas)</th>
+        <th>Frequência Absoluta</th>
+        <th>Frequência Relativa</th>
+        <th>Frequência Acumulada</th>
+        <th>Frequência Relativa Acumulada</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>0–1</td>
+        <td>3</td>
+        <td>15%</td>
+        <td>3</td>
+        <td>15%</td>
+      </tr>
+      <tr>
+        <td>1–2</td>
+        <td>6</td>
+        <td>30%</td>
+        <td>9</td>
+        <td>45%</td>
+      </tr>
+      <tr>
+        <td>2–3</td>
+        <td>5</td>
+        <td>25%</td>
+        <td>14</td>
+        <td>70%</td>
+      </tr>
+      <tr>
+        <td>3–4</td>
+        <td>4</td>
+        <td>20%</td>
+        <td>18</td>
+        <td>90%</td>
+      </tr>
+      <tr>
+        <td>4–5</td>
+        <td>2</td>
+        <td>10%</td>
+        <td>20</td>
+        <td>100%</td>
+      </tr>
+      <tr class="total">
+        <td><strong>Total</strong></td>
+        <td><strong>20</strong></td>
+        <td><strong>100%</strong></td>
+        <td><strong>20</strong></td>
+        <td><strong>100%</strong></td>
+      </tr>
+    </tbody>
+  </table>
+  <figcaption>
+    Tabela 2. Distribuição de frequência do tempo diário de estudo (em horas).
+  </figcaption>
+</figure>
+
+<p>
+  A análise dessa tabela permite identificar padrões importantes: a maior concentração de estudantes se encontra
+  entre 1 e 3 horas de estudo por dia, enquanto poucos dedicam mais de 4 horas diárias. Essa síntese fornece uma
+  visão geral da distribuição da variável e prepara o terreno para representações gráficas mais adequadas ao caso
+  quantitativo, como o <strong>histograma</strong> e o <strong>polígono de frequência</strong>.
+</p>
+<figure>
+  <img src="../../imagens/grafico-histograma-poligonos.svg" alt="Gráficos: Setores e de Barras">
+</figure>
 
   <h2>3. </h2>
 

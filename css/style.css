@@ -103,7 +103,7 @@ body.textbook ul {
 body.textbook ol {
   margin:2rem 2.5rem 2rem; padding:0;
 }
-body.textbook li { margin:0 0 1rem; }
+body.textbook li { margin:0 0 1.5rem; font-size:1.13rem;}
 body.textbook .newthought {
   font-variant:small-caps; font-size:1.28rem; letter-spacing:.03em;
 }
@@ -189,7 +189,7 @@ figure.figure.table figcaption {
   --kg-max-width: var(--content-width);
   --kg-padding: 8px 6px;
   width:100%;
-  margin:0 auto;
+  margin:2rem 0 5rem 0;
   padding:var(--kg-padding);
   background:#fff;
   border-radius:6px;
@@ -210,8 +210,8 @@ figure.figure.table figcaption {
 }
 
 /* KaTeX */
-body.textbook .katex { font-size:1.2em; }
-body.textbook .katex-display { font-size:1.2em; margin:0 0; }
+body.textbook .katex { font-size:1.1em; }
+body.textbook .katex-display { font-size:1.15em; margin:1.5rem 0; }
 
 /* KG wrapper */
 .kg-wrapper {
@@ -301,6 +301,7 @@ body.textbook .katex-display { font-size:1.2em; margin:0 0; }
   body.textbook p,
   body.textbook ul { font-size:.9rem; margin-bottom:.75rem; }
   body.textbook ol { font-size:.9rem; margin:2rem 0.3rem 2rem 1.5rem; }
+  body.textbook li.lista { font-size:.9rem; margin:2rem 0.3rem 2rem 1.5rem; }
 
   /* 4.3 Figuras e SVGs */
   figure { margin:1.2rem 0; padding:0; }
@@ -342,6 +343,6 @@ body.textbook .katex-display { font-size:1.2em; margin:0 0; }
     transform:none;
   }
   body.textbook .katex,
-  body.textbook .katex-display { font-size:1em !important; overflow-wrap:anywhere; }
+  body.textbook .katex-display { font-size:1.1em !important; overflow-wrap:anywhere; margin:1.2rem 0;}
 }
 
