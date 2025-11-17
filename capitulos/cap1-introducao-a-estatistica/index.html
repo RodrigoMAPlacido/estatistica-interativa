@@ -9,7 +9,6 @@ proximo: /capitulos/cap2-distribuicoes-de-frequencia-e-graficos/
   <li>Compreender a natureza e o papel da Estatística como método científico para produzir conhecimento descritivo ou inferencial.</li>
   <li>Distinguir corretamente os conceitos fundamentais: variável, dados, população, amostra, parâmetro e estatística.</li>
   <li>Diferenciar os domínios da disciplina: estatística descritiva e estatística inferencial.</li>
-  <li>Reconhecer a importância da obtenção de dados e dos planos de amostragem para a validade das conclusões.</li>
   <li>Entender a relação entre variabilidade, incerteza e probabilidade no raciocínio estatístico.</li>
 </ul>
 
@@ -22,7 +21,7 @@ proximo: /capitulos/cap2-distribuicoes-de-frequencia-e-graficos/
     </p>
 
     <p>
-        Na Antiguidade — e de forma mais sistemática no Império Romano —, a atividade que hoje chamamos de estatística consistia na coleta organizada de informações demográficas, fiscais e militares, com a finalidade direta de administrar e manter o poder político. Daí a origem etimológica do termo: <em>status</em>, em latim, refere-se ao Estado e designava aquilo que era do interesse da administração pública. A estatística, em seu uso inicial, era uma técnica de governo aplicada ao levantamento de nascimentos, mortes, propriedades, impostos e efetivos militares — um instrumento burocrático de contagem e descrição, e não ainda uma disciplina científica estruturada.
+        Na Antiguidade — e de forma mais sistemática no Império Romano —, a atividade que hoje chamamos de estatística consistia na coleta organizada de informações demográficas, fiscais e militares, com a finalidade direta de administrar e manter o poder político. Daí a origem etimológica do termo: <em>status</em>, em latim, refere-se ao Estado e designava aquilo que era do interesse da administração pública. A estatística, em seu uso inicial, era um instrumento burocrático de contagem e descrição, e não ainda uma disciplina científica estruturada.
     </p>
 
     <p>
@@ -30,7 +29,7 @@ proximo: /capitulos/cap2-distribuicoes-de-frequencia-e-graficos/
     </p>
 
     <p>
-        Esse desenvolvimento histórico integrou o raciocínio matemático ao estudo dos dados empíricos, transformando a estatística: de mero registro administrativo, para constituir um corpo metodológico orientado pela investigação científica. Contudo, para que sua natureza seja plenamente compreendida, é necessário esclarecer o que constitui seu objeto fundamental de estudo. Antes de distinguir técnicas e métodos, é preciso responder a perguntas conceituais essenciais: <em>o que são dados? o que caracteriza uma observação? em que sentido informações numéricas representam fenômenos reais?</em> É a essas questões que se dedica a próxima seção.
+        Esse desenvolvimento histórico integrou o raciocínio matemático ao estudo dos dados empíricos, transformando a estatística: de mero registro administrativo, para constituir um corpo metodológico orientado pela investigação científica. Contudo, para que sua natureza seja plenamente compreendida, é necessário esclarecer o que constitui seu objeto fundamental de estudo, apresentando os conceitos e definições elementares que fundamentam e padronizam a forma como a análise estatística é feita.  
     </p>
 
 <hr>
@@ -38,126 +37,168 @@ proximo: /capitulos/cap2-distribuicoes-de-frequencia-e-graficos/
 <h2>2. Elementos fundamentais da Estatística</h2>
 
 <p>
-  A estatística é frequentemente associada a cálculos e representações numéricas, mas sua base não é aritmética:
-  ela repousa sobre conceitos fundamentais que permitem transformar observações do mundo real em informação útil.
-  Antes de distinguir métodos ou técnicas, é necessário esclarecer os elementos que constituem o objeto de estudo
-  desta disciplina: <strong>variável, dados, população, amostra, parâmetros e estatísticas</strong>.
-  Esses conceitos estruturam o raciocínio estatístico e são indispensáveis para compreender como se formulam conclusões
-  a partir de informações empíricas.
+    Na seção anterior, mostramos que o surgimento da Estatística está historicamente 
+    ligado ao processo de coleta e organização de informações que sirvam de insumos para a tomada de decisão na administração do Estado — podendo ser estendido para qualquer tipo de organização. 
+    O amadurecimento científico da disciplina não tornou obsoleto esses procedimentos elementares; ao contrário, 
+    integrou-os e os refinou, estruturando-os de forma mais rigorosa com conceitos próprios 
+    que hoje constituem os elementos fundamentais da Estatística. Antes de qualquer 
+    análise estatística, é necessário compreender esses elementos constitutivos mais simples, 
+    a fim de operacionalizá-los de forma mais padronizada e sistemática.
+</p>
+<figure>
+  <img src="../../imagens/elementos-fundamentais.svg" alt="Elementos Fundamentais">
+</figure>
+<p>
+    Os elementos constitutivos fundamentais são:
 </p>
 
-<h3>2.1 Variável</h3>
+<ul>
+  <li><strong>Unidade de observação e variável</strong>: o elemento sobre o qual se coletam informações
+      (unidade de observação) e a característica registrada em cada elemento (variável);</li>
+
+  <li><strong>Dado</strong>: o valor concreto obtido para uma variável em uma unidade de observação;</li>
+
+  <li><strong>População e amostra</strong>: o conjunto completo de unidades de interesse e o subconjunto observado;</li>
+
+  <li><strong>Parâmetro e estatística</strong>: medida numérica que descreve, respectivamente, a população e a amostra.</li>
+</ul>
+
 <p>
-  Em estatística, chama-se <strong>variável</strong> qualquer característica dos elementos de uma população ou amostra que
-  possa assumir <strong>diferentes valores</strong>. É aquilo que se observa, mede ou classifica em cada unidade estudada
-  e que pode variar de um indivíduo para outro. Exemplos incluem qualidades (como estado civil ou meio de transporte)
-  e quantidades (como idade, renda ou tempo de viagem).
+    Nas subseções seguintes, cada um desses conceitos será definido com precisão 
+    e colocado em perspectiva quanto ao seu papel no raciocínio estatístico.
+</p>
+
+<h3>2.1 Unidade de Observação e Variável</h3>
+
+<p>
+  Em estatística, a <strong>unidade de observação</strong> é o elemento sobre o qual as informações são coletadas — 
+  como indivíduos, objetos, instituições ou eventos. A <strong>variável</strong>, por sua vez, é a característica 
+  que pode apresentar <strong>diferentes valores</strong> entre as unidades observadas.
+  Em uma tabela de dados, a <strong>coluna inicial</strong> geralmente tem a função de identificar as unidades de 
+  observação. As <strong>demais colunas</strong> indicam as <strong>características</strong> — isto é, as variáveis — 
+  cujos valores são registrados para cada unidade. Assim, cada <strong>linha</strong> reúne os valores das variáveis 
+  correspondentes a uma mesma unidade de observação.
+</p>
+
+
+
+<figure>
+  <img src="../../imagens/tabela-variaveis.svg" alt="Tabela Variáveis">
+</figure>
+
+<p>
+  As variáveis podem assumir valores de naturezas distintas. Em alguns casos, esses valores correspondem a 
+  <em>categorias</em> que descrevem atributos das unidades observadas; em outros, são 
+  <em>medidas numéricas</em> que expressam a intensidade ou quantidade de uma característica. 
+  Essa diferença na natureza dos valores motiva a classificação das variáveis em 
+  <strong>qualitativas</strong> e <strong>quantitativas</strong>.
+</p>
+
+
+<figure>
+  <img src="../../imagens/tipos-variaveis.svg" alt="Tipos de Variáveis">
+</figure>
+
+<p>
+  As <strong>variáveis qualitativas</strong> representam atributos, estados ou classificações, cujos valores funcionam como
+  <em>categorias</em> ou <em>rótulos</em>. Exemplos incluem sexo, cor dos olhos, estado civil e profissão. Nesse tipo de variável,
+  as categorias distinguem unidades observadas sem expressar quantidade.
 </p>
 
 <p>
-  As variáveis podem ser classificadas de acordo com a natureza dos valores que assumem. O diagrama a seguir mostra a divisão
-  fundamental entre os dois grandes tipos de variáveis: <strong>qualitativas</strong> e <strong>quantitativas</strong>.
+  As <strong>variáveis quantitativas</strong> representam grandezas mensuráveis expressas numericamente. Elas indicam
+  <em>quanto</em> de uma característica está presente em cada unidade e permitem operações aritméticas com significado.
+  Exemplos incluem idade, renda, peso, altura e tempo.
+</p>
+
+<h3>2.2 Dados</h3>
+
+<p>
+  Enquanto a <strong>variável</strong> representa a <strong>característica</strong> capaz de assumir diferentes valores,
+  o <strong>dado</strong> é o <strong>valor concreto</strong> que essa característica assume em uma unidade de observação.
+  Cada dado corresponde ao valor efetivamente observado e registrado de uma característica. Em uma tabela, cada <strong>célula</strong> 
+  contém um dado relativo à <strong>variável</strong> indicada pela coluna e à <strong>unidade de observação</strong> 
+  representada pela linha. Assim, cada <strong>linha</strong> reúne o conjunto de dados registrados para uma mesma unidade.
 </p>
 
 <figure>
-  <img src="../../imagens/tipos-variaveis.svg" alt="Tipos de tipos-variaveis: qualitativas e quantitativas">
+  <img src="../../imagens/tabela-dados.svg" alt="Exemplo de dados observados ao longo do tempo">
 </figure>
 
 <p>
-  As <strong>variáveis qualitativas</strong> expressam atributos ou categorias que não envolvem medições numéricas.
-  Elas descrevem características, estados ou classificações, como sexo, cor dos olhos, profissão ou meio de transporte.
-  Seus valores são, portanto, <em>nomes</em> ou <em>categorias</em>.
+  Os dados podem ser obtidos por diferentes procedimentos: <strong>medições</strong> (como altura, temperatura ou tempo),
+  <strong>contagens</strong> (número de atendimentos por hora), <strong>classificações</strong> (estado civil, tipo sanguíneo)
+  ou <strong>respostas</strong> de pesquisa (opiniões, preferências, avaliações). Independentemente do método utilizado,
+  cada valor registrado constitui uma observação do fenômeno investigado.
 </p>
 
 <p>
-  Já as <strong>variáveis quantitativas</strong> representam grandezas mensuráveis, expressas em números,
-  permitindo realizar operações aritméticas significativas. Exemplos incluem idade, renda, peso, altura e tempo.
-  Esse tipo de variável indica <em>quanto</em> de uma determinada característica está presente em cada unidade observada.
+  Assim como as variáveis, os dados podem apresentar naturezas distintas. Quando descrevem <em>categorias</em> ou 
+  <em>atributos</em>, são chamados de <strong>dados qualitativos</strong>. Já quando expressam <em>quantidades</em> ou 
+  <em>medições numéricas</em>, são denominados <strong>dados quantitativos</strong>. De maneira geral, variáveis 
+  qualitativas são expressas por dados qualitativos e variáveis quantitativas por dados quantitativos. A distinção entre 
+  esses tipos é importante porque cada um transmite um <strong>tipo específico de informação</strong>. Essa diferença 
+  conceitual terá consequências práticas na forma de organizar e analisar os dados, como será detalhado adiante, na seção 
+  sobre <strong>classificação e níveis de mensuração</strong>.
 </p>
 
-
-<h3>2.2 Dados</h3>
 <p>
-  Do ponto de vista formal, os <strong>dados</strong> são os <strong>registros observados das variáveis</strong> em cada unidade analisada.
-  Cada dado representa o valor assumido por uma variável em um indivíduo, objeto ou caso estudado.
-  Esses valores podem resultar de <strong>contagens</strong> (número de clientes atendidos por hora),
-  <strong>medições</strong> (altura, temperatura, tempo), <strong>classificações</strong> (estado civil, tipo sanguíneo)
-  ou <strong>respostas</strong> de pesquisa (opiniões ou avaliações).
-  Em conjunto, formam o conjunto de observações que servirá de base para a análise estatística.
-</p>
-
-
-<p>
-  A tabela a seguir apresenta um exemplo simples de dados obtidos por medição: o registro da temperatura ao longo de um dia em determinada cidade.
-</p>
-
-<figure class="figure table">
-  <table>
-    <thead>
-      <tr>
-        <th>Horário (h)</th>
-        <th>Temperatura (°C)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td>7:00</td><td>18</td></tr>
-      <tr><td>9:00</td><td>20</td></tr>
-      <tr><td>12:00</td><td>25</td></tr>
-      <tr><td>15:00</td><td>27</td></tr>
-      <tr><td>18:00</td><td>22</td></tr>
-      <tr><td>21:00</td><td>19</td></tr>
-    </tbody>
-  </table>
-  <figcaption>Tabela 1. Temperaturas registradas ao longo do dia</figcaption>
-</figure>
-
-<p>
-  Cada valor na tabela é uma observação produzida pela medição de um fenômeno: a temperatura do ar em diferentes horários.
-  Conjuntos como esse representam o ponto de partida de uma análise estatística. Antes de qualquer tratamento, organização
-  ou cálculo, essas observações são simplesmente valores coletados.
-  A partir deles, a análise estatística buscará resumir informações, identificar padrões e responder perguntas de interesse,
-  como: <em>em que período do dia fez mais calor?</em> ou <em>qual foi a temperatura média desse dia?</em>
-</p>
-<p>
-  Entretanto, na maioria das situações, os dados coletados não representam todos os elementos possíveis de interesse, mas
-  apenas uma parte deles. Para compreender de onde os dados vêm e o alcance das conclusões que podemos tirar a partir deles,
-  é necessário introduzir mais dois conceitos: <strong>população</strong> e <strong>amostra</strong>.
+  Até aqui, tratamos dos dados como valores que descrevem uma característica em cada unidade observada. Contudo, em estudos 
+  estatísticos, nem sempre é possível registrar esses valores para todos os elementos de interesse. Trabalha-se, na maioria 
+  das vezes, com apenas uma parte deles. Para compreender a origem desses valores e os limites das conclusões que podem ser 
+  obtidas, é necessário introduzir dois conceitos fundamentais: <strong>população</strong> e <strong>amostra</strong>.
 </p>
 
 <h3>2.3 População e amostra</h3>
 <p>
-  Em estatística, chama-se <strong>população</strong> o conjunto completo de elementos sobre os quais se deseja obter informação.
-  A natureza dessa população depende do contexto da investigação: pode ser formada por pessoas, empresas, medições físicas,
-  resultados de testes ou qualquer outro tipo de unidade observável relevante para o estudo.
+  Em estatística, chama-se <strong>população</strong> o conjunto completo de unidades de observação sobre as quais se 
+  deseja obter informação. A definição dessa população depende diretamente do propósito do estudo: ela pode abranger 
+  todas as pessoas de uma determinada região, todas as empresas de um setor, todas as medições realizadas em um 
+  experimento ou qualquer outro grupo de elementos que constituam o universo de interesse. Assim, a população descreve 
+  o âmbito total do fenômeno que se pretende investigar, independentemente de ser ou não viável observar todos os seus 
+  elementos na prática.
 </p>
+
 <p>
-  Na prática, entretanto, raramente é possível observar toda a população. Em muitos casos, ela é demasiado extensa, dispersa ou de acesso limitado.
-  Por essa razão, trabalha-se frequentemente com uma <strong>amostra</strong>, isto é, <strong>um subconjunto da população selecionado para fins de estudo</strong>.
+  Na prática, entretanto, raramente é possível observar todas as unidades que compõem a população. Em muitos estudos,
+  a população é demasiado extensa, dispersa ou de acesso difícil, o que torna inviável registrar informações sobre cada
+  um de seus elementos. Por essa razão, trabalha-se frequentemente com uma <strong>amostra</strong>, isto é,
+  <strong>um subconjunto da população selecionado para fins de estudo</strong>. É a partir desse conjunto reduzido de
+  unidades que os dados são coletados e organizados, formando a base empírica inicial da investigação.
 </p>
+
 
 <figure>
   <img src="../../imagens/populacao-amostra.svg" alt="Representação de população e amostra">
-  <figcaption>Figura 1. A amostra como subconjunto da população</figcaption>
+  <figcaption >Figura 1. A amostra como subconjunto da população</figcaption>
 </figure>
 
 <p>
-  A distinção entre população e amostra é fundamental porque, na prática, quase sempre se trabalha com dados amostrais para tirar conclusões sobre uma população.
-  A partir de uma amostra, extraem-se medidas descritivas, que resumem os dados observados. Em seguida, com o uso de <strong>métodos estatísticos</strong>,
-  essas medidas são utilizadas para inferir características verdadeiras — ou <strong>parâmetros</strong> — da população.
+  A distinção entre população e amostra é fundamental porque, na prática, as análises estatísticas baseiam-se
+  predominantemente em dados amostrais para se obter informação sobre a população. A partir da amostra,
+  calculam-se <strong>medidas descritivas</strong> que resumem os dados observados. Em seguida, com o uso de 
+  <strong>métodos estatísticos</strong>, essas medidas servem de base para inferir características verdadeiras
+  da população — os seus <strong>parâmetros</strong>.
 </p>
 
+
 <h3>2.4 Parâmetro e estatística</h3>
+
 <p>
-  Chama-se <strong>parâmetro</strong> qualquer medida numérica que descreve uma característica da população. Exemplos incluem a média populacional,
-  a proporção populacional e medidas de variabilidade. Trata-se de um valor fixo para a população, ainda que, em geral, desconhecido.
+  Chama-se <strong>parâmetro</strong> qualquer medida numérica que descreve uma característica da população. Exemplos 
+  incluem a média populacional, a proporção populacional e medidas de variabilidade. O parâmetro é um valor fixo para a 
+  população, ainda que, na prática, quase sempre seja desconhecido.
 </p>
+
 <p>
-  A Figura 2 abaixo ilustra esse conceito de forma intuitiva. Suponha que uma população seja formada por dois grupos de indivíduos:
-  aqueles com cabelo e aqueles sem cabelo. Nosso objetivo é descobrir <strong>qual é a proporção de indivíduos carecas na população</strong>.
-  Esse valor corresponde a um <strong>parâmetro populacional</strong>, pois representa uma característica verdadeira da população.
-  Entretanto, como geralmente é inviável analisar todos os indivíduos, seleciona-se uma <strong>amostra</strong> — isto é, um subconjunto da população —
-  para coletar dados a respeito da característica investigada e, com base neles, construir uma estimativa para o parâmetro de interesse.
+  A Figura 2 apresenta uma ilustração intuitiva desse conceito. Suponha que a população seja composta por indivíduos com e 
+  sem cabelo, e que o objetivo seja determinar <strong>qual é a proporção de indivíduos carecas na população</strong>. 
+  Essa proporção corresponde a um <strong>parâmetro populacional</strong>, pois descreve uma característica verdadeira da 
+  população como um todo. Como, em geral, não é viável observar todos os elementos, seleciona-se uma 
+  <strong>amostra</strong> — isto é, um subconjunto da população — para registrar os dados disponíveis e, a partir deles, 
+  construir uma estimativa desse parâmetro.
 </p>
+
 
 <figure>
   <img src="../../imagens/parametro-estatistica.svg" alt="Parâmetro e Estatística">
@@ -165,44 +206,92 @@ proximo: /capitulos/cap2-distribuicoes-de-frequencia-e-graficos/
 </figure>
 
 <p>
-  A medida calculada a partir dos <em>dados observados</em> na amostra recebe o nome de <strong>estatística</strong>.
-  Diferentemente do parâmetro, que é fixo para a população, a estatística pode <strong>variar de amostra para amostra</strong>,
-  pois depende apenas dos elementos selecionados na coleta de dados. Essa variabilidade é natural em estudos amostrais
-  e, por meio de métodos apropriados, permite <strong>estimar</strong> os parâmetros desconhecidos da população.
+  A medida numérica calculada a partir dos <em>dados observados</em> na amostra recebe o nome de 
+  <strong>estatística</strong>. Diferentemente do parâmetro — que é um valor fixo associado à população — a estatística 
+  pode <strong>variar de amostra para amostra</strong>, pois depende apenas dos elementos que compõem a amostra 
+  selecionada. Essa variabilidade é inerente aos estudos amostrais e, quando tratada com métodos apropriados, permite 
+  utilizar as estatísticas como <strong>estimativas</strong> dos parâmetros populacionais desconhecidos.
 </p>
+
 
 <hr>
 
+
 <h2>3. Classificação dos Dados </h2>
 
-<p> Antes de serem analisados, os dados precisam ser corretamente classificados. Essa classificação é necessária porque o tipo de dado determina quais representações gráficas podem ser utilizadas, quais medidas estatísticas fazem sentido (como média ou mediana) e quais métodos de análise são válidos. Em outras palavras, a forma como tratamos e interpretamos os dados depende diretamente de sua natureza. Por isso, a Estatística organiza os dados — assim como nos tipos de variáveis — em categorias, distinguindo-os quanto ao seu conteúdo (qualitativo ou quantitativo) e quanto ao nível de mensuração utilizado para registrá-los (nominal, ordinal, intervalar ou de razão). </p>
-
-
+<p>
+  Nas seções anteriores, vimos que cada variável descreve uma característica das unidades observadas e que seus valores 
+  — os dados — podem ter naturezas distintas, <strong>qualitativa</strong> ou <strong>quantitativa</strong>. Nesta seção, retomamos essa distinção, agora 
+  com foco nas consequências operacionais da análise: a forma como os dados são classificados influencia diretamente quais 
+  representações gráficas são adequadas, quais medidas podem ser calculadas e quais procedimentos estatísticos são 
+  válidos. Assim, compreender a classificação dos dados é essencial para decidir como organizá-los e interpretá-los.
+</p>
 
 <h3>3.1 Dados qualitativos e quantitativos</h3>
 
-
-
-<p> Uma das formas mais básicas de classificar dados é diferenciá-los de acordo com a natureza da informação que representam. Nesse sentido, os dados podem ser divididos em duas categorias principais: <strong>dados qualitativos</strong> e <strong>dados quantitativos</strong>. </p> 
+<p>
+  Quando passamos da definição teórica de uma variável para o conjunto de valores
+  efetivamente observados, aquilo que antes era apenas uma possibilidade — o tipo da variável —
+  transforma-se em uma característica concreta dos dados registrados. Assim, dizemos que um conjunto de
+  dados é <strong>qualitativo</strong> quando seus valores representam categorias, e é
+  <strong>quantitativo</strong> quando consistem em números que expressam quantidades ou medidas.
+  Essa distinção, retomada aqui sob a perspectiva operacional, orienta a maneira como os dados podem ser
+  organizados e analisados.
+</p>
 
 <figure>
   <img src="../../imagens/tipos-dados.svg" alt="Tipos de dados: qualitativas e quantitativas">
 </figure>
 
-<div class="box-definicao"> <strong>Definição</strong> <ul> <li><strong>Dados qualitativos</strong>: descrevem características, atributos ou categorias, sem envolver contagem ou mensuração numérica. Exemplos: uso de óculos, cor dos olhos, profissão, nacionalidade.</li>
-<li><strong>Dados quantitativos</strong>: são expressos numericamente e resultam de contagem ou medição. Exemplos: idade, salário e número de filhos.</li> </ul> 
-</div> <p> Enquanto os dados qualitativos classificam ou identificam elementos sem utilizar valores numéricos, os dados quantitativos permitem a realização de operações matemáticas, como soma, média e variação. Essa distinção é essencial, pois determina não apenas como os dados serão organizados, mas também quais ferramentas estatísticas podem ser utilizadas na análise. </p>
+<p>
+  <strong>Dados qualitativos</strong> reúnem informações que classificam as unidades observadas
+  segundo atributos não numéricos — por exemplo, a cor de um carro, o tipo de moradia ou a modalidade
+  de transporte utilizada. Embora possamos atribuir códigos numéricos a essas categorias, tais números
+  não representam quantidades, e qualquer operação aritmética direta (como médias ou diferenças)
+  perderia o sentido. Por isso, os dados qualitativos são tradicionalmente organizados em
+  <em>tabelas de frequências</em> e representados por <strong>gráficos de barras</strong> ou
+  <strong>gráficos de setores</strong>.
+</p>
 
+<p>
+  Já os <strong>dados quantitativos</strong> representam grandezas mensuráveis — idade, temperatura,
+  renda, tempo de percurso, entre outras. Por carregarem significado numérico pleno, admitem operações
+  aritméticas e análises mais detalhadas, como medidas de posição (médias, medianas), de dispersão
+  (variância, amplitude) e representações gráficas que exploram a escala numérica, como
+  <strong>histogramas</strong>, <strong>polígonos de frequência</strong> e <strong>gráficos de linhas</strong>.
+  Além disso, a natureza quantitativa permite organizar os valores em classes, o que é fundamental quando
+  os dados são numerosos ou apresentam grande variabilidade.
+</p>
+
+<p>
+  Portanto, embora a distinção entre qualitativo e quantitativo já tenha sido introduzida anteriormente ao
+  definirmos o conceito de variável, sua reaplicação aqui — agora centrada nos <em>dados observados</em> —
+  é indispensável para entender as etapas subsequentes da análise estatística. A classificação inicial dos
+  dados determina tanto a modalidade de tabela a ser construída quanto o tipo de gráfico que melhor descreve
+  o padrão observado. Na próxima seção, aprofundaremos essa classificação examinando os
+  <strong>níveis de mensuração</strong>, que refinam ainda mais a forma apropriada de organizar e interpretar
+  cada tipo de dado.
+</p>
 
 
 <h3>3.2 Níveis de mensuração</h3>
 
 <p>
-Além de identificar se os dados são <strong>qualitativos</strong> ou <strong>quantitativos</strong>, é necessário compreender o <strong>nível de mensuração</strong> em que foram registrados. O nível de mensuração indica <em>como</em> uma variável foi medida ou classificada e determina o <strong>tipo de informação que os dados oferecem</strong>, bem como <strong>quais operações matemáticas ou estatísticas</strong> podem ser aplicadas de forma válida.
+  Identificar se os dados são <strong>qualitativos</strong> ou <strong>quantitativos</strong> é apenas o primeiro passo.
+  Para analisar um conjunto de dados de forma adequada, é necessário compreender o <strong>nível de mensuração</strong>
+  em que os valores foram registrados. O nível de mensuração descreve o <em>tipo de informação embutida nos dados</em> — 
+  isto é, o que faz sentido comparar, ordenar ou calcular a partir deles. Essa noção é crucial porque determina 
+  <strong>quais operações matemáticas</strong> são válidas e quais <strong>representações estatísticas</strong> 
+  preservam o significado original dos valores.
 </p>
 
 <p>
-A classificação mais conhecida foi proposta por <strong>S. S. Stevens (1946)</strong> e distingue quatro níveis principais: <em>nominal</em>, <em>ordinal</em>, <em>intervalar</em> e <em>de razão</em>. Eles se diferenciam quanto à natureza da informação fornecida e à possibilidade de ordenar valores, calcular diferenças ou estabelecer proporções. Embora essa tipologia seja amplamente utilizada, <strong>não existe um padrão universal e rígido</strong> — sua aplicação depende do contexto e da forma como os dados foram coletados ou codificados.
+  A classificação contemporânea mais influente foi apresentada por <strong>S. S. Stevens, em 1946</strong>, no contexto
+  da psicometria e da construção de escalas. Stevens argumentou que diferentes formas de registrar informações — seja
+  por categorias, por ordenações ou por medidas contínuas — carregam quantidades distintas de estrutura matemática.
+  A partir dessa ideia, propôs quatro níveis: <em>nominal</em>, <em>ordinal</em>, <em>intervalar</em> e 
+  <em>de razão</em>. Cada nível adiciona novas possibilidades de comparação: da simples distinção entre categorias 
+  (nominal) até a interpretação legítima de proporções (razão).
 </p>
 
 <figure>
@@ -210,30 +299,155 @@ A classificação mais conhecida foi proposta por <strong>S. S. Stevens (1946)</
 </figure>
 
 <p>
-O <strong>nível nominal</strong> é o mais simples. Nesse caso, os valores de uma variável representam apenas <strong>categorias distintas</strong>, sem qualquer relação de ordem ou hierarquia. Quando números são utilizados, funcionam apenas como rótulos identificadores, sem valor quantitativo. Exemplos típicos incluem o <em>sexo</em>, a <em>CPF</em>, a <em>nacionalidade</em> e o <em>estado civil</em>. Essas variáveis são chamadas de <strong>qualitativas nominais</strong>, pois servem exclusivamente para classificar os elementos observados.
+  Embora esses quatro níveis sejam amplamente adotados na Estatística e em áreas aplicadas, é importante lembrar que
+  a tipologia <strong>não é um sistema rígido ou universal</strong>. Em muitos contextos empíricos, a classificação
+  depende de <em>como</em> o conjunto de dados associado à variável foi coletado, codificado ou interpretado. Por exemplo, uma escala de satisfação 
+  de 1 a 5 pode ser tratada como ordinal em algumas análises e como intervalar em outras, desde que isso seja coerente
+  com os objetivos do estudo e com as propriedades do instrumento de medida.
 </p>
+
+<p>
+  Cada nível de mensuração está associado a um tipo específico de informação que os dados são capazes de fornecer. 
+  Por isso, nem todo nível é aplicável a qualquer tipo de dado. Em termos gerais, os <strong>dados qualitativos</strong>
+  admitem apenas os níveis <strong>nominal</strong> e <strong>ordinal</strong>, pois descrevem categorias — com ou sem 
+  ordem — e não quantidades mensuráveis. Já os <strong>dados quantitativos</strong> podem assumir os níveis 
+  <strong>intervalar</strong> ou <strong>de razão</strong>, nos quais a interpretação numérica das diferenças e, em 
+  alguns casos, das proporções é significativa. Reconhecer essa correspondência é essencial para evitar análises 
+  inadequadas, como calcular médias de códigos nominais ou interpretar razões quando não existe zero absoluto.
+</p>
+
+<h4>3.2.1 Nível nominal</h4>
+
+<p>
+  O nível <strong>nominal</strong> é o mais simples entre os níveis de mensuração propostos
+  por Stevens. Ele descreve dados registrados apenas como <strong>categorias distintas</strong>,
+  sem qualquer relação de ordem ou magnitude entre elas. Seu propósito é
+  <strong>classificar</strong> as unidades observadas segundo atributos qualitativos que
+  diferenciam grupos, mas não permitem comparações numéricas legítimas. Dessa forma, o nível de mensuração nominal está associado diretamente à <strong>dados qualitativos</strong>.
+</p>
+
+<p>
+  Exemplos característicos de variáveis nominais incluem informações como <em>sexo</em>,
+  <em>nacionalidade</em>, <em>estado civil</em> ou <em>documentos de identificação</em>, tais como
+  o <em>CPF</em>. Em todos esses casos, as categorias servem apenas para distinguir grupos de
+  indivíduos, sem estabelecer qualquer ordem entre eles. “Brasileiro” não é maior nem menor que
+  “estrangeiro”, assim como “solteiro” não vem antes ou depois de “casado” em um sentido numérico.
+  O objetivo é simplesmente classificar as unidades observadas, permitindo contar a frequência de
+  cada categoria, mas não realizar operações aritméticas sobre elas.
+</p>
+
 <figure>
   <img src="../../imagens/nominal.svg" alt="Nível Nominal">
 </figure>
+
 <p>
-O <strong>nível ordinal</strong> acrescenta uma <strong>ordem entre as categorias</strong>, embora as diferenças entre elas não possam ser mensuradas. É possível afirmar que uma categoria é “maior” ou “menor” que outra, mas não determinar <em>quanto</em> difere. Exemplos incluem o <em>grau de instrução</em> (fundamental, médio, superior), a <em>classe social</em> (baixa, média, alta), o <em>grau de satisfação</em> (insatisfeito, neutro, satisfeito) e o <em>grau de dificuldade</em> (fácil, médio, difícil) . Essas variáveis são geralmente <strong>qualitativas ordinais</strong>, pois expressam atributos não numéricos que podem ser hierarquizados.
-</p>
-<figure>
-  <img src="../../imagens/quali-ordinal.svg" alt="Qualitativo Ordinal">
-</figure>
-<p>
-  Uma variável originalmente quantitativa também pode ser tratada em <strong>nível ordinal</strong>, quando seus valores são <strong>agrupados em faixas ordenadas</strong>, preservando apenas a sequência lógica entre os grupos. Assim, variáveis como <strong>anos de escolaridade</strong> ou <strong>tempo de prática esportiva</strong> podem ser reorganizadas em categorias como “até 1 ano”, “de 2 a 5 anos” e “mais de 5 anos”. Nesses casos, as classes mantêm uma <strong>ordem crescente</strong>, mas <strong>perdem a precisão numérica</strong> e a <strong>igualdade dos intervalos</strong>. O que define o <strong>nível ordinal</strong> não é o tipo de dado, e sim a <strong>estrutura ordenada</strong> criada pelo modo de mensuração.
+  No nível nominal, as operações válidas são essencialmente <strong>comparações de igualdade</strong>:
+  podemos determinar se duas unidades pertencem à mesma categoria ou a categorias distintas,
+  mas não podemos ordená-las ou interpretar relações de distância. Por essa razão, os dados
+  nominais são analisados por meio de <strong>tabelas de frequências</strong> e são
+  representados graficamente por <strong>gráficos de barras</strong> ou
+  <strong>gráficos de setores</strong>, que evidenciam a distribuição das categorias sem
+  sugerir qualquer hierarquia entre elas.
 </p>
 
 <p>
-O <strong>nível intervalar</strong> caracteriza-se pelo fato de que os valores podem ser ordenados e as diferenças entre eles possuem significado numérico real. Nesse nível, é possível calcular médias e intervalos, pois a distância entre dois valores consecutivos é constante. Entretanto, o <strong>zero é arbitrário</strong>, funcionando apenas como referência, sem representar ausência da característica medida. Por essa razão, operações de multiplicação ou divisão não são interpretáveis. Um exemplo clássico é a <em>temperatura em graus Celsius</em>: a diferença entre 20 °C e 30 °C é igual à diferença entre 10 °C e 20 °C, mas 0 °C não indica ausência de calor, apenas o ponto de congelamento da água definido por convenção.
+  É importante notar que, apesar de sua simplicidade, o nível nominal é fundamental em diversas
+  áreas da Estatística aplicada. Ele aparece sempre que o objetivo é identificar, agrupar ou
+  comparar populações segundo características qualitativas. Além disso, muitos testes estatísticos —
+  como o <em>qui-quadrado de independência</em> — são especialmente projetados para lidar com esse tipo de dado.
 </p>
+
+<h4>3.2.2 Nível ordinal</h4>
+
+<p>
+  O nível <strong>ordinal</strong> acrescenta um elemento que não está presente no nível nominal:
+  a possibilidade de <strong>ordenar</strong> as categorias. Nesse tipo de dado, cada valor
+  representa uma posição relativa dentro de uma sequência — menor, igual ou maior — mas sem que
+  possamos interpretar <em>o quanto</em> uma categoria está acima ou abaixo da outra. A informação
+  essencial é a <strong>hierarquia</strong>, e não a magnitude das diferenças. Dessa forma, o nível de mensuração ordinal também está associado diretamente à <strong>dados qualitativos</strong>.
+</p>
+
+<p>
+  Exemplos frequentes de variáveis ordinais incluem classificações que organizam indivíduos em
+  níveis progressivos, como o <em>grau de instrução</em> (fundamental, médio, superior), a
+  <em>classe social</em> em estratos hierarquizados, o <em>grau de satisfação</em> em pesquisas
+  de opinião e o <em>grau de dificuldade</em> de uma tarefa. Em todos esses casos, as categorias
+  possuem uma <strong>ordem reconhecida</strong>, permitindo identificar posições relativas —
+  maior, menor ou intermediária — mas sem que as diferenças entre os níveis possam ser tratadas
+  como quantidades equivalentes. Sabemos, por exemplo, que “superior” vem depois de “médio”, mas
+  não podemos afirmar que essa diferença é do mesmo tamanho que a que separa “médio” de
+  “fundamental”, nem que o salto entre “fácil” e “médio” seja igual ao entre “médio” e
+  “difícil”.
+</p>
+
+<figure>
+ <img src="../../imagens/quali-ordinal.svg" alt="Qualitativo Ordinal">
+</figure>
+<p>
+  Por essa razão, apenas algumas operações são válidas nesse nível. Podemos <strong>comparar
+  posições</strong> e <strong>estabelecer rankings</strong>, mas não calcular médias ou interpretar
+  diferenças numéricas de forma literal, mesmo quando os valores vêm codificados por números
+  (por exemplo, atribuir 1 para “baixo”, 2 para “médio” e 3 para “alto”). Esses números
+  funcionam apenas como <em>marcadores de ordem</em>, não como quantidades. Consequentemente,
+  os dados ordinais são geralmente apresentados em <strong>tabelas de frequência</strong> e
+  visualizados por <strong>gráficos de barras</strong> ou por gráficos que preservam a
+  ordenação das categorias.
+</p>
+
+<p>
+  O nível ordinal desempenha um papel importante em pesquisas, avaliações e estudos sociais,
+  nos quais muitas variáveis expressam julgamentos, preferências ou estágios de formação. Ele
+  serve como ponte conceitual entre a simples classificação nominal e os níveis mais
+  estruturados — <strong>intervalar</strong> e <strong>razão</strong> — que adicionam noções de
+  distância e proporção às comparações.
+</p>
+
+
+<h4>3.2.3 Nível intervalar</h4>
+
+<p>
+  O nível <strong>intervalar</strong> introduz um elemento ausente nos níveis nominal e ordinal:
+  a possibilidade de interpretar <strong>diferenças numéricas</strong> entre os valores de maneira
+  significativa. Em variáveis intervalares, a distância entre duas medidas é informativa — podemos
+  afirmar, por exemplo, que a diferença entre 20 °C e 25 °C é a mesma que entre 30 °C e 35 °C.
+  Contudo, apesar dessa estrutura adicional, não existe um <strong>zero absoluto</strong> que represente
+  ausência da quantidade medida. O zero funciona apenas como um ponto arbitrário na escala. Dessa forma, o nível de mensuração interalar está associado diretamente à <strong>dados quantitativos</strong>.
+</p>
+<p>
+  Exemplos recorrentes de variáveis intervalares incluem a <em>temperatura</em> em escalas como
+  Celsius ou Fahrenheit, em que o zero é apenas um ponto de referência e não indica ausência de
+  calor; o <em>ano calendário</em>, cuja contagem estabelece diferenças temporais consistentes,
+  mas cujo marco zero é convencional; e certas <em>escalas padronizadas</em>, como o <em>QI</em>
+  ou <em>pontuações de testes</em>, nas quais diferenças entre valores têm significado
+  interpretável, embora o zero não represente ausência da habilidade medida. Em todos esses casos,
+  as <strong>diferenças</strong> entre valores são informativas e podem ser comparadas, mas
+  <strong>proporções</strong> não fazem sentido: não é correto afirmar que um indivíduo com
+  pontuação 120 em QI possui “o dobro” da capacidade de outro com 60, ou que o ano 2000 é “o
+  dobro” do ano 1000.
+</p>
+
 <figure>
   <img src="../../imagens/intervalar.svg" alt="Nível Intervalar">
 </figure>
-<p>
 
-<p>O <strong>nível de razão</strong> reúne todas as propriedades do nível intervalar e distingue-se pela existência de um <strong>zero absoluto</strong>, ponto que indica a ausência completa da característica observada. Essa propriedade permite estabelecer <strong>relações de proporção</strong> entre valores — por exemplo, afirmar que um valor é o dobro ou a metade de outro. Nesse nível, todas as operações aritméticas são significativas: soma, subtração, multiplicação e divisão.</p>
+<p>
+  Essa característica determina as operações estatísticas adequadas. Em dados intervalares, podemos
+  calcular <strong>médias</strong>, <strong>desvios</strong> e <strong>diferenças</strong> entre valores,
+  mas não faz sentido calcular razões ou interpretar multiplicações como expressões de magnitude real.
+  Graficamente, variáveis intervalares podem ser representadas por <strong>gráficos de linhas</strong>,
+  <strong>histogramas</strong> ou outras representações que exploram a continuidade e a estrutura de
+  diferenças da escala.
+</p>
+
+<p>
+  O nível intervalar ocupa uma posição intermediária entre o ordinal e o nível <strong>de razão</strong>,
+  que adiciona — além das diferenças — a interpretação legítima de proporções. Essa distinção é crucial
+  para evitar inferências equivocadas e para selecionar métodos estatísticos apropriados.
+</p>
+
+
+<h4>3.2.4 Nível razão</h4>
+<p>O <strong>nível de razão</strong> reúne todas as propriedades do nível intervalar e distingue-se pela existência de um <strong>zero absoluto</strong>, ponto que indica a ausência completa da característica observada. Essa propriedade permite estabelecer <strong>relações de proporção</strong> entre valores — por exemplo, afirmar que um valor é o dobro ou a metade de outro. Nesse nível, todas as operações aritméticas são significativas: soma, subtração, multiplicação e divisão. Dessa forma, o nível de mensuração razão está associado diretamente à <strong>dados quantitativos</strong>.</p>
 
 <p>São exemplos típicos de variáveis em nível de razão: <strong>peso</strong>, <strong>altura</strong>, <strong>renda</strong>, <strong>idade</strong> e <strong>distância</strong> — grandezas nas quais o valor zero representa a inexistência do que se mede. Essas variáveis podem ser classificadas, quanto à forma de obtenção dos dados, em <strong>discretas</strong> ou <strong>contínuas</strong>.</p>
 

@@ -101,12 +101,12 @@
     <!-- Elipses inferiores animadas -->
     <g id="left-oval" transform="translate(212,218) scale(1)" style="--delay:.70s">
       <ellipse rx="160" ry="42" class="u-stroke a-draw" style="stroke-width:2"/>
-      <text class="a-text u-center" font-size="25" y="6">QUALITATIVOS</text>
+      <text class="a-text u-center" font-size="25" y="2">QUALITATIVOS</text>
     </g>
 
     <g id="right-oval" transform="translate(608,218) scale(1)" style="--delay:.85s">
       <ellipse rx="160" ry="42" class="u-stroke a-draw" style="stroke-width:2"/>
-      <text class="a-text u-center" font-size="25" y="6">QUANTITATIVOS</text>
+      <text class="a-text u-center" font-size="25" y="2">QUANTITATIVOS</text>
     </g>
   </g>
 </svg>

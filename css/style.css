@@ -77,6 +77,15 @@ body.textbook h2 {
 body.textbook h3 {
   font-size:1.4rem; font-weight:700; line-height:1.35; margin:2.3rem 0 1rem 1rem;
 }
+
+/* NOVO: h4 — coerente com a hierarquia */
+body.textbook h4 {
+  font-size:1.4rem;
+  font-weight:600;
+  line-height:1.35;
+  margin:2.3rem 0 1rem 2rem;   
+}
+
 body.textbook .subtitle {
   font-size:1rem; font-weight:700; color:#555;
   margin:1rem 0 0; letter-spacing:.04em; text-transform:uppercase;
@@ -99,23 +108,21 @@ body.textbook .newthought {
   font-variant:small-caps; font-size:1.28rem; letter-spacing:.03em;
 }
 
-/* 3.3 Figuras e SVGs (não-KG) */
-figure.figure,
-.figure {
+/* 3.3 Figuras e SVGs (não-KG) — versão simplificada e corrigida */
+figure {
   display:block;
-  margin:1.2rem 0 0 1.2rem;
+  margin:1.6rem auto 1rem;
   text-align:center;
   max-width:var(--content-width);
+  line-height:0; /* remove baseline que cria espaço extra abaixo da imagem */
 }
 
-figure.figure > img,
-figure.figure > svg,
-.figure > img,
-.figure > svg {
+figure > img,
+figure > svg {
   display:block;
   margin:0 auto;
-  width:50%;
-  max-width:700px;
+  width:100%;
+  max-width:750px;
   height:auto;
 
   image-rendering:-webkit-optimize-contrast;
@@ -126,11 +133,11 @@ figure.figure > svg,
   backface-visibility:hidden;
 }
 
-figure.figure > figcaption,
-.figure > figcaption {
+figure > figcaption {
+  line-height:1.25;
+  margin:0.4rem 0 1.6rem;
   font-style:italic;
-  font-size:1.3rem;
-  margin-top:.1rem;
+  font-size:1rem;
   color:#444;
 }
 
@@ -150,7 +157,6 @@ figure.figure.table table {
   max-width:100%;
   font-size:1.05rem;
   margin:1.5rem auto;
-  word-wrap:break-word;
 }
 
 figure.figure.table th,
@@ -289,6 +295,8 @@ body.textbook .katex-display { font-size:1.2em; margin:0 0; }
   body.textbook h1 { font-size:1.8rem; line-height:1.22; margin:0 0 .7rem; }
   body.textbook h2 { font-size:1.6rem; line-height:1.24; margin:1.1rem 0 .5rem; }
   body.textbook h3 { font-size:1rem; margin:2.5rem .5rem 1rem; }
+  body.textbook h4 { font-size:1rem; margin:2.5rem 1rem 1rem; }
+
 
   body.textbook p,
   body.textbook ul { font-size:.9rem; margin-bottom:.75rem; }
@@ -303,6 +311,18 @@ body.textbook .katex-display { font-size:1.2em; margin:0 0; }
     position:relative;
     left:50%;
     transform:translateX(-50%);
+  }
+
+  /* 4.3.1 Figcaption — versão mobile */
+  figure > figcaption {
+    font-size:0.85rem;
+    line-height:1.2;
+    margin:0.45rem auto 1.2rem;
+    max-width:90vw;
+    padding:0 4px;
+    text-align:center;
+    font-style:italic;
+    color:#555;
   }
 
   /* 4.4 Tabelas */

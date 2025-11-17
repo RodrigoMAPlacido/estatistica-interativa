@@ -1,7 +1,7 @@
 <!-- ===========================================
    AMOSTRA ⟵ POPULAÇÃO — padrão unificado (u-*/a-*)
    =========================================== -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 360" width="820" height="360" role="img" aria-labelledby="title desc" style="background:#ffffff">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 260" width="820" height="260" role="img" aria-labelledby="title desc" style="background:#ffffff">
   <title id="title">Amostra como subconjunto da população — traçado cíclico sem sobreposição</title>
   <desc id="desc">População fixa em cinza. Caixa “Amostra” com traçado padrão a-draw (sem fade), texto com stroke+fill (a-text) e pontos que entram depois (a-dot), tudo no mesmo ciclo e com as mesmas variáveis globais.</desc>
 
@@ -100,7 +100,7 @@
   <rect x="0" y="0" width="100%" height="100%" fill="#ffffff"/>
 
   <!-- painel/população -->
-  <g id="panel">
+  <g id="panel" transform="translate(0,-50)">
     <rect x="40" y="60" width="740" height="240" rx="22"
           fill="var(--pop-bg)" stroke="var(--pop-stroke)" stroke-width="2" class="u-ns"/>
     <text x="60" y="92" font-size="24" class="u-bold" fill="#334155">População</text>

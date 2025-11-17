@@ -1,0 +1,203 @@
+<!-- =========================================================
+   TABELA — DADOS (linhas como observações)
+   Versão com IDENTIFICAÇÃO + ELEMENTOS + DADOS
+   ========================================================= -->
+<svg viewBox="0 0 840 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Tabela destacando dados (linhas)</title>
+  <desc id="desc">
+    Tabela com coluna de identificação das unidades de observação e duas colunas de características. 
+    A palavra DADOS aparece na lateral direita, ligada por uma chave às linhas da tabela.
+    Um highlight percorre cada linha sucessivamente, indicando que cada linha corresponde 
+    ao conjunto de dados observados para uma unidade de observação.
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --muted:#4b5563;
+        --font:"et-book","ETBook","Georgia",serif;
+        --cycle:8s;
+        --ease:ease-in-out;
+        --dash:4000;
+        --dashText:900;
+      }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        user-select:none;
+      }
+      .u-stroke{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+      }
+      .line{
+        stroke:#555;
+        stroke-width:0.5;
+      }
+
+      .header{
+        font-size:18px;
+        font-weight:700;
+        text-anchor:middle;
+      }
+      .cell{
+        font-size:17px;
+        text-anchor:middle;
+      }
+
+      /* ===== TEXTO ANIMADO DADOS ===== */
+      @keyframes k-textStroke{
+        0%   { stroke-dashoffset:var(--dashText); opacity:0; }
+        10%  { opacity:1; }
+        45%  { stroke-dashoffset:0; opacity:1; }
+        55%  { stroke-dashoffset:0; opacity:1; }
+        90%  { stroke-dashoffset:var(--dashText); opacity:1; }
+        100% { stroke-dashoffset:var(--dashText); opacity:0; }
+      }
+      @keyframes k-textFill{
+        0%,13%   { fill:transparent; }
+        36%,64%  { fill:var(--ink); }
+        80%,100% { fill:transparent; }
+      }
+      .a-text{
+        stroke:var(--ink);
+        stroke-width:1;
+        fill:transparent;
+        stroke-dasharray:var(--dashText);
+        stroke-dashoffset:var(--dashText);
+        animation:
+          k-textStroke var(--cycle) var(--ease) infinite both,
+          k-textFill   var(--cycle) var(--ease) infinite both;
+      }
+
+      /* ===== CHAVE ===== */
+      @keyframes k-drawLine{
+        0%   { stroke-dashoffset:var(--dash); opacity:0; }
+        10%  { opacity:1; }
+        45%  { stroke-dashoffset:0; opacity:1; }
+        55%  { stroke-dashoffset:0; opacity:1; }
+        90%  { stroke-dashoffset:var(--dash); opacity:1; }
+        100% { stroke-dashoffset:var(--dash); opacity:0; }
+      }
+      .a-draw{
+        stroke-dasharray:var(--dash);
+        stroke-dashoffset:var(--dash);
+        animation:k-drawLine var(--cycle) var(--ease) infinite both;
+      }
+
+      /* ===== HIGHLIGHT ===== */
+      @keyframes k-rowHi{
+        0%,12%   { opacity:0; }
+        18%,30%  { opacity:.56; }
+        36%,100% { opacity:0; }
+      }
+      .row-hi{
+        fill:#e5e7eb;
+        opacity:0;
+      }
+      .r1{ animation:k-rowHi var(--cycle) var(--ease) infinite 0s; }
+      .r2{ animation:k-rowHi var(--cycle) var(--ease) infinite 1s; }
+      .r3{ animation:k-rowHi var(--cycle) var(--ease) infinite 2s; }
+      .r4{ animation:k-rowHi var(--cycle) var(--ease) infinite 3s; }
+      .r5{ animation:k-rowHi var(--cycle) var(--ease) infinite 4s; }
+      .r6{ animation:k-rowHi var(--cycle) var(--ease) infinite 5s; }
+
+      @media (prefers-reduced-motion:reduce){
+        .a-text,.a-draw,.row-hi{
+          animation:none;
+          stroke-dashoffset:0;
+          opacity:1;
+        }
+        .row-hi{ opacity:.10; }
+        .a-text{ fill:var(--ink); }
+      }
+    </style>
+  </defs>
+
+  <!-- ========================================================= -->
+  <g id="scene" transform="translate(-70,0)">
+
+    <!-- HIGHLIGHTS -->
+    <rect x="350" y="83"  width="470" height="40" class="row-hi r1"/>
+    <rect x="350" y="128" width="470" height="40" class="row-hi r2"/>
+    <rect x="350" y="173" width="470" height="40" class="row-hi r3"/>
+    <rect x="350" y="218" width="470" height="40" class="row-hi r4"/>
+    <rect x="350" y="263" width="470" height="40" class="row-hi r5"/>
+    <rect x="350" y="308" width="470" height="40" class="row-hi r6"/>
+
+    <!-- Linhas da tabela -->
+    <g class="u-stroke line" transform="translate(0,0)">
+      <line x1="20" y1="80"  x2="820" y2="80"  stroke-width="1.8"/>
+      <line x1="20" y1="125" x2="820" y2="125"/>
+      <line x1="20" y1="170" x2="820" y2="170"/>
+      <line x1="20" y1="215" x2="820" y2="215"/>
+      <line x1="20" y1="260" x2="820" y2="260"/>
+      <line x1="20" y1="305" x2="820" y2="305"/>
+      <line x1="20" y1="350" x2="820" y2="350"/>
+    </g>
+
+    <!-- Cabeçalhos -->
+    <g class="header" transform="translate(70,0)">
+      <text x="160" y="65" font-size="17" font-weight="600">IDENTIFICAÇÃO</text>
+      <text x="400" y="65" font-size="17" font-weight="600">CARACTERÍSTICA</text>
+      <text x="640" y="65" font-size="17" font-weight="600">CARACTERÍSTICA</text>
+    </g>
+
+    <!-- Células -->
+    <g class="cell" transform="translate(70,0)">
+      <text x="160" y="107">Elemento 1</text>
+      <text x="400" y="107">valor observado</text>
+      <text x="640" y="107">valor observado</text>
+
+      <text x="160" y="152">Elemento 2</text>
+      <text x="400" y="152">valor observado</text>
+      <text x="640" y="152">valor observado</text>
+
+      <text x="160" y="197">Elemento 3</text>
+      <text x="400" y="197">valor observado</text>
+      <text x="640" y="197">valor observado</text>
+
+      <text x="160" y="242">Elemento 4</text>
+      <text x="400" y="242">valor observado</text>
+      <text x="640" y="242">valor observado</text>
+
+      <text x="160" y="287">Elemento 5</text>
+      <text x="400" y="287">valor observado</text>
+      <text x="640" y="287">valor observado</text>
+
+      <text x="160" y="332">Elemento 6</text>
+      <text x="400" y="332">valor observado</text>
+      <text x="640" y="332">valor observado</text>
+    </g>
+
+    <!-- TEXTO “DADOS” -->
+    <text x="915" y="270"
+          font-size="27"
+          font-weight="500"
+          text-anchor="middle"
+          transform="rotate(90,930,230)"
+          class="a-text">
+      DADOS
+    </text>
+
+    <!-- CHAVE LATERAL -->
+    <polyline class="u-stroke a-draw"
+              stroke-width="2.4"
+              transform="translate(-40,0)"
+              points="
+                890,80
+                905,80
+                905,95
+                910,95
+                910,335
+                905,335
+                905,350
+                890,350
+              "/>
+
+  </g>
+</svg>

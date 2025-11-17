@@ -1,7 +1,7 @@
 <!-- ===========================================
    AMOSTRA COMO SUBCONJUNTO — padrão unificado (u-*/a-*)
    =========================================== -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 360" width="820" height="360" role="img" aria-labelledby="title desc" style="background:#ffffff">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 260" width="820" height="260" role="img" aria-labelledby="title desc" style="background:#ffffff">
   <title id="title">Amostra como subconjunto da população — traçado cíclico (padrão unificado)</title>
   <desc id="desc">População fixa em cinza. Retângulo “Amostra” com traçado animado no padrão u-*/a-*; texto com stroke+fill sincronizados; ícones da amostra entram e mudam de cor no miolo do ciclo.</desc>
 
@@ -104,7 +104,7 @@
       }
     </style>
   </defs>
-
+<g transform="translate(0,-50)">
   <!-- ===== Fundo e moldura População ===== -->
   <rect x="0" y="0" width="100%" height="100%" fill="#ffffff"/>
   <rect x="40" y="60" width="740" height="240" rx="22" fill="var(--pop-bg)" stroke="var(--pop-stroke)" stroke-width="2" class="u-ns"/>
@@ -151,4 +151,5 @@
     <g transform="translate(660,220)"><g transform="scale(1.7)"><use class="a-dot" href="#busto-careca"/></g></g>
     <g transform="translate(690,210)"><g transform="scale(1.7)"><use class="a-dot" href="#busto-cabelo"/></g></g>
   </g>
+</g>  
 </svg>

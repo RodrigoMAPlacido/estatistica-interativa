@@ -1,0 +1,152 @@
+<!-- ===========================================
+   DADOS NOMINAIS — padrão unificado (u-*/a-*)
+   =========================================== -->
+<svg viewBox="0 0 1500 750" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Elementos Fundamentais da Estatística</title>
+  <desc id="desc">Título ELEMENTOS FUNDAMENTAIS; linhas surgem; depois setas; depois cartões (Variáveis, Dados, População e Amostra, Parâmetro e Estatística) com traçado e texto preenchendo. Loop.</desc>
+
+  <defs>
+    <style>
+      /* ============ Variáveis globais ============ */
+      :root{
+        --ink:#111827;
+        --font:"et-book","ETBook","Georgia",serif;
+        --cycle:8s;
+        --ease:ease-in-out;
+        --dash:4000;     /* dash grande para evitar artefatos */
+        --dashText:900;  /* comprimento virtual p/ texto */
+      }
+
+      /* ============ Base/utilitárias (u-*) ============ */
+      text{ font-family:var(--font); fill:var(--ink); user-select:none; }
+      tspan{ x:0; dy:1.25em; }
+      .u-stroke{ stroke:var(--ink); fill:none; stroke-linecap:round; stroke-linejoin:round; }
+      .u-thick{ stroke-width:3; }
+      .u-box{ stroke-width:3; rx:15; }
+      .u-center{ text-anchor:middle; }
+      .u-head{ fill:var(--ink); }
+
+      /* ============ Animações (a-*) ============ */
+      /* traçado tipo tronco/ramo */
+      @keyframes k-drawLine{
+        0%   { stroke-dashoffset:var(--dash); opacity:0; }
+        10%  { opacity:1; }
+        42%  { stroke-dashoffset:0;          opacity:1; }
+        58%  { stroke-dashoffset:0;          opacity:1; }
+        90%  { stroke-dashoffset:var(--dash); opacity:1; }
+        100% { stroke-dashoffset:var(--dash); opacity:0; }
+      }
+      .a-draw{
+        stroke-dasharray:var(--dash);
+        stroke-dashoffset:var(--dash);
+        animation:k-drawLine var(--cycle) var(--ease) infinite both;
+        animation-delay:var(--delay,0s);
+      }
+
+      /* texto com stroke + fill sincronizados */
+      @keyframes k-textStroke{
+        0%   { stroke-dashoffset:var(--dashText); opacity:0; }
+        10%  { opacity:1; }
+        45%  { stroke-dashoffset:0;   opacity:1; }
+        55%  { stroke-dashoffset:0;   opacity:1; }
+        90%  { stroke-dashoffset:var(--dashText); opacity:1; }
+        100% { stroke-dashoffset:var(--dashText); opacity:0; }
+      }
+      @keyframes k-textFill{
+        0%,13%   { fill:transparent; }
+        36%,64%  { fill:var(--ink); }
+        80%,100% { fill:transparent; }
+      }
+      .a-text{
+        stroke:var(--ink); stroke-width:.95; fill:transparent;
+        stroke-dasharray:var(--dashText); stroke-dashoffset:var(--dashText);
+        animation:
+          k-textStroke var(--cycle) var(--ease) infinite both,
+          k-textFill   var(--cycle) var(--ease) infinite both;
+        animation-delay:var(--delay,0s), var(--delay,0s);
+      }
+
+      /* fade sincronizado (pontas de seta) */
+      @keyframes k-fadeSeq{ 0%,15%{opacity:0} 35%,85%{opacity:1} 100%{opacity:0} }
+      .a-fade{ animation:k-fadeSeq var(--cycle) var(--ease) infinite both; animation-delay:var(--delay,0s); }
+
+      /* acessibilidade */
+      @media (prefers-reduced-motion:reduce){
+        .a-draw,.a-text,.a-fade{ animation:none; opacity:1; stroke-dashoffset:0; }
+        .a-text{ fill:var(--ink); }
+      }
+    </style>
+  </defs>
+
+  <!-- ========== OBJETOS ========== -->
+  <g id="scene" transform="translate(0,0) scale(1)">
+
+    <!-- Topo -->
+    <rect x="425" y="67" width="650" height="210" class="u-stroke u-box"/>
+    <g style="--delay:0s">
+      <text x="750" y="150" font-size="70" font-weight="700" class="a-text u-center">ELEMENTOS</text>
+      <text x="750" y="240" font-size="70" font-weight="700" class="a-text u-center">FUNDAMENTAIS</text>
+    </g>
+
+    <!-- Grupo animado em ondas -->
+    <g id="diagram" transform="translate(0,0) scale(1)">
+
+      <!-- Fase 1: tronco e barra -->
+      <g style="--delay:0s">
+        <line x1="750" y1="277" x2="750" y2="410" class="u-stroke u-thick a-draw"/>
+        <line x1="250" y1="410" x2="1250" y2="410" class="u-stroke u-thick a-draw"/>
+      </g>
+
+      <!-- Fase 2: ramos verticais -->
+      <g style="--delay:.18s">
+        <line x1="250"  y1="410" x2="250"  y2="520" class="u-stroke u-thick a-draw"/>
+        <line x1="580"  y1="410" x2="580"  y2="520" class="u-stroke u-thick a-draw"/>
+        <line x1="920"  y1="410" x2="920"  y2="520" class="u-stroke u-thick a-draw"/>
+        <line x1="1250" y1="410" x2="1250" y2="520" class="u-stroke u-thick a-draw"/>
+      </g>
+
+      <!-- Fase 3: setas (pontas) -->
+      <g style="--delay:.32s">
+        <g transform="translate(250,520) rotate(90)"><polygon class="u-head a-fade" points="21,0 0,-8 0,8"/></g>
+        <g transform="translate(580,520) rotate(90)"><polygon class="u-head a-fade" points="21,0 0,-8 0,8"/></g>
+        <g transform="translate(920,520) rotate(90)"><polygon class="u-head a-fade" points="21,0 0,-8 0,8"/></g>
+        <g transform="translate(1250,520) rotate(90)"><polygon class="u-head a-fade" points="21,0 0,-8 0,8"/></g>
+      </g>
+
+      <!-- Fase 4: cartões + textos -->
+      <!-- VARIÁVEIS -->
+      <g style="--delay:.48s">
+        <rect x="100" y="550" width="300" height="115" class="u-stroke u-box a-draw"/>
+        <text x="250" y="585" font-size="35" font-weight="500" class="a-text u-center">UNIDADE DE</text>
+        <text x="250" y="620" font-size="35" font-weight="500" class="a-text u-center">OBSERVAÇÃO</text>
+        <text x="250" y="655" font-size="35" font-weight="500" class="a-text u-center">E VARIÁVEL</text>
+
+      </g>
+
+      <!-- DADOS -->
+      <g style="--delay:.62s">
+        <rect x="430" y="550" width="300" height="115" class="u-stroke u-box a-draw"/>
+        <text x="580" y="620" font-size="46" font-weight="500" class="a-text u-center">DADOS</text>
+      </g>
+
+      <!-- POPULAÇÃO E AMOSTRA -->
+      <g style="--delay:.76s">
+        <rect x="770" y="550" width="300" height="115" class="u-stroke u-box a-draw"/>
+        <text x="920" y="595" font-size="40" font-weight="500" class="a-text u-center">
+          <tspan x="920" dy="0">POPULAÇÃO E</tspan>
+          <tspan x="920" dy="1.3em">AMOSTRA</tspan>
+        </text>
+      </g>
+
+      <!-- PARÂMETRO E ESTATÍSTICA -->
+      <g style="--delay:.90s">
+        <rect x="1100" y="550" width="300" height="115" class="u-stroke u-box a-draw"/>
+        <text x="1250" y="595" font-size="38" font-weight="500" class="a-text u-center">
+          <tspan x="1250" dy="0">PARÂMETRO E</tspan>
+          <tspan x="1250" dy="1.3em">ESTATÍSTICA</tspan>
+        </text>
+      </g>
+
+    </g>
+  </g>
+</svg>
