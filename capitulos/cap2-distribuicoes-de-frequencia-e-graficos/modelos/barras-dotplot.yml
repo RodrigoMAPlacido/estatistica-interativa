@@ -212,22 +212,9 @@ layout:
         min: 0
         max: 6.2
         ticks: 0
+        show: false
       objects:
 
-        # Eixo horizontal
-        - Segment:
-            a: [-0.2, 0]
-            b: [4.8, 0]
-            color: grey
-            strokeWidth: 1.5
-
-        # ----------------------------------------------------
-        # Pontos do dot plot
-        # base = y=1, passo = 1 (1,2,3,...)
-        # cada ponto só aparece se F_k >= nível
-        # ----------------------------------------------------
-
-        # 0 livros
         - Point:
             coordinates: [0.5, 1]
             r: 5
