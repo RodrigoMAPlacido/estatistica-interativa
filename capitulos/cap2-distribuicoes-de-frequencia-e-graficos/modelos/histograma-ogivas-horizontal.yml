@@ -1,0 +1,416 @@
+schema: EconSchema
+aspectRatio: 1.75
+
+params:
+  # Frequências absolutas por classe (0–1, 1–2, 2–3, 3–4, 4–5)
+  - name: F_0
+    value: 3
+    min: 0
+    max: 10
+    round: 1
+
+  - name: F_1
+    value: 6
+    min: 0
+    max: 10
+    round: 1
+
+  - name: F_2
+    value: 5
+    min: 0
+    max: 10
+    round: 1
+
+  - name: F_3
+    value: 4
+    min: 0
+    max: 10
+    round: 1
+
+  - name: F_4
+    value: 2
+    min: 0
+    max: 10
+    round: 1
+
+calcs:
+  # Total e acumuladas (para a ogiva)
+  total: "(params.F_0 + params.F_1 + params.F_2 + params.F_3 + params.F_4)"
+
+  cum_0: "params.F_0"
+  cum_1: "(params.F_0 + params.F_1)"
+  cum_2: "(params.F_0 + params.F_1 + params.F_2)"
+  cum_3: "(params.F_0 + params.F_1 + params.F_2 + params.F_3)"
+  cum_4: "(params.F_0 + params.F_1 + params.F_2 + params.F_3 + params.F_4)"
+
+layout:
+  TwoHorizontalGraphs:
+    leftGraph:
+      xAxis:
+        min: 0
+        max: 5
+        ticks: 0
+        
+      yAxis:
+        min: 0
+        max: 10.01
+      objects:
+        - Line:
+            strokeWidth: 0.5
+            point: [0,2]
+            point2: [5,2]
+            color: grey
+        - Line:
+            strokeWidth: 0.5
+            point: [0,4]
+            point2: [5,4]
+            color: grey
+        - Line:
+            strokeWidth: 0.5
+            point: [0,6]
+            point2: [5,6]
+            color: grey
+        - Line:
+            strokeWidth: 0.5
+            point: [0,8]
+            point2: [5,8]
+            color: grey
+        - Line:
+            strokeWidth: 0.5
+            point: [0,10]
+            point2: [5,10]
+            color: grey
+
+        # Histograma — barras arrastáveis (classes 0–1,1–2,2–3,3–4,4–5)
+        - Rectangle:
+            x1: 0
+            x2: 1
+            y1: 0
+            y2: params.F_0
+            fill: "'#111827'"
+            opacity: 1
+            drag:
+              - directions: y
+                param: F_0
+                expression: "(drag.y)"
+
+        - Rectangle:
+            x1: 1
+            x2: 2
+            y1: 0
+            y2: params.F_1
+            fill: "'#111827'"
+            opacity: 1
+            drag:
+              - directions: y
+                param: F_1
+                expression: "(drag.y)"
+
+        - Rectangle:
+            x1: 2
+            x2: 3
+            y1: 0
+            y2: params.F_2
+            fill: "'#111827'"
+            opacity: 1
+            drag:
+              - directions: y
+                param: F_2
+                expression: "(drag.y)"
+
+        - Rectangle:
+            x1: 3
+            x2: 4
+            y1: 0
+            y2: params.F_3
+            fill: "'#111827'"
+            opacity: 1
+            drag:
+              - directions: y
+                param: F_3
+                expression: "(drag.y)"
+
+        - Rectangle:
+            x1: 4
+            x2: 5
+            y1: 0
+            y2: params.F_4
+            fill: "'#111827'"
+            opacity: 1
+            drag:
+              - directions: y
+                param: F_4
+                expression: "(drag.y)"
+
+        # Rótulos no eixo x (limites de classe)
+        - Segment:
+            a: [0,0]
+            b: [0,0]
+            color: "'#111827'"
+            label:
+              text: "'0'"
+              position: t
+              fontSize: 7
+
+        - Segment:
+            a: [1,0]
+            b: [1,0]
+            color: "'#111827'"
+            label:
+              text: "'1'"
+              position: t
+              fontSize: 7
+
+        - Segment:
+            a: [2,0]
+            b: [2,0]
+            color: "'#111827'"
+            label:
+              text: "'2'"
+              position: t
+              fontSize: 7
+
+        - Segment:
+            a: [3,0]
+            b: [3,0]
+            color: "'#111827'"
+            label:
+              text: "'3'"
+              position: t
+              fontSize: 7
+
+        - Segment:
+            a: [4,0]
+            b: [4,0]
+            color: "'#111827'"
+            label:
+              text: "'4'"
+              position: t
+              fontSize: 7
+
+        - Segment:
+            a: [5,0]
+            b: [5,0]
+            color: "'#111827'"
+            label:
+              text: "'5'"
+              position: t
+              fontSize: 7
+
+        # Polígono de frequências — conecta os pontos médios de cada classe
+        # centros: (0.5,F_0), (1.5,F_1), ..., (4.5,F_4)
+        # mais os pontos de base (0,0) e (5,0)
+
+        # Base à esquerda
+        - Segment:
+            a: [0,0]
+            b: [0.5, params.F_0]
+            color: "'#64748b'"
+            strokeWidth: 2
+
+        # Segmentos entre pontos médios
+        - Segment:
+            a: [0.5, params.F_0]
+            b: [1.5, params.F_1]
+            color: "'#64748b'"
+            strokeWidth: 2
+
+        - Segment:
+            a: [1.5, params.F_1]
+            b: [2.5, params.F_2]
+            color: "'#64748b'"
+            strokeWidth: 2
+
+        - Segment:
+            a: [2.5, params.F_2]
+            b: [3.5, params.F_3]
+            color: "'#64748b'"
+            strokeWidth: 2
+
+        - Segment:
+            a: [3.5, params.F_3]
+            b: [4.5, params.F_4]
+            color: "'#64748b'"
+            strokeWidth: 2
+
+        # Base à direita
+        - Segment:
+            a: [4.5, params.F_4]
+            b: [5,0]
+            color: "'#64748b'"
+            strokeWidth: 2
+
+        # Pontos visíveis do polígono (pontos médios)
+        - Point:
+            coordinates: [0.5, params.F_0]
+            r: 4
+            color: "'#64748b'"
+
+        - Point:
+            coordinates: [1.5, params.F_1]
+            r: 4
+            color: "'#64748b'"
+
+        - Point:
+            coordinates: [2.5, params.F_2]
+            r: 4
+            color: "'#64748b'"
+
+        - Point:
+            coordinates: [3.5, params.F_3]
+            r: 4
+            color: "'#64748b'"
+
+        - Point:
+            coordinates: [4.5, params.F_4]
+            r: 4
+            color: "'#64748b'"
+
+    # ========================================================
+    # 2 — OGIVA (BASE)
+    # ========================================================
+    rightGraph:
+      xAxis:
+        min: 0
+        max: 5
+        ticks: 0
+      yAxis:
+        min: 0
+        max: 20.01
+        ticks: 5
+      objects:
+
+        # Grade horizontal para a frequência acumulada (0–20)
+        - Line:
+            strokeWidth: 0.5
+            point: [0,5]
+            point2: [5,5]
+            color: grey
+        - Line:
+            strokeWidth: 0.5
+            point: [0,10]
+            point2: [5,10]
+            color: grey
+        - Line:
+            strokeWidth: 0.5
+            point: [0,15]
+            point2: [5,15]
+            color: grey
+        - Line:
+            strokeWidth: 0.5
+            point: [0,20]
+            point2: [5,20]
+            color: grey
+
+
+        # Rótulos X (limites superiores)
+        - Segment:
+            a: [0,0]
+            b: [0,0]
+            color: "'#111827'"
+            label:
+              text: "'0'"
+              position: t
+              fontSize: 7
+
+        - Segment:
+            a: [1,0]
+            b: [1,0]
+            color: "'#111827'"
+            label:
+              text: "'1'"
+              position: t
+              fontSize: 7
+
+        - Segment:
+            a: [2,0]
+            b: [2,0]
+            color: "'#111827'"
+            label:
+              text: "'2'"
+              position: t
+              fontSize: 7
+
+        - Segment:
+            a: [3,0]
+            b: [3,0]
+            color: "'#111827'"
+            label:
+              text: "'3'"
+              position: t
+              fontSize: 7
+
+        - Segment:
+            a: [4,0]
+            b: [4,0]
+            color: "'#111827'"
+            label:
+              text: "'4'"
+              position: t
+              fontSize: 7
+
+        - Segment:
+            a: [5,0]
+            b: [5,0]
+            color: "'#111827'"
+            label:
+              text: "'5'"
+              position: t
+              fontSize: 7
+
+        # Ogiva: pontos (0,0), (1,cum_0), (2,cum_1), ..., (5,cum_4)
+        - Segment:
+            a: [0,0]
+            b: [1, calcs.cum_0]
+            color: "'#0f766e'"
+            strokeWidth: 2
+
+        - Segment:
+            a: [1, calcs.cum_0]
+            b: [2, calcs.cum_1]
+            color: "'#0f766e'"
+            strokeWidth: 2
+
+        - Segment:
+            a: [2, calcs.cum_1]
+            b: [3, calcs.cum_2]
+            color: "'#0f766e'"
+            strokeWidth: 2
+
+        - Segment:
+            a: [3, calcs.cum_2]
+            b: [4, calcs.cum_3]
+            color: "'#0f766e'"
+            strokeWidth: 2
+
+        - Segment:
+            a: [4, calcs.cum_3]
+            b: [5, calcs.cum_4]
+            color: "'#0f766e'"
+            strokeWidth: 2
+
+        # Pontos da ogiva
+        - Point:
+            coordinates: [1, calcs.cum_0]
+            r: 4
+            color: "'#0f766e'"
+
+        - Point:
+            coordinates: [2, calcs.cum_1]
+            r: 4
+            color: "'#0f766e'"
+
+        - Point:
+            coordinates: [3, calcs.cum_2]
+            r: 4
+            color: "'#0f766e'"
+
+        - Point:
+            coordinates: [4, calcs.cum_3]
+            r: 4
+            color: "'#0f766e'"
+
+        - Point:
+            coordinates: [5, calcs.cum_4]
+            r: 4
+            color: "'#0f766e'"

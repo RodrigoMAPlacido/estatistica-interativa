@@ -1,0 +1,435 @@
+schema: EconSchema
+aspectRatio: 1.75
+
+params:
+  # Frequências absolutas para número de livros lidos
+  - name: F_0
+    value: 2
+    min: 0
+    max: 6
+    round: 1
+
+  - name: F_1
+    value: 5
+    min: 0
+    max: 6
+    round: 1
+
+  - name: F_2
+    value: 4
+    min: 0
+    max: 6
+    round: 1
+
+  - name: F_3
+    value: 3
+    min: 0
+    max: 6
+    round: 1
+
+  - name: F_4
+    value: 1
+    min: 0
+    max: 6
+    round: 1
+
+calcs:
+  # Só para referência, se quiser usar depois
+  total: "(params.F_0 + params.F_1 + params.F_2 + params.F_3 + params.F_4)"
+
+layout:
+  TwoHorizontalGraphs:
+
+    # --------------------------------------------------------
+    # 1. GRÁFICO DE BARRAS (TOPO)
+    # --------------------------------------------------------
+    leftGraph:
+      xAxis:
+        min: 0
+        max: 4.8
+        ticks: 0
+        title: Quantidade de Livros Lidos
+      yAxis:
+        min: 0
+        max: 6.2
+        title: Quantidade de Pessoas que Leram
+      objects:
+
+        # Linhas de grade horizontais
+        - Line:
+            strokeWidth: 0.5
+            point: [0,1]
+            point2: [4.8,1]
+            color: grey
+        - Line:
+            strokeWidth: 0.5
+            point: [0,2]
+            point2: [4.8,2]
+            color: grey
+        - Line:
+            strokeWidth: 0.5
+            point: [0,3]
+            point2: [4.8,3]
+            color: grey
+        - Line:
+            strokeWidth: 0.5
+            point: [0,4]
+            point2: [4.8,4]
+            color: grey
+        - Line:
+            strokeWidth: 0.5
+            point: [0,5]
+            point2: [4.8,5]
+            color: grey
+        - Line:
+            strokeWidth: 0.5
+            point: [0,6]
+            point2: [4.8,6]
+            color: grey
+
+        # Barras arrastáveis: x de -0.2 a 4.8, centradas em 0.5,1.5,2.5,3.5,4.5
+
+        # 0 livros
+        - Rectangle:
+            x1: 0.1
+            x2: 0.9
+            y1: 0
+            y2: params.F_0
+            fill: "'#111827'"
+            opacity: 1
+            drag:
+              - directions: y
+                param: F_0
+                expression: "(drag.y)"
+
+        # 1 livro
+        - Rectangle:
+            x1: 1.1
+            x2: 1.9
+            y1: 0
+            y2: params.F_1
+            fill: "'#111827'"
+            opacity: 1
+            drag:
+              - directions: y
+                param: F_1
+                expression: "(drag.y)"
+
+        # 2 livros
+        - Rectangle:
+            x1: 2.1
+            x2: 2.9
+            y1: 0
+            y2: params.F_2
+            fill: "'#111827'"
+            opacity: 1
+            drag:
+              - directions: y
+                param: F_2
+                expression: "(drag.y)"
+
+        # 3 livros
+        - Rectangle:
+            x1: 3.1
+            x2: 3.9
+            y1: 0
+            y2: params.F_3
+            fill: "'#111827'"
+            opacity: 1
+            drag:
+              - directions: y
+                param: F_3
+                expression: "(drag.y)"
+
+        # 4 livros
+        - Rectangle:
+            x1: 4.1
+            x2: 4.9
+            y1: 0
+            y2: params.F_4
+            fill: "'#111827'"
+            opacity: 1
+            drag:
+              - directions: y
+                param: F_4
+                expression: "(drag.y)"
+
+        # Rótulos no eixo x
+        - Segment:
+            a: [0.5, 0]
+            b: [0.5, 0]
+            color: "'#111827'"
+            label:
+              text: "'0'"
+              position: t
+              fontSize: 10
+
+        - Segment:
+            a: [1.5, 0]
+            b: [1.5, 0]
+            color: "'#111827'"
+            label:
+              text: "'1'"
+              position: t
+              fontSize: 10
+
+        - Segment:
+            a: [2.5, 0]
+            b: [2.5, 0]
+            color: "'#111827'"
+            label:
+              text: "'2'"
+              position: t
+              fontSize: 10
+
+        - Segment:
+            a: [3.5, 0]
+            b: [3.5, 0]
+            color: "'#111827'"
+            label:
+              text: "'3'"
+              position: t
+              fontSize: 10
+
+        - Segment:
+            a: [4.5, 0]
+            b: [4.5, 0]
+            color: "'#111827'"
+            label:
+              text: "'4'"
+              position: t
+              fontSize: 10
+
+    # --------------------------------------------------------
+    # 2. DOT PLOT (BASE)
+    # --------------------------------------------------------
+    rightGraph:
+      xAxis:
+        min: 0
+        max: 4.8
+        ticks: 0
+        title: Quantidade de Livros Lidos
+      yAxis:
+        min: 0
+        max: 6.2
+        ticks: 0
+        show: false
+      objects:
+
+        # Eixo horizontal
+        - Segment:
+            a: [-0.2, 0]
+            b: [4.8, 0]
+            color: grey
+            strokeWidth: 1.5
+
+        # ----------------------------------------------------
+        # Pontos do dot plot
+        # base = y=1, passo = 1 (1,2,3,...)
+        # cada ponto só aparece se F_k >= nível
+        # ----------------------------------------------------
+
+        # 0 livros
+        - Point:
+            coordinates: [0.5, 1]
+            r: 5
+            color: "'#64748b'"
+            show: "(params.F_0 >= 1)"
+        - Point:
+            coordinates: [0.5, 2]
+            r: 5
+            color: "'#64748b'"
+            show: "(params.F_0 >= 2)"
+        - Point:
+            coordinates: [0.5, 3]
+            r: 5
+            color: "'#64748b'"
+            show: "(params.F_0 >= 3)"
+        - Point:
+            coordinates: [0.5, 4]
+            r: 5
+            color: "'#64748b'"
+            show: "(params.F_0 >= 4)"
+        - Point:
+            coordinates: [0.5, 5]
+            r: 5
+            color: "'#64748b'"
+            show: "(params.F_0 >= 5)"
+        - Point:
+            coordinates: [0.5, 6]
+            r: 5
+            color: "'#64748b'"
+            show: "(params.F_0 >= 6)"
+
+        # 1 livro
+        - Point:
+            coordinates: [1.5, 1]
+            r: 5
+            color: "'#64748b'"
+            show: "(params.F_1 >= 1)"
+        - Point:
+            coordinates: [1.5, 2]
+            r: 5
+            color: "'#64748b'"
+            show: "(params.F_1 >= 2)"
+        - Point:
+            coordinates: [1.5, 3]
+            r: 5
+            color: "'#64748b'"
+            show: "(params.F_1 >= 3)"
+        - Point:
+            coordinates: [1.5, 4]
+            r: 5
+            color: "'#64748b'"
+            show: "(params.F_1 >= 4)"
+        - Point:
+            coordinates: [1.5, 5]
+            r: 5
+            color: "'#64748b'"
+            show: "(params.F_1 >= 5)"
+        - Point:
+            coordinates: [1.5, 6]
+            r: 5
+            color: "'#64748b'"
+            show: "(params.F_1 >= 6)"
+
+        # 2 livros
+        - Point:
+            coordinates: [2.5, 1]
+            r: 5
+            color: "'#64748b'"
+            show: "(params.F_2 >= 1)"
+        - Point:
+            coordinates: [2.5, 2]
+            r: 5
+            color: "'#64748b'"
+            show: "(params.F_2 >= 2)"
+        - Point:
+            coordinates: [2.5, 3]
+            r: 5
+            color: "'#64748b'"
+            show: "(params.F_2 >= 3)"
+        - Point:
+            coordinates: [2.5, 4]
+            r: 5
+            color: "'#64748b'"
+            show: "(params.F_2 >= 4)"
+        - Point:
+            coordinates: [2.5, 5]
+            r: 5
+            color: "'#64748b'"
+            show: "(params.F_2 >= 5)"
+        - Point:
+            coordinates: [2.5, 6]
+            r: 5
+            color: "'#64748b'"
+            show: "(params.F_2 >= 6)"
+
+        # 3 livros
+        - Point:
+            coordinates: [3.5, 1]
+            r: 5
+            color: "'#64748b'"
+            show: "(params.F_3 >= 1)"
+        - Point:
+            coordinates: [3.5, 2]
+            r: 5
+            color: "'#64748b'"
+            show: "(params.F_3 >= 2)"
+        - Point:
+            coordinates: [3.5, 3]
+            r: 5
+            color: "'#64748b'"
+            show: "(params.F_3 >= 3)"
+        - Point:
+            coordinates: [3.5, 4]
+            r: 5
+            color: "'#64748b'"
+            show: "(params.F_3 >= 4)"
+        - Point:
+            coordinates: [3.5, 5]
+            r: 5
+            color: "'#64748b'"
+            show: "(params.F_3 >= 5)"
+        - Point:
+            coordinates: [3.5, 6]
+            r: 5
+            color: "'#64748b'"
+            show: "(params.F_3 >= 6)"
+
+        # 4 livros
+        - Point:
+            coordinates: [4.5, 1]
+            r: 5
+            color: "'#64748b'"
+            show: "(params.F_4 >= 1)"
+        - Point:
+            coordinates: [4.5, 2]
+            r: 5
+            color: "'#64748b'"
+            show: "(params.F_4 >= 2)"
+        - Point:
+            coordinates: [4.5, 3]
+            r: 5
+            color: "'#64748b'"
+            show: "(params.F_4 >= 3)"
+        - Point:
+            coordinates: [4.5, 4]
+            r: 5
+            color: "'#64748b'"
+            show: "(params.F_4 >= 4)"
+        - Point:
+            coordinates: [4.5, 5]
+            r: 5
+            color: "'#64748b'"
+            show: "(params.F_4 >= 5)"
+        - Point:
+            coordinates: [4.5, 6]
+            r: 5
+            color: "'#64748b'"
+            show: "(params.F_4 >= 6)"
+        # Rótulos no eixo x
+        - Segment:
+            a: [0.5, 0]
+            b: [0.5, 0]
+            color: "'#111827'"
+            label:
+              text: "'0'"
+              position: t
+              fontSize: 10
+
+        - Segment:
+            a: [1.5, 0]
+            b: [1.5, 0]
+            color: "'#111827'"
+            label:
+              text: "'1'"
+              position: t
+              fontSize: 10
+
+        - Segment:
+            a: [2.5, 0]
+            b: [2.5, 0]
+            color: "'#111827'"
+            label:
+              text: "'2'"
+              position: t
+              fontSize: 10
+
+        - Segment:
+            a: [3.5, 0]
+            b: [3.5, 0]
+            color: "'#111827'"
+            label:
+              text: "'3'"
+              position: t
+              fontSize: 10
+
+        - Segment:
+            a: [4.5, 0]
+            b: [4.5, 0]
+            color: "'#111827'"
+            label:
+              text: "'4'"
+              position: t
+              fontSize: 10

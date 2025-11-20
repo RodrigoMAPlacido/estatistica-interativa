@@ -1,62 +1,80 @@
-<svg viewBox="0 0 1000 620" xmlns="http://www.w3.org/2000/svg">
+<!-- =========================================================
+   GRÁFICOS PARA VARIÁVEIS QUANTITATIVAS CONTÍNUAS
+   Histograma + Polígono de Frequências + Ogiva
+   Tempo diário de estudo (horas) — n = 20
+   ========================================================= -->
+<svg viewBox="0 0 1500 720" xmlns="http://www.w3.org/2000/svg"
+     role="img" aria-labelledby="title desc">
+  <title id="title">Gráficos para variáveis quantitativas contínuas</title>
+  <desc id="desc">
+    Histograma, polígono de frequências e ogiva representando a distribuição do tempo diário de estudo (em horas).
+  </desc>
 
   <defs>
     <style>
       :root{
-        --ink:#0f172a;
-        --ink-soft:#1e293b;
-        --bar-fill:#111827;
-        --accent:#64748b;
+        --ink:#111827;
+        --ink-soft:#64748b;
         --grid:#e5e7eb;
+        --accent:#0f766e;
         --font:"et-book","ETBook","Georgia",serif;
-        --dash:1500;
-        --cycle:6s;
+        --cycle:7s;
         --ease:ease-in-out;
+        --dash:1500;
       }
 
       text{
         font-family:var(--font);
         fill:var(--ink);
+        user-select:none;
       }
 
-      .u-card{
-        fill:#ffffff;
+      .u-stroke{
         stroke:var(--ink);
-        stroke-width:2.2;
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+      }
+
+      .u-panel{
+        stroke-width:2;
         rx:22;
         ry:22;
       }
 
-      .u-title{
-        font-size:24px;
-        font-weight:700;
-      }
-      .u-sub{
-        font-size:17px;
-        fill:var(--ink-soft);
+      .label{
+        font-size:36px;
+        font-weight:600;
+        text-anchor:middle;
       }
 
-      .u-axis{
-        stroke:var(--ink);
-        stroke-width:2;
-        vector-effect:non-scaling-stroke;
-      }
-      .u-grid{
-        stroke:var(--grid);
-        stroke-width:1.2;
-        stroke-dasharray:6 8;
-        vector-effect:non-scaling-stroke;
+      .small{
+        font-size:22px;
+        text-anchor:middle;
       }
 
-      .u-bar{
-        fill:var(--bar-fill);
-        opacity:0.90;
+      .axis{ stroke-width:2; }
+      .grid{ stroke:var(--grid); stroke-width:1; stroke-dasharray:6 8; }
+
+      .bar{
+        fill:var(--ink);
         transform-box:fill-box;
         transform-origin:50% 100%;
-        animation:k-grow var(--cycle) var(--ease) infinite;
+        animation:growY var(--cycle) var(--ease) infinite;
       }
 
-      .u-poly{
+      .poly{
+        fill:none;
+        stroke:var(--ink-soft);
+        stroke-width:3;
+        stroke-linejoin:round;
+        stroke-linecap:round;
+        stroke-dasharray:var(--dash);
+        stroke-dashoffset:var(--dash);
+        animation:drawLine var(--cycle) var(--ease) infinite;
+      }
+
+      .ogive{
         fill:none;
         stroke:var(--accent);
         stroke-width:3;
@@ -64,121 +82,200 @@
         stroke-linecap:round;
         stroke-dasharray:var(--dash);
         stroke-dashoffset:var(--dash);
-        animation:k-draw var(--cycle) var(--ease) infinite;
+        animation:drawLine var(--cycle) var(--ease) infinite;
       }
 
-      /* Pontos: posição fixa, só animamos a opacidade */
-      .u-node{
+      .node{
+        fill:var(--ink-soft);
+        opacity:0;
+        animation:appearNode var(--cycle) var(--ease) infinite;
+      }
+
+      .node-ogive{
         fill:var(--accent);
         opacity:0;
+        animation:appearNode var(--cycle) var(--ease) infinite;
       }
 
-      .u-label{
-        font-size:15px;
-        fill:var(--ink);
+      .tick-label{
+        font-size:22px;
       }
 
-      /* Barras crescendo no início do ciclo */
-      @keyframes k-grow{
-        0%,12%   { transform:scaleY(0); }
-        30%,100% { transform:scaleY(1); }
+      /* ===== Animações ===== */
+      @keyframes growY{
+        0%{transform:scaleY(0)}
+        18%,82%{transform:scaleY(1)}
+        100%{transform:scaleY(0)}
       }
 
-      /* Linha sendo desenhada até 65% do ciclo */
-      @keyframes k-draw{
-        0%,25%   { stroke-dashoffset:var(--dash); }
-        65%,100% { stroke-dashoffset:0; }
+      @keyframes drawLine{
+        0%,25%{stroke-dashoffset:var(--dash);}
+        65%,100%{stroke-dashoffset:0;}
       }
 
-      /* Pontos aparecem quando o traço termina e ficam até o fim */
-      @keyframes k-node{
-        0%,25%   { opacity:0; }
-        30%,100% { opacity:1; }
+      @keyframes appearNode{
+        0%,30%{opacity:0;}
+        40%,100%{opacity:1;}
       }
 
+      @media (prefers-reduced-motion:reduce){
+        .bar{animation:none; transform:none;}
+        .poly,.ogive{animation:none; stroke-dashoffset:0;}
+        .node,.node-ogive{animation:none; opacity:1;}
+      }
     </style>
   </defs>
 
-  <!-- Moldura externa -->
-  <rect class="u-card" x="60" y="40" width="880" height="540"/>
+  <!-- =========================================================
+       1 — HISTOGRAMA + POLÍGONO (ESQUERDA)
+       ========================================================= -->
+  <g transform="translate(40,80)">
+    <rect x="0" y="0" width="680" height="560" class="u-panel u-stroke"/>
 
-  <!-- Grupo do gráfico (sem moldura) -->
-  <g id="histograma" transform="translate(-150,-30) scale(1.3)">
+    <text x="340" y="55" class="label">Histograma e Polígono</text>
+    <text x="340" y="90" class="small">Tempo diário de estudo (horas)</text>
 
-    <!-- Títulos -->
-    <text class="u-title" x="500" y="90" text-anchor="middle">
-      Histograma e Polígono de Frequências
-    </text>
+    <!-- Área do gráfico -->
+    <g transform="translate(100,130)">
+      <!-- Grid Y: 0–6, passo 60 (360 px de altura) -->
+      <g class="grid">
+        <line x1="0" y1="300" x2="480" y2="300"/>
+        <line x1="0" y1="240" x2="480" y2="240"/>
+        <line x1="0" y1="180" x2="480" y2="180"/>
+        <line x1="0" y1="120" x2="480" y2="120"/>
+        <line x1="0" y1="60"  x2="480" y2="60"/>
+      </g>
 
-    <text class="u-sub" x="500" y="120" text-anchor="middle">
-      Tempo diário de estudo (horas)
-    </text>
+      <!-- Eixos -->
+      <g class="u-stroke axis">
+        <line x1="0" y1="360" x2="480" y2="360"/>
+        <line x1="0" y1="360" x2="0" y2="0"/>
+      </g>
 
-    <!-- Grid horizontal -->
-    <line class="u-grid" x1="210" y1="420" x2="820" y2="420"/>
-    <line class="u-grid" x1="210" y1="350" x2="820" y2="350"/>
-    <line class="u-grid" x1="210" y1="280" x2="820" y2="280"/>
-    <line class="u-grid" x1="210" y1="210" x2="820" y2="210"/>
+      <!-- Rótulos Y (0–6) -->
+      <g class="tick-label">
+        <text x="-10" y="364" text-anchor="end">0</text>
+        <text x="-10" y="304" text-anchor="end">1</text>
+        <text x="-10" y="244" text-anchor="end">2</text>
+        <text x="-10" y="184" text-anchor="end">3</text>
+        <text x="-10" y="124" text-anchor="end">4</text>
+        <text x="-10" y="64"  text-anchor="end">5</text>
+        <text x="-10" y="4"   text-anchor="end">6</text>
+      </g>
 
-    <!-- Eixos -->
-    <line class="u-axis" x1="210" y1="420" x2="820" y2="420"/>
-    <line class="u-axis" x1="210" y1="190" x2="210" y2="420"/>
+      <!-- Rótulos X (limites de classe 0–5) -->
+      <g class="tick-label">
+        <text x="0"   y="395" text-anchor="middle">0</text>
+        <text x="96"  y="395" text-anchor="middle">1</text>
+        <text x="192" y="395" text-anchor="middle">2</text>
+        <text x="288" y="395" text-anchor="middle">3</text>
+        <text x="384" y="395" text-anchor="middle">4</text>
+        <text x="480" y="395" text-anchor="middle">5</text>
+      </g>
 
-    <!-- Rótulos do eixo Y -->
-    <text class="u-label" x="195" y="424" text-anchor="end">0</text>
-    <text class="u-label" x="195" y="354" text-anchor="end">2</text>
-    <text class="u-label" x="195" y="284" text-anchor="end">4</text>
-    <text class="u-label" x="195" y="214" text-anchor="end">6</text>
+      <!-- Barras do histograma — classes 0–1,1–2,2–3,3–4,4–5
+           freq: 3,6,5,4,2; altura = 60 * freq -->
+      <!-- 0–1: freq 3 => h=180 -->
+      <rect x="0"   y="180" width="96" height="180" class="bar" style="animation-delay:0s"/>
+      <!-- 1–2: freq 6 => h=360 -->
+      <rect x="96"  y="0"   width="96" height="360" class="bar" style="animation-delay:.1s"/>
+      <!-- 2–3: freq 5 => h=300 -->
+      <rect x="192" y="60"  width="96" height="300" class="bar" style="animation-delay:.2s"/>
+      <!-- 3–4: freq 4 => h=240 -->
+      <rect x="288" y="120" width="96" height="240" class="bar" style="animation-delay:.3s"/>
+      <!-- 4–5: freq 2 => h=120 -->
+      <rect x="384" y="240" width="96" height="120" class="bar" style="animation-delay:.4s"/>
 
-    <!-- Marcas do eixo X -->
-    <g class="u-axis">
-      <line x1="210" y1="420" x2="210" y2="426"/>
-      <line x1="332" y1="420" x2="332" y2="426"/>
-      <line x1="454" y1="420" x2="454" y2="426"/>
-      <line x1="576" y1="420" x2="576" y2="426"/>
-      <line x1="698" y1="420" x2="698" y2="426"/>
-      <line x1="820" y1="420" x2="820" y2="426"/>
+      <!-- Polígono de frequências: pontos médios das classes -->
+      <!-- centros em x: 48,144,240,336,432 -->
+      <path class="poly"
+            d="M0 360
+               L48 180
+               L144 0
+               L240 60
+               L336 120
+               L432 240
+               L480 360" />
+
+      <!-- Nós do polígono -->
+      <circle class="node" cx="48"  cy="180" r="5"/>
+      <circle class="node" cx="144" cy="0"   r="5"/>
+      <circle class="node" cx="240" cy="60"  r="5"/>
+      <circle class="node" cx="336" cy="120" r="5"/>
+      <circle class="node" cx="432" cy="240" r="5"/>
     </g>
-
-    <!-- Rótulos do eixo X -->
-    <text class="u-label" x="210" y="455" text-anchor="middle">0</text>
-    <text class="u-label" x="332" y="455" text-anchor="middle">1</text>
-    <text class="u-label" x="454" y="455" text-anchor="middle">2</text>
-    <text class="u-label" x="576" y="455" text-anchor="middle">3</text>
-    <text class="u-label" x="698" y="455" text-anchor="middle">4</text>
-    <text class="u-label" x="820" y="455" text-anchor="middle">5</text>
-
-    <!-- Barras do histograma -->
-    <rect class="u-bar" x="210" y="315" width="122" height="105"/>
-    <rect class="u-bar" x="332" y="210" width="122" height="210"/>
-    <rect class="u-bar" x="454" y="245" width="122" height="175"/>
-    <rect class="u-bar" x="576" y="280" width="122" height="140"/>
-    <rect class="u-bar" x="698" y="350" width="122" height="70"/>
-
-    <!-- Labels das frequências -->
-    <text class="u-label" x="271" y="300" text-anchor="middle">3</text>
-    <text class="u-label" x="393" y="200" text-anchor="middle">6</text>
-    <text class="u-label" x="515" y="235" text-anchor="middle">5</text>
-    <text class="u-label" x="637" y="270" text-anchor="middle">4</text>
-    <text class="u-label" x="759" y="340" text-anchor="middle">2</text>
-
-    <!-- Polígono de frequências -->
-    <path class="u-poly"
-          d="M210 420
-             L271 315
-             L393 210
-             L515 245
-             L637 280
-             L759 350
-             L820 420" />
-
-    <!-- Nós do polígono: aparecem todos juntos quando o traço termina -->
-    <circle class="u-node" cx="271" cy="315" r="4" style="animation:k-node var(--cycle) var(--ease) infinite;"/>
-    <circle class="u-node" cx="393" cy="210" r="4" style="animation:k-node var(--cycle) var(--ease) infinite;"/>
-    <circle class="u-node" cx="515" cy="245" r="4" style="animation:k-node var(--cycle) var(--ease) infinite;"/>
-    <circle class="u-node" cx="637" cy="280" r="4" style="animation:k-node var(--cycle) var(--ease) infinite;"/>
-    <circle class="u-node" cx="759" cy="350" r="4" style="animation:k-node var(--cycle) var(--ease) infinite;"/>
-
   </g>
 
+  <!-- =========================================================
+       2 — OGIVA (DIREITA)
+       ========================================================= -->
+  <g transform="translate(780,80)">
+    <rect x="0" y="0" width="680" height="560" class="u-panel u-stroke"/>
+
+    <text x="340" y="55" class="label">Ogiva</text>
+    <text x="340" y="90" class="small">Frequência acumulada</text>
+
+    <!-- Área do gráfico -->
+    <g transform="translate(100,130)">
+      <!-- Escala: FAC 0–20 mapeado para 0–360 px -->
+      <!-- grid em 4,8,12,16,20 -->
+      <g class="grid">
+        <line x1="0" y1="288" x2="480" y2="288"/><!-- 4 -->
+        <line x1="0" y1="216" x2="480" y2="216"/><!-- 8 -->
+        <line x1="0" y1="144" x2="480" y2="144"/><!-- 12 -->
+        <line x1="0" y1="72"  x2="480" y2="72"/><!-- 16 -->
+        <line x1="0" y1="0"   x2="480" y2="0"/><!-- 20 -->
+      </g>
+
+      <!-- Eixos -->
+      <g class="u-stroke axis">
+        <line x1="0" y1="360" x2="480" y2="360"/>
+        <line x1="0" y1="360" x2="0" y2="0"/>
+      </g>
+
+      <!-- Rótulos Y (0,4,8,12,16,20) -->
+      <g class="tick-label">
+        <text x="-10" y="364" text-anchor="end">0</text>
+        <text x="-10" y="292" text-anchor="end">4</text>
+        <text x="-10" y="220" text-anchor="end">8</text>
+        <text x="-10" y="148" text-anchor="end">12</text>
+        <text x="-10" y="76"  text-anchor="end">16</text>
+        <text x="-10" y="8"   text-anchor="end">20</text>
+      </g>
+
+      <!-- Rótulos X (limites superiores 0–5) -->
+      <g class="tick-label">
+        <text x="0"   y="395" text-anchor="middle">0</text>
+        <text x="96"  y="395" text-anchor="middle">1</text>
+        <text x="192" y="395" text-anchor="middle">2</text>
+        <text x="288" y="395" text-anchor="middle">3</text>
+        <text x="384" y="395" text-anchor="middle">4</text>
+        <text x="480" y="395" text-anchor="middle">5</text>
+      </g>
+
+      <!-- Ogiva: FAC = [0,3,9,14,18,20]
+           pontos: (0,0),(1,3),(2,9),(3,14),(4,18),(5,20)
+           y = 360 - (FAC/20)*360
+           3  -> 306
+           9  -> 198
+           14 -> 108
+           18 -> 36
+           20 -> 0
+      -->
+      <path class="ogive"
+            d="M0 360
+               L96 306
+               L192 198
+               L288 108
+               L384 36
+               L480 0" />
+
+      <!-- Nós da ogiva (nos limites superiores das classes) -->
+      <circle class="node-ogive" cx="96"  cy="306" r="5"/>
+      <circle class="node-ogive" cx="192" cy="198" r="5"/>
+      <circle class="node-ogive" cx="288" cy="108" r="5"/>
+      <circle class="node-ogive" cx="384" cy="36"  r="5"/>
+      <circle class="node-ogive" cx="480" cy="0"   r="5"/>
+    </g>
+  </g>
 </svg>

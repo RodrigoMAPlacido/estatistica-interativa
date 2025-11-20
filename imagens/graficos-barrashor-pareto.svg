@@ -1,0 +1,144 @@
+<!-- =========================================================
+   REPRESENTAÇÕES GRÁFICAS — Barras Horizontal + Pareto
+   Frequências: [8, 6, 4, 2] | Total = 20
+   ========================================================= -->
+<svg viewBox="0 0 1550 780" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Distribuição de Frequências — Gráficos</title>
+  <desc id="desc">Gráfico de barras horizontal e diagrama de Pareto, animados conforme as frequências (Carro, Ônibus, Bicicleta, Metrô).</desc>
+
+  <defs>
+    <style>
+      :root {
+        --ink:#111827;
+        --font:"et-book","ETBook","Georgia",serif;
+        --cycle:7s;
+        --ease:ease-in-out;
+        --c1:#111827;
+        --c2:#374151;
+        --c3:#6b7280;
+        --c4:#9ca3af;
+      }
+
+      text { font-family:var(--font); fill:var(--ink); user-select:none; }
+      .u-stroke { stroke:var(--ink); fill:none; stroke-linecap:round; stroke-linejoin:round; }
+      .u-panel { stroke-width:2; rx:22; }
+
+      .label { font-size:34px; font-weight:600; text-anchor:middle; }
+      .small { font-size:18px; }
+      .tiny { font-size:16px; }
+
+      /* ======================= Barras horizontais ======================= */
+      @keyframes growX{
+        0%{transform:scaleX(0)}
+        18%,82%{transform:scaleX(1)}
+        100%{transform:scaleX(0)}
+      }
+      .bar{
+        transform-box:fill-box;
+        transform-origin:left center;
+        transform:scaleX(0);
+      }
+      .bh1{ fill:var(--c1); animation:growX var(--cycle) var(--ease) infinite 0s }
+      .bh2{ fill:var(--c2); animation:growX var(--cycle) var(--ease) infinite .15s }
+      .bh3{ fill:var(--c3); animation:growX var(--cycle) var(--ease) infinite .30s }
+      .bh4{ fill:var(--c4); animation:growX var(--cycle) var(--ease) infinite .45s }
+
+      /* ======================= Pareto — curva acumulada ======================= */
+      @keyframes dash{
+        0%{stroke-dasharray:0 800}
+        18%,82%{stroke-dasharray:800 800}
+        100%{stroke-dasharray:0 800}
+      }
+      .acc{
+        stroke:var(--ink);
+        stroke-width:4;
+        fill:none;
+        stroke-dasharray:0 800;
+        animation:dash var(--cycle) var(--ease) infinite .25s;
+      }
+
+      @keyframes appearDot{
+        0%,12%{opacity:0; transform:scale(.3)}
+        25%,80%{opacity:1; transform:scale(1)}
+        100%{opacity:0; transform:scale(.3)}
+      }
+      .dot{
+        fill:var(--ink);
+        opacity:0;
+      }
+      .d1{ animation:appearDot var(--cycle) var(--ease) infinite .30s }
+      .d2{ animation:appearDot var(--cycle) var(--ease) infinite .45s }
+      .d3{ animation:appearDot var(--cycle) var(--ease) infinite .60s }
+      .d4{ animation:appearDot var(--cycle) var(--ease) infinite .75s }
+
+      @media (prefers-reduced-motion:reduce){
+        .bar, .acc, .dot { animation:none; opacity:1; transform:none; }
+      }
+    </style>
+  </defs>
+
+  <!-- ======================= GRÁFICO DE BARRAS HORIZONTAL ======================= -->
+  <g transform="translate(-180,-200) scale(1.2)">
+    <rect x="160" y="230" width="600" height="510" class="u-panel u-stroke"/>
+    <text x="460" y="280" class="label">Gráfico de Barras Horizontal</text>
+    <text x="460" y="308" class="small" text-anchor="middle">Frequência Absoluta</text>
+
+    <!-- Guias -->
+    <g class="u-stroke small" opacity=".35" style="stroke-width:2">
+      <line x1="270" y1="400" x2="650" y2="400"/>
+      <line x1="270" y1="460" x2="650" y2="460"/>
+      <line x1="270" y1="520" x2="650" y2="520"/>
+      <line x1="270" y1="580" x2="650" y2="580"/>
+    </g>
+
+    <!-- Barras -->
+    <rect x="270" y="380" width="330" height="35" class="bar bh1"/>
+    <rect x="270" y="440" width="250" height="35" class="bar bh2"/>
+    <rect x="270" y="500" width="170" height="35" class="bar bh3"/>
+    <rect x="270" y="560" width="90"  height="35" class="bar bh4"/>
+
+    <!-- Rótulos -->
+    <g class="small">
+      <text x="240" y="403" text-anchor="end">Carro</text>
+      <text x="240" y="463" text-anchor="end">Ônibus</text>
+      <text x="240" y="523" text-anchor="end">Bicicleta</text>
+      <text x="240" y="583" text-anchor="end">Metrô</text>
+    </g>
+  </g>
+
+
+  <!-- ======================= DIAGRAMA DE PARETO ======================= -->
+  <g transform="translate(450,-200) scale(1.2)">
+    <rect x="160" y="230" width="600" height="510" class="u-panel u-stroke"/>
+    <text x="460" y="280" class="label">Diagrama de Pareto</text>
+    <text x="460" y="308" class="small" text-anchor="middle">Frequência + % Acumulada</text>
+
+    <!-- Eixos -->
+    <g class="u-stroke small" opacity=".40">
+      <line x1="240" y1="600" x2="660" y2="600"/>
+      <line x1="240" y1="600" x2="240" y2="380"/>
+    </g>
+
+    <!-- Barras Pareto -->
+    <rect x="280" y="380" width="60" height="220" class="bar bh1"/>
+    <rect x="380" y="420" width="60" height="180" class="bar bh2"/>
+    <rect x="480" y="460" width="60" height="140" class="bar bh3"/>
+    <rect x="580" y="500" width="60" height="100" class="bar bh4"/>
+
+    <g class="small">
+      <text x="310" y="630" text-anchor="middle">Carro</text>
+      <text x="410" y="630" text-anchor="middle">Ônibus</text>
+      <text x="510" y="630" text-anchor="middle">Bicicleta</text>
+      <text x="610" y="630" text-anchor="middle">Metrô</text>
+    </g>
+
+    <!-- Curva acumulada -->
+    <path class="acc" d="M310 380 L410 420 L510 460 L610 500"/>
+
+    <!-- Pontos -->
+    <circle cx="310" cy="380" r="9" class="dot d1"/>
+    <circle cx="410" cy="420" r="9" class="dot d2"/>
+    <circle cx="510" cy="460" r="9" class="dot d3"/>
+    <circle cx="610" cy="500" r="9" class="dot d4"/>
+  </g>
+</svg>

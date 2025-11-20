@@ -36,6 +36,11 @@ calcs:
   prop_bicicleta: "(params.F_bicicleta / calcs.total)"
   prop_metro: "(params.F_metro / calcs.total)"
 
+  prop_carro_ac: "(params.F_carro / calcs.total)"
+  prop_onibus_ac: "((params.F_onibus + params.F_carro) / calcs.total)"
+  prop_bicicleta_ac: "((params.F_bicicleta + params.F_onibus + params.F_carro)/ calcs.total)"
+  prop_metro_ac: "((params.F_metro + params.F_bicicleta + params.F_onibus + params.F_carro) / calcs.total)"
+
   per_carro: "(params.F_carro * 100/ calcs.total)"
   per_onibus: "(params.F_onibus * 100/ calcs.total)"
   per_bicicleta: "(params.F_bicicleta * 100/ calcs.total)"
@@ -77,11 +82,11 @@ layout:
     leftGraph:
       xAxis:
         min: 0
-        max: 4.2
+        max: 4.21
         ticks: 0
       yAxis:
         min: 0
-        max: 9
+        max: 10.01
       objects:
         - Line:
             strokeWidth: 0.5
@@ -126,6 +131,10 @@ layout:
               - directions: y
                 param: F_carro
                 expression: "(drag.y)"
+        - Point:
+            coordinates: [0.6, calcs.prop_carro_ac*10]
+            color: grey
+            r: 5
 
         - Rectangle:
             x1: 1.2
@@ -139,6 +148,11 @@ layout:
                 param: F_onibus
                 expression: "(drag.y)"
 
+        - Point:
+            coordinates: [1.6, calcs.prop_onibus_ac*10]
+            color: grey
+            r: 5
+
         - Rectangle:
             x1: 2.2
             x2: 3.0
@@ -151,6 +165,11 @@ layout:
                 param: F_bicicleta
                 expression: "(drag.y)"
 
+        - Point:
+            coordinates: [2.6, calcs.prop_bicicleta_ac*10]
+            color: grey
+            r: 5
+
         - Rectangle:
             x1: 3.2
             x2: 4.0
@@ -162,6 +181,30 @@ layout:
               - directions: y
                 param: F_metro
                 expression: "(drag.y)"
+
+        - Point:
+            coordinates: [3.6, calcs.prop_metro_ac*10]
+            color: grey
+            r: 5
+
+        # pareto
+        - Segment:
+            a: [0.6, calcs.prop_carro_ac*10]
+            b: [1.6, calcs.prop_onibus_ac*10]
+            color: grey
+            strokeWidth: 2
+
+        - Segment:
+            a: [1.6, calcs.prop_onibus_ac*10]
+            b: [2.6, calcs.prop_bicicleta_ac*10]
+            color: grey
+            strokeWidth: 2
+
+        - Segment:
+            a: [2.6, calcs.prop_bicicleta_ac*10]
+            b: [3.6, calcs.prop_metro_ac*10]
+            color: grey
+            strokeWidth: 2
 
         # Rótulos das categorias
         - Segment:
@@ -200,6 +243,61 @@ layout:
               position: t
               fontSize: 7
 
+        - Segment:
+            a: [4.2, 0]
+            b: [4.2, 10]
+            color: grey
+            strokeWidth: 2
+
+        - Segment:
+            a: [4.13, 2]
+            b: [4.13, 2]
+            color: grey
+            strokeWidth: 2
+            label:
+              text: "'20\\\\%'"
+              position: l
+              fontSize: 7
+
+        - Segment:
+            a: [4.13, 4]
+            b: [4.13, 4]
+            color: grey
+            strokeWidth: 2
+            label:
+              text: "'40\\\\%'"
+              position: l
+              fontSize: 7
+
+        - Segment:
+            a: [4.13, 6]
+            b: [4.13, 6]
+            color: grey
+            strokeWidth: 2
+            label:
+              text: "'60\\\\%'"
+              position: l
+              fontSize: 7
+
+        - Segment:
+            a: [4.13, 8]
+            b: [4.13, 8]
+            color: grey
+            strokeWidth: 2
+            label:
+              text: "'80\\\\%'"
+              position: l
+              fontSize: 7
+
+        - Segment:
+            a: [4.13, 10]
+            b: [4.13, 10]
+            color: grey
+            strokeWidth: 2
+            label:
+              text: "'100\\\\%'"
+              position: l
+              fontSize: 7
 
     rightGraph:
       xAxis:

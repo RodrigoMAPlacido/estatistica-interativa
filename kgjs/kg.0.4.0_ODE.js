@@ -63094,7 +63094,7 @@ var KGAuthor;
             };
             bottomGraphDef.position = {
                 "x": 0.35,
-                "y": 0.575,
+                "y": 0.600,
                 "width": 0.5,
                 "height": 0.5
             };
