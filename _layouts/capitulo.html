@@ -72,5 +72,50 @@
     window.addEventListener('scroll', toggleButtons, { passive: true });
   })();
 </script>
+
+<script src="{{ '/js/tts.js' | relative_url }}"></script>
+
+<button id="tts-floating-btn" aria-label="Ouvir este capítulo">
+  ▶ Ouvir
+</button>
+<script>
+  const btn = document.getElementById("tts-floating-btn");
+
+  btn.addEventListener("click", () => {
+    const state = SPEECH.getStatus();
+
+    if (state === "stopped") {
+      SPEECH.speakSequential();
+      btn.textContent = "Pausar";
+
+    } else if (state === "playing") {
+      SPEECH.pause();
+      btn.textContent = "▶ Play";
+
+    } else if (state === "paused") {
+      btn.textContent = "Pausar";
+      SPEECH.resume();   // <- ordem correta
+    }
+  });
+</script>
+
+<div id="tts-speed-btn">
+  <span id="tts-speed-value">1.0×</span>
+</div>
+<script>
+  const speedBtn = document.getElementById("tts-speed-btn");
+  const speedValue = document.getElementById("tts-speed-value");
+
+  // Ao clicar, ciclo: 1.0 → 1.2 → 1.4 → ... → 2.0 → volta ao 0.8
+  speedBtn.addEventListener("click", () => {
+    let current = SPEECH.rate;
+    current += 0.2;
+    if (current > 2.0) current = 0.8; // reinicia o ciclo
+
+    SPEECH.setRate(current);
+    speedValue.textContent = current.toFixed(1) + "×";
+  });
+</script>
+
 </body>
 </html>
