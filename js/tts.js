@@ -87,6 +87,29 @@ class TTSController {
     this.highlightSpans = [];
   }
 
+  // ------------------------------------------
+  // Normalização do texto para o TTS
+  // (remove quebras de linha e espaços múltiplos,
+  //  mas NÃO influencia offsets / highlight)
+  // ------------------------------------------
+cleanForSpeech(text) {
+  // ----------------------------------------
+  // 1) Corrigir valores monetários
+  //    Padrão: R$ 1.234,56  -> "1.234 reais"
+  // ----------------------------------------
+  text = text.replace(/R\$\s*([\d\.]+),00/g, function(_, valor) {
+    return valor + " reais";
+  });
+
+  // ----------------------------------------
+  // 2) Normalização geral
+  // ----------------------------------------
+  return text
+    .replace(/\s+/g, " ")   // compacta espaços
+    .trim();
+}
+
+
   // ======================================================
   // Utilitários de texto REAL (DOM)
   // ======================================================
@@ -103,6 +126,8 @@ class TTSController {
     while (walker.nextNode()) {
       const node = walker.currentNode;
       nodes.push(node);
+      // IMPORTANTE: usamos o textContent cru aqui.
+      // Isso preserva o mapeamento de offsets para o DOM.
       fullText += node.textContent;
     }
 
@@ -247,8 +272,9 @@ class TTSController {
 
     // Blocos de texto relevantes (p e li, fora de figure, se você quiser pode adicionar !el.closest("figure"))
     const blocks = Array.from(
-      document.querySelectorAll("main p, main li")
+      document.querySelectorAll("main h1, main h2, main h3, main h4, main p, main li")
     ).filter(el => el.textContent.replace(/\s+/g, "").length > 0);
+
 
     if (!blocks.length) return;
 
@@ -334,7 +360,14 @@ class TTSController {
 
       this.highlightSentence(blockEl, start, end);
 
-      const utter = new SpeechSynthesisUtterance(sentence);
+      // ======== PONTO-CHAVE: limpar texto antes de falar ========
+      const spokenSentence = this.cleanForSpeech(sentence);
+      if (!spokenSentence) {
+        sentenceIndex++;
+        return readSentence();
+      }
+
+      const utter = new SpeechSynthesisUtterance(spokenSentence);
       utter.voice = this.getVoice();
       utter.rate = this.rate;
 

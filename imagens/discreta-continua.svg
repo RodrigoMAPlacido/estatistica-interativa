@@ -2,7 +2,7 @@
    QUANTITATIVAS — padrão unificado (u-*/a-*)
    =========================================== -->
 <svg viewBox="0 0 1500 750" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
-  <title id="title">Variáveis Quantitativas — Discretas vs Contínuas</title>
+  <title id="title">Dados Quantitativos — Discretos vs Contínuos</title>
   <desc id="desc">Discretas com pontos surgindo em sequência; contínuas com bolinha que se move. Tronco e ramos com traçado animado.</desc>
 
   <defs>
@@ -84,7 +84,7 @@
   <!-- ====== OBJETOS ====== -->
   <!-- Título -->
   <rect x="480" y="60" width="540" height="120" class="u-stroke u-box"/>
-  <text x="750" y="130" font-size="55" class="a-text u-center" style="--delay:0s">QUANTITATIVAS</text>
+  <text x="750" y="130" font-size="55" class="a-text u-center" style="--delay:0s">QUANTITATIVOS</text>
 
   <!-- Tronco e barra (ANIMADOS) -->
   <line x1="750" y1="180" x2="750" y2="280" class="u-stroke u-thick a-draw" style="--delay:0s"/>
@@ -94,7 +94,7 @@
   <!-- Ramo esquerdo (ANIMADO) -->
   <line x1="380" y1="280" x2="380" y2="370" class="u-stroke u-thick a-draw" style="--delay:.24s"/>
   <rect x="230" y="370" width="300" height="110" class="u-stroke u-box"/>
-  <text x="380" y="435" class="u-label">DISCRETAS</text>
+  <text x="380" y="435" class="u-label">DISCRETOS</text>
 
   <!-- Reta numérica (discretas) — estática -->
   <line x1="180" y1="540" x2="580" y2="540" class="u-stroke" style="stroke-width:3"/>
@@ -115,7 +115,7 @@
   <!-- Ramo direito (ANIMADO) -->
   <line x1="1120" y1="280" x2="1120" y2="370" class="u-stroke u-thick a-draw" style="--delay:.24s"/>
   <rect x="970" y="370" width="300" height="110" class="u-stroke u-box"/>
-  <text x="1120" y="435" class="u-label">CONTÍNUAS</text>
+  <text x="1120" y="435" class="u-label">CONTÍNUOS</text>
 
   <!-- Reta numérica (contínuas) — estática -->
   <line x1="840" y1="540" x2="1400" y2="540" class="u-stroke" style="stroke-width:3"/>

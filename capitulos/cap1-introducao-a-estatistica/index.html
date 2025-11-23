@@ -134,13 +134,22 @@ proximo: /capitulos/cap2-distribuicoes-de-frequencia-e-graficos/
 
 <p>
   Assim como as variáveis, os dados podem apresentar naturezas distintas. Quando descrevem <em>categorias</em> ou 
-  <em>atributos</em>, são chamados de <strong>dados qualitativos</strong>. Já quando expressam <em>quantidades</em> ou 
-  <em>medições numéricas</em>, são denominados <strong>dados quantitativos</strong>. De maneira geral, variáveis 
-  qualitativas são expressas por dados qualitativos e variáveis quantitativas por dados quantitativos. A distinção entre 
-  esses tipos é importante porque cada um transmite um <strong>tipo específico de informação</strong>. Essa diferença 
-  conceitual terá consequências práticas na forma de organizar e analisar os dados, como será detalhado adiante, na seção 
-  sobre <strong>classificação e níveis de mensuração</strong>.
+  <em>atributos</em>, são classificados como <strong>dados qualitativos</strong>. Já quando expressam <em>quantidades</em> 
+  ou <em>medições numéricas</em>, são denominados <strong>dados quantitativos</strong>. Em geral, 
+  <strong>variáveis qualitativas produzem dados qualitativos</strong>, enquanto 
+  <strong>variáveis quantitativas produzem dados quantitativos</strong>, pois o tipo da variável determina o tipo de 
+  valor que pode ser observado.
 </p>
+<p>
+  Entretanto, em muitas análises, valores originalmente numéricos são <strong>agrupados em categorias</strong> para 
+  simplificar a interpretação ou permitir comparações. Por exemplo, a variável <em>renda</em>, que em princípio é quantitativa, pode ser 
+  reorganizada em faixas como “até <span class="no-katex">R$ 1.000,00</span>”, “de <span class="no-katex">R$ 1.000,00</span> a <span class="no-katex">R$ 3.000,00</span>” ou 
+  “acima de <span class="no-katex">R$ 5.000,00</span>”. Nesse caso, deixa-se de 
+  utilizar a variável quantitativa original e passa-se a analisar uma <strong>nova variável qualitativa ordinal</strong>, 
+  cujos dados são as categorias formadas pelo agrupamento. Essa transformação não altera a natureza da variável original, 
+  apenas cria outra variável baseada nela. Essas questões serão mais aprofundadas na seção seguinte.
+</p>
+
 
 <p>
   Até aqui, tratamos dos dados como valores que descrevem uma característica em cada unidade observada. Contudo, em estudos 
@@ -217,62 +226,73 @@ proximo: /capitulos/cap2-distribuicoes-de-frequencia-e-graficos/
 <hr>
 
 
-<h2>3. Classificação dos Dados </h2>
+<h2>3. Classificação dos Dados</h2>
 
 <p>
   Nas seções anteriores, vimos que cada variável descreve uma característica das unidades observadas e que seus valores 
-  — os dados — podem ter naturezas distintas, <strong>qualitativa</strong> ou <strong>quantitativa</strong>. Nesta seção, retomamos essa distinção, agora 
-  com foco nas consequências operacionais da análise: a forma como os dados são classificados influencia diretamente quais 
-  representações gráficas são adequadas, quais medidas podem ser calculadas e quais procedimentos estatísticos são 
-  válidos. Assim, compreender a classificação dos dados é essencial para decidir como organizá-los e interpretá-los.
+  — os dados — podem ter naturezas distintas, <strong>qualitativa</strong> ou <strong>quantitativa</strong>. Em linhas gerais, 
+  quando a variável é qualitativa, os dados registrados são categorias; quando a variável é quantitativa, os dados são 
+  números que expressam quantidades ou medições. Nesta seção, retomamos essa distinção com foco nas consequências 
+  operacionais: a forma como os dados são classificados influencia diretamente quais representações gráficas são adequadas, 
+  quais medidas podem ser calculadas e quais procedimentos estatísticos são válidos.
 </p>
 
 <h3>3.1 Dados qualitativos e quantitativos</h3>
 
 <p>
-  Quando passamos da definição teórica de uma variável para o conjunto de valores
-  efetivamente observados, aquilo que antes era apenas uma possibilidade — o tipo da variável —
-  transforma-se em uma característica concreta dos dados registrados. Assim, dizemos que um conjunto de
-  dados é <strong>qualitativo</strong> quando seus valores representam categorias, e é
-  <strong>quantitativo</strong> quando consistem em números que expressam quantidades ou medidas.
-  Essa distinção, retomada aqui sob a perspectiva operacional, orienta a maneira como os dados podem ser
-  organizados e analisados.
-</p>
-
-<figure>
-  <img src="../../imagens/tipos-dados.svg" alt="Tipos de dados: qualitativas e quantitativas">
-</figure>
-
-<p>
-  <strong>Dados qualitativos</strong> reúnem informações que classificam as unidades observadas
-  segundo atributos não numéricos — por exemplo, a cor de um carro, o tipo de moradia ou a modalidade
-  de transporte utilizada. Embora possamos atribuir códigos numéricos a essas categorias, tais números
-  não representam quantidades, e qualquer operação aritmética direta (como médias ou diferenças)
-  perderia o sentido. Por isso, os dados qualitativos são tradicionalmente organizados em
-  <em>tabelas de frequências</em> e representados por <strong>gráficos de barras</strong> ou
+  Dizemos que um conjunto de dados é <strong>qualitativo</strong> quando seus valores classificam as unidades observadas 
+  segundo atributos, como cor, tipo de moradia ou modalidade de transporte. Mesmo quando se atribuem códigos numéricos a 
+  essas categorias, tais números funcionam apenas como <em>rótulos</em>, e não como medidas: operações aritméticas diretas 
+  (como médias ou diferenças) não são apropriadas. Nesse contexto, a organização costuma envolver 
+  <em>tabelas de frequências</em> e representações como <strong>gráficos de barras</strong> e 
   <strong>gráficos de setores</strong>.
 </p>
 
+<figure>
+  <img src="../../imagens/tipos-dados.svg" alt="Tipos de dados: qualitativos e quantitativos">
+</figure>
+
 <p>
-  Já os <strong>dados quantitativos</strong> representam grandezas mensuráveis — idade, temperatura,
-  renda, tempo de percurso, entre outras. Por carregarem significado numérico pleno, admitem operações
-  aritméticas e análises mais detalhadas, como medidas de posição (médias, medianas), de dispersão
-  (variância, amplitude) e representações gráficas que exploram a escala numérica, como
+  Já os <strong>dados quantitativos</strong> correspondem a valores numéricos que expressam grandezas mensuráveis — idade, 
+  altura, tempo de percurso, renda, entre outras. Como carregam significado numérico, admitem cálculos como médias, 
+  medianas e medidas de dispersão, além de representações que exploram a escala numérica, como 
   <strong>histogramas</strong>, <strong>polígonos de frequência</strong> e <strong>gráficos de linhas</strong>.
-  Além disso, a natureza quantitativa permite organizar os valores em classes, o que é fundamental quando
-  os dados são numerosos ou apresentam grande variabilidade.
 </p>
 
 <p>
-  Portanto, embora a distinção entre qualitativo e quantitativo já tenha sido introduzida anteriormente ao
-  definirmos o conceito de variável, sua reaplicação aqui — agora centrada nos <em>dados observados</em> —
-  é indispensável para entender as etapas subsequentes da análise estatística. A classificação inicial dos
-  dados determina tanto a modalidade de tabela a ser construída quanto o tipo de gráfico que melhor descreve
-  o padrão observado. Na próxima seção, aprofundaremos essa classificação examinando os
-  <strong>níveis de mensuração</strong>, que refinam ainda mais a forma apropriada de organizar e interpretar
-  cada tipo de dado.
+  Dentro dos dados quantitativos, há um refinamento importante relacionado à forma como os valores são obtidos. 
+  Quando resultam de <strong>contagens</strong>, assumindo apenas valores inteiros e separados entre si, dizem-se 
+  <strong>dados quantitativos discretos</strong> — como o número de filhos, o número de chamadas recebidas por hora 
+  ou o total de defeitos em um lote. Nesses casos, cada valor isolado tem significado próprio e não existem valores 
+  intermediários possíveis entre um inteiro e outro.
 </p>
 
+<p>
+  Por outro lado, quando os valores são produzidos por <strong>medições</strong>, podendo assumir infinitos valores dentro 
+  de um intervalo contínuo, tratam-se de <strong>dados quantitativos contínuos</strong>. Grandezas como altura, peso, 
+  renda, temperatura ou tempo são contínuas porque, entre duas medidas observadas, sempre é possível conceber uma medida 
+  intermediária. A continuidade aqui decorre do próprio processo de mensuração.
+</p>
+
+<figure>
+  <img src="../../imagens/discreta-continua.svg" alt="Dados quantitativos discretos e contínuos">
+</figure>
+
+<p>
+  Essa distinção entre <strong>discretos</strong> e <strong>contínuos</strong> não cria novos tipos de variável, 
+  mas especifica a <em>estrutura numérica</em> dos dados quantitativos. Ela é especialmente relevante para as formas 
+  de organização e representação: dados discretos são comumente exibidos por <strong>gráficos de barras</strong> ou 
+  <strong>dot plots</strong>, enquanto dados contínuos são agrupados em <strong>intervalos</strong> e representados por 
+  <strong>histogramas</strong> e <strong>polígonos de frequência</strong>. Essa distinção será explorada com mais detalhe 
+  no capítulo seguinte.
+</p>
+
+<p>
+  Embora dados quantitativos sejam, em geral, valores numéricos individuais, em algumas análises eles podem ser 
+  utilizados de forma resumida, organizando-se em intervalos ou grupos. Nesses casos, o que se passa a registrar 
+  não são mais os valores isolados, mas as categorias que os representam. Essa forma de organização não altera o 
+  fato de que a variável original é quantitativa; apenas muda o tipo de informação que será utilizada na análise.
+</p>
 
 <h3>3.2 Níveis de mensuração</h3>
 
@@ -418,13 +438,15 @@ proximo: /capitulos/cap2-distribuicoes-de-frequencia-e-graficos/
   Celsius ou Fahrenheit, em que o zero é apenas um ponto de referência e não indica ausência de
   calor; o <em>ano calendário</em>, cuja contagem estabelece diferenças temporais consistentes,
   mas cujo marco zero é convencional; e certas <em>escalas padronizadas</em>, como o <em>QI</em>
-  ou <em>pontuações de testes</em>, nas quais diferenças entre valores têm significado
-  interpretável, embora o zero não represente ausência da habilidade medida. Em todos esses casos,
-  as <strong>diferenças</strong> entre valores são informativas e podem ser comparadas, mas
-  <strong>proporções</strong> não fazem sentido: não é correto afirmar que um indivíduo com
-  pontuação 120 em QI possui “o dobro” da capacidade de outro com 60, ou que o ano 2000 é “o
-  dobro” do ano 1000.
+  ou <em>pontuações de testes</em>. Esses exemplos mostram que o nível intervalar pode ocorrer 
+  tanto em variáveis que produzem <strong>dados contínuos</strong> (como a temperatura) quanto em 
+  variáveis que produzem <strong>dados discretos</strong> (como o ano calendário). Em todos esses casos, 
+  as <strong>diferenças</strong> entre valores são informativas e comparáveis, enquanto 
+  <strong>proporções</strong> não fazem sentido — não é correto afirmar, por exemplo, que um 
+  indivíduo com QI 120 tem “o dobro” da capacidade de outro com 60, ou que o ano 2000 é “o dobro” 
+  do ano 1000.
 </p>
+
 
 <figure>
   <img src="../../imagens/intervalar.svg" alt="Nível Intervalar">
@@ -445,27 +467,45 @@ proximo: /capitulos/cap2-distribuicoes-de-frequencia-e-graficos/
   para evitar inferências equivocadas e para selecionar métodos estatísticos apropriados.
 </p>
 
-
 <h4>3.2.4 Nível razão</h4>
-<p>O <strong>nível de razão</strong> reúne todas as propriedades do nível intervalar e distingue-se pela existência de um <strong>zero absoluto</strong>, ponto que indica a ausência completa da característica observada. Essa propriedade permite estabelecer <strong>relações de proporção</strong> entre valores — por exemplo, afirmar que um valor é o dobro ou a metade de outro. Nesse nível, todas as operações aritméticas são significativas: soma, subtração, multiplicação e divisão. Dessa forma, o nível de mensuração razão está associado diretamente à <strong>dados quantitativos</strong>.</p>
 
-<p>São exemplos típicos de variáveis em nível de razão: <strong>peso</strong>, <strong>altura</strong>, <strong>renda</strong>, <strong>idade</strong> e <strong>distância</strong> — grandezas nas quais o valor zero representa a inexistência do que se mede. Essas variáveis podem ser classificadas, quanto à forma de obtenção dos dados, em <strong>discretas</strong> ou <strong>contínuas</strong>.</p>
+<p>
+  O <strong>nível de razão</strong> reúne todas as propriedades do nível intervalar e acrescenta um
+  elemento fundamental: a existência de um <strong>zero absoluto</strong>, entendido como ausência
+  real da grandeza medida. Esse zero confere à escala uma interpretação completa das operações
+  aritméticas, permitindo não apenas comparar <strong>diferenças</strong>, mas também interpretar
+  <strong>proporções</strong> de maneira legítima — como afirmar que um valor é o dobro ou a metade
+  de outro. Por essa razão, variáveis em nível de razão estão necessariamente associadas a
+  <strong>dados quantitativos</strong>.
+</p>
 
-<ul>
-  <li><strong>Discretas:</strong> resultam de <strong>contagens inteiras</strong>, como o número de filhos ou o número de defeitos em um lote.</li>
-  <li><strong>Contínuas:</strong> resultam de <strong>medições</strong> e podem assumir infinitos valores dentro de um intervalo, como altura, peso, tempo ou renda.</li>
-</ul>
-
+<p>
+  São exemplos típicos de variáveis de razão: <strong>peso</strong>, <strong>altura</strong>,
+  <strong>renda</strong>, <strong>idade</strong>, <strong>tempo transcorrido</strong> e
+  <strong>distância</strong>. Em todas essas situações, o valor zero tem interpretação concreta:
+  ausência de massa, de comprimento, de recursos financeiros ou de tempo decorrido. Essa
+  característica distingue o nível razão do nível intervalar, no qual o zero é apenas arbitrário.
+</p>
 <figure>
-  <img src="../../imagens/discreta-continua.svg" alt="Nível Intervalar">
+  <img src="../../imagens/razao.svg" alt="Nível Razão">
 </figure>
 <p>
+  Esses exemplos também mostram que o nível razão pode envolver tanto <strong>dados contínuos</strong>
+  quanto <strong>dados discretos</strong>. Grandezas como peso, altura ou distância são contínuas,
+  pois derivam de medições que admitem valores intermediários. Já a <strong>idade em anos
+  completos</strong>, o <strong>número de filhos</strong> ou a <strong>quantidade de ocorrências</strong>
+  de um evento produzem dados discretos. A distinção entre discretos e contínuos, apresentada na
+  Seção 3.1, descreve apenas a forma de geração dos valores — por medições ou por contagens — e não
+  altera o <em>nível de mensuração</em> da variável. O que define o nível razão é exclusivamente a
+  presença de um zero absoluto e a legitimidade das comparações multiplicativas.
+</p>
+
 <p>
-  A distinção entre variáveis <strong>discretas</strong> e <strong>contínuas</strong> não constitui um novo nível de mensuração,
-  mas um <em>refinamento</em> dentro das variáveis quantitativas. As discretas expressam quantidades contáveis e finitas,
-  enquanto as contínuas representam grandezas que variam de forma contínua. Em ambos os casos, o nível de mensuração é
-  geralmente o de razão — exceto em situações específicas, como a <em>temperatura em graus Celsius</em>, cujo zero é
-  arbitrário (apenas referência) e, portanto, classificada como <strong>intervalar</strong>.
+  Essa estrutura matemática robusta torna as variáveis de razão especialmente adequadas para
+  análises que envolvem <strong>razões</strong>, <strong>taxas</strong>, <strong>índices</strong> e
+  transformações proporcionais. Graficamente, podem ser representadas por histogramas, gráficos de
+  linhas ou diagramas que explorem tanto a continuidade quanto a magnitude relativa dos valores, de
+  acordo com a natureza dos dados gerados.
 </p>
 
 <hr>
@@ -556,14 +596,42 @@ proximo: /capitulos/cap2-distribuicoes-de-frequencia-e-graficos/
 <h2>6. Conclusão do capítulo</h2>
 
 <p>
-  Este capítulo estabeleceu os alicerces conceituais da Estatística. Partimos de sua formação histórica e chegamos à sua
-  formulação moderna como método para produzir conhecimento sob incerteza. Definimos os objetos fundamentais — dados,
-  populações, amostras, parâmetros e estatísticas —, distinguimos os domínios de
-  atuação — estatística descritiva e inferencial — e discutimos a importância da obtenção de dados, das restrições da sua coleta e da importância da
- das técnicas de amostragem para a validade das conclusões. Por fim, apresentamos o problema central da inferência e o papel da
-  probabilidade como linguagem formal para quantificar incerteza. A partir daqui, avançaremos para a organização e
-  descrição de dados, etapa necessária para toda análise subsequente.
+  Este capítulo apresentou as bases conceituais que estruturam o raciocínio estatístico. 
+  Partimos de sua formação histórica, mostrando como a estatística evoluiu de um instrumento 
+  administrativo de registro para um método científico voltado à análise sistemática de dados 
+  sob incerteza. Em seguida, definimos os elementos fundamentais que compõem qualquer estudo 
+  empírico — variáveis, dados, população, amostra, parâmetros e estatísticas — e examinamos 
+  como cada um deles contribui para transformar observações individuais em informação organizada.
 </p>
+
+<p>
+  Ao classificar os dados segundo sua natureza <strong>qualitativa</strong> ou 
+  <strong>quantitativa</strong>, exploramos as implicações operacionais dessa distinção, 
+  retomando conceitos essenciais como dados <strong>discretos</strong> e 
+  <strong>contínuos</strong>. Aprofundamos essa discussão introduzindo os 
+  <strong>níveis de mensuração</strong> — nominal, ordinal, intervalar e razão — que determinam 
+  quais comparações e operações matemáticas preservam significado ao trabalhar com diferentes 
+  tipos de informação. Essa estrutura conceitual é indispensável para evitar interpretações 
+  equivocadas e para selecionar métodos adequados de análise.
+</p>
+
+<p>
+  Por fim, discutimos a distinção entre <strong>estatística descritiva</strong> e 
+  <strong>estatística inferencial</strong>. A primeira organiza e resume os dados observados; 
+  a segunda busca generalizar essas informações para além da amostra, recorrendo à 
+  <strong>probabilidade</strong> como linguagem formal para quantificar incerteza. Assim, o 
+  capítulo estabeleceu o arcabouço lógico necessário para compreender o problema central da 
+  inferência estatística: como extrair conclusões válidas a partir de informações limitadas e 
+  sujeitas à variabilidade.
+</p>
+
+<p>
+  A partir desta base conceitual, avançaremos para a etapa seguinte da análise: a 
+  <strong>organização e representação dos dados</strong>. Antes de calcular medidas ou formular 
+  inferências, é preciso compreender como os dados podem ser estruturados, sumarizados e 
+  visualizados de forma clara e informativa — tema dos próximos capítulos.
+</p>
+
 
 <hr>
 

@@ -4,125 +4,134 @@ title: Capítulo 2 — Distribuições de Frequência e Gráficos
 anterior: /capitulos/cap1-introducao-a-estatistica/
 proximo: /capitulos/cap3-medidas-de-tendencia-central/
 ---
-  <p class="subtitle">Objetivos de aprendizagem</p>
-  <ul>
-    <li>Compreender a necessidade de organizar dados em distribuições de frequência para revelar padrões e tendências.</li>
-    <li>Aprender a construir tabelas de frequência simples e expandidas, com ponto médio, frequência relativa e acumulada.</li>
-    <li>Reconhecer os principais tipos de representações gráficas: histograma, polígono de frequência e ogiva.</li>
-    <li>Interpretar corretamente a informação expressa em tabelas e gráficos estatísticos.</li>
-  </ul>
+<p class="subtitle">Objetivos de aprendizagem</p>
+<ul>
+  <li>Compreender por que diferentes tipos de dados — qualitativos, quantitativos discretos e quantitativos contínuos — exigem formas específicas de organização em distribuições de frequência.</li>
+  <li>Aprender a construir tabelas de distribuição de frequências (absoluta, relativa, acumulada e relativa acumulada) para variáveis qualitativas, quantitativas discretas e quantitativas contínuas.</li>
+  <li>Identificar e selecionar representações gráficas adequadas a cada tipo de dado: gráficos de barras (verticais e horizontais), gráficos de setores, diagrama de Pareto, dot plot, histograma, polígono de frequência e ogiva.</li>
+  <li>Interpretar corretamente as informações expressas em tabelas de frequência e em gráficos, incluindo leitura de proporções, concentrações, formato da distribuição e comportamento acumulado dos dados.</li>
+  <li>Perceber como alterações nas frequências observadas se refletem na forma dos gráficos, consolidando a relação entre estrutura numérica dos dados e sua representação visual.</li>
+</ul>
+
 
   <hr>
 <h2>1. Introdução</h2>
 
 <p>
-  <span class="newthought">No capítulo anterior,</span> estabelecemos os fundamentos necessários para qualquer análise 
-  estatística. Definimos o que é uma <strong>variável</strong> e como ela descreve uma 
-  característica das unidades observadas; distinguimos os <strong>dados</strong> como os valores 
-  efetivamente registrados; classificamos esses dados em <strong>qualitativos</strong> ou 
-  <strong>quantitativos</strong>; e examinamos os <strong>níveis de mensuração</strong> que 
-  determinam o tipo de informação que cada dado é capaz de fornecer — se apenas diferencia categorias, 
-  se permite ordenação, se possui diferenças numericamente interpretáveis ou se admite comparações 
-  proporcionais. Conjuntamente, esses conceitos definem <em>quais relações</em> podem ser estabelecidas 
-  entre os valores observados e, portanto, <em>como</em> os dados devem ser organizados para que a análise 
-  seja coerente e informativa.
+  <span class="newthought">No capítulo anterior,</span> estabelecemos os fundamentos conceituais que tornam possível 
+  qualquer análise estatística. Definimos o que são <strong>variáveis</strong> e <strong>dados</strong>; distinguimos 
+  suas naturezas <strong>qualitativas</strong> ou <strong>quantitativas</strong>; refinamos os dados quantitativos em 
+  <strong>discretos</strong> ou <strong>contínuos</strong>, conforme resultem de contagens ou medições; e examinamos os 
+  <strong>níveis de mensuração</strong> que determinam quais comparações fazem sentido em cada tipo de escala. 
+  Conjuntamente, esses elementos descrevem a estrutura lógica dos dados e indicam <em>que tipo de informação</em> 
+  cada variável é capaz de fornecer.
 </p>
 
+
 <p>
-  Com essa base conceitual estabelecida, avançamos agora para a etapa seguinte: transformar um conjunto de 
-  dados brutos — muitas vezes desorganizado, extenso ou repetitivo — em uma forma que revele sua 
-  <strong>estrutura</strong>. É nesse ponto que entram as <strong>distribuições de frequência</strong> 
-  e as <strong>representações gráficas</strong>, ferramentas que sintetizam os dados de modo a tornar 
-  visíveis padrões, comparações e tendências que permanecem ocultos quando as informações são apresentadas 
-  apenas como uma lista longa de observações.
+  A partir dessa base, avançamos agora para a primeira etapa prática da análise estatística. 
+  Dado um conjunto de dados coletados — seja de uma população ou de uma amostra —, 
+  o primeiro desafio consiste em organizá-los de modo que deixem de ser apenas uma sequência 
+  de valores e passem a revelar sua <strong>estrutura</strong>. 
+  Em vez de examinar cada observação isoladamente, buscamos agrupar e resumir os dados de forma sistemática, 
+  de modo que padrões, concentrações e contrastes se tornem perceptíveis. 
+  É nesse contexto que surgem as <strong>distribuições de frequência</strong> e as 
+  <strong>representações gráficas</strong>, que convertem listas de observações em descrições mais compactas 
+  e informativas do comportamento do conjunto.
 </p>
+
 
 <figure>
   <img src="../../imagens/frequencia-histograma.svg" alt="Tabela de Frequência e Histograma">
 </figure>
 
 <p>
-  A forma como uma distribuição de frequências é construída decorre diretamente da natureza dos 
-  dados estabelecida no capítulo anterior. Nos dados <strong>qualitativos</strong>, a construção se 
-  baseia na contagem das <em>categorias</em> observadas, pois cada valor identifica um grupo distinto. 
-  Já nos dados <strong>quantitativos</strong>, sobretudo quando apresentam ampla variação ou muitos 
-  valores possíveis, a organização requer a definição de <em>intervalos</em> ou classes que agrupem 
-  observações semelhantes. Essas diferenças estruturais não alteram o propósito central da distribuição 
-  de frequências: revelar o padrão dos dados de forma clara, comparável e adequada ao tipo de informação 
-  que eles são capazes de fornecer.
+  A construção de uma distribuição de frequências depende diretamente da natureza dos dados. 
+  Nos dados <strong>qualitativos</strong>, o ponto central é a contagem das <em>categorias</em> observadas. 
+  Nos dados <strong>quantitativos</strong>, sobretudo quando há grande dispersão ou muitos valores distintos, 
+  a organização exige a definição de <em>intervalos</em> ou classes que agrupem medidas semelhantes. 
+  Embora essas estruturas sejam distintas, o objetivo é o mesmo: sintetizar os dados de modo a evidenciar 
+  a forma da distribuição.
 </p>
 
 <p>
-  Este capítulo, portanto, marca a transição entre compreender a natureza dos dados e 
-  <em>interpretar</em> a sua distribuição. Ao longo das próximas seções, examinaremos como 
-  construir tabelas de frequências para diferentes tipos de dados e como representá-las por meio 
-  de gráficos adequados — desde gráficos de barras e setores até histogramas, polígonos de 
-  frequência e ogivas. Essas ferramentas constituem o ponto de partida para análises mais profundas 
-  e fornecem a base visual e numérica para as medidas estatísticas que estudaremos nos capítulos 
-  seguintes.
+  Este capítulo marca, assim, a passagem do entendimento conceitual para a <strong>caracterização operacional</strong> 
+  dos dados. Nas próximas seções, veremos como construir distribuições de frequência para diferentes tipos de 
+  variáveis e como representá-las por meio de gráficos adequados — gráficos de barras e setores no caso de dados 
+  qualitativos; histogramas, polígonos de frequência e ogivas no caso de dados quantitativos. 
+  Essas ferramentas constituem o ponto de partida para análises mais profundas e fundamentam as medidas 
+  estatísticas que estudaremos nos capítulos seguintes.
 </p>
-
 
   <hr>
 
 <h2>2. Distribuições de Frequência e Gráficos de Representação</h2>
 
 <p>
-  A <strong>distribuição de frequência</strong> é uma forma estruturada de organizar os dados observados,
-  registrando <em>quantas vezes</em> cada categoria, valor ou intervalo aparece no conjunto analisado.
-  Esse procedimento transforma uma lista de observações brutas em um quadro sintético que revela 
-  <strong>como os dados se distribuem</strong> ao longo dos possíveis resultados da variável, destacando 
-  padrões essenciais como concentrações, dispersões e irregularidades. Ao tornar explícita a 
-  <strong>incidência relativa dos valores</strong>, a distribuição de frequência constitui a base para 
-  representações gráficas e para as medidas descritivas estudadas nos capítulos seguintes.
+  Chamaremos de <strong>distribuição de frequência</strong> a organização sistemática de um conjunto de dados
+  em termos de <em>ocorrências</em>. Em vez de listar cada observação individualmente, registramos, para cada
+  categoria (nos dados qualitativos), para cada valor possível (nos dados quantitativos discretos) ou para
+  cada <em>intervalo de classe</em> (nos dados quantitativos contínuos), <strong>quantas vezes</strong> ela aparece
+  no conjunto analisado. O resultado é uma tabela que descreve de forma compacta como os dados se distribuem
+  ao longo dos possíveis resultados da variável.
 </p>
-
 
 <p>
-Uma tabela de distribuição de frequências é composta pelos seguintes cálculos:
+  Em termos práticos, uma tabela de distribuição de frequências é composta pelos seguintes cálculos:
 </p>
- <ol type="I">
-    <li class="lista">
-      <strong>Frequência absoluta ($F_{i}$):</strong>
-      número de vezes que cada valor ou categoria aparece na amostra.
-    </li>
 
-    <li class="lista">
-      <strong>Frequência relativa ($Fr_{i}$):</strong>
-      porcentagem que cada valor representa em relação ao total de observações.
-    </li>
+<ol type="I">
+  <li class="lista">
+    <strong>Frequência absoluta ($F_{i}$):</strong>
+    número de vezes que cada valor, categoria ou intervalo aparece no conjunto de dados.
+  </li>
 
-    <li class="lista">
-      <strong>Frequência acumulada ($F_{ac}$):</strong>
-      soma das frequências absolutas até o valor ou categoria analisada.
-    </li>
+  <li class="lista">
+    <strong>Frequência relativa ($Fr_{i}$):</strong>
+    proporção (ou porcentagem) que cada valor representa em relação ao total de observações.
+  </li>
 
-    <li class="lista">
-      <strong>Frequência relativa acumulada ($Fr_{ac}$):</strong>
-      porcentagem acumulada das observações até o valor ou categoria analisada.
-    </li>
-  </ol>
+  <li class="lista">
+    <strong>Frequência acumulada ($F_{ac}$):</strong>
+    soma das frequências absolutas até o valor, categoria ou limite de classe considerado.
+  </li>
 
-  <p>
-  A construção de uma tabela de distribuição de frequência varia de acordo com a natureza dos dados — podendo seguir procedimentos distintos
-  para variáveis <strong>qualitativas</strong> ou <strong>quantitativas</strong>.
+  <li class="lista">
+    <strong>Frequência relativa acumulada ($Fr_{ac}$):</strong>
+    soma das frequências relativas até o valor, categoria ou limite de classe considerado, indicando
+    qual fração do conjunto de dados se encontra até aquele ponto da escala.
+  </li>
+</ol>
+
+<p>
+  A forma concreta de construir essa tabela varia de acordo com a natureza dos dados — podendo seguir
+  procedimentos distintos para variáveis <strong>qualitativas</strong>, <strong>quantitativas discretas</strong>
+  e <strong>quantitativas contínuas</strong>, como veremos nas subseções seguintes.
 </p>
 
 <h3>2.1 Distribuição de Frequência de Variáveis Qualitativas</h3>
 
 <p>
-  No caso de variáveis <strong>qualitativas</strong>, a distribuição de frequência organiza as observações em <strong>categorias</strong> que representam
-  diferentes modalidades do fenômeno estudado. A tabela apresenta, para cada categoria, o número de ocorrências observadas (<strong>frequência absoluta</strong>),
-  a sua <strong>frequência relativa</strong> (percentual em relação ao total de respostas) e a <strong>frequência acumulada</strong>,
-  quando há uma ordenação lógica entre as categorias (por exemplo, em escalas de satisfação).
-  Esse tipo de distribuição é especialmente útil para visualizar a predominância de determinadas categorias
-  e comparar proporções entre grupos de respostas.
+  Para variáveis <strong>qualitativas</strong>, a distribuição de frequência consiste em organizar as observações segundo 
+  suas <strong>categorias</strong>, registrando quantas vezes cada modalidade aparece no conjunto de dados. Como esses valores 
+  não representam quantidades mensuráveis, mas sim <em>atributos</em>, a ênfase recai na identificação da 
+  <strong>predominância</strong> e da <strong>proporção</strong> de cada categoria.
 </p>
 
 <p>
-  A tabela a seguir representa a <strong>distribuição de frequência</strong> obtida em uma pesquisa sobre o <strong>meio de transporte utilizado para ir ao trabalho</strong>,
-  considerando uma amostra de 20 pessoas. Nela, observa-se o número absoluto de respostas para cada categoria,
-  bem como sua proporção em relação ao total de participantes.
+  Na prática, essa distribuição é organizada em forma de tabela, em que cada linha corresponde a uma categoria da variável 
+  e cada coluna registra um tipo de frequência. Em variáveis qualitativas sem ordem natural entre as categorias, faz sentido 
+  trabalhar apenas com a <strong>frequência absoluta</strong> (número de respostas em cada categoria) e a 
+  <strong>frequência relativa</strong> (a proporção que cada categoria representa no total). Quando existe uma 
+  <em>ordem lógica</em> — como em escalas de satisfação ou níveis de escolaridade — pode-se ainda calcular a 
+  <strong>frequência acumulada</strong> e a <strong>frequência relativa acumulada</strong>, que mostram como as respostas 
+  se acumulam à medida que avançamos na escala qualitativa.
+</p>
+
+<p>
+  A tabela a seguir apresenta a <strong>distribuição de frequência</strong> obtida em uma pesquisa sobre o 
+  <strong>meio de transporte utilizado para ir ao trabalho</strong>, considerando uma amostra de 20 pessoas. Ela mostra, 
+  para cada categoria, tanto a contagem absoluta quanto sua proporção em relação ao total de participantes.
 </p>
 
 <figure class="figure table">
@@ -186,94 +195,122 @@ Uma tabela de distribuição de frequências é composta pelos seguintes cálcul
 </figure>
 
 <p>
-  Nota-se que o <strong>carro</strong> é o meio de transporte mais utilizado, correspondendo a 40% das respostas,
-  seguido pelo <strong>ônibus</strong> (30%), pela <strong>bicicleta</strong> (20%) e pelo <strong>metrô</strong> (10%).
-  A tabela permite comparar facilmente a predominância de cada categoria e fornece uma
-  visão clara da distribuição dessa variável qualitativa.
+  A leitura da tabela evidencia que o <strong>carro</strong> é a categoria predominante, concentrando 40% das respostas, 
+  seguido pelo <strong>ônibus</strong> (30%), <strong>bicicleta</strong> (20%) e <strong>metrô</strong> (10%). 
+  Mais do que listar proporções, a distribuição revela a <strong>estrutura do padrão de uso</strong>: 
+  há um meio claramente dominante, dois intermediários e um minoritário. 
+  Essa organização facilita comparações diretas entre categorias — por exemplo, observar que o uso de carro é 
+  quatro vezes maior que o de metrô — e fornece uma base objetiva para representar graficamente o comportamento da variável. 
+  Em variáveis qualitativas como esta, a distribuição de frequência cumpre o papel essencial de transformar um conjunto 
+  de respostas isoladas em um panorama coerente, permitindo identificar contrastes, padrões de preferência e possíveis 
+  assimetrias entre as categorias observadas.
 </p>
 
 <h4>2.1.1 Gráficos para Variáveis Qualitativas</h4>
 
 <p>
-  A partir dessa distribuição de frequência, podemos representar visualmente as categorias por meio de gráficos
-  adequados ao caráter <strong>categórico</strong> da variável. Como as categorias são distintas e não formam uma
-  escala contínua, os gráficos utilizados enfatizam a <strong>comparação</strong> entre elas, e não a forma de uma
-  distribuição. Entre as representações mais empregadas estão o <strong>gráfico de barras vertical</strong>, o
+  A partir da distribuição de frequência, podemos representar visualmente as categorias por meio de gráficos
+  adequados ao caráter <strong>categórico</strong> da variável. Como não há uma escala numérica contínua,
+  o objetivo principal desses gráficos não é descrever a forma de uma curva, mas tornar mais clara a
+  <strong>comparação</strong> entre as categorias em termos de intensidade e participação no total.
+  Entre as representações mais empregadas estão o <strong>gráfico de barras vertical</strong>, o
   <strong>gráfico de barras horizontal</strong>, o <strong>gráfico de setores (pizza)</strong> e o
-  <strong>diagrama de Pareto</strong>. Cada um desses gráficos destaca aspectos diferentes da distribuição e torna
-  mais intuitiva a comparação entre as categorias.
+  <strong>diagrama de Pareto</strong>, cada qual enfatizando aspectos distintos da mesma distribuição.
 </p>
 
 <figure>
   <img src="../../imagens/graficos-setores-barras.svg" alt="Gráficos: Setores e de Barras">
 </figure>
+
 <p>
-  Embora esses quatro gráficos representem a mesma distribuição de frequências, cada um destaca um 
-  aspecto diferente dos dados. Após visualizar as animações, é importante compreender a finalidade 
-  específica de cada representação, pois o tipo de variável, o objetivo da análise e o aspecto que se 
-  deseja enfatizar influenciam diretamente a escolha do gráfico. A seguir, resumimos o papel de cada um:
+  Embora esses quatro gráficos representem exatamente a mesma distribuição de frequências, eles a expressam
+  de maneiras diferentes. Após visualizar as animações, é importante compreender a finalidade específica de
+  cada um: o tipo de variável, o objetivo da análise e o aspecto que se deseja enfatizar influenciam
+  diretamente a escolha do gráfico. A seguir, resumimos o papel de cada representação.
 </p>
 
 <ul>
-  <li class="lista"><strong>Gráfico de Barras Vertical:</strong> compara diretamente as frequências das categorias. A altura das barras evidencia quais grupos são mais ou menos frequentes.</li>
+  <li class="lista">
+    <strong>Gráfico de barras vertical:</strong>
+    compara diretamente as frequências das categorias. A altura das barras evidencia quais grupos
+    são mais ou menos frequentes, permitindo identificar rapidamente a categoria predominante e
+    o contraste entre as demais.
+  </li>
 
-  <li class="lista"><strong>Gráfico de Setores (Pizza):</strong> representa a proporção que cada categoria ocupa no total. É útil quando o foco está na participação relativa de cada grupo.</li>
+  <li class="lista">
+    <strong>Gráfico de setores (pizza):</strong>
+    representa a participação relativa de cada categoria no total, por meio de áreas proporcionais.
+    É especialmente útil quando o foco está em mostrar como o conjunto de respostas se reparte entre
+    as categorias, enfatizando a ideia de “partes de um todo”.
+  </li>
 
-  <li class="lista"><strong>Diagrama de Pareto:</strong> ordena as categorias da maior para a menor frequência e acrescenta a curva acumulada. Essa combinação revela rapidamente quais poucas categorias concentram a maior parte das ocorrências.</li>
+  <li class="lista">
+    <strong>Diagrama de Pareto:</strong>
+    ordena as categorias da maior para a menor frequência e acrescenta a curva da frequência acumulada.
+    Essa combinação evidencia, de forma imediata, quais poucas categorias concentram a maior parte das
+    ocorrências, sendo particularmente útil em contextos em que se deseja priorizar causas ou grupos
+    mais relevantes.
+  </li>
 
-  <li class="lista"><strong>Gráfico de Barras Horizontal:</strong> apresenta as mesmas frequências do gráfico vertical, mas favorece a leitura quando os nomes das categorias são longos ou quando se deseja enfatizar a comparação na dimensão horizontal.</li>
+  <li class="lista">
+    <strong>Gráfico de barras horizontal:</strong>
+    apresenta as mesmas frequências do gráfico de barras vertical, porém com as barras dispostas
+    horizontalmente. Essa forma favorece a leitura quando os nomes das categorias são longos ou
+    numerosos, mantendo a comparação entre frequências visualmente clara.
+  </li>
 </ul>
 
 <p>
-  Para solidificar o entendimento da distribuição obtida, podemos representar essas mesmas informações de 
-  forma visual. Ajuste as frequências e observe como o gráfico reage — essa exploração ajuda a perceber, 
-  de imediato, como cada variação nos dados altera o formato da distribuição.
+  Nos painéis interativos a seguir, a mesma distribuição de frequências pode ser explorada de forma dinâmica.
+  Ao ajustar as frequências na tabela e observar como cada gráfico reage, torna-se mais fácil perceber
+  como as mudanças nas contagens afetam a <strong>comparação entre categorias</strong> e a forma geral
+  da distribuição visualizada.
 </p>
 
 <figure class="figure fullwidth" style="page-break-inside: avoid;">
-<!-- Versão para desktop -->
-<div class="kg-wrapper kg-desktop">
-  <div class="kg-container" src="modelos/setores-barras-horizontal.yml"></div>
-</div>
+  <!-- Versão para desktop -->
+  <div class="kg-wrapper kg-desktop">
+    <div class="kg-container" src="modelos/setores-barras-horizontal.yml"></div>
+  </div>
 </figure>
 
 <figure class="figure fullwidth" style="page-break-inside: avoid;">
-<!-- Versão para desktop -->
-<div class="kg-wrapper kg-mobile">
-  <div class="kg-container" src="modelos/setores-barras.yml"></div>
-</div>
+  <!-- Versão para mobile -->
+  <div class="kg-wrapper kg-mobile">
+    <div class="kg-container" src="modelos/setores-barras.yml"></div>
+  </div>
 </figure>
-
 <h3>2.2 Distribuição de Frequência de Variáveis Quantitativas Discretas</h3>
 
 <p>
-  Diferentemente da distribuição de frequência das <strong>variáveis qualitativas</strong> — nas quais cada categoria
-  representa um rótulo ou atributo — as <strong>variáveis quantitativas discretas</strong> envolvem valores numéricos 
-  obtidos por <strong>contagem</strong>. Esses valores são inteiros e separados uns dos outros, como número de 
-  irmãos, chamadas recebidas ou produtos vendidos. Como diversos indivíduos podem apresentar exatamente o mesmo
-  valor, é possível organizar os dados listando diretamente cada valor observado, sem a necessidade de formar
-  intervalos ou classes.
+  Diferentemente das <strong>variáveis qualitativas</strong> — nas quais cada categoria funciona como um rótulo ou atributo — 
+  as <strong>variáveis quantitativas discretas</strong> assumem <strong>valores numéricos inteiros</strong>, obtidos por 
+  <strong>contagem</strong>. Esses valores são separados uns dos outros, como o número de irmãos, o número de chamadas 
+  recebidas ou a quantidade de produtos vendidos em um dia. Como vários indivíduos podem apresentar exatamente o mesmo valor, 
+  é natural organizar os dados listando diretamente cada valor distinto observado, sem a necessidade de formar intervalos 
+  ou classes.
 </p>
 
 <p>
-  A construção da distribuição segue a mesma estrutura geral utilizada em qualquer tabela de frequências: 
-  identifica-se cada valor distinto da variável e registra-se sua <strong>frequência absoluta</strong> (quantas vezes 
-  aparece), a <strong>frequência relativa</strong> (a proporção em relação ao total de observações) e a 
-  <strong>frequência acumulada</strong>, quando pertinente. Como os valores numéricos possuem ordem natural, a 
-  frequência acumulada sempre faz sentido nesse contexto.
+  A construção da distribuição segue a mesma estrutura geral de qualquer tabela de frequências: identifica-se cada valor 
+  distinto da variável e registra-se sua <strong>frequência absoluta</strong> (quantas vezes aparece), a 
+  <strong>frequência relativa</strong> (a proporção em relação ao total de observações), a 
+  <strong>frequência acumulada</strong> e a <strong>frequência relativa acumulada</strong>, que somam progressivamente 
+  as ocorrências até cada valor possível. Como os valores numéricos possuem uma ordem natural, as frequências acumuladas 
+  são sempre conceitualmente apropriadas nesse contexto.
 </p>
 
 <p>
   Para exemplificar, considere a variável <strong>número de livros lidos por mês</strong> por um grupo de quinze
-  estudantes. A tabela abaixo sintetiza o comportamento da variável de maneira clara e concisa, permitindo 
-  identificar os valores mais comuns e a progressão acumulada da distribuição.
+  estudantes. A tabela abaixo sintetiza o comportamento da variável de maneira clara e concisa, permitindo identificar 
+  os valores mais comuns e acompanhar a progressão acumulada da distribuição.
 </p>
 
 <figure class="figure table">
   <table>
     <thead>
       <tr>
-        <th>Quantidade de Livros lidos</th>
+        <th>Quantidade de livros lidos</th>
         <th>Frequência Absoluta</th>
         <th>Frequência Relativa</th>
         <th>Frequência Acumulada</th>
@@ -326,99 +363,102 @@ Uma tabela de distribuição de frequências é composta pelos seguintes cálcul
     </tbody>
   </table>
   <figcaption>
-    Tabela 1. Distribuição de frequência do número de livros lidos por mês.
+    Tabela 2. Distribuição de frequência do número de livros lidos por mês.
   </figcaption>
 </figure>
 
 <p>
-  A tabela mostra que a maior parte dos estudantes lê entre um e dois livros por mês, enquanto poucos não leem 
-  nenhum ou chegam a quatro. Como se trata de uma variável de contagem, a representação gráfica mais adequada é 
-  o <strong>gráfico de barras</strong>, no qual cada valor aparece isolado no eixo horizontal e as barras são separadas 
-  por espaços — enfatizando que os valores possíveis são distintos e não formam um continuum.
+  A tabela mostra que a maior parte dos estudantes lê entre um e dois livros por mês, enquanto poucos não leem nenhum 
+  ou chegam a quatro. A combinação entre frequências absolutas e relativas permite avaliar tanto o número de ocorrências 
+  de cada valor quanto sua importância proporcional no conjunto. As frequências acumuladas indicam, por exemplo, que 
+  73,2% dos estudantes leem no máximo dois livros por mês. Como se trata de uma variável de contagem, uma representação 
+  gráfica particularmente adequada é o <strong>gráfico de barras</strong>, no qual cada valor possível aparece isolado 
+  no eixo horizontal e as barras são separadas por espaços, enfatizando que os valores são distintos e não formam um 
+  continuum numérico.
 </p>
 
 <h4>2.2.1 Gráficos para Variáveis Quantitativas Discretas</h4>
 
 <p>
-  Para dados discretos, o <strong>gráfico de barras</strong> é a forma padrão de visualização. A altura da barra 
-  representa a frequência de cada valor, e o espaçamento entre elas destaca a natureza descontínua da variável.
-  Em situações com poucas observações ou com interesse em visualizar repetições individuais, também é possível 
-  utilizar um <strong>dot plot</strong>, que representa cada ocorrência como um ponto empilhado.
+  Para dados discretos, o <strong>gráfico de barras</strong> é a forma padrão de visualização. 
+  Cada valor possível da variável aparece isolado no eixo horizontal, e a altura da barra indica 
+  sua <strong>frequência</strong> no conjunto de dados. O espaçamento entre as barras reforça a 
+  natureza <strong>descontínua</strong> da variável, destacando que apenas certos valores inteiros 
+  são admissíveis. Em situações com poucas observações ou quando se deseja visualizar diretamente 
+  cada ocorrência, também é possível utilizar um <strong>dot plot</strong>, no qual cada dado é 
+  representado por um ponto empilhado acima do valor correspondente.
 </p>
 
 <figure>
   <img src="../../imagens/grafico-barras-discretas.svg" alt="Gráfico de barras para dados discretos">
 </figure>
+
 <p>
   Embora ambos os gráficos representem a mesma distribuição discreta, cada um enfatiza um aspecto 
-  distinto da variável. Por isso, após observar as animações, é importante compreender o papel que 
-  cada representação desempenha na análise dos dados. A seguir, resumimos a função de cada gráfico.
+  distinto dos dados. Por isso, após observar as animações, é importante compreender o papel que 
+  cada representação desempenha na análise: o gráfico de barras ressalta a <strong>intensidade</strong> 
+  de cada valor, enquanto o dot plot aproxima a visualização da própria estrutura dos dados observados.
 </p>
+
 <ul>
   <li class="lista">
-    <strong>Gráfico de Barras:</strong> mostra a frequência associada a cada valor possível da variável. 
-    A altura das barras evidencia as categorias mais comuns e destaca o caráter <strong>pontual</strong> 
-    da variável discreta.
+    <strong>Gráfico de barras:</strong> mostra a frequência associada a cada valor possível da variável. 
+    A altura das barras evidencia os valores mais comuns, permite comparar rapidamente as contagens e 
+    destaca o caráter <strong>pontual</strong> da variável discreta, na qual não existem valores intermediários 
+    entre os inteiros representados.
   </li>
 
   <li class="lista">
-    <strong>Dot Plot:</strong> representa cada observação individual por um ponto. Os pontos empilhados 
-    revelam a frequência de forma direta, preservando a ideia de que cada unidade corresponde exatamente 
-    a um dado observado. É especialmente útil em amostras pequenas ou quando se deseja visualizar as 
-    repetições de maneira explícita.
+    <strong>Dot plot:</strong> representa cada observação individual por um ponto. Os pontos empilhados 
+    revelam a frequência de forma direta, preservando a ideia de que cada unidade corresponde a um dado 
+    observado. É especialmente útil em amostras pequenas ou moderadas, quando se deseja visualizar 
+    explicitamente as repetições e identificar facilmente possíveis valores atípicos.
   </li>
 </ul>
 
 <p>
-  Para solidificar o entendimento dos gráficos, podemos representar essas mesmas informações de forma interativa.
-  Ajuste as barras do gráfico de barras e observe como o dot plot reage — essa exploração torna imediata a percepção
-  de que qualquer alteração nas frequências modifica a forma da distribuição, reforçando a intuição sobre a relação
-  entre os dados e suas representações visuais.
+  Nos painéis interativos a seguir, essas mesmas informações podem ser exploradas dinamicamente. 
+  Ajuste as barras no gráfico de barras e observe como o dot plot reage: qualquer alteração nas frequências 
+  modifica imediatamente o desenho de ambos os gráficos, reforçando a intuição de que a forma da distribuição 
+  é apenas uma outra maneira de representar o conjunto de dados de contagem.
 </p>
 
-
 <figure class="figure fullwidth" style="page-break-inside: avoid;">
-<!-- Versão para desktop -->
-<div class="kg-wrapper kg-desktop">
-  <div class="kg-container" src="modelos/barras-dotplot-horizontal.yml"></div>
-</div>
+  <!-- Versão para desktop -->
+  <div class="kg-wrapper kg-desktop">
+    <div class="kg-container" src="modelos/barras-dotplot-horizontal.yml"></div>
+  </div>
 </figure>
 
 <figure class="figure fullwidth" style="page-break-inside: avoid;">
-<!-- Versão para mobile -->
-<div class="kg-wrapper kg-mobile">
-  <div class="kg-container" src="modelos/barras-dotplot.yml"></div>
-</div>
+  <!-- Versão para mobile -->
+  <div class="kg-wrapper kg-mobile">
+    <div class="kg-container" src="modelos/barras-dotplot.yml"></div>
+  </div>
 </figure>
-
 
 <h3>2.3 Distribuição de Frequência de Variáveis Quantitativas Contínuas</h3>
 
 <p>
-  Assim como nas <strong>variáveis quantitativas discretas</strong>, o objetivo da distribuição de frequência é 
-  organizar os valores observados de maneira que revelem o comportamento geral da variável. 
-  No entanto, variáveis <strong>quantitativas contínuas</strong> apresentam uma característica essencialmente 
-  diferente: elas podem assumir <strong>qualquer valor real</strong> dentro de um intervalo. Em medições como tempo, 
-  altura, peso ou temperatura, é improvável que duas observações coincidam exatamente. Por isso, listar cada 
-  valor individualmente — como se faz no caso discreto — raramente produz uma síntese informativa.
+  Assim como no caso das <strong>variáveis quantitativas discretas</strong>, o objetivo da distribuição de frequência 
+  é organizar os valores observados de modo a revelar o comportamento geral da variável. 
+  No entanto, as <strong>variáveis quantitativas contínuas</strong> possuem uma característica distinta: 
+  podem assumir <strong>qualquer valor real</strong> dentro de um intervalo. Em medições como tempo, altura, peso ou 
+  temperatura, os valores observados são, em princípio, infinitamente divisíveis, e coincidências exatas entre 
+  observações são pouco informativas. Por isso, listar cada valor individualmente — como se faz no caso discreto — 
+  raramente produz uma síntese útil da distribuição.
 </p>
 
 <p>
   A solução consiste em agrupar os dados em <strong>classes</strong> ou <strong>intervalos de valores</strong>. 
-  Cada intervalo reúne observações próximas, permitindo visualizar a distribuição de forma integrada. A definição 
-  dessas classes envolve decisões importantes: o <strong>número de intervalos</strong>, sua <strong>amplitude</strong>, os 
-  <strong>limites inferior e superior</strong> e a regra de alocação dos valores. Métodos como a <em>regra de Sturges</em> 
-  ou critérios baseados na dispersão dos dados podem ser utilizados, mas as classes devem ser sempre 
-  <strong>contínuas</strong> (sem lacunas), <strong>mutuamente exclusivas</strong> e <strong>exaustivas</strong>.
+  Cada intervalo reúne observações próximas, permitindo visualizar a distribuição de forma integrada. 
+  A definição dessas classes envolve decisões importantes: o <strong>número de intervalos</strong>, sua 
+  <strong>amplitude</strong>, os <strong>limites inferior e superior</strong> e a regra de alocação dos valores em cada 
+  classe. Métodos como a <em>regra de Sturges</em> ou critérios baseados na dispersão dos dados podem orientar essa escolha, 
+  mas, em qualquer caso, as classes devem ser <strong>contínuas</strong> (sem lacunas), 
+  <strong>mutuamente exclusivas</strong> (cada observação pertence a um único intervalo) e 
+  <strong>exaustivas</strong> (cobrem todo o intervalo de interesse da variável).
 </p>
-
-<p>
-  Definidas as classes, calcula-se para cada uma delas a <strong>frequência absoluta</strong> (quantidade de 
-  observações no intervalo), a <strong>frequência relativa</strong> (proporção em relação ao total) e a 
-  <strong>frequência acumulada</strong>. Como os intervalos seguem ordem numérica crescente, a frequência acumulada 
-  é naturalmente interpretável — assim como no caso das variáveis discretas.
-</p>
-
 <p>
   Para ilustrar, considere a variável <strong>tempo diário de estudo</strong> (em horas), medida em uma turma com 
   vinte estudantes. Após definir classes de mesma amplitude, obtém-se a distribuição apresentada abaixo.
@@ -486,19 +526,42 @@ Uma tabela de distribuição de frequências é composta pelos seguintes cálcul
 </figure>
 
 <p>
-  A tabela evidencia que a maior parte dos estudantes dedica entre 1 e 3 horas diárias ao estudo, e poucos 
-  ultrapassam 4 horas. Essa organização fornece uma visão geral da distribuição e prepara o caminho para 
-  representações gráficas específicas das variáveis contínuas, que precisam refletir a <strong>unidade da escala</strong> 
-  e as <strong>transições graduais entre intervalos</strong>.
+  Em termos práticos, o <strong>número de intervalos</strong> indica em quantas faixas distintas o eixo numérico será 
+  dividido (por exemplo, 5 classes de tempo de estudo). A <strong>amplitude</strong> de cada classe corresponde à 
+  largura do intervalo, isto é, à diferença entre o seu limite superior e o seu limite inferior 
+  (por exemplo, de 1 a 2 horas, amplitude igual a 1). Já os <strong>limites inferior e superior</strong> de uma classe 
+  são os valores que definem o começo e o fim desse intervalo na escala numérica. A combinação dessas escolhas determina 
+  quão “fina” ou “grossa” será a descrição da distribuição: intervalos muito largos escondem detalhes; intervalos muito 
+  estreitos produzem uma representação fragmentada e pouco estável.
+</p>
+
+
+<p>
+  Uma vez definidas as classes, calcula-se, para cada uma, a <strong>frequência absoluta</strong> 
+  (quantidade de observações no intervalo) e a <strong>frequência relativa</strong> 
+  (proporção em relação ao total de dados). Podem-se também determinar a <strong>frequência acumulada</strong> e a 
+  <strong>frequência relativa acumulada</strong>, somando progressivamente as frequências até cada limite superior 
+  de classe. Como os intervalos seguem uma ordem numérica crescente, essas frequências acumuladas permitem, por exemplo, 
+  responder diretamente a perguntas do tipo “qual proporção de estudantes estuda até certo número de horas por dia?”.
+</p>
+
+
+<p>
+  A tabela evidencia que a maior parte dos estudantes dedica entre 1 e 3 horas diárias ao estudo, enquanto poucos 
+  ultrapassam 4 horas. As frequências acumuladas mostram, por exemplo, que 70% dos estudantes estudam no máximo 
+  3 horas por dia, enquanto 30% estudam mais que isso. Essa organização fornece uma visão geral da distribuição e 
+  prepara o caminho para representações gráficas específicas das variáveis contínuas — como o <strong>histograma</strong> 
+  e o <strong>polígono de frequência</strong> —, que precisam refletir a <strong>unidade da escala</strong> e as 
+  <strong>transições graduais entre intervalos</strong>, em vez de valores isolados.
 </p>
 
 <h4>2.3.1 Gráficos para Variáveis Quantitativas Contínuas</h4>
 
 <p>
-  As variáveis contínuas exigem gráficos que respeitem a continuidade da escala numérica. 
-  Os mais utilizados são o <strong>histograma</strong>, o <strong>polígono de frequências</strong> e a <strong>ogiva</strong>. 
-  O histograma destaca a forma geral da distribuição; o polígono evidencia a transição entre as classes; 
-  e a ogiva representa o comportamento acumulado dos dados, útil para localizar percentis e proporções.
+  As variáveis contínuas exigem gráficos que respeitem a <strong>continuidade da escala numérica</strong> e o fato de que os 
+  dados foram agrupados em <strong>intervalos de classe</strong>. Os mais utilizados são o <strong>histograma</strong>, o 
+  <strong>polígono de frequências</strong> e a <strong>ogiva</strong>. Em conjunto, esses gráficos descrevem não apenas onde 
+  as observações se concentram, mas também como a distribuição se comporta ao longo de toda a escala.
 </p>
 
 <figure>
@@ -506,46 +569,56 @@ Uma tabela de distribuição de frequências é composta pelos seguintes cálcul
 </figure>
 
 <p>
-  Embora os três gráficos representem a mesma distribuição contínua, cada um destaca um aspecto 
-  específico da estrutura dos dados. Depois de observar as animações, é fundamental compreender a 
-  finalidade de cada representação e o tipo de informação que ela torna mais evidente. A seguir, 
-  resumimos o papel de cada gráfico.
+  Embora os três gráficos representem a mesma distribuição contínua, cada um enfatiza um aspecto específico da 
+  estrutura dos dados. Depois de observar as animações, é importante compreender a finalidade de cada representação 
+  e o tipo de informação que ela torna mais evidente. A seguir, resumimos o papel de cada gráfico.
 </p>
+
 <ul>
   <li class="lista">
-    <strong>Histograma:</strong> organiza os dados em intervalos de classe e representa a 
-    concentração de valores por meio da <strong>área</strong> das barras. Ele revela o formato 
-    geral da distribuição, como regiões de maior ou menor densidade.
+    <strong>Histograma:</strong>
+    organiza os dados em classes e representa a concentração de valores pela <strong>área das barras</strong>, que é 
+    proporcional à frequência de cada intervalo. As barras adjacentes, sem espaçamento entre si, reforçam a ideia 
+    de continuidade da escala e permitem visualizar o <strong>formato geral da distribuição</strong>, destacando 
+    regiões de maior e menor densidade.
   </li>
 
   <li class="lista">
-    <strong>Polígono de frequências:</strong> conecta os pontos médios das classes por uma linha 
-    contínua, enfatizando a <strong>transição suave</strong> entre as classes. É útil para comparar 
-    distribuições ou observar padrões mais claros do que no histograma.
+    <strong>Polígono de frequências:</strong>
+    conecta os pontos médios das classes por uma linha contínua, utilizando as mesmas frequências do histograma. 
+    Essa representação enfatiza a <strong>transição suave</strong> entre as classes e torna mais nítidos padrões 
+    como assimetrias, múltiplos picos ou comparações entre duas distribuições traçadas no mesmo sistema de eixos.
   </li>
 
   <li class="lista">
-    <strong>Ogiva (curva acumulada):</strong> mostra como a frequência se acumula ao longo dos limites 
-    superiores das classes. Ela indica percentis, mediana e proporções acima ou abaixo de qualquer 
-    ponto da escala, sendo particularmente útil para análises de posição.
+    <strong>Ogiva (curva acumulada):</strong>
+    mostra como a frequência se acumula ao longo dos <strong>limites superiores das classes</strong>. A partir dela, 
+    é possível localizar percentis, a mediana e proporções de observações acima ou abaixo de qualquer ponto da escala, 
+    o que a torna particularmente útil em análises de posição e em comparações entre grupos.
   </li>
 </ul>
 
-
-<p> Para aprofundar a compreensão da distribuição contínua, podemos representar essas mesmas informações de forma interativa. Ajuste as alturas das barras no <strong>histograma</strong> e observe como o <strong>polígono de frequências</strong> e a <strong>ogiva</strong> se transformam automaticamente. Essa exploração evidencia, de maneira imediata, como cada variação nas frequências de classe altera tanto o contorno geral da distribuição quanto o comportamento acumulado dos dados. </p>
+<p>
+  Nos painéis interativos a seguir, essas três representações são construídas a partir da mesma distribuição de 
+  frequências por classe. Ao ajustar as alturas das barras no <strong>histograma</strong>, observe como o 
+  <strong>polígono de frequências</strong> e a <strong>ogiva</strong> se transformam automaticamente. Essa exploração 
+  evidencia, de maneira imediata, que histograma, polígono e ogiva são apenas diferentes formas de expressar a mesma 
+  estrutura de dados contínuos: alterações nas frequências de classe modificam simultaneamente o contorno geral da 
+  distribuição e o comportamento acumulado dos valores.
+</p>
 
 <figure class="figure fullwidth" style="page-break-inside: avoid;">
-<!-- Versão para desktop -->
-<div class="kg-wrapper kg-desktop">
-  <div class="kg-container" src="modelos/histograma-ogivas-horizontal.yml"></div>
-</div>
+  <!-- Versão para desktop -->
+  <div class="kg-wrapper kg-desktop">
+    <div class="kg-container" src="modelos/histograma-ogivas-horizontal.yml"></div>
+  </div>
 </figure>
 
 <figure class="figure fullwidth" style="page-break-inside: avoid;">
-<!-- Versão para mobile -->
-<div class="kg-wrapper kg-mobile">
-  <div class="kg-container" src="modelos/histograma-ogivas.yml"></div>
-</div>
+  <!-- Versão para mobile -->
+  <div class="kg-wrapper kg-mobile">
+    <div class="kg-container" src="modelos/histograma-ogivas.yml"></div>
+  </div>
 </figure>
 
 <hr>
@@ -553,37 +626,39 @@ Uma tabela de distribuição de frequências é composta pelos seguintes cálcul
 <h2>Conclusão</h2>
 
 <p>
-  No capítulo anterior, estabelecemos os elementos fundamentais da Estatística: variável, dados, 
-  população, amostra, parâmetro e estatística. Esses conceitos estruturam a lógica de toda análise 
-  estatística, pois definem o que está sendo medido, de onde as informações vêm e como devem ser 
-  interpretadas. Sem essa base conceitual, qualquer descrição ou inferência perde clareza e rigor.
+  No capítulo anterior, estabelecemos os elementos fundamentais da Estatística — variável, dados, 
+  população, amostra, parâmetro e estatística — e vimos como eles estruturam a lógica de qualquer 
+  estudo empírico. Essas noções definem <strong>o que é observado</strong>, <strong>de onde vêm as informações</strong> 
+  e <strong>sobre qual universo se pretende concluir</strong>. Sem essa base conceitual, qualquer descrição ou inferência 
+  perde clareza e rigor.
 </p>
 
 <p>
   Neste capítulo, avançamos da definição conceitual para a <strong>organização e representação</strong> dos dados. 
-  A classificação das variáveis em qualitativas, quantitativas discretas e quantitativas contínuas 
-  mostrou que diferentes naturezas exigem diferentes formas de sumarização. As tabelas de frequência 
-  permitiram estruturar as observações de modo sistemático, enquanto os gráficos — barras, setores, 
-  dot plot, histograma, polígono e ogiva — revelaram visualmente padrões essenciais: comparações entre 
-  categorias, frequências pontuais, formato geral da distribuição e comportamento acumulado dos dados.
+  A distinção entre variáveis <strong>qualitativas</strong>, <strong>quantitativas discretas</strong> e 
+  <strong>quantitativas contínuas</strong> mostrou que naturezas distintas exigem formas específicas de sumarização. 
+  As tabelas de distribuição de frequências — absolutas, relativas e acumuladas — permitiram estruturar as observações 
+  de maneira sistemática, enquanto os diferentes tipos de gráficos — barras, setores, dot plot, histograma, polígono 
+  de frequência e ogiva — revelaram visualmente aspectos complementares da distribuição: comparação entre categorias, 
+  frequência de valores pontuais, forma geral da distribuição e comportamento acumulado dos dados ao longo da escala.
 </p>
 
 <p>
   As animações e visualizações interativas reforçaram uma intuição central da análise estatística: 
-  <strong>a forma do gráfico não é um enfeite, mas uma expressão direta das frequências observadas</strong>. 
-  Vimos como pequenas alterações nos dados modificam a aparência da distribuição, evidenciando a conexão 
-  entre estrutura numérica e representação visual. Essa compreensão é o elo entre a observação empírica, 
-  a interpretação gráfica e a futura análise numérica.
+  <strong>a forma do gráfico é uma consequência direta das frequências observadas</strong>, e não um mero recurso 
+  estético. Vimos como pequenas alterações nas contagens modificam imediatamente o formato das barras, a curva do 
+  polígono ou o perfil da ogiva, evidenciando a ligação estreita entre a estrutura numérica dos dados e sua 
+  representação visual. Essa compreensão fornece o elo conceitual entre a observação empírica, a leitura gráfica 
+  e a análise numérica que será desenvolvida nos próximos capítulos.
 </p>
 
 <p>
   Tendo consolidado a etapa de coleta, organização e visualização dos dados, estamos prontos para dar o 
-  próximo passo: resumir quantitativamente o comportamento de uma distribuição. No capítulo seguinte, 
-  estudaremos as <strong>medidas de tendência central</strong> — média, mediana e moda — que produzem valores 
-  representativos capazes de sintetizar o conjunto de dados e aprofundar a compreensão do fenômeno 
-  estudado.
+  passo seguinte: resumir quantitativamente o comportamento de uma distribuição. No capítulo seguinte, 
+  estudaremos as <strong>medidas de tendência central</strong> — média, mediana e moda — que produzem 
+  valores representativos capazes de sintetizar o conjunto de dados e aprofundar a compreensão do fenômeno 
+  estudado, preparando o terreno para análises descritivas e inferenciais mais sofisticadas.
 </p>
-
 
 <hr>
 
