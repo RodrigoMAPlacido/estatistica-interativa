@@ -443,3 +443,7 @@ body.textbook .katex-display { font-size:1.15em; margin:1.5rem 0; }
     padding: 8px 12px;
   }
 }
+.tts-hidden {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}

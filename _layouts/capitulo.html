@@ -116,6 +116,32 @@
     speedValue.textContent = current.toFixed(1) + "×";
   });
 </script>
+ <script>
+(function () {
 
+  const ttsBtn   = document.getElementById("tts-floating-btn");
+  const speedBtn = document.getElementById("tts-speed-btn");
+
+  function hideTTSAtPageEnd() {
+    const scrollY    = window.scrollY;
+    const viewport   = window.innerHeight;
+    const pageHeight = document.documentElement.scrollHeight;
+
+    const atBottom = scrollY + viewport >= pageHeight - 80;
+
+    if (atBottom) {
+      ttsBtn.classList.add("tts-hidden");
+      speedBtn.classList.add("tts-hidden");
+    } else {
+      ttsBtn.classList.remove("tts-hidden");
+      speedBtn.classList.remove("tts-hidden");
+    }
+  }
+
+  hideTTSAtPageEnd();
+  window.addEventListener("scroll", hideTTSAtPageEnd, { passive: true });
+
+})();
+</script>
 </body>
 </html>
