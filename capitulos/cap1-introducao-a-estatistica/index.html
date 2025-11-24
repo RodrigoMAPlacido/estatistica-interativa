@@ -49,18 +49,29 @@ proximo: /capitulos/cap2-distribuicoes-de-frequencia-e-graficos/
   <img src="../../imagens/elementos-fundamentais.svg" alt="Elementos Fundamentais">
 </figure>
 <p>
-    Os elementos constitutivos fundamentais são:
+  Os elementos constitutivos fundamentais são:
 </p>
 
 <ul>
-  <li class="lista"><strong>Unidade de observação e variável</strong>: o elemento sobre o qual se coletam informações
-      (unidade de observação) e a característica registrada em cada elemento (variável);</li>
+  <li class="lista">
+    <strong>Unidade de observação e variável</strong>: o elemento sobre o qual se coletam informações
+    (unidade de observação) e a característica registrada em cada elemento (variável);
+  </li>
 
-  <li class="lista"><strong>Dado</strong>: o valor concreto obtido para uma variável em uma unidade de observação;</li>
+  <li class="lista">
+    <strong>Dado e conjunto de dados</strong>: o valor concreto obtido para uma variável em uma unidade de
+    observação (dado) e a coleção organizada desses valores para um grupo de unidades, normalmente disposta
+    em forma de tabela (conjunto de dados);
+  </li>
 
-  <li class="lista"><strong>População e amostra</strong>: o conjunto completo de unidades de interesse e o subconjunto observado;</li>
+  <li class="lista">
+    <strong>População e amostra</strong>: o conjunto completo de unidades de interesse e o subconjunto observado;
+  </li>
 
-  <li class="lista"><strong>Parâmetro e estatística</strong>: medida numérica que descreve, respectivamente, a população e a amostra.</li>
+  <li class="lista">
+    <strong>Parâmetro e estatística</strong>: medida numérica que descreve, respectivamente, uma característica
+    da população e da amostra.
+  </li>
 </ul>
 
 <p>
@@ -111,14 +122,21 @@ proximo: /capitulos/cap2-distribuicoes-de-frequencia-e-graficos/
   Exemplos incluem idade, renda, peso, altura e tempo.
 </p>
 
-<h3>2.2 Dados</h3>
+<h3>2.2 Dado e conjunto de dados</h3>
 
 <p>
   Enquanto a <strong>variável</strong> representa a <strong>característica</strong> capaz de assumir diferentes valores,
   o <strong>dado</strong> é o <strong>valor concreto</strong> que essa característica assume em uma unidade de observação.
-  Cada dado corresponde ao valor efetivamente observado e registrado de uma característica. Em uma tabela, cada <strong>célula</strong> 
-  contém um dado relativo à <strong>variável</strong> indicada pela coluna e à <strong>unidade de observação</strong> 
-  representada pela linha. Assim, cada <strong>linha</strong> reúne o conjunto de dados registrados para uma mesma unidade.
+  Cada dado corresponde ao valor efetivamente observado e registrado para uma variável em um único elemento do estudo.
+</p>
+
+<p>
+  Quando reunimos simultaneamente os dados de várias unidades de observação, obtemos um 
+  <strong>conjunto de dados</strong>. Em uma tabela, cada <strong>célula</strong> contém um dado relativo à 
+  <strong>variável</strong> indicada pela coluna e à <strong>unidade de observação</strong> representada pela linha;
+  cada <strong>linha</strong> reúne os dados registrados para uma mesma unidade; e cada <strong>coluna</strong> 
+  apresenta os dados de uma variável ao longo de todas as unidades observadas. É essa organização tabular que torna 
+  possível analisar, comparar e sintetizar o comportamento das variáveis em estudo.
 </p>
 
 <figure>
@@ -129,7 +147,7 @@ proximo: /capitulos/cap2-distribuicoes-de-frequencia-e-graficos/
   Os dados podem ser obtidos por diferentes procedimentos: <strong>medições</strong> (como altura, temperatura ou tempo),
   <strong>contagens</strong> (número de atendimentos por hora), <strong>classificações</strong> (estado civil, tipo sanguíneo)
   ou <strong>respostas</strong> de pesquisa (opiniões, preferências, avaliações). Independentemente do método utilizado,
-  cada valor registrado constitui uma observação do fenômeno investigado.
+  cada valor registrado constitui uma observação do fenômeno investigado e passa a integrar o conjunto de dados.
 </p>
 
 <p>
@@ -140,22 +158,23 @@ proximo: /capitulos/cap2-distribuicoes-de-frequencia-e-graficos/
   <strong>variáveis quantitativas produzem dados quantitativos</strong>, pois o tipo da variável determina o tipo de 
   valor que pode ser observado.
 </p>
+
 <p>
   Entretanto, em muitas análises, valores originalmente numéricos são <strong>agrupados em categorias</strong> para 
   simplificar a interpretação ou permitir comparações. Por exemplo, a variável <em>renda</em>, que em princípio é quantitativa, pode ser 
   reorganizada em faixas como “até <span class="no-katex">R$ 1.000,00</span>”, “de <span class="no-katex">R$ 1.000,00</span> a <span class="no-katex">R$ 3.000,00</span>” ou 
-  “acima de <span class="no-katex">R$ 5.000,00</span>”. Nesse caso, deixa-se de 
-  utilizar a variável quantitativa original e passa-se a analisar uma <strong>nova variável qualitativa ordinal</strong>, 
-  cujos dados são as categorias formadas pelo agrupamento. Essa transformação não altera a natureza da variável original, 
-  apenas cria outra variável baseada nela. Essas questões serão mais aprofundadas na seção seguinte.
+  “acima de <span class="no-katex">R$ 5.000,00</span>”. Nesse caso, deixa-se de utilizar diretamente a variável quantitativa original 
+  e passa-se a analisar uma <strong>nova variável qualitativa ordinal</strong>, cujos dados são as categorias formadas pelo agrupamento. 
+  Essa transformação não altera a natureza da variável de origem, apenas cria outra variável baseada nela. Essas questões serão 
+  aprofundadas na seção seguinte.
 </p>
 
-
 <p>
-  Até aqui, tratamos dos dados como valores que descrevem uma característica em cada unidade observada. Contudo, em estudos 
-  estatísticos, nem sempre é possível registrar esses valores para todos os elementos de interesse. Trabalha-se, na maioria 
-  das vezes, com apenas uma parte deles. Para compreender a origem desses valores e os limites das conclusões que podem ser 
-  obtidas, é necessário introduzir dois conceitos fundamentais: <strong>população</strong> e <strong>amostra</strong>.
+  Até aqui, tratamos dos dados como valores que descrevem uma característica em cada unidade observada e, em conjunto, formam 
+  uma base de dados organizada. Contudo, em estudos estatísticos, nem sempre é possível registrar esses valores para todos os 
+  elementos de interesse. Trabalha-se, na maioria das vezes, com apenas uma parte deles. Para compreender a origem desses valores 
+  e os limites das conclusões que podem ser obtidas, é necessário introduzir dois conceitos fundamentais: 
+  <strong>população</strong> e <strong>amostra</strong>.
 </p>
 
 <h3>2.3 População e amostra</h3>
@@ -254,7 +273,7 @@ proximo: /capitulos/cap2-distribuicoes-de-frequencia-e-graficos/
 
 <p>
   Já os <strong>dados quantitativos</strong> correspondem a valores numéricos que expressam grandezas mensuráveis — idade, 
-  altura, tempo de percurso, renda, entre outras. Como carregam significado numérico, admitem cálculos como médias, 
+  altura, tempo de percurso, renda, entre outras. Como carregam significado de medida, admitem cálculos como médias, 
   medianas e medidas de dispersão, além de representações que exploram a escala numérica, como 
   <strong>histogramas</strong>, <strong>polígonos de frequência</strong> e <strong>gráficos de linhas</strong>.
 </p>
@@ -513,8 +532,8 @@ proximo: /capitulos/cap2-distribuicoes-de-frequencia-e-graficos/
 <h2>4. Estatística descritiva e estatística inferencial</h2>
 
 <p>
-  Tendo definidos os objetos fundamentais da estatística — dados, população, amostra,
-  parâmetros e estatísticas —, bem como entendido a texanomia da classificação dos dados, é possível compreender como a disciplina se estrutura metodologicamente. A atividade
+  Tendo definidos os objetos fundamentais da estatística —variáveis, dados, conjunto de dados, população, amostra,
+  parâmetros e estatísticas —, bem como entendido a taxonomia da classificação dos dados, é possível compreender como a disciplina se estrutura metodologicamente. A atividade
   estatística não consiste apenas em calcular medidas numéricas, mas em transformar dados em conhecimento. Essa transformação
   ocorre em duas etapas intelectuais distintas e complementares: a <strong>estatística descritiva</strong> e a
   <strong>estatística inferencial</strong>.

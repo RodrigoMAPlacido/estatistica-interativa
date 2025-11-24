@@ -176,12 +176,12 @@
 
     <!-- TEXTO “DADOS” -->
     <text x="915" y="270"
-          font-size="27"
+          font-size="24"
           font-weight="500"
           text-anchor="middle"
           transform="rotate(90,930,230)"
           class="a-text">
-      DADOS
+      CONJUNTO DE DADOS
     </text>
 
     <!-- CHAVE LATERAL -->
