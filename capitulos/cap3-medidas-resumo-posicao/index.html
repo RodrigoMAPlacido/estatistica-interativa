@@ -1,0 +1,1298 @@
+---
+layout: capitulo
+title: "Capítulo 3 — Medidas-resumo: Medidas de Posição I"
+anterior: /capitulos/cap2-distribuicoes-de-frequencia-e-graficos/
+proximo: /capitulos/cap4-medidas-resumo-dispersao-dois/
+---
+<p class="subtitle">Objetivos de aprendizagem</p>
+<ul>
+  <li>Compreender o papel das <strong>medidas-resumo</strong> na síntese numérica de uma distribuição e sua relação com diferentes formas de representação dos dados.</li>
+
+  <li>Entender o conceito de <strong>posição central</strong> em uma distribuição e seu papel na descrição do comportamento típico dos dados.</li>
+
+  <li>Calcular e interpretar as <strong>medidas de tendência central</strong> — média, mediana e moda — reconhecendo suas propriedades, aplicações e limitações.</li>
+
+  <li>Analisar criticamente o uso de cada medida de tendência central em diferentes contextos e tipos de distribuição.</li>
+</ul>
+
+<hr>
+<h2>1. Introdução</h2>
+<p>
+  <span class="newthought">No capítulo anterior,</span> examinamos como diferentes tipos de dados podem ser organizados em tabelas de frequência
+  e representados graficamente de maneiras adequadas à sua natureza — <strong>qualitativa</strong> ou <strong>quantitativa</strong>. 
+  Esses recursos estruturam o conjunto de observações, revelam categorias predominantes, permitem comparar a intensidade relativa das 
+  classes e, quando aplicável, descrevem a distribuição dos valores ao longo de intervalos. Trata-se de uma etapa fundamental da análise 
+  descritiva, pois transforma dados brutos em estruturas passíveis de interpretação visual. Ainda assim, por mais informativas que sejam, 
+  essas representações permanecem essencialmente <em>gráficas</em>: oferecem uma visão inicial dos padrões observados, mas não fornecem, 
+  por si só, <strong>números que sintetizam informações essenciais</strong> para comparações objetivas ou decisões quantitativas.
+</p>
+
+<p>
+  Em muitas situações práticas, é necessário complementar a leitura visual fornecida por tabelas e gráficos com valores numéricos que 
+  resumam características essenciais da distribuição. Esses valores, chamados de <strong>medidas-resumo</strong>, condensam o conjunto 
+  de observações em poucos números representativos, capazes de indicar onde os dados se concentram, qual é sua variabilidade e como se 
+  distribuem ao longo da escala observada. Além de facilitar comparações entre grupos e tornar a comunicação mais clara, as medidas-resumo 
+  são fundamentais para análises que exigem maior precisão quantitativa. De maneira geral, os principais manuais classificam essas medidas 
+  em duas categorias complementares: <strong>medidas de posição</strong>, relacionadas à localização dos valores, e 
+  <strong>medidas de dispersão</strong>, associadas ao grau de espalhamento.
+</p>
+
+<p>
+  As <strong>medidas de posição</strong> podem ser subdivididas em duas categorias complementares. As 
+  <strong>medidas de tendência central</strong> — como a <strong>média</strong>, a <strong>mediana</strong> e a 
+  <strong>moda</strong> — procuram identificar um <em>valor representativo</em> em torno do qual os dados tendem a se 
+  concentrar. Já as <strong>separatrizes</strong>, que incluem os <strong>quartis</strong>, <strong>decis</strong> e 
+  <strong>percentis</strong>, particionam a distribuição em frações iguais e indicam <em>posições relativas</em> ao longo da 
+  escala observada. Enquanto as primeiras oferecem um único ponto característico da distribuição, as separatrizes fornecem 
+  múltiplos marcos que permitem analisar como as observações se distribuem entre diferentes segmentos dos dados.
+</p>
+
+<p>
+  Neste capítulo, concentraremos a atenção nas <strong>medidas de tendência central</strong>, desenvolvendo em detalhe os conceitos
+  de média, mediana e moda, suas variantes e suas formas de cálculo em diferentes situações. O objetivo é que o leitor compreenda
+  não apenas <em>como</em> obter essas medidas, mas também <em>quando</em> cada uma delas é mais adequada, <em>por que</em> podem produzir
+  resultados distintos na mesma distribuição e <em>como</em> interpretar esses resultados no contexto de uma análise estatística
+  cuidadosa. As <strong>separatrizes</strong> serão tratadas de forma sistemática no capítulo seguinte.
+</p>
+<hr>
+
+<h2>2. Medidas-resumo de Posição: Tendência Central</h2>
+
+<p>
+  As <strong>medidas de tendência central</strong> têm como objetivo identificar um valor que represente, de forma sintética, o comportamento 
+  típico e característico de uma distribuição. A ideia central é encontrar um ponto em torno do qual as observações se concentram, permitindo resumir o 
+  conjunto de dados por meio de um único número com significado estatístico claro. Essa representação é útil tanto para descrever 
+  rapidamente o conjunto de valores quanto para comparar diferentes grupos ou avaliar alterações em séries de dados. As três medidas 
+  mais utilizadas — <strong>média</strong>, <strong>mediana</strong> e <strong>moda</strong> — capturam aspectos distintos da 
+  distribuição e respondem de maneira diferente à presença de valores extremos, assimetrias e variações na forma dos dados.
+</p>
+
+<h3>2.1 Média</h3>
+
+<p>
+  A <strong>média</strong> é uma das formas mais tradicionais de resumir numericamente um conjunto de dados. Seu propósito é sintetizar, 
+  em um único valor, alguma característica global das observações. Independentemente do método de cálculo adotado, a média sempre 
+  representa uma medida de posição obtida a partir de todos os valores disponíveis, funcionando como um indicador que resume o 
+  comportamento geral da distribuição.
+</p>
+
+<p>
+  A forma como essa síntese é construída varia conforme a estrutura dos dados e o tipo de relação entre as observações. Quando todos 
+  os valores possuem a mesma importância, utiliza-se a <strong>média aritmética</strong>. Se algumas observações exercem influência 
+  diferenciada — como em notas com pesos —, emprega-se a <strong>média ponderada</strong>. Em distribuições organizadas em classes, cada 
+  intervalo é representado por seu ponto médio, resultando na <strong>média para dados agrupados</strong>. Quando as informações se 
+  combinam de modo multiplicativo, como em taxas de crescimento sucessivas, a síntese adequada é a <strong>média geométrica</strong>. E, 
+  em situações baseadas em razões do tipo “quantidade por unidade”, como velocidades médias ou produtividades, utiliza-se a 
+  <strong>média harmônica</strong>, que se baseia nos inversos dos valores.
+</p>
+
+<p>
+  Essas cinco versões resumem os dados de maneiras distintas — por soma direta, por pesos diferenciados, por aproximação por classes, 
+  por multiplicação ou por inversão — e são adequadas para problemas estatísticos específicos. Nas subseções seguintes, apresentamos a 
+  definição formal, a interpretação e exemplos de cada tipo de média, indicando em quais contextos cada uma delas é mais apropriada.
+</p>
+<h4>2.1.1 Média aritmética</h4>
+
+<p>
+  A <strong>média aritmética</strong> é a forma mais simples e amplamente utilizada de média. Ela resume o conjunto de dados por meio de 
+  um valor que corresponde à soma das observações dividida pela quantidade total de elementos — uma interpretação que pode ser vista 
+  como uma redistribuição uniforme dos valores. Para um conjunto de <em>n</em> observações <span class="formula-inline" data-tts=", xis um, xis dois, até xis ene,">\(x_1, x_2, \ldots, x_n\)</span>, sua forma expandida é:
+</p>
+
+<p class="formula" data-tts="x barra é igual à soma dos valores dividida por n.">
+  \[
+  \bar{X} = \frac{x_1 + x_2 + x_3 + \cdots + x_{n-1} + x_n}{n}.
+  \]
+</p>
+
+
+<p>
+  Nessa expressão, cada <span class="formula-inline" data-tts="xis i,">\(x_i\)</span> representa um <em>dado</em> observado — isto é, o valor assumido pela variável na unidade de observação 
+  <em>i</em>. O termo <em>n</em> indica o total de observações disponíveis.
+</p>
+
+<p>
+  Para fins de compactação e notação matemática, essa fórmula costuma ser escrita de forma resumida utilizando o símbolo de somatório:
+</p>
+
+<p class="formula" data-tts="x barra é igual a um sobre n, vezes o operador de somatória de i até n,  de xis i.">
+  \[
+    \bar{X} = \frac{1}{n}\sum_{i=1}^{n} x_i.
+  \]
+</p>
+
+
+<p>
+  Como leva em conta todos os valores da distribuição, a média aritmética é sensível à presença de observações muito altas ou muito 
+  baixas. Ainda assim, quando não há valores extremos relevantes, ela fornece uma síntese numérica eficiente da tendência geral 
+  dos dados.
+</p>
+
+<div class="example-frame">
+  <h5>Exemplo</h5>
+
+  <p>
+    Considere um conjunto de dados coletado a partir de uma <strong>amostra</strong> composta por 
+    <strong>5 unidades de observação</strong>, selecionadas de uma <strong>população</strong> de estudantes. 
+    A variável analisada é a <strong>nota final</strong>, classificada como quantitativa contínua e medida 
+    em <strong>escala de razão</strong>, registrada para cada estudante.
+  </p>
+<p>
+  Os valores observados na amostra estão organizados na tabela a seguir:
+</p>
+
+<figure class="figure table">
+
+  <table>
+    <thead>
+      <tr>
+        <th>Estudantes</th>
+        <th>Nota (<em>x</em>)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Estudante 1</td><td>5</td></tr>
+      <tr><td>Estudante 2</td><td>6</td></tr>
+      <tr><td>Estudante 3</td><td>6</td></tr>
+      <tr><td>Estudante 4</td><td>7</td></tr>
+      <tr><td>Estudante 5</td><td>8</td></tr>
+    </tbody>
+  </table>
+ <figcaption>Valores da variável na amostra</figcaption>
+
+</figure>
+
+<p>
+  Representando esses mesmos dados na forma de um conjunto:
+</p>
+
+<p class="formula" data-tts="xis igual a cinco, seis, seis, sete e oito.">
+  \[
+    x = \{5, 6, 6, 7, 8\}.
+  \]
+</p>
+
+  <p>
+    Aplicando a definição da média aritmética:
+  </p>
+
+  <p class="formula" data-tts="x barra igual a trinta e dois dividido por cinco, igual a seis vírgula quatro.">
+    \[
+      \bar{X} = \frac{32}{5} = 6{,}4.
+    \]
+  </p>
+
+  <p>
+    O valor <strong>6,4</strong> representa a nota média da amostra. Ele resume numericamente o desempenho 
+    observado e fornece uma estimativa pontual da tendência central da população à qual a amostra pertence.
+  </p>
+</div>
+
+<h4>2.1.2 Média ponderada</h4>
+
+<p>
+  A <strong>média ponderada</strong> é utilizada quando as observações não têm a mesma importância dentro do conjunto de dados. 
+  Cada valor <span class="formula-inline" data-tts=",xis i,">\(x_i\)</span> recebe um peso <span class="formula-inline" data-tts=",dabliu i,">\(w_i\)</span>, que expressa sua relevância relativa no cálculo da média. Assim, valores mais importantes 
+  exercem maior influência no resultado final.
+</p>
+
+<p class="formula"
+   data-tts="x barra ponderado é igual à soma dos pesos multiplicados pelos valores, dividida pela soma total dos pesos.">
+  \[
+    \bar{X}_w = \frac{w_1 x_1 + w_2 x_2 + \cdots + w_{n} x_n}{w_1 + w_2 + \cdots + w_n}.
+  \]
+</p>
+
+
+<p>
+  Nessa expressão, cada <span class="formula-inline" data-tts=",xis i,">\(x_i\)</span> representa o valor observado e cada 
+  <span class="formula-inline" data-tts=",dabliu i,">\(w_i\)</span> corresponde ao peso atribuído à observação <em>i</em>. 
+  O denominador não é mais o número de termos <em>n</em>, como na média aritmética, mas sim a <em>soma dos pesos</em>, que representa a 
+  importância total atribuída ao conjunto de observações. Ao incorporar pesos, cada unidade de observação passa a contribuir 
+  para a soma de forma ajustada à sua importância relativa, e dividir pela soma dos pesos faz com que a média represente 
+  o valor médio por unidade de peso. Se todas as observações tiverem peso igual, por exemplo 
+  <span class="formula-inline" data-tts=",dabliu i igual à um,">\(w_i = 1\)</span> para todo <em>i</em>, a soma dos pesos é 
+  <em>n</em> e a média ponderada reduz-se à média aritmética usual.
+</p>
+
+<p>
+  De forma compacta, a média ponderada é escrita com a notação de somatório:
+</p>
+
+<p class="formula"
+   data-tts="x barra w é igual ao somatório de i igual a um até n, de w i vezes x i, dividida pela soma, de i igual a um até n, de w i.">
+  \[
+    \bar{X}_w = \frac{\sum_{i=1}^{n} w_i x_i}{\sum_{i=1}^{n} w_i}.
+  \]
+</p>
+
+<p>
+  A média ponderada é amplamente utilizada em contextos nos quais certas observações possuem maior impacto, como no cálculo de médias de 
+  notas com pesos diferentes, na construção de índices econômicos e em situações em que grupos de tamanhos distintos contribuem de 
+  maneira desigual para o total.
+</p>
+
+<div class="example-frame">
+<h5>Exemplo</h5>
+
+<p>
+  Considere um <strong>estudante</strong> selecionado de uma <strong>população</strong> de estudantes de uma disciplina. 
+  A variável de interesse é a sua <strong>nota final</strong>, classificada como quantitativa contínua e medida 
+  em <strong>escala de razão</strong>. Essa nota é obtida a partir de <strong>3 avaliações</strong>, cada uma com um 
+  <strong>peso</strong> proporcional à sua importância no cálculo da média.
+</p>
+
+<p>
+  Note que, diferentemente do exemplo anterior, aqui não estamos lidando com várias unidades de observação 
+  na amostra, mas com as diferentes <strong>avaliações</strong> que compõem a nota final de um mesmo estudante.
+</p>
+
+  <p>
+    Os dados observados na amostra são apresentados a seguir:
+  </p>
+
+  <figure class="figure table">
+    <table>
+      <thead>
+        <tr>
+          <th>Avaliação</th>
+          <th>Nota (<em>x</em>)</th>
+          <th>Peso (<em>w</em>)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Prova 1</td><td>7</td><td>2</td></tr>
+        <tr><td>Prova 2</td><td>6</td><td>3</td></tr>
+        <tr><td>Prova 3</td><td>8</td><td>5</td></tr>
+      </tbody>
+    </table>
+  </figure>
+
+  <p>
+    Aplicando a definição da média ponderada:
+  </p>
+
+<p class="formula"
+   data-tts="x barra com peso igual a dois vezes sete mais três vezes seis mais cinco vezes oito, dividido por dois mais três mais cinco. Igual a quatorze mais dezoito mais quarenta sobre dez. Igual a setenta e dois sobre dez. Igual a sete vírgula dois.">
+  \[
+    \bar{X}_w = \frac{2 \cdot 7 + 3 \cdot 6 + 5 \cdot 8}{2 + 3 + 5}
+              = \frac{14 + 18 + 40}{10}
+              = \frac{72}{10}
+              = 7{,}2.
+    \]
+</p>
+
+  <p>
+    O valor <strong>7,2</strong> representa a nota média ponderada da amostra, levando em conta 
+    que avaliações com maior peso exercem maior influência sobre o resultado final.
+  </p>
+
+  <p>
+    Observe que, se todos os pesos fossem iguais, a média ponderada coincidiria com a média 
+    aritmética simples. A média ponderada é, portanto, uma generalização da média usual, 
+    na qual cada observação contribui proporcionalmente à sua relevância.
+  </p>
+</div>
+
+<h4>2.1.3 Média para dados agrupados</h4>
+
+<p>
+  Em muitas situações práticas, os dados não são registrados como valores individuais, mas agrupados
+  em <strong>classes de frequência</strong>, seja por conveniência, por economia de espaço ou por
+  necessidade de visualização. Nesses casos, não dispomos mais de cada valor 
+  <span class="formula-inline">\(x_i\)</span> separadamente, mas apenas do <strong>intervalo</strong> 
+  em que ele se encontra e da <strong>frequência</strong> de observações em cada classe. Como a informação 
+  original foi condensada, não é possível calcular diretamente a média aritmética usual. A 
+  <strong>média para dados agrupados</strong> surge, então, como uma forma de estimar a média original 
+  a partir da distribuição em classes.
+</p>
+
+<p class="formula" 
+   data-tts="Média dos dados agrupados é igual à soma dos produtos entre cada ponto médio e sua frequência, dividida pelo total de observações.">
+  \[
+    \bar{X}_{agr}
+    = \frac{f_1 m_1 + f_2 m_2 + \cdots + f_k m_k}{f_1 + f_2 + \cdots + f_k}.
+  \]
+</p>
+
+<p>
+  Nessa expressão, <span class="formula-inline" data-tts=",ême jota,">\(m_j\)</span> é o <strong>ponto médio</strong> da classe <em>j</em>, 
+  obtido pela média aritmética entre o limite inferior e o limite superior do intervalo e utilizado como 
+  representante aproximado dos valores contidos nessa classe. O termo 
+  <span class="formula-inline" data-tts=",éfê jota,">\(f_j\)</span> indica a <strong>frequência</strong> de observações naquela classe. 
+  O denominador corresponde à <strong>soma das frequências</strong>, isto é, ao total de observações consideradas.
+</p>
+
+<p>
+  Comparando essa fórmula com a <strong>média ponderada</strong> apresentada na subseção anterior, nota-se que a 
+  estrutura é a mesma: na média ponderada, cada valor <span class="formula-inline">\(x_i\)</span> recebe um peso 
+  <span class="formula-inline">\(w_i\)</span>; aqui, o papel dos “valores” é desempenhado pelos pontos médios 
+  <span class="formula-inline">\(m_j\)</span>, e o papel dos “pesos” é desempenhado pelas frequências 
+  <span class="formula-inline">\(f_j\)</span>. A média para dados agrupados nada mais é do que a 
+  <strong>média ponderada dos pontos médios</strong>, em que cada classe contribui de acordo com sua frequência.
+</p>
+
+<p>
+  Em notação de somatório, a expressão assume a forma compacta:
+</p>
+
+<p class="formula"
+   data-tts="x barra agri é igual ao somatório, de j igual a um até k, de f j vezes m j, dividido pela soma, de j igual a um até k, de f j.">
+  \[
+    \bar{X}_{agr} 
+    = 
+    \frac{\sum_{j=1}^{k} f_j m_j}
+         {\sum_{j=1}^{k} f_j}.
+  \]
+</p>
+
+<p>
+  Essa abordagem é especialmente importante em <strong>distribuições contínuas</strong> representadas por histogramas 
+  e em conjuntos de dados muito extensos, nos quais a apresentação em classes é a forma mais prática de organizar 
+  a informação. Como os pontos médios são aproximações dos valores individuais, a média agrupada também é uma 
+  aproximação da média verdadeira. Quando as classes são relativamente estreitas e bem posicionadas, porém, 
+  essa média ponderada dos pontos médios fornece uma estimativa consistente da tendência geral dos dados.
+</p>
+
+<div class="example-frame">
+  <h5>Exemplo</h5>
+
+  <p>
+    Considere uma <strong>amostra</strong> composta por <strong>20 estudantes</strong>, selecionados de uma 
+    <strong>população</strong> de alunos de um curso. A variável de interesse é o 
+    <strong>número de horas de estudo por semana</strong>, classificada como quantitativa contínua e medida 
+    em <strong>escala de razão</strong>. Por questões de síntese, os dados individuais não foram registrados
+    um a um, mas agrupados em <strong>classes de frequência</strong>.
+  </p>
+
+  <p>
+    A distribuição de frequências para as horas semanais de estudo é apresentada na tabela a seguir, 
+    juntamente com o ponto médio <span class="formula-inline">\(m_j\)</span> de cada classe:
+  </p>
+
+  <figure class="figure table">
+
+    <table>
+      <thead>
+        <tr>
+          <th>Classe (horas/semana)</th>
+          <th>Ponto médio \(m_j\)</th>
+          <th>Frequência \(f_j\)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>0–10</td><td>5</td><td>4</td></tr>
+        <tr><td>10–20</td><td>15</td><td>6</td></tr>
+        <tr><td>20–30</td><td>25</td><td>8</td></tr>
+        <tr><td>30–40</td><td>35</td><td>2</td></tr>
+      </tbody>
+    </table>
+   <figcaption>Horas de estudo por semana — dados agrupados em classes</figcaption>
+
+  </figure>
+
+  <p>
+    Para estimar a média das horas de estudo a partir dos dados agrupados, utilizamos os pontos médios
+    de cada classe como representantes dos valores nela contidos e aplicamos a fórmula da média para dados
+    agrupados:
+  </p>
+
+  <p class="formula"
+     data-tts="x barra agri igual a quatro vezes cinco mais seis vezes quinze mais oito vezes vinte e cinco mais dois vezes trinta e cinco, dividido por quatro mais seis mais oito mais dois. Igual a vinte mais noventa mais duzentos mais setenta, sobre vinte. Igual a trezentos e oitenta sobre vinte. Igual a dezenove.">
+    \[
+      \bar{X}_{agr} 
+      = \frac{4 \cdot 5 + 6 \cdot 15 + 8 \cdot 25 + 2 \cdot 35}{4 + 6 + 8 + 2}
+      = \frac{20 + 90 + 200 + 70}{20}
+      = \frac{380}{20}
+      = 19.
+    \]
+  </p>
+
+  <p>
+    O valor <strong>19</strong> representa uma estimativa da <strong>média de horas semanais de estudo</strong> na amostra, 
+    obtida a partir dos dados agrupados. Como utilizamos os pontos médios de cada classe no lugar dos valores
+    individuais, trata-se de uma aproximação da média verdadeira: quanto mais estreitas forem as classes e 
+    quanto melhor os pontos médios representarem os dados nelas contidos, mais próxima essa média agrupada 
+    tende a ficar da média que seria obtida com as observações originais.
+  </p>
+</div>
+
+
+<h4>2.1.4 Média geométrica</h4>
+
+<p>
+  A <strong>média geométrica</strong> é utilizada quando os dados se relacionam de forma multiplicativa, isto é, quando o que importa 
+  são <em>variações relativas</em> e não diferenças absolutas. Esse é o caso típico de taxas de crescimento, índices financeiros, 
+  rendimentos sucessivos e comparações baseadas em proporções. Nesses contextos, a média aritmética não descreve adequadamente o 
+  comportamento dos dados, pois trata incrementos absolutos como equivalentes, independentemente da escala.
+</p>
+
+<p>
+  A média geométrica é construída multiplicando todas as observações e extraindo a raiz <em>n</em>-ésima desse produto. Para um conjunto 
+  de valores positivos <span class="formula-inline" data-tts=", xis um, xis dois, até xis ene,">\(x_1, x_2, \ldots, x_n\)</span>, sua forma expandida é:
+</p>
+
+<p class="formula"
+   data-tts="g é igual à raiz de n, de x um, vezes x dois, vezes x três, até x ene.">
+\[
+G = \sqrt[n]{\,x_1 \cdot x_2 \cdot x_3 \cdots x_{n-1} \cdot x_n\,}.
+\]
+</p>
+
+<p>
+  Em que cada <span class="formula-inline" data-tts=", xis i,">\(x_i\)</span> é o valor observado na unidade <em>i</em>, e <em>n</em> é o número total de observações. Essa construção reflete o fato de 
+  que, quando as grandezas se combinam multiplicativamente, a medida de tendência central deve preservar as proporções relativas entre os 
+  valores. 
+  Em notação compacta, utiliza-se o símbolo de produto:
+</p>
+
+<p class="formula"
+   data-tts="g é igual ao produtório de i igual a um, até n, de x i, elevado à potência de um sobre n.">
+\[
+G = \left( \prod_{i=1}^{n} x_i \right)^{1/n}.
+\]
+</p>
+
+<p>
+  A média geométrica é sempre menor ou igual à média aritmética, sendo igual apenas quando todas as observações são idênticas. Ela é 
+  especialmente apropriada em situações em que a ordem das multiplicações altera o resultado — como séries de rentabilidades — e em que 
+  variações percentuais sucessivas devem ser tratadas como fatores multiplicativos, não como incrementos lineares.
+</p>
+<div class="example-frame">
+  <h5>Exemplo</h5>
+
+  <p>
+    Considere uma <strong>amostra</strong> composta por <strong>4 observações</strong>, selecionadas de uma 
+    <strong>população</strong> de aplicações financeiras. A variável analisada é o 
+    <strong>fator de crescimento anual</strong> de um investimento ao longo de quatro anos, classificada 
+    como quantitativa contínua e medida em <strong>escala de razão</strong>.
+  </p>
+
+  <p>
+    Os valores observados foram:
+  </p>
+
+  <p class="formula" data-tts="xis igual a um vírgula dois, um vírgula um, zero vírgula nove e um vírgula três.">
+    \[
+      x = \{1{,}2,\; 1{,}1,\; 0{,}9,\; 1{,}3\}.
+    \]
+  </p>
+
+  <p>
+    Para calcular a média geométrica, multiplicam-se todas as observações e extrai-se a raiz de índice 
+    igual ao número de dados:
+  </p>
+
+  <p class="formula"
+     data-tts="g igual à raiz quarta de um vírgula dois vezes um vírgula um vezes zero vírgula nove vezes um vírgula três. Igual a aproximadamente um vírgula um oito.">
+    \[
+      G = \sqrt[4]{1{,}2 \cdot 1{,}1 \cdot 0{,}9 \cdot 1{,}3}
+        \approx 1{,}118.
+    \]
+  </p>
+
+  <p>
+    O resultado indica que, em média, o investimento cresceu cerca de <strong>11,8%</strong> por ano no período. 
+    Diferentemente da média aritmética, a média geométrica considera o <strong>efeito multiplicativo</strong> 
+    dos fatores de crescimento, sendo especialmente apropriada para taxas e razões sucessivas.
+  </p>
+</div>
+
+<h4>2.1.5 Média harmônica</h4>
+
+<p>
+  A <strong>média harmônica</strong> é utilizada quando os dados representam razões do tipo “quantidade por unidade” ou quando se deseja 
+  calcular uma taxa média supondo que cada observação está associada ao mesmo denominador físico. Nessas situações, a média aritmética 
+  fornece resultados incorretos, pois trata valores altos e baixos com o mesmo impacto, enquanto a média harmônica ajusta a contribuição 
+  relativa de cada observação ao trabalhar com seus <em>inversos</em>.
+</p>
+
+<p>
+  Para um conjunto de valores positivos <span class="formula-inline" data-tts=", xis um, xis dois, até xis ene,">\(x_1, x_2, \ldots, x_n\)</span>, a média harmônica é definida pela razão entre o número total de 
+  observações e a soma dos inversos desses valores:
+</p>
+
+<p class="formula"
+   data-tts="h é igual a ene, dividido por um sobre x um, mais um sobre x dois, até um sobre x ene.">
+\[
+H = \frac{n}{\frac{1}{x_1} + \frac{1}{x_2} + \cdots + \frac{1}{x_n}}.
+\]
+</p>
+
+<p>
+  Nessa expressão, cada <span class="formula-inline" data-tts=", xis i,">\(x_i\)</span> é uma taxa, velocidade ou razão associada a uma mesma unidade física de referência. O denominador envolve 
+  a <strong>soma dos inversos</strong> porque, quando trabalhamos com grandezas do tipo “por unidade”, valores menores exercem maior 
+  influência na taxa média — algo que a média aritmética não capta. Em notação compacta, utiliza-se o símbolo de somatório:
+</p>
+
+<p class="formula"
+   data-tts="h é igual a ene dividido pelo somatório de i igual a um até n de um sobre x i.">
+\[
+H = \frac{n}{\sum_{i=1}^{n} \frac{1}{x_i}}.
+\]
+</p>
+
+<p>
+  A média harmônica é especialmente útil para calcular <em>velocidades médias</em> em trechos de igual distância, <em>produtividades</em> 
+  em tarefas com esforço equivalente e <em>taxas unitárias</em> que se acumulam de modo inversamente proporcional ao tempo ou ao recurso 
+  utilizado. Ela é sempre menor que a média geométrica (exceto quando todos os valores são iguais) e atribui maior peso a valores 
+  pequenos, refletindo sua sensibilidade natural a observações baixas na escala dos inversos.
+</p>
+<div class="example-frame">
+  <h5>Exemplo</h5>
+
+  <p>
+    Considere uma <strong>amostra</strong> composta por <strong>3 observações</strong>, selecionadas de uma 
+    <strong>população</strong> de deslocamentos urbanos. A variável analisada é a 
+    <strong>velocidade média em cada trecho</strong>, classificada como quantitativa contínua e medida 
+    em <strong>escala de razão</strong>.
+  </p>
+
+  <p>
+    Um motorista percorre dois trechos de mesma distância com velocidades diferentes, registradas como:
+  </p>
+
+  <p class="formula" data-tts="v igual a trinta e sessenta quilômetros por hora.">
+    \[
+      v = \{30,\;60\}\ \text{km/h}.
+    \]
+  </p>
+
+  <p>
+    A velocidade média do percurso não é a média aritmética das velocidades, mas a 
+    <strong>média harmônica</strong>:
+  </p>
+
+  <p class="formula"
+     data-tts="h igual a dois dividido por um sobre trinta mais um sobre sessenta. Igual a quarenta.">
+    \[
+      H = \frac{2}{\frac{1}{30} + \frac{1}{60}} = 40.
+    \]
+  </p>
+
+  <p>
+    O valor <strong>40 km/h</strong> representa a velocidade média efetiva ao longo de todo o percurso. 
+    A média harmônica é apropriada nesse caso porque as velocidades estão relacionadas a uma 
+    grandeza fixa (a distância), e o tempo gasto em cada trecho é inversamente proporcional à velocidade.
+  </p>
+</div>
+
+<h3>2.2 Mediana</h3>
+
+<p>
+  Diferentemente da média, que resume uma distribuição a partir dos valores numéricos observados, a
+  <strong>mediana</strong> é a medida de tendência central que identifica o valor situado exatamente no
+  meio da distribuição quando as observações são organizadas em ordem crescente. Ela divide o conjunto
+  de dados em duas partes com o mesmo número de observações: metade dos valores fica abaixo da mediana
+  e metade acima. Por essa razão, a mediana é interpretada como uma medida associada à
+  <em>posição</em>, e não à magnitude dos valores.
+</p>
+
+<p>
+  Uma característica essencial da mediana é sua <strong>robustez</strong>. Como ela depende apenas da
+  ordenação dos dados, e não de seus valores numéricos exatos, sua posição permanece praticamente
+  inalterada na presença de observações extremas. Em distribuições assimétricas ou com valores
+  atípicos, essa propriedade faz com que a mediana frequentemente forneça uma representação mais
+  fiel do centro da distribuição do que a média aritmética.
+</p>
+
+<p>
+  Embora o conceito de mediana seja único — identificar o ponto central da distribuição —, a forma
+  de obtê-la varia conforme a maneira como os dados estão registrados. Quando dispomos dos valores
+  individualmente, calculamos a <strong>mediana para dados não agrupados</strong>, localizando o valor
+  que ocupa a posição central após a ordenação. Se os dados foram organizados em <strong>classes
+  intervalares</strong>, utilizamos a <strong>mediana para dados agrupados</strong>, em que o ponto central
+  é identificado dentro da classe mediana. Por fim, quando trabalhamos com variáveis em
+  <strong>escala ordinal</strong>, determinamos a <strong>categoria mediana</strong>, isto é, a classe ordinal
+  que divide a distribuição em duas metades.
+</p>
+
+<p>
+  Nas subseções seguintes, apresentamos a definição formal, o procedimento de cálculo e exemplos para
+  cada uma dessas situações — dados não agrupados, dados agrupados em classes e dados ordinais —,
+  indicando em quais contextos a mediana oferece uma síntese mais informativa do que a média.
+</p>
+
+<h4>2.2.1 Mediana em dados não agrupados</h4>
+
+<p>
+  Quando os valores observados estão disponíveis individualmente, dizemos que os dados são 
+  <strong>não agrupados</strong>. Nessa situação, a mediana é identificada diretamente a partir da 
+  <strong>ordenação dos dados</strong>. Diferentemente da média, que depende do valor numérico de cada 
+  observação, a mediana depende exclusivamente da <strong>posição</strong> que cada valor ocupa no 
+  conjunto ordenado.
+</p>
+
+<p>
+  O procedimento para determinar a mediana segue duas etapas fundamentais:
+</p>
+
+<ul>
+  <li>ordenar os dados em <strong>ordem crescente</strong>;</li>
+  <li>identificar a posição central da distribuição.</li>
+</ul>
+
+<p>
+  Seja um conjunto com <span class="formula-inline" data-tts=", ene,">\(n\)</span> observações. Há dois casos possíveis:
+</p>
+
+<ul>
+  <li>
+    <strong>Se <span class="formula-inline" data-tts=", ene,">\(n\)</span> é ímpar</strong>, a mediana é o valor que ocupa a posição
+    <span class="formula-inline" data-tts=", ene mais um sobre dois,">\( \frac{n+1}{2} \)</span> no conjunto ordenado;
+  </li>
+
+  <li>
+    <strong>Se <span class="formula-inline" data-tts=", ene,">\(n\)</span> é par</strong>, a mediana é a média aritmética dos valores que ocupam as posições 
+    <span class="formula-inline" data-tts=", ene sobre dois,">\( \frac{n}{2} \)</span> e 
+    <span class="formula-inline" data-tts=", ene sobre dois mais um,">\( \frac{n}{2} + 1 \)</span>.
+  </li>
+</ul>
+
+<div class="example-frame">
+  <h5>Exemplo</h5>
+
+  <p>
+    Considere uma <strong>amostra</strong> formada por estudantes selecionados de uma 
+    <strong>população</strong> de alunos de uma disciplina. A variável em estudo é a 
+    <strong>nota final</strong>, classificada como quantitativa contínua e medida em 
+    <strong>escala de razão</strong>. Dois conjuntos de dados são analisados a seguir para ilustrar 
+    os dois casos possíveis no cálculo da mediana: número ímpar e número par de observações.
+  </p>
+
+  <p>
+    <strong>Caso 1 — Número ímpar de observações</strong>
+  </p>
+
+  <p class="formula" data-tts="xis igual a quatro, cinco, seis, sete e oito.">
+    \[
+      x = \{4, 5, 6, 7, 8\}.
+    \]
+  </p>
+
+  <p>
+    Após ordenar os dados (o que já está feito), identifica-se a posição central:
+  </p>
+
+  <p class="formula" data-tts="cinco mais um sobre dois igual a três.">
+    \[
+      \frac{5+1}{2} = 3.
+    \]
+  </p>
+
+  <p>
+    O valor que ocupa essa posição é:
+  </p>
+
+  <p class="formula" data-tts="mediana igual a seis.">
+    \[
+      \text{Mediana} = 6.
+    \]
+  </p>
+
+  <p>
+    <strong>Caso 2 — Número par de observações</strong>
+  </p>
+
+  <p class="formula" data-tts="xis igual a quatro, cinco, seis, sete, oito e vinte.">
+    \[
+      x = \{4, 5, 6, 7, 8, 20\}.
+    \]
+  </p>
+
+  <p>
+    Com seis observações, não há um único valor central. A mediana é dada pela média aritmética 
+    dos dois valores centrais:
+  </p>
+
+  <p class="formula" data-tts="seis mais sete dividido por dois igual a seis vírgula cinco.">
+    \[
+      \text{Mediana} = \frac{6 + 7}{2} = 6{,}5.
+    \]
+  </p>
+
+  <p>
+    Observe que, apesar da presença de um valor extremo (20), o valor da mediana permanece muito 
+    próximo ao do primeiro caso. Isso evidencia uma propriedade importante da mediana: sua 
+    <strong>robustez</strong> frente a observações extremas.
+  </p>
+</div>
+
+<h4>2.2.2 Mediana em dados agrupados</h4>
+
+<p>
+  Quando os dados são organizados em <strong>classes intervalares</strong>, os valores individuais deixam de estar
+  disponíveis. Nesse caso, a mediana continua sendo definida como o valor que separa a metade inferior da metade superior
+  da distribuição, mas já não pode ser obtida diretamente a partir da ordenação dos dados. Em vez disso, ela deve ser 
+  <strong>estimada</strong> por meio de uma interpolação dentro da classe que contém a observação central, denominada 
+  <strong>classe mediana</strong>.
+</p>
+
+<p>
+  A classe mediana é aquela cuja <strong>frequência acumulada</strong> ultrapassa pela primeira vez a metade do total
+  de observações. Uma vez identificada essa classe, a mediana é estimada pela expressão:
+</p>
+
+<p class="formula"
+   data-tts="mediana é igual a ele i mais, abre parêntese, ene sobre dois menos éfe i menos um, sobre éfe i, fecha parêntese, vezes agá.">
+  \[
+    \text{Mediana} = L_i + 
+    \left(\frac{\frac{n}{2} - F_{i-1}}{f_i}\right) \cdot h
+  \]
+</p>
+
+<p>
+  em que:
+</p>
+
+<ul>
+  <li><span class="formula-inline" data-tts=", ele i,">\( L_i \)</span> é o limite inferior da classe mediana;</li>
+  <li><span class="formula-inline" data-tts=", éfe i menos um,">\( F_{i-1} \)</span> é a frequência acumulada da classe imediatamente anterior;</li>
+  <li><span class="formula-inline" data-tts=", éfe i,">\( f_i \)</span> é a frequência da classe mediana;</li>
+  <li><span class="formula-inline" data-tts=", agá,">\( h \)</span> é a amplitude da classe;</li>
+  <li><span class="formula-inline" data-tts=", ene,">\( n \)</span> é o número total de observações.</li>
+</ul>
+
+<p>
+  Essa fórmula supõe que os dados estejam aproximadamente <strong>uniformemente distribuídos</strong> dentro da classe mediana,
+  de modo que a posição da mediana possa ser interpolada de forma linear. O valor obtido é, portanto, uma 
+  <em>estimativa</em> da mediana dos dados originais, e não o valor exato que seria obtido se todas as observações 
+  individuais estivessem disponíveis.
+</p>
+
+<div class="example-frame">
+  <h5>Exemplo</h5>
+
+  <p>
+    Retome a distribuição de frequência do <strong>tempo diário de estudo</strong> (em horas) apresentada na 
+    Tabela 2 desta seção, obtida a partir de uma <strong>amostra</strong> com <strong>20 estudantes</strong>. 
+    A variável em estudo é o <strong>tempo diário de estudo</strong>, classificada como quantitativa contínua 
+    e medida em <strong>escala de razão</strong>.
+  </p>
+
+  <p>
+    A partir da tabela, temos as classes e suas frequências absolutas:
+  </p>
+
+  <ul>
+    <li>0–1 horas: frequência 3 (acumulada 3);</li>
+    <li>1–2 horas: frequência 6 (acumulada 9);</li>
+    <li>2–3 horas: frequência 5 (acumulada 14);</li>
+    <li>3–4 horas: frequência 4 (acumulada 18);</li>
+    <li>4–5 horas: frequência 2 (acumulada 20).</li>
+  </ul>
+
+  <p>
+    Como o total de observações é <span class="formula-inline">\(n = 20\)</span>, metade da amostra corresponde a 
+    <span class="formula-inline">\( \frac{n}{2} = 10 \)</span> observações. A classe mediana é aquela em que a 
+    frequência acumulada ultrapassa pela primeira vez esse valor. Observando as frequências acumuladas:
+  </p>
+
+  <p class="formula" data-tts="três, nove, catorze, dezoito, vinte.">
+    \[
+      3,\; 9,\; 14,\; 18,\; 20,
+    \]
+  </p>
+
+  <p>
+    vemos que a primeira classe cuja frequência acumulada excede 10 é o intervalo <strong>2–3 horas</strong>. 
+    Logo, essa é a <strong>classe mediana</strong>. Para essa classe, identificamos:
+  </p>
+
+  <ul>
+    <li><span class="formula-inline">\( L_i = 2 \)</span> (limite inferior da classe mediana);</li>
+    <li><span class="formula-inline">\( F_{i-1} = 9 \)</span> (frequência acumulada da classe anterior, 1–2 horas);</li>
+    <li><span class="formula-inline">\( f_i = 5 \)</span> (frequência da classe 2–3 horas);</li>
+    <li><span class="formula-inline">\( h = 1 \)</span> (amplitude da classe: 3 − 2);</li>
+    <li><span class="formula-inline">\( n = 20 \)</span> (total de observações).</li>
+  </ul>
+
+  <p>
+    Substituindo esses valores na fórmula da mediana para dados agrupados, obtemos:
+  </p>
+
+  <p class="formula"
+     data-tts="mediana aproximadamente igual a dois mais, abre parêntese, dez menos nove, dividido por cinco, fecha parêntese, vezes um. Igual a dois vírgula dois.">
+    \[
+      \text{Mediana} 
+      \approx 2 + 
+      \left(\frac{\frac{20}{2} - 9}{5}\right) \cdot 1
+      = 2 + \frac{10 - 9}{5}
+      = 2 + \frac{1}{5}
+      = 2{,}2.
+    \]
+  </p>
+
+  <p>
+    O valor <strong>2,2 horas</strong> é uma <strong>estimativa da mediana</strong> do tempo diário de estudo na amostra. 
+    Ele indica que aproximadamente metade dos estudantes estuda até cerca de 2,2 horas por dia, enquanto a outra metade 
+    estuda mais do que isso. Como trabalhamos com dados agrupados em classes, esse valor é obtido por interpolação e 
+    deve ser interpretado como uma aproximação da mediana que seria calculada a partir dos dados individuais.
+  </p>
+</div>
+
+<h4>2.2.3 Mediana em dados ordinais</h4>
+
+<p>
+  Quando os dados pertencem a uma <strong>escala ordinal</strong> — isto é, quando as categorias possuem
+  uma <strong>ordem</strong>, mas não valores numéricos bem definidos —, ainda é possível determinar
+  a mediana. Nesses casos, a mediana continua sendo a categoria que ocupa a <strong>posição central</strong> 
+  da distribuição, mas agora essa posição é definida em termos da <strong>ordem das categorias</strong>, 
+  e não de uma escala numérica.
+</p>
+
+<p>
+  O procedimento é análogo ao dos dados numéricos não agrupados: ordenam-se as categorias da menor para 
+  a maior (por exemplo, “ruim” &lt; “regular” &lt; “bom” &lt; “ótimo”), contam-se as frequências de cada 
+  categoria e identifica-se a posição central. A mediana será a categoria na qual essa posição recai.
+</p>
+
+<div class="example-frame">
+  <h5>Exemplo</h5>
+
+  <p>
+    Considere uma <strong>amostra</strong> de <strong>15 respostas</strong> a uma pesquisa de satisfação 
+    aplicada a clientes de um serviço. A variável de interesse é o 
+    <strong>nível de satisfação</strong>, medida em escala ordinal com as categorias 
+    “ruim”, “regular”, “bom” e “ótimo”.
+  </p>
+
+  <p>
+    As frequências observadas foram:
+  </p>
+
+  <figure class="figure table">
+    <table>
+      <thead>
+        <tr>
+          <th>Categoria</th>
+          <th>Frequência</th>
+          <th>Frequência acumulada</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Ruim</td>
+          <td>2</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>Regular</td>
+          <td>4</td>
+          <td>6</td>
+        </tr>
+        <tr>
+          <td>Bom</td>
+          <td>6</td>
+          <td>12</td>
+        </tr>
+        <tr>
+          <td>Ótimo</td>
+          <td>3</td>
+          <td>15</td>
+        </tr>
+      </tbody>
+    </table>
+  </figure>
+
+  <p>
+    Como o total de respostas é <span class="formula-inline">\(n = 15\)</span>, a posição central da 
+    distribuição é
+    <span class="formula-inline">\( \frac{n+1}{2} = \frac{15+1}{2} = 8 \)</span>. 
+    Pela coluna de frequências acumuladas, vemos que:
+  </p>
+
+  <ul>
+    <li>até “regular”, acumulamos 6 respostas;</li>
+    <li>até “bom”, acumulamos 12 respostas.</li>
+  </ul>
+
+  <p>
+    Logo, a 8ª observação está na categoria <strong>“bom”</strong>, que é a mediana da distribuição de 
+    satisfação. Em termos interpretativos, isso significa que pelo menos metade dos clientes avalia o 
+    serviço como “bom” ou “ótimo”, e pelo menos metade o avalia como “bom” ou pior.
+  </p>
+</div>
+
+<p>
+  Esse exemplo mostra que a mediana é, essencialmente, uma medida <strong>posicional</strong>: ela identifica 
+  a categoria que ocupa o centro da distribuição em termos de ordenação, mesmo na ausência de valores 
+  numéricos. Essa característica torna a mediana particularmente útil em variáveis ordinais, nas quais 
+  a noção de “mais” ou “menos” faz sentido, mas a intensidade das diferenças entre categorias não é 
+  quantificável.
+</p>
+
+<p>
+  Ao mesmo tempo, por não levar em conta a <strong>magnitude das diferenças</strong> entre categorias ou valores, 
+  a mediana não captura variações internas da distribuição que a média aritmética — quando a escala numérica 
+  é adequada — consegue refletir. Em contextos em que a intensidade dos valores é relevante e a escala é 
+  compatível com operações numéricas, a média pode oferecer uma síntese mais informativa.
+</p>
+
+<p>
+  Assim, não existe uma medida de tendência central universalmente superior. A escolha entre média e 
+  mediana depende da <strong>natureza dos dados</strong> (numéricos contínuos, discretos ou ordinais), da 
+  <strong>forma da distribuição</strong> (simétrica, assimétrica, com ou sem valores extremos) e dos 
+  <strong>objetivos da análise</strong>. O uso consciente da mediana exige reconhecer tanto a sua 
+  <strong>robustez</strong> em relação a valores extremos quanto a sua <strong>limitação</strong> em termos 
+  de sensibilidade à intensidade dos valores.
+</p>
+
+<h3>2.3 Moda</h3>
+
+<p>
+  A <strong>moda</strong> é a medida de tendência central que identifica o valor mais frequente em um conjunto de dados.
+  Diferentemente da média e da mediana, que dependem da ordem e da magnitude das observações, a moda está diretamente
+  associada à <em>frequência</em> com que cada valor aparece. Por isso, é particularmente útil quando o objetivo é destacar
+  a categoria ou o valor mais comum dentro da distribuição.
+</p>
+
+<p>
+  A moda é aplicável tanto a dados quantitativos quanto a dados <strong>qualitativos</strong>, caso em que representa a
+  categoria mais escolhida ou mais observada. Essa característica torna a moda uma medida especialmente flexível, já que
+  média e mediana não se aplicam, em geral, a variáveis nominais. Em contrapartida, a moda pode não ser única ou,
+  em certos conjuntos de dados, sequer existir valor claramente predominante.
+</p>
+
+<p>
+  Uma distribuição pode apresentar:
+</p>
+
+<ul>
+  <li><strong>uma única moda</strong> (distribuição unimodal);</li>
+  <li><strong>duas modas</strong> (distribuição bimodal);</li>
+  <li><strong>mais de duas modas</strong> (distribuição multimodal).</li>
+</ul>
+
+<p>
+  A existência de múltiplas modas indica que a distribuição possui mais de um valor típico, frequentemente associado a
+  diferentes agrupamentos de observações. Nesses casos, a moda <strong>complementa</strong>, em vez de substituir, outras
+  medidas de tendência central, pois oferece informações sobre os pontos de maior concentração ou os “picos” da distribuição.
+</p>
+
+<p>
+  Embora o conceito de moda seja único — identificar o valor ou a categoria mais frequente —, a forma de obtê-la depende de
+  como os dados estão organizados. Quando dispomos dos valores individualmente, determinamos a <strong>moda para dados não
+  agrupados</strong>, identificando o(s) valor(es) com maior frequência absoluta. Se os dados estão organizados em
+  <strong>classes intervalares</strong>, trabalhamos com a <strong>moda para dados agrupados</strong>, em que o foco recai
+  sobre a <em>classe modal</em> (aquela com maior frequência), podendo-se obter uma estimativa numérica do valor modal dentro
+  dessa classe. Por fim, em variáveis <strong>qualitativas ou ordinais</strong>, identificamos a <strong>categoria modal</strong>,
+  isto é, a categoria que mais se repete na distribuição.
+</p>
+
+<p>
+  Nas subseções seguintes, apresentamos o procedimento de identificação da moda em cada uma dessas situações — dados não
+  agrupados, dados agrupados em classes e dados qualitativos ou ordinais —, com exemplos que ilustram tanto distribuições
+  unimodais quanto casos com múltiplas modas.
+</p>
+
+<p>
+  Por exemplo, considere os valores \( 3, 4, 4, 5, 6, 6, 7 \). Há duas modas — 4 e 6 — indicando dois valores igualmente
+  frequentes. Já em dados nominais como {“carro”, “ônibus”, “carro”, “carro”, “metrô”}, a moda é “carro”, pois representa
+  a categoria mais escolhida.
+</p>
+
+<h4>2.3.1 Moda em dados não agrupados</h4>
+
+<p>
+  A <strong>moda</strong> é o valor (ou categoria) que ocorre com maior frequência em um conjunto de dados. 
+  Quando os dados estão disponíveis individualmente, isto é, na forma de uma lista de observações 
+  <strong>não agrupadas</strong>, a identificação da moda é direta: basta verificar qual valor aparece 
+  mais vezes. A moda pode ser definida tanto para variáveis <strong>qualitativas</strong> quanto para 
+  variáveis <strong>quantitativas</strong>.
+</p>
+
+<p>
+  Um conjunto de dados pode ser:
+</p>
+
+<ul>
+  <li><strong>unimodal</strong>, quando há apenas um valor mais frequente;</li>
+  <li><strong>bimodal</strong>, quando dois valores ocorrem com a mesma frequência máxima;</li>
+  <li><strong>multimodal</strong>, quando há três ou mais valores igualmente mais frequentes;</li>
+  <li><strong>amodal</strong>, quando todas as observações são distintas e nenhuma se repete.</li>
+</ul>
+
+<div class="example-frame">
+  <h5>Exemplo</h5>
+
+  <p>
+    Considere uma <strong>amostra</strong> composta por <strong>10 estudantes</strong>, selecionados de uma 
+    <strong>população</strong> de alunos de ensino médio. A variável analisada é o 
+    <strong>meio de transporte utilizado para ir à escola</strong>, classificada como qualitativa nominal.
+  </p>
+
+  <p>
+    Os dados observados são:
+  </p>
+
+  <p>
+    <em>ônibus, carro, ônibus, a pé, bicicleta, ônibus, carro, ônibus, a pé, ônibus</em>.
+  </p>
+
+  <p>
+    Contando as ocorrências de cada categoria:
+  </p>
+
+  <ul>
+    <li>ônibus: 5 estudantes;</li>
+    <li>carro: 2 estudantes;</li>
+    <li>a pé: 2 estudantes;</li>
+    <li>bicicleta: 1 estudante.</li>
+  </ul>
+
+  <p>
+    A categoria <strong>ônibus</strong> é a que apresenta maior frequência, de modo que a moda da distribuição 
+    é “ônibus”. Em termos interpretativos, isso indica que o meio de transporte mais utilizado na amostra é o ônibus.
+  </p>
+</div>
+
+
+<h4>2.3.2 Moda em dados agrupados sem intervalos de classe</h4>
+
+<p>
+  Em muitas situações, os dados são organizados em uma <strong>tabela de frequências</strong>, 
+  na qual cada linha corresponde a um valor (ou categoria) distinto e à frequência com que ele ocorre. 
+  Quando não há <strong>intervalos de classe</strong> — isto é, quando cada linha representa um valor específico 
+  da variável —, a moda continua sendo o valor associado à <strong>maior frequência</strong>.
+</p>
+
+<p>
+  Nesse caso, a tabela de frequências apenas torna explícito o que já poderia ser obtido pela contagem das 
+  observações individuais, facilitando a identificação da moda, especialmente quando o número de dados é grande.
+</p>
+
+<div class="example-frame">
+  <h5>Exemplo</h5>
+
+  <p>
+    Considere uma <strong>amostra</strong> composta por <strong>30 lançamentos</strong> de um dado honesto. 
+    A variável em estudo é o <strong>número de faces observadas</strong>, classificada como quantitativa discreta 
+    e medida em escala de razão.
+  </p>
+
+  <p>
+    A distribuição de frequências obtida foi:
+  </p>
+
+  <figure class="figure table">
+    <table>
+      <thead>
+        <tr>
+          <th>Face</th>
+          <th>Frequência</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>3</td></tr>
+        <tr><td>2</td><td>4</td></tr>
+        <tr><td>3</td><td>7</td></tr>
+        <tr><td>4</td><td>6</td></tr>
+        <tr><td>5</td><td>5</td></tr>
+        <tr><td>6</td><td>5</td></tr>
+      </tbody>
+    </table>
+  </figure>
+
+  <p>
+    Observa-se que a maior frequência é <strong>7</strong>, associada à face <strong>3</strong>. Portanto, 
+    a moda da distribuição é <strong>3</strong>. Em termos descritivos, a face 3 foi a mais frequentemente 
+    observada nesses 30 lançamentos.
+  </p>
+
+  <p>
+    Em distribuições desse tipo, diferentes valores podem apresentar a mesma frequência máxima. 
+    Nesses casos, a distribuição será bi ou multimodal, e todas as categorias associadas à frequência máxima 
+    são consideradas modas.
+  </p>
+</div>
+
+
+<h4>2.3.3 Moda em dados agrupados em classes</h4>
+
+<p>
+  Quando os dados de uma variável <strong>quantitativa contínua</strong> são agrupados em 
+  <strong>classes intervalares</strong>, não é mais possível identificar diretamente qual valor ocorre com 
+  maior frequência, pois apenas se conhece o número de observações em cada intervalo. Nessa situação, 
+  define-se como <strong>classe modal</strong> a classe que apresenta a <strong>maior frequência</strong>.
+</p>
+
+<p>
+  Para obter uma <strong>estimativa numérica</strong> da moda, pode-se considerar que, dentro da classe modal, 
+  as frequências aumentam a partir da classe anterior e diminuem em direção à classe seguinte, realizando-se uma 
+  interpolação. Uma fórmula frequentemente utilizada é:
+</p>
+
+<p class="formula"
+   data-tts="moda é igual a ele i mais, abre parêntese, éfe i menos éfe i menos um, sobre, éfe i menos éfe i menos um, mais éfe i menos éfe i mais um, fecha parêntese, vezes agá.">
+  \[
+    \text{Moda} 
+    = L_i + 
+    \left(
+      \frac{f_i - f_{i-1}}{(f_i - f_{i-1}) + (f_i - f_{i+1})}
+    \right)\cdot h
+  \]
+</p>
+
+<p>
+  em que:
+</p>
+
+<ul>
+  <li><span class="formula-inline">\(L_i\)</span> é o limite inferior da classe modal;</li>
+  <li><span class="formula-inline">\(f_i\)</span> é a frequência da classe modal;</li>
+  <li><span class="formula-inline">\(f_{i-1}\)</span> é a frequência da classe anterior;</li>
+  <li><span class="formula-inline">\(f_{i+1}\)</span> é a frequência da classe seguinte;</li>
+  <li><span class="formula-inline">\(h\)</span> é a amplitude das classes.</li>
+</ul>
+
+<p>
+  Assim como no caso da mediana para dados agrupados, o valor obtido é uma <strong>estimativa</strong> da moda, 
+  baseada na suposição de que a distribuição das observações varia de forma aproximadamente regular entre as classes.
+</p>
+
+<div class="example-frame">
+  <h5>Exemplo</h5>
+
+  <p>
+    Considere novamente a variável <strong>tempo diário de estudo</strong> (em horas), agrupada nas seguintes classes,
+    com frequências observadas em uma amostra de estudantes:
+  </p>
+
+  <figure class="figure table">
+    <table>
+      <thead>
+        <tr>
+          <th>Classe (horas)</th>
+          <th>Frequência</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>0–1</td><td>3</td></tr>
+        <tr><td>1–2</td><td>6</td></tr>
+        <tr><td>2–3</td><td>8</td></tr>
+        <tr><td>3–4</td><td>5</td></tr>
+        <tr><td>4–5</td><td>2</td></tr>
+      </tbody>
+    </table>
+  </figure>
+
+  <p>
+    A maior frequência é <span class="formula-inline">\(f_i = 8\)</span>, correspondente à classe 
+    <strong>2–3 horas</strong>, que é, portanto, a <strong>classe modal</strong>. As frequências das 
+    classes anterior e seguinte são, respectivamente, 
+    <span class="formula-inline">\(f_{i-1} = 6\)</span> (1–2 horas) e 
+    <span class="formula-inline">\(f_{i+1} = 5\)</span> (3–4 horas). A amplitude das classes é 
+    <span class="formula-inline">\(h = 1\)</span> hora, e o limite inferior da classe modal é 
+    <span class="formula-inline">\(L_i = 2\)</span>.
+  </p>
+
+  <p>
+    Substituindo na fórmula da moda para dados agrupados:
+  </p>
+
+  <p class="formula"
+     data-tts="moda aproximadamente igual a dois mais, abre parêntese, oito menos seis, sobre, oito menos seis mais oito menos cinco, fecha parêntese, vezes um. Igual a dois mais dois sobre cinco. Igual a dois vírgula quatro.">
+    \[
+      \text{Moda}
+      \approx 
+      2 + 
+      \left(
+        \frac{8 - 6}{(8 - 6) + (8 - 5)}
+      \right)\cdot 1
+      = 2 + \frac{2}{2 + 3}
+      = 2 + \frac{2}{5}
+      = 2{,}4.
+    \]
+  </p>
+
+  <p>
+    A moda estimada é, portanto, aproximadamente <strong>2,4 horas</strong>. Esse valor representa o 
+    <strong>tempo de estudo mais frequente</strong> na distribuição contínua aproximada pelas classes, 
+    levando em conta não apenas a frequência da classe modal, mas também o comportamento das frequências 
+    nas classes vizinhas.
+  </p>
+</div>
+
+<hr>
+
+<h2>3. Conclusão</h2>
+
+<p>
+  Ao longo deste capítulo, vimos como as <strong>medidas-resumo</strong> complementam o papel de tabelas de frequência
+  e representações gráficas ao fornecer <strong>sínteses numéricas</strong> do comportamento dos dados. Dentro dessa
+  classe geral de medidas, concentramos a atenção nas <strong>medidas de posição central</strong> — média, mediana e
+  moda —, que procuram identificar um valor representativo em torno do qual as observações tendem a se concentrar.
+  Cada uma delas sintetiza a informação de maneira distinta, destacando aspectos diferentes da estrutura dos valores
+  observados e respondendo a perguntas específicas sobre o conjunto de dados.
+</p>
+
+<p>
+  A <strong>média</strong> combina todos os valores numéricos disponíveis e produz um ponto de equilíbrio da distribuição. Quando
+  todos os valores têm a mesma importância, utilizamos a média aritmética; em situações com pesos diferenciados, recorremos à
+  média ponderada; em dados agrupados em classes, aproximamos os valores pelos pontos médios; e, quando as informações se
+  combinam multiplicativamente ou em forma de razões, a média geométrica e a média harmônica tornam-se mais adequadas. Em todos
+  esses casos, a média é sensível a valores extremos e reflete fortemente a magnitude das observações.
+</p>
+
+<p>
+  A <strong>mediana</strong>, por sua vez, é uma medida de posição: identifica o valor situado no meio da distribuição quando os dados
+  são ordenados. Ela pode ser obtida a partir de dados não agrupados, de distribuições em classes ou de escalas ordinais, sempre
+  com a mesma interpretação: dividir o conjunto em duas metades de igual tamanho. Por depender apenas da ordenação, a mediana é
+  menos afetada por observações extremas e costuma representar melhor o “centro típico” em distribuições assimétricas ou com
+  outliers.
+</p>
+
+<p>
+  Já a <strong>moda</strong> destaca o(s) valor(es) mais frequente(s) na distribuição. Em dados não agrupados, identifica o(s) valor(es)
+  com maior contagem; em dados agrupados, a atenção recai sobre a <em>classe modal</em>; e, em variáveis qualitativas ou ordinais,
+  a moda corresponde à categoria mais escolhida. A possibilidade de distribuições unimodais, bimodais ou multimodais evidencia
+  que podem existir diversos “valores típicos”, muitas vezes associados a agrupamentos distintos dentro dos dados.
+</p>
+
+<p>
+  Em síntese, nenhuma dessas medidas deve ser encarada como superior em termos absolutos. A escolha entre média, mediana e moda
+  depende do <strong>tipo de variável</strong> (quantitativa ou qualitativa, nominal ou ordinal), da <strong>forma de registro dos dados</strong>
+  (valores individuais ou classes) e das <strong>características da distribuição</strong>, como assimetria, presença de valores
+  extremos e existência de múltiplos picos. Utilizar uma única medida de tendência central sem considerar essas dimensões pode
+  levar a interpretações imprecisas ou enganosas.
+</p>
+
+<p>
+  Por fim, é importante lembrar que qualquer medida-resumo condensa uma distribuição inteira em um único número e, portanto,
+  inevitavelmente perde detalhes. Os quadros de distribuição de frequência e os gráficos estudados nos capítulos anteriores
+  continuam sendo ferramentas essenciais para visualizar a forma da distribuição, enquanto média, mediana e moda fornecem
+  sínteses numéricas de seu comportamento central. Nos próximos capítulos, completaremos o quadro das <strong>medidas-resumo</strong>,
+  introduzindo outras <strong>medidas de posição</strong> e as <strong>medidas de dispersão</strong>, que permitem avaliar não
+  apenas onde os dados se concentram, mas também <em>o quão espalhados</em> eles estão em torno dessas medidas de tendência central.
+</p>
+
+  <hr>
+<h2>4. Referências</h2>
+<p>
+  FÁVERO, Luiz Paulo; BELFIORE, Patrícia. Manual de análise de dados: estatística e modelagem multivariada com Excel®, SPSS® e Stata®. 1. ed. Rio de Janeiro: Elsevier, 2017.
+</p>
+<p>
+  MAGALHÃES, Marcos Nascimento; LIMA, Antonio Carlos Pedroso de. Noções de Probabilidade e Estatística. 7. ed., 1. reimpr. São Paulo: Editora da Universidade de São Paulo, 2011.
+</p>
+<p>
+  SARTORIS, Alexandre. Estatística e introdução à econometria. 2. ed. São Paulo: Saraiva, 2013.
+</p>
+<p>
+  BUSSAB, Wilton de Oliveira; MORETTIN, Pedro Alberto. <strong>Estatística básica</strong>. 10. ed. São Paulo: SaraivaUni, 2023.
+</p>
+<p>
+  LARSON, Ron; FARBER, Betsy. <strong>Estatística aplicada</strong>. 6. ed. Tradução José Fernando Pereira Gonçalves; Revisão técnica Manoel Henrique Salgado. São Paulo: Pearson Education do Brasil, 2015.
+</p>
+<p>
+  TRIOLA, Mario F. <strong>Introdução à estatística</strong>. 12. ed. Tradução e revisão técnica Ana Maria Lima de Farias, Vera Regina Lima de Farias e Flores. Rio de Janeiro: LTC — Livros Técnicos e Científicos Editora, 2017.
+</p>
+<p>
+  MOOD, Alexander McFarlane; GRAYBILL, Franklin A.; BOES, Duane C. Introduction to the theory of statistics. New York: McGraw-Hill, 1974.
+</p>
+<p>
+  SAVAGE, Leonard J. The Foundations of Statistics. 2. ed. rev. New York: Dover Publications, 1972.
+</p>
+<p>
+  WARE, William B.; FERRON, John M.; MILLER, Barbara M. Introductory Statistics: A Conceptual Approach Using R. New York: Routledge, 2013.
+</p>

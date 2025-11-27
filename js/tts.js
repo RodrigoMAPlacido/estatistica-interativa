@@ -1,12 +1,18 @@
 // =========================================================
 // TEXT-TO-SPEECH — Estatística Interativa (Versão PRO DOM-REAL)
-// - Highlight preciso via TextNodes
-// - Começa no PRIMEIRO parágrafo visível
-// - Começa na primeira frase visível desse parágrafo
-// - Resume contextual (sempre a partir do que está na tela)
-// - Recalcula DOM/offsets a cada frase
-// - Controle de velocidade
 // =========================================================
+
+class TTSFormula {
+  constructor(element) {
+    this.el = element;
+  }
+
+  getText() {
+    const t = this.el.getAttribute("data-tts");
+    if (t && t.trim().length > 0) return t.trim();
+    return "Fórmula matemática sem descrição textual definida.";
+  }
+}
 
 class TTSController {
   constructor() {
@@ -17,7 +23,6 @@ class TTSController {
     this.highlightSpans = [];
     this._paused = false;
 
-    // velocidade padrão
     this.rate = 1.0;
 
     this.waitForVoices().then(() => this.loadVoices());
@@ -27,7 +32,7 @@ class TTSController {
   // Velocidade
   // ------------------------------------------
   setRate(v) {
-    const r = Math.max(0.5, Math.min(2.0, v)); // 0.5x–2.0x
+    const r = Math.max(0.5, Math.min(2.0, v));
     this.rate = r;
   }
 
@@ -89,29 +94,19 @@ class TTSController {
 
   // ------------------------------------------
   // Normalização do texto para o TTS
-  // (remove quebras de linha e espaços múltiplos,
-  //  mas NÃO influencia offsets / highlight)
   // ------------------------------------------
 cleanForSpeech(text) {
-  // ----------------------------------------
-  // 1) Corrigir valores monetários
-  //    Padrão: R$ 1.234,56  -> "1.234 reais"
-  // ----------------------------------------
   text = text.replace(/R\$\s*([\d\.]+),00/g, function(_, valor) {
     return valor + " reais";
   });
 
-  // ----------------------------------------
-  // 2) Normalização geral
-  // ----------------------------------------
   return text
-    .replace(/\s+/g, " ")   // compacta espaços
+    .replace(/\s+/g, " ")
     .trim();
 }
 
-
   // ======================================================
-  // Utilitários de texto REAL (DOM)
+  // Utilitários de texto REAL (DOM) — AJUSTADO
   // ======================================================
   extractRealText(element) {
     const walker = document.createTreeWalker(
@@ -125,10 +120,47 @@ cleanForSpeech(text) {
 
     while (walker.nextNode()) {
       const node = walker.currentNode;
-      nodes.push(node);
-      // IMPORTANTE: usamos o textContent cru aqui.
-      // Isso preserva o mapeamento de offsets para o DOM.
-      fullText += node.textContent;
+      const parent = node.parentElement;
+
+      // ============================================================
+      // INLINE FORMULA → substitui tudo pelo data-tts e PULA o KaTeX
+      // ============================================================
+      if (parent && parent.closest(".formula-inline")) {
+        const container = parent.closest(".formula-inline");
+        const spoken = container.getAttribute("data-tts") || "";
+
+        nodes.push({
+          node: container.firstChild, // usamos referência fake
+          isInlineFormula: true,
+          spoken
+        });
+
+        fullText += spoken;
+
+        // PULAR todos os nós internos da fórmula KaTeX
+        // → avançamos o walker até sair dela
+        while (walker.nextNode()) {
+          if (!walker.currentNode.parentElement.closest(".formula-inline")) {
+            walker.previousNode(); // voltar uma para não perder
+            break;
+          }
+        }
+
+        continue;
+      }
+
+      // ============================================================
+      // TEXTO NORMAL
+      // ============================================================
+      const txt = node.textContent;
+
+      nodes.push({
+        node,
+        isInlineFormula: false,
+        spoken: txt
+      });
+
+      fullText += txt;
     }
 
     return { nodes, fullText };
@@ -157,36 +189,45 @@ cleanForSpeech(text) {
     return offsets;
   }
 
+  // ======================================================
+  // rangeForOffsets — AJUSTADO
+  // ======================================================
   rangeForOffsets(nodes, start, end) {
     const range = document.createRange();
     let idx = 0;
     let started = false;
 
     for (let i = 0; i < nodes.length; i++) {
-      const node = nodes[i];
-      const len = node.textContent.length;
+      const obj = nodes[i];
+      const realNode = obj.node;
+
+      const len = obj.isInlineFormula
+        ? obj.spoken.length
+        : realNode.textContent.length;
+
       const nodeStart = idx;
       const nodeEnd = idx + len;
 
       if (!started && nodeEnd > start) {
         const from = Math.max(0, start - nodeStart);
-        range.setStart(node, from);
+        range.setStart(realNode, from);
         started = true;
       }
 
       if (started && nodeEnd >= end) {
         const to = end - nodeStart;
-        range.setEnd(node, to);
+        range.setEnd(realNode, to);
         return range;
       }
 
       idx += len;
     }
+
     return null;
   }
 
   // ======================================================
-  // Highlight de uma frase
+  // Highlight — AJUSTADO
   // ======================================================
   highlightSentence(blockEl, start, end) {
     if (start == null || end == null || end <= start) return;
@@ -197,18 +238,30 @@ cleanForSpeech(text) {
     const spans = [];
     let idx = 0;
 
-    for (const node of nodes) {
-      const len = node.textContent.length;
+    for (const obj of nodes) {
+      const realNode = obj.node;
+
+      const len = obj.isInlineFormula
+        ? obj.spoken.length
+        : realNode.textContent.length;
+
       const nodeStart = idx;
       const nodeEnd = idx + len;
 
+      // ❗ Se é fórmula inline → NÃO highlight, mas AVANÇA os offsets normalmente
+      if (obj.isInlineFormula) {
+        idx += len;
+        continue; // ← isso é essencial
+      }
+
+      // highlight normal para partes fora da fórmula
       if (nodeEnd > start && nodeStart < end) {
         const from = Math.max(0, start - nodeStart);
         const to = Math.min(len, end - nodeStart);
 
         const range = document.createRange();
-        range.setStart(node, from);
-        range.setEnd(node, to);
+        range.setStart(realNode, from);
+        range.setEnd(realNode, to);
 
         const span = document.createElement("span");
         span.className = "tts-highlight";
@@ -240,7 +293,7 @@ cleanForSpeech(text) {
   }
 
   // ======================================================
-  // STOP / PAUSE / RESUME
+  // STOP / PAUSE / RESUME — (inalterado)
   // ======================================================
   async stop() {
     if (this.synth.speaking || this.synth.paused) {
@@ -263,25 +316,22 @@ cleanForSpeech(text) {
   }
 
   // ======================================================
-  // Leitura sequencial a partir do PRIMEIRO bloco visível
+  // Leitura sequencial — (inalterado, exceto fórmula de BLOCO)
   // ======================================================
   async speakSequential() {
     await this.stop();
     this._paused = false;
     await this.waitForVoices();
 
-    // Blocos de texto relevantes (p e li, fora de figure, se você quiser pode adicionar !el.closest("figure"))
     const blocks = Array.from(
-      document.querySelectorAll("main h1, main h2, main h3, main h4, main p, main li")
+      document.querySelectorAll("main h1, main h2, main h3, main h4, main h5, main p, main li")
     ).filter(el => el.textContent.replace(/\s+/g, "").length > 0);
-
 
     if (!blocks.length) return;
 
     const viewportTop = 0;
     const viewportBottom = window.innerHeight;
 
-    // 1) Encontrar o PRIMEIRO parágrafo visível (topo da tela)
     let blockIndex = 0;
     for (let i = 0; i < blocks.length; i++) {
       const rect = blocks[i].getBoundingClientRect();
@@ -291,7 +341,6 @@ cleanForSpeech(text) {
       }
     }
 
-    // 2) Dentro desse bloco, localizar a primeira frase visível
     const prepareBlock = (blockEl) => {
       const { nodes, fullText } = this.extractRealText(blockEl);
       const sentences = this.splitSentences(fullText);
@@ -329,10 +378,34 @@ cleanForSpeech(text) {
 
       const blockEl = blocks[blockIndex];
 
-      // Recalcular DOM/offsets a cada frase para evitar bugs de highlight
+      // ======== FORMULA DE BLOCO ========
+      if (blockEl.classList.contains("formula")) {
+        const formula = new TTSFormula(blockEl);
+        const text = formula.getText();
+        this.clearHighlight();
+
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.voice = this.getVoice();
+        utter.rate = this.rate;
+
+        this.currentUtterance = utter;
+
+        utter.onend = () => {
+          if (!this._paused) {
+            blockIndex++;
+            sentenceIndex = 0;
+            if (blockIndex < blocks.length) readSentence();
+            else this.clearHighlight();
+          }
+        };
+
+        this.synth.speak(utter);
+        return;
+      }
+
+      // ======== FRASES NORMAIS ========
       ({ nodes, sentences, offsets } = prepareBlock(blockEl));
 
-      // se não há frases neste bloco, pula para o próximo
       if (!sentences.length) {
         blockIndex++;
         sentenceIndex = 0;
@@ -341,7 +414,6 @@ cleanForSpeech(text) {
         return;
       }
 
-      // fim das frases desse bloco → próximo bloco
       if (sentenceIndex >= sentences.length) {
         blockIndex++;
         sentenceIndex = 0;
@@ -360,7 +432,6 @@ cleanForSpeech(text) {
 
       this.highlightSentence(blockEl, start, end);
 
-      // ======== PONTO-CHAVE: limpar texto antes de falar ========
       const spokenSentence = this.cleanForSpeech(sentence);
       if (!spokenSentence) {
         sentenceIndex++;

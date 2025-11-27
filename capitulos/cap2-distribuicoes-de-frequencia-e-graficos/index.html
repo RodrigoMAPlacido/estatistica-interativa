@@ -2,7 +2,7 @@
 layout: capitulo
 title: Capítulo 2 — Distribuições de Frequência e Gráficos
 anterior: /capitulos/cap1-introducao-a-estatistica/
-proximo: /capitulos/cap3-medidas-de-tendencia-central/
+proximo: /capitulos/cap3-medidas-resumo-posicao/
 ---
 <p class="subtitle">Objetivos de aprendizagem</p>
 <ul>
@@ -82,22 +82,22 @@ proximo: /capitulos/cap3-medidas-de-tendencia-central/
 
 <ol type="I">
   <li class="lista">
-    <strong>Frequência absoluta ($F_{i}$):</strong>
+    <strong>Frequência absoluta<span class="formula-inline" data-tts=",Éfe i,"> ($F_{i}$):</span>  </strong>
     número de vezes que cada valor, categoria ou intervalo aparece no conjunto de dados.
   </li>
 
   <li class="lista">
-    <strong>Frequência relativa ($Fr_{i}$):</strong>
+    <strong>Frequência relativa <span class="formula-inline" data-tts=",Éfe érre i,"> ($Fr_{i}$):</span></strong>
     proporção (ou porcentagem) que cada valor representa em relação ao total de observações.
   </li>
 
   <li class="lista">
-    <strong>Frequência acumulada ($F_{ac}$):</strong>
+    <strong>Frequência acumulada <span class="formula-inline" data-tts=",Éfe á cê,"> ($F_{ac}$):</span></strong>
     soma das frequências absolutas até o valor, categoria ou limite de classe considerado.
   </li>
 
   <li class="lista">
-    <strong>Frequência relativa acumulada ($Fr_{ac}$):</strong>
+    <strong>Frequência relativa acumulada <span class="formula-inline" data-tts=",Éfe érre á cê,"> ($Fr_{ac}$): </span></strong>
     soma das frequências relativas até o valor, categoria ou limite de classe considerado, indicando
     qual fração do conjunto de dados se encontra até aquele ponto da escala.
   </li>
@@ -131,9 +131,9 @@ proximo: /capitulos/cap3-medidas-de-tendencia-central/
   A tabela a seguir apresenta a <strong>distribuição de frequência</strong> obtida em uma pesquisa sobre o 
   <strong>meio de transporte utilizado para ir ao trabalho</strong>, considerando uma amostra de 20 pessoas. 
   As categorias estão ordenadas da mais para a menos frequente e, para cada uma delas, são mostradas a 
-  <strong>frequência absoluta</strong> (número de respostas), a <strong>frequência acumulada</strong> 
-  (número de respostas acumulado até aquela categoria), a <strong>frequência relativa</strong> 
-  (proporção em relação ao total) e a <strong>frequência relativa acumulada</strong> 
+  <strong>frequência absoluta</strong> (número de respostas), a <strong>frequência relativa</strong> 
+  (proporção em relação ao total),a <strong>frequência acumulada</strong> 
+  (número de respostas acumulado até aquela categoria) e a <strong>frequência relativa acumulada</strong> 
   (proporção acumulada até aquela categoria).
 </p>
 
@@ -463,6 +463,7 @@ proximo: /capitulos/cap3-medidas-de-tendencia-central/
   <strong>mutuamente exclusivas</strong> (cada observação pertence a um único intervalo) e 
   <strong>exaustivas</strong> (cobrem todo o intervalo de interesse da variável).
 </p>
+
 <p>
   Para ilustrar, considere a variável <strong>tempo diário de estudo</strong> (em horas), medida em uma turma com 
   vinte estudantes. Após definir classes de mesma amplitude, obtém-se a distribuição apresentada abaixo.
@@ -473,6 +474,7 @@ proximo: /capitulos/cap3-medidas-de-tendencia-central/
     <thead>
       <tr>
         <th>Classe (horas)</th>
+        <th>Ponto médio (<em>m</em>)</th>
         <th>Frequência Absoluta</th>
         <th>Frequência Relativa</th>
         <th>Frequência Acumulada</th>
@@ -482,6 +484,7 @@ proximo: /capitulos/cap3-medidas-de-tendencia-central/
     <tbody>
       <tr>
         <td>0–1</td>
+        <td>0,5</td>
         <td>3</td>
         <td>15%</td>
         <td>3</td>
@@ -489,6 +492,7 @@ proximo: /capitulos/cap3-medidas-de-tendencia-central/
       </tr>
       <tr>
         <td>1–2</td>
+        <td>1,5</td>
         <td>6</td>
         <td>30%</td>
         <td>9</td>
@@ -496,6 +500,7 @@ proximo: /capitulos/cap3-medidas-de-tendencia-central/
       </tr>
       <tr>
         <td>2–3</td>
+        <td>2,5</td>
         <td>5</td>
         <td>25%</td>
         <td>14</td>
@@ -503,6 +508,7 @@ proximo: /capitulos/cap3-medidas-de-tendencia-central/
       </tr>
       <tr>
         <td>3–4</td>
+        <td>3,5</td>
         <td>4</td>
         <td>20%</td>
         <td>18</td>
@@ -510,6 +516,7 @@ proximo: /capitulos/cap3-medidas-de-tendencia-central/
       </tr>
       <tr>
         <td>4–5</td>
+        <td>4,5</td>
         <td>2</td>
         <td>10%</td>
         <td>20</td>
@@ -517,6 +524,7 @@ proximo: /capitulos/cap3-medidas-de-tendencia-central/
       </tr>
       <tr class="total">
         <td><strong>Total</strong></td>
+        <td>—</td>
         <td><strong>20</strong></td>
         <td><strong>100%</strong></td>
         <td><strong>20</strong></td>
@@ -532,11 +540,19 @@ proximo: /capitulos/cap3-medidas-de-tendencia-central/
 <p>
   Em termos práticos, o <strong>número de intervalos</strong> indica em quantas faixas distintas o eixo numérico será 
   dividido (por exemplo, 5 classes de tempo de estudo). A <strong>amplitude</strong> de cada classe corresponde à 
-  largura do intervalo, isto é, à diferença entre o seu limite superior e o seu limite inferior 
-  (por exemplo, de 1 a 2 horas, amplitude igual a 1). Já os <strong>limites inferior e superior</strong> de uma classe 
-  são os valores que definem o começo e o fim desse intervalo na escala numérica. A combinação dessas escolhas determina 
-  quão “fina” ou “grossa” será a descrição da distribuição: intervalos muito largos escondem detalhes; intervalos muito 
-  estreitos produzem uma representação fragmentada e pouco estável.
+  largura do intervalo, isto é, à diferença entre o seu limite superior e o seu limite inferior. Já os 
+  <strong>limites inferior e superior</strong> são os valores que definem o início e o término de cada intervalo 
+  na escala numérica. A combinação dessas escolhas determina quão “fina” ou “grossa” será a descrição da 
+  distribuição: intervalos muito largos escondem detalhes; intervalos muito estreitos produzem uma 
+  representação excessivamente fragmentada.
+</p>
+
+<p>
+  Como é possível observar na tabela, foi incluída uma nova coluna denominada 
+  <strong>ponto médio</strong>. Esse valor é calculado como a média aritmética entre o limite inferior 
+  e o limite superior de cada classe e funciona como um representante aproximado dos valores contidos 
+  naquele intervalo. O ponto médio será utilizado posteriormente no cálculo da 
+  <strong>média para dados agrupados</strong>, quando os valores individuais não estiverem mais disponíveis ou forem de difícil identificação.
 </p>
 
 
@@ -545,17 +561,16 @@ proximo: /capitulos/cap3-medidas-de-tendencia-central/
   (quantidade de observações no intervalo) e a <strong>frequência relativa</strong> 
   (proporção em relação ao total de dados). Podem-se também determinar a <strong>frequência acumulada</strong> e a 
   <strong>frequência relativa acumulada</strong>, somando progressivamente as frequências até cada limite superior 
-  de classe. Como os intervalos seguem uma ordem numérica crescente, essas frequências acumuladas permitem, por exemplo, 
-  responder diretamente a perguntas do tipo “qual proporção de estudantes estuda até certo número de horas por dia?”.
+  de classe. Como os intervalos seguem uma ordem numérica crescente, essas frequências permitem responder, por exemplo, 
+  a perguntas do tipo “qual proporção de estudantes estuda até certo número de horas por dia?”.
 </p>
-
 
 <p>
   A tabela evidencia que a maior parte dos estudantes dedica entre 1 e 3 horas diárias ao estudo, enquanto poucos 
   ultrapassam 4 horas. As frequências acumuladas mostram, por exemplo, que 70% dos estudantes estudam no máximo 
   3 horas por dia, enquanto 30% estudam mais que isso. Essa organização fornece uma visão geral da distribuição e 
   prepara o caminho para representações gráficas específicas das variáveis contínuas — como o <strong>histograma</strong> 
-  e o <strong>polígono de frequência</strong> —, que precisam refletir a <strong>unidade da escala</strong> e as 
+  e o <strong>polígono de frequência</strong> —, que precisam refletir a <strong>continuidade da escala</strong> e as 
   <strong>transições graduais entre intervalos</strong>, em vez de valores isolados.
 </p>
 
