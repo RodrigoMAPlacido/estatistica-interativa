@@ -1,0 +1,268 @@
+<!-- ===========================================
+   MEDIDAS DE POSIÇÃO — animação tipo INTERVALAR
+   =========================================== -->
+<svg viewBox="0 0 1500 1000" xmlns="http://www.w3.org/2000/svg"
+     role="img" aria-labelledby="title desc">
+  <title id="title">Medidas de posição (animado)</title>
+  <desc id="desc">
+    Diagrama hierárquico: MEDIDAS DE POSIÇÃO no topo, dividindo-se em
+    TENDÊNCIA CENTRAL e SEPARATRIZES. Da primeira saem MÉDIA, MEDIANA e MODA;
+    da segunda, QUARTIS, DECIS e PERCENTIS. Linhas e caixas surgem com animação
+    de traçado idêntica à usada no diagrama de dados intervalares.
+  </desc>
+
+  <defs>
+    <style>
+      /* ============ Variáveis globais ============ */
+      :root{
+        --ink:#111827;
+        --font:"et-book","ETBook","Georgia",serif;
+        --cycle:8s;
+        --ease:ease-in-out;
+        --dash:4000;
+        --dashText:900;
+      }
+
+      /* ============ Base/utilitárias (u-*) ============ */
+      text{ font-family:var(--font); fill:var(--ink); user-select:none; }
+      tspan{ x:0; dy:1.25em; }
+      .u-stroke{ stroke:var(--ink); fill:none; stroke-linecap:round; stroke-linejoin:round; }
+      .u-thick{ stroke-width:3; }
+      .u-box{ stroke-width:3; rx:15; }
+      .u-center{ text-anchor:middle; }
+      .u-head{ fill:var(--ink); }
+
+      /* ============ Animações (a-*) ============ */
+      @keyframes k-drawLine{
+        0%   { stroke-dashoffset:var(--dash); opacity:0; }
+        10%  { opacity:1; }
+        42%  { stroke-dashoffset:0;          opacity:1; }
+        58%  { stroke-dashoffset:0;          opacity:1; }
+        90%  { stroke-dashoffset:var(--dash); opacity:1; }
+        100% { stroke-dashoffset:var(--dash); opacity:0; }
+      }
+      .a-draw{
+        stroke-dasharray:var(--dash);
+        stroke-dashoffset:var(--dash);
+        animation:k-drawLine var(--cycle) var(--ease) infinite both;
+        animation-delay:var(--delay,0s);
+      }
+
+      @keyframes k-textStroke{
+        0%   { stroke-dashoffset:var(--dashText); opacity:0; }
+        10%  { opacity:1; }
+        45%  { stroke-dashoffset:0;   opacity:1; }
+        55%  { stroke-dashoffset:0;   opacity:1; }
+        90%  { stroke-dashoffset:var(--dashText); opacity:1; }
+        100% { stroke-dashoffset:var(--dashText); opacity:0; }
+      }
+      @keyframes k-textFill{
+        0%,13%   { fill:transparent; }
+        36%,64%  { fill:var(--ink); }
+        80%,100% { fill:transparent; }
+      }
+      .a-text{
+        stroke:var(--ink); stroke-width:.95; fill:transparent;
+        stroke-dasharray:var(--dashText); stroke-dashoffset:var(--dashText);
+        animation:
+          k-textStroke var(--cycle) var(--ease) infinite both,
+          k-textFill   var(--cycle) var(--ease) infinite both;
+        animation-delay:var(--delay,0s), var(--delay,0s);
+      }
+
+      @keyframes k-fadeSeq{
+        0%,15%{opacity:0}
+        35%,85%{opacity:1}
+        100%{opacity:0}
+      }
+      .a-fade{
+        animation:k-fadeSeq var(--cycle) var(--ease) infinite both;
+        animation-delay:var(--delay,0s);
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        .a-draw,.a-text,.a-fade{ animation:none; opacity:1; stroke-dashoffset:0; }
+        .a-text{ fill:var(--ink); }
+      }
+    </style>
+  </defs>
+
+  <!-- ====== Cena ====== -->
+  <g id="scene" transform="scale(1.4) translate(-250,0)">
+
+    <!-- Caixa do topo, maior e centralizada -->
+    <rect x="425" y="40" width="650" height="170" class="u-stroke u-box"/>
+    <g style="--delay:0s">
+      <text x="750" y="110" font-size="60" font-weight="700"
+            class="a-text u-center">
+        <tspan x="750" dy="0">MEDIDAS DE</tspan>
+        <tspan x="750" dy="1.25em">POSIÇÃO</tspan>
+      </text>
+    </g>
+
+    <!-- Diagrama -->
+    <g id="diagram">
+
+      <!-- Tronco + barra principal -->
+      <g style="--delay:.12s">
+        <!-- tronco central -->
+        <line x1="750" y1="210" x2="750" y2="280" class="u-stroke u-thick a-draw"/>
+        <!-- barra horizontal central -->
+        <line x1="500" y1="280" x2="1000" y2="280" class="u-stroke u-thick a-draw"/>
+      </g>
+
+      <!-- Ramos verticais para TENDÊNCIA CENTRAL e SEPARATRIZES -->
+      <g style="--delay:.26s">
+        <line x1="500" y1="280" x2="500" y2="330" class="u-stroke u-thick a-draw"/>
+        <line x1="1000" y1="280" x2="1000" y2="330" class="u-stroke u-thick a-draw"/>
+      </g>
+
+      <!-- Setas nível 1 (com folga antes das caixas) -->
+      <g style="--delay:.34s">
+        <g transform="translate(500,330) rotate(90)">
+          <polygon class="u-head a-fade" points="21,0 0,-8 0,8"/>
+        </g>
+        <g transform="translate(1000,330) rotate(90)">
+          <polygon class="u-head a-fade" points="21,0 0,-8 0,8"/>
+        </g>
+      </g>
+
+      <!-- Caixas nível 1 -->
+      <!-- TENDÊNCIA CENTRAL (centro x=500) -->
+      <g style="--delay:.52s">
+        <rect x="370" y="350" width="260" height="90"
+              class="u-stroke u-box a-draw"/>
+        <text x="500" y="390" font-size="26" font-weight="600"
+              class="a-text u-center">
+          <tspan x="500" dy="0">TENDÊNCIA</tspan>
+          <tspan x="500" dy="1.25em">CENTRAL</tspan>
+        </text>
+      </g>
+
+      <!-- SEPARATRIZES (centro x=1000) -->
+      <g style="--delay:.66s">
+        <rect x="870" y="350" width="260" height="90"
+              class="u-stroke u-box a-draw"/>
+        <text x="1000" y="405" font-size="28" font-weight="600"
+              class="a-text u-center">
+          SEPARATRIZES
+        </text>
+      </g>
+
+      <!-- Subtronco TENDÊNCIA CENTRAL -->
+      <g style="--delay:.72s">
+        <line x1="500" y1="440" x2="500" y2="490" class="u-stroke u-thick a-draw"/>
+        <line x1="340" y1="490" x2="660" y2="490" class="u-stroke u-thick a-draw"/>
+      </g>
+
+      <!-- Ramos verticais: MÉDIA / MEDIANA / MODA -->
+      <g style="--delay:.80s">
+        <line x1="340" y1="490" x2="340" y2="540" class="u-stroke u-thick a-draw"/>
+        <line x1="500" y1="490" x2="500" y2="540" class="u-stroke u-thick a-draw"/>
+        <line x1="660" y1="490" x2="660" y2="540" class="u-stroke u-thick a-draw"/>
+      </g>
+
+      <!-- Setas: MÉDIA / MEDIANA / MODA -->
+      <g style="--delay:.86s">
+        <g transform="translate(340,540) rotate(90)">
+          <polygon class="u-head a-fade" points="21,0 0,-8 0,8"/>
+        </g>
+        <g transform="translate(500,540) rotate(90)">
+          <polygon class="u-head a-fade" points="21,0 0,-8 0,8"/>
+        </g>
+        <g transform="translate(660,540) rotate(90)">
+          <polygon class="u-head a-fade" points="21,0 0,-8 0,8"/>
+        </g>
+      </g>
+
+      <!-- Caixas nível 2 — TENDÊNCIA CENTRAL -->
+      <!-- MÉDIA -->
+      <g style="--delay:.92s">
+        <rect x="265" y="560" width="150" height="90"
+              class="u-stroke u-box a-draw"/>
+        <text x="340" y="615" font-size="24" font-weight="600"
+              class="a-text u-center">
+          MÉDIA
+        </text>
+      </g>
+
+      <!-- MEDIANA -->
+      <g style="--delay:1.00s">
+        <rect x="425" y="560" width="150" height="90"
+              class="u-stroke u-box a-draw"/>
+        <text x="500" y="615" font-size="24" font-weight="600"
+              class="a-text u-center">
+          MEDIANA
+        </text>
+      </g>
+
+      <!-- MODA -->
+      <g style="--delay:1.08s">
+        <rect x="585" y="560" width="150" height="90"
+              class="u-stroke u-box a-draw"/>
+        <text x="660" y="615" font-size="24" font-weight="600"
+              class="a-text u-center">
+          MODA
+        </text>
+      </g>
+
+      <!-- Subtronco SEPARATRIZES -->
+      <g style="--delay:.72s">
+        <line x1="1000" y1="440" x2="1000" y2="490" class="u-stroke u-thick a-draw"/>
+        <line x1="840" y1="490" x2="1160" y2="490" class="u-stroke u-thick a-draw"/>
+      </g>
+
+      <!-- Ramos verticais: QUARTIS / DECIS / PERCENTIS -->
+      <g style="--delay:.80s">
+        <line x1="840"  y1="490" x2="840"  y2="540" class="u-stroke u-thick a-draw"/>
+        <line x1="1000" y1="490" x2="1000" y2="540" class="u-stroke u-thick a-draw"/>
+        <line x1="1160" y1="490" x2="1160" y2="540" class="u-stroke u-thick a-draw"/>
+      </g>
+
+      <!-- Setas: QUARTIS / DECIS / PERCENTIS -->
+      <g style="--delay:.86s">
+        <g transform="translate(840,540) rotate(90)">
+          <polygon class="u-head a-fade" points="21,0 0,-8 0,8"/>
+        </g>
+        <g transform="translate(1000,540) rotate(90)">
+          <polygon class="u-head a-fade" points="21,0 0,-8 0,8"/>
+        </g>
+        <g transform="translate(1160,540) rotate(90)">
+          <polygon class="u-head a-fade" points="21,0 0,-8 0,8"/>
+        </g>
+      </g>
+
+      <!-- Caixas nível 2 — SEPARATRIZES -->
+      <!-- QUARTIS -->
+      <g style="--delay:.92s">
+        <rect x="765" y="560" width="150" height="90"
+              class="u-stroke u-box a-draw"/>
+        <text x="840" y="615" font-size="24" font-weight="600"
+              class="a-text u-center">
+          QUARTIS
+        </text>
+      </g>
+
+      <!-- DECIS -->
+      <g style="--delay:1.00s">
+        <rect x="925" y="560" width="150" height="90"
+              class="u-stroke u-box a-draw"/>
+        <text x="1000" y="615" font-size="24" font-weight="600"
+              class="a-text u-center">
+          DECIS
+        </text>
+      </g>
+
+      <!-- PERCENTIS -->
+      <g style="--delay:1.08s">
+        <rect x="1085" y="560" width="160" height="90"
+              class="u-stroke u-box a-draw"/>
+        <text x="1165" y="615" font-size="24" font-weight="600"
+              class="a-text u-center">
+          PERCENTIS
+        </text>
+      </g>
+
+    </g>
+  </g>
+</svg>

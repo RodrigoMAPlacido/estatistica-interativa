@@ -1,0 +1,172 @@
+<!-- ===========================================
+   MÉDIA — padrão unificado (u-*/a-*)
+   5 ramos simétricos: Aritmética, Ponderada,
+   Dados agrupados, Geométrica, Harmônica
+   =========================================== -->
+<svg viewBox="0 0 1500 750" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Tipos de média</title>
+  <desc id="desc">
+    Caixa com o título “MÉDIA” no topo; abaixo, uma barra com cinco ramos
+    simétricos levando às caixas: ARITMÉTICA, PONDERADA, DADOS AGRUPADOS,
+    GEOMÉTRICA e HARMÔNICA. O ramo de DADOS AGRUPADOS fica alinhado com o
+    tronco central.
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --font:"et-book","ETBook","Georgia",serif;
+        --cycle:8s;
+        --ease:ease-in-out;
+        --dash:4000;
+        --dashText:900;
+      }
+
+      text{ font-family:var(--font); fill:var(--ink); user-select:none; }
+      tspan{ x:0; dy:1.25em; }
+      .u-stroke{ stroke:var(--ink); fill:none; stroke-linecap:round; stroke-linejoin:round; }
+      .u-thick{ stroke-width:3; }
+      .u-box{ stroke-width:3; rx:15; }
+      .u-center{ text-anchor:middle; }
+      .u-head{ fill:var(--ink); }
+
+      @keyframes k-drawLine{
+        0%   { stroke-dashoffset:var(--dash); opacity:0; }
+        10%  { opacity:1; }
+        42%  { stroke-dashoffset:0;          opacity:1; }
+        58%  { stroke-dashoffset:0;          opacity:1; }
+        90%  { stroke-dashoffset:var(--dash); opacity:1; }
+        100% { stroke-dashoffset:var(--dash); opacity:0; }
+      }
+      .a-draw{
+        stroke-dasharray:var(--dash);
+        stroke-dashoffset:var(--dash);
+        animation:k-drawLine var(--cycle) var(--ease) infinite both;
+        animation-delay:var(--delay,0s);
+      }
+
+      @keyframes k-textStroke{
+        0%   { stroke-dashoffset:var(--dashText); opacity:0; }
+        10%  { opacity:1; }
+        45%  { stroke-dashoffset:0;   opacity:1; }
+        55%  { stroke-dashoffset:0;   opacity:1; }
+        90%  { stroke-dashoffset:var(--dashText); opacity:1; }
+        100% { stroke-dashoffset:var(--dashText); opacity:0; }
+      }
+      @keyframes k-textFill{
+        0%,13%   { fill:transparent; }
+        36%,64%  { fill:var(--ink); }
+        80%,100% { fill:transparent; }
+      }
+      .a-text{
+        stroke:var(--ink); stroke-width:.95; fill:transparent;
+        stroke-dasharray:var(--dashText); stroke-dashoffset:var(--dashText);
+        animation:
+          k-textStroke var(--cycle) var(--ease) infinite both,
+          k-textFill   var(--cycle) var(--ease) infinite both;
+        animation-delay:var(--delay,0s), var(--delay,0s);
+      }
+
+      @keyframes k-fadeSeq{ 0%,15%{opacity:0} 35%,85%{opacity:1} 100%{opacity:0} }
+      .a-fade{ animation:k-fadeSeq var(--cycle) var(--ease) infinite both; animation-delay:var(--delay,0s); }
+
+      @media (prefers-reduced-motion:reduce){
+        .a-draw,.a-text,.a-fade{ animation:none; opacity:1; stroke-dashoffset:0; }
+        .a-text{ fill:var(--ink); }
+      }
+    </style>
+  </defs>
+
+  <g id="scene">
+
+    <!-- Caixa do topo -->
+    <rect x="480" y="67" width="540" height="210" class="u-stroke u-box"/>
+    <g style="--delay:0s">
+      <text x="750" y="190" font-size="65" font-weight="700" class="a-text u-center">
+        MÉDIA
+      </text>
+    </g>
+
+    <!-- Diagrama -->
+    <g id="diagram">
+
+      <!-- Tronco + barra (centro em 750) -->
+      <g style="--delay:.12s">
+        <line x1="750" y1="277" x2="750" y2="410" class="u-stroke u-thick a-draw"/>
+        <line x1="290" y1="410" x2="1210" y2="410" class="u-stroke u-thick a-draw"/>
+      </g>
+
+      <!-- Ramos verticais: centros 290, 520, 750, 980, 1210 -->
+      <g style="--delay:.26s">
+        <line x1="290"  y1="410" x2="290"  y2="520" class="u-stroke u-thick a-draw"/>
+        <line x1="520"  y1="410" x2="520"  y2="520" class="u-stroke u-thick a-draw"/>
+        <line x1="750"  y1="410" x2="750"  y2="520" class="u-stroke u-thick a-draw"/>
+        <line x1="980"  y1="410" x2="980"  y2="520" class="u-stroke u-thick a-draw"/>
+        <line x1="1210" y1="410" x2="1210" y2="520" class="u-stroke u-thick a-draw"/>
+      </g>
+
+      <!-- Setas -->
+      <g style="--delay:.38s">
+        <g transform="translate(290,520) rotate(90)">
+          <polygon class="u-head a-fade" points="21,0 0,-8 0,8"/>
+        </g>
+        <g transform="translate(520,520) rotate(90)">
+          <polygon class="u-head a-fade" points="21,0 0,-8 0,8"/>
+        </g>
+        <g transform="translate(750,520) rotate(90)">
+          <polygon class="u-head a-fade" points="21,0 0,-8 0,8"/>
+        </g>
+        <g transform="translate(980,520) rotate(90)">
+          <polygon class="u-head a-fade" points="21,0 0,-8 0,8"/>
+        </g>
+        <g transform="translate(1210,520) rotate(90)">
+          <polygon class="u-head a-fade" points="21,0 0,-8 0,8"/>
+        </g>
+      </g>
+
+      <!-- Cartões (largura 220, alinhados aos centros) -->
+      <!-- ARITMÉTICA (centro 290) -->
+      <g style="--delay:.52s">
+        <rect x="180" y="550" width="220" height="110" class="u-stroke u-box a-draw"/>
+        <text x="290" y="615" font-size="32" font-weight="500" class="a-text u-center">
+          ARITMÉTICA
+        </text>
+      </g>
+
+      <!-- PONDERADA (centro 520) -->
+      <g style="--delay:.62s">
+        <rect x="410" y="550" width="220" height="110" class="u-stroke u-box a-draw"/>
+        <text x="520" y="615" font-size="32" font-weight="500" class="a-text u-center">
+          PONDERADA
+        </text>
+      </g>
+
+      <!-- DADOS AGRUPADOS (centro 750, alinhado ao tronco) -->
+      <g style="--delay:.72s">
+        <rect x="640" y="550" width="220" height="110" class="u-stroke u-box a-draw"/>
+        <text x="750" y="600" font-size="28" font-weight="500" class="a-text u-center">
+          <tspan x="750" dy="0">DADOS</tspan>
+          <tspan x="750" dy="1.25em">AGRUPADOS</tspan>
+        </text>
+      </g>
+
+      <!-- GEOMÉTRICA (centro 980) -->
+      <g style="--delay:.82s">
+        <rect x="870" y="550" width="220" height="110" class="u-stroke u-box a-draw"/>
+        <text x="980" y="615" font-size="32" font-weight="500" class="a-text u-center">
+          GEOMÉTRICA
+        </text>
+      </g>
+
+      <!-- HARMÔNICA (centro 1210) -->
+      <g style="--delay:.92s">
+        <rect x="1100" y="550" width="220" height="110" class="u-stroke u-box a-draw"/>
+        <text x="1210" y="615" font-size="32" font-weight="500" class="a-text u-center">
+          HARMÔNICA
+        </text>
+      </g>
+
+    </g>
+  </g>
+</svg>

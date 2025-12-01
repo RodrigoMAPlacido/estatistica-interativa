@@ -27,6 +27,7 @@ proximo: /capitulos/cap4-medidas-resumo-dispersao-dois/
   por si só, <strong>números que sintetizam informações essenciais</strong> para comparações objetivas ou decisões quantitativas.
 </p>
 
+
 <p>
   Em muitas situações práticas, é necessário complementar a leitura visual fornecida por tabelas e gráficos com valores numéricos que 
   resumam características essenciais da distribuição. Esses valores, chamados de <strong>medidas-resumo</strong>, condensam o conjunto 
@@ -36,6 +37,9 @@ proximo: /capitulos/cap4-medidas-resumo-dispersao-dois/
   em duas categorias complementares: <strong>medidas de posição</strong>, relacionadas à localização dos valores, e 
   <strong>medidas de dispersão</strong>, associadas ao grau de espalhamento.
 </p>
+<figure>
+  <img src="../../imagens/tipos-medidas-resumo.svg" alt="Medidas-resumo">
+</figure>
 
 <p>
   As <strong>medidas de posição</strong> podem ser subdivididas em duas categorias complementares. As 
@@ -46,7 +50,9 @@ proximo: /capitulos/cap4-medidas-resumo-dispersao-dois/
   escala observada. Enquanto as primeiras oferecem um único ponto característico da distribuição, as separatrizes fornecem 
   múltiplos marcos que permitem analisar como as observações se distribuem entre diferentes segmentos dos dados.
 </p>
-
+<figure>
+  <img src="../../imagens/tipos-posicao.svg" alt="Posição">
+</figure>
 <p>
   Neste capítulo, concentraremos a atenção nas <strong>medidas de tendência central</strong>, desenvolvendo em detalhe os conceitos
   de média, mediana e moda, suas variantes e suas formas de cálculo em diferentes situações. O objetivo é que o leitor compreenda
@@ -66,7 +72,9 @@ proximo: /capitulos/cap4-medidas-resumo-dispersao-dois/
   mais utilizadas — <strong>média</strong>, <strong>mediana</strong> e <strong>moda</strong> — capturam aspectos distintos da 
   distribuição e respondem de maneira diferente à presença de valores extremos, assimetrias e variações na forma dos dados.
 </p>
-
+<figure>
+  <img src="../../imagens/tendencia-central.svg" alt="media">
+</figure>
 <h3>2.1 Média</h3>
 
 <p>
@@ -85,6 +93,11 @@ proximo: /capitulos/cap4-medidas-resumo-dispersao-dois/
   em situações baseadas em razões do tipo “quantidade por unidade”, como velocidades médias ou produtividades, utiliza-se a 
   <strong>média harmônica</strong>, que se baseia nos inversos dos valores.
 </p>
+
+<figure>
+  <img src="../../imagens/media.svg" alt="media">
+</figure>
+
 
 <p>
   Um aspecto importante comum a todas essas médias é que elas utilizam, de algum modo, <strong>todos os valores da distribuição</strong>. 
@@ -874,7 +887,9 @@ H = \frac{n}{\sum_{i=1}^{n} \frac{1}{x_i}}.
   classes</strong>, em que o ponto central é estimado dentro da classe mediana por meio de
   interpolação.
 </p>
-
+<figure>
+  <img src="../../imagens/mediana.svg" alt="mediana">
+</figure>
 <p>
   Nas subseções seguintes, apresentamos a definição formal, o procedimento de cálculo e exemplos para
   cada uma dessas situações — <strong>dados não agrupados</strong>, 
@@ -1231,9 +1246,9 @@ H = \frac{n}{\sum_{i=1}^{n} \frac{1}{x_i}}.
   <h5>Exemplo</h5>
 
   <p>
-    Retome a distribuição de frequência do <strong>tempo diário de estudo</strong> (em horas) apresentada na 
-    Tabela 2 desta seção, obtida a partir de uma <strong>amostra</strong> com <strong>20 estudantes</strong>. 
-    A variável em estudo é o <strong>tempo diário de estudo</strong>, classificada como quantitativa contínua 
+    Retome a distribuição de frequência das <strong>horas de estudo por semana</strong> apresentada anteriormente,
+    obtida a partir de uma <strong>amostra</strong> com <strong>20 estudantes</strong>.
+    A variável em estudo é o <strong>tempo semanal de estudo</strong>, classificada como quantitativa contínua
     e medida em <strong>escala de razão</strong>.
   </p>
 
@@ -1245,40 +1260,35 @@ H = \frac{n}{\sum_{i=1}^{n} \frac{1}{x_i}}.
     <table>
       <thead>
         <tr>
-          <th>Classe (horas/dia)</th>
+          <th>Classe (horas/semana)</th>
           <th>Frequência \(f_j\)</th>
           <th>Frequência acumulada \(F_j\)</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>0–1</td>
-          <td>3</td>
-          <td>3</td>
-        </tr>
-        <tr>
-          <td>1–2</td>
-          <td>6</td>
-          <td>9</td>
-        </tr>
-        <tr>
-          <td>2–3</td>
-          <td>5</td>
-          <td>14</td>
-        </tr>
-        <tr>
-          <td>3–4</td>
+          <td>0–10</td>
           <td>4</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>10–20</td>
+          <td>6</td>
+          <td>10</td>
+        </tr>
+        <tr>
+          <td>20–30</td>
+          <td>8</td>
           <td>18</td>
         </tr>
         <tr>
-          <td>4–5</td>
+          <td>30–40</td>
           <td>2</td>
           <td>20</td>
         </tr>
       </tbody>
     </table>
-    <figcaption>Tempo diário de estudo (em horas) — distribuição de frequências</figcaption>
+    <figcaption>Horas de estudo por semana — distribuição de frequências</figcaption>
   </figure>
 
   <p>
@@ -1295,72 +1305,74 @@ H = \frac{n}{\sum_{i=1}^{n} \frac{1}{x_i}}.
     Para encontrar a classe mediana, observamos as frequências acumuladas:
   </p>
 
-  <p class="formula" data-tts="três, nove, quatorze, dezoito, vinte.">
+  <p class="formula" data-tts="quatro, dez, dezoito, vinte.">
     \[
-      3,\; 9,\; 14,\; 18,\; 20.
+      4,\; 10,\; 18,\; 20.
     \]
   </p>
 
   <p>
-    A primeira classe cuja frequência acumulada <strong>ultrapassa</strong> 10 é o intervalo <strong>2–3 horas</strong>, 
-    com frequência acumulada 14. Logo, essa é a <strong>classe mediana</strong>. Para essa classe, identificamos:
+    A primeira classe cuja frequência acumulada é <strong>maior ou igual</strong> a 10 é o intervalo
+    <strong>10–20 horas</strong>.
+    Logo, essa é a <strong>classe mediana</strong>. Para essa classe, identificamos:
   </p>
 
   <ul>
-    <li class="lista"><span class="formula-inline" data-tts=", ele i igual a dois,">\( L_i = 2 \)</span> (limite inferior da classe mediana);</li>
-    <li class="lista"><span class="formula-inline" data-tts=", F i menos um igual a nove,">\( F_{i-1} = 9 \)</span> (frequência acumulada da classe anterior, 1–2 horas);</li>
-    <li class="lista"><span class="formula-inline" data-tts=", éfe i igual a cinco,">\( f_i = 5 \)</span> (frequência da classe 2–3 horas);</li>
-    <li class="lista"><span class="formula-inline" data-tts=", agá igual a um,">\( h = 1 \)</span> (amplitude da classe: 3 menos 2);</li>
+    <li class="lista"><span class="formula-inline" data-tts=", ele i igual a dez,">\( L_i = 10 \)</span> (limite inferior da classe mediana);</li>
+    <li class="lista"><span class="formula-inline" data-tts=", F i menos um igual a quatro,">\( F_{i-1} = 4 \)</span> (frequência acumulada da classe anterior, 0–10 horas);</li>
+    <li class="lista"><span class="formula-inline" data-tts=", éfe i igual a seis,">\( f_i = 6 \)</span> (frequência da classe 10–20 horas);</li>
+    <li class="lista"><span class="formula-inline" data-tts=", agá igual a dez,">\( h = 10 \)</span> (amplitude da classe: 20 − 10);</li>
     <li class="lista"><span class="formula-inline" data-tts=", ene igual a vinte,">\( n = 20 \)</span> (total de observações).</li>
   </ul>
 
   <p>
-    Faltam, a partir da classe anterior, exatamente
-    <span class="formula-inline" data-tts=", dez menos nove igual a um,">\(10 - 9 = 1\)</span> observação para alcançar a posição
-    central da amostra, que é a 10ª observação. Essa única observação encontra-se dentro da classe 2–3 horas. 
+    Faltam, a partir da classe anterior,
+    <span class="formula-inline" data-tts=", dez menos quatro igual a seis,">\(10 - 4 = 6\)</span> observações para alcançar a posição
+    central da amostra, que é a 10ª observação. Todas essas observações encontram-se no interior da classe mediana.
     Em termos proporcionais, isso corresponde a:
   </p>
 
   <p class="formula"
-     data-tts="n sobre dois menos F i menos um, dividido por éfe i, é igual a dez menos nove sobre cinco, igual a um quinto.">
+     data-tts="n sobre dois menos F i menos um dividido por éfe i é igual a dez menos quatro sobre seis igual a um.">
     \[
       \frac{\frac{n}{2} - F_{i-1}}{f_i}
-      = \frac{10 - 9}{5}
-      = \frac{1}{5}.
+      = \frac{10 - 4}{6}
+      = 1.
     \]
   </p>
 
   <p>
-    Ou seja, a mediana está a <strong>um quinto</strong> da amplitude da classe acima do limite inferior. 
-    Como a amplitude é <span class="formula-inline" data-tts=", agá igual a um,">\(h = 1\)</span>, o deslocamento dentro do intervalo
-    é:
+    Isso significa que a posição central coincide com o final da classe mediana.
+    Como a amplitude da classe é <span class="formula-inline" data-tts=", agá igual a dez,">\(h = 10\)</span>,
+    o deslocamento dentro do intervalo é:
   </p>
 
-  <p class="formula" data-tts="um quinto vezes um, igual a um quinto.">
+  <p class="formula" data-tts="um vezes dez, igual a dez.">
     \[
-      \frac{1}{5} \cdot 1 = \frac{1}{5}.
+      1 \cdot 10 = 10.
     \]
   </p>
 
   <p>
     Somando esse deslocamento ao limite inferior 
-    <span class="formula-inline" data-tts=", ele i igual a dois,">\(L_i = 2\)</span>, obtemos a estimativa da mediana:
+    <span class="formula-inline" data-tts=", ele i igual a dez,">\(L_i = 10\)</span>, obtemos a estimativa da mediana:
   </p>
 
   <p class="formula"
-     data-tts="mediana aproximadamente igual a dois mais um quinto, igual a dois vírgula dois.">
+     data-tts="mediana aproximadamente igual a dez mais dez igual a vinte.">
     \[
-      \text{Mediana} 
-      \approx 2 + \frac{1}{5}
-      = 2{,}2.
+      \text{Mediana}
+      = 10 + 10
+      = 20.
     \]
   </p>
 
   <p>
-    O valor <strong>2,2 horas</strong> é uma <strong>estimativa da mediana</strong> do tempo diário de estudo na amostra. 
-    Ele indica que aproximadamente metade dos estudantes estuda até cerca de 2,2 horas por dia, enquanto a outra metade 
-    estuda mais do que isso. Como trabalhamos com dados agrupados em classes, esse valor é obtido por interpolação e 
-    deve ser interpretado como uma aproximação da mediana que seria calculada a partir dos dados individuais.
+    O valor <strong>20 horas</strong> é uma <strong>estimativa da mediana</strong> do tempo semanal de estudo na amostra.
+    Ele indica que aproximadamente metade dos estudantes estuda até 20 horas por semana,
+    enquanto a outra metade estuda mais do que isso. Como os dados estão agrupados em classes,
+    esse valor é obtido por interpolação e deve ser interpretado como uma aproximação da mediana que
+    seria calculada a partir dos dados individuais.
   </p>
 </div>
 
@@ -1410,7 +1422,9 @@ H = \frac{n}{\sum_{i=1}^{n} \frac{1}{x_i}}.
   <em>classe modal</em> (a de maior frequência) e, se necessário, estima-se um valor modal dentro dessa classe por meio 
   de interpolação.
 </p>
-
+<figure>
+  <img src="../../imagens/moda.svg" alt="moda">
+</figure>
 <p>
   Nas subseções seguintes, apresentamos o procedimento de identificação da moda em cada uma dessas situações — dados não
   agrupados, dados agrupados sem intervalos de classe e dados agrupados em classes —, com exemplos que ilustram tanto 
