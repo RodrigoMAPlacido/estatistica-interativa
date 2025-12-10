@@ -2,7 +2,7 @@
 layout: capitulo
 title: "Capítulo 3 — Medidas-resumo: Medidas de Posição I"
 anterior: /capitulos/cap2-distribuicoes-de-frequencia-e-graficos/
-proximo: /capitulos/cap4-medidas-resumo-dispersao-dois/
+proximo: /capitulos/cap4-medidas-resumo-posicao-dois/
 ---
 <p class="subtitle">Objetivos de aprendizagem</p>
 <ul>
@@ -80,7 +80,7 @@ proximo: /capitulos/cap4-medidas-resumo-dispersao-dois/
 <p>
   A <strong>média</strong> é uma das formas mais tradicionais de resumir numericamente um conjunto de dados. Seu propósito é sintetizar, 
   em um único valor, alguma característica global das observações. Independentemente do método de cálculo adotado, a média sempre 
-  representa uma medida de posição obtida a partir de todos os valores disponíveis, funcionando como um indicador que resume o 
+  representa uma medida de posição obtida considerando a influência de todos os valores disponíveis do conjunto de dados, funcionando como um indicador que resume o 
   comportamento geral da distribuição.
 </p>
 
@@ -133,7 +133,9 @@ proximo: /capitulos/cap4-medidas-resumo-dispersao-dois/
   Nessa expressão, cada <span class="formula-inline" data-tts="xis i,">\(x_i\)</span> representa um <em>dado</em> observado — isto é, o valor assumido pela variável na unidade de observação 
   <em>i</em>. O termo <em>n</em> indica o total de observações disponíveis.
 </p>
-
+<figure>
+  <img src="../../imagens/media-aritmetica.svg" alt="media aritmética">
+</figure>
 <p>
   Para fins de compactação e notação matemática, essa fórmula costuma ser escrita de forma resumida utilizando o símbolo de somatório:
 </p>
@@ -236,7 +238,9 @@ proximo: /capitulos/cap4-medidas-resumo-dispersao-dois/
   <span class="formula-inline" data-tts=",dabliu i igual à um,">\(w_i = 1\)</span> para todo <em>i</em>, a soma dos pesos é 
   <em>n</em> e a média ponderada reduz-se à média aritmética usual.
 </p>
-
+<figure>
+  <img src="../../imagens/media-ponderada.svg" alt="media ponderada">
+</figure>
 <p>
   De forma compacta, a média ponderada é escrita com a notação de somatório:
 </p>
@@ -359,7 +363,9 @@ proximo: /capitulos/cap4-medidas-resumo-dispersao-dois/
   <span class="formula-inline" data-tts=",éfê jota,">\(f_j\)</span> indica a <strong>frequência</strong> de observações naquela classe. 
   O denominador corresponde à <strong>soma das frequências</strong>, isto é, ao total de observações consideradas.
 </p>
-
+<figure>
+  <img src="../../imagens/media-dados-agrupados.svg" alt="media dados agrupados">
+</figure>
 <p>
   Comparando essa fórmula com a <strong>média ponderada</strong> apresentada na subseção anterior, nota-se que a 
   estrutura é a mesma: na média ponderada, cada valor <span class="formula-inline">\(x_i\)</span> recebe um peso 
@@ -487,7 +493,9 @@ proximo: /capitulos/cap4-medidas-resumo-dispersao-dois/
   rendimentos sucessivos e comparações baseadas em proporções. Nesses contextos, a média aritmética não descreve adequadamente o 
   comportamento dos dados, pois trata incrementos absolutos como equivalentes, independentemente da escala.
 </p>
-
+<figure>
+  <img src="../../imagens/media-geometrica.svg" alt="media geométrica">
+</figure>
 <p>
   A média geométrica é construída multiplicando todas as observações e extraindo a raiz <em>n</em>-ésima desse produto. Para um conjunto 
   de valores positivos <span class="formula-inline" data-tts=", xis um, xis dois, até xis ene,">\(x_1, x_2, \ldots, x_n\)</span>, sua forma expandida é:
@@ -674,75 +682,143 @@ G^n = \prod_{i=1}^{n} x_i.
 </div>
 
 
+
 <h4>2.1.5 Média harmônica</h4>
 
 <p>
-  A <strong>média harmônica</strong> é utilizada quando os dados representam razões do tipo “quantidade por unidade” ou quando se deseja 
-  calcular uma taxa média supondo que cada observação está associada ao mesmo denominador físico, como
-  distância percorrida por unidade de tempo, número de unidades produzidas por unidade de tempo ou quantidade de recurso consumido por unidade de tempo. Nessas situações, a média aritmética 
-  fornece resultados incorretos, pois trata valores altos e baixos com o mesmo impacto, enquanto a média harmônica ajusta a contribuição 
-  relativa de cada observação ao trabalhar com seus <em>inversos</em>.
+  A <strong>média harmônica</strong> é uma variante da média aritmética que depende da forma como os dados são representados,
+  sendo adequada para dados em forma de taxas quando, na forma da razão adotada no problema, a grandeza de referência é o 
+  <em>numerador</em>. É o caso, por exemplo, de velocidades medidas em trechos de <strong>igual distância</strong>, produtividades associadas 
+  à <strong>mesma quantidade produzida</strong> ou custos unitários observados em compras com o <strong>mesmo valor gasto em cada ocorrência</strong>, 
+  situações nas quais o valor de referência deixa de ser o denominador e passa a ser o numerador.
+  Nessas situações, busca-se uma <strong>taxa média efetiva</strong> associada à <strong>  grandeza de referência comum</strong>, e a média aritmética 
+  direta das taxas fornece resultados enganosos.
 </p>
+<figure>
+  <img src="../../imagens/media-harmonica.svg" alt="media harmônica">
+</figure>
+<p> Para um conjunto de valores positivos <span class="formula-inline" data-tts=", xis um, xis dois, até xis ene,">\(x_1, x_2, \ldots, x_n\)</span>, a média harmônica é definida pela razão entre o número total de observações e a soma dos inversos desses valores: </p> <p class="formula" data-tts="h é igual a ene, dividido por um sobre x um, mais um sobre x dois, até um sobre xis ene."> \[ H = \frac{n}{\frac{1}{x_1} + \frac{1}{x_2} + \cdots + \frac{1}{x_n}}. \] </p>
 
-<p>
-  Para um conjunto de valores positivos <span class="formula-inline" data-tts=", xis um, xis dois, até xis ene,">\(x_1, x_2, \ldots, x_n\)</span>, a média harmônica é definida pela razão entre o número total de 
-  observações e a soma dos inversos desses valores:
-</p>
+<p>Representando com a notação do operador de somatório, temos</p>
 
 <p class="formula"
-   data-tts="h é igual a ene, dividido por um sobre x um, mais um sobre x dois, até xis ene.">
+   data-tts="h é igual a ene dividido pela soma de um sobre x i.">
 \[
-H = \frac{n}{\frac{1}{x_1} + \frac{1}{x_2} + \cdots + \frac{1}{x_n}}.
+H = \frac{n}{\sum_{i=1}^{n}\frac{1}{x_i}}.
 \]
 </p>
 
 <p>
-  Nessa expressão, cada <span class="formula-inline" data-tts=", xis i,">\(x_i\)</span> é uma taxa, velocidade ou razão associada a uma mesma unidade física de referência. O denominador envolve 
-  a <strong>soma dos inversos</strong> porque, quando trabalhamos com grandezas do tipo “por unidade”, valores menores exercem maior 
-  influência na taxa média — algo que a média aritmética não capta. Em notação compacta, utiliza-se o símbolo de somatório:
+  Essa expressão mostra que a média harmônica depende da soma dos inversos das taxas observadas,
+  e não dos valores 
+  <span class="formula-inline" data-tts=", xis i,">\(x_i\)</span>
+  diretamente. A seguir, mostramos como essa fórmula pode ser obtida a partir da própria
+  <strong>média aritmética</strong>.
+</p>
+
+<p>
+  Para compreender a origem dessa fórmula, é preciso observar que,
+  em determinados problemas, as grandezas de interesse não são as próprias taxas
+  <span class="formula-inline" data-tts=", xis i,">\(x_i\)</span>,
+  mas sim o seu inverso
+  <span class="formula-inline" data-tts=", um sobre xis i,">\(1/x_i\)</span>,
+  pois é essa forma que representa adequadamente o aspecto do fenômeno
+  que se deseja resumir.
+</p>
+
+<p>
+  Assim, o conjunto de valores efetivamente considerados no cálculo é:
 </p>
 
 <p class="formula"
-   data-tts="h é igual a ene dividido pelo somatório de i igual a um até n de um sobre x i.">
+   data-tts="um sobre xis um, um sobre xis dois, até um sobre xis ene.">
 \[
-H = \frac{n}{\sum_{i=1}^{n} \frac{1}{x_i}}.
+\frac{1}{x_1}, \;
+\frac{1}{x_2}, \;
+\ldots, \;
+\frac{1}{x_n}.
+\]
+</p>
+<p>
+  Como essas são as grandezas relevantes para a síntese, aplica-se a
+  <strong>média aritmética</strong> diretamente sobre esses valores:
+</p>
+
+<p class="formula" data-tts=", xis barra, igual à, um sobre xis um, mais, um sobre xis dois, até um sobre xis ene, tudo dividido por êne.">
+\[
+\bar{X}
+=
+\frac{\frac{1}{x_1}
++
+\frac{1}{x_2}
++
+\cdots
++
+\frac{1}{x_n}}{n}.
+\]
+</p>
+<p>Simplificando, encontramos</p>
+<p class="formula"
+   data-tts="X barra é igual a um sobre ene, vezes um sobre xis um mais um sobre xis dois até um sobre xis ene.">
+\[
+\bar{X}
+=
+\frac{1}{n}
+\left(
+\frac{1}{x_1}
++
+\frac{1}{x_2}
++
+\cdots
++
+\frac{1}{x_n}
+\right).
+\]
+</p>
+<p>
+  A soma pode ser representada de forma compacta pela notação de somatório:
+</p>
+
+<p class="formula"
+   data-tts="um sobre ene, vezes o somatório de i igual a um até ene, de um sobre xis i.">
+\[
+\frac{1}{n}\sum_{i=1}^{n}\frac{1}{x_i}.
 \]
 </p>
 
 <p>
-  A média harmônica não deve ser interpretada como uma simples “média numérica”, mas como uma forma de calcular uma
-  <strong>taxa média efetiva</strong> quando as observações estão associadas a uma mesma quantidade fixa. Em situações desse tipo, o que
-  realmente importa não são os valores das taxas em si, mas o <strong>tempo</strong> ou o <strong>esforço</strong>
-  associados a cada uma delas. Valores menores correspondem a maiores tempos ou esforço por unidade e, por isso, determinam
-  o ritmo efetivo do processo. Ao trabalhar com os inversos <span class="formula-inline" data-tts=", 1, sobre, xis i,">\(1/x_i\)</span>, a média harmônica efetivamente calcula o
-  <strong>tempo</strong> ou <strong>esforço</strong> médio por unidade e, em seguida, o converte de volta em taxa média, refletindo com fidelidade o ritmo real
-  do fenômeno.
+  O resultado acima corresponde ao valor médio das quantidades inversamente proporcionais às taxas.
+  No entanto, como o objetivo é obter uma taxa média equivalente na mesma forma das observações
+  originais, é necessário retornar à escala das taxas, tomando o inverso desse valor médio.
+  Isso define a <strong>média harmônica</strong> <span class="formula-inline" data-tts=", hagá,">\(H\)</span>:
+</p>
+
+<p class="formula"
+   data-tts="h é igual ao inverso de um sobre ene vezes o somatório de um sobre xis i.">
+\[
+H
+= \frac{1}{\dfrac{1}{n}\sum_{i=1}^{n}\frac{1}{x_i}}
+= \frac{n}{\sum_{i=1}^{n}\frac{1}{x_i}}.
+\]
 </p>
 
 <p>
-  Do ponto de vista da sensibilidade a valores extremos, a média harmônica é <strong>particularmente sensível a valores muito pequenos</strong>. 
-  Como o cálculo se baseia nos inversos <span class="formula-inline" data-tts=", 1, sobre, xis i,">\(1/x_i\)</span>, uma única observação próxima de zero pode dominar a soma no denominador e reduzir 
-  drasticamente o valor da média. Se algum valor for igual a zero, a expressão deixa de estar definida. Em contraste, valores muito altos 
-  exercem influência limitada, pois seus inversos são próximos de zero. Assim, a média harmônica reage fortemente a observações baixas e 
-  de forma bem mais suave a valores isolados muito elevados.
-</p>
-
-<p>
-  A média harmônica é especialmente útil para calcular <em>velocidades médias</em> em trechos de igual distância, 
-  <em>produtividades</em> em tarefas com esforço equivalente e <em>taxas unitárias</em> associadas a quantidades fixas.
-  Ela é sempre menor que a média geométrica (exceto quando todos os valores são iguais) e, em conjunto com a média 
-  aritmética e a geométrica, compõe uma família de médias que enfatiza, de formas distintas, diferentes aspectos da 
-  distribuição dos dados.
+  Em outras palavras, a média harmônica é o <strong>inverso da média aritmética dos inversos</strong>
+  dos valores
+  <span class="formula-inline" data-tts=", xis i,">\(x_i\)</span>.
+  Isso explica por que observações muito pequenas exercem forte influência sobre o resultado:
+  seus inversos são grandes e tendem a dominar a soma no denominador, enquanto valores elevados,
+  ao gerarem inversos pequenos, têm impacto relativamente menor.
 </p>
 
 <div class="example-frame">
   <h5>Exemplo</h5>
 
   <p>
-    Considere um conjunto de dados coletado a partir de uma <strong>amostra</strong> composta por 
-    <strong>2 observações</strong>, correspondentes a dois <strong>trechos de igual distância</strong> 
-    percorridos por um motorista em um deslocamento urbano. A variável analisada é a 
-    <strong>velocidade média em cada trecho</strong>, classificada como quantitativa contínua e medida 
+    Considere um conjunto de dados coletado a partir de uma <strong>amostra</strong> composta por
+    <strong>2 observações</strong>, correspondentes a dois <strong>trechos consecutivos de igual distância</strong>
+    (cada um com <strong>60 km</strong>) percorridos por um motorista em um deslocamento urbano. A variável analisada é a
+    <strong>velocidade média em cada trecho</strong>, classificada como quantitativa contínua e medida
     em <strong>escala de razão</strong>.
   </p>
 
@@ -763,7 +839,7 @@ H = \frac{n}{\sum_{i=1}^{n} \frac{1}{x_i}}.
         <tr><td>Trecho 2</td><td>60 km/h</td></tr>
       </tbody>
     </table>
-    <figcaption>Velocidades médias em dois trechos de igual distância</figcaption>
+    <figcaption>Velocidades médias em dois trechos consecutivos de 60 km cada.</figcaption>
   </figure>
 
   <p>
@@ -783,18 +859,19 @@ H = \frac{n}{\sum_{i=1}^{n} \frac{1}{x_i}}.
   <p class="formula"
      data-tts="média aritmética igual a trinta mais sessenta dividido por dois, igual a quarenta e cinco quilômetros por hora.">
     \[
-      \bar{v}_{arit} = \frac{30 + 60}{2} = 45\ \text{km/h}.
+      \bar{v}_{\text{arit}} = \frac{30 + 60}{2} = 45\ \text{km/h}.
     \]
   </p>
 
   <p>
-    Esse valor, porém, <strong>não corresponde</strong> à velocidade média efetiva do percurso, porque o motorista
-    passa mais tempo no trecho mais lento (30 km/h) do que no trecho mais rápido (60 km/h). Para obter a velocidade
-    média correta, é preciso levar em conta o <strong>tempo gasto</strong> em cada trecho.
+    Esse valor, porém, <strong>não corresponde</strong> à velocidade média efetiva do percurso. O motivo é que,
+    embora as <strong>distâncias</strong> sejam iguais (60 km em cada trecho), o motorista
+    passa mais <strong>tempo</strong> no trecho mais lento (30 km/h) do que no trecho mais rápido (60 km/h).
+    Para obter a velocidade média correta, é preciso levar em conta o <strong>tempo gasto</strong> em cada trecho.
   </p>
 
   <p>
-    Suponha que cada trecho tenha <strong>60 km</strong> de extensão. O tempo gasto em cada um é dado por:
+    Como cada trecho tem <strong>60 km</strong>, o tempo gasto em cada um é dado por:
   </p>
 
   <p class="formula"
@@ -831,8 +908,8 @@ H = \frac{n}{\sum_{i=1}^{n} \frac{1}{x_i}}.
   </p>
 
   <p>
-    Esse resultado pode ser escrito diretamente na forma de <strong>média harmônica</strong> das velocidades, sem
-    precisar explicitar a distância:
+    Esse resultado pode ser obtido diretamente pela fórmula da <strong>média harmônica</strong> das velocidades, sem
+    precisar refazer todo o cálculo com a distância, justamente porque os trechos têm <strong>mesma extensão</strong>:
   </p>
 
   <p class="formula"
@@ -848,12 +925,13 @@ H = \frac{n}{\sum_{i=1}^{n} \frac{1}{x_i}}.
 
   <p>
     O valor <strong>40 km/h</strong> representa a velocidade média efetiva ao longo de todo o percurso. A média harmônica
-    é apropriada nesse caso porque as velocidades estão relacionadas a uma <strong>distância fixa</strong>, e o tempo gasto
-    em cada trecho varia de forma inversamente proporcional à velocidade: o trecho mais lento consome mais tempo e, por isso,
-    exerce maior influência sobre a taxa média do que o trecho mais rápido — exatamente o comportamento capturado pelos inversos
-    na fórmula da média harmônica.
+    é apropriada nesse caso porque as velocidades estão associadas a uma <strong>distância fixa</strong> em cada trecho,
+    de modo que o tempo gasto varia de forma inversamente proporcional à velocidade: o trecho mais lento consome mais tempo
+    e, por isso, exerce maior influência sobre a taxa média do que o trecho mais rápido — exatamente o comportamento capturado
+    pelos inversos na fórmula da média harmônica.
   </p>
 </div>
+
 
 <h3>2.2 Mediana</h3>
 
@@ -901,35 +979,41 @@ H = \frac{n}{\sum_{i=1}^{n} \frac{1}{x_i}}.
 <h4>2.2.1 Mediana em dados não agrupados</h4>
 
 <p>
-  Quando os valores observados estão disponíveis individualmente, dizemos que os dados são 
-  <strong>não agrupados</strong>. Nessa situação, a mediana é obtida diretamente a partir da 
-  <strong>ordenação dos dados</strong>. Diferentemente da média, que depende do valor numérico de cada 
-  observação, a mediana depende exclusivamente da <strong>posição</strong> ocupada pelos valores no 
-  conjunto ordenado.
+  Quando os valores observados estão disponíveis individualmente, dizemos que os dados são
+  <strong>não agrupados</strong>. Nessa situação, a mediana é determinada diretamente a partir da
+  <strong>ordenação dos dados</strong>. Diferentemente da média, que depende da magnitude dos valores,
+  a mediana depende exclusivamente da <strong>posição</strong> que cada observação ocupa no conjunto ordenado.
 </p>
-
+<figure>
+  <img src="../../imagens/mediana-nao-agrupados.svg" alt="mediana dados não agrupados">
+</figure>
 <p>
-  O procedimento para determinar a mediana segue duas etapas fundamentais:
+  A determinação da mediana envolve dois passos essenciais:
 </p>
 
 <ul>
   <li class="lista">ordenar os dados em <strong>ordem crescente</strong>;</li>
-  <li class="lista">identificar a <strong>posição central</strong> da distribuição.</li>
+  <li class="lista">localizar a <strong>posição central</strong> da distribuição ordenada.</li>
 </ul>
 
 <p>
-  Seja um conjunto com <span class="formula-inline" data-tts=", ene,">\(n\)</span> observações. Há dois casos possíveis:
+  Seja um conjunto composto por
+  <span class="formula-inline" data-tts=", ene,">\(n\)</span>
+  observações. A definição da mediana depende da paridade de <span class="formula-inline" data-tts=", ene,">\(n\)</span>, dando origem a dois casos:
 </p>
 
 <ul>
   <li class="lista">
-    <strong>Se <span class="formula-inline" data-tts=", ene,">\(n\)</span> é ímpar</strong>, a mediana é o valor que ocupa a posição
-    <span class="formula-inline" data-tts=", ene mais um sobre dois,">\( \frac{n+1}{2} \)</span> no conjunto ordenado;
+    <strong>Se <span class="formula-inline" data-tts=", ene,">\(n\)</span> é ímpar</strong>, a mediana corresponde ao valor situado na posição
+    <span class="formula-inline" data-tts=", ene mais um sobre dois,">\( \frac{n+1}{2} \)</span>
+    da lista ordenada;
   </li>
 
   <li class="lista">
-    <strong>Se <span class="formula-inline" data-tts=", ene,">\(n\)</span> é par</strong>, a mediana é a média aritmética dos valores que ocupam as posições 
-    <span class="formula-inline" data-tts=", ene sobre dois,">\( \frac{n}{2} \)</span> e 
+    <strong>Se <span class="formula-inline" data-tts=", ene,">\(n\)</span> é par</strong>, a mediana é definida como a média aritmética dos valores situados
+    nas posições
+    <span class="formula-inline" data-tts=", ene sobre dois,">\( \frac{n}{2} \)</span>
+    e
     <span class="formula-inline" data-tts=", ene sobre dois mais um,">\( \frac{n}{2} + 1 \)</span>.
   </li>
 </ul>
@@ -1024,66 +1108,78 @@ H = \frac{n}{\sum_{i=1}^{n} \frac{1}{x_i}}.
 <h4>2.2.2 Mediana em dados agrupados sem intervalos de classe</h4>
 
 <p>
-  Em muitos casos, os dados não são registrados como uma lista completa de valores individuais, mas
-  aparecem resumidos em uma <strong>tabela de frequências</strong> para cada valor possível ou para
-  cada categoria de interesse. Isso ocorre, por exemplo, com variáveis <strong>discretas</strong> 
-  (como número de filhos) e com variáveis em <strong>escala ordinal</strong> (como níveis de 
-  satisfação “ruim”, “regular”, “bom”, “ótimo”). Nesses casos, ainda podemos calcular a mediana 
-  com base na <strong>posição central</strong>, mas agora essa posição é identificada a partir da 
-  <strong>frequência acumulada</strong>.
+  Diferentemente do caso de <strong>dados não agrupados</strong> — em que a posição central pode ser
+  localizada diretamente na lista ordenada — aqui os valores individuais não estão disponíveis. 
+  Em muitos contextos, os dados aparecem resumidos em uma <strong>tabela de frequências</strong> para 
+  cada valor possível ou para cada categoria de interesse. Isso ocorre, por exemplo, com variáveis 
+  <strong>discretas</strong> (como número de filhos) e com variáveis em <strong>escala ordinal</strong> 
+  (como níveis de satisfação “ruim”, “regular”, “bom”, “ótimo”). 
+  Nessas situações, ainda calculamos a mediana com base na <strong>posição central</strong>, 
+  mas agora essa posição é identificada a partir da <strong>frequência acumulada</strong>.
+</p>
+<figure>
+  <img src="../../imagens/mediana-dados-agrupados.svg" alt="mediana dados agrupados">
+</figure>
+<p>
+  A ideia geral continua a mesma do caso não agrupado: encontrar o ponto que divide a distribuição
+  em duas metades. A diferença é que, em vez de percorrer observação por observação, contamos 
+  quantas observações estão acumuladas até cada valor ou categoria.
 </p>
 
-<p>
-  A ideia é a mesma dos dados não agrupados: encontrar o ponto que divide a distribuição em duas 
-  metades. A diferença é que, em vez de percorrer observação por observação, contamos quantas 
-  observações estão acumuladas até cada valor ou categoria.
-</p>
-
-<p>
-  O procedimento geral é o seguinte:
-</p>
+<p>O procedimento geral é o seguinte:</p>
 
 <ol>
   <li class="lista">
     ordenar os <strong>valores ou categorias</strong> em ordem crescente, de acordo com a escala
     (numérica ou ordinal);
   </li>
+
   <li class="lista">
     calcular a <strong>frequência acumulada</strong> de cada valor ou categoria;
   </li>
+
   <li class="lista">
     determinar a <strong>posição central</strong> da distribuição:
-    <span class="formula-inline" data-tts=", pe igual a, abre parêntese, ene mais um, fecha parêntese, sobre dois,">
-      \( p = \dfrac{n+1}{2} \)
+    <span class="formula-inline" 
+          data-tts=", pe igual a, abre parêntese, ene mais um, fecha parêntese, sobre dois,">
+      \(p = \dfrac{n+1}{2}\)
     </span>,
     em que <span class="formula-inline" data-tts=", ene,">\(n\)</span> é o número total de observações;
   </li>
+
   <li class="lista">
-    identificar o primeiro valor ou categoria cuja <strong>frequência acumulada</strong> seja
-    maior ou igual a <span class="formula-inline" data-tts=", pe,">\(p\)</span>:
+    identificar o primeiro valor ou categoria cuja <strong>frequência acumulada</strong> seja maior 
+    ou igual a <span class="formula-inline" data-tts=", pe,">\(p\)</span>:
     esse será o valor (ou categoria) da mediana.
   </li>
 </ol>
 
 <p>
   Quando <span class="formula-inline" data-tts=", ene,">\(n\)</span> é ímpar, a posição central
-  <span class="formula-inline" data-tts=", pe,">\(p\)</span> é inteira, e a mediana coincide com o
-  valor que contém exatamente essa observação na contagem acumulada. Quando
-  <span class="formula-inline" data-tts=", ene,">\(n\)</span> é par, as posições centrais são
-  <span class="formula-inline" data-tts=", ene sobre dois,">\(n/2\)</span> e
-  <span class="formula-inline" data-tts=", ene sobre dois mais um,">\(n/2 + 1\)</span>. Se ambas
-  recaem na mesma categoria, a mediana é essa própria categoria; se recaem em valores numéricos
-  distintos, é comum tomar a média entre eles (quando a escala permite essa operação). Em
-  variáveis estritamente ordinais, em geral relata-se apenas a <strong>categoria mediana</strong>.
+  <span class="formula-inline" data-tts=", pe,">\(p\)</span> é inteira, e a mediana coincide com o 
+  valor que contém exatamente essa observação na contagem acumulada. 
+  Quando <span class="formula-inline" data-tts=", ene,">\(n\)</span> é par, as posições centrais são 
+  <span class="formula-inline" data-tts=", ene sobre dois,">\(n/2\)</span> e 
+  <span class="formula-inline" data-tts=", ene sobre dois mais um,">\(n/2 + 1\)</span>. 
+  Se ambas recaem na mesma categoria, a mediana é essa própria categoria; 
+  se recaem em valores numéricos distintos, é comum tomar a média entre eles 
+  (quando a escala permite essa operação). 
+  Em variáveis estritamente ordinais, em geral relata-se apenas a 
+  <strong>categoria mediana</strong>.
 </p>
 
 <div class="example-frame">
-  <h5>Exemplo</h5>
+  <h5>Exemplos</h5>
+
+  <!-- ===========================================================
+       CASO 1 — VARIÁVEL ORDINAL
+       =========================================================== -->
+  <p><strong>Caso 1 — Variável Ordinal</strong></p>
 
   <p>
     Considere uma <strong>amostra</strong> de <strong>15 respostas</strong> a uma pesquisa de satisfação 
     aplicada a clientes de um serviço. A variável de interesse é o 
-    <strong>nível de satisfação</strong>, medida em escala ordinal com as categorias 
+    <strong>nível de satisfação</strong>, medido em escala ordinal com as categorias 
     “ruim”, “regular”, “bom” e “ótimo”.
   </p>
 
@@ -1126,9 +1222,7 @@ H = \frac{n}{\sum_{i=1}^{n} \frac{1}{x_i}}.
     <figcaption>Nível de satisfação — distribuição de frequências</figcaption>
   </figure>
 
-  <p>
-    O número total de respostas é:
-  </p>
+  <p>O número total de respostas é:</p>
 
   <p class="formula" data-tts="ene igual a quinze.">
     \[
@@ -1168,78 +1262,226 @@ H = \frac{n}{\sum_{i=1}^{n} \frac{1}{x_i}}.
     necessário atribuir valores numéricos às categorias: a mediana foi determinada apenas com base na 
     <strong>ordem</strong> e nas <strong>frequências acumuladas</strong>.
   </p>
+
+  <hr>
+
+  <!-- ===========================================================
+       CASO 2 — VARIÁVEL DISCRETA
+       =========================================================== -->
+  <p><strong>Caso 2 — Variável Discreta</strong></p>
+
+  <p>
+    Considere uma pesquisa com <strong>20 famílias</strong>, na qual se registrou o 
+    <strong>número de filhos</strong> em cada família. A variável é 
+    <strong>quantitativa discreta</strong>, assumindo valores inteiros como 0, 1, 2, 3, …  
+    Os dados foram organizados em uma <strong>tabela de frequências</strong>:
+  </p>
+
+  <figure class="figure table">
+    <table>
+      <thead>
+        <tr>
+          <th>Número de filhos</th>
+          <th>Frequência</th>
+          <th>Frequência acumulada</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>0</td>
+          <td>3</td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>5</td>
+          <td>8</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>6</td>
+          <td>14</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>4</td>
+          <td>18</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>2</td>
+          <td>20</td>
+        </tr>
+      </tbody>
+    </table>
+    <figcaption>Número de filhos — distribuição de frequências</figcaption>
+  </figure>
+
+  <p>O total de observações é:</p>
+
+  <p class="formula" data-tts="ene igual a vinte.">
+    \[
+      n = 20.
+    \]
+  </p>
+
+  <p>
+    Como \(n\) é par, as posições centrais são:
+  </p>
+
+  <p class="formula" data-tts="pe um igual a dez, pe dois igual a onze.">
+    \[
+      p_1 = \frac{n}{2} = 10,
+      \qquad
+      p_2 = \frac{n}{2} + 1 = 11.
+    \]
+  </p>
+
+  <p>
+    Verificando a coluna de <strong>frequência acumulada</strong>:
+  </p>
+
+  <ul>
+    <li class="lista">até 0 filhos: 3 famílias acumuladas;</li>
+    <li class="lista">até 1 filho: 8 acumuladas;</li>
+    <li class="lista">até 2 filhos: 14 acumuladas;</li>
+    <li class="lista">até 3 filhos: 18 acumuladas;</li>
+    <li class="lista">até 4 filhos: 20 acumuladas.</li>
+  </ul>
+
+  <p>
+    Observe que:
+  </p>
+
+  <ul>
+    <li class="lista">a 10ª observação está em <strong>2 filhos</strong> (pois 8 &lt; 10 ≤ 14);</li>
+    <li class="lista">a 11ª observação também está em <strong>2 filhos</strong> (pois 8 &lt; 11 ≤ 14).</li>
+  </ul>
+
+  <p>
+    Como ambas as posições centrais recaem no mesmo valor, a mediana é:
+  </p>
+
+  <p class="formula" data-tts="mediana igual a dois.">
+    \[
+      \text{Mediana} = 2.
+    \]
+  </p>
+
+  <p>
+    Assim, mesmo com <span class="formula-inline" data-tts=", ene,">\(n\)</span> par, não é necessário tomar média entre valores distintos, pois 
+    as duas posições centrais estão na mesma categoria. A mediana é um número inteiro e 
+    coincide exatamente com o valor que contém as observações 10 e 11.
+  </p>
+
+  <p>
+    Em termos interpretativos, isso significa que pelo menos metade das famílias tem 
+    <strong>até 2 filhos</strong> e pelo menos metade tem <strong>2 filhos ou mais</strong>. 
+    Como a variável é discreta, não há qualquer estimativa dentro de intervalo — apenas 
+    identificamos o valor exato que contém a posição mediana.
+  </p>
+
 </div>
 
 <h4>2.2.3 Mediana em dados agrupados em classes</h4>
 
 <p>
-  Quando os dados são organizados em <strong>classes intervalares</strong>, os valores individuais deixam de estar
-  disponíveis. Nesse caso, a mediana continua sendo definida como o valor que separa a metade inferior da metade superior
-  da distribuição, mas já não pode ser obtida diretamente a partir da ordenação dos dados. Em vez disso, ela deve ser 
-  <strong>estimada</strong> por meio de uma interpolação dentro da classe que contém a observação central, denominada 
-  <strong>classe mediana</strong>.
+  Diferentemente do caso anterior — dados agrupados <em>sem</em> intervalos de classe — em que, por serem aplicados em variáveis qualitativas ordinais ou quantitativas discretas, bastava 
+  localizar o valor ou categoria cuja <strong>frequência acumulada</strong> contém a posição central, 
+  aqui enfrentamos uma limitação adicional: quando tratamos de variáveis quantitativas contínuas e as observações são agrupadas em 
+  <strong>classes intervalares</strong>, não conhecemos os valores individuais nem sabemos como eles se 
+  distribuem <em>dentro</em> de cada classe. Assim, mesmo após identificar a classe mediana, ainda 
+  não sabemos a posição exata da mediana no interior desse intervalo. Por isso, a mediana não pode 
+  ser obtida diretamente, mas sim <strong>estimada por interpolação</strong>.
 </p>
 
+<figure>
+  <img src="../../imagens/mediana-dados-agrupados-classes.svg" alt="mediana dados agrupados em classes">
+</figure>
 <p>
-  A classe mediana é aquela cuja <strong>frequência acumulada</strong> ultrapassa pela primeira vez a metade do total
-  de observações. Uma vez identificada essa classe, a mediana é estimada pela expressão:
+  A <strong>classe mediana</strong> é definida como o primeiro intervalo cuja 
+  <strong>frequência acumulada</strong> ultrapassa 
+  <span class="formula-inline" data-tts=", ene sobre dois,">\(n/2\)</span>. 
+  O princípio para identificá-la é o mesmo do caso anterior: determinar, pela contagem acumulada, 
+  onde a <strong>posição central</strong> da distribuição se encontra. A diferença está na informação 
+  disponível: enquanto antes esse ponto já definia diretamente o valor ou a categoria mediana, aqui 
+  precisamos <em>estimar</em> a posição da mediana <strong>dentro</strong> da classe na qual ela ocorre.
+</p>
+
+
+
+<p>
+  Uma vez identificada essa classe, a mediana é estimada por:
 </p>
 
 <p class="formula"
-   data-tts="mediana é igual a ele i mais, abre parêntese, ene sobre dois menos F i menos um, fecha parêntese, dividido por éfe i, vezes agá.">
-  \[
-    \text{Mediana} = L_i + 
-    \left(\frac{\frac{n}{2} - F_{i-1}}{f_i}\right) \cdot h
-  \]
+   data-tts="mediana é igual a ele i mais, abre parêntese, ene sobre dois menos, éfe maiúsculo i menos um, fecha parêntese, vezes ága sobre éfe minúsculo i.">
+\[
+\text{Mediana}
+  = L_i
+  + \left( \frac{n}{2} - F_{i-1} \right)\frac{h}{f_i}
+\]
 </p>
 
-<p>
-  em que:
-</p>
+<p>em que:</p>
 
 <ul>
-  <li class="lista"><span class="formula-inline" data-tts=", ele i,">\( L_i \)</span> é o limite inferior da classe mediana;</li>
-  <li class="lista"><span class="formula-inline" data-tts=", F i menos um,">\( F_{i-1} \)</span> é a frequência acumulada da classe imediatamente anterior;</li>
-  <li class="lista"><span class="formula-inline" data-tts=", éfe i,">\( f_i \)</span> é a frequência da classe mediana;</li>
-  <li class="lista"><span class="formula-inline" data-tts=", agá,">\( h \)</span> é a amplitude da classe;</li>
-  <li class="lista"><span class="formula-inline" data-tts=", ene,">\( n \)</span> é o número total de observações.</li>
+  <li class="lista"><span class="formula-inline" data-tts=", éle i,">\(L_i\)</span> é o limite inferior da classe mediana;</li>
+  <li class="lista"><span class="formula-inline" data-tts=", éfe maiúsculo i menos um,">\(F_{i-1}\)</span> é a frequência acumulada até a classe anterior;</li>
+  <li class="lista"><span class="formula-inline" data-tts=", éfe minúsculo i,">\(f_i\)</span> é a frequência da classe mediana;</li>
+  <li class="lista"><span class="formula-inline" data-tts=", ága,">\(h\)</span> é a amplitude da classe;</li>
+  <li class="lista"><span class="formula-inline" data-tts=", ene,">\(n\)</span> é o total de observações.</li>
 </ul>
 
 <p>
-  Em termos intuitivos, a fórmula segue quatro passos:
+  A intuição por trás do funcionamento dessa fórmula pode ser entendida da seguinte maneira. 
+  A partir do termo <span class="formula-inline" data-tts=", éle i,">
+    \( L_{i} \)
+  </span>, sendo o limite inferior da classe mediana, temos o valor correspondente à posição mínima que a mediana possa assumir dentro da classe. Já o termo
+  <span class="formula-inline" data-tts=", ene sobre dois, menos éfe maiúsculo i menos um,">
+    \( \frac{n}{2} - F_{i-1} \)
+  </span> indica quantas posições é necessário avançar, tomando como ponto de partida o último elemento contido na classe imediatamente anterior, para atingirmos a posição mediana 
+  <em>dentro</em> da classe mediana.
 </p>
 
+<p>
+  Até esse ponto, dispomos de um termo que representa o valor mínimo possível para a mediana e de um termo que indica quantas observações precisamos “avançar” dentro da classe mediana. Ainda falta, porém, <strong>transformar essa contagem de posições em um deslocamento em termos de valores</strong> ao longo do intervalo. Essa conversão é feita sob a hipótese de que as observações se distribuem aproximadamente de forma uniforme no interior da classe.
+</p>
+
+<p>
+  Essa hipótese é incorporada pelo fator 
+  <span class="formula-inline" data-tts=", ága sobre éfe minúsculo i,">
+    \( h/f_i \)
+  </span>, em que a amplitude 
+  <span class="formula-inline" data-tts=", ága,">\(h\)</span> da classe mediana é dividida pela quantidade de observações contidadas na classe, ou seja, sua frequência. 
+  <span class="formula-inline" data-tts=", éfe minúsculo i,">\(f_i\)</span>. Assim, 
+  <span class="formula-inline" data-tts=", ága sobre éfe minúsculo i,">\(h/f_i\)</span> pode ser interpretado como o 
+  <strong>comprimento médio do intervalo associado a cada observação</strong> dentro da classe: sob uniformidade, cada observação “ocupa”, em média, uma mesma fração da largura total do intervalo.
+</p>
+
+<p>
+  Multiplicando o número de posições que faltam até a mediana,
+  <span class="formula-inline" data-tts=", ene sobre dois, menos éfe maiúsculo i menos um,">
+    \( \frac{n}{2} - F_{i-1} \)
+  </span>, por esse comprimento médio 
+  <span class="formula-inline" data-tts=", ága sobre éfe minúsculo i,">\(h/f_i\)</span>, obtemos o 
+  <strong>deslocamento horizontal</strong> que separa o limite inferior da classe do ponto em que a mediana se encontra. Somando esse deslocamento ao limite inferior 
+  <span class="formula-inline" data-tts=", éle i,">\(L_i\)</span>, chegamos à estimativa do valor da mediana para dados agrupados em classes.
+</p>
+
+<p>Assim, a lógica da estimativa segue quatro passos:</p>
+
 <ol>
-  <li class="lista">
-    localizar a <strong>posição central</strong> da distribuição, dada por 
-    <span class="formula-inline" data-tts=", ene sobre dois,">\( \frac{n}{2} \)</span>;
-  </li>
-  <li class="lista">
-    verificar quantas observações ainda faltam, após a classe anterior, para atingir essa posição central: 
-    <span class="formula-inline" data-tts="ene sobre dois menos F i menos um,">
-      \( \frac{n}{2} - F_{i-1} \)
-    </span>;
-  </li>
-  <li class="lista">
-    transformar essa quantidade em uma <strong>proporção da classe mediana</strong>, dividindo pela frequência da classe:
-    <span class="formula-inline"
-          data-tts="n sobre dois menos F i menos um, dividido por éfe i,">
-      \(\dfrac{\frac{n}{2} - F_{i-1}}{f_i}\)
-    </span>;
-  </li>
-  <li class="lista">
-    converter essa proporção em um <strong>comprimento dentro do intervalo</strong>, multiplicando pela amplitude 
-    <span class="formula-inline" data-tts=", agá,">\(h\)</span>, e somar esse deslocamento ao limite inferior 
-    <span class="formula-inline" data-tts=", ele i,">\(L_i\)</span>.
-  </li>
+  <li class="lista">localizamos a posição central <span class="formula-inline" data-tts=", ene sobre dois,">\(n/2\)</span>;</li>
+  <li class="lista">identificamos a classe cuja frequência acumulada ultrapassa essa posição;</li>
+  <li class="lista">determinamos quanto falta para atingir a posição mediana dentro da classe;</li>
+  <li class="lista">transformamos essa “falta” em deslocamento horizontal e o somamos ao limite inferior.</li>
 </ol>
 
 <p>
-  Essa construção corresponde a uma <strong>interpolação linear</strong> dentro da classe mediana: supõe-se que os dados 
-  estejam aproximadamente <strong>uniformemente distribuídos</strong> dentro dessa classe, de modo que a posição da mediana 
-  possa ser “lida” em um ponto proporcionalmente distante do limite inferior. O valor obtido é, portanto, uma 
-  <em>estimativa</em> da mediana dos dados originais, e não o valor exato que seria obtido se todas as observações 
-  individuais estivessem disponíveis.
+  A interpolação linear decorre da suposição de que as observações se distribuem uniformemente 
+  dentro da classe mediana, tornando apropriada a conversão entre frequências relativas e 
+  comprimentos proporcionais.
 </p>
 
 <div class="example-frame">
@@ -1386,7 +1628,7 @@ H = \frac{n}{\sum_{i=1}^{n} \frac{1}{x_i}}.
 </p>
 
 <p>
-  A moda é aplicável tanto a dados quantitativos quanto a dados <strong>qualitativos</strong>, caso em que representa a
+  A moda é aplicável tanto a dados <strong>quantitativos</strong> quanto a dados <strong>qualitativos</strong>, caso em que representa a
   categoria mais escolhida ou mais observada. Essa característica torna a moda uma medida especialmente flexível, já que
   média e mediana não se aplicam, em geral, a variáveis nominais. Em contrapartida, a moda pode não ser única ou,
   em certos conjuntos de dados, sequer apresentar um valor claramente predominante.
@@ -1414,7 +1656,7 @@ H = \frac{n}{\sum_{i=1}^{n} \frac{1}{x_i}}.
 <p>
   Embora o conceito de moda seja único — identificar o valor ou a categoria mais frequente —, a forma de obtê-la depende de
   como os dados estão organizados. Quando dispomos dos valores <strong>individualmente</strong>, determinamos a 
-  <strong>moda para dados não agrupados</strong>, identificando o(s) valor(es) com maior frequência absoluta. 
+  <strong>moda para dados não agrupados</strong>, identificando o valor, ou vaores, com maior frequência absoluta. 
   Se os dados estão organizados em uma <strong>tabela de frequências sem intervalos de classe</strong>, como no caso 
   de variáveis discretas ou ordinais, trabalhamos com a <strong>moda em dados agrupados sem intervalos</strong>, em que 
   o valor modal é lido diretamente na tabela. Por fim, em variáveis <strong>quantitativas contínuas agrupadas em classes 
@@ -1434,23 +1676,33 @@ H = \frac{n}{\sum_{i=1}^{n} \frac{1}{x_i}}.
 <h4>2.3.1 Moda em dados não agrupados</h4>
 
 <p>
-  Quando os dados estão disponíveis individualmente, isto é, na forma de uma lista de observações 
-  <strong>não agrupadas</strong>, a identificação da moda é direta: basta verificar qual valor aparece mais vezes.
-  Esse valor (ou valores) é a moda da distribuição. Essa definição vale tanto para variáveis <strong>qualitativas</strong> 
+  Quando os dados estão disponíveis individualmente — isto é, na forma de uma lista de observações 
+  <strong>não agrupadas</strong> — a determinação da moda é direta: basta identificar qual valor ocorre 
+  com maior frequência absoluta. Essa definição vale tanto para variáveis <strong>qualitativas</strong> 
   quanto para variáveis <strong>quantitativas</strong>.
+</p>
+
+<figure>
+  <img src="../../imagens/moda-dados-nao-agrupados.svg" alt="moda dados não agrupados">
+</figure>
+<p>
+  A vantagem desse caso é que não há perda de informação: cada observação é conhecida e a contagem de 
+  ocorrências pode ser feita diretamente. Isso torna a moda especialmente simples de calcular e interpretar. 
 </p>
 
 <div class="example-frame">
   <h5>Exemplo</h5>
 
+  <p><strong>Caso 1 — Unimodal</strong></p>
+
   <p>
     Considere uma <strong>amostra</strong> composta por <strong>10 estudantes</strong>, selecionados de uma 
-    <strong>população</strong> de alunos de ensino médio. A variável analisada é o 
+    <strong>população</strong> de alunos do ensino médio. A variável analisada é o 
     <strong>meio de transporte utilizado para ir à escola</strong>, classificada como qualitativa nominal.
   </p>
 
   <p>
-    Os dados observados são:
+    Os dados observados foram:
   </p>
 
   <p>
@@ -1458,31 +1710,78 @@ H = \frac{n}{\sum_{i=1}^{n} \frac{1}{x_i}}.
   </p>
 
   <p>
-    Contando as ocorrências de cada categoria:
+    A tabela abaixo apresenta a <strong>frequência</strong> de cada categoria:
   </p>
 
-  <ul>
-    <li class="lista">ônibus: 5 estudantes;</li>
-    <li class="lista">carro: 2 estudantes;</li>
-    <li class="lista">a pé: 2 estudantes;</li>
-    <li class="lista">bicicleta: 1 estudante.</li>
-  </ul>
+  <figure class="figure table">
+    <table>
+      <thead>
+        <tr>
+          <th>Categoria</th>
+          <th>Frequência</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Ônibus</td><td>5</td></tr>
+        <tr><td>Carro</td><td>2</td></tr>
+        <tr><td>A pé</td><td>2</td></tr>
+        <tr><td>Bicicleta</td><td>1</td></tr>
+      </tbody>
+    </table>
+    <figcaption>Distribuição dos meios de transporte utilizados pelos estudantes</figcaption>
+  </figure>
 
   <p>
-    A categoria <strong>ônibus</strong> apresenta a maior frequência, de modo que a moda da distribuição 
-    é “ônibus”. Em termos interpretativos, isso indica que o meio de transporte mais utilizado na amostra é o ônibus.
+    Observa-se que a categoria <strong>ônibus</strong> apresenta a maior frequência, com cinco ocorrências. 
+    Portanto, a distribuição é <strong>unimodal</strong>, e a moda é <strong>“ônibus”</strong>. Em termos 
+    interpretativos, isso significa que o meio de transporte mais comum entre os estudantes é o ônibus.
   </p>
 
+  <hr>
+
+  <p><strong>Caso 2 — Bimodal</strong></p>
+
   <p>
-    Para ilustrar um caso com múltiplas modas, considere os valores numéricos
+    Considere agora o conjunto de valores numéricos:
     <span class="formula-inline" data-tts="três, quatro, quatro, cinco, seis, seis, sete.">
       \(3, 4, 4, 5, 6, 6, 7\).
     </span>
-    Os valores 4 e 6 aparecem duas vezes cada, mais do que os demais, de modo que a distribuição é 
-    <strong>bimodal</strong>, com modas 4 e 6. Já em um conjunto como 
+  </p>
+
+  <p>
+    As frequências correspondentes são:
+  </p>
+
+  <figure class="figure table">
+    <table>
+      <thead>
+        <tr>
+          <th>Valor</th>
+          <th>Frequência</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>3</td><td>1</td></tr>
+        <tr><td>4</td><td>2</td></tr>
+        <tr><td>5</td><td>1</td></tr>
+        <tr><td>6</td><td>2</td></tr>
+        <tr><td>7</td><td>1</td></tr>
+      </tbody>
+    </table>
+    <figcaption>Distribuição dos valores no segundo conjunto</figcaption>
+  </figure>
+
+  <p>
+    Os valores <strong>4</strong> e <strong>6</strong> apresentam a mesma frequência máxima (duas ocorrências 
+    cada). A distribuição é, portanto, <strong>bimodal</strong>.
+  </p>
+
+  <p>
+    Já em um conjunto como 
     <span class="formula-inline" data-tts="dois, três, quatro, cinco.">
       \(2, 3, 4, 5\)
-    </span>, todas as observações são distintas e a distribuição é <strong>amodal</strong>, isto é, não há moda claramente definida.
+    </span>, todas as observações são distintas e nenhuma frequência se destaca. Esse é um caso 
+    <strong>amodal</strong>.
   </p>
 </div>
 
@@ -1490,15 +1789,22 @@ H = \frac{n}{\sum_{i=1}^{n} \frac{1}{x_i}}.
 <h4>2.3.2 Moda em dados agrupados sem intervalos de classe</h4>
 
 <p>
-  Em muitas situações, os dados são organizados em uma <strong>tabela de frequências</strong>, 
-  na qual cada linha corresponde a um valor (ou categoria) distinto e à frequência com que ele ocorre. 
-  Quando não há <strong>intervalos de classe</strong> — isto é, quando cada linha representa um valor específico 
-  da variável —, a moda continua sendo o valor associado à <strong>maior frequência</strong>.
+  Assim como no caso da mediana, quando os dados são organizados em uma 
+  <strong>tabela de frequências</strong> sem intervalos de classe, não observamos mais os valores 
+  individualmente, mas apenas quantas vezes cada valor (ou categoria) ocorre. Ainda assim, como cada linha 
+  da tabela corresponde a um valor específico, a moda continua sendo o <strong>valor de maior frequência</strong>.
 </p>
 
 <p>
-  Nesses casos, a tabela de frequências apenas torna explícito o que já poderia ser obtido pela contagem das 
-  observações individuais, facilitando a identificação da moda, especialmente quando o número de dados é grande.
+  Nessa situação, a tabela apenas sistematiza a contagem que seria feita diretamente a partir dos dados 
+  não agrupados. O cálculo da moda, portanto, não exige nenhuma estimativa adicional: basta localizar o 
+  valor associado à maior frequência absoluta.
+</p>
+
+<p>
+  Caso dois ou mais valores apresentem a mesma frequência máxima, a distribuição será bi ou multimodal, 
+  assim como no caso dos dados não agrupados. A interpretação permanece idêntica: a moda representa o(s) 
+  valor(es) mais frequente(s) na distribuição observada.
 </p>
 
 <div class="example-frame">
@@ -1550,51 +1856,110 @@ H = \frac{n}{\sum_{i=1}^{n} \frac{1}{x_i}}.
 <h4>2.3.3 Moda em dados agrupados em classes</h4>
 
 <p>
-  Quando os dados de uma variável <strong>quantitativa contínua</strong> são agrupados em 
-  <strong>classes intervalares</strong>, não é mais possível identificar diretamente qual valor ocorre com 
-  maior frequência, pois apenas se conhece o número de observações em cada intervalo. Nessa situação, 
-  define-se como <strong>classe modal</strong> a classe que apresenta a <strong>maior frequência</strong>.
+  Diferentemente do caso anterior — dados agrupados <em>sem</em> intervalos de classe —, em que 
+  bastava localizar diretamente o valor ou a categoria associado à maior frequência, aqui enfrentamos 
+  uma limitação adicional: quando uma variável quantitativa contínua é organizada em 
+  <strong>classes intervalares</strong>, não conhecemos os valores individuais nem sabemos como eles 
+  se distribuem <em>dentro</em> de cada classe. Assim, apenas identificar qual classe possui a maior 
+  frequência já não determina imediatamente o valor modal. Por isso, o valor da moda não pode ser 
+  obtido diretamente, mas sim <strong>estimado por interpolação</strong>.
+</p>
+<figure>
+  <img src="../../imagens/moda-dados-agrupados-classe.svg" alt="moda de dados agrupados em classes">
+</figure>
+<p>
+  Chama-se <strong>classe modal</strong> o primeiro intervalo que apresenta a 
+  <strong>maior frequência</strong> dentre todas as classes da distribuição. O princípio para 
+  identificá-la é o mesmo do caso anterior: determinar onde a concentração de observações atinge 
+  seu máximo. A diferença está na informação disponível: enquanto antes esse máximo já definia 
+  diretamente o valor modal, aqui precisamos <em>estimar</em> a posição do valor mais frequente 
+  <strong>dentro</strong> da classe modal.
 </p>
 
 <p>
-  Em muitas aplicações, é útil obter não apenas a classe modal, mas também uma <strong>estimativa numérica</strong> 
-  do valor modal dentro dessa classe. Uma forma comum de fazer isso é supor que as frequências crescem da classe anterior 
-  até a classe modal e diminuem em direção à classe seguinte, formando um “topo” aproximadamente trapezoidal. 
-  Sob essa hipótese, pode-se aplicar uma interpolação que leva em conta as frequências das três classes envolvidas:
+  Uma vez identificada essa classe, a moda pode ser estimada por:
 </p>
 
 <p class="formula"
-   data-tts="moda é igual a ele i mais, abre parêntese, éfe i menos éfe i menos um, sobre, éfe i menos éfe i menos um, mais éfe i menos éfe i mais um, fecha parêntese, vezes agá.">
-  \[
-    \text{Moda} 
-    = L_i + 
-    \left(
-      \frac{f_i - f_{i-1}}{(f_i - f_{i-1}) + (f_i - f_{i+1})}
-    \right)\cdot h
-  \]
+   data-tts="moda é igual a éle i, mais, abre parêntese, éfe minúsculo i menos éfe minúsculo i menos um, sobre, éfe minúsculo i menos éfe minúsculo i menos um, mais, éfe minúsculo i menos éfe minúsculo i mais um, fecha parêntese, vezes ága.">
+\[ 
+\text{Moda}
+  = L_i
+  + 
+  \left(
+    \frac{f_i - f_{i-1}}{(f_i - f_{i-1}) + (f_i - f_{i+1})}
+  \right) h
+\]
 </p>
 
-<p>
-  em que:
-</p>
+<p>em que:</p>
 
 <ul>
-  <li class="lista"><span class="formula-inline">\(L_i\)</span> é o limite inferior da classe modal;</li>
-  <li class="lista"><span class="formula-inline">\(f_i\)</span> é a frequência da classe modal;</li>
-  <li class="lista"><span class="formula-inline">\(f_{i-1}\)</span> é a frequência da classe anterior;</li>
-  <li class="lista"><span class="formula-inline">\(f_{i+1}\)</span> é a frequência da classe seguinte;</li>
-  <li class="lista"><span class="formula-inline">\(h\)</span> é a amplitude das classes.</li>
+  <li class="lista">
+    <span class="formula-inline" data-tts=", éle i,">\(L_i\)</span> 
+    é o limite inferior da classe modal;
+  </li>
+  <li class="lista">
+    <span class="formula-inline" data-tts=", éfe minúsculo i,">\(f_i\)</span> 
+    é a frequência da classe modal;
+  </li>
+  <li class="lista">
+    <span class="formula-inline" data-tts=", éfe minúsculo i menos um,">\(f_{i-1}\)</span> 
+    é a frequência da classe anterior;
+  </li>
+  <li class="lista">
+    <span class="formula-inline" data-tts=", éfe minúsculo i mais um,">\(f_{i+1}\)</span> 
+    é a frequência da classe seguinte;
+  </li>
+  <li class="lista">
+    <span class="formula-inline" data-tts=", ága,">\(h\)</span> 
+    é a amplitude comum das classes.
+  </li>
 </ul>
 
 <p>
-  A fração
-  <span class="formula-inline">
-    \(\dfrac{f_i - f_{i-1}}{(f_i - f_{i-1}) + (f_i - f_{i+1})}\)
+  A intuição por trás dessa fórmula pode ser entendida da seguinte maneira. A partir do termo 
+  <span class="formula-inline" data-tts=", éle i,">\(L_i\)</span> — o limite inferior da classe modal — 
+  obtemos o valor mínimo que a moda pode assumir dentro desse intervalo. Em seguida, é preciso determinar 
+  <em>quão distante</em> desse limite inferior se encontra o ponto de maior concentração dentro da classe.
+</p>
+
+<p>
+  Para isso, comparamos dois aspectos: o <strong>salto de frequência</strong> ao entrar na classe modal, 
+  medido por 
+  <span class="formula-inline" data-tts=", éfe minúsculo i menos éfe minúsculo i menos um,">
+    \(f_i - f_{i-1}\)
+  </span>, 
+  e a <strong>queda de frequência</strong> ao sair dela, medida por 
+  <span class="formula-inline" data-tts=", éfe minúsculo i menos éfe minúsculo i mais um,">
+    \(f_i - f_{i+1}\)
+  </span>. 
+  A razão
+  <span class="formula-inline" data-tts=", abre parêntese, éfe minúsculo i menos éfe minúsculo i menos um, fecha parêntese, sobre, abre parêntese, éfe minúsculo i menos éfe minúsculo i menos um, mais, éfe minúsculo i menos éfe minúsculo i mais um, fecha parêntese,">
+    \[
+      \frac{f_i - f_{i-1}}{(f_i - f_{i-1}) + (f_i - f_{i+1})}
+    \]
   </span>
-  indica que, quanto maior o “salto” de frequência da classe anterior para a classe modal em relação à queda
-  para a classe seguinte, mais a moda se aproxima do limite inferior ou superior da classe modal. Assim como no 
-  caso da mediana para dados agrupados, o valor obtido é uma <strong>estimativa</strong>, que depende do modo 
-  como as classes foram definidas e da forma da distribuição entre elas.
+  expressa <strong>qual proporção</strong> desse “topo” está associada ao lado esquerdo da classe modal. 
+  Em outras palavras, ela indica, em termos relativos, onde o ponto de maior frequência deve se situar 
+  dentro da classe.
+</p>
+
+<p>
+  Para converter essa proporção em termos de valores, multiplicamos o resultado pela amplitude 
+  <span class="formula-inline" data-tts=", hága,">\(h\)</span> da classe, obtendo o 
+  <strong>deslocamento horizontal</strong> entre o limite inferior 
+  <span class="formula-inline" data-tts=", éle i,">\(L_i\)</span> 
+  e o ponto estimado de máxima frequência. Somando esse deslocamento ao limite inferior, chegamos à 
+  estimativa numérica da moda para dados agrupados em classes.
+</p>
+
+<p>
+  Assim como no caso da mediana para dados agrupados em classes, o valor obtido é uma 
+  <strong>estimativa</strong>, cujo grau de precisão depende tanto da forma real da distribuição quanto 
+  da maneira como as classes foram construídas. A interpolação linear utilizada pressupõe um comportamento 
+  relativamente regular das frequências entre as classes, de modo que proporções de frequências possam ser 
+  associadas a posições relativas dentro do intervalo.
 </p>
 
 <div class="example-frame">

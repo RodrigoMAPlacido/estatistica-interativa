@@ -1,0 +1,327 @@
+<!-- ===========================================
+   MEDIANA EM DADOS AGRUPADOS EM CLASSES
+   Horas de estudo por semana — N = 20
+   Padrão unificado (u-*/subscript/rowHi/grow)
+   =========================================== -->
+<svg viewBox="0 0 1500 780" xmlns="http://www.w3.org/2000/svg"
+     role="img" aria-labelledby="title desc">
+  <title id="title">Mediana em dados agrupados em classes</title>
+  <desc id="desc">
+    À esquerda, tabela com classes de horas de estudo por semana, frequências e
+    frequências acumuladas, destacando a classe mediana 10–20 horas. À direita,
+    histograma da mesma distribuição com uma linha vertical na posição da mediana,
+    igual a 20 horas.
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --font:"et-book","ETBook","Georgia",serif;
+        --cycle:8s;
+        --ease:ease-in-out;
+      }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        user-select:none;
+      }
+
+      .u-stroke{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+      }
+
+      .u-panel{
+        stroke-width:2;
+        rx:12;
+      }
+
+      .label{
+        font-size:34px;
+        font-weight:600;
+        text-anchor:middle;
+      }
+
+      .small{ font-size:18px; }
+      .tiny{ font-size:15px; }
+
+      /* Subscritos (j, agr etc.) */
+      .subscript{
+        font-size:0.65em;
+        font-weight:600;
+      }
+
+      /* ====== Destaque sequencial das linhas da tabela ====== */
+      @keyframes rowHi{
+        0%,10%{opacity:0}
+        15%,25%{opacity:.18}
+        30%,100%{opacity:0}
+      }
+      .row-hi{ fill:var(--ink); opacity:0 }
+      .r1{ animation:rowHi var(--cycle) var(--ease) infinite 0s }
+      .r2{ animation:rowHi var(--cycle) var(--ease) infinite .7s }
+      .r3{ animation:rowHi var(--cycle) var(--ease) infinite 1.4s }
+      .r4{ animation:rowHi var(--cycle) var(--ease) infinite 2.1s }
+      .r5{ animation:rowHi var(--cycle) var(--ease) infinite 2.8s }
+
+      /* Pulse extra na classe mediana */
+      @keyframes medPulse{
+        0%,35%,100%{
+          opacity:.14;
+          transform:scale(1);
+        }
+        45%,65%{
+          opacity:.32;
+          transform:scale(1.02);
+        }
+      }
+      .med-hi{
+        fill:var(--ink);
+        opacity:.14;
+        transform-box:fill-box;
+        transform-origin:center;
+        animation:medPulse var(--cycle) var(--ease) infinite 1.4s;
+      }
+
+      /* ====== Barras do histograma ====== */
+      @keyframes grow{
+        0%{ transform:scaleY(0) }
+        18%,82%{ transform:scaleY(1) }
+        100%{ transform:scaleY(0) }
+      }
+      .bar{
+        fill:var(--ink);
+        transform-box:fill-box;
+        transform-origin:bottom;
+        transform:scaleY(0);
+      }
+      .b1{ animation:grow var(--cycle) var(--ease) infinite 0s }
+      .b2{ animation:grow var(--cycle) var(--ease) infinite .15s }
+      .b3{ animation:grow var(--cycle) var(--ease) infinite .30s }
+      .b4{ animation:grow var(--cycle) var(--ease) infinite .45s }
+
+      /* ====== Linha da mediana no histograma ====== */
+      .u-med-line{
+        stroke:var(--ink);
+        stroke-width:2;
+        stroke-dasharray:260;
+        stroke-dashoffset:260;
+        opacity:.9;
+        animation:medLine var(--cycle) var(--ease) infinite;
+      }
+
+      .med-label{
+        font-size:16px;
+        font-weight:600;
+        text-anchor:start;
+        opacity:0;
+        animation:medLabel var(--cycle) var(--ease) infinite;
+      }
+
+      @keyframes medLine{
+        0%{   stroke-dashoffset:260; opacity:0 }
+        20%,65%{ stroke-dashoffset:0;   opacity:1 }
+        85%,100%{ stroke-dashoffset:260; opacity:0 }
+      }
+
+      @keyframes medLabel{
+        0%,25%{ opacity:0 }
+        35%,70%{ opacity:1 }
+        85%,100%{ opacity:0 }
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        .row-hi{ animation:none; opacity:.12 }
+        .med-hi{ animation:none; opacity:.28 }
+        .bar{ animation:none; transform:scaleY(1) }
+        .u-med-line{ animation:none; stroke-dashoffset:0; opacity:1 }
+        .med-label{ animation:none; opacity:1 }
+      }
+    </style>
+  </defs>
+
+  <!-- ================= PAINEL ESQUERDO: TABELA ================= -->
+  <!-- (mesmo enquadramento do exemplo da média agrupada) -->
+  <g id="panel-table" transform="translate(-140,-200) scale(1.2)">
+    <g class="p-panel">
+      <!-- Moldura -->
+      <rect x="120" y="230" width="560" height="510" class="u-panel u-stroke"/>
+
+      <!-- Cabeçalho -->
+      <g class="p-header">
+        <text x="390" y="280" class="label">Mediana em dados agrupados</text>
+        <text x="390" y="308" class="small" text-anchor="middle">
+          Horas de estudo por semana — N = 20
+        </text>
+      </g>
+
+      <!-- Corpo da tabela -->
+      <g class="p-body" transform="translate(-35,-10) scale(1.1)">
+        <!-- linha do cabeçalho -->
+        <line x1="160" y1="364" x2="620" y2="364" class="u-stroke" style="stroke-width:2"/>
+
+        <!-- rótulos das colunas -->
+        <g font-size="20" font-weight="700">
+          <text x="175" y="352">Classe (h/sem)</text>
+
+          <!-- "Frequência f_j" -->
+          <text x="445" y="352" text-anchor="end">Frequência</text>
+          <text x="455" y="352"> f</text>
+          <text x="467" y="356" class="subscript">j</text>
+
+          <!-- "Frequência acumulada F_j" -->
+          <text x="620" y="352" text-anchor="end">
+            Frequência acumulada
+          </text>
+          <text x="628" y="352"> F</text>
+          <text x="642" y="356" class="subscript">j</text>
+        </g>
+
+        <!-- linhas horizontais -->
+        <g class="u-stroke">
+          <line x1="160" y1="404" x2="620" y2="404"/>
+          <line x1="160" y1="444" x2="620" y2="444"/>
+          <line x1="160" y1="484" x2="620" y2="484"/>
+          <line x1="160" y1="524" x2="620" y2="524"/>
+          <line x1="160" y1="564" x2="620" y2="564"/>
+          <line x1="160" y1="604" x2="620" y2="604"/>
+        </g>
+
+        <!-- faixas animadas percorrendo as linhas -->
+        <rect x="160" y="374" width="460" height="30" class="row-hi r1"/>
+        <rect x="160" y="414" width="460" height="30" class="row-hi r2"/>
+        <rect x="160" y="454" width="460" height="30" class="row-hi r3"/>
+        <rect x="160" y="494" width="460" height="30" class="row-hi r4"/>
+        <rect x="160" y="534" width="460" height="30" class="row-hi r5"/>
+
+        <!-- destaque especial na classe mediana 10–20 -->
+        <rect x="160" y="414" width="460" height="30" class="med-hi"/>
+
+        <!-- dados da tabela -->
+        <g font-size="19">
+          <!-- 0–10 -->
+          <text x="175" y="396">0–10</text>
+          <text x="495" y="396" text-anchor="end">4</text>
+          <text x="610" y="396" text-anchor="end">4</text>
+
+          <!-- 10–20 (classe mediana) -->
+          <text x="175" y="436">10–20</text>
+          <text x="495" y="436" text-anchor="end">6</text>
+          <text x="610" y="436" text-anchor="end">10</text>
+
+          <!-- 20–30 -->
+          <text x="175" y="476">20–30</text>
+          <text x="495" y="476" text-anchor="end">8</text>
+          <text x="610" y="476" text-anchor="end">18</text>
+
+          <!-- 30–40 -->
+          <text x="175" y="516">30–40</text>
+          <text x="495" y="516" text-anchor="end">2</text>
+          <text x="610" y="516" text-anchor="end">20</text>
+
+          <!-- Totais -->
+          <text x="175" y="556" font-weight="700">Totais</text>
+          <text x="495" y="556" text-anchor="end" font-weight="700">20</text>
+          <text x="610" y="556" text-anchor="end" font-weight="700">20</text>
+        </g>
+      </g>
+
+      <!-- Rodapé com N/2 e fórmula em linha -->
+      <g class="p-footer">
+        <text x="390" y="670" class="small" text-anchor="middle">
+          N = 20 → N/2 = 10. A primeira F
+          <tspan class="subscript">j</tspan> ≥ 10 ocorre na classe 10–20: ela é a classe mediana.
+        </text>
+
+        <g class="small">
+          <text x="160" y="697">Pela fórmula de interpolação:</text>
+
+          <g transform="translate(40,3)">
+            <!-- Mediana = L + (N/2 − F_{j−1}) / f_m · h -->
+            <text x="310" y="694">Mediana = L + (N/2 − F</text>
+            <text x="468" y="698" class="subscript">j−1</text>
+            <text x="500" y="694">)/f</text>
+            <text x="522" y="698" class="subscript">m</text>
+            <text x="535" y="694"> · h</text>
+            <text x="565" y="694">= 10 + (10 − 4)/6 · 10 ≈ 20 h.</text>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- ================= PAINEL DIREITO: HISTOGRAMA ================= -->
+  <!-- mesmo enquadramento do histograma da média agrupada -->
+  <g id="panel-hist" transform="translate(-220,-200) scale(1.2)">
+    <g class="p-panel">
+      <!-- Moldura -->
+      <rect x="840" y="230" width="580" height="510" class="u-panel u-stroke"/>
+
+      <!-- Cabeçalho -->
+      <g class="p-header">
+        <text x="1128" y="280" class="label">Histograma e mediana</text>
+        <text x="1128" y="308" class="small" text-anchor="middle">
+          Horas de estudo por semana — N = 20
+        </text>
+      </g>
+
+      <!-- Corpo: eixos + barras -->
+      <g class="p-body" transform="translate(-225,-250) scale(1.3)">
+        <!-- eixos -->
+        <g class="u-stroke" style="stroke-width:2.5">
+          <line x1="890" y1="670" x2="1200" y2="670"/>
+          <line x1="890" y1="670" x2="890" y2="450"/>
+        </g>
+
+        <!-- grades Y (0,2,4,6,8,10) -->
+        <g class="u-stroke small" opacity=".5">
+          <line x1="890" y1="670" x2="1200" y2="670"/><text x="872" y="674" text-anchor="end">0</text>
+          <line x1="890" y1="630" x2="1200" y2="630"/><text x="872" y="634" text-anchor="end">2</text>
+          <line x1="890" y1="590" x2="1200" y2="590"/><text x="872" y="594" text-anchor="end">4</text>
+          <line x1="890" y1="550" x2="1200" y2="550"/><text x="872" y="554" text-anchor="end">6</text>
+          <line x1="890" y1="510" x2="1200" y2="510"/><text x="872" y="514" text-anchor="end">8</text>
+          <line x1="890" y1="470" x2="1200" y2="470"/><text x="872" y="474" text-anchor="end">10</text>
+        </g>
+
+        <!-- Barras para f = [4,6,8,2] (escala aproximada) -->
+        <!-- base em y = 670 -->
+        <rect x="890"  y="590" width="70" height="80"  class="bar b1"/> <!-- 4 -->
+        <rect x="960" y="550" width="70" height="120" class="bar b2"/> <!-- 6 -->
+        <rect x="1030" y="510" width="70" height="160" class="bar b3"/> <!-- 8 -->
+        <rect x="1100" y="630" width="70" height="40"  class="bar b4"/> <!-- 2 -->
+
+        <!-- Linha vertical da mediana (≈ 20 h) entre as classes 10–20 e 20–30 -->
+        <!-- ponto médio da fronteira: ~ x = 1088 -->
+        <line x1="1030" y1="450" x2="1030" y2="670" class="u-med-line"/>
+
+        <!-- Label "Mediana ≈ 20 h" -->
+        <g class="med-label">
+          <text x="1038" y="458">Mediana ≈ 20 h</text>
+        </g>
+      </g>
+
+      <!-- Rodapé: rótulos das classes e frase explicativa -->
+      <g class="p-footer small" transform="translate(0,-40)">
+        <!-- rótulos das classes -->
+        <text x="975"  y="695" text-anchor="middle">0–10</text>
+        <text x="1065" y="695" text-anchor="middle">10–20</text>
+        <text x="1155" y="695" text-anchor="middle">20–30</text>
+        <text x="1245" y="695" text-anchor="middle">30–40</text>
+
+        <!-- frase explicativa -->
+        <g transform="translate(-140,10)">
+          <text x="1070" y="725" text-anchor="start">
+            A barra da classe 10–20 contém a posição central N/2;
+          </text>
+          <text x="1070" y="745" text-anchor="start">
+            a linha vertical marca a mediana estimada de 20 horas.
+          </text>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

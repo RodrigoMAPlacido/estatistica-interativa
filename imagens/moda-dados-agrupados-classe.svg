@@ -1,0 +1,328 @@
+<!-- ===========================================
+   MODA EM DADOS AGRUPADOS EM CLASSES
+   Tempo diário de estudo (horas) — N = 24
+   Classes: 0–1, 1–2, 2–3, 3–4, 4–5
+   f_j: 3, 6, 8, 5, 2
+   Classe modal: 2–3  →  Moda ≈ 2,4 h
+   =========================================== -->
+<svg viewBox="0 0 1500 780" xmlns="http://www.w3.org/2000/svg"
+     role="img" aria-labelledby="title desc">
+  <title id="title">Moda em dados agrupados em classes</title>
+  <desc id="desc">
+    À esquerda, uma tabela com classes de tempo diário de estudo e suas frequências.
+    À direita, um histograma da mesma distribuição. A animação percorre as linhas,
+    destaca a classe 2–3 horas como classe modal e mostra uma linha vertical na
+    posição aproximada da moda, igual a 2,4 horas.
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --font:"et-book","ETBook","Georgia",serif;
+        --cycle:8s;
+        --ease:ease-in-out;
+      }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        user-select:none;
+      }
+      .u-stroke{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+      }
+      .u-panel{
+        stroke-width:1.5;
+        rx:10;
+      }
+      .label{
+        font-size:24px;
+        font-weight:600;
+        text-anchor:middle;
+      }
+      .small{ font-size:16px; }
+      .tiny{ font-size:12px; }
+
+      /* Subscritos (para j, agr etc.) */
+      .subscript{
+        font-size:0.65em;   /* relativo ao contexto (small, header, label) */
+        font-weight:600;
+      }
+      .row-line{ stroke-width:1; }
+
+      /* varredura das linhas */
+      @keyframes rowHi{
+        0%,10%{ opacity:0; }
+        15%,25%{ opacity:.18; }
+        30%,100%{ opacity:0; }
+      }
+      .row-hi{
+        fill:var(--ink);
+        opacity:0;
+      }
+      .r1{ animation:rowHi var(--cycle) var(--ease) infinite 0s; }
+      .r2{ animation:rowHi var(--cycle) var(--ease) infinite .7s; }
+      .r3{ animation:rowHi var(--cycle) var(--ease) infinite 1.4s; }
+      .r4{ animation:rowHi var(--cycle) var(--ease) infinite 2.1s; }
+      .r5{ animation:rowHi var(--cycle) var(--ease) infinite 2.8s; }
+
+      /* destaque da classe modal */
+      @keyframes modePulse{
+        0%,35%,100%{
+          opacity:.16;
+          transform:scale(1);
+        }
+        45%,65%{
+          opacity:.34;
+          transform:scale(1.02);
+        }
+      }
+      .mode-hi{
+        fill:var(--ink);
+        opacity:.16;
+        transform-box:fill-box;
+        transform-origin:center;
+        animation:modePulse var(--cycle) var(--ease) infinite 1.4s;
+      }
+
+      /* barras do histograma */
+      @keyframes grow{
+        0%{ transform:scaleY(0); }
+        15%,80%{ transform:scaleY(1); }
+        100%{ transform:scaleY(0); }
+      }
+      .bar{
+        fill:var(--ink);
+        transform-box:fill-box;
+        transform-origin:bottom;
+        transform:scaleY(0);
+        animation:grow var(--cycle) var(--ease) infinite;
+      }
+      .b1{ animation-delay:0s; }
+      .b2{ animation-delay:.1s; }
+      .b3{ animation-delay:.2s; }
+      .b4{ animation-delay:.3s; }
+      .b5{ animation-delay:.4s; }
+
+      /* linha da moda no histograma */
+      .mode-line{
+        stroke:var(--ink);
+        stroke-width:2;
+        stroke-dasharray:220;
+        stroke-dashoffset:220;
+        opacity:0;
+        animation:modeLine var(--cycle) var(--ease) infinite;
+      }
+      .mode-label{
+        font-size:14px;
+        font-weight:600;
+        opacity:0;
+        animation:modeLabel var(--cycle) var(--ease) infinite;
+      }
+      @keyframes modeLine{
+        0%,25%{ stroke-dashoffset:220; opacity:0; }
+        35%,75%{ stroke-dashoffset:0; opacity:1; }
+        90%,100%{ stroke-dashoffset:220; opacity:0; }
+      }
+      @keyframes modeLabel{
+        0%,35%{ opacity:0; }
+        45%,75%{ opacity:1; }
+        90%,100%{ opacity:0; }
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        .row-hi{
+          animation:none;
+          opacity:.12;
+        }
+        .mode-hi{
+          animation:none;
+          opacity:.30;
+        }
+        .bar{
+          animation:none;
+          transform:scaleY(1);
+        }
+        .mode-line{
+          animation:none;
+          stroke-dashoffset:0;
+          opacity:1;
+        }
+        .mode-label{
+          animation:none;
+          opacity:1;
+        }
+      }
+    </style>
+  </defs>
+
+  <!-- ============ PAINEL ESQUERDO: TABELA ============ -->
+  <g id="panel-table">
+    <g class="p-panel">
+      <!-- moldura -->
+      <rect x="80" y="80" width="580" height="620" class="u-panel u-stroke"/>
+
+      <!-- cabeçalho -->
+      <g class="p-header">
+        <text x="370" y="120" class="label">Moda em dados agrupados</text>
+        <text x="370" y="145" class="small" text-anchor="middle">
+          Tempo diário de estudo (horas) — tabela de frequências
+        </text>
+      </g>
+
+      <!-- corpo -->
+      <g class="p-body">
+        <!-- linha do cabeçalho -->
+        <line x1="120" y1="190" x2="620" y2="190" class="u-stroke row-line"/>
+
+        <!-- rótulos -->
+        <g class="small" font-weight="600">
+          <text x="135" y="178">Classe (h/dia)</text>
+          <text x="600" y="178" text-anchor="end">Frequência f</text>
+          <text x="610" y="182" class="subscript">j</text>
+
+        </g>
+
+        <!-- linhas -->
+        <g class="u-stroke row-line">
+          <line x1="120" y1="230" x2="620" y2="230"/>
+          <line x1="120" y1="270" x2="620" y2="270"/>
+          <line x1="120" y1="310" x2="620" y2="310"/>
+          <line x1="120" y1="350" x2="620" y2="350"/>
+          <line x1="120" y1="390" x2="620" y2="390"/>
+          <line x1="120" y1="430" x2="620" y2="430"/>
+        </g>
+
+        <!-- faixas de varredura -->
+        <rect x="120" y="200" width="500" height="30" class="row-hi r1"/>
+        <rect x="120" y="240" width="500" height="30" class="row-hi r2"/>
+        <rect x="120" y="280" width="500" height="30" class="row-hi r3"/>
+        <rect x="120" y="320" width="500" height="30" class="row-hi r4"/>
+        <rect x="120" y="360" width="500" height="30" class="row-hi r5"/>
+
+        <!-- destaque na classe modal 2–3 -->
+        <rect x="120" y="280" width="500" height="30" class="mode-hi"/>
+
+        <!-- dados -->
+        <g class="small">
+          <text x="135" y="222">0–1</text>
+          <text x="600" y="222" text-anchor="end">3</text>
+
+          <text x="135" y="262">1–2</text>
+          <text x="600" y="262" text-anchor="end">6</text>
+
+          <text x="135" y="302">2–3</text>
+          <text x="600" y="302" text-anchor="end">8</text>
+
+          <text x="135" y="342">3–4</text>
+          <text x="600" y="342" text-anchor="end">5</text>
+
+          <text x="135" y="382">4–5</text>
+          <text x="600" y="382" text-anchor="end">2</text>
+
+          <text x="135" y="422" font-weight="600">Total</text>
+          <text x="600" y="422" text-anchor="end" font-weight="600">24</text>
+        </g>
+
+        <!-- explicação da classe modal e da interpolação -->
+        <g>
+          <text x="370" y="470" class="tiny" text-anchor="middle">
+            A maior frequência é 8, na classe 2–3 horas: essa é a classe modal.
+          </text>
+          <text x="370" y="486" class="tiny" text-anchor="middle">
+            Usando a interpolação: L = 2, h = 1, f_ = 8, f_{anterior} = 6, f_{posterior} = 5
+          </text>
+          <text x="367" y="490" class="subscript">m</text>
+
+          <text x="370" y="502" class="tiny" text-anchor="middle">
+            Moda ≈ 2 + (8 − 6)/[(8 − 6) + (8 − 5)] × 1 = 2,4 horas.
+          </text>
+        </g>
+      </g>
+
+      <!-- rodapé -->
+      <g class="p-footer">
+        <text x="370" y="550" class="tiny" text-anchor="middle">
+          Em dados contínuos agrupados em classes, a moda é estimada dentro da classe modal
+        </text>
+        <text x="370" y="566" class="tiny" text-anchor="middle">
+          usando as frequências da própria classe e das classes vizinhas.
+        </text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ============ PAINEL DIREITO: HISTOGRAMA ============ -->
+  <g id="panel-hist" transform="translate(760,0)">
+    <g class="p-panel">
+      <!-- moldura -->
+      <rect x="80" y="80" width="580" height="620" class="u-panel u-stroke"/>
+
+      <!-- cabeçalho -->
+      <g class="p-header">
+        <text x="370" y="120" class="label">Histograma e moda</text>
+        <text x="370" y="145" class="small" text-anchor="middle">
+          Tempo diário de estudo (horas) — N = 24
+        </text>
+      </g>
+
+      <!-- corpo -->
+      <g class="p-body">
+        <!-- eixos -->
+        <g class="u-stroke" style="stroke-width:2">
+          <line x1="130" y1="520" x2="540" y2="520"/>
+          <line x1="130" y1="520" x2="130" y2="220"/>
+        </g>
+
+        <!-- grades e rótulos de frequência -->
+        <g class="u-stroke tiny" opacity=".4">
+          <line x1="130" y1="480" x2="540" y2="480"/><text x="120" y="484" text-anchor="end">2</text>
+          <line x1="130" y1="440" x2="540" y2="440"/><text x="120" y="444" text-anchor="end">4</text>
+          <line x1="130" y1="400" x2="540" y2="400"/><text x="120" y="404" text-anchor="end">6</text>
+          <line x1="130" y1="360" x2="540" y2="360"/><text x="120" y="364" text-anchor="end">8</text>
+          <line x1="130" y1="320" x2="540" y2="320"/><text x="120" y="324" text-anchor="end">10</text>
+        </g>
+
+        <!-- barras (escala ≈ 1 unidade de frequência → 20 px; base y = 520) -->
+        <!-- 0–1: f=3 → 60 -->
+        <rect x="150" y="460" width="70" height="60" class="bar b1"/>
+        <!-- 1–2: f=6 → 120 -->
+        <rect x="230" y="400" width="70" height="120" class="bar b2"/>
+        <!-- 2–3: f=8 → 160 (barra modal) -->
+        <rect x="310" y="360" width="70" height="160" class="bar b3"/>
+        <!-- 3–4: f=5 → 100 -->
+        <rect x="390" y="420" width="70" height="100" class="bar b4"/>
+        <!-- 4–5: f=2 → 40 -->
+        <rect x="470" y="480" width="70" height="40" class="bar b5"/>
+
+        <!-- rótulos das classes -->
+        <g class="tiny">
+          <text x="185" y="540" text-anchor="middle">0–1</text>
+          <text x="265" y="540" text-anchor="middle">1–2</text>
+          <text x="345" y="540" text-anchor="middle">2–3</text>
+          <text x="425" y="540" text-anchor="middle">3–4</text>
+          <text x="505" y="540" text-anchor="middle">4–5</text>
+        </g>
+
+        <!-- linha da moda: valor ≈ 2,4 dentro da classe 2–3
+             posição x escolhemos no interior da barra 2–3 -->
+        <line x1="340" y1="520" x2="340" y2="300" class="mode-line"/>
+        <text x="345" y="292" class="mode-label">Moda ≈ 2,4 h</text>
+      </g>
+
+      <!-- rodapé -->
+      <g class="p-footer">
+        <text x="370" y="585" class="tiny" text-anchor="middle">
+          A barra 2–3 h é a mais alta (classe modal); a linha vertical indica
+        </text>
+        <text x="370" y="601" class="tiny" text-anchor="middle">
+          a moda estimada por interpolação dentro dessa classe.
+        </text>
+      </g>
+    </g>
+  </g>
+</svg>

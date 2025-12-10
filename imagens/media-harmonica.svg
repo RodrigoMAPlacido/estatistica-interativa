@@ -1,0 +1,351 @@
+<!-- ===========================================
+   MÉDIA HARMÔNICA — Velocidades e trajetórias
+   Exemplo: 2 trechos consecutivos de 60 km
+   Velocidades: 30 km/h e 60 km/h
+   =========================================== -->
+<svg viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Média harmônica como velocidade equivalente</title>
+  <desc id="desc">
+    À esquerda, barras mostram as velocidades em dois trechos consecutivos de igual distância
+    (30 km/h e 60 km/h). À direita, um gráfico distância-tempo compara a trajetória real,
+    em que as velocidades mudam de um trecho para outro, com uma trajetória de velocidade
+    constante igual à média harmônica (40 km/h), que leva ao mesmo tempo total.
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --font:"et-book","ETBook","Georgia",serif;
+        --cycle:8s;
+        --ease:ease-in-out;
+      }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        user-select:none;
+      }
+      .u-stroke{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+      }
+      .u-panel{
+        stroke-width:2;
+        rx:12;
+      }
+      .label{
+        font-size:34px;
+        font-weight:600;
+        text-anchor:middle;
+      }
+      .small{ font-size:18px; }
+      .tiny{ font-size:16px; }
+
+      /* ==== Barras (velocidades) ==== */
+      @keyframes growBar{
+        0%{   transform:scaleY(0); }
+        15%,70%{ transform:scaleY(1); }
+        100%{ transform:scaleY(0); }
+      }
+      .bar{
+        fill:var(--ink);
+        transform-box:fill-box;
+        transform-origin:bottom;
+        transform:scaleY(0);
+      }
+      .b1{ animation:growBar var(--cycle) var(--ease) infinite 0s; }
+      .b2{ animation:growBar var(--cycle) var(--ease) infinite .2s; }
+
+      /* ====== Linha da média ponderada ====== */
+      .u-mean-line{
+        stroke: #64748b;
+        stroke-width:3;
+        /* comprimento >= da linha (≈490px) */
+        stroke-dasharray:500;
+        stroke-dashoffset:500;
+        opacity:.9;
+        animation:meanLine var(--cycle) var(--ease) infinite;
+      }
+
+        @keyframes meanLine{
+        0%{ stroke-dashoffset:500; opacity:0 }
+        15%,65%{ stroke-dashoffset:0; opacity:1 }
+        80%,100%{ stroke-dashoffset:500; opacity:0 }
+        }
+
+      .mean-label{
+        font-size:16px;
+        font-weight:600;
+        text-anchor:end;
+        opacity:0;
+        animation:meanLabel var(--cycle) var(--ease) infinite;
+      }
+      @keyframes meanLabel{
+        0%,20%{ opacity:0 }
+        30%,70%{ opacity:1 }
+        85%,100%{ opacity:0 }
+      }
+      /* ==== Trajetórias (efeito traçado) ==== */
+      @keyframes drawPath{
+        0%{   stroke-dashoffset:600; opacity:0; }
+        20%{  stroke-dashoffset:600; opacity:0; }
+        35%,75%{ stroke-dashoffset:0; opacity:1; }
+        95%,100%{ stroke-dashoffset:600; opacity:0; }
+      }
+      .path-real,
+      .path-harm{
+        fill:none;
+        stroke-width:2.5;
+        stroke-dasharray:600;
+        stroke-dashoffset:600;
+        opacity:0;
+        animation:drawPath var(--cycle) var(--ease) infinite;
+      }
+      .path-real{ stroke:var(--ink); animation-delay:.4s; }
+      .path-harm{ stroke:var(--ink); stroke-dasharray:5 5; animation-delay:.9s; }
+
+      /* Pontos ao longo das trajetórias */
+      @keyframes pop{
+        0%,30%{ opacity:0; transform:scale(0); }
+        40%,75%{ opacity:1; transform:scale(1); }
+        95%,100%{ opacity:0; transform:scale(0); }
+      }
+      .dot{
+        fill:var(--ink);
+        opacity:0;
+        transform-box:fill-box;
+        transform-origin:center;
+        animation:pop var(--cycle) var(--ease) infinite;
+      }
+      .d1{ animation-delay:.45s; }
+      .d2{ animation-delay:.60s; }
+      .d3{ animation-delay:.75s; }
+
+      .dot-harm{
+        fill:#fff;
+        stroke:var(--ink);
+        stroke-width:2.5;
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        .bar{
+          animation:none;
+          transform:scaleY(1);
+        }
+        .path-real,
+        .path-harm{
+          animation:none;
+          stroke-dashoffset:0;
+          opacity:1;
+        }
+        .dot{
+          animation:none;
+          opacity:1;
+          transform:scale(1);
+        }
+        .u-mean-line{ animation:none; stroke-dashoffset:0; opacity:1 }
+        .mean-label{ animation:none; opacity:1 }
+
+      }
+    </style>
+  </defs>
+
+  <!-- ============ PAINEL ESQUERDO: VELOCIDADES ============ -->
+  <g id="panel-speeds">
+    <rect x="20" y="20" width="540" height="510" class="u-panel u-stroke"/>
+
+    <!-- Cabeçalho -->
+    <g class="p-header">
+      <text x="300" y="60" class="label">Média harmônica</text>
+      <text x="300" y="85" class="small" text-anchor="middle">
+        Velocidades em dois trechos de igual distância
+      </text>
+    </g>
+
+    <!-- Corpo: barras de velocidade -->
+    <g class="p-body" transform="translate(0,20)">
+      <!-- Eixos: 0 km/h em y=380 -->
+      <g class="u-stroke" style="stroke-width:2">
+        <line x1="110" y1="380" x2="520" y2="380"/>
+        <line x1="110" y1="120" x2="110" y2="380"/>
+      </g>
+
+      <!-- Grades (escala: 10 km/h = 20 px) -->
+      <g class="u-stroke" opacity=".2" style="stroke-width:1">
+        <!-- 10 -->
+        <line x1="110" y1="340" x2="520" y2="340"/>
+        <!-- 20 -->
+        <line x1="110" y1="300" x2="520" y2="300"/>
+        <!-- 30 -->
+        <line x1="110" y1="260" x2="520" y2="260"/>
+        <!-- 40 -->
+        <line style="stroke-width:2" opacity="1" x1="110" y1="220" x2="520" y2="220"/>
+        <line x1="110" y1="220" x2="520" y2="220" class="u-mean-line"/>
+        <!-- 50 -->
+        <line x1="110" y1="180" x2="520" y2="180"/>
+        <!-- 60 -->
+        <line x1="110" y1="140" x2="520" y2="140"/>
+      </g>
+
+      <!-- Rótulos de velocidade -->
+      <g class="small" opacity=".7">
+        <text x="100" y="344" text-anchor="end">10 km/h</text>
+        <text x="100" y="304" text-anchor="end">20 km/h</text>
+        <text x="100" y="264" text-anchor="end">30 km/h</text>
+        <text x="100" y="224" text-anchor="end">40 km/h</text>
+
+        <text x="100" y="184" text-anchor="end">50 km/h</text>
+        <text x="100" y="144" text-anchor="end">60 km/h</text>
+      </g>
+      <line x1="110" y1="220" x2="520" y2="220" class="u-mean-line"/>
+        <text class="mean-label" font-weight="700" x="520" y="200" text-anchor="end">Média</text>
+        <text class="mean-label" font-weight="700" x="555" y="215" text-anchor="end">Harm. = 40</text>
+      <!-- Barras (escala: 10 km/h = 20 px)
+           30 → altura 60; 60 → altura 120 -->
+      <rect x="200" y="260" width="90" height="120"  class="bar b1"/>
+      <rect x="340" y="140" width="90" height="240" class="bar b2"/>
+
+      <!-- Rótulos dos trechos -->
+      <g class="small">
+        <text x="245" y="410" text-anchor="middle">Trecho 1</text>
+        <text x="385" y="410" text-anchor="middle">Trecho 2</text>
+      </g>
+    </g>
+
+    <!-- Rodapé -->
+    <g class="p-footer">
+      <text x="300" y="470" class="tiny" text-anchor="middle">
+        Dois trechos consecutivos de 60 km cada.
+      </text>
+      <text x="300" y="485" class="tiny" text-anchor="middle">
+        Velocidades: 30 km/h e 60 km/h.
+      </text>
+      <text x="300" y="500" class="tiny" text-anchor="middle">
+        A média harmônica dessas velocidades é 40 km/h,
+      </text>
+      <text x="300" y="515" class="tiny" text-anchor="middle">
+        única velocidade constante que dá o mesmo tempo total.
+      </text>
+    </g>
+  </g>
+
+  <!-- ============ PAINEL DIREITO: TRAJETÓRIAS DISTÂNCIA–TEMPO ============ -->
+  <g id="panel-paths" transform="translate(600,0)">
+    <rect x="20" y="20" width="540" height="510" class="u-panel u-stroke"/>
+
+    <!-- Cabeçalho -->
+    <g class="p-header">
+      <text x="300" y="60" class="label">Tempo de viagem</text>
+      <text x="300" y="85" class="small" text-anchor="middle">
+        Trajetória real vs. velocidade constante (média harmônica)
+      </text>
+    </g>
+
+    <!-- Corpo -->
+    <g class="p-body"  transform="translate(-10,-20)">
+      <!-- Sistema de eixos
+           Distância total 0–120 km → x de 80 a 520
+           Tempo 0–3 h → y de 420 a 180
+           y(t) = 420 − 80·t
+      -->
+      <g class="u-stroke" style="stroke-width:2">
+        <line x1="80" y1="420" x2="520" y2="420"/> <!-- eixo X (distância) -->
+        <line x1="80" y1="420" x2="80"  y2="180"/> <!-- eixo Y (tempo) -->
+      </g>
+
+      <!-- Grades e rótulos do eixo Y (tempo em horas) -->
+      <g class="u-stroke small" opacity=".2" style="stroke-width:1">
+        <!-- 0 h -->
+        <line x1="80" y1="420" x2="520" y2="420"/>
+        <!-- 1 h -->
+        <line x1="80" y1="340" x2="520" y2="340"/>
+        <!-- 2 h -->
+        <line x1="80" y1="260" x2="520" y2="260"/>
+        <!-- 3 h -->
+        <line x1="80" y1="180" x2="520" y2="180"/>
+      </g>
+      <g class="small" opacity=".8">
+        <text x="68" y="424" text-anchor="end">0 h</text>
+        <text x="68" y="344" text-anchor="end">1 h</text>
+        <text x="68" y="264" text-anchor="end">2 h</text>
+        <text x="68" y="184" text-anchor="end">3 h</text>
+      </g>
+
+      <!-- Ticks e rótulos no eixo X (distância)
+           0, 60, 120 km → x = 80, 300, 520
+      -->
+      <g class="u-stroke">
+        <line x1="80"  y1="420" x2="80"  y2="426"/>
+        <line x1="300" y1="420" x2="300" y2="426"/>
+        <line x1="520" y1="420" x2="520" y2="426"/>
+      </g>
+      <g class="small" opacity=".8">
+        <text x="80"  y="442" text-anchor="middle">0</text>
+        <text x="300" y="442" text-anchor="middle">60</text>
+        <text x="520" y="442" text-anchor="middle">120 km</text>
+      </g>
+
+      <!-- TRAJETÓRIA REAL
+           Distância por trecho: 60 km
+           Velocidades: 30 km/h, 60 km/h
+           Tempos acumulados: 0, 2, 3 horas
+           y(t) = 420 − 80·t
+           Pontos:
+             (0 km, 0 h)   → (80, 420)
+             (60 km, 2 h)  → (300, 260)
+             (120 km, 3 h) → (520, 180)
+      -->
+      <path class="u-stroke path-real"
+            d="M 80 420
+               L 300 260
+               L 520 180"/>
+
+      <!-- TRAJETÓRIA COM VELOCIDADE CONSTANTE (MÉDIA HARMÔNICA)
+           Velocidade média harmônica = 40 km/h
+           Distância total 120 km → tempo total 3 h
+           Mesmos pontos inicial e final:
+             (0 km, 0 h)   → (80, 420)
+             (120 km, 3 h) → (520, 180)
+           Ponto intermediário com velocidade constante:
+             distância 60 km → t = 1,5 h → y = 420 − 80·1,5 = 300
+      -->
+      <path class="u-stroke path-harm"
+            d="M 80 420
+               L 520 180"/>
+
+      <!-- Pontos da trajetória real -->
+      <circle cx="80"  cy="420" r="4" class="dot d1"/>
+      <circle cx="300" cy="260" r="4" class="dot d2"/>
+      <circle cx="520" cy="180" r="4" class="dot d3"/>
+
+      <!-- Pontos sobre a reta da média harmônica (círculos vazados) -->
+      <circle cx="80"  cy="420" r="4" class="dot dot-harm d1"/>
+      <circle cx="300" cy="300" r="4" class="dot dot-harm d2"/>
+      <circle cx="520" cy="180" r="4" class="dot dot-harm d3"/>
+
+      <!-- Rótulo do ponto final -->
+      <text x="510" y="158" class="tiny" text-anchor="middle" opacity="1">
+        Mesmo tempo
+      </text>
+      <text x="510" y="170" class="tiny" text-anchor="middle" opacity="1">
+        total.
+      </text>
+    </g>
+
+    <!-- Rodapé -->
+    <g class="p-footer">
+      <text x="300" y="470" class="tiny" text-anchor="middle">
+        Linha contínua: tempo acumulado com 30 km/h e depois 60 km/h.
+      </text>
+      <text x="300" y="485" class="tiny" text-anchor="middle">
+        Linha pontilhada: velocidade constante de 40 km/h (média harmônica).
+      </text>
+      <text x="300" y="500" class="tiny" text-anchor="middle">
+        Ambas partem do mesmo ponto e percorrem 120 km em 3 horas.
+      </text>
+    </g>
+  </g>
+</svg>
