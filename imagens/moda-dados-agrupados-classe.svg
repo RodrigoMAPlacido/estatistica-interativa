@@ -49,7 +49,7 @@
 
       /* Subscritos (para j, agr etc.) */
       .subscript{
-        font-size:0.65em;   /* relativo ao contexto (small, header, label) */
+        font-size:12px;   /* relativo ao contexto (small, header, label) */
         font-weight:600;
       }
       .row-line{ stroke-width:1; }

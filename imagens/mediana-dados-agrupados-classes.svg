@@ -51,7 +51,7 @@
 
       /* Subscritos (j, agr etc.) */
       .subscript{
-        font-size:0.65em;
+        font-size:12px;   /* relativo ao contexto (small, header, label) */
         font-weight:600;
       }
 
