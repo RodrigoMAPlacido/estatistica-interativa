@@ -40,12 +40,15 @@
         font-weight:600;
         text-anchor:middle;
       }
-      .small{ font-size:18px }
+      .u-small{
+        font-size:18px;
+      }
 
       /* Subscritos (para j, agr etc.) */
       .subscript{
-        font-size:12px;   /* relativo ao contexto (small, header, label) */
+        font-size:0.7em;        /* relativo ao texto "pai" */
         font-weight:600;
+        baseline-shift:-0.3em;  /* empurra para baixo (subscrito) */
       }
 
       /* ====== Animações: destaque de linha da tabela ====== */
@@ -82,7 +85,7 @@
       /* ====== Linha da média agrupada (vertical) ====== */
       .u-mean-line{
         stroke:var(--ink);
-        stroke-width:2;
+        stroke-width:3;
         stroke-dasharray:260;    /* >= comprimento vertical da linha */
         stroke-dashoffset:260;
         opacity:.9;
@@ -96,7 +99,7 @@
       }
 
       .mean-label-main{
-        font-size:16px;
+        font-size:20px;
         font-weight:600;
         text-anchor:start;
       }
@@ -132,17 +135,11 @@
       <g class="p-header">
         <text x="390" y="280" class="label">Média para dados agrupados</text>
 
-        <!-- Linha com m_j e f_j com subscript fake -->
-        <g class="small">
-          <text x="150" y="308">Intervalos de classe, pontos médios </text>
-          <!-- m_j -->
-          <text x="437" y="308">m</text>
-          <text x="455" y="312" class="subscript">j</text>
-
-          <text x="465" y="308"> e frequências </text>
-          <!-- f_j -->
-          <text x="580" y="308">f</text>
-          <text x="592" y="312" class="subscript">j</text>
+        <!-- Linha com m_j e f_j -->
+        <g class="u-small">
+          <text x="150" y="308">
+            Intervalos de classe, pontos médios m<tspan class="subscript">j</tspan> e frequências f<tspan class="subscript">j</tspan>.
+          </text>
         </g>
       </g>
 
@@ -155,19 +152,13 @@
           <text x="175" y="352">Classe</text>
 
           <!-- "Ponto médio m_j" -->
-          <text x="345" y="352">m</text>
-          <text x="367" y="356" class="subscript">j</text>
+          <text x="345" y="352">m<tspan class="subscript">j</tspan></text>
 
           <!-- "Frequência f_j" -->
-          <text x="485" y="352">f</text>
-          <text x="495" y="356" class="subscript">j</text>
+          <text x="485" y="352">f<tspan class="subscript">j</tspan></text>
 
           <!-- "f_j × m_j" -->
-          <text x="570" y="352">f</text>
-          <text x="580" y="356" class="subscript">j</text>
-          <text x="590" y="352">×</text>
-          <text x="610" y="352">m</text>
-          <text x="635" y="356" class="subscript">j</text>
+          <text x="570" y="352">f<tspan class="subscript">j</tspan> × m<tspan class="subscript">j</tspan></text>
         </g>
 
         <!-- Linhas horizontais -->
@@ -223,36 +214,17 @@
 
       <!-- ==== Rodapé ==== -->
       <g class="p-footer">
-        <text x="390" y="670" class="small" text-anchor="middle">
+        <text x="390" y="670" class="u-small" text-anchor="middle">
           A média para dados agrupados usa os pontos médios como 
         </text>
 
         <!-- Linha com X̄_agr e Σ f_j m_j / Σ f_j -->
-        <g class="small">
+        <g class="u-small">
           <text x="160" y="697">aproximação e calcula:</text>
-          
           <g transform="translate(40,3)">
-          <!-- X̄_agr -->
-          <text x="310" y="694">X̄</text>
-          <text x="324" y="698" class="subscript">agr</text>
-
-          <text x="350" y="694">= </text>
-
-          <!-- f_j -->
-          <text x="375" y="694">(Σ</text>
-          <text x="400" y="694">f</text>
-
-          <text x="410" y="698" class="subscript">j</text>
-
-          <text x="422" y="694"> · </text>
-          <text x="440" y="694">m</text>
-          <text x="460" y="698" class="subscript">j</text>
-          <text x="470" y="694">) / (Σ </text>
-
-          <!-- f_j no denominador -->
-          <text x="520" y="694">f</text>
-          <text x="530" y="698" class="subscript">j</text>
-          <text x="538" y="694">).</text>
+            <text x="323" y="694">
+              X̄ <tspan class="subscript">agr</tspan> = (Σ f<tspan class="subscript">j</tspan> · m<tspan class="subscript">j</tspan>) / (Σ f<tspan class="subscript">j</tspan>).
+            </text>
           </g>
         </g>
       </g>
@@ -269,69 +241,72 @@
       <g class="p-header">
         <text x="1128" y="280" class="label">Histograma e média agrupada</text>
 
-        <!-- Frase + X̄_agr abaixo -->
-        <text x="1128" y="308" class="small" text-anchor="middle">
+        <!-- Frase -->
+        <text x="1128" y="308" class="u-small" text-anchor="middle">
           Frequências por classe e posição da média
         </text>
-
       </g>
 
       <!-- ==== Corpo: eixos + barras ==== -->
-      <g class="p-body" transform="translate(0,-40)">
+      <g class="p-body" transform="translate(-85,-120) scale(1.1)">
         <!-- Eixos -->
         <g class="u-stroke" style="stroke-width:2.5">
-          <line x1="890" y1="670" x2="1380" y2="670"/>
-          <line x1="890" y1="670" x2="890" y2="400"/>
+          <line x1="890" y1="670" x2="1340" y2="670"/>
+          <line x1="890" y1="670" x2="890" y2="450"/>
         </g>
 
         <!-- Grades Y (0,5,10,15) -->
-        <g class="u-stroke small" opacity=".5">
-          <line x1="890" y1="670" x2="1380" y2="670"/><text x="872" y="674" text-anchor="end">0</text>
-          <line x1="890" y1="620" x2="1380" y2="620"/><text x="872" y="624" text-anchor="end">5</text>
-          <line x1="890" y1="570" x2="1380" y2="570"/><text x="872" y="574" text-anchor="end">10</text>
-          <line x1="890" y1="520" x2="1380" y2="520"/><text x="872" y="524" text-anchor="end">15</text>
+        <g class="u-stroke u-small" opacity=".5">
+          <line x1="890" y1="670" x2="1340" y2="670"/><text x="872" y="674" text-anchor="end">0</text>
+          <line x1="890" y1="620" x2="1340" y2="620"/><text x="872" y="624" text-anchor="end">5</text>
+          <line x1="890" y1="570" x2="1340" y2="570"/><text x="872" y="574" text-anchor="end">10</text>
+          <line x1="890" y1="520" x2="1340" y2="520"/><text x="872" y="524" text-anchor="end">15</text>
         </g>
 
         <!-- Barras para as frequências f_j (escala ~10px por unidade) -->
         <!-- f = [5,8,12,9,6] -->
-        <rect x="910"  y="620" width="70" height="50"  class="bar b1"/>
-        <rect x="1005" y="540" width="70" height="130" class="bar b2"/>
-        <rect x="1100" y="500" width="70" height="170" class="bar b3"/>
-        <rect x="1195" y="530" width="70" height="140" class="bar b4"/>
-        <rect x="1290" y="610" width="70" height="60"  class="bar b5"/>
+        <rect x="890"  y="620" width="80" height="50"  class="bar b1"/>
+        <rect x="971" y="540" width="80" height="130" class="bar b2"/>
+        <rect x="1052" y="500" width="80" height="170" class="bar b3"/>
+        <rect x="1133" y="530" width="80" height="140" class="bar b4"/>
+        <rect x="1214" y="610" width="80" height="60"  class="bar b5"/>
 
         <!-- Linha vertical da média agrupada (≈ 25,8) -->
-        <line x1="1135" y1="400" x2="1135" y2="670" class="u-mean-line"/>
+        <line x1="1098.4" y1="450" x2="1098.4" y2="670" class="u-mean-line"/>
 
         <!-- Label com subscript: X̄_agr ≈ 25,8 -->
         <g class="mean-label">
-          <text x="1140" y="412" class="mean-label-main">X̄</text>
-          <text x="1154" y="416" class="mean-label-main subscript">agr</text>
-          <text x="1192" y="412" class="mean-label-main">≈ 25,8</text>
+          <text x="1110" y="452" class="mean-label-main">
+            X̄ <tspan class="subscript">agr</tspan> ≈ 25,8
+          </text>
         </g>
+              <!-- ==== Rodapé: rótulos das classes ==== -->
+      <g class="p-footer u-small">
+        <!-- rótulos das classes -->
+        <text x="930"  y="695" text-anchor="middle">[0, 10)</text>
+        <text x="1005" y="695" text-anchor="middle">[10, 20)</text>
+        <text x="1090" y="695" text-anchor="middle">[20, 30)</text>
+        <text x="1170" y="695" text-anchor="middle">[30, 40)</text>
+        <text x="1260" y="695" text-anchor="middle">[40, 50)</text>
+
+
+      </g>
       </g>
 
-        <!-- ==== Rodapé: rótulos das classes ==== -->
-        <g class="p-footer small" transform="translate(0,-40)">
-        <!-- rótulos das classes -->
-        <text x="945"  y="695" text-anchor="middle">[0, 10)</text>
-        <text x="1040" y="695" text-anchor="middle">[10, 20)</text>
-        <text x="1135" y="695" text-anchor="middle">[20, 30)</text>
-        <text x="1230" y="695" text-anchor="middle">[30, 40)</text>
-        <text x="1325" y="695" text-anchor="middle">[40, 50)</text>
+
+        <g class="u-small">
 
         <!-- frase com subscript f_j -->
-        <g transform="translate(-220, 10)">
-            <text x="1070" y="725" text-anchor="start">
-            A altura de cada retângulo mostra f
-            </text>
-            <text x="1352" y="729" class="subscript">j</text>
-            <text x="1360" y="725" text-anchor="start">
-            ; a linha marca a média agrupada.
-            </text>
-        </g>
-        </g>
+        <g class="p-footer">
+          <text x="910" y="695" >
+            A altura de cada retângulo mostra f<tspan class="subscript">j</tspan>; a linha marca
+          </text>
+          <text x="1060" y="725" >
+            a média agrupada.
+          </text>
 
+        </g>
+        </g>
     </g>
   </g>
 </svg>

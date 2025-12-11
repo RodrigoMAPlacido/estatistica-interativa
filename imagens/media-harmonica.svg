@@ -41,7 +41,7 @@
         font-weight:600;
         text-anchor:middle;
       }
-      .small{ font-size:18px; }
+      .u-small{ font-size:18px; }
       .tiny{ font-size:16px; }
 
       /* ==== Barras (velocidades) ==== */
@@ -98,7 +98,7 @@
       .path-real,
       .path-harm{
         fill:none;
-        stroke-width:2.5;
+        stroke-width:3.5;
         stroke-dasharray:600;
         stroke-dashoffset:600;
         opacity:0;
@@ -160,7 +160,7 @@
     <!-- Cabeçalho -->
     <g class="p-header">
       <text x="300" y="60" class="label">Média harmônica</text>
-      <text x="300" y="85" class="small" text-anchor="middle">
+      <text x="300" y="85" class="u-small" text-anchor="middle">
         Velocidades em dois trechos de igual distância
       </text>
     </g>
@@ -191,7 +191,7 @@
       </g>
 
       <!-- Rótulos de velocidade -->
-      <g class="small" opacity=".7">
+      <g class="u-small" opacity=".7">
         <text x="100" y="344" text-anchor="end">10 km/h</text>
         <text x="100" y="304" text-anchor="end">20 km/h</text>
         <text x="100" y="264" text-anchor="end">30 km/h</text>
@@ -209,7 +209,7 @@
       <rect x="340" y="140" width="90" height="240" class="bar b2"/>
 
       <!-- Rótulos dos trechos -->
-      <g class="small">
+      <g class="u-small">
         <text x="245" y="410" text-anchor="middle">Trecho 1</text>
         <text x="385" y="410" text-anchor="middle">Trecho 2</text>
       </g>
@@ -217,17 +217,14 @@
 
     <!-- Rodapé -->
     <g class="p-footer">
-      <text x="300" y="470" class="tiny" text-anchor="middle">
+      <text x="300" y="460" class="tiny" text-anchor="middle">
         Dois trechos consecutivos de 60 km cada.
       </text>
       <text x="300" y="485" class="tiny" text-anchor="middle">
         Velocidades: 30 km/h e 60 km/h.
       </text>
-      <text x="300" y="500" class="tiny" text-anchor="middle">
+      <text x="300" y="510" class="tiny" text-anchor="middle">
         A média harmônica dessas velocidades é 40 km/h,
-      </text>
-      <text x="300" y="515" class="tiny" text-anchor="middle">
-        única velocidade constante que dá o mesmo tempo total.
       </text>
     </g>
   </g>
@@ -239,7 +236,7 @@
     <!-- Cabeçalho -->
     <g class="p-header">
       <text x="300" y="60" class="label">Tempo de viagem</text>
-      <text x="300" y="85" class="small" text-anchor="middle">
+      <text x="300" y="85" class="u-small" text-anchor="middle">
         Trajetória real vs. velocidade constante (média harmônica)
       </text>
     </g>
@@ -257,7 +254,7 @@
       </g>
 
       <!-- Grades e rótulos do eixo Y (tempo em horas) -->
-      <g class="u-stroke small" opacity=".2" style="stroke-width:1">
+      <g class="u-stroke u-small" opacity=".2" style="stroke-width:1">
         <!-- 0 h -->
         <line x1="80" y1="420" x2="520" y2="420"/>
         <!-- 1 h -->
@@ -267,7 +264,7 @@
         <!-- 3 h -->
         <line x1="80" y1="180" x2="520" y2="180"/>
       </g>
-      <g class="small" opacity=".8">
+      <g class="u-small" opacity=".8">
         <text x="68" y="424" text-anchor="end">0 h</text>
         <text x="68" y="344" text-anchor="end">1 h</text>
         <text x="68" y="264" text-anchor="end">2 h</text>
@@ -282,7 +279,7 @@
         <line x1="300" y1="420" x2="300" y2="426"/>
         <line x1="520" y1="420" x2="520" y2="426"/>
       </g>
-      <g class="small" opacity=".8">
+      <g class="u-small" opacity=".8">
         <text x="80"  y="442" text-anchor="middle">0</text>
         <text x="300" y="442" text-anchor="middle">60</text>
         <text x="520" y="442" text-anchor="middle">120 km</text>
@@ -317,9 +314,9 @@
                L 520 180"/>
 
       <!-- Pontos da trajetória real -->
-      <circle cx="80"  cy="420" r="4" class="dot d1"/>
-      <circle cx="300" cy="260" r="4" class="dot d2"/>
-      <circle cx="520" cy="180" r="4" class="dot d3"/>
+      <circle cx="80"  cy="420" r="6" class="dot d1"/>
+      <circle cx="300" cy="260" r="6" class="dot d2"/>
+      <circle cx="520" cy="180" r="6" class="dot d3"/>
 
       <!-- Pontos sobre a reta da média harmônica (círculos vazados) -->
       <circle cx="80"  cy="420" r="4" class="dot dot-harm d1"/>
@@ -327,23 +324,23 @@
       <circle cx="520" cy="180" r="4" class="dot dot-harm d3"/>
 
       <!-- Rótulo do ponto final -->
-      <text x="510" y="158" class="tiny" text-anchor="middle" opacity="1">
+      <text x="505" y="150" class="u-small" text-anchor="middle" opacity="1">
         Mesmo tempo
       </text>
-      <text x="510" y="170" class="tiny" text-anchor="middle" opacity="1">
+      <text x="510" y="170" class="u-small" text-anchor="middle" opacity="1">
         total.
       </text>
     </g>
 
     <!-- Rodapé -->
     <g class="p-footer">
-      <text x="300" y="470" class="tiny" text-anchor="middle">
+      <text x="300" y="460" class="tiny" text-anchor="middle">
         Linha contínua: tempo acumulado com 30 km/h e depois 60 km/h.
       </text>
-      <text x="300" y="485" class="tiny" text-anchor="middle">
-        Linha pontilhada: velocidade constante de 40 km/h (média harmônica).
+      <text x="290" y="485" class="tiny" text-anchor="middle">
+        Linha pontilhada: velocidade const. de 40 km/h (média harmônica).
       </text>
-      <text x="300" y="500" class="tiny" text-anchor="middle">
+      <text x="300" y="510" class="tiny" text-anchor="middle">
         Ambas partem do mesmo ponto e percorrem 120 km em 3 horas.
       </text>
     </g>

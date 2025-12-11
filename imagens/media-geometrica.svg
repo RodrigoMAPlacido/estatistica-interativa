@@ -42,8 +42,9 @@
         font-weight:600;
         text-anchor:middle;
       }
-      .small{ font-size:18px; }
+      .u-small{ font-size:18px; }
       .tiny{ font-size:16px; }
+      .leg{ font-size:20px; }
 
       /* ====== Animação das barras (crescer a partir do zero) ====== */
       @keyframes growBar{
@@ -134,7 +135,7 @@
 
     <!-- Cabeçalho -->
     <text x="300" y="60" class="label">Média geométrica</text>
-    <text x="300" y="85" class="small" text-anchor="middle">
+    <text x="300" y="85" class="u-small" text-anchor="middle">
       Crescimento ano a ano de um investimento
     </text>
 
@@ -161,7 +162,7 @@
       </g>
 
       <!-- Rótulos de % -->
-      <g class="small" opacity=".7">
+      <g class="u-small" opacity=".7">
         <text x="70" y="143" text-anchor="end">+30%</text>
         <text x="70" y="203" text-anchor="end">+20%</text>
         <text x="70" y="263" text-anchor="end">+10%</text>
@@ -177,7 +178,7 @@
       <rect x="420" y="140" width="70" height="180" class="bar b4"/>
 
       <!-- Rótulos dos anos -->
-      <g class="small">
+      <g class="u-small">
         <text x="155" y="405" text-anchor="middle">Ano 1</text>
         <text x="255" y="405" text-anchor="middle">Ano 2</text>
         <text x="355" y="405" text-anchor="middle">Ano 3</text>
@@ -209,7 +210,7 @@
 
     <!-- Cabeçalho -->
     <text x="300" y="60" class="label">Crescimento acumulado</text>
-    <text x="300" y="85" class="small" text-anchor="middle">
+    <text x="300" y="85" class="u-small" text-anchor="middle">
       Valor do investimento: taxas variadas vs. constante
     </text>
 
@@ -226,7 +227,7 @@
       </g>
 
       <!-- Grades + labels do eixo Y (valores do investimento) -->
-      <g class="u-stroke small" opacity=".2" style="stroke-width:1">
+      <g class="u-stroke u-small" opacity=".2" style="stroke-width:1">
         <!-- 100 -->
         <line x1="80" y1="440" x2="520" y2="440"/>
         <text x="68" y="444" text-anchor="end">100</text>
@@ -249,7 +250,7 @@
         <line x1="410" y1="440" x2="410" y2="446"/>
         <line x1="520" y1="440" x2="520" y2="446"/>
       </g>
-      <g class="small" opacity=".8">
+      <g class="u-small" opacity=".8">
         <text x="80"  y="462" text-anchor="middle">0</text>
         <text x="190" y="462" text-anchor="middle">1</text>
         <text x="300" y="462" text-anchor="middle">2</text>
@@ -295,8 +296,8 @@
       <circle cx="520" cy="167.8" r="5" class="dot dot-geo d5"/>
 
       <!-- Rótulo do ponto final -->
-      <text x="520" y="150" class="tiny" text-anchor="middle" opacity=".8">mesmo valor</text>
-      <text x="520" y="162" class="tiny" text-anchor="middle" opacity=".8">final</text>
+      <text x="505" y="140" class="leg" text-anchor="middle" >Mesmo valor</text>
+      <text x="510" y="157" class="leg" text-anchor="middle" >final</text>
     </g>
 
     <!-- Rodapé (legenda das trajetórias + explicação) -->

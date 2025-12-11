@@ -176,10 +176,10 @@
       <text x="300" y="430" class="tiny" text-anchor="middle">
         Em variáveis ordinais, a mediana é a categoria que contém a posição 
       </text>
-      <text x="300" y="445" class="tiny" text-anchor="middle">
+      <text x="300" y="447" class="tiny" text-anchor="middle">
         central, identificada pela primeira frequência acumulada que
       </text>
-      <text x="300" y="460" class="tiny" text-anchor="middle">
+      <text x="300" y="465" class="tiny" text-anchor="middle">
         ultrapassa N/2.
       </text>
     </g>
@@ -273,7 +273,7 @@
       <text x="300" y="445" class="tiny" text-anchor="middle">
         Para dados discretos sem intervalos, a mediana é o menor valor
       </text>
-      <text x="300" y="460" class="tiny" text-anchor="middle">
+      <text x="300" y="465" class="tiny" text-anchor="middle">
         cuja frequência acumulada ultrapassa N/2.
       </text>
     </g>
