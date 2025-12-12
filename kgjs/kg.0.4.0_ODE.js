@@ -62457,7 +62457,7 @@ var KGAuthor;
             var l = _this;
             var graphDef = def['graph'];
             graphDef.position = {
-                "x": 0.15,
+                "x": 0.25,
                 "y": 0.025,
                 "width": 0.74,
                 "height": 0.9
@@ -62495,7 +62495,7 @@ var KGAuthor;
             graphDef.position = {
                 "x": 0.15,
                 "y": 0.025,
-                "width": 0.74,
+                "width": 1,
                 "height": 0.9
             };
             l.subObjects.push(new KGAuthor.Graph(graphDef));
@@ -62551,7 +62551,7 @@ var KGAuthor;
             graphDef.position = {
                 "x": 0.15,
                 "y": 0.025,
-                "width": 0.738,
+                "width": 1,
                 "height": 0.9
             };
             l.subObjects.push(new KGAuthor.Graph(graphDef));
