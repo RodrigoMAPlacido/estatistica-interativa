@@ -1,0 +1,448 @@
+schema: EconSchema
+aspectRatio: 1.75
+
+params:
+  - name: V0
+    value: 100
+    min: 10
+    max: 500
+    round: 1
+
+  # Fatores de crescimento (ex.: 1.20 = +20%)
+  - name: g1
+    value: 0.2
+    min: -1
+    max: 1
+    round: 0.01
+
+  - name: g2
+    value: 0.1
+    min: -1
+    max: 1
+    round: 0.01
+
+  - name: g3
+    value: -0.1
+    min: -1
+    max: 1
+    round: 0.01
+
+  - name: g4
+    value: 0.3
+    min: -1
+    max: 1
+    round: 0.01
+
+calcs:
+  # Taxas (decimais) para as “barras”
+  r1: "(params.g1 + 1)"
+  r2: "(params.g2 + 1)"
+  r3: "(params.g3 + 1)"
+  r4: "(params.g4 + 1)"
+
+  # Produto e média geométrica anual
+  prod: "(calcs.r1 * calcs.r2 * calcs.r3 * calcs.r4)"
+  gbar: "(calcs.prod)^0.25"
+  rbar: "(calcs.gbar - 1)"
+
+  # Trajetória com taxas variadas
+  V1: "(params.V0 * calcs.r1)"
+  V2: "(calcs.V1 * calcs.r2)"
+  V3: "(calcs.V2 * calcs.r3)"
+  V4: "(calcs.V3 * calcs.r4)"
+
+  # Trajetória com taxa constante (= média geométrica)
+  W0: "(params.V0)"
+  W1: "(params.V0 * calcs.gbar)"
+  W2: "(params.V0 * (calcs.gbar)^2)"
+  W3: "(params.V0 * (calcs.gbar)^3)"
+  W4: "(params.V0 * (calcs.gbar)^4)"
+
+  # Percentuais (pra label)
+  r1pct: "(100*params.g1)"
+  r2pct: "(100*params.g2)"
+  r3pct: "(100*params.g3)"
+  r4pct: "(100*params.g4)"
+  rbpct: "(100*calcs.rbar)"
+
+layout:
+  TwoHorizontalGraphs:
+
+    leftGraph:
+      xAxis:
+        min: 0
+        max: 4.5
+        ticks: 0
+      yAxis:
+        min: -0.4
+        max: 0.4
+
+      objects:
+        # Linhas de grade (±10%, ±20%, ±30% e zero)
+        - Line: 
+           strokeWidth: 0.5
+           point: [0.6,  0.3]
+           point2: [4.4,  0.3]
+           color: grey 
+
+        - Line: 
+           strokeWidth: 0.5
+           point: [0.6,  0.2]
+           point2: [4.4,  0.2]
+           color: grey 
+
+        - Line: 
+           strokeWidth: 0.5
+           point: [0.6,  0.1]
+           point2: [4.4,  0.1]
+           color: grey 
+
+        - Line: 
+           strokeWidth: 1.2
+           point: [0.6,  0.0]
+           point2: [4.4,  0.0]
+           color: grey 
+
+        - Line: 
+           strokeWidth: 0.5
+           point: [0.6, -0.1]
+           point2: [4.4, -0.1]
+           color: grey
+        - Line: 
+           strokeWidth: 0.5
+           point: [0.6, -0.2]
+           point2: [4.4, -0.2]
+           color: grey
+        - Line: 
+           strokeWidth: 0.5
+           point: [0.6, -0.3]
+           point2: [4.4, -0.3]
+           color: grey 
+
+        # “Barras” (retângulos). Agora funciona tanto positivo quanto negativo.
+        - Rectangle:
+            x1: 0.75
+            x2: 1.25
+            y1: 0
+            y2: params.g1
+            fill: "'#111827'"
+            opacity: 1
+            drag:
+              - directions: y
+                param: g1
+                expression: "(drag.y)"
+
+        - Rectangle:
+            x1: 1.75
+            x2: 2.25
+            y1: 0
+            y2: params.g2
+            fill: "'#111827'"
+            opacity: 1
+            drag:
+              - directions: y
+                param: g2
+                expression: "(drag.y)"
+        - Rectangle:
+            x1: 2.75
+            x2: 3.25
+            y1: 0
+            y2: params.g3
+            fill: "'#111827'"
+            opacity: 1
+            drag:
+              - directions: y
+                param: g3
+                expression: "(drag.y)"
+        - Rectangle:
+            x1: 3.75
+            x2: 4.25
+            y1: 0
+            y2: params.g4
+            fill: "'#111827'"
+            opacity: 1
+            drag:
+              - directions: y
+                param: g4
+                expression: "(drag.y)"
+                
+        # Rótulos Ano 1..4 (embaixo)
+        - Segment:
+            a: [1.0, -0.38]
+            b: [1.0, -0.38]
+            color: "'#111827'"
+            label: 
+             text: "'\\\\bf{Ano\\\\ 1}'" 
+             position: t 
+             fontSize: 7 
+
+        - Segment:
+            a: [2.0, -0.38]
+            b: [2.0, -0.38]
+            color: "'#111827'"
+            label: 
+             text: "'\\\\bf{Ano\\\\ 2}'"
+             position: t 
+             fontSize: 7 
+
+        - Segment:
+            a: [3.0, -0.38]
+            b: [3.0, -0.38]
+            color: "'#111827'"
+            label: 
+             text: "'\\\\bf{Ano\\\\ 3}'"
+             position: t
+             fontSize: 7 
+
+        - Segment:
+            a: [4.0, -0.38]
+            b: [4.0, -0.38]
+            color: "'#111827'"
+            label: 
+             text: "'\\\\bf{Ano\\\\ 4}'"
+             position: t
+             fontSize: 7 
+
+        # Labels com percentuais (perto de cada barra)
+        - Label:
+            coordinates: [1.0, 0.34]
+            text: "`${calcs.r1pct.toFixed(1)}\\\\%`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 7
+
+        - Label:
+            coordinates: [2.0, 0.34]
+            text: "`${calcs.r2pct.toFixed(1)}\\\\%`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 7
+
+        - Label:
+            coordinates: [3.0, 0.34]
+            text: "`${calcs.r3pct.toFixed(1)}\\\\%`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 7
+
+        - Label:
+            coordinates: [4.0, 0.34]
+            text: "`${calcs.r4pct.toFixed(1)}\\\\%`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 7
+
+
+    rightGraph:
+      xAxis:
+        min: 0
+        max: 4
+        ticks: 0
+      yAxis:
+        min: 0
+        max: 80
+        ticks: 0
+
+      objects:
+        # Linha “variada” (contínua)
+        - Segment:
+            a: [0, params.V0-100]
+            b: [1, calcs.V1-100]
+            color: "'#111827'"
+            strokeWidth: 2 
+
+        - Segment: 
+            a: [1, calcs.V1-100]
+            b: [2, calcs.V2-100]
+            color: "'#111827'"
+            strokeWidth: 2
+
+        - Segment:
+            a: [2, calcs.V2-100]
+            b: [3, calcs.V3-100]
+            color: "'#111827'"
+            strokeWidth: 2
+
+        - Segment:
+            a: [3, calcs.V3-100]
+            b: [4, calcs.V4-100]
+            color: "'#111827'"
+            strokeWidth: 2 
+          
+
+        # Linha “constante” (cinza). Se o seu build tiver dash em Segment, dá pra pontilhar;
+        # se não tiver, pelo menos fica visualmente distinta.
+        - Segment:
+            a: [0, calcs.W0-100]
+            b: [1, calcs.W1-100]
+            color: grey
+            strokeWidth: 3
+            lineStyle: dotted
+
+        - Segment:
+            a: [1, calcs.W1-100]
+            b: [2, calcs.W2-100]
+            color: grey
+            strokeWidth: 3
+            lineStyle: dotted
+
+        - Segment:
+            a: [2, calcs.W2-100]
+            b: [3, calcs.W3-100]
+            color: grey
+            strokeWidth: 3
+            lineStyle: dotted
+
+        - Segment:
+            a: [3, calcs.W3-100]
+            b: [4, calcs.W4-100]
+            color: grey
+            strokeWidth: 3
+            lineStyle: dotted
+
+
+        # Pontos (marcadores)
+        - Point:
+            coordinates: [0, params.V0-100]
+            color: "'#111827'"
+            r: 4
+
+        - Point:
+            coordinates: [1, calcs.V1-100]
+            color: "'#111827'"
+            r: 4 
+
+        - Point:
+            coordinates: [2, calcs.V2-100]
+            color: "'#111827'"
+            r: 4 
+
+        - Point:
+            coordinates: [3, calcs.V3-100]
+            color: "'#111827'"
+            r: 4
+
+        - Point: 
+            coordinates: [4, calcs.V4-100]
+            color: "'#111827'"
+            r: 5
+            
+        - Point:
+            coordinates: [0, calcs.W0-100]
+            color: grey
+            r: 4 
+
+        - Point:
+            coordinates: [1, calcs.W1-100]
+            color: grey
+            r: 4 
+
+        - Point:
+            coordinates: [2, calcs.W2-100]
+            color: grey
+            r: 4
+            
+        - Point:
+            coordinates: [3, calcs.W3-100]
+            color: grey
+            r: 4 
+
+        - Point:
+            coordinates: [4, calcs.W4-100]
+            color: grey
+            r: 5 
+
+        # Texto final: mesmo valor
+        - Label:
+            coordinates: [4, calcs.W4-95]
+            text: "`\\\\mathbf{Mesmo\\\\ valor} \\\\\\\\ \\\\mathbf{final:} ${calcs.V4.toFixed(2)}`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 7
+            position: b
+
+        # Mini-legenda (como no seu exemplo)
+        - Rectangle:
+            x1: 0.2
+            x2: 0.5
+            y1: 75
+            y2: 80
+            fill: "'#111827'"
+            opacity: 1
+
+        - Label:
+            coordinates: [0.55, 76]
+            text: "`Linha\\\\ contínua:\\\\ valores\\\\ com \\\\ fatores \\\\\\\\ 1.2, 1.1, 0.9, 1.3`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 7
+            position: l
+
+        - Rectangle:
+            x1: 2.2
+            x2: 2.5
+            y1: 75
+            y2: 80
+            fill: "grey"
+            opacity: 1
+
+        - Label:
+            coordinates: [2.55, 76]
+            text: "`Linha \\\\ pontilhada: \\\\ taxa \\\\ constante \\\\\\\\ (Média \\\\ Geométrica)`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 7
+            position: l
+
+        - Label:
+            coordinates: [0, 0]
+            text: "`\\\\bf{0}`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 10
+            position: t
+        - Label:
+            coordinates: [1, 0]
+            text: "`\\\\bf{1}`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 10
+            position: t
+        - Label:
+            coordinates: [2, 0]
+            text: "`\\\\bf{2}`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 10
+            position: t
+        - Label:
+            coordinates: [3, 0]
+            text: "`\\\\bf{3}`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 10
+            position: t
+        - Label:
+            coordinates: [4, 0]
+            text: "`\\\\bf{4}`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 10
+            position: t
+
+        - Line: 
+           strokeWidth: 0.5
+           point: [0, 20]
+           point2: [4, 20]
+           color: grey 
+        - Line: 
+           strokeWidth: 0.5
+           point: [0, 40]
+           point2: [4, 40]
+           color: grey 
+        - Line: 
+           strokeWidth: 0.5
+           point: [0, 60]
+           point2: [4, 60]
+           color: grey 
+

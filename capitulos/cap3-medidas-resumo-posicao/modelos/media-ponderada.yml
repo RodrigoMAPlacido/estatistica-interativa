@@ -72,7 +72,7 @@ layout:
         min: 0
         max: 5
         ticks: 0
-        title: Média ponderada — valores x e frequências f
+        show: false
       yAxis:
         min: 0
         max: 11
@@ -87,7 +87,7 @@ layout:
         - Rectangle:
             x1: 0.7
             x2: 1.3
-            y1: 0
+            y1: 0.3
             y2: params.x_1
             fill: colors.ink
             opacity: 1
@@ -99,7 +99,7 @@ layout:
         - Rectangle:
             x1: 1.7
             x2: 2.3
-            y1: 0
+            y1: 0.3
             y2: params.x_2
             fill: colors.ink
             opacity: 1
@@ -111,7 +111,7 @@ layout:
         - Rectangle:
             x1: 2.7
             x2: 3.3
-            y1: 0
+            y1: 0.3
             y2: params.x_3
             fill: colors.ink
             opacity: 1
@@ -123,7 +123,7 @@ layout:
         - Rectangle:
             x1: 3.7
             x2: 4.3
-            y1: 0
+            y1: 0.3
             y2: params.x_4
             fill: colors.ink
             opacity: 1
@@ -143,52 +143,52 @@ layout:
             strokeWidth: 3
             color: "'#64748b'"
 
-        - Segment:
-            a: [4.5, calcs.weightedMean]
-            b: [4.5, calcs.weightedMean]
-            color: colors.ink
-            label:
-              text: "`\\\\bar{X}_{pond}=${calcs.weightedMean.toFixed(2)}`"
-              position: l
-              fontSize: 10
+
+        - Label:
+            coordinates: [4.6,calcs.weightedMean + 0.3]
+            text: "`\\\\bf{Média}\\\\ \\\\bf{Pond.} = ${calcs.weightedMean.toFixed(2)}`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 9
+            position: l
 
         # ---------------------------
         # RÓTULOS DAS FREQUÊNCIAS (f_i)
         # mostrados no topo de cada barra
         # ---------------------------
         - Segment:
-            a: [1, params.x_1]
-            b: [1, params.x_1]
+            a: [1, params.x_1-0.2]
+            b: [1, params.x_1-0.2]
             color: colors.ink
             label:
-              text: "`w=${params.w_1.toFixed(1)}`"
+              text: "`Nota: \\\\\\\\ ${params.x_1.toFixed(1)}`"
               position: t
               fontSize: 9
 
         - Segment:
-            a: [2, params.x_2]
-            b: [2, params.x_2]
+            a: [2, params.x_2-0.2]
+            b: [2, params.x_2-0.2]
             color: colors.ink
             label:
-              text: "`w=${params.w_2.toFixed(1)}`"
+              text: "`Nota: \\\\\\\\ ${params.x_2.toFixed(1)}`"
               position: t
               fontSize: 9
 
         - Segment:
-            a: [3, params.x_3]
-            b: [3, params.x_3]
+            a: [3, params.x_3-0.2]
+            b: [3, params.x_3-0.2]
             color: colors.ink
             label:
-              text: "`w=${params.w_3.toFixed(1)}`"
+              text: "`Nota: \\\\\\\\ ${params.x_3.toFixed(1)}`"
               position: t
               fontSize: 9
 
         - Segment:
-            a: [4, params.x_4]
-            b: [4, params.x_4]
+            a: [4, params.x_4-0.2]
+            b: [4, params.x_4-0.2]
             color: colors.ink
             label:
-              text: "`w=${params.w_4.toFixed(1)}`"
+              text: "`Nota: \\\\\\\\ ${params.x_4.toFixed(1)}`"
               position: t
               fontSize: 9
 
@@ -196,42 +196,76 @@ layout:
         # ---------------------------
         # RÓTULOS NO EIXO X (ÍNDICE DO VALOR)
         # ---------------------------
+        - Label:
+            coordinates: [1,0]
+            text: "`\\\\mathbf{Matemática}\\\\\\\\ w_{1} = ${params.w_1.toFixed(2)}`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 9
+            position: t
+        - Label:
+            coordinates: [2,0]
+            text: "`\\\\mathbf{Estatística}\\\\\\\\ w_{2} = ${params.w_2.toFixed(2)}`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 9
+            position: t
+        - Label:
+            coordinates: [3,0]
+            text: "`\\\\mathbf{História}\\\\\\\\ w_{3} = ${params.w_3.toFixed(2)}`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 9
+            position: t
+        - Label:
+            coordinates: [4,0]
+            text: "`\\\\mathbf{Ed.Física}\\\\\\\\ w_{4} = ${params.w_4.toFixed(2)}`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 9
+            position: t
+
+        #Grade
         - Segment:
-            a: [1, 0]
-            b: [1, 0]
-            color: colors.ink
-            label:
-              text: "'Matemática'"
-              position: t
-              fontSize: 11
+            a: [0, 2]
+            b: [5, 2]
+            color: grey
+            strokeWidth: 1
+            lineStyle: dashed
 
         - Segment:
-            a: [2, 0]
-            b: [2, 0]
-            color: colors.ink
-            label:
-              text: "'Estatística'"
-              position: t
-              fontSize: 11
+            a: [0, 4]
+            b: [5, 4]
+            color: grey
+            strokeWidth: 1
+            lineStyle: dashed
 
         - Segment:
-            a: [3, 0]
-            b: [3, 0]
-            color: colors.ink
-            label:
-              text: "'História'"
-              position: t
-              fontSize: 11
+            a: [0, 6]
+            b: [5, 6]
+            color: grey
+            strokeWidth: 1
+            lineStyle: dashed
 
         - Segment:
-            a: [4, 0]
-            b: [4, 0]
-            color: colors.ink
-            label:
-              text: "'Ed. Física'"
-              position: t
-              fontSize: 11
+            a: [0, 8]
+            b: [5, 8]
+            color: grey
+            strokeWidth: 1
+            lineStyle: dashed
 
+        - Segment:
+            a: [0, 10]
+            b: [5, 10]
+            color: grey
+            strokeWidth: 1
+            lineStyle: dashed
+        - Segment:
+            a: [0, 0.3]
+            b: [5, 0.3]
+            color: black
+            strokeWidth: 1
+            lineStyle: solid
     sidebar:
       triggerWidth: 9999
       controls:

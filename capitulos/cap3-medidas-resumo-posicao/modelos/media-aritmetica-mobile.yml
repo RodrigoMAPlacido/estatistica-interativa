@@ -144,13 +144,72 @@ layout:
             strokeWidth: 3
             color: "'#64748b'"
 
+        - Label:
+            coordinates: [6.2,calcs.mean+0.5]
+            text: "`\\\\mathbf{Média}\\\\  \\\\\\\\ = ${calcs.mean.toFixed(2)}`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 8
+            position: l
+
+
+
+
+        # ---------------------------
+        # RÓTULOS DAS FREQUÊNCIAS (f_i)
+        # mostrados no topo de cada barra
+        # ---------------------------
         - Segment:
-            a: [6.3, calcs.mean]
-            b: [6.3, calcs.mean]
+            a: [1, params.x_1]
+            b: [1, params.x_1]
             color: colors.ink
             label:
-              text: "`\\\\bar{X}=${calcs.mean.toFixed(2)}`"
-              position: b
+              text: "`\\\\bf{x_{1}}:${params.x_1.toFixed(1)}`"
+              position: t
+              fontSize: 8
+
+        - Segment:
+            a: [2, params.x_2]
+            b: [2, params.x_2]
+            color: colors.ink
+            label:
+              text: "`\\\\bf{x_{2}}:${params.x_2.toFixed(1)}`"
+              position: t
+              fontSize: 8
+
+        - Segment:
+            a: [3, params.x_3]
+            b: [3, params.x_3]
+            color: colors.ink
+            label:
+              text: "`\\\\bf{x_{3}}:${params.x_3.toFixed(1)}`"
+              position: t
+              fontSize: 8
+
+        - Segment:
+            a: [4, params.x_4]
+            b: [4, params.x_4]
+            color: colors.ink
+            label:
+              text: "`\\\\bf{x_{4}}:${params.x_4.toFixed(1)}`"
+              position: t
+              fontSize: 8
+
+        - Segment:
+            a: [5, params.x_5]
+            b: [5, params.x_5]
+            color: colors.ink
+            label:
+              text: "`\\\\bf{x_{5}}:${params.x_4.toFixed(1)}`"
+              position: t
+              fontSize: 8
+        - Segment:
+            a: [6, params.x_6]
+            b: [6, params.x_6]
+            color: colors.ink
+            label:
+              text: "`\\\\bf{x_{6}}:${params.x_4.toFixed(1)}`"
+              position: t
               fontSize: 8
         # ---------------------------
         # RÓTULOS NO EIXO X
@@ -209,3 +268,41 @@ layout:
               text: "'3'"
               position: t
               fontSize: 9
+
+        #Grade
+        - Segment:
+            a: [0, 1]
+            b: [6.5, 1]
+            color: grey
+            strokeWidth: 1
+            lineStyle: dashed
+        - Segment:
+            a: [0, 2]
+            b: [6.5, 2]
+            color: grey
+            strokeWidth: 1
+            lineStyle: dashed
+        - Segment:
+            a: [0, 3]
+            b: [6.5, 3]
+            color: grey
+            strokeWidth: 1
+            lineStyle: dashed
+        - Segment:
+            a: [0, 4]
+            b: [6.5, 4]
+            color: grey
+            strokeWidth: 1
+            lineStyle: dashed
+        - Segment:
+            a: [0, 5]
+            b: [6.5, 5]
+            color: grey
+            strokeWidth: 1
+            lineStyle: dashed
+        - Segment:
+            a: [0, 6]
+            b: [6.5, 6]
+            color: grey
+            strokeWidth: 1
+            lineStyle: dashed

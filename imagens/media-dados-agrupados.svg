@@ -144,7 +144,7 @@
       </g>
 
       <!-- ==== Corpo da tabela ==== -->
-      <g class="p-body" transform="translate(0,24)">
+      <g class="p-body" transform="translate(0,0)">
         <!-- Cabeçalho das colunas -->
         <line x1="160" y1="364" x2="620" y2="364" class="u-stroke" style="stroke-width:2"/>
 
@@ -169,6 +169,8 @@
           <line x1="160" y1="524" x2="620" y2="524"/>
           <line x1="160" y1="564" x2="620" y2="564"/>
           <line x1="160" y1="604" x2="620" y2="604"/>
+          <line x1="160" y1="644" x2="620" y2="644"/>
+
         </g>
 
         <!-- Destaques animados por linha -->
@@ -209,11 +211,16 @@
           <text x="355" y="596" text-anchor="end">—</text>
           <text x="495" y="596" text-anchor="end" font-weight="700">40</text>
           <text x="610" y="596" text-anchor="end" font-weight="700">1030</text>
+
+          <text x="175" y="636" font-weight="700">Média Agr.</text>
+          <text x="355" y="636" text-anchor="end" font-weight="700">25,75</text>
+          <text x="495" y="636" text-anchor="end" font-weight="700">40</text>
+          <text x="610" y="636" text-anchor="end" font-weight="700">1030</text>
         </g>
       </g>
 
       <!-- ==== Rodapé ==== -->
-      <g class="p-footer">
+      <g class="p-footer" transform="translate(0,5)">
         <text x="390" y="670" class="u-small" text-anchor="middle">
           A média para dados agrupados usa os pontos médios como 
         </text>
@@ -257,27 +264,27 @@
 
         <!-- Grades Y (0,5,10,15) -->
         <g class="u-stroke u-small" opacity=".5">
-          <line x1="890" y1="670" x2="1340" y2="670"/><text x="872" y="674" text-anchor="end">0</text>
-          <line x1="890" y1="620" x2="1340" y2="620"/><text x="872" y="624" text-anchor="end">5</text>
-          <line x1="890" y1="570" x2="1340" y2="570"/><text x="872" y="574" text-anchor="end">10</text>
-          <line x1="890" y1="520" x2="1340" y2="520"/><text x="872" y="524" text-anchor="end">15</text>
+          <line x1="890" y1="670" x2="1340" y2="670"/><text x="872" y="670" text-anchor="end">0</text>
+          <line x1="890" y1="597" x2="1340" y2="597"/><text x="872" y="597" text-anchor="end">5</text>
+          <line x1="890" y1="523" x2="1340" y2="523"/><text x="872" y="523" text-anchor="end">10</text>
+          <line x1="890" y1="450" x2="1340" y2="450"/><text x="872" y="450" text-anchor="end">15</text>
         </g>
 
         <!-- Barras para as frequências f_j (escala ~10px por unidade) -->
         <!-- f = [5,8,12,9,6] -->
-        <rect x="890"  y="620" width="80" height="50"  class="bar b1"/>
-        <rect x="971" y="540" width="80" height="130" class="bar b2"/>
-        <rect x="1052" y="500" width="80" height="170" class="bar b3"/>
-        <rect x="1133" y="530" width="80" height="140" class="bar b4"/>
-        <rect x="1214" y="610" width="80" height="60"  class="bar b5"/>
+        <rect x="890"  y="597" width="80" height="73"  class="bar b1"/>
+        <rect x="971" y="553.2" width="80" height="116.8" class="bar b2"/>
+        <rect x="1052" y="494.8" width="80" height="175.2" class="bar b3"/>
+        <rect x="1133" y="538.6" width="80" height="131.4" class="bar b4"/>
+        <rect x="1214" y="582.4" width="80" height="87.6"  class="bar b5"/>
 
         <!-- Linha vertical da média agrupada (≈ 25,8) -->
-        <line x1="1098.4" y1="450" x2="1098.4" y2="670" class="u-mean-line"/>
+        <line x1="1093.2" y1="450" x2="1093.2" y2="670" class="u-mean-line"/>
 
         <!-- Label com subscript: X̄_agr ≈ 25,8 -->
         <g class="mean-label">
-          <text x="1110" y="452" class="mean-label-main">
-            X̄ <tspan class="subscript">agr</tspan> ≈ 25,8
+          <text x="1110" y="472" class="mean-label-main">
+            X̄ <tspan class="subscript">agr</tspan> = 25,75
           </text>
         </g>
               <!-- ==== Rodapé: rótulos das classes ==== -->

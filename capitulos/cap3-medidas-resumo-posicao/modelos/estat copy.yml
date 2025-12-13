@@ -1,6 +1,6 @@
 ---
 schema: EconSchema
-aspectRatio: 1.3
+aspectRatio: 1.5
 params:
 - name: p0
   value: 0.125
@@ -76,6 +76,7 @@ layout:
             text: "`E[X] = ${calcs.media.toFixed(2)}`"
             position: t
     sidebar:
+      triggerWidth: 9999
       controls:
       - title: Ajuste as probabilidades
         sliders:

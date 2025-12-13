@@ -1,0 +1,218 @@
+---
+schema: EconSchema
+aspectRatio: 1.5
+params:
+- name: f1
+  value: 5
+  min: 0
+  max: 15
+  round: 0.001
+- name: f2
+  value: 8
+  min: 0
+  max: 15
+  round: 0.001
+- name: f3
+  value: 12
+  min: 0
+  max: 15
+  round: 0.001
+- name: f4
+  value: 9
+  min: 0
+  max: 15
+  round: 0.001
+- name: f5
+  value: 6
+  min: 0
+  max: 15
+  round: 0.001
+calcs:
+  soma: "(params.f1 + params.f2 + params.f3 + params.f4 + params.f5)"
+  media: "(((5*params.f1) + (15*params.f2) + (25*params.f3) + (35*params.f4) + (45*params.f5)) / calcs.soma)"
+layout:
+  OneWideGraph:
+    graph:
+      xAxis:
+        min: 0
+        max: 53
+        ticks: 0
+        title: Agrupamento de Classes
+      yAxis:
+        min: 0
+        max: 15
+        ticks: 4
+        title: Frequências 
+      objects:
+      - Rectangle:
+          x1: 0
+          x2: 10
+          y1: 0
+          y2: params.f1
+          fill: "'#111827'"
+          opacity: 1
+          drag:
+            - directions: y
+              param: f1
+              expression: "(drag.y)"
+      - Rectangle:
+          x1: 10.1
+          x2: 20.1
+          y1: 0
+          y2: params.f2
+          fill: "'#111827'"
+          opacity: 1
+          drag:
+            - directions: y
+              param: f2
+              expression: "(drag.y)"
+      - Rectangle:
+          x1: 20.2
+          x2: 30.2
+          y1: 0
+          y2: params.f3
+          fill: "'#111827'"
+          opacity: 1
+          drag:
+            - directions: y
+              param: f3
+              expression: "(drag.y)"
+      - Rectangle:
+          x1: 30.3
+          x2: 40.3
+          y1: 0
+          y2: params.f4
+          opacity: 1
+          fill: "'#111827'"
+          drag:
+            - directions: y
+              param: f4
+              expression: "(drag.y)"
+      - Rectangle:
+          x1: 40.4
+          x2: 50.4
+          y1: 0
+          y2: params.f5
+          fill: "'#111827'"
+          opacity: 1
+          drag:
+            - directions: y
+              param: f5
+              expression: "(drag.y)"
+      - Segment:
+          a: [calcs.media, 0]
+          b: [calcs.media, 15]
+          color: "'#111827'"
+          strokeWidth: 3
+
+      - Segment:
+          a: [calcs.media, 14]
+          b: [calcs.media, 14]
+          color: "'#111827'"
+          strokeWidth: 3
+          label:
+            text: "`\\\\bar{X}_{agr} = ${calcs.media.toFixed(2)}`"
+            position: l
+            fontSize: 9
+        #Grade
+      - Segment:
+          a: [0, 5]
+          b: [60, 5]
+          color: grey
+          strokeWidth: 1
+          lineStyle: dashed
+
+      - Segment:
+          a: [0, 10]
+          b: [60, 10]
+          color: grey
+          strokeWidth: 1
+          lineStyle: dashed
+      - Segment:
+          a: [0, 15]
+          b: [60, 15]
+          color: grey
+          strokeWidth: 1
+          lineStyle: dashed
+      - Label:
+          coordinates: [5,0]
+          text: "`\\\\mathbf{[0, 10)}`"
+          bgcolor: "'#ffffff'"
+          color: "'#111827'"
+          fontSize: 9
+          position: t
+      - Label:
+          coordinates: [15.1,0]
+          text: "`\\\\mathbf{[10, 20)}`"
+          bgcolor: "'#ffffff'"
+          color: "'#111827'"
+          fontSize: 9
+          position: t
+      - Label:
+          coordinates: [25.2,0]
+          text: "`\\\\mathbf{[20, 30)}`"
+          bgcolor: "'#ffffff'"
+          color: "'#111827'"
+          fontSize: 9
+          position: t
+      - Label:
+          coordinates: [35.3,0]
+          text: "`\\\\mathbf{[30, 40)}`"
+          bgcolor: "'#ffffff'"
+          color: "'#111827'"
+          fontSize: 9
+          position: t
+      - Label:
+          coordinates: [45.4,0]
+          text: "`\\\\mathbf{[40, 50)}`"
+          bgcolor: "'#ffffff'"
+          color: "'#111827'"
+          fontSize: 9
+          position: t
+
+      - Label:
+          coordinates: [5, params.f1-0.5]
+          text: "`\\\\bf{f_1}= ${params.f1.toFixed(2)}`"
+          bgcolor: "'#ffffff'"
+          color: "'#111827'"
+          fontSize: 8
+      - Label:
+          coordinates: [15.1, params.f2-0.5]
+          text: "`\\\\bf{f_2}= ${params.f2.toFixed(2)}`"
+          bgcolor: "'#ffffff'"
+          color: "'#111827'"
+          fontSize: 8
+      - Label:
+          coordinates: [25.2, params.f3-0.5]
+          text: "`\\\\bf{f_3}= ${params.f3.toFixed(2)}`"
+          bgcolor: "'#ffffff'"
+          color: "'#111827'"
+          fontSize: 8
+      - Label:
+          coordinates: [35.3, params.f4-0.5]
+          text: "`\\\\bf{f_4}= ${params.f4.toFixed(2)}`"
+          bgcolor: "'#ffffff'"
+          color: "'#111827'"
+          fontSize: 8
+      - Label:
+          coordinates: [45.4, params.f5-0.5]
+          text: "`\\\\bf{f_5}= ${params.f5.toFixed(2)}`"
+          bgcolor: "'#ffffff'"
+          color: "'#111827'"
+          fontSize: 8
+
+    sidebar:
+      triggerWidth: 9999
+      controls:
+      - title: Ajuste as probabilidades
+        sliders:
+        - param: f1
+          label: 'f_1  '
+        - param: f2
+          label: 'f_2  '
+        - param: f3
+          label: 'f_3  '
+        - param: f4
+          label: 'f_4  '
+        - param: f5
+          label: 'f_5  '
