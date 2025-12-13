@@ -1,5 +1,5 @@
 schema: EconSchema
-aspectRatio: 1.75
+aspectRatio: 1
 
 params:
   - name: V0
@@ -66,16 +66,16 @@ calcs:
   rbpct: "(100*calcs.rbar)"
 
 layout:
-  TwoHorizontalGraphs:
+  TwoVerticalGraphs:
 
-    leftGraph:
+    topGraph:
       xAxis:
         min: 0
         max: 4.5
         ticks: 0
       yAxis:
-        min: -0.4
-        max: 0.4
+        min: -0.2
+        max: 0.35
 
       objects:
         # Linhas de grade (±10%, ±20%, ±30% e zero)
@@ -113,11 +113,7 @@ layout:
            point: [0.6, -0.2]
            point2: [4.4, -0.2]
            color: grey
-        - Line: 
-           strokeWidth: 0.5
-           point: [0.6, -0.3]
-           point2: [4.4, -0.3]
-           color: grey 
+
 
         # “Barras” (retângulos). Agora funciona tanto positivo quanto negativo.
         - Rectangle:
@@ -168,17 +164,17 @@ layout:
                 
         # Rótulos Ano 1..4 (embaixo)
         - Segment:
-            a: [1.0, -0.38]
-            b: [1.0, -0.38]
+            a: [1.0, -0.2]
+            b: [1.0, -0.2]
             color: "'#111827'"
             label: 
              text: "'\\\\bf{Ano\\\\ 1}'" 
              position: t 
-             fontSize: 7 
+             fontSize: 7
 
         - Segment:
-            a: [2.0, -0.38]
-            b: [2.0, -0.38]
+            a: [2.0, -0.2]
+            b: [2.0, -0.2]
             color: "'#111827'"
             label: 
              text: "'\\\\bf{Ano\\\\ 2}'"
@@ -186,54 +182,54 @@ layout:
              fontSize: 7 
 
         - Segment:
-            a: [3.0, -0.38]
-            b: [3.0, -0.38]
+            a: [3.0, -0.2]
+            b: [3.0, -0.2]
             color: "'#111827'"
             label: 
              text: "'\\\\bf{Ano\\\\ 3}'"
              position: t
-             fontSize: 7 
+             fontSize: 7
 
         - Segment:
-            a: [4.0, -0.38]
-            b: [4.0, -0.38]
+            a: [4.0, -0.2]
+            b: [4.0, -0.2]
             color: "'#111827'"
             label: 
              text: "'\\\\bf{Ano\\\\ 4}'"
              position: t
-             fontSize: 7 
+             fontSize: 7
 
         # Labels com percentuais (perto de cada barra)
         - Label:
-            coordinates: [1.0, 0.34]
+            coordinates: [1.0, 0.35]
             text: "`${calcs.r1pct.toFixed(1)}\\\\%`"
             bgcolor: "'#ffffff'"
             color: "'#111827'"
-            fontSize: 7
+            fontSize: 8
 
         - Label:
-            coordinates: [2.0, 0.34]
+            coordinates: [2.0, 0.35]
             text: "`${calcs.r2pct.toFixed(1)}\\\\%`"
             bgcolor: "'#ffffff'"
             color: "'#111827'"
-            fontSize: 7
+            fontSize: 8
 
         - Label:
-            coordinates: [3.0, 0.34]
+            coordinates: [3.0, 0.35]
             text: "`${calcs.r3pct.toFixed(1)}\\\\%`"
             bgcolor: "'#ffffff'"
             color: "'#111827'"
-            fontSize: 7
+            fontSize: 8
 
         - Label:
-            coordinates: [4.0, 0.34]
+            coordinates: [4.0, 0.35]
             text: "`${calcs.r4pct.toFixed(1)}\\\\%`"
             bgcolor: "'#ffffff'"
             color: "'#111827'"
-            fontSize: 7
+            fontSize: 8
 
 
-    rightGraph:
+    bottomGraph:
       xAxis:
         min: 0
         max: 4
@@ -358,7 +354,7 @@ layout:
             text: "`\\\\mathbf{Mesmo\\\\ valor} \\\\\\\\ \\\\mathbf{final:} ${calcs.V4.toFixed(2)}`"
             bgcolor: "'#ffffff'"
             color: "'#111827'"
-            fontSize: 7
+            fontSize: 5
             position: b
 
         # Mini-legenda (como no seu exemplo)
@@ -371,11 +367,11 @@ layout:
             opacity: 1
 
         - Label:
-            coordinates: [0.55, 76]
-            text: "`Linha\\\\ contínua:\\\\ valores\\\\ com \\\\ fatores \\\\\\\\ 1.2, 1.1, 0.9, 1.3`"
+            coordinates: [0.5, 76]
+            text: "`Linha\\\\ contínua:\\\\\\\\ valores\\\\ com \\\\ fatores \\\\\\\\ 1.2, 1.1, 0.9, 1.3`"
             bgcolor: "'#ffffff'"
             color: "'#111827'"
-            fontSize: 7
+            fontSize: 5
             position: l
 
         - Rectangle:
@@ -387,11 +383,11 @@ layout:
             opacity: 1
 
         - Label:
-            coordinates: [2.55, 76]
-            text: "`Linha \\\\ pontilhada: \\\\ taxa \\\\ constante \\\\\\\\ (Média \\\\ Geométrica)`"
+            coordinates: [2.5, 76]
+            text: "`Linha \\\\ pontilhada: \\\\\\\\ taxa \\\\ constante \\\\\\\\ (Média \\\\ Geométrica)`"
             bgcolor: "'#ffffff'"
             color: "'#111827'"
-            fontSize: 7
+            fontSize: 5
             position: l
 
         - Label:
@@ -399,35 +395,35 @@ layout:
             text: "`\\\\bf{0}`"
             bgcolor: "'#ffffff'"
             color: "'#111827'"
-            fontSize: 10
+            fontSize: 7
             position: t
         - Label:
             coordinates: [1, 0]
             text: "`\\\\bf{1}`"
             bgcolor: "'#ffffff'"
             color: "'#111827'"
-            fontSize: 10
+            fontSize: 7
             position: t
         - Label:
             coordinates: [2, 0]
             text: "`\\\\bf{2}`"
             bgcolor: "'#ffffff'"
             color: "'#111827'"
-            fontSize: 10
+            fontSize: 7
             position: t
         - Label:
             coordinates: [3, 0]
             text: "`\\\\bf{3}`"
             bgcolor: "'#ffffff'"
             color: "'#111827'"
-            fontSize: 10
+            fontSize: 7
             position: t
         - Label:
             coordinates: [4, 0]
             text: "`\\\\bf{4}`"
             bgcolor: "'#ffffff'"
             color: "'#111827'"
-            fontSize: 10
+            fontSize: 7
             position: t
 
         - Line: 

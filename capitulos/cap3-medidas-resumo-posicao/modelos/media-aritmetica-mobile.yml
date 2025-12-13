@@ -149,7 +149,7 @@ layout:
             text: "`\\\\mathbf{Média}\\\\  \\\\\\\\ = ${calcs.mean.toFixed(2)}`"
             bgcolor: "'#ffffff'"
             color: "'#111827'"
-            fontSize: 8
+            fontSize: 6
             position: l
 
 
@@ -166,7 +166,7 @@ layout:
             label:
               text: "`\\\\bf{x_{1}}:${params.x_1.toFixed(1)}`"
               position: t
-              fontSize: 8
+              fontSize: 7
 
         - Segment:
             a: [2, params.x_2]
@@ -175,7 +175,7 @@ layout:
             label:
               text: "`\\\\bf{x_{2}}:${params.x_2.toFixed(1)}`"
               position: t
-              fontSize: 8
+              fontSize: 7
 
         - Segment:
             a: [3, params.x_3]
@@ -184,7 +184,7 @@ layout:
             label:
               text: "`\\\\bf{x_{3}}:${params.x_3.toFixed(1)}`"
               position: t
-              fontSize: 8
+              fontSize: 7
 
         - Segment:
             a: [4, params.x_4]
@@ -193,7 +193,7 @@ layout:
             label:
               text: "`\\\\bf{x_{4}}:${params.x_4.toFixed(1)}`"
               position: t
-              fontSize: 8
+              fontSize: 7
 
         - Segment:
             a: [5, params.x_5]
@@ -202,7 +202,7 @@ layout:
             label:
               text: "`\\\\bf{x_{5}}:${params.x_4.toFixed(1)}`"
               position: t
-              fontSize: 8
+              fontSize: 7
         - Segment:
             a: [6, params.x_6]
             b: [6, params.x_6]
@@ -210,7 +210,7 @@ layout:
             label:
               text: "`\\\\bf{x_{6}}:${params.x_4.toFixed(1)}`"
               position: t
-              fontSize: 8
+              fontSize: 7
         # ---------------------------
         # RÓTULOS NO EIXO X
         # (valores 1, 4, 2, 3, 5, 3)
@@ -274,35 +274,35 @@ layout:
             a: [0, 1]
             b: [6.5, 1]
             color: grey
-            strokeWidth: 1
+            strokeWidth: 0.5
             lineStyle: dashed
         - Segment:
             a: [0, 2]
             b: [6.5, 2]
             color: grey
-            strokeWidth: 1
+            strokeWidth: 0.5
             lineStyle: dashed
         - Segment:
             a: [0, 3]
             b: [6.5, 3]
             color: grey
-            strokeWidth: 1
+            strokeWidth: 0.5
             lineStyle: dashed
         - Segment:
             a: [0, 4]
             b: [6.5, 4]
             color: grey
-            strokeWidth: 1
+            strokeWidth: 0.5
             lineStyle: dashed
         - Segment:
             a: [0, 5]
             b: [6.5, 5]
             color: grey
-            strokeWidth: 1
+            strokeWidth: 0.5
             lineStyle: dashed
         - Segment:
             a: [0, 6]
             b: [6.5, 6]
             color: grey
-            strokeWidth: 1
+            strokeWidth: 0.5
             lineStyle: dashed

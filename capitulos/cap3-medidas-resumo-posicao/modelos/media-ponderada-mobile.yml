@@ -144,11 +144,11 @@ layout:
             color: "'#64748b'"
 
         - Label:
-            coordinates: [4.6,calcs.weightedMean + 0.7]
+            coordinates: [4.6,calcs.weightedMean + 0.8]
             text: "`\\\\mathbf{Média}\\\\ \\\\\\\\ \\\\bf{Pond.} = ${calcs.weightedMean.toFixed(2)}`"
             bgcolor: "'#ffffff'"
             color: "'#111827'"
-            fontSize: 8
+            fontSize: 6
             position: l
 
         # ---------------------------
@@ -162,7 +162,7 @@ layout:
             label:
               text: "`Nota=${params.x_1.toFixed(1)}`"
               position: t
-              fontSize: 8
+              fontSize: 6
 
         - Segment:
             a: [2, params.x_2]
@@ -171,7 +171,7 @@ layout:
             label:
               text: "`Nota=${params.x_2.toFixed(1)}`"
               position: t
-              fontSize: 8
+              fontSize: 6
 
         - Segment:
             a: [3, params.x_3]
@@ -180,7 +180,7 @@ layout:
             label:
               text: "`Nota=${params.x_3.toFixed(1)}`"
               position: t
-              fontSize: 8
+              fontSize: 6
 
         - Segment:
             a: [4, params.x_4]
@@ -189,7 +189,7 @@ layout:
             label:
               text: "`Nota=${params.x_4.toFixed(1)}`"
               position: t
-              fontSize: 8
+              fontSize: 6
 
 
 
@@ -201,28 +201,28 @@ layout:
             text: "`\\\\mathbf{Matemática}\\\\\\\\ w_{1} = ${params.w_1.toFixed(2)}`"
             bgcolor: "'#ffffff'"
             color: "'#111827'"
-            fontSize: 9
+            fontSize: 7
             position: t
         - Label:
             coordinates: [2,0]
             text: "`\\\\mathbf{Estatística}\\\\\\\\ w_{2} = ${params.w_2.toFixed(2)}`"
             bgcolor: "'#ffffff'"
             color: "'#111827'"
-            fontSize: 9
+            fontSize: 7
             position: t
         - Label:
             coordinates: [3,0]
             text: "`\\\\mathbf{História}\\\\\\\\ w_{3} = ${params.w_3.toFixed(2)}`"
             bgcolor: "'#ffffff'"
             color: "'#111827'"
-            fontSize: 9
+            fontSize: 7
             position: t
         - Label:
             coordinates: [4,0]
             text: "`\\\\mathbf{Ed.Física}\\\\\\\\ w_{4} = ${params.w_4.toFixed(2)}`"
             bgcolor: "'#ffffff'"
             color: "'#111827'"
-            fontSize: 9
+            fontSize: 7
             position: t
 
         #Grade
@@ -230,41 +230,41 @@ layout:
             a: [0, 2]
             b: [5, 2]
             color: grey
-            strokeWidth: 1
+            strokeWidth: 0.5
             lineStyle: dashed
 
         - Segment:
             a: [0, 4]
             b: [5, 4]
             color: grey
-            strokeWidth: 1
+            strokeWidth: 0.5
             lineStyle: dashed
 
         - Segment:
             a: [0, 6]
             b: [5, 6]
             color: grey
-            strokeWidth: 1
+            strokeWidth: 0.5
             lineStyle: dashed
 
         - Segment:
             a: [0, 8]
             b: [5, 8]
             color: grey
-            strokeWidth: 1
+            strokeWidth: 0.5
             lineStyle: dashed
 
         - Segment:
             a: [0, 10]
             b: [5, 10]
             color: grey
-            strokeWidth: 1
+            strokeWidth: 0.5
             lineStyle: dashed
         - Segment:
             a: [0, 0.3]
             b: [5, 0.3]
             color: black
-            strokeWidth: 1
+            strokeWidth: 0.5
             lineStyle: solid
     sidebar:
       triggerWidth: 9999

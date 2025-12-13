@@ -119,87 +119,87 @@ layout:
           a: [0, 5]
           b: [60, 5]
           color: grey
-          strokeWidth: 1
+          strokeWidth: 0.5
           lineStyle: dashed
 
       - Segment:
           a: [0, 10]
           b: [60, 10]
           color: grey
-          strokeWidth: 1
+          strokeWidth: 0.5
           lineStyle: dashed
       - Segment:
           a: [0, 15]
           b: [60, 15]
           color: grey
-          strokeWidth: 1
+          strokeWidth: 0.5
           lineStyle: dashed
       - Label:
           coordinates: [5,0]
           text: "`\\\\mathbf{[0, 10)}`"
           bgcolor: "'#ffffff'"
           color: "'#111827'"
-          fontSize: 9
+          fontSize: 7
           position: t
       - Label:
           coordinates: [15.1,0]
           text: "`\\\\mathbf{[10, 20)}`"
           bgcolor: "'#ffffff'"
           color: "'#111827'"
-          fontSize: 9
+          fontSize: 7
           position: t
       - Label:
           coordinates: [25.2,0]
           text: "`\\\\mathbf{[20, 30)}`"
           bgcolor: "'#ffffff'"
           color: "'#111827'"
-          fontSize: 9
+          fontSize: 7
           position: t
       - Label:
           coordinates: [35.3,0]
           text: "`\\\\mathbf{[30, 40)}`"
           bgcolor: "'#ffffff'"
           color: "'#111827'"
-          fontSize: 9
+          fontSize: 7
           position: t
       - Label:
           coordinates: [45.4,0]
           text: "`\\\\mathbf{[40, 50)}`"
           bgcolor: "'#ffffff'"
           color: "'#111827'"
-          fontSize: 9
+          fontSize: 7
           position: t
 
       - Label:
-          coordinates: [5, params.f1-0.5]
+          coordinates: [5, params.f1-0.7]
           text: "`\\\\bf{f_1}= ${params.f1.toFixed(2)}`"
           bgcolor: "'#ffffff'"
           color: "'#111827'"
-          fontSize: 8
+          fontSize: 7
       - Label:
-          coordinates: [15.1, params.f2-0.5]
+          coordinates: [15.1, params.f2-0.7]
           text: "`\\\\bf{f_2}= ${params.f2.toFixed(2)}`"
           bgcolor: "'#ffffff'"
           color: "'#111827'"
-          fontSize: 8
+          fontSize: 7
       - Label:
-          coordinates: [25.2, params.f3-0.5]
+          coordinates: [25.2, params.f3-0.7]
           text: "`\\\\bf{f_3}= ${params.f3.toFixed(2)}`"
           bgcolor: "'#ffffff'"
           color: "'#111827'"
-          fontSize: 8
+          fontSize: 7
       - Label:
-          coordinates: [35.3, params.f4-0.5]
+          coordinates: [35.3, params.f4-0.7]
           text: "`\\\\bf{f_4}= ${params.f4.toFixed(2)}`"
           bgcolor: "'#ffffff'"
           color: "'#111827'"
-          fontSize: 8
+          fontSize: 7
       - Label:
-          coordinates: [45.4, params.f5-0.5]
+          coordinates: [45.4, params.f5-0.7]
           text: "`\\\\bf{f_5}= ${params.f5.toFixed(2)}`"
           bgcolor: "'#ffffff'"
           color: "'#111827'"
-          fontSize: 8
+          fontSize: 7
 
     sidebar:
       triggerWidth: 9999
