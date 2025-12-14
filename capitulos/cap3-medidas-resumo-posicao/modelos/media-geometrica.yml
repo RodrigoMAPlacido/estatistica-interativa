@@ -446,3 +446,32 @@ layout:
            point2: [4, 60]
            color: grey 
 
+
+        - Label:
+            coordinates: [0, 0]
+            text: "`100`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 10
+            position: r
+        - Label:
+            coordinates: [0, 20]
+            text: "`120`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 10
+            position: r
+        - Label:
+            coordinates: [0, 40]
+            text: "`140`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 10
+            position: r
+        - Label:
+            coordinates: [0, 60]
+            text: "`160`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 10
+            position: r

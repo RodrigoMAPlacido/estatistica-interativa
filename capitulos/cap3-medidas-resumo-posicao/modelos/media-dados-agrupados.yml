@@ -6,27 +6,27 @@ params:
   value: 5
   min: 0
   max: 15
-  round: 0.001
+  round: 0.1
 - name: f2
   value: 8
   min: 0
   max: 15
-  round: 0.001
+  round: 0.1
 - name: f3
   value: 12
   min: 0
   max: 15
-  round: 0.001
+  round: 0.1
 - name: f4
   value: 9
   min: 0
   max: 15
-  round: 0.001
+  round: 0.1
 - name: f5
   value: 6
   min: 0
   max: 15
-  round: 0.001
+  round: 0.1
 calcs:
   soma: "(params.f1 + params.f2 + params.f3 + params.f4 + params.f5)"
   media: "(((5*params.f1) + (15*params.f2) + (25*params.f3) + (35*params.f4) + (45*params.f5)) / calcs.soma)"
@@ -203,7 +203,7 @@ layout:
     sidebar:
       triggerWidth: 9999
       controls:
-      - title: Ajuste as probabilidades
+      - title: Ajuste as Frequências
         sliders:
         - param: f1
           label: 'f_1  '

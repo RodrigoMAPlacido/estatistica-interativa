@@ -62511,10 +62511,10 @@ var KGAuthor;
             var l = _this;
             var graphDef = def['graph'], sidebarDef = def['sidebar'];
             graphDef.position = {
-                "x": 0.15,
+                "x": 0.25,
                 "y": 0.025,
-                "width": 0.738,
-                "height": 0.9
+                "width": 0.838,
+                "height": 1
             };
             l.subObjects.push(new KGAuthor.Graph(graphDef));
             l.subObjects.push(new KGAuthor.Sidebar(sidebarDef));

@@ -1,0 +1,265 @@
+---
+schema: EconSchema
+aspectRatio: 1.5
+
+params:
+  # Frequências por classe (horas)
+  - name: f1
+    value: 3
+    min: 0
+    max: 15
+    round: 0.001
+  - name: f2
+    value: 6
+    min: 0
+    max: 15
+    round: 0.001
+  - name: f3
+    value: 8
+    min: 0
+    max: 15
+    round: 0.001
+  - name: f4
+    value: 5
+    min: 0
+    max: 15
+    round: 0.001
+  - name: f5
+    value: 2
+    min: 0
+    max: 15
+    round: 0.001
+
+calcs:
+  # Classes: [0,1), [1,2), [2,3), [3,4), [4,5)
+  h: "1"
+
+  N: "(params.f1 + params.f2 + params.f3 + params.f4 + params.f5)"
+
+  # ======================================================
+  # Classe modal (sem Math.max e sem comparar por == com fmax)
+  # Torneio por pares usando apenas >= (estável no KGJS).
+  # Regra em empate: escolhe a classe "mais à esquerda".
+  # ======================================================
+
+  # duelo 1: 1 vs 2
+  i12:    "(params.f1 >= params.f2 ? 1 : 2)"
+  fmax12: "(params.f1 >= params.f2 ? params.f1 : params.f2)"
+
+  # duelo 2: 3 vs 4
+  i34:    "(params.f3 >= params.f4 ? 3 : 4)"
+  fmax34: "(params.f3 >= params.f4 ? params.f3 : params.f4)"
+
+  # vencedor entre (1,2) e (3,4)
+  i1234:    "(calcs.fmax12 >= calcs.fmax34 ? calcs.i12 : calcs.i34)"
+  fmax1234: "(calcs.fmax12 >= calcs.fmax34 ? calcs.fmax12 : calcs.fmax34)"
+
+  # vencedor final vs classe 5
+  iModal: "(calcs.fmax1234 >= params.f5 ? calcs.i1234 : 5)"
+  fmax:   "(calcs.fmax1234 >= params.f5 ? calcs.fmax1234 : params.f5)"
+
+  # Limite inferior da classe modal: L_i = iModal - 1
+  L: "(calcs.iModal - 1)"
+
+  # f_i, f_{i-1}, f_{i+1} (bordas assumem 0)
+  fmodal: "((calcs.iModal < 1.5) ? params.f1
+        : ((calcs.iModal < 2.5) ? params.f2
+        : ((calcs.iModal < 3.5) ? params.f3
+        : ((calcs.iModal < 4.5) ? params.f4
+        : params.f5))))"
+  fprev: "((calcs.iModal < 1.5) ? 0
+       : ((calcs.iModal < 2.5) ? params.f1
+       : ((calcs.iModal < 3.5) ? params.f2
+       : ((calcs.iModal < 4.5) ? params.f3
+       : params.f4))))"
+  fnext: "((calcs.iModal > 4.5) ? 0
+       : ((calcs.iModal < 1.5) ? params.f2
+       : ((calcs.iModal < 2.5) ? params.f3
+       : ((calcs.iModal < 3.5) ? params.f4
+       : params.f5))))"
+
+  # Diferenças
+  d1: "(calcs.fmodal - calcs.fprev)"
+  d2: "(calcs.fmodal - calcs.fnext)"
+  den: "(calcs.d1 + calcs.d2)"
+
+  # Moda agrupada:
+  # Mo = L_i + [ (f_i - f_{i-1}) / ((f_i - f_{i-1}) + (f_i - f_{i+1})) ] * h
+  # Se den=0 (platô perfeito), usa o meio da classe como fallback.
+  moda: "((calcs.den==0) ? (calcs.L + 0.5*calcs.h) : (calcs.L + (calcs.d1/calcs.den)*calcs.h))"
+
+layout:
+  OneWideGraphPlusSidebar:
+
+    graph:
+      xAxis:
+        min: 0
+        max: 5.2
+        ticks: 0
+        title: Histograma e moda (dados agrupados em classes)
+      yAxis:
+        min: 0
+        max: 10
+        ticks: 5
+        title: Frequências
+
+      objects:
+        # =========================
+        # Grade horizontal (2,4,6,8,10)
+        # =========================
+        - Segment: { a: [0, 2],  b: [5.2, 2],  color: grey, strokeWidth: 0.5, lineStyle: solid }
+        - Segment: { a: [0, 4],  b: [5.2, 4],  color: grey, strokeWidth: 0.5, lineStyle: solid }
+        - Segment: { a: [0, 6],  b: [5.2, 6],  color: grey, strokeWidth: 0.5, lineStyle: solid }
+        - Segment: { a: [0, 8],  b: [5.2, 8],  color: grey, strokeWidth: 0.5, lineStyle: solid }
+        - Segment: { a: [0, 10], b: [5.2, 10], color: grey, strokeWidth: 0.5, lineStyle: solid }
+
+        # ===========
+        # Histograma
+        # ===========
+        - Rectangle:
+            x1: 0
+            x2: 1
+            y1: 0
+            y2: params.f1
+            fill: "'#111827'"
+            opacity: 1
+            drag:
+              - directions: y
+                param: f1
+                expression: "(drag.y)"
+
+        - Rectangle:
+            x1: 1
+            x2: 2
+            y1: 0
+            y2: params.f2
+            fill: "'#111827'"
+            opacity: 1
+            drag:
+              - directions: y
+                param: f2
+                expression: "(drag.y)"
+
+        - Rectangle:
+            x1: 2
+            x2: 3
+            y1: 0
+            y2: params.f3
+            fill: "'#111827'"
+            opacity: 1
+            drag:
+              - directions: y
+                param: f3
+                expression: "(drag.y)"
+
+        - Rectangle:
+            x1: 3
+            x2: 4
+            y1: 0
+            y2: params.f4
+            fill: "'#111827'"
+            opacity: 1
+            drag:
+              - directions: y
+                param: f4
+                expression: "(drag.y)"
+
+        - Rectangle:
+            x1: 4
+            x2: 5
+            y1: 0
+            y2: params.f5
+            fill: "'#111827'"
+            opacity: 1
+            drag:
+              - directions: y
+                param: f5
+                expression: "(drag.y)"
+
+        # ==========================
+        # Destaque da classe modal
+        # ==========================
+        - Rectangle:
+            x1: calcs.L
+            x2: "(calcs.L + calcs.h)"
+            y1: 0
+            y2: calcs.fmodal
+            fill: "'#111827'"
+            opacity: 0.12
+
+        # ======================
+        # Linha vertical da moda
+        # ======================
+        - Segment:
+            a: [calcs.moda, 0]
+            b: [calcs.moda, 10]
+            color: "'#111827'"
+            strokeWidth: 3
+
+        - Segment:
+            a: [calcs.moda, 9.6]
+            b: [calcs.moda, 9.6]
+            color: "'#111827'"
+            strokeWidth: 3
+            label:
+              text: "`\\\\bf{Moda}\\\\approx ${calcs.moda.toFixed(2)}\\\\ h`"
+              position: l
+
+        # ======================
+        # Rótulos das classes
+        # ======================
+        - Label: { coordinates: [0.5, 0], text: "`\\\\mathbf{0–1}`", bgcolor: "'#ffffff'", color: "'#111827'", fontSize: 12, position: t }
+        - Label: { coordinates: [1.5, 0], text: "`\\\\mathbf{1–2}`", bgcolor: "'#ffffff'", color: "'#111827'", fontSize: 12, position: t }
+        - Label: { coordinates: [2.5, 0], text: "`\\\\mathbf{2–3}`", bgcolor: "'#ffffff'", color: "'#111827'", fontSize: 12, position: t }
+        - Label: { coordinates: [3.5, 0], text: "`\\\\mathbf{3–4}`", bgcolor: "'#ffffff'", color: "'#111827'", fontSize: 12, position: t }
+        - Label: { coordinates: [4.5, 0], text: "`\\\\mathbf{4–5}`", bgcolor: "'#ffffff'", color: "'#111827'", fontSize: 12, position: t }
+
+        # ======================
+        # Labels das frequências
+        # ======================
+        - Label:
+            coordinates: [0.5, "(params.f1-0.5)"]
+            text: "`\\\\bf{f_1}= ${params.f1.toFixed(0)}`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 11
+
+        - Label:
+            coordinates: [1.5, "(params.f2-0.5)"]
+            text: "`\\\\bf{f_2}= ${params.f2.toFixed(0)}`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 11
+
+        - Label:
+            coordinates: [2.5, "(params.f3-0.5)"]
+            text: "`\\\\bf{f_3}= ${params.f3.toFixed(0)}`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 11
+
+        - Label:
+            coordinates: [3.5, "(params.f4-0.5)"]
+            text: "`\\\\bf{f_4}= ${params.f4.toFixed(0)}`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 11
+
+        - Label:
+            coordinates: [4.5, "(params.f5-0.5)"]
+            text: "`\\\\bf{f_5}= ${params.f5.toFixed(0)}`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 11
+
+    sidebar:
+      triggerWidth: 9999
+      controls:
+        - title: ""
+          divs:
+            - html: '$$\footnotesize \textbf{Moda} = L_i + \left(\frac{f_i-f_{i-1}}{(f_i-f_{i-1})+(f_i-f_{i+1})}\right)\cdot h $$'
+            - html: '$$\footnotesize \Longleftrightarrow$$'
+            - html: "`$$\\\\footnotesize \\\\textbf{Moda} =${calcs.L.toFixed(2)} + \\\\left(\\\\frac{${calcs.fmodal.toFixed(2)}-${calcs.fprev.toFixed(2)}} {(${calcs.fmodal.toFixed(2)}-${calcs.fprev.toFixed(2)})+(${calcs.fmodal.toFixed(2)}-${calcs.fnext.toFixed(2)})}\\\\right) \\\\cdot ${calcs.h.toFixed(2)}$$`"
+            - html: '$$\footnotesize \Longleftrightarrow$$'
+            - html: "`$$\\\\footnotesize \\\\textbf{Moda} =${calcs.moda.toFixed(2)} $$`"
+            - html: "<hr>"

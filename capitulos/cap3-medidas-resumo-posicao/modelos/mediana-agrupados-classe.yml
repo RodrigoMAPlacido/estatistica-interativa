@@ -1,0 +1,265 @@
+---
+schema: EconSchema
+aspectRatio: 1.5
+
+params:
+  # Frequências por classe (horas/semana)
+  - name: f1
+    value: 4
+    min: 0
+    max: 15
+    round: 0.001
+  - name: f2
+    value: 6
+    min: 0
+    max: 15
+    round: 0.001
+  - name: f3
+    value: 8
+    min: 0
+    max: 15
+    round: 0.001
+  - name: f4
+    value: 2
+    min: 0
+    max: 15
+    round: 0.001
+
+calcs:
+  # Tamanho da amostra
+  N: "(params.f1 + params.f2 + params.f3 + params.f4)"
+
+  # Frequências acumuladas
+  F1: "(params.f1)"
+  F2: "(params.f1 + params.f2)"
+  F3: "(params.f1 + params.f2 + params.f3)"
+  F4: "(params.f1 + params.f2 + params.f3 + params.f4)"
+
+  # Posição central
+  N2: "(calcs.N/2)"
+
+  # Classe mediana (L é o limite inferior; Fprev é a acumulada anterior; fmed é a freq da classe; h é amplitude)
+  # Classes: [0,10), [10,20), [20,30), [30,40)  =>  L ∈ {0,10,20,30}, h=10
+  L: "((calcs.N2 <= calcs.F1) ? 0 : ((calcs.N2 <= calcs.F2) ? 10 : ((calcs.N2 <= calcs.F3) ? 20 : 30)))"
+  Fprev: "((calcs.N2 <= calcs.F1) ? 0 : ((calcs.N2 <= calcs.F2) ? calcs.F1 : ((calcs.N2 <= calcs.F3) ? calcs.F2 : calcs.F3)))"
+  fmed: "((calcs.N2 <= calcs.F1) ? params.f1 : ((calcs.N2 <= calcs.F2) ? params.f2 : ((calcs.N2 <= calcs.F3) ? params.f3 : params.f4)))"
+  h: "10"
+
+  # Mediana agrupada:  Me = L + ((N/2 − Fprev)/fmed) * h
+  mediana: "(calcs.L + ((calcs.N2 - calcs.Fprev) / calcs.fmed) * calcs.h)"
+
+  # Centro x da classe mediana (para destacar no histograma)
+  xMedCenter: "((calcs.L==0) ? 5 : ((calcs.L==10) ? 15 : ((calcs.L==20) ? 25 : 35)))"
+
+layout:
+  OneWideGraphPlusSidebar:
+
+    graph:
+      xAxis:
+        min: 0
+        max: 43
+        ticks: 0
+        title: Histograma e mediana (dados agrupados em classes)
+      yAxis:
+        min: 0
+        max: 10
+        ticks: 5
+        title: Frequências
+
+      objects:
+        # =========================
+        # Grade horizontal (5,10,15)
+        # =========================
+        - Segment:
+            a: [0, 2]
+            b: [43, 2]
+            color: grey
+            strokeWidth: 0.5
+            lineStyle: solid
+
+        - Segment:
+            a: [0, 4]
+            b: [43, 4]
+            color: grey
+            strokeWidth: 0.5
+            lineStyle: solid
+
+        - Segment:
+            a: [0, 6]
+            b: [43, 6]
+            color: grey
+            strokeWidth: 0.5
+            lineStyle: solid
+
+        - Segment:
+            a: [0, 8]
+            b: [43, 8]
+            color: grey
+            strokeWidth: 0.5
+            lineStyle: solid
+        - Segment:
+            a: [0, 10]
+            b: [43, 10]
+            color: grey
+            strokeWidth: 0.5
+            lineStyle: solid
+        # ===========
+        # Histograma
+        # ===========
+        - Rectangle:
+            x1: 0
+            x2: 10
+            y1: 0
+            y2: params.f1
+            fill: "'#111827'"
+            opacity: 1
+            drag:
+              - directions: y
+                param: f1
+                expression: "(drag.y)"
+
+        - Rectangle:
+            x1: 10.1
+            x2: 20.1
+            y1: 0
+            y2: params.f2
+            fill: "'#111827'"
+            opacity: 1
+            drag:
+              - directions: y
+                param: f2
+                expression: "(drag.y)"
+
+        - Rectangle:
+            x1: 20.2
+            x2: 30.2
+            y1: 0
+            y2: params.f3
+            fill: "'#111827'"
+            opacity: 1
+            drag:
+              - directions: y
+                param: f3
+                expression: "(drag.y)"
+
+        - Rectangle:
+            x1: 30.3
+            x2: 40.3
+            y1: 0
+            y2: params.f4
+            fill: "'#111827'"
+            opacity: 1
+            drag:
+              - directions: y
+                param: f4
+                expression: "(drag.y)"
+
+        # ==========================
+        # Linha vertical da mediana
+        # ==========================
+        - Segment:
+            a: [calcs.mediana, 0]
+            b: [calcs.mediana, 15]
+            color: "'#111827'"
+            strokeWidth: 3
+
+        - Segment:
+            a: [calcs.mediana, 9.5]
+            b: [calcs.mediana, 9.5]
+            color: "'#111827'"
+            strokeWidth: 3
+            label:
+              text: "`\\\\bf{Mediana}\\\\approx ${calcs.mediana.toFixed(1)}\\\\ h`"
+              position: l
+
+        # ==========================
+        # Destaque da classe mediana
+        # (um contorno por cima)
+        # ==========================
+        - Rectangle:
+            x1: calcs.L
+            x2: "(calcs.L + 10)"
+            y1: 0
+            y2: calcs.fmed
+            fill: "'#111827'"
+            opacity: 0.12
+
+        # ======================
+        # Rótulos das classes
+        # ======================
+        - Label:
+            coordinates: [5, 0]
+            text: "`\\\\mathbf{0–10}`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 12
+            position: t
+
+        - Label:
+            coordinates: [15.1, 0]
+            text: "`\\\\mathbf{10–20}`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 12
+            position: t
+
+        - Label:
+            coordinates: [25.2, 0]
+            text: "`\\\\mathbf{20–30}`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 12
+            position: t
+
+        - Label:
+            coordinates: [35.3, 0]
+            text: "`\\\\mathbf{30–40}`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 12
+            position: t
+
+        # ======================
+        # Labels das frequências
+        # ======================
+        - Label:
+            coordinates: [5, "(params.f1-0.5)"]
+            text: "`\\\\bf{f_1}= ${params.f1.toFixed(0)}`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 11
+
+        - Label:
+            coordinates: [15.1, "(params.f2-0.5)"]
+            text: "`\\\\bf{f_2}= ${params.f2.toFixed(0)}`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 11
+
+        - Label:
+            coordinates: [25.2, "(params.f3-0.5)"] 
+            text: "`\\\\bf{f_3}= ${params.f3.toFixed(0)}`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 11
+
+        - Label:
+            coordinates: [35.3, "(params.f4-0.5)"]
+            text: "`\\\\bf{f_4}= ${params.f4.toFixed(0)}`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 11
+
+
+
+    sidebar:
+      triggerWidth: 9999
+
+      controls:
+        - title:
+          divs:    
+             - html: '$${\footnotesize \textbf{Mediana} = L_i + \left( \frac{n}{2} - F_{i-1} \right)\frac{h}{f_i} }$$ $$\tiny \Longleftrightarrow$$'
+             - html: "`$$\\\\footnotesize \textbf{Mediana} = ${calcs.L.toFixed(2)} + \\\\left( \\\\frac{${calcs.N.toFixed(2)}}{2} - ${calcs.Fprev.toFixed(2)}\\\\right) \\\\frac{${calcs.h.toFixed(2)}}{${calcs.fmed.toFixed(2)}} $$`"
+             - html: '$$\footnotesize \Longleftrightarrow$$'
+             - html: "`$$\\\\footnotesize \\\\textbf{Mediana} =${calcs.mediana.toFixed(2)} $$`"
+             - html: <hr>

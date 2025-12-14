@@ -204,7 +204,7 @@ layout:
     sidebar:
       triggerWidth: 9999
       controls:
-      - title: Ajuste as probabilidades
+      - title: Ajuste as Frequências
         sliders:
         - param: f1
           label: 'f_1  '

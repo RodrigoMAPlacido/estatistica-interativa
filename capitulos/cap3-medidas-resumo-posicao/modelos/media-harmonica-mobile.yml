@@ -1,0 +1,313 @@
+schema: EconSchema
+aspectRatio: 1
+
+params:
+  - name: d
+    value: 60
+    min: 60
+    max: 60
+    round: 1
+
+  - name: v1
+    value: 30
+    min: 5
+    max: 120
+    round: 1
+
+  - name: v2
+    value: 60
+    min: 5
+    max: 120
+    round: 1
+
+
+calcs:
+  # Média harmônica para dois trechos de igual distância
+  vH: "(2 / (1/params.v1 + 1/params.v2))"
+
+  # Tempos (h): t = d / v
+  t1: "(params.d / params.v1)"
+  t2: "(params.d / params.v2)"
+  T:  "(calcs.t1 + calcs.t2)"
+
+  # Distância total
+  D: "(2*params.d)"
+
+  # Trajetória de velocidade constante vH (tempo = distância / vH)
+  tH1: "(params.d / calcs.vH)"
+  TH:  "(calcs.D / calcs.vH)"
+
+
+layout:
+  TwoVerticalGraphs:
+
+    topGraph:
+      xAxis:
+        min: 0
+        max: 3.2
+        ticks: 0
+      yAxis:
+        min: 0
+        max: 63
+        ticks: 5
+
+      objects:
+        # Linhas de grade (10,20,30,40,50,60)
+        - Line:
+           strokeWidth: 0.5
+           point: [0.6, 10]
+           point2: [3.0, 10]
+           color: grey
+
+        - Line:
+           strokeWidth: 0.5
+           point: [0.6, 20]
+           point2: [3.0, 20]
+           color: grey
+
+        - Line:
+           strokeWidth: 0.5
+           point: [0.6, 30]
+           point2: [3.0, 30]
+           color: grey
+
+        - Line:
+           strokeWidth: 0.5
+           point: [0.6, 40]
+           point2: [3.0, 40]
+           color: grey
+
+        - Line:
+           strokeWidth: 0.5
+           point: [0.6, 50]
+           point2: [3.0, 50]
+           color: grey
+
+        - Line:
+           strokeWidth: 0.5
+           point: [0.6, 60]
+           point2: [3.0, 60]
+           color: grey
+
+
+        # Barras de velocidade (arrastáveis)
+        - Rectangle:
+            x1: 0.90
+            x2: 1.50
+            y1: 0
+            y2: params.v1
+            fill: "'#111827'"
+            opacity: 1
+            drag:
+              - directions: y
+                param: v1
+                expression: "(drag.y)"
+
+        - Rectangle:
+            x1: 1.90
+            x2: 2.50
+            y1: 0
+            y2: params.v2
+            fill: "'#111827'"
+            opacity: 1
+            drag:
+              - directions: y
+                param: v2
+                expression: "(drag.y)"
+
+
+        # Linha da média harmônica (nível vH)
+        - Line:
+           strokeWidth: 3
+           point: [0.6, calcs.vH]
+           point2: [3.0, calcs.vH]
+           color: grey
+
+
+        # Rótulos Trecho 1 / Trecho 2
+        - Segment:
+            a: [1.20, 0]
+            b: [1.20, 0]
+            color: "'#111827'"
+            label:
+             text: "'\\\\bf{Trecho\\\\ 1}'"
+             position: t
+             fontSize: 7
+
+        - Segment:
+            a: [2.20, 0]
+            b: [2.20, 0]
+            color: "'#111827'"
+            label:
+             text: "'\\\\bf{Trecho\\\\ 2}'"
+             position: t
+             fontSize: 7
+
+
+        # Label da média harmônica (à direita, como no print)
+        - Label:
+            coordinates: [2.75, calcs.vH+4]
+            text: "`\\\\mathbf{Média\\\\ Harm.}\\\\\\\\ =\\\\ ${calcs.vH.toFixed(1)}\\\\ km/h`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 7
+            position: l
+
+
+
+    bottomGraph:
+      xAxis:
+        min: 0
+        max: 120
+        ticks: 0
+      yAxis:
+        min: 0
+        max: 4
+        ticks: 3
+
+      objects:
+        # Linha contínua: tempo acumulado (v1 depois v2)
+        # Pontos: (0,0), (60, t1), (120, T)
+        - Segment:
+            a: [0, 0]
+            b: [params.d, calcs.t1]
+            color: "'#111827'"
+            strokeWidth: 2
+
+        - Segment:
+            a: [params.d, calcs.t1]
+            b: [calcs.D, calcs.T]
+            color: "'#111827'"
+            strokeWidth: 2
+
+
+        # Linha pontilhada: velocidade constante vH
+        # Pontos: (0,0), (60, tH1), (120, TH)
+        - Segment:
+            a: [0, 0]
+            b: [params.d, calcs.tH1]
+            color: grey
+            strokeWidth: 3
+            lineStyle: dotted
+
+        - Segment:
+            a: [params.d, calcs.tH1]
+            b: [calcs.D, calcs.TH]
+            color: grey
+            strokeWidth: 3
+            lineStyle: dotted
+
+
+        # Pontos (marcadores)
+        - Point:
+            coordinates: [0, 0]
+            color: "'#111827'"
+            r: 4
+
+        - Point:
+            coordinates: [params.d, calcs.t1]
+            color: "'#111827'"
+            r: 4
+
+        - Point:
+            coordinates: [calcs.D, calcs.T]
+            color: "'#111827'"
+            r: 5
+
+        - Point:
+            coordinates: [calcs.D, calcs.TH]
+            color: grey
+            r: 5
+        - Point:
+            coordinates: [params.d, calcs.tH1]
+            color: grey
+            r: 5
+
+        # Texto final: mesmo tempo total
+        - Label:
+            coordinates: [calcs.D, calcs.T+0.2]
+            text: "`\\\\mathbf{Mesmo\\\\ tempo} \\\\\\\\ \\\\mathbf{total:} ${calcs.T.toFixed(2)}\\\\ h`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 5
+            position: b
+
+
+        # Mini-legenda
+        - Rectangle:
+            x1: 70
+            x2: 80
+            y1: 3.63
+            y2: 3.92
+            fill: "grey"
+            opacity: 1
+
+        - Label:
+            coordinates: [81, 3.76]
+            text: "`Linha\\\\ tracejada:\\\\\\\\ velocidade \\\\ constante \\\\\\\\ (Média \\\\ Harm.)`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 5
+            position: l
+
+        - Rectangle:
+            x1: 10
+            x2: 20
+            y1: 3.63
+            y2: 3.92
+            fill: "'#111827'"
+            opacity: 1
+
+        - Label:
+            coordinates: [17, 3.76]
+            text: "`Linha\\\\ contínua:\\\\\\\\ tempo \\\\ acum.  \\\\ em \\\\\\\\ 30km/h \\\\ e \\\\ 60km/h`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 5
+            position: l
+
+
+        # Labels do eixo x (0, 60, 120)
+        - Label:
+            coordinates: [0, 0]
+            text: "`\\\\bf{0}`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 7
+            position: t
+
+        - Label:
+            coordinates: [params.d, 0]
+            text: "`\\\\bf{60}`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 7
+            position: t
+
+        - Label:
+            coordinates: [calcs.D, 0]
+            text: "`\\\\bf{120}`"
+            bgcolor: "'#ffffff'"
+            color: "'#111827'"
+            fontSize: 7
+            position: t
+
+
+        # Grades horizontais em horas (1h,2h,3h)
+        - Line:
+           strokeWidth: 0.5
+           point: [0, 1]
+           point2: [120, 1]
+           color: grey
+
+        - Line:
+           strokeWidth: 0.5
+           point: [0, 2]
+           point2: [120, 2]
+           color: grey
+
+        - Line:
+           strokeWidth: 0.5
+           point: [0, 3]
+           point2: [120, 3]
+           color: grey
