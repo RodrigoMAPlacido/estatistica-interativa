@@ -31,7 +31,7 @@ calcs:
   soma: "(params.f1 + params.f2 + params.f3 + params.f4 + params.f5)"
   media: "(((5*params.f1) + (15*params.f2) + (25*params.f3) + (35*params.f4) + (45*params.f5)) / calcs.soma)"
 layout:
-  OneWideGraph:
+  OneWideGraphPlusSidebar:
     graph:
       xAxis:
         min: 0
@@ -172,46 +172,40 @@ layout:
       - Label:
           coordinates: [5, params.f1-0.5]
           text: "`\\\\bf{f_1}= ${params.f1.toFixed(2)}`"
-          bgcolor: "'#ffffff'"
-          color: "'#111827'"
+          color: "'#ffffff'"
+          bgcolor: "'#111827'"
           fontSize: 11
       - Label:
           coordinates: [15.1, params.f2-0.5]
           text: "`\\\\bf{f_2}= ${params.f2.toFixed(2)}`"
-          bgcolor: "'#ffffff'"
-          color: "'#111827'"
+          color: "'#ffffff'"
+          bgcolor: "'#111827'"
           fontSize: 11
       - Label:
           coordinates: [25.2, params.f3-0.5]
           text: "`\\\\bf{f_3}= ${params.f3.toFixed(2)}`"
-          bgcolor: "'#ffffff'"
-          color: "'#111827'"
+          color: "'#ffffff'"
+          bgcolor: "'#111827'"
           fontSize: 11
       - Label:
           coordinates: [35.3, params.f4-0.5]
           text: "`\\\\bf{f_4}= ${params.f4.toFixed(2)}`"
-          bgcolor: "'#ffffff'"
-          color: "'#111827'"
+          color: "'#ffffff'"
+          bgcolor: "'#111827'"
           fontSize: 11
       - Label:
           coordinates: [45.4, params.f5-0.5]
           text: "`\\\\bf{f_5}= ${params.f5.toFixed(2)}`"
-          bgcolor: "'#ffffff'"
-          color: "'#111827'"
+          color: "'#ffffff'"
+          bgcolor: "'#111827'"
           fontSize: 11
 
     sidebar:
       triggerWidth: 9999
       controls:
-      - title: Ajuste as Frequências
-        sliders:
-        - param: f1
-          label: 'f_1  '
-        - param: f2
-          label: 'f_2  '
-        - param: f3
-          label: 'f_3  '
-        - param: f4
-          label: 'f_4  '
-        - param: f5
-          label: 'f_5  '
+        - title: ""
+          divs:
+            - html: '$$\footnotesize \mathbf{\bar{X}_{agr}} = \frac{f_1 m_1 + f_2 m_2 + f_3 m_3 + f_4 m_4 + f_5 m_5}{f_1 + f_2 + f_3 + f_4 + f_5} $$'
+            - html: '$$\footnotesize \Longleftrightarrow$$'
+            - html: "`$$\\\\footnotesize \\\\mathbf{\\\\bar{X}_{agr}} = \\\\frac{${params.f1.toFixed(2)} \\\\times 5 + ${params.f2.toFixed(2)} \\\\times 15 + ${params.f3.toFixed(2)} \\\\times 25 + ${params.f4.toFixed(2)} \\\\times 35 + ${params.f5.toFixed(2)} \\\\times 45}{${params.f1.toFixed(2)} + ${params.f2.toFixed(2)}+ ${params.f3.toFixed(2)}+ ${params.f4.toFixed(2)} + ${params.f5.toFixed(2)}} = ${calcs.media.toFixed(2)}$$`"
+            - html: <hr>

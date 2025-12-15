@@ -1,5 +1,5 @@
 schema: EconSchema
-aspectRatio: 2.5
+aspectRatio: 1.6
 
 params:
   - name: x_1
@@ -46,7 +46,7 @@ colors:
   grid: "'#e5e7eb'"
 
 layout:
-  OneGraph:
+  OneWideGraphPlusSidebar:
     graph:
       xAxis:
         min: 0
@@ -152,9 +152,6 @@ layout:
             fontSize: 6
             position: l
 
-
-
-
         # ---------------------------
         # RÓTULOS DAS FREQUÊNCIAS (f_i)
         # mostrados no topo de cada barra
@@ -162,56 +159,62 @@ layout:
         - Segment:
             a: [1, params.x_1]
             b: [1, params.x_1]
-            color: colors.ink
+            color: white
+            bgcolor: colors.ink            
             label:
               text: "`\\\\bf{x_{1}}:${params.x_1.toFixed(1)}`"
               position: t
-              fontSize: 7
+              fontSize: 5
 
         - Segment:
             a: [2, params.x_2]
             b: [2, params.x_2]
-            color: colors.ink
+            color: white
+            bgcolor: colors.ink            
             label:
               text: "`\\\\bf{x_{2}}:${params.x_2.toFixed(1)}`"
               position: t
-              fontSize: 7
+              fontSize: 5
 
         - Segment:
             a: [3, params.x_3]
             b: [3, params.x_3]
-            color: colors.ink
+            color: white
+            bgcolor: colors.ink            
             label:
               text: "`\\\\bf{x_{3}}:${params.x_3.toFixed(1)}`"
               position: t
-              fontSize: 7
+              fontSize: 5
 
         - Segment:
             a: [4, params.x_4]
             b: [4, params.x_4]
-            color: colors.ink
+            color: white
+            bgcolor: colors.ink            
             label:
               text: "`\\\\bf{x_{4}}:${params.x_4.toFixed(1)}`"
               position: t
-              fontSize: 7
+              fontSize: 5
 
         - Segment:
             a: [5, params.x_5]
             b: [5, params.x_5]
-            color: colors.ink
+            color: white
+            bgcolor: colors.ink
             label:
               text: "`\\\\bf{x_{5}}:${params.x_4.toFixed(1)}`"
               position: t
-              fontSize: 7
+              fontSize: 5
         - Segment:
             a: [6, params.x_6]
             b: [6, params.x_6]
-            color: colors.ink
+            color: white
+            bgcolor: colors.ink
             label:
               text: "`\\\\bf{x_{6}}:${params.x_4.toFixed(1)}`"
               position: t
-              fontSize: 7
-        # ---------------------------
+              fontSize: 5
+       # ---------------------------
         # RÓTULOS NO EIXO X
         # (valores 1, 4, 2, 3, 5, 3)
         # ---------------------------
@@ -306,3 +309,16 @@ layout:
             color: grey
             strokeWidth: 0.5
             lineStyle: dashed
+
+    sidebar:
+      triggerWidth: 9999
+      controls:
+        - title: ""
+          divs:
+            - html: '$$\scriptsize \mathbf{\bar{X}} = \frac{x_1 + x_2 + x_3 + x_4 + x_5 + x_6}{n} $$'
+            - html: '$$\scriptsize \Longleftrightarrow$$'
+
+            - html: "`$$\\\\scriptsize \\\\mathbf{\\\\bar{X}} = \\\\frac{${params.x_1.toFixed(2)} + ${params.x_2.toFixed(2)}+ ${params.x_3.toFixed(2)}+ ${params.x_4.toFixed(2)}+ ${params.x_5.toFixed(2)}+ ${params.x_6.toFixed(2)}}{6} = ${calcs.mean.toFixed(2)}$$`"
+
+
+            - html: "<hr>"

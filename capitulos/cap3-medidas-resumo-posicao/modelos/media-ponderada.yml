@@ -159,7 +159,8 @@ layout:
         - Segment:
             a: [1, params.x_1-0.2]
             b: [1, params.x_1-0.2]
-            color: colors.ink
+            color: white
+            bgcolor: colors.ink
             label:
               text: "`Nota: \\\\\\\\ ${params.x_1.toFixed(1)}`"
               position: t
@@ -168,7 +169,8 @@ layout:
         - Segment:
             a: [2, params.x_2-0.2]
             b: [2, params.x_2-0.2]
-            color: colors.ink
+            color: white
+            bgcolor: colors.ink
             label:
               text: "`Nota: \\\\\\\\ ${params.x_2.toFixed(1)}`"
               position: t
@@ -177,7 +179,8 @@ layout:
         - Segment:
             a: [3, params.x_3-0.2]
             b: [3, params.x_3-0.2]
-            color: colors.ink
+            color: white
+            bgcolor: colors.ink
             label:
               text: "`Nota: \\\\\\\\ ${params.x_3.toFixed(1)}`"
               position: t
@@ -186,7 +189,8 @@ layout:
         - Segment:
             a: [4, params.x_4-0.2]
             b: [4, params.x_4-0.2]
-            color: colors.ink
+            color: white
+            bgcolor: colors.ink
             label:
               text: "`Nota: \\\\\\\\ ${params.x_4.toFixed(1)}`"
               position: t
@@ -230,35 +234,35 @@ layout:
             a: [0, 2]
             b: [5, 2]
             color: grey
-            strokeWidth: 1
+            strokeWidth: 0.5
             lineStyle: dashed
 
         - Segment:
             a: [0, 4]
             b: [5, 4]
             color: grey
-            strokeWidth: 1
+            strokeWidth: 0.5
             lineStyle: dashed
 
         - Segment:
             a: [0, 6]
             b: [5, 6]
             color: grey
-            strokeWidth: 1
+            strokeWidth: 0.5
             lineStyle: dashed
 
         - Segment:
             a: [0, 8]
             b: [5, 8]
             color: grey
-            strokeWidth: 1
+            strokeWidth: 0.5
             lineStyle: dashed
 
         - Segment:
             a: [0, 10]
             b: [5, 10]
             color: grey
-            strokeWidth: 1
+            strokeWidth: 0.5
             lineStyle: dashed
         - Segment:
             a: [0, 0.3]
@@ -279,3 +283,9 @@ layout:
           label: 'w_{3}'
         - param: w_4
           label: 'w_{4}'
+        divs:
+           - html: <hr>
+           - html: '$$\footnotesize \mathbf{\bar{X}_w} = \frac{w_1 x_1 + w_2 x_2 + w_3 x_3 + w_4 x_4}{w_1 + w_2 + w_3 + w_4} $$'
+           - html: '$$\footnotesize \Longleftrightarrow$$'
+           - html: "`$$\\\\footnotesize \\\\mathbf{\\\\bar{X}_w} = \\\\frac{${params.x_1.toFixed(2)} \\\\times ${params.w_1.toFixed(2)} + ${params.x_2.toFixed(2)} \\\\times ${params.w_2.toFixed(2)} + ${params.x_3.toFixed(2)} \\\\times ${params.w_3.toFixed(2)} + ${params.x_4.toFixed(2)} \\\\times ${params.w_4.toFixed(2)}}{${params.w_1.toFixed(2)} + ${params.w_2.toFixed(2)}+ ${params.w_3.toFixed(2)}+ ${params.w_4.toFixed(2)}} = ${calcs.weightedMean.toFixed(2)}$$`"
+           - html: <hr>
