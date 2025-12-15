@@ -60,6 +60,10 @@ calcs:
 
   # Média ponderada: sum(x_i f_i) / sum(f_i)
   weightedMean: "((params.x_1*params.w_1) + (params.x_2*params.w_2) + (params.x_3*params.w_3) + (params.x_4*params.w_4))/(calcs.totalF)"
+  notapeso1: "(params.x_1*params.w_1)"
+  notapeso2: "(params.x_2*params.w_2)"
+  notapeso3: "(params.x_3*params.w_3)"
+  notapeso4: "(params.x_4*params.w_4)"
 
 colors:
   ink: "'#111827'"
@@ -287,12 +291,14 @@ layout:
 
           - html: "`<figure class='sidebar-figure'>
               <div class='sidebar-table-wrap'>
-                <table class='sidebar-table'>
+                <table class='sidebar-table' style='font-size:1rem'>
                   <thead>
                     <tr>
                       <th>Disciplina</th>
                       <th>Nota (<em>x</em>)</th>
                       <th>Peso (<em>w</em>)</th>
+                      <th>$Nota \\\\times Peso$</th>
+
                     </tr>
                   </thead>
                   <tbody>
@@ -300,21 +306,26 @@ layout:
                       <td>Matemática</td>
                       <td>${params.x_1.toFixed(2)}</td>
                       <td>${params.w_1.toFixed(2)}</td>
+                      <td>${calcs.notapeso1.toFixed(2)}</td>
+
                     </tr>
                     <tr>
                       <td>Estatística</td>
                       <td>${params.x_2.toFixed(2)}</td>
                       <td>${params.w_2.toFixed(2)}</td>
+                      <td>${calcs.notapeso2.toFixed(2)}</td>
                     </tr>
                     <tr>
                       <td>História</td>
                       <td>${params.x_3.toFixed(2)}</td>
                       <td>${params.w_3.toFixed(2)}</td>
+                      <td>${calcs.notapeso3.toFixed(2)}</td>
                     </tr>
                     <tr>
-                      <td>Educação Física</td>
+                      <td>Ed. Física</td>
                       <td>${params.x_4.toFixed(2)}</td>
                       <td>${params.w_4.toFixed(2)}</td>
+                      <td>${calcs.notapeso4.toFixed(2)}</td>
                     </tr>
                   </tbody>
                 </table>
