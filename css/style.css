@@ -436,6 +436,7 @@ body.textbook h5{
   body.textbook p,
   body.textbook ul { font-size:.9rem; margin-bottom:.75rem; }
   body.textbook ol { font-size:.9rem; margin:2rem 0.3rem 2rem 1.5rem; }
+  body.textbook li { margin:0 0 1.5rem; font-size:0.9rem;}
   body.textbook li.lista { font-size:.9rem; margin:2rem 0.3rem 2rem 1.5rem; }
 
   /* 4.3 Figuras e SVGs */
