@@ -237,7 +237,7 @@ figure.figure.table figcaption {
   --kg-max-width: var(--content-width);
   --kg-padding: 8px 6px;
   width:100%;
-  margin:2rem 0 5rem 0;
+  margin:2rem 0 2rem 0;
   padding:var(--kg-padding);
   background:#fff;
   border-radius:6px;
@@ -247,6 +247,7 @@ figure.figure.table figcaption {
   -webkit-overflow-scrolling:auto;
   pointer-events:auto;
 }
+
 .kg-container.kg--sidebar-centered{
   position: relative; /* referência do absolute */
 }
@@ -254,12 +255,8 @@ figure.figure.table figcaption {
 .kg-container.kg--sidebar-centered .sidebar{
   left: 15% !important;                 /* vence left inline */
   right: auto !important;
-  margin:2rem 0 5rem 0;
-
+  margin:0rem 0 0rem 0;
 }
-
-
-
 .kg-container canvas,
 .kg-container img {
   max-width:100%;
@@ -288,6 +285,62 @@ body.textbook .katex-display { font-size:1.15em; margin:1.5rem 0; }
   max-width:620px;
   margin:0 0 0 0;
 }
+/* =========================================================
+   SIDEBAR — TABELA DO EXEMPLO (NÃO AFETA SLIDERS)
+   ========================================================= */
+
+.kg-container .sidebar .sidebar-table-wrap{
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+}
+
+.kg-container .sidebar table{   /* <- reset: não impõe nada em tabelas genéricas */
+  border-collapse:separate;
+}
+
+.kg-container .sidebar .sidebar-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:0.9rem;
+}
+.kg-container .sidebar .sidebar-table th{
+  padding:4px 6px;
+  border-bottom:2px solid #111827;
+  text-align:center;
+  line-height:1.25;
+  white-space:nowrap;
+}
+.kg-container .sidebar .sidebar-table td{
+  padding:4px 6px;
+  border-bottom:1px solid #e5e7eb;
+  text-align:center;
+  line-height:1.25;
+  white-space:nowrap;
+}
+
+.kg-container .sidebar .sidebar-table th{
+  font-weight:600;
+}
+/* Sidebar — ajuste fino do título */
+.kg-container .sidebar .sidebar-title{
+  margin-bottom:10px;   /* valor típico: 2px a 6px */
+}
+
+@media (max-width:768px){
+  .kg-wrapper.kg-mobile-sidebar .sidebar .sidebar-table{
+    width:100%;
+    table-layout:fixed;
+    font-size:0.78rem;
+  }
+
+  .kg-wrapper.kg-mobile-sidebar .sidebar .sidebar-table th,
+  .kg-wrapper.kg-mobile-sidebar .sidebar .sidebar-table td{
+    padding:3px 4px;
+    white-space:normal;
+    word-break:break-word;
+  }
+}
+
 /* =========================================================
    Classe padrão para fórmulas (KaTeX ou MathJax)
    ========================================================= */
@@ -487,7 +540,7 @@ body.textbook h5{
   .kg-wrapper.kg-mobile-sidebar {
     width:100%;
     max-width:none;
-    margin:1.2rem auto .2rem 0rem;
+    margin:0 0 0 0;
     position:relative;
     left: -15%;
     transform:scale(0.9);
@@ -499,6 +552,50 @@ body.textbook h5{
 }
   body.textbook .katex,
   body.textbook .katex-display { font-size:1.1em !important; overflow-wrap:anywhere; margin:1.2rem 0;}
+  /* =========================================================
+   KGJS — Compactar sliders + tipografia (somente kg-mobile-sidebar)
+   ========================================================= */
+
+.kg-wrapper.kg-mobile-sidebar .sidebar{
+  font-size: 1.20rem;
+  line-height: 1.2;
+}
+
+/* label do slider */
+.kg-wrapper.kg-mobile-sidebar .sidebar .slider-label{
+  padding: 2px 6px !important;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
+/* input numérico (classe existe: slider-numberInput) */
+.kg-wrapper.kg-mobile-sidebar .sidebar .slider-numberInput{
+  font-size: 1rem;
+  padding: 2px 2px;
+  height: 26px;
+  /* vence o width que o JS seta no redraw */
+  width: 64px !important;
+  min-width: 56px !important;
+  max-width: 72px !important;
+  box-sizing: border-box;
+}
+
+/* o range não tem classe, mas é input[type=range] */
+.kg-wrapper.kg-mobile-sidebar .sidebar input[type="range"]{
+  height: 6px;
+}
+
+/* reduz espaço entre linhas/controles */
+.kg-wrapper.kg-mobile-sidebar .sidebar tr{
+  height: auto;
+}
+
+.kg-wrapper.kg-mobile-sidebar .sidebar td{
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+
+}
+
 }
 
 /* =========================================================

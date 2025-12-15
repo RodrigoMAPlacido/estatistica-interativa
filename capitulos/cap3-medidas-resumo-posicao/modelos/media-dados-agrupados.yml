@@ -30,6 +30,14 @@ params:
 calcs:
   soma: "(params.f1 + params.f2 + params.f3 + params.f4 + params.f5)"
   media: "(((5*params.f1) + (15*params.f2) + (25*params.f3) + (35*params.f4) + (45*params.f5)) / calcs.soma)"
+  m1f1: "5(params.f1)"
+  m2f2: "15(params.f2)"
+  m3f3: "25(params.f3)"
+  m4f4: "35(params.f4)"
+  m5f5: "45(params.f5)"
+  soma2: "(((5*params.f1) + (15*params.f2) + (25*params.f3) + (35*params.f4) + (45*params.f5)))"
+
+
 layout:
   OneWideGraphPlusSidebar:
     graph:
@@ -205,6 +213,62 @@ layout:
       controls:
         - title: ""
           divs:
+            - html: "`<figure class='sidebar-figure'>
+                <div class='sidebar-table-wrap'>
+                  <table class='sidebar-table'>
+                    <thead>
+                      <tr>
+                        <th>Classe</th>
+                        <th>$m_j$</th>
+                        <th>$f_j$</th>
+                        <th>$f_j \\\\times m_j$</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>[0,10)</td>
+                        <td>5</td>
+                        <td>${params.f1.toFixed(2)}</td>
+                        <td>${calcs.m1f1.toFixed(2)}</td>
+
+                      </tr>
+                      <tr>
+                        <td>[10,20)</td>
+                        <td>15</td>
+                        <td>${params.f2.toFixed(2)}</td>
+                        <td>${calcs.m2f2.toFixed(2)}</td>
+                      </tr>
+                      <tr>
+                        <td>[20,30)</td>
+                        <td>25</td>
+                        <td>${params.f3.toFixed(2)}</td>
+                        <td>${calcs.m3f3.toFixed(2)}</td>
+                      </tr>
+                      <tr>
+                        <td>[30,40)</td>
+                        <td>35</td>
+                        <td>${params.f4.toFixed(2)}</td>
+                        <td>${calcs.m4f4.toFixed(2)}</td>
+                      </tr>
+                      <tr>
+                        <td>[40,50)</td>
+                        <td>45</td>
+                        <td>${params.f5.toFixed(2)}</td>
+                        <td>${calcs.m5f5.toFixed(2)}</td>
+                      </tr>
+                      <tr>
+                        <td>$\\\\textbf{Total}$</td>
+                        <td>—</td>
+                        <td>$\\\\mathbf{${calcs.soma.toFixed(2)}}$</td>
+                        <td>$\\\\mathbf{${calcs.soma2.toFixed(2)}}$</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <figcaption>Notas obtidas nas disciplinas e seus respectivos pesos</figcaption> </figure>`"
+
+            - html: "<div style='text-align:left; font-size:18px; margin:15px 0 15px 0;'> <b>Aplicando a fórmula:</b></div>"
+
             - html: '$$\footnotesize \mathbf{\bar{X}_{agr}} = \frac{f_1 m_1 + f_2 m_2 + f_3 m_3 + f_4 m_4 + f_5 m_5}{f_1 + f_2 + f_3 + f_4 + f_5} $$'
             - html: '$$\footnotesize \Longleftrightarrow$$'
             - html: "`$$\\\\footnotesize \\\\mathbf{\\\\bar{X}_{agr}} = \\\\frac{${params.f1.toFixed(2)} \\\\times 5 + ${params.f2.toFixed(2)} \\\\times 15 + ${params.f3.toFixed(2)} \\\\times 25 + ${params.f4.toFixed(2)} \\\\times 35 + ${params.f5.toFixed(2)} \\\\times 45}{${params.f1.toFixed(2)} + ${params.f2.toFixed(2)}+ ${params.f3.toFixed(2)}+ ${params.f4.toFixed(2)} + ${params.f5.toFixed(2)}} = ${calcs.media.toFixed(2)}$$`"

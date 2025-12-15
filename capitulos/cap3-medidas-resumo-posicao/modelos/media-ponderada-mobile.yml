@@ -284,8 +284,58 @@ layout:
         - param: w_4
           label: 'w_{4}'
         divs:
-           - html: <hr>
-           - html: '$$\tiny \mathbf{\bar{X}_w} = \frac{w_1 x_1 + w_2 x_2 + w_3 x_3 + w_4 x_4}{w_1 + w_2 + w_3 + w_4} $$'
-           - html: '$$\tiny \Longleftrightarrow$$'
-           - html: "`$$\\\\tiny \\\\mathbf{\\\\bar{X}_w} = \\\\frac{${params.x_1.toFixed(2)} \\\\times ${params.w_1.toFixed(2)} + ${params.x_2.toFixed(2)} \\\\times ${params.w_2.toFixed(2)} + ${params.x_3.toFixed(2)} \\\\times ${params.w_3.toFixed(2)} + ${params.x_4.toFixed(2)} \\\\times ${params.w_4.toFixed(2)}}{${params.w_1.toFixed(2)} + ${params.w_2.toFixed(2)}+ ${params.w_3.toFixed(2)}+ ${params.w_4.toFixed(2)}} = ${calcs.weightedMean.toFixed(2)}$$`"
-           - html: <hr>
+
+          - html: "`<figure class='sidebar-figure'>
+              <div class='sidebar-table-wrap'>
+                <table class='sidebar-table'>
+                  <thead>
+                    <tr>
+                      <th>Disciplina</th>
+                      <th>Nota (<em>x</em>)</th>
+                      <th>Peso (<em>w</em>)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Matemática</td>
+                      <td>${params.x_1.toFixed(2)}</td>
+                      <td>${params.w_1.toFixed(2)}</td>
+                    </tr>
+                    <tr>
+                      <td>Estatística</td>
+                      <td>${params.x_2.toFixed(2)}</td>
+                      <td>${params.w_2.toFixed(2)}</td>
+                    </tr>
+                    <tr>
+                      <td>História</td>
+                      <td>${params.x_3.toFixed(2)}</td>
+                      <td>${params.w_3.toFixed(2)}</td>
+                    </tr>
+                    <tr>
+                      <td>Educação Física</td>
+                      <td>${params.x_4.toFixed(2)}</td>
+                      <td>${params.w_4.toFixed(2)}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <figcaption>Notas obtidas nas disciplinas e seus respectivos pesos</figcaption> </figure>`"
+
+          - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'> <b>Aplicando a fórmula:</b></div>"
+          - html: '$$\tiny \mathbf{\bar{X}_w} = \frac{w_1 x_1 + w_2 x_2 + w_3 x_3 + w_4 x_4}{w_1 + w_2 + w_3 + w_4} $$'
+          - html: '$$\tiny \Longleftrightarrow$$'
+
+          - html: "`$$\\\\tiny \\\\mathbf{\\\\bar{X}_w} =
+                    \\\\frac{
+                      ${params.x_1.toFixed(2)} \\\\times ${params.w_1.toFixed(2)} +
+                      ${params.x_2.toFixed(2)} \\\\times ${params.w_2.toFixed(2)} +
+                      ${params.x_3.toFixed(2)} \\\\times ${params.w_3.toFixed(2)} +
+                      ${params.x_4.toFixed(2)} \\\\times ${params.w_4.toFixed(2)}
+                    }{
+                      ${params.w_1.toFixed(2)} + ${params.w_2.toFixed(2)} + ${params.w_3.toFixed(2)} + ${params.w_4.toFixed(2)}
+                    }
+                    $$`"
+          - html: '$$\tiny \Longleftrightarrow$$'
+          - html: "`$$\\\\tiny \\\\mathbf{\\\\bar{X}_w} = ${calcs.weightedMean.toFixed(2)} $$`"
+
+          - html: <hr>

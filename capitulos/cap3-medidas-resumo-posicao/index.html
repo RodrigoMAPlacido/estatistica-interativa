@@ -90,7 +90,7 @@ proximo: /capitulos/cap4-medidas-resumo-posicao-dois/
   diferenciada — como em notas com pesos —, emprega-se a <strong>média ponderada</strong>. Em distribuições organizadas em classes, cada 
   intervalo é representado por seu ponto médio, resultando na <strong>média para dados agrupados</strong>. Quando as informações se 
   combinam de modo multiplicativo, como em taxas de crescimento sucessivas, a síntese adequada é a <strong>média geométrica</strong>. E, 
-  em situações baseadas em razões do tipo “quantidade por unidade”, como velocidades médias ou produtividades, utiliza-se a 
+  em situações baseadas em razões em que a grandeza de referência passa a ser o numerador, como velocidades médias para uma mesma distância ou produtividade média para uma mesma quantidade, utiliza-se a 
   <strong>média harmônica</strong>, que se baseia nos inversos dos valores.
 </p>
 
@@ -108,11 +108,6 @@ proximo: /capitulos/cap4-medidas-resumo-posicao-dois/
   do “valor típico”.
 </p>
 
-<p>
-  Essas cinco versões resumem os dados de maneiras distintas — por soma direta, por pesos diferenciados, por aproximação por classes, 
-  por multiplicação ou por inversão — e são adequadas para problemas estatísticos específicos. Nas subseções seguintes, apresentamos a 
-  definição formal, a interpretação e exemplos de cada tipo de média, indicando em quais contextos cada uma delas é mais apropriada.
-</p>
 
 <h4>2.1.1 Média aritmética</h4>
 
@@ -272,14 +267,10 @@ proximo: /capitulos/cap4-medidas-resumo-posicao-dois/
   com a diferença de que essa sensibilidade é <strong>amplificada pelos pesos</strong>. Valores muito altos ou muito baixos associados
   a pesos elevados podem deslocar de forma significativa o resultado da média, enquanto observações extremas com pesos reduzidos têm 
   impacto limitado. Assim, a média ponderada continua sendo sensível à presença de <em>outliers</em>, mas o efeito de cada valor extremo depende
-  diretamente do peso que lhe é atribuído.
+  diretamente do peso que lhe é atribuído. A média ponderada é amplamente utilizada em contextos nos quais certas observações possuem maior impacto, como no cálculo de médias de 
+  notas com pesos diferentes ou na construção de índices econômicos.
 </p>
 
-<p>
-  A média ponderada é amplamente utilizada em contextos nos quais certas observações possuem maior impacto, como no cálculo de médias de 
-  notas com pesos diferentes, na construção de índices econômicos e em situações em que grupos de tamanhos distintos contribuem de 
-  maneira desigual para o total.
-</p>
 
 <p>
   Para visualizar esse comportamento de forma dinâmica, apresentamos a seguir um gráfico interativo construído com os mesmos dados que serão utilizados no exemplo subsequente. Ele permite observar como cada valor contribui para o cálculo da média e como alterações individuais afetam o resultado final. Logo após essa visualização, retomamos os mesmos dados em uma solução algébrica completa, seguindo o procedimento tradicional.
@@ -292,7 +283,7 @@ proximo: /capitulos/cap4-medidas-resumo-posicao-dois/
   </div>
 </figure>
 
-<figure class="figure fullwidth" style="page-break-inside: avoid;">
+<figure style="page-break-inside: avoid;">
   <!-- Versão para mobile -->
   <div class="kg-wrapper kg-mobile-sidebar ">
     <div class="kg-container kg--sidebar-centered" src="modelos/media-ponderada-mobile.yml"></div>
@@ -302,11 +293,16 @@ proximo: /capitulos/cap4-medidas-resumo-posicao-dois/
   <h5>Exemplo</h5>
 
   <p>
-    Considere um conjunto de dados coletado a partir de uma <strong>amostra</strong> composta por 
-    <strong>3 unidades de observação</strong>, correspondentes às <strong>avaliações</strong> que compõem a nota
-    de um estudante em determinada disciplina. A variável analisada é a <strong>nota obtida em cada avaliação</strong>,
-    classificada como quantitativa contínua e medida em <strong>escala de razão</strong>. Cada avaliação possui 
-    um <strong>peso</strong> que indica sua importância relativa no cálculo da nota final.
+    Considere um conjunto de dados obtido a partir de uma <strong>amostra</strong> composta pelas 
+    <strong>notas finais de um estudante em quatro disciplinas</strong>. A variável analisada é a 
+    <strong>nota em cada disciplina</strong>, classificada como quantitativa contínua e medida em 
+    <strong>escala de razão</strong>.
+  </p>
+
+  <p>
+    Cada disciplina possui um <strong>peso</strong> associado, que reflete sua importância relativa
+    no cálculo da média final do estudante. Esses pesos podem representar, por exemplo, diferentes
+    cargas horárias ou critérios institucionais de avaliação.
   </p>
 
   <p>
@@ -317,30 +313,31 @@ proximo: /capitulos/cap4-medidas-resumo-posicao-dois/
     <table>
       <thead>
         <tr>
-          <th>Avaliação</th>
+          <th>Disciplina</th>
           <th>Nota (<em>x</em>)</th>
           <th>Peso (<em>w</em>)</th>
         </tr>
       </thead>
       <tbody>
-        <tr><td>Prova 1</td><td>7</td><td>2</td></tr>
-        <tr><td>Prova 2</td><td>6</td><td>3</td></tr>
-        <tr><td>Prova 3</td><td>8</td><td>5</td></tr>
+        <tr><td>Matemática</td><td>9,0</td><td>4</td></tr>
+        <tr><td>Estatística</td><td>8,0</td><td>3</td></tr>
+        <tr><td>História</td><td>7,0</td><td>2</td></tr>
+        <tr><td>Educação Física</td><td>10,0</td><td>1</td></tr>
       </tbody>
     </table>
-    <figcaption>Notas e pesos atribuídos às avaliações</figcaption>
+    <figcaption>Notas obtidas nas disciplinas e seus respectivos pesos</figcaption>
   </figure>
 
   <p>
-    Representando esses mesmos dados na forma de conjuntos de valores e de pesos:
+    Representando os mesmos dados na forma de conjuntos de valores e de pesos:
   </p>
 
   <p class="formula"
-     data-tts="xis igual a sete, seis e oito; dabliu igual a dois, três e cinco.">
+     data-tts="xis igual a nove, oito, sete e dez; dabliu igual a quatro, três, dois e um.">
     \[
-      x = \{7, 6, 8\}, 
+      x = \{9, 8, 7, 10\},
       \qquad
-      w = \{2, 3, 5\}.
+      w = \{4, 3, 2, 1\}.
     \]
   </p>
 
@@ -349,20 +346,25 @@ proximo: /capitulos/cap4-medidas-resumo-posicao-dois/
   </p>
 
   <p class="formula"
-     data-tts="x barra com peso igual a dois vezes sete mais três vezes seis mais cinco vezes oito, dividido por dois mais três mais cinco. Igual a quatorze mais dezoito mais quarenta, sobre dez. Igual a setenta e dois sobre dez. Igual a sete vírgula dois.">
+     data-tts="x barra com peso igual a quatro vezes nove mais três vezes oito mais dois vezes sete mais um vezes dez, dividido por quatro mais três mais dois mais um. Igual a oitenta e quatro sobre dez. Igual a oito vírgula quatro.">
     \[
-      \bar{X}_w = \frac{2 \cdot 7 + 3 \cdot 6 + 5 \cdot 8}{2 + 3 + 5}
-                = \frac{14 + 18 + 40}{10}
-                = \frac{72}{10}
-                = 7{,}2.
+      \bar{X}_w
+      = \frac{4 \cdot 9 + 3 \cdot 8 + 2 \cdot 7 + 1 \cdot 10}{4 + 3 + 2 + 1}
+      = \frac{84}{10}
+      = 8{,}4.
     \]
   </p>
 
   <p>
-    O valor <strong>7,2</strong> representa a <strong>nota média ponderada</strong> do estudante nessa disciplina.
-    Ele resume numericamente o desempenho nas diferentes avaliações, atribuindo maior influência às provas com 
-    pesos mais elevados. Se todos os pesos fossem iguais, essa média coincidiria com a média aritmética simples,
-    na qual cada avaliação teria o mesmo impacto no resultado final.
+    O valor <strong>8,4</strong> representa a <strong>média ponderada</strong> das notas do estudante,
+    levando em conta a importância relativa de cada disciplina. Note que a disciplina com maior peso
+    (<em>Matemática</em>) exerce maior influência sobre o resultado final do que aquela com menor peso
+    (<em>Educação Física</em>).
+  </p>
+
+  <p>
+    Caso todos os pesos fossem iguais, essa média coincidiria com a <strong>média aritmética simples</strong>,
+    na qual cada disciplina teria o mesmo impacto sobre o valor final.
   </p>
 </div>
 
