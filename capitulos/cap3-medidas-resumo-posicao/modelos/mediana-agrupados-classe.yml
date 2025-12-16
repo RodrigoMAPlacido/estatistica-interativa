@@ -259,7 +259,7 @@ layout:
         - title:
           divs:    
              - html: '$${\footnotesize \textbf{Mediana} = L_i + \left( \frac{n}{2} - F_{i-1} \right)\frac{h}{f_i} }$$ $$\tiny \Longleftrightarrow$$'
-             - html: "`$$\\\\footnotesize \textbf{Mediana} = ${calcs.L.toFixed(2)} + \\\\left( \\\\frac{${calcs.N.toFixed(2)}}{2} - ${calcs.Fprev.toFixed(2)}\\\\right) \\\\frac{${calcs.h.toFixed(2)}}{${calcs.fmed.toFixed(2)}} $$`"
+             - html: "`$$\\\\footnotesize \\\\textbf{Mediana} = ${calcs.L.toFixed(2)} + \\\\left( \\\\frac{${calcs.N.toFixed(2)}}{2} - ${calcs.Fprev.toFixed(2)}\\\\right) \\\\frac{${calcs.h.toFixed(2)}}{${calcs.fmed.toFixed(2)}} $$`"
              - html: '$$\footnotesize \Longleftrightarrow$$'
              - html: "`$$\\\\footnotesize \\\\textbf{Mediana} =${calcs.mediana.toFixed(2)} $$`"
              - html: <hr>

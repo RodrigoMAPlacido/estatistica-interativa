@@ -207,6 +207,36 @@ layout:
           color: "'#ffffff'"
           bgcolor: "'#111827'"
           fontSize: 7
+      - Label:
+          coordinates: [5, params.f1-1.7]
+          text: "`\\\\bf{m_1}= 5`"
+          color: "'#ffffff'"
+          bgcolor: "'#111827'"
+          fontSize: 7
+      - Label:
+          coordinates: [15.1, params.f2-1.7]
+          text: "`\\\\bf{m_2}= 15`"
+          color: "'#ffffff'"
+          bgcolor: "'#111827'"
+          fontSize: 7
+      - Label:
+          coordinates: [25.2, params.f3-1.7]
+          text: "`\\\\bf{m_3}= 25`"
+          color: "'#ffffff'"
+          bgcolor: "'#111827'"
+          fontSize: 7
+      - Label:
+          coordinates: [35.3, params.f4-1.7]
+          text: "`\\\\bf{m_4}= 35`"
+          color: "'#ffffff'"
+          bgcolor: "'#111827'"
+          fontSize: 7
+      - Label:
+          coordinates: [45.4, params.f5-1.7]
+          text: "`\\\\bf{m_5}= 45`"
+          color: "'#ffffff'"
+          bgcolor: "'#111827'"
+          fontSize: 7
 
     sidebar:
       triggerWidth: 9999

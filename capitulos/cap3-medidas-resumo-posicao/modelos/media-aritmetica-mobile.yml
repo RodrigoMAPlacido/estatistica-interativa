@@ -223,7 +223,7 @@ layout:
             b: [1, 0]
             color: colors.ink
             label:
-              text: "'1'"
+              text: "'x_{1}'"
               position: t
               fontSize: 9
 
@@ -232,7 +232,7 @@ layout:
             b: [2, 0]
             color: colors.ink
             label:
-              text: "'4'"
+              text: "'x_{2}'"
               position: t
               fontSize: 9
 
@@ -241,7 +241,7 @@ layout:
             b: [3, 0]
             color: colors.ink
             label:
-              text: "'2'"
+              text: "'x_{3}'"
               position: t
               fontSize: 9
 
@@ -250,7 +250,7 @@ layout:
             b: [4, 0]
             color: colors.ink
             label:
-              text: "'3'"
+              text: "'x_{4}'"
               position: t
               fontSize: 9
 
@@ -259,7 +259,7 @@ layout:
             b: [5, 0]
             color: colors.ink
             label:
-              text: "'5'"
+              text: "'x_{5}'"
               position: t
               fontSize: 9
 
@@ -268,7 +268,7 @@ layout:
             b: [6, 0]
             color: colors.ink
             label:
-              text: "'3'"
+              text: "'x_{6}'"
               position: t
               fontSize: 9
 

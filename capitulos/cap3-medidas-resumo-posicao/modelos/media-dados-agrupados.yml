@@ -110,7 +110,7 @@ layout:
       - Segment:
           a: [calcs.media, 0]
           b: [calcs.media, 15]
-          color: "'#111827'"
+          color: grey
           strokeWidth: 3
 
       - Segment:
@@ -207,6 +207,36 @@ layout:
           color: "'#ffffff'"
           bgcolor: "'#111827'"
           fontSize: 11
+      - Label:
+          coordinates: [5, params.f1-1.5]
+          text: "`\\\\bf{m_1}= 5`"
+          color: "'#ffffff'"
+          bgcolor: "'#111827'"
+          fontSize: 11
+      - Label:
+          coordinates: [15.1, params.f2-1.5]
+          text: "`\\\\bf{m_2}= 15`"
+          color: "'#ffffff'"
+          bgcolor: "'#111827'"
+          fontSize: 11
+      - Label:
+          coordinates: [25.2, params.f3-1.5]
+          text: "`\\\\bf{m_3}= 25`"
+          color: "'#ffffff'"
+          bgcolor: "'#111827'"
+          fontSize: 11
+      - Label:
+          coordinates: [35.3, params.f4-1.5]
+          text: "`\\\\bf{m_4}= 35`"
+          color: "'#ffffff'"
+          bgcolor: "'#111827'"
+          fontSize: 11
+      - Label:
+          coordinates: [45.4, params.f5-1.5]
+          text: "`\\\\bf{m_5}= 45`"
+          color: "'#ffffff'"
+          bgcolor: "'#111827'"
+          fontSize: 11
 
     sidebar:
       triggerWidth: 9999
@@ -215,7 +245,7 @@ layout:
           divs:
             - html: "`<figure class='sidebar-figure'>
                 <div class='sidebar-table-wrap'>
-                  <table class='sidebar-table'>
+                  <table class='sidebar-table'  style='font-size:16px'>
                     <thead>
                       <tr>
                         <th>Classe</th>
@@ -265,7 +295,7 @@ layout:
                     </tbody>
                   </table>
                 </div>
-                <figcaption>Notas obtidas nas disciplinas e seus respectivos pesos</figcaption> </figure>`"
+               </figure>`"
 
             - html: "<div style='text-align:left; font-size:18px; margin:15px 0 15px 0;'> <b>Aplicando a fórmula:</b></div>"
 

@@ -291,7 +291,7 @@ layout:
 
           - html: "`<figure class='sidebar-figure'>
               <div class='sidebar-table-wrap'>
-                <table class='sidebar-table'>
+                  <table class='sidebar-table'  style='font-size:16px'>
                   <thead>
                     <tr>
                       <th>Disciplina</th>

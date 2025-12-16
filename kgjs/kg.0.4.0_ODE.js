@@ -62684,7 +62684,7 @@ var KGAuthor;
             var l = _this;
             var leftGraphDef = def['leftGraph'], rightGraphDef = def['rightGraph'], sidebarDef = def['sidebar'];
             var includeControls = false;
-            var leftX = 0.1, rightX = 0.6, topY = 0.025, bottomY = 1.2, width = 0.369, controlHeight = 0.3, controlBottom = 0.65;
+            var leftX = 0.1, rightX = 0.7, topY = 0.1, bottomY = 0.9, width = 0.5, controlHeight = 0.5, controlBottom = 0.9;
             if (def.hasOwnProperty('leftControls')) {
                 var leftControlsContainer = {
                     position: {
@@ -63117,14 +63117,14 @@ var KGAuthor;
             topGraphDef.position = {
                 "x": 0.35,
                 "y": 0.025,
-                "width": 0.45,
-                "height": 0.45
+                "width": 0.5,
+                "height": 0.5
             };
             bottomGraphDef.position = {
                 "x": 0.35,
-                "y": 0.55,
-                "width": 0.45,
-                "height": 0.45
+                "y": 0.6,
+                "width": 0.5,
+                "height": 0.5
             };
             var topGraph = new KGAuthor.Graph(topGraphDef), bottomGraph = new KGAuthor.Graph(bottomGraphDef), sidebar = new KGAuthor.Sidebar(sidebarDef);
             topGraph.subObjects.forEach(function (obj) { obj.addSecondGraph(bottomGraph); });

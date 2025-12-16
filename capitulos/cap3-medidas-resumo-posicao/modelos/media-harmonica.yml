@@ -39,7 +39,7 @@ calcs:
 
 
 layout:
-  TwoHorizontalGraphs:
+  TwoHorizontalGraphsPlusSidebar:
 
     leftGraph:
       xAxis:
@@ -311,3 +311,39 @@ layout:
            point: [0, 3]
            point2: [120, 3]
            color: grey
+    sidebar:
+      triggerWidth: 9999
+      controls:
+        - title: ""
+          divs:
+            - html: "`<figure class='sidebar-figure'>
+                <div class='sidebar-table-wrap'>
+                  <table class='sidebar-table'  style='font-size:18px'>
+                    <thead>
+                      <tr>
+                        <th>Trecho</th>
+                        <th>velocidade</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Trecho 1</td>
+                        <td>${params.v1.toFixed(2)}</td>
+
+                      </tr>
+                      <tr>
+                        <td>Trecho 2</td>
+                        <td>${params.v2.toFixed(2)}</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+                </div>
+               </figure>`"
+
+            - html: "<div style='text-align:left; font-size:18px; margin:15px 0 15px 0;'> <b>Aplicando a fórmula:</b></div>"
+
+            - html: '$$\footnotesize \mathbf{H} = \frac{2}{\frac{1}{x_1} + \frac{1}{x_2}}$$'
+            - html: '$$\footnotesize \Longleftrightarrow$$'
+            - html: "`$$\\\\footnotesize \\\\mathbf{H} = \\\\frac{2}{\\\\frac{1}{${params.v1.toFixed(2)}} + \\\\frac{1}{${params.v2.toFixed(2)}}} = ${calcs.vH.toFixed(2)}$$`"
+            - html: <hr>

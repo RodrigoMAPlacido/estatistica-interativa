@@ -66,7 +66,7 @@ calcs:
   rbpct: "(100*calcs.rbar)"
 
 layout:
-  TwoHorizontalGraphs:
+  TwoHorizontalGraphsPlusSidebar:
 
     leftGraph:
       xAxis:
@@ -475,3 +475,47 @@ layout:
             color: "'#111827'"
             fontSize: 10
             position: r
+
+    sidebar:
+      triggerWidth: 9999
+      controls:
+        - title: ""
+          divs:
+            - html: "`<figure class='sidebar-figure'>
+                <div class='sidebar-table-wrap'>
+                  <table class='sidebar-table'  style='font-size:18px'>
+                    <thead>
+                      <tr>
+                        <th>Ano</th>
+                        <th>Fator de Crescimento</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Ano 1</td>
+                        <td>${calcs.r1.toFixed(2)}</td>
+
+                      </tr>
+                      <tr>
+                        <td>Ano 2</td>
+                        <td>${calcs.r2.toFixed(2)}</td>
+                      </tr>
+                      <tr>
+                        <td>Ano 3</td>
+                        <td>${calcs.r3.toFixed(2)}</td>
+                      </tr>
+                      <tr>
+                        <td>Ano 4</td>
+                        <td>${calcs.r4.toFixed(2)}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+               </figure>`"
+
+            - html: "<div style='text-align:left; font-size:18px; margin:15px 0 15px 0;'> <b>Aplicando a fórmula:</b></div>"
+
+            - html: '$$\footnotesize \mathbf{G} = \sqrt[4]{x_1 \cdot x_2 \cdot x_3 \cdot x_4} $$'
+            - html: '$$\footnotesize \Longleftrightarrow$$'
+            - html: "`$$\\\\footnotesize \\\\mathbf{G} = \\\\sqrt[4]{${calcs.r1.toFixed(2)} \\\\cdot ${calcs.r2.toFixed(2)} \\\\cdot  ${calcs.r3.toFixed(2)} \\\\cdot  ${calcs.r4.toFixed(2)}} = ${calcs.gbar.toFixed(2)}$$`"
+            - html: <hr>

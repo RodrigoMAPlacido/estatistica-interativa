@@ -265,7 +265,15 @@ figure.figure.table figcaption {
   display:block;
 }
 
-.kg-container svg {
+/* EXEMPLO 1: se o SVG do gráfico é filho direto */
+.kg-container > svg{
+  max-width:100%;
+  height:auto;
+  display:block;
+}
+
+/* EXEMPLO 2: se o SVG do gráfico fica dentro de .graph */
+.kg-container .graph svg{
   max-width:100%;
   height:auto;
   display:block;
