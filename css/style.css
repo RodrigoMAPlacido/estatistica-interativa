@@ -302,52 +302,82 @@ body.textbook .katex-display { font-size:1.15em; margin:1.5rem 0; }
   -webkit-overflow-scrolling:touch;
 }
 
-.kg-container .sidebar table{   /* <- reset: não impõe nada em tabelas genéricas */
+/* reset: não impõe nada em tabelas genéricas */
+.kg-container .sidebar table{
   border-collapse:separate;
 }
 
 .kg-container .sidebar .sidebar-table{
   width:100%;
   border-collapse:collapse;
-  font-size:0.9rem;
+  font-size:1.0rem;          /* levemente maior que 0.9 */
 }
-.kg-container .sidebar .sidebar-table th{
-  padding:4px 6px;
+
+/* Cabeçalho: mais “alto” e mais legível */
+.kg-container .sidebar .sidebar-table thead th{
+  padding:10px 10px;           /* mais ar vertical */
   border-bottom:2px solid #111827;
   text-align:center;
-  line-height:1.25;
+  line-height:1.35;
   white-space:nowrap;
+  font-weight:600;
 }
-.kg-container .sidebar .sidebar-table td{
-  padding:4px 6px;
+
+/* Corpo */
+.kg-container .sidebar .sidebar-table tbody td{
+  padding:7px 10px;           /* mais ar vertical */
   border-bottom:1px solid #e5e7eb;
   text-align:center;
-  line-height:1.25;
+  line-height:1.35;
   white-space:nowrap;
 }
 
-.kg-container .sidebar .sidebar-table th{
-  font-weight:600;
+/* (Opcional, mas costuma ajudar) alinhar números à direita, melhora leitura de colunas */
+.kg-container .sidebar .sidebar-table td:nth-child(2),
+.kg-container .sidebar .sidebar-table td:nth-child(3),
+.kg-container .sidebar .sidebar-table td:nth-child(4){
+  text-align:center;
+  padding-right:12px;         /* dá “respiro” pro número */
 }
+
 /* Sidebar — ajuste fino do título */
 .kg-container .sidebar .sidebar-title{
-  margin-bottom:10px;   /* valor típico: 2px a 6px */
+  margin-bottom:10px;
 }
 
 @media (max-width:768px){
+
+  /* alvo exato: sidebar-table dentro do wrapper mobile */
   .kg-wrapper.kg-mobile-sidebar .sidebar .sidebar-table{
     width:100%;
     table-layout:fixed;
-    font-size:0.78rem;
+    font-size:0.86rem;
+    border-collapse:collapse;
   }
 
+  /* IMPORTANTE: desliga o nowrap herdado do desktop */
   .kg-wrapper.kg-mobile-sidebar .sidebar .sidebar-table th,
   .kg-wrapper.kg-mobile-sidebar .sidebar .sidebar-table td{
-    padding:3px 4px;
     white-space:normal;
-    word-break:break-word;
+    overflow-wrap:anywhere;
+  }
+
+  /* aqui está o “espaço entre linhas” de verdade */
+  .kg-wrapper.kg-mobile-sidebar .sidebar .sidebar-table tbody td{
+    padding-top:10px;
+    padding-bottom:10px;
+    padding-left:8px;
+    padding-right:8px;
+    line-height:1.3;
+  }
+
+  /* cabeçalho um pouco mais compacto que o corpo (opcional) */
+  .kg-wrapper.kg-mobile-sidebar .sidebar .sidebar-table thead th{
+    padding:8px 8px;
+    line-height:1.2;
   }
 }
+
 
 /* =========================================================
    Classe padrão para fórmulas (KaTeX ou MathJax)
@@ -565,7 +595,7 @@ body.textbook h5{
    ========================================================= */
 
 .kg-wrapper.kg-mobile-sidebar .sidebar{
-  font-size: 1.20rem;
+  font-size: 1rem;
   line-height: 1.2;
 }
 
@@ -588,17 +618,37 @@ body.textbook h5{
   box-sizing: border-box;
 }
 
-/* o range não tem classe, mas é input[type=range] */
-.kg-wrapper.kg-mobile-sidebar .sidebar input[type="range"]{
-  height: 6px;
-}
+  /* RESET obrigatório para o Chrome aplicar o thumb custom */
+  .kg-wrapper.kg-mobile-sidebar .sidebar input[type="range"]{
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;              /* trilho mais fino */
+    background: #cbd5e1;      /* cor do trilho (ajuste se quiser) */
+    border-radius: 999px;
+    outline: none;
+    touch-action: none;            /* trava scroll durante o drag */
+    overscroll-behavior: contain;  /* evita “puxar” a página */
+    user-select: none;
+  }
+  /* THUMB (Chrome / Edge / Android) */
+  .kg-wrapper.kg-mobile-sidebar .sidebar input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    appearance: none;
 
+    width: 10px !important;
+    height: 10px !important;
+    border-radius: 999px;
+
+    background: #232e46;      /* cor da “bola” */
+    border: none;
+
+  }
 /* reduz espaço entre linhas/controles */
-.kg-wrapper.kg-mobile-sidebar .sidebar tr{
+.kg-wrapper.kg-mobile-sidebar .sidebar table:not(.sidebar-table) td tr{
   height: auto;
 }
 
-.kg-wrapper.kg-mobile-sidebar .sidebar td{
+.kg-wrapper.kg-mobile-sidebar .sidebar table:not(.sidebar-table) td td{
   padding-top: 0px !important;
   padding-bottom: 0px !important;
 
@@ -634,6 +684,58 @@ body.textbook h5{
 #tts-floating-btn:hover {
   transform: scale(1);
   opacity: 0.9;
+}
+/* =========================================================
+   KGJS — Sliders no DESKTOP com as mesmas cores do mobile
+   (trilho #cbd5e1, thumb #232e46)
+   ========================================================= */
+
+@media (min-width:769px){
+
+  /* Se você usa .kg-desktop/.kg-mobile, isso restringe bem ao desktop */
+  .kg-wrapper.kg-desktop .sidebar input[type="range"],
+  /* fallback caso não exista .kg-desktop: aplica em qualquer wrapper que não seja o mobile-sidebar */
+  .kg-wrapper:not(.kg-mobile-sidebar) .sidebar input[type="range"]{
+    -webkit-appearance: none;
+    appearance: none;
+
+    height: 7px;              /* trilho fino */
+    background: #cbd5e1;      /* trilho */
+    border-radius: 999px;
+    outline: none;
+  }
+
+  /* THUMB — Chrome / Edge / Safari */
+  .kg-wrapper.kg-desktop .sidebar input[type="range"]::-webkit-slider-thumb,
+  .kg-wrapper:not(.kg-mobile-sidebar) .sidebar input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    appearance: none;
+
+    width: 14px !important;
+    height: 14px !important;
+    border-radius: 999px;
+
+    background: #232e46;      /* “bola” */
+    border: none;
+  }
+
+  /* FIREFOX: track e thumb têm pseudo-elementos próprios */
+  .kg-wrapper.kg-desktop .sidebar input[type="range"]::-moz-range-track,
+  .kg-wrapper:not(.kg-mobile-sidebar) .sidebar input[type="range"]::-moz-range-track{
+    height: 10px;
+    background: #cbd5e1;
+    border-radius: 999px;
+    border: none;
+  }
+
+  .kg-wrapper.kg-desktop .sidebar input[type="range"]::-moz-range-thumb,
+  .kg-wrapper:not(.kg-mobile-sidebar) .sidebar input[type="range"]::-moz-range-thumb{
+    width: 14px;
+    height: 14px;
+    border-radius: 999px;
+    background: #232e46;
+    border: none;
+  }
 }
 
 /* =========================================================

@@ -1,3 +1,4 @@
+
 schema: EconSchema
 aspectRatio: 2
 
@@ -141,12 +142,12 @@ layout:
             fontSize: 10
             position: c
         - Label:
-            coordinates: [calcs.Q1, 0.68]
+            coordinates: [calcs.Q1, 0.8]
             text: "`${calcs.Q1.toFixed(2)}`"
             bgcolor: colors.bg
             color: colors.inkSoft
             fontSize: 9
-            position: c
+            position: t
 
         - Label:
             coordinates: [calcs.Q2, 0.84]
@@ -156,19 +157,19 @@ layout:
             fontSize: 10
             position: c
         - Label:
-            coordinates: [calcs.Q2, 0.68]
+            coordinates: [calcs.Q2, 0.8]
             text: "`${calcs.Q2.toFixed(2)}`"
             bgcolor: colors.bg
             color: colors.inkSoft
             fontSize: 9
-            position: c
+            position: t
         - Label:
-            coordinates: [calcs.Q2, 0.54]
+            coordinates: [calcs.Q2, 0.6]
             text: "'(mediana)'"
             bgcolor: colors.bg
             color: colors.inkSoft
             fontSize: 8
-            position: c
+            position: t
 
         - Label:
             coordinates: [calcs.Q3, 0.84]
@@ -178,12 +179,12 @@ layout:
             fontSize: 10
             position: c
         - Label:
-            coordinates: [calcs.Q3, 0.68]
+            coordinates: [calcs.Q3, 0.8]
             text: "`${calcs.Q3.toFixed(2)}`"
             bgcolor: colors.bg
             color: colors.inkSoft
             fontSize: 9
-            position: c
+            position: t
 
         # percentuais (opcional)
 
@@ -279,7 +280,7 @@ layout:
         # rótulos dos valores (alternando cima/baixo pra não embolar)
 
         - Label:
-            coordinates: [params.x_1, 0.14]
+            coordinates: [params.x_1, 0.18]
             text: "`${params.x_1.toFixed(1)}`"
             color: colors.inkSoft
             fontSize: 9
@@ -288,7 +289,7 @@ layout:
             show: (params.x_1>5)
 
         - Label:
-            coordinates: [params.x_2, -0.14]
+            coordinates: [params.x_2, -0.18]
             text: "`${params.x_2.toFixed(1)}`"
             color: colors.inkSoft
             fontSize: 9
@@ -296,7 +297,7 @@ layout:
             bgcolor: colors.bg
 
         - Label:
-            coordinates: [params.x_3, 0.14]
+            coordinates: [params.x_3, 0.18]
             text: "`${params.x_3.toFixed(1)}`"
             color: colors.inkSoft
             fontSize: 9
@@ -304,7 +305,7 @@ layout:
             bgcolor: colors.bg
 
         - Label:
-            coordinates: [params.x_4, -0.14]
+            coordinates: [params.x_4, -0.18]
             text: "`${params.x_4.toFixed(1)}`"
             color: colors.inkSoft
             fontSize: 9
@@ -312,7 +313,7 @@ layout:
             bgcolor: colors.bg
 
         - Label:
-            coordinates: [params.x_5, 0.14]
+            coordinates: [params.x_5, 0.18]
             text: "`${params.x_5.toFixed(1)}`"
             color: colors.inkSoft
             fontSize: 9
@@ -320,7 +321,7 @@ layout:
             bgcolor: colors.bg
 
         - Label:
-            coordinates: [params.x_6, -0.14]
+            coordinates: [params.x_6, -0.18]
             text: "`${params.x_6.toFixed(1)}`"
             color: colors.inkSoft
             fontSize: 9
@@ -328,7 +329,7 @@ layout:
             bgcolor: colors.bg
 
         - Label:
-            coordinates: [params.x_7, 0.14]
+            coordinates: [params.x_7, 0.18]
             text: "`${params.x_7.toFixed(1)}`"
             color: colors.inkSoft
             fontSize: 9
@@ -336,7 +337,7 @@ layout:
             bgcolor: colors.bg
 
         - Label:
-            coordinates: [params.x_8, -0.14]
+            coordinates: [params.x_8, -0.18]
             text: "`${params.x_8.toFixed(1)}`"
             color: colors.inkSoft
             fontSize: 9
@@ -349,6 +350,7 @@ layout:
       controls:
         - title: ""
           divs:
+            - html: "<p>Pontos arrastáveis na reta. (Sem clamp, então evite cruzar se quiser manter a interpretação de rol.)</p>"
             - html: "$$\\tiny Q_1=\\frac{x_2+x_3}{2},\\quad Q_2=\\frac{x_4+x_5}{2},\\quad Q_3=\\frac{x_6+x_7}{2}$$"
             - html: "<hr>"
             - html: "`$$\\\\tiny Q_1=${calcs.Q1.toFixed(2)}, Q_2=${calcs.Q2.toFixed(2)}, Q_3=${calcs.Q3.toFixed(2)}$$`"

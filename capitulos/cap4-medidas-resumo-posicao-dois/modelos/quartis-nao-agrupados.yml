@@ -349,7 +349,8 @@ layout:
       controls:
         - title: ""
           divs:
-            - html: "$$\\tiny Q_1=\\frac{x_2+x_3}{2},\\quad Q_2=\\frac{x_4+x_5}{2},\\quad Q_3=\\frac{x_6+x_7}{2}$$"
+            - html: "$$\\footnotesize P_{Q_1}=\\frac{n \\cdot 1}{4},\\quad P_{Q_2}=\\frac{n \\cdot 2}{4},\\quad P_{Q_3}=\\frac{n \\cdot 3}{4}$$"
+            - html: "$$\\footnotesize Q_1=\\frac{x_2+x_3}{2},\\quad Q_2=\\frac{x_4+x_5}{2},\\quad Q_3=\\frac{x_6+x_7}{2}$$"
             - html: "<hr>"
-            - html: "`$$\\\\tiny Q_1=${calcs.Q1.toFixed(2)}, Q_2=${calcs.Q2.toFixed(2)}, Q_3=${calcs.Q3.toFixed(2)}$$`"
-            - html: "`$$\\\\tiny Valores: \\\\{ ${params.x_1.toFixed(1)}, ${params.x_2.toFixed(1)}, ${params.x_3.toFixed(1)}, ${params.x_4.toFixed(1)}, ${params.x_5.toFixed(1)}, ${params.x_6.toFixed(1)}, ${params.x_7.toFixed(1)}, ${params.x_8.toFixed(1)} \\\\} $$`"
+            - html: "`$$\\\\footnotesize Q_1=${calcs.Q1.toFixed(2)}, Q_2=${calcs.Q2.toFixed(2)}, Q_3=${calcs.Q3.toFixed(2)}$$`"
+            - html: "`$$\\\\footnotesize Valores: \\\\{ ${params.x_1.toFixed(1)}, ${params.x_2.toFixed(1)}, ${params.x_3.toFixed(1)}, ${params.x_4.toFixed(1)}, ${params.x_5.toFixed(1)}, ${params.x_6.toFixed(1)}, ${params.x_7.toFixed(1)}, ${params.x_8.toFixed(1)} \\\\} $$`"

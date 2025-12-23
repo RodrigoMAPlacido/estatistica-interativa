@@ -1,0 +1,222 @@
+<!-- =========================================================
+   MESMA MÉDIA (ARITMÉTICA), BARRAS DIFERENTES — 2 PAINÉIS
+   Estilo semelhante ao exemplo (moldura + eixos + grade + linha da média)
+   Dados genéricos (0–10):
+     Conjunto A: 2, 5, 8, 5  -> média = 5,0
+     Conjunto B: 1, 4, 9, 6  -> média = 5,0
+   ========================================================= -->
+<svg viewBox="0 0 1500 780" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Mesma média aritmética com distribuições diferentes</title>
+  <desc id="desc">
+    Dois gráficos de barras lado a lado (0 a 10) com médias aritméticas iguais a 5,0,
+    mas com barras diferentes em cada conjunto. Uma linha horizontal marca a média em cada painel.
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --grid:#9ca3af;
+        --mean:#111827;
+        --font:"et-book","ETBook","Georgia",serif;
+        --cycle:7.5s;
+        --ease:ease-in-out;
+      }
+
+      text{ font-family:var(--font); fill:var(--ink); user-select:none; }
+      .u-stroke{ stroke:var(--ink); fill:none; stroke-linecap:round; stroke-linejoin:round; }
+      .u-panel{ stroke-width:2; rx:12; }
+      .label{ font-size:38px; font-weight:600; text-anchor:middle; }
+      .small{ font-size:24px; }
+      .tiny{ font-size:20px; }
+
+      /* ===== Barras (crescimento vertical) ===== */
+      @keyframes growY{
+        0%{ transform:scaleY(0); opacity:1 }
+        16%,78%{ transform:scaleY(1); opacity:1 }
+        100%{ transform:scaleY(0); opacity:1 }
+      }
+      .bar{
+        fill:var(--ink);
+        transform-box:fill-box;
+        transform-origin:bottom;
+        transform:scaleY(0);
+      }
+      .a1{ animation:growY var(--cycle) var(--ease) infinite 0s; }
+      .a2{ animation:growY var(--cycle) var(--ease) infinite .12s; }
+      .a3{ animation:growY var(--cycle) var(--ease) infinite .24s; }
+      .a4{ animation:growY var(--cycle) var(--ease) infinite .36s; }
+
+      .b1{ animation:growY var(--cycle) var(--ease) infinite .55s; }
+      .b2{ animation:growY var(--cycle) var(--ease) infinite .67s; }
+      .b3{ animation:growY var(--cycle) var(--ease) infinite .79s; }
+      .b4{ animation:growY var(--cycle) var(--ease) infinite .91s; }
+
+      /* ===== Linha da média ===== */
+      .u-mean-line{
+        stroke:var(--mean);
+        stroke-width:3;
+        stroke-dasharray:520;
+        stroke-dashoffset:520;
+        opacity:.95;
+        animation:meanLine var(--cycle) var(--ease) infinite;
+      }
+      @keyframes meanLine{
+        0%{ stroke-dashoffset:520; opacity:0 }
+        18%,70%{ stroke-dashoffset:0; opacity:1 }
+        100%{ stroke-dashoffset:520; opacity:0 }
+      }
+      .mean-label{
+        font-size:20px;
+        font-weight:600;
+        fill:var(--mean);
+        opacity:0;
+        animation:meanLabel var(--cycle) var(--ease) infinite;
+      }
+      @keyframes meanLabel{
+        0%,22%{ opacity:0 }
+        30%,70%{ opacity:1 }
+        100%{ opacity:0 }
+      }
+
+      /* ===== Valores acima das barras (aparecem junto) ===== */
+      .val{
+        font-size:16px;
+        font-weight:600;
+        opacity:0;
+        animation:valIn var(--cycle) var(--ease) infinite;
+      }
+      @keyframes valIn{
+        0%,22%{ opacity:0 }
+        34%,70%{ opacity:1 }
+        100%{ opacity:0 }
+      }
+
+      /* Grade */
+      .grid{ stroke:var(--grid); opacity:.35; }
+
+      @media (prefers-reduced-motion:reduce){
+        .bar{ animation:none; transform:scaleY(1); }
+        .u-mean-line{ animation:none; stroke-dashoffset:0; opacity:1; }
+        .mean-label{ animation:none; opacity:1; }
+        .val{ animation:none; opacity:1; }
+      }
+    </style>
+  </defs>
+
+  <!-- =========================================================
+       Geometria (por painel)
+       - Moldura: 600x520
+       - Área do gráfico:
+           xL = 170, xR = 610  (largura útil = 440)
+           yTop = 300, yBot = 580 (altura = 280)
+         Escala: 0..10 -> 28 px por unidade
+         y(v) = yBot - 28*v
+       ========================================================= -->
+
+  <!-- ===================== PAINEL ESQUERDO ===================== -->
+  <g id="panel-left">
+    <rect x="80" y="140" width="650" height="540" class="u-panel u-stroke"/>
+
+    <!-- Cabeçalho -->
+    <text x="405" y="200" class="label">Gráfico de barras</text>
+    <text x="405" y="238" class="small" text-anchor="middle">Conjunto A (0–10) e média aritmética</text>
+
+<g transform="translate(-40,-35) scale(1.1)">
+    <!-- Eixos -->
+    <g class="u-stroke" style="stroke-width:2.5">
+      <line x1="170" y1="580" x2="610" y2="580"/>
+      <line x1="170" y1="580" x2="170" y2="300"/>
+    </g>
+
+    <!-- Grades horizontais + rótulos Y (0,2,4,6,8,10) -->
+    <g class="u-stroke small">
+      <line x1="170" y1="580" x2="610" y2="580" class="grid"/><text x="155" y="585" text-anchor="end" class="tiny">0</text>
+      <line x1="170" y1="524" x2="610" y2="524" class="grid"/><text x="155" y="529" text-anchor="end" class="tiny">2</text>
+      <line x1="170" y1="468" x2="610" y2="468" class="grid"/><text x="155" y="473" text-anchor="end" class="tiny">4</text>
+      <line x1="170" y1="412" x2="610" y2="412" class="grid"/><text x="155" y="417" text-anchor="end" class="tiny">6</text>
+      <line x1="170" y1="356" x2="610" y2="356" class="grid"/><text x="155" y="361" text-anchor="end" class="tiny">8</text>
+      <line x1="170" y1="300" x2="610" y2="300" class="grid"/><text x="155" y="305" text-anchor="end" class="tiny">10</text>
+    </g>
+
+    <!-- Barras A: 2,5,8,5  (largura = 64, gap ~70) -->
+    <!-- x: 230, 350, 470, 590 (centros); largura 64 -->
+    <!-- y(v)=580-28*v -->
+    <rect x="198" y="524" width="64" height="56"  class="bar a1"/> <!-- 2 -->
+    <rect x="318" y="440" width="64" height="140" class="bar a2"/> <!-- 5 -->
+    <rect x="438" y="356" width="64" height="224" class="bar a3"/> <!-- 8 -->
+    <rect x="558" y="440" width="64" height="140" class="bar a4"/> <!-- 5 -->
+
+    <!-- Valores acima -->
+    <text x="230" y="512" text-anchor="middle" class="val">2</text>
+    <text x="350" y="428" text-anchor="middle" class="val">5</text>
+    <text x="470" y="344" text-anchor="middle" class="val">8</text>
+    <text x="590" y="428" text-anchor="middle" class="val">5</text>
+
+    <!-- Rótulos X -->
+    <g class="tiny">
+      <text x="230" y="625" text-anchor="middle">Obs. 1</text>
+      <text x="350" y="625" text-anchor="middle">Obs. 2</text>
+      <text x="470" y="625" text-anchor="middle">Obs. 3</text>
+      <text x="590" y="625" text-anchor="middle">Obs. 4</text>
+    </g>
+
+    <!-- Linha da média: média = 5 -> y = 440 -->
+    <line x1="170" y1="440" x2="690" y2="440" class="u-mean-line"/>
+    <text x="626" y="405" class="mean-label">Média</text>
+    <text x="626" y="424" class="mean-label">= 5,0</text>
+  </g>
+</g>
+  <!-- ===================== PAINEL DIREITO ===================== -->
+  <g id="panel-right">
+    <rect x="770" y="140" width="650" height="540" class="u-panel u-stroke"/>
+
+    <!-- Cabeçalho -->
+    <text x="1095" y="200" class="label">Gráfico de barras</text>
+    <text x="1095" y="238" class="small" text-anchor="middle">Conjunto B (0–10) e média aritmética</text>
+
+<g transform="translate(-110,-35) scale(1.1)">
+
+    <!-- Eixos -->
+    <g class="u-stroke" style="stroke-width:2.5">
+      <line x1="860" y1="580" x2="1300" y2="580"/>
+      <line x1="860" y1="580" x2="860" y2="300"/>
+    </g>
+
+    <!-- Grades horizontais + rótulos Y -->
+    <g class="u-stroke small">
+      <line x1="860" y1="580" x2="1300" y2="580" class="grid"/><text x="845" y="585" text-anchor="end" class="tiny">0</text>
+      <line x1="860" y1="524" x2="1300" y2="524" class="grid"/><text x="845" y="529" text-anchor="end" class="tiny">2</text>
+      <line x1="860" y1="468" x2="1300" y2="468" class="grid"/><text x="845" y="473" text-anchor="end" class="tiny">4</text>
+      <line x1="860" y1="412" x2="1300" y2="412" class="grid"/><text x="845" y="417" text-anchor="end" class="tiny">6</text>
+      <line x1="860" y1="356" x2="1300" y2="356" class="grid"/><text x="845" y="361" text-anchor="end" class="tiny">8</text>
+      <line x1="860" y1="300" x2="1300" y2="300" class="grid"/><text x="845" y="305" text-anchor="end" class="tiny">10</text>
+    </g>
+
+    <!-- Barras B: 1,4,9,6 -->
+    <rect x="888"  y="328" width="64" height="252"  class="bar b1"/> <!-- 9 -->
+    <rect x="1008" y="468" width="64" height="112" class="bar b2"/> <!-- 4 -->
+    <rect x="1128" y="412" width="64" height="168" class="bar b3"/> <!-- 6 -->
+    <rect x="1248" y="552" width="64" height="28" class="bar b4"/> <!-- 1 -->
+
+    <!-- Valores acima -->
+    <text x="920"  y="316" text-anchor="middle" class="val">9</text>
+    <text x="1040" y="456" text-anchor="middle" class="val">4</text>
+    <text x="1160" y="400" text-anchor="middle" class="val">6</text>
+    <text x="1280" y="540" text-anchor="middle" class="val">1</text>
+
+    <!-- Rótulos X -->
+    <g class="tiny">
+      <text x="920"  y="625" text-anchor="middle">Obs. 1</text>
+      <text x="1040" y="625" text-anchor="middle">Obs. 2</text>
+      <text x="1160" y="625" text-anchor="middle">Obs. 3</text>
+      <text x="1280" y="625" text-anchor="middle">Obs. 4</text>
+    </g>
+
+    <!-- Linha da média: média = 5 -> y = 440 -->
+    <line x1="860" y1="440" x2="1380" y2="440" class="u-mean-line"/>
+    <text x="1321" y="405" class="mean-label">Média</text>
+    <text x="1321" y="424" class="mean-label">= 5,0</text>
+  </g>
+  </g>
+</svg>

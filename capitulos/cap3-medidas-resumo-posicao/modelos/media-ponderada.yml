@@ -291,13 +291,13 @@ layout:
 
           - html: "`<figure class='sidebar-figure'>
               <div class='sidebar-table-wrap'>
-                  <table class='sidebar-table'  style='font-size:16px'>
+                  <table class='sidebar-table'>
                   <thead>
                     <tr>
                       <th>Disciplina</th>
                       <th>Nota (<em>x</em>)</th>
                       <th>Peso (<em>w</em>)</th>
-                      <th>$Nota \\\\times Peso$</th>
+                      <th>Peso x Nota</th>
 
                     </tr>
                   </thead>

@@ -1,0 +1,303 @@
+---
+schema: EconSchema
+aspectRatio: 2
+
+params:
+  - name: x_1
+    value: 5.0
+    min: 5
+    max: 15
+    round: 0.1
+  - name: x_2
+    value: 6.0
+    min: 5
+    max: 15
+    round: 0.1
+  - name: x_3
+    value: 7.0
+    min: 5
+    max: 15
+    round: 0.1
+  - name: x_4
+    value: 8.0
+    min: 5
+    max: 15
+    round: 0.1
+  - name: x_5
+    value: 9.0
+    min: 5
+    max: 15
+    round: 0.1
+  - name: x_6
+    value: 10.0
+    min: 5
+    max: 15
+    round: 0.1
+  - name: x_7
+    value: 11.0
+    min: 5
+    max: 15
+    round: 0.1
+  - name: x_8
+    value: 12.0
+    min: 5
+    max: 15
+    round: 0.1
+  - name: x_9
+    value: 13.0
+    min: 5
+    max: 15
+    round: 0.1
+  - name: x_10
+    value: 15.0
+    min: 5
+    max: 15
+    round: 0.1
+
+calcs:
+  # ============================
+  # 0) Tamanho da amostra
+  # ============================
+  n: "10"
+
+  # ============================
+  # 1) Posições dos percentis: P_Perq = q*n/100
+  # q em {5,25,50,75,95}
+  # ============================
+  P5:  "( 5*calcs.n/100)"
+  P25: "(25*calcs.n/100)"
+  P50: "(50*calcs.n/100)"
+  P75: "(75*calcs.n/100)"
+  P95: "(95*calcs.n/100)"
+
+  # ============================
+  # 2) Percentis (regra do ponto médio quando P é inteiro)
+  # Se P não inteiro -> Per = x_(ceil(P))
+  # Se P inteiro     -> Per = (x_P + x_(P+1))/2
+  # Aqui (n=10):
+  # P5=0.5  -> ceil=1  -> x1
+  # P25=2.5 -> ceil=3  -> x3
+  # P50=5   -> inteiro -> (x5+x6)/2
+  # P75=7.5 -> ceil=8  -> x8
+  # P95=9.5 -> ceil=10 -> x10
+  # ============================
+  Per5:  "(params.x_1)"
+  Per25: "(params.x_3)"
+  Per50: "((params.x_5 + params.x_6)/2)"
+  Per75: "(params.x_8)"
+  Per95: "(params.x_10)"
+
+colors:
+  ink: "'#111827'"
+  inkSoft: "'#64748b'"
+  accent: "'#64748b'"
+  bg: "'#ffffff'"
+  point: "'#1f77b4'"
+
+layout:
+  OneWideGraphPlusSidebar:
+
+    graph:
+      xAxis:
+        min: 5
+        max: 15
+        ticks: 0
+        title: Percentis (Per) com pontos arrastáveis (n=10)
+      yAxis:
+        show: false
+        min: -1
+        max: 1
+        ticks: 0
+
+      objects:
+        # ---------------------------
+        # Reta numérica
+        # ---------------------------
+        - Segment: { a: [5, 0], b: [15, 0], color: colors.ink, strokeWidth: 3 }
+
+        # ticks (extremos)
+        - Segment: { a: [5, -0.08],  b: [5,  0.08],  color: colors.ink, strokeWidth: 2 }
+        - Segment: { a: [15,-0.08],  b: [15, 0.08],  color: colors.ink, strokeWidth: 2 }
+        - Label:   { coordinates: [5,  -0.25], text: "'5'",  color: colors.inkSoft, fontSize: 10, position: c }
+        - Label:   { coordinates: [15, -0.25], text: "'15'", color: colors.inkSoft, fontSize: 10, position: c }
+
+        # ---------------------------
+        # Retas verticais dos percentis (Per5, Per25, Per50, Per75, Per95)
+        # ---------------------------
+        - Segment: { a: [calcs.Per5,  -0.70], b: [calcs.Per5,   0.70], color: colors.accent, strokeWidth: 1.2, lineStyle: dotted }
+        - Segment: { a: [calcs.Per25, -0.70], b: [calcs.Per25,  0.70], color: colors.accent, strokeWidth: 1.2, lineStyle: dashed }
+        - Segment: { a: [calcs.Per50, -0.82], b: [calcs.Per50,  0.82], color: colors.accent, strokeWidth: 2.0 }
+        - Segment: { a: [calcs.Per75, -0.70], b: [calcs.Per75,  0.70], color: colors.accent, strokeWidth: 1.2, lineStyle: dashed }
+        - Segment: { a: [calcs.Per95, -0.70], b: [calcs.Per95,  0.70], color: colors.accent, strokeWidth: 1.2, lineStyle: dotted }
+
+        # ---------------------------
+        # Labels Per (alternando alturas) + valores
+        # ---------------------------
+        - Label: { coordinates: [calcs.Per5,  0.86], text: "`\\\\bf{Per}_5`",  bgcolor: colors.bg, color: colors.ink, fontSize: 10, position: c }
+        - Label: { coordinates: [calcs.Per5,  0.70], text: "`${calcs.Per5.toFixed(2)}`",  bgcolor: colors.bg, color: colors.inkSoft, fontSize: 9, position: c }
+
+        - Label: { coordinates: [calcs.Per25, 0.56], text: "`\\\\bf{Per}_{25}`", bgcolor: colors.bg, color: colors.ink, fontSize: 10, position: c }
+        - Label: { coordinates: [calcs.Per25, 0.40], text: "`${calcs.Per25.toFixed(2)}`", bgcolor: colors.bg, color: colors.inkSoft, fontSize: 9, position: c }
+
+        - Label: { coordinates: [calcs.Per50, 0.86], text: "`\\\\bf{Per}_{50}`", bgcolor: colors.bg, color: colors.ink, fontSize: 10, position: c }
+        - Label: { coordinates: [calcs.Per50, 0.70], text: "`${calcs.Per50.toFixed(2)}`", bgcolor: colors.bg, color: colors.inkSoft, fontSize: 9, position: c }
+        - Label: { coordinates: [calcs.Per50, 0.56], text: "'(mediana)'",        bgcolor: colors.bg, color: colors.inkSoft, fontSize: 8, position: c }
+
+        - Label: { coordinates: [calcs.Per75, 0.56], text: "`\\\\bf{Per}_{75}`", bgcolor: colors.bg, color: colors.ink, fontSize: 10, position: c }
+        - Label: { coordinates: [calcs.Per75, 0.40], text: "`${calcs.Per75.toFixed(2)}`", bgcolor: colors.bg, color: colors.inkSoft, fontSize: 9, position: c }
+
+        - Label: { coordinates: [calcs.Per95, 0.86], text: "`\\\\bf{Per}_{95}`", bgcolor: colors.bg, color: colors.ink, fontSize: 10, position: c }
+        - Label: { coordinates: [calcs.Per95, 0.70], text: "`${calcs.Per95.toFixed(2)}`", bgcolor: colors.bg, color: colors.inkSoft, fontSize: 9, position: c }
+
+        # ---------------------------
+        # Percentuais (5%,25%,50%,75%,95%)
+        # ---------------------------
+        - Label: { coordinates: [calcs.Per5,  -0.82], text: "'5\\\\%'",  color: colors.inkSoft, fontSize: 9, position: c }
+        - Label: { coordinates: [calcs.Per25, -0.62], text: "'25\\\\%'", color: colors.inkSoft, fontSize: 9, position: c }
+        - Label: { coordinates: [calcs.Per50, -0.82], text: "'50\\\\%'", color: colors.inkSoft, fontSize: 9, position: c }
+        - Label: { coordinates: [calcs.Per75, -0.62], text: "'75\\\\%'", color: colors.inkSoft, fontSize: 9, position: c }
+        - Label: { coordinates: [calcs.Per95, -0.82], text: "'95\\\\%'", color: colors.inkSoft, fontSize: 9, position: c }
+
+        # ---------------------------
+        # PONTOS (Point) com drag horizontal + clamp (sem cruzar)
+        # ---------------------------
+        - Point:
+            coordinates: [params.x_1, 0]
+            color: colors.ink
+            drag:
+              - directions: x
+                param: x_1
+                expression: "((drag.x >= 5) ? ((drag.x <= params.x_2) ? drag.x : params.x_2) : 5)"
+
+        - Point:
+            coordinates: [params.x_2, 0]
+            color: colors.inkSoft
+            drag:
+              - directions: x
+                param: x_2
+                expression: "((drag.x >= params.x_1) ? ((drag.x <= params.x_3) ? drag.x : params.x_3) : params.x_1)"
+
+        - Point:
+            coordinates: [params.x_3, 0]
+            color: colors.ink
+            drag:
+              - directions: x
+                param: x_3
+                expression: "((drag.x >= params.x_2) ? ((drag.x <= params.x_4) ? drag.x : params.x_4) : params.x_2)"
+
+        - Point:
+            coordinates: [params.x_4, 0]
+            color: colors.inkSoft
+            drag:
+              - directions: x
+                param: x_4
+                expression: "((drag.x >= params.x_3) ? ((drag.x <= params.x_5) ? drag.x : params.x_5) : params.x_3)"
+
+        - Point:
+            coordinates: [params.x_5, 0]
+            color: colors.ink
+            drag:
+              - directions: x
+                param: x_5
+                expression: "((drag.x >= params.x_4) ? ((drag.x <= params.x_6) ? drag.x : params.x_6) : params.x_4)"
+
+        - Point:
+            coordinates: [params.x_6, 0]
+            color: colors.inkSoft
+            drag:
+              - directions: x
+                param: x_6
+                expression: "((drag.x >= params.x_5) ? ((drag.x <= params.x_7) ? drag.x : params.x_7) : params.x_5)"
+
+        - Point:
+            coordinates: [params.x_7, 0]
+            color: colors.ink
+            drag:
+              - directions: x
+                param: x_7
+                expression: "((drag.x >= params.x_6) ? ((drag.x <= params.x_8) ? drag.x : params.x_8) : params.x_6)"
+
+        - Point:
+            coordinates: [params.x_8, 0]
+            color: colors.inkSoft
+            drag:
+              - directions: x
+                param: x_8
+                expression: "((drag.x >= params.x_7) ? ((drag.x <= params.x_9) ? drag.x : params.x_9) : params.x_7)"
+
+        - Point:
+            coordinates: [params.x_9, 0]
+            color: colors.ink
+            drag:
+              - directions: x
+                param: x_9
+                expression: "((drag.x >= params.x_8) ? ((drag.x <= params.x_10) ? drag.x : params.x_10) : params.x_8)"
+
+        - Point:
+            coordinates: [params.x_10, 0]
+            color: colors.inkSoft
+            drag:
+              - directions: x
+                param: x_10
+                expression: "((drag.x >= params.x_9) ? ((drag.x <= 15) ? drag.x : 15) : params.x_9)"
+
+        # rótulos dos valores (alternando cima/baixo)
+        - Label: { coordinates: [params.x_1,   0.14], text: "`${params.x_1.toFixed(1)}`",  color: colors.inkSoft, fontSize: 9, position: c, bgcolor: colors.bg, show: (params.x_1>5) }
+        - Label: { coordinates: [params.x_2,  -0.14], text: "`${params.x_2.toFixed(1)}`",  color: colors.inkSoft, fontSize: 9, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [params.x_3,   0.14], text: "`${params.x_3.toFixed(1)}`",  color: colors.inkSoft, fontSize: 9, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [params.x_4,  -0.14], text: "`${params.x_4.toFixed(1)}`",  color: colors.inkSoft, fontSize: 9, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [params.x_5,   0.14], text: "`${params.x_5.toFixed(1)}`",  color: colors.inkSoft, fontSize: 9, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [params.x_6,  -0.14], text: "`${params.x_6.toFixed(1)}`",  color: colors.inkSoft, fontSize: 9, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [params.x_7,   0.14], text: "`${params.x_7.toFixed(1)}`",  color: colors.inkSoft, fontSize: 9, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [params.x_8,  -0.14], text: "`${params.x_8.toFixed(1)}`",  color: colors.inkSoft, fontSize: 9, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [params.x_9,   0.14], text: "`${params.x_9.toFixed(1)}`",  color: colors.inkSoft, fontSize: 9, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [params.x_10, -0.14], text: "`${params.x_10.toFixed(1)}`", color: colors.inkSoft, fontSize: 9, position: c, bgcolor: colors.bg, show: (params.x_10<15) }
+
+    sidebar:
+      triggerWidth: 9999
+      controls:
+        - title: ""
+          divs:
+            # ---------------------------
+            # 1) POSIÇÕES DOS PERCENTIS
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Posição dos Percentis (Per):</b></div>"
+
+            - html: "`$$\\\\small P_{\\\\mathrm{Per}_k}=\\\\frac{k \\\\cdot n}{100}\\\\quad (k\\\\in\\\\{5,25,50,75,95\\\\};\\\\; n=${calcs.n.toFixed(0)})$$`"
+
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Aplicando:</b></div>"
+
+            - html: "`$$\\\\small
+                      P_{\\\\mathrm{Per}_5}=\\\\frac{5\\\\cdot ${calcs.n.toFixed(0)}}{100}=${calcs.P5.toFixed(1)},\\\\qquad
+                      P_{\\\\mathrm{Per}_{25}}=\\\\frac{25\\\\cdot ${calcs.n.toFixed(0)}}{100}=${calcs.P25.toFixed(1)}.
+                      $$`"
+
+            - html: "`$$\\\\small
+                      P_{\\\\mathrm{Per}_{50}}=\\\\frac{50\\\\cdot ${calcs.n.toFixed(0)}}{100}=${calcs.P50.toFixed(1)},\\\\qquad
+                      P_{\\\\mathrm{Per}_{75}}=\\\\frac{75\\\\cdot ${calcs.n.toFixed(0)}}{100}=${calcs.P75.toFixed(1)}.
+                      $$`"
+
+            - html: "`$$\\\\small
+                      P_{\\\\mathrm{Per}_{95}}=\\\\frac{95\\\\cdot ${calcs.n.toFixed(0)}}{100}=${calcs.P95.toFixed(1)}.
+                      $$`"
+
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Regra do Ponto Médio:</b></div>"
+
+            - html: "$$\\small Per_k= \\frac{x_{(P_{Per_k})} + x_{(P_{Per_k}+1)}}{2}$$"
+
+
+            # ---------------------------
+            # 2) RESULTADOS
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Resultados:</b></div>"
+
+            - html: "`$$\\\\small
+                      \\\\mathrm{Per}_5=${calcs.Per5.toFixed(2)},\\\\; \\\\quad
+                      \\\\mathrm{Per}_{25}=${calcs.Per25.toFixed(2)},\\\\; \\\\quad
+                      \\\\mathrm{Per}_{50}=${calcs.Per50.toFixed(2)}.
+                      $$`"
+
+            - html: "`$$\\\\small
+                      \\\\mathrm{Per}_{75}=${calcs.Per75.toFixed(2)},\\\\; \\\\quad
+                      \\\\mathrm{Per}_{95}=${calcs.Per95.toFixed(2)}.
+                      $$`"

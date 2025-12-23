@@ -1,0 +1,293 @@
+<!-- =========================================================
+   CONCEITO DE QUARTIS
+   Proporções acumuladas → cortes Q1, Q2, Q3 (CSS-only)
+   Paleta idêntica ao SVG da média aritmética
+   ========================================================= -->
+<svg viewBox="0 0 1550 744" xmlns="http://www.w3.org/2000/svg"
+     role="img" aria-labelledby="title desc">
+  <title id="title">Conceito de quartis</title>
+  <desc id="desc">
+    Observações ordenadas sobre uma reta numérica. Em sequência, aparecem faixas de 25%, 50% e 75%
+    das observações e as linhas verticais dos quartis Q1, Q2 (mediana) e Q3. Ao final, destaca que
+    quartis são percentuais de observações, não percentuais do valor.
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --ink-soft:#64748b;
+        --grid:#e5e7eb;
+        --accent:#64748b;
+        --font:"et-book","ETBook","Georgia",serif;
+        --cycle:7s;
+        --ease:ease-in-out;
+      }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        user-select:none;
+      }
+
+      .u-stroke{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+      }
+
+      .u-panel{
+        stroke-width:2;
+        rx:22;
+        ry:22;
+      }
+
+      .label{
+        font-size:46px;
+        font-weight:600;
+        text-anchor:middle;
+      }
+
+      .small{
+        font-size:32px;
+        text-anchor:middle;
+        fill:var(--ink-soft);
+      }
+
+      .axis{ stroke-width:2; }
+
+      .grid{
+        stroke:var(--grid);
+        stroke-width:1;
+        stroke-dasharray:6 8;
+      }
+
+      .tick-label{
+        font-size:22px;
+        fill:var(--ink-soft);
+      }
+
+      /* ===================== ELEMENTOS ===================== */
+      .dot{ fill:var(--ink); opacity:.9; }
+      .dot.soft{ opacity:.55; }
+
+      .seg{
+        fill:var(--accent);
+        opacity:0;
+      }
+
+      .qline{
+        stroke:var(--accent);
+        stroke-width:4;
+        opacity:0;
+      }
+      .q1{ stroke-dasharray:10 10; }  /* Q1: tracejado */
+      .q2{ stroke-dasharray:none; }   /* Q2: contínuo */
+      .q3{ stroke-dasharray:2 10; }   /* Q3: pontilhado */
+
+      .qlab{
+        font-size:28px;
+        font-weight:600;
+        fill:var(--ink);
+        opacity:0;
+      }
+      .qlab .sub{ font-size:18px; baseline-shift:sub; }
+      .qlab .hint{ font-size:22px; fill:var(--ink-soft); font-weight:500; }
+
+      .badge-box{
+        fill:#fff;
+        stroke:var(--accent);
+        stroke-width:1.5;
+        rx:12; ry:12;
+        opacity:0;
+      }
+
+      .note-box{
+        fill:#fff;
+        stroke:var(--grid);
+        stroke-width:2;
+        rx:18; ry:18;
+        opacity:0;
+      }
+      .note-text{
+        font-size:26px;
+        fill:var(--ink);
+        opacity:0;
+      }
+      .note-text .strong{ font-weight:700; }
+      .note-text .soft{ fill:var(--ink-soft); }
+
+      /* ======= NOVO: % que desce para ficar na linha vertical ======= */
+      .pct{
+        font-size:22px;
+        fill:var(--ink-soft);
+        text-anchor:middle;
+      }
+      .a-p25{ animation:pct25 var(--cycle) var(--ease) infinite; }
+      .a-p50{ animation:pct50 var(--cycle) var(--ease) infinite; }
+      .a-p75{ animation:pct75 var(--cycle) var(--ease) infinite; }
+
+      /* 42px: de y=190 para y=232 (abaixo, “na linha vertical”) */
+      @keyframes pct25{
+        0%,26%{ transform:translateY(0px); }
+        34%,100%{ transform:translateY(93px); }
+      }
+      @keyframes pct50{
+        0%,36%{ transform:translateY(0px); }
+        44%,100%{ transform:translateY(93px); }
+      }
+      @keyframes pct75{
+        0%,46%{ transform:translateY(0px); }
+        54%,100%{ transform:translateY(93px); }
+      }
+
+      /* ===================== ANIMAÇÕES ===================== */
+      .a-dots{
+        transform-box:fill-box;
+        transform-origin:50% 50%;
+        animation:dotsIn var(--cycle) var(--ease) infinite;
+      }
+      @keyframes dotsIn{
+        0%,10%{ opacity:0; transform:scale(.98); }
+        18%,100%{ opacity:1; transform:scale(1); }
+      }
+
+      .a-seg25{ animation:seg25 var(--cycle) var(--ease) infinite; }
+      .a-seg50{ animation:seg50 var(--cycle) var(--ease) infinite; }
+      .a-seg75{ animation:seg75 var(--cycle) var(--ease) infinite; }
+      @keyframes seg25{ 0%,18%{opacity:0} 26%,55%{opacity:.18} 100%{opacity:.15} }
+      @keyframes seg50{ 0%,28%{opacity:0} 36%,65%{opacity:.16} 100%{opacity:.14} }
+      @keyframes seg75{ 0%,38%{opacity:0} 46%,75%{opacity:.14} 100%{opacity:.12} }
+
+      .a-q1{ animation:q1On var(--cycle) var(--ease) infinite; }
+      .a-q2{ animation:q2On var(--cycle) var(--ease) infinite; }
+      .a-q3{ animation:q3On var(--cycle) var(--ease) infinite; }
+      @keyframes q1On{ 0%,22%{opacity:0} 30%,100%{opacity:1} }
+      @keyframes q2On{ 0%,32%{opacity:0} 40%,100%{opacity:1} }
+      @keyframes q3On{ 0%,42%{opacity:0} 50%,100%{opacity:1} }
+
+      .a-q1t{ animation:q1T var(--cycle) var(--ease) infinite; }
+      .a-q2t{ animation:q2T var(--cycle) var(--ease) infinite; }
+      .a-q3t{ animation:q3T var(--cycle) var(--ease) infinite; }
+      @keyframes q1T{ 0%,24%{opacity:0} 32%,100%{opacity:1} }
+      @keyframes q2T{ 0%,34%{opacity:0} 42%,100%{opacity:1} }
+      @keyframes q3T{ 0%,44%{opacity:0} 52%,100%{opacity:1} }
+
+      .a-b25{ animation:b25 var(--cycle) var(--ease) infinite; }
+      .a-b50{ animation:b50 var(--cycle) var(--ease) infinite; }
+      .a-b75{ animation:b75 var(--cycle) var(--ease) infinite; }
+      @keyframes b25{ 0%,24%{opacity:0} 32%,58%{opacity:1} 72%,100%{opacity:0} }
+      @keyframes b50{ 0%,34%{opacity:0} 42%,66%{opacity:1} 72%,100%{opacity:0} }
+      @keyframes b75{ 0%,44%{opacity:0} 52%,74%{opacity:1} 72%,100%{opacity:0} }
+
+      .a-note{ animation:noteOn var(--cycle) var(--ease) infinite; }
+      @keyframes noteOn{
+        0%,70%{ opacity:0; transform:translateY(8px); }
+        78%,100%{ opacity:1; transform:translateY(0px); }
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        .a-dots,.a-seg25,.a-seg50,.a-seg75,.a-q1,.a-q2,.a-q3,.a-q1t,.a-q2t,.a-q3t,.a-b25,.a-b50,.a-b75,.a-note,
+        .a-p25,.a-p50,.a-p75{
+          animation:none;
+        }
+        .seg{ opacity:.14; }
+        .qline,.qlab{ opacity:1; }
+        .note-box,.note-text{ opacity:1; transform:none; }
+        .a-p25,.a-p50,.a-p75{ transform:translateY(93px); }
+      }
+    </style>
+  </defs>
+
+  <g transform="translate(85,92)">
+    <rect x="0" y="0" width="1380" height="560" class="u-panel u-stroke"/>
+
+    <text x="690" y="55" class="label">Quartis</text>
+    <text x="690" y="90" class="small">Pontos de corte por percentuais de observações</text>
+
+    <g transform="translate(110,150)">
+      <g class="grid">
+        <line x1="0" y1="150" x2="1160" y2="150"/>
+        <line x1="0" y1="210" x2="1160" y2="210"/>
+        <line x1="0" y1="90"  x2="1160" y2="90"/>
+      </g>
+
+      <g class="u-stroke axis">
+        <line x1="0" y1="150" x2="1160" y2="150"/>
+      </g>
+
+      <g class="u-stroke" style="stroke-width:2">
+        <line x1="0"   y1="140" x2="0"   y2="160"/>
+        <line x1="290" y1="140" x2="290" y2="160"/>
+        <line x1="580" y1="140" x2="580" y2="160"/>
+        <line x1="870" y1="140" x2="870" y2="160"/>
+        <line x1="1160" y1="140" x2="1160" y2="160"/>
+      </g>
+
+      <!-- TICKS: agora só mín/máx (os % vão “descer” para a linha vertical) -->
+      <g class="tick-label">
+        <text x="0" y="190" text-anchor="middle">mín</text>
+        <text x="1160" y="190" text-anchor="middle">máx</text>
+      </g>
+
+      <!-- % que desce para baixo na própria linha vertical -->
+      <g class="pct">
+        <text class="a-p25" x="290" y="190">25%</text>
+        <text class="a-p50" x="580" y="190">50%</text>
+        <text class="a-p75" x="870" y="190">75%</text>
+      </g>
+
+      <rect class="seg a-seg25" x="0" y="120" width="290" height="60"/>
+      <rect class="seg a-seg50" x="0" y="120" width="580" height="60"/>
+      <rect class="seg a-seg75" x="0" y="120" width="870" height="60"/>
+
+      <g class="a-dots">
+        <circle class="dot"      cx="40.0"    cy="150" r="7"/>
+        <circle class="dot soft" cx="96.8"    cy="150" r="7"/>
+        <circle class="dot"      cx="153.7"   cy="150" r="7"/>
+        <circle class="dot soft" cx="210.5"   cy="150" r="7"/>
+        <circle class="dot"      cx="267.4"   cy="150" r="7"/>
+        <circle class="dot soft" cx="324.2"   cy="150" r="7"/>
+        <circle class="dot"      cx="381.1"   cy="150" r="7"/>
+        <circle class="dot soft" cx="437.9"   cy="150" r="7"/>
+        <circle class="dot"      cx="494.7"   cy="150" r="7"/>
+        <circle class="dot soft" cx="551.6"   cy="150" r="7"/>
+        <circle class="dot"      cx="608.4"   cy="150" r="7"/>
+        <circle class="dot soft" cx="665.3"   cy="150" r="7"/>
+        <circle class="dot"      cx="722.1"   cy="150" r="7"/>
+        <circle class="dot soft" cx="778.9"   cy="150" r="7"/>
+        <circle class="dot"      cx="835.8"   cy="150" r="7"/>
+        <circle class="dot soft" cx="892.6"   cy="150" r="7"/>
+        <circle class="dot"      cx="949.5"   cy="150" r="7"/>
+        <circle class="dot soft" cx="1006.3"  cy="150" r="7"/>
+        <circle class="dot"      cx="1063.2"  cy="150" r="7"/>
+        <circle class="dot soft" cx="1120.0"  cy="150" r="7"/>
+      </g>
+
+      <line class="qline q1 a-q1" x1="290" y1="40" x2="290" y2="250"/>
+      <line class="qline q2 a-q2" x1="580" y1="40" x2="580" y2="250"/>
+      <line class="qline q3 a-q3" x1="870" y1="40" x2="870" y2="250"/>
+
+      <text class="qlab a-q1t" x="290" y="28" text-anchor="middle">
+        Q<tspan class="sub">1</tspan>
+      </text>
+      <text class="qlab a-q2t" x="580" y="28" text-anchor="middle">
+        Q<tspan class="sub">2</tspan><tspan class="hint"> (mediana)</tspan>
+      </text>
+      <text class="qlab a-q3t" x="870" y="28" text-anchor="middle">
+        Q<tspan class="sub">3</tspan>
+      </text>
+
+      <g class="a-b25">
+        <rect class="badge-box" x="165" y="255" width="250" height="44"/>
+      </g>
+      <g class="a-b50">
+        <rect class="badge-box" x="455" y="255" width="250" height="44"/>
+      </g>
+      <g class="a-b75">
+        <rect class="badge-box" x="745" y="255" width="250" height="44"/>
+      </g>
+    </g>
+  </g>
+</svg>

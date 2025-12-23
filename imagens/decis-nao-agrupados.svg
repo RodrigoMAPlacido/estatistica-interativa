@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- DECIS — Exemplo (n=10): Dois quadros | CSS-only | Padrão u-*/a-* -->
+<svg viewBox="0 0 1500 780" xmlns="http://www.w3.org/2000/svg"
+     role="img" aria-labelledby="title desc">
+  <title id="title">Decis - dados nao-agrupados (n=10)</title>
+  <desc id="desc">
+    Painel esquerdo: dados, rol, posicoes P_Dk=k·n/10 (n=10) e decis por ponto medio (P inteiro).
+    Painel direito: reta numerica com pontos do rol; faixas de 10% acumuladas e linhas D1..D9 aparecem em sequencia e permanecem.
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --ink-soft:#64748b;
+        --grid:#e5e7eb;
+        --accent:#64748b;
+        --font:"et-book","ETBook","Georgia",serif;
+
+        --cycle:12s;
+        --ease:ease-in-out;
+      }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        user-select:none;
+      }
+
+      .u-stroke{ stroke:var(--ink); fill:none; stroke-linecap:round; stroke-linejoin:round; }
+      .u-panel{ stroke-width:2; }
+
+      .label{ font-size:48px; font-weight:700; text-anchor:middle; }
+      .small{ font-size:22px; text-anchor:middle; fill:var(--ink-soft); }
+
+      .mono{ font-variant-numeric: tabular-nums; }
+
+      /* Painel esquerdo */
+      .k{ font-size:20px; font-weight:700; fill:var(--ink); text-anchor:end; }
+      .v{ font-size:22px; fill:var(--ink); }
+      .f{ font-size:18px; fill:var(--ink-soft); }
+      .hr{ stroke:var(--grid); stroke-width:2; }
+
+      .hi{ fill:var(--grid); opacity:0; }
+      @keyframes h1{ 0%,10%{opacity:0} 14%,24%{opacity:.55} 28%,100%{opacity:0} }
+      @keyframes h2{ 0%,24%{opacity:0} 28%,38%{opacity:.45} 42%,100%{opacity:0} }
+      @keyframes h3{ 0%,40%{opacity:0} 44%,54%{opacity:.40} 58%,100%{opacity:0} }
+      @keyframes h4{ 0%,56%{opacity:0} 60%,100%{opacity:.35} }
+      .a-h1{ animation:h1 var(--cycle) var(--ease) infinite; }
+      .a-h2{ animation:h2 var(--cycle) var(--ease) infinite; }
+      .a-h3{ animation:h3 var(--cycle) var(--ease) infinite; }
+      .a-h4{ animation:h4 var(--cycle) var(--ease) infinite; }
+
+      /* Painel direito */
+      .axis{ stroke-width:2; }
+      .grid{ stroke:var(--grid); stroke-width:1; stroke-dasharray:6 8; }
+      .tick-label{ font-size:18px; fill:var(--ink-soft); }
+
+      .dot{ fill:var(--ink); opacity:.9; }
+      .dot.soft{ opacity:.55; }
+
+      .data-lab{ font-size:16px; fill:var(--ink-soft); text-anchor:middle; }
+
+      /* faixas acumuladas (como no seu quartis: surgem e ficam) */
+      .seg{ fill:var(--accent); opacity:0; }
+
+      /* linhas/labels/valores (surgem e ficam) */
+      .dline{ stroke:var(--accent); stroke-width:4; opacity:0; }
+      .d1{ stroke-dasharray:2 10; }
+      .d2{ stroke-dasharray:2 10; }
+      .d3{ stroke-dasharray:2 10; }
+      .d4{ stroke-dasharray:10 10; }
+      .d5{ stroke-dasharray:10 10; }
+      .d6{ stroke-dasharray:10 10; }
+      .d7{ stroke-dasharray:2 10; }
+      .d8{ stroke-dasharray:2 10; }
+      .d9{ stroke-dasharray:2 10; }
+
+      .dlab{ font-size:20px; font-weight:650; fill:var(--ink); opacity:0; text-anchor:middle; }
+      .dlab .sub{ font-size:15px; baseline-shift:sub; }
+      .dval{ font-size:15px; fill:var(--ink-soft); opacity:0; text-anchor:middle; }
+
+      /* percentuais (surgem, caem, e ficam) */
+      .pct{
+        font-size:18px;
+        fill:var(--ink-soft);
+        text-anchor:middle;
+        transform-box:fill-box;
+        transform-origin:50% 50%;
+        opacity:0;
+      }
+
+      /* dots entram e permanecem */
+      .a-dots{
+        transform-box:fill-box;
+        transform-origin:50% 50%;
+        animation:dotsIn var(--cycle) var(--ease) infinite;
+      }
+      @keyframes dotsIn{
+        0%,12%{ opacity:0; transform:scale(.985); }
+        20%,100%{ opacity:1; transform:scale(1); }
+      }
+
+      /* ============
+         Faixas (10%..90%) — acumulam e ficam
+         (desenho em ordem crescente de largura para “somar” opacidades na esquerda)
+         ============ */
+      @keyframes seg10{ 0%,20%{opacity:0} 24%,100%{opacity:.20} }
+      @keyframes seg20{ 0%,26%{opacity:0} 30%,100%{opacity:.18} }
+      @keyframes seg30{ 0%,32%{opacity:0} 36%,100%{opacity:.16} }
+      @keyframes seg40{ 0%,38%{opacity:0} 42%,100%{opacity:.14} }
+      @keyframes seg50{ 0%,44%{opacity:0} 48%,100%{opacity:.12} }
+      @keyframes seg60{ 0%,50%{opacity:0} 54%,100%{opacity:.10} }
+      @keyframes seg70{ 0%,56%{opacity:0} 60%,100%{opacity:.09} }
+      @keyframes seg80{ 0%,62%{opacity:0} 66%,100%{opacity:.08} }
+      @keyframes seg90{ 0%,68%{opacity:0} 72%,100%{opacity:.07} }
+
+      .a-seg10{ animation:seg10 var(--cycle) var(--ease) infinite; }
+      .a-seg20{ animation:seg20 var(--cycle) var(--ease) infinite; }
+      .a-seg30{ animation:seg30 var(--cycle) var(--ease) infinite; }
+      .a-seg40{ animation:seg40 var(--cycle) var(--ease) infinite; }
+      .a-seg50{ animation:seg50 var(--cycle) var(--ease) infinite; }
+      .a-seg60{ animation:seg60 var(--cycle) var(--ease) infinite; }
+      .a-seg70{ animation:seg70 var(--cycle) var(--ease) infinite; }
+      .a-seg80{ animation:seg80 var(--cycle) var(--ease) infinite; }
+      .a-seg90{ animation:seg90 var(--cycle) var(--ease) infinite; }
+
+      /* ============
+         Linhas D1..D9 — surgem e ficam (como q1/q2/q3)
+         ============ */
+      @keyframes d1On{ 0%,22%{opacity:0} 28%,100%{opacity:1} }
+      @keyframes d2On{ 0%,28%{opacity:0} 34%,100%{opacity:1} }
+      @keyframes d3On{ 0%,34%{opacity:0} 40%,100%{opacity:1} }
+      @keyframes d4On{ 0%,40%{opacity:0} 46%,100%{opacity:1} }
+      @keyframes d5On{ 0%,46%{opacity:0} 52%,100%{opacity:1} }
+      @keyframes d6On{ 0%,52%{opacity:0} 58%,100%{opacity:1} }
+      @keyframes d7On{ 0%,58%{opacity:0} 64%,100%{opacity:1} }
+      @keyframes d8On{ 0%,64%{opacity:0} 70%,100%{opacity:1} }
+      @keyframes d9On{ 0%,70%{opacity:0} 76%,100%{opacity:1} }
+
+      .a-d1{ animation:d1On var(--cycle) var(--ease) infinite; }
+      .a-d2{ animation:d2On var(--cycle) var(--ease) infinite; }
+      .a-d3{ animation:d3On var(--cycle) var(--ease) infinite; }
+      .a-d4{ animation:d4On var(--cycle) var(--ease) infinite; }
+      .a-d5{ animation:d5On var(--cycle) var(--ease) infinite; }
+      .a-d6{ animation:d6On var(--cycle) var(--ease) infinite; }
+      .a-d7{ animation:d7On var(--cycle) var(--ease) infinite; }
+      .a-d8{ animation:d8On var(--cycle) var(--ease) infinite; }
+      .a-d9{ animation:d9On var(--cycle) var(--ease) infinite; }
+
+      /* rótulos/valores entram um pouco depois da linha (como no quartis) */
+      @keyframes t1{ 0%,24%{opacity:0} 30%,100%{opacity:1} }
+      @keyframes t2{ 0%,30%{opacity:0} 36%,100%{opacity:1} }
+      @keyframes t3{ 0%,36%{opacity:0} 42%,100%{opacity:1} }
+      @keyframes t4{ 0%,42%{opacity:0} 48%,100%{opacity:1} }
+      @keyframes t5{ 0%,48%{opacity:0} 54%,100%{opacity:1} }
+      @keyframes t6{ 0%,54%{opacity:0} 60%,100%{opacity:1} }
+      @keyframes t7{ 0%,60%{opacity:0} 66%,100%{opacity:1} }
+      @keyframes t8{ 0%,66%{opacity:0} 72%,100%{opacity:1} }
+      @keyframes t9{ 0%,72%{opacity:0} 78%,100%{opacity:1} }
+
+      .a-d1t,.a-d1v{ animation:t1 var(--cycle) var(--ease) infinite; }
+      .a-d2t,.a-d2v{ animation:t2 var(--cycle) var(--ease) infinite; }
+      .a-d3t,.a-d3v{ animation:t3 var(--cycle) var(--ease) infinite; }
+      .a-d4t,.a-d4v{ animation:t4 var(--cycle) var(--ease) infinite; }
+      .a-d5t,.a-d5v{ animation:t5 var(--cycle) var(--ease) infinite; }
+      .a-d6t,.a-d6v{ animation:t6 var(--cycle) var(--ease) infinite; }
+      .a-d7t,.a-d7v{ animation:t7 var(--cycle) var(--ease) infinite; }
+      .a-d8t,.a-d8v{ animation:t8 var(--cycle) var(--ease) infinite; }
+      .a-d9t,.a-d9v{ animation:t9 var(--cycle) var(--ease) infinite; }
+
+      /* ============
+         Percentuais — aparecem, caem, e ficam (como no seu pct25/50/75, mas com opacity)
+         ============ */
+      @keyframes p10{ 0%,22%{opacity:0; transform:translateY(0)} 26%{opacity:1; transform:translateY(0)} 34%,100%{opacity:1; transform:translateY(108px)} }
+      @keyframes p20{ 0%,28%{opacity:0; transform:translateY(0)} 32%{opacity:1; transform:translateY(0)} 40%,100%{opacity:1; transform:translateY(108px)} }
+      @keyframes p30{ 0%,34%{opacity:0; transform:translateY(0)} 38%{opacity:1; transform:translateY(0)} 46%,100%{opacity:1; transform:translateY(108px)} }
+      @keyframes p40{ 0%,40%{opacity:0; transform:translateY(0)} 44%{opacity:1; transform:translateY(0)} 52%,100%{opacity:1; transform:translateY(108px)} }
+      @keyframes p50{ 0%,46%{opacity:0; transform:translateY(0)} 50%{opacity:1; transform:translateY(0)} 58%,100%{opacity:1; transform:translateY(108px)} }
+      @keyframes p60{ 0%,52%{opacity:0; transform:translateY(0)} 56%{opacity:1; transform:translateY(0)} 64%,100%{opacity:1; transform:translateY(108px)} }
+      @keyframes p70{ 0%,58%{opacity:0; transform:translateY(0)} 62%{opacity:1; transform:translateY(0)} 70%,100%{opacity:1; transform:translateY(108px)} }
+      @keyframes p80{ 0%,64%{opacity:0; transform:translateY(0)} 68%{opacity:1; transform:translateY(0)} 76%,100%{opacity:1; transform:translateY(108px)} }
+      @keyframes p90{ 0%,70%{opacity:0; transform:translateY(0)} 74%{opacity:1; transform:translateY(0)} 82%,100%{opacity:1; transform:translateY(108px)} }
+
+      .a-p10{ animation:p10 var(--cycle) var(--ease) infinite; }
+      .a-p20{ animation:p20 var(--cycle) var(--ease) infinite; }
+      .a-p30{ animation:p30 var(--cycle) var(--ease) infinite; }
+      .a-p40{ animation:p40 var(--cycle) var(--ease) infinite; }
+      .a-p50{ animation:p50 var(--cycle) var(--ease) infinite; }
+      .a-p60{ animation:p60 var(--cycle) var(--ease) infinite; }
+      .a-p70{ animation:p70 var(--cycle) var(--ease) infinite; }
+      .a-p80{ animation:p80 var(--cycle) var(--ease) infinite; }
+      .a-p90{ animation:p90 var(--cycle) var(--ease) infinite; }
+
+      @media (prefers-reduced-motion:reduce){
+        .a-h1,.a-h2,.a-h3,.a-h4,
+        .a-dots,
+        .a-seg10,.a-seg20,.a-seg30,.a-seg40,.a-seg50,.a-seg60,.a-seg70,.a-seg80,.a-seg90,
+        .a-d1,.a-d2,.a-d3,.a-d4,.a-d5,.a-d6,.a-d7,.a-d8,.a-d9,
+        .a-d1t,.a-d2t,.a-d3t,.a-d4t,.a-d5t,.a-d6t,.a-d7t,.a-d8t,.a-d9t,
+        .a-d1v,.a-d2v,.a-d3v,.a-d4v,.a-d5v,.a-d6v,.a-d7v,.a-d8v,.a-d9v,
+        .a-p10,.a-p20,.a-p30,.a-p40,.a-p50,.a-p60,.a-p70,.a-p80,.a-p90{
+          animation:none;
+        }
+        .hi{ opacity:.35; }
+
+        /* estado final “como se tudo tivesse aparecido” */
+        .seg{ opacity:.10; }
+        .dline,.dlab,.dval{ opacity:1; }
+        .pct{ opacity:1; transform:translateY(108px); }
+      }
+    </style>
+  </defs>
+
+  <!-- =========================
+       Painel esquerdo
+       ========================= -->
+  <g id="panel-left">
+    <rect x="90" y="110" width="640" height="560" rx="14" ry="14" class="u-panel u-stroke"/>
+
+    <text x="410" y="168" class="label">Exemplo</text>
+    <text x="410" y="208" class="small">Ordenar e localizar cortes de 10%</text>
+
+    <g transform="translate(0,30)">
+      <line x1="120" y1="268" x2="700" y2="268" class="hr"/>
+      <line x1="120" y1="352" x2="700" y2="352" class="hr"/>
+      <line x1="120" y1="470" x2="700" y2="470" class="hr"/>
+
+      <rect x="120" y="210" width="580" height="58"  class="hi a-h1"/>
+      <rect x="120" y="264" width="580" height="88"  class="hi a-h2"/>
+      <rect x="120" y="353" width="580" height="117" class="hi a-h3"/>
+      <rect x="120" y="468" width="580" height="150" class="hi a-h4"/>
+
+      <g class="mono">
+        <!-- rótulos -->
+        <text x="245" y="246" class="k">Dados</text>
+
+        <text x="245" y="310" class="k">Ordem</text>
+        <text x="255" y="330" class="k">crescente</text>
+
+        <text x="245" y="410" class="k">Posições</text>
+        <text x="225" y="530" class="k">Decis</text>
+
+        <!-- valores -->
+        <text x="325" y="246" class="v">A = {12, 5, 7, 9, 15, 6, 10, 8, 13, 11}</text>
+
+        <text x="325" y="315" class="v">A = {5, 6, 7, 8, 9, 10, 11, 12, 13, 15}</text>
+
+        <text x="395" y="380" class="f">
+          P<tspan baseline-shift="sub" font-size="14">Dk</tspan> = k·n/10,  n = 10
+        </text>
+
+        <text x="295" y="412" class="v">
+          • P<tspan baseline-shift="sub" font-size="16">D1</tspan>=1
+          <tspan dx="14"/>• P<tspan baseline-shift="sub" font-size="16">D2</tspan>=2
+          <tspan dx="14"/>• P<tspan baseline-shift="sub" font-size="16">D3</tspan>=3
+          <tspan dx="14"/>• P<tspan baseline-shift="sub" font-size="16">D4</tspan>=4
+          <tspan dx="14"/>• P<tspan baseline-shift="sub" font-size="16">D5</tspan>=5
+        </text>
+
+        <text x="315" y="448" class="v">
+          • P<tspan baseline-shift="sub" font-size="16">D6</tspan>=6
+          <tspan dx="14"/>• P<tspan baseline-shift="sub" font-size="16">D7</tspan>=7
+          <tspan dx="14"/>• P<tspan baseline-shift="sub" font-size="16">D8</tspan>=8
+          <tspan dx="14"/>• P<tspan baseline-shift="sub" font-size="16">D9</tspan>=9
+        </text>
+
+        <text x="345" y="500" class="f">
+          (Ponto Médio) D<tspan baseline-shift="sub" font-size="14">k</tspan> =
+          (x<tspan baseline-shift="sub" font-size="14">(P)</tspan> + x<tspan baseline-shift="sub" font-size="14">(P+1)</tspan>)/2
+        </text>
+
+        <text x="265" y="538" class="v">
+         • D<tspan baseline-shift="sub" font-size="16">1</tspan>=5,5
+          <tspan dx="18"/>• D<tspan baseline-shift="sub" font-size="16">2</tspan>=6,5
+          <tspan dx="18"/>• D<tspan baseline-shift="sub" font-size="16">3</tspan>=7,5
+          <tspan dx="18"/>• D<tspan baseline-shift="sub" font-size="16">4</tspan>=8,5
+          <tspan dx="18"/>• D<tspan baseline-shift="sub" font-size="16">5</tspan>=9,5
+        </text>
+
+        <text x="285" y="588" class="v">
+         • D<tspan baseline-shift="sub" font-size="16">6</tspan>=10,5
+          <tspan dx="18"/>• D<tspan baseline-shift="sub" font-size="16">7</tspan>=11,5
+          <tspan dx="18"/>• D<tspan baseline-shift="sub" font-size="16">8</tspan>=12,5
+          <tspan dx="18"/>• D<tspan baseline-shift="sub" font-size="16">9</tspan>=14,0
+        </text>
+      </g>
+    </g>
+  </g>
+
+  <!-- =========================
+       Painel direito
+       ========================= -->
+  <g id="panel-right">
+    <rect x="770" y="110" width="640" height="560" rx="14" ry="14" class="u-panel u-stroke"/>
+
+    <text x="1090" y="168" class="label">Decis</text>
+    <text x="1090" y="208" class="small">Faixas acumuladas e cortes D1..D9</text>
+
+    <g transform="translate(0,30)">
+      <!-- Escala: 5..15 em x0=820..x1=1360 (1 un = 54) -->
+      <g id="plot-right">
+        <g class="grid">
+          <line x1="820" y1="330" x2="1360" y2="330"/>
+          <line x1="820" y1="405" x2="1360" y2="405"/>
+          <line x1="820" y1="480" x2="1360" y2="480"/>
+        </g>
+
+        <g class="u-stroke axis">
+          <line x1="820" y1="405" x2="1360" y2="405"/>
+        </g>
+
+        <g class="u-stroke" style="stroke-width:2">
+          <line x1="820"  y1="395" x2="820"  y2="415"/>
+          <line x1="1090" y1="395" x2="1090" y2="415"/>
+          <line x1="1360" y1="395" x2="1360" y2="415"/>
+        </g>
+        <g class="tick-label">
+          <text x="820"  y="450" text-anchor="middle">5</text>
+          <text x="1090" y="450" text-anchor="middle">10</text>
+          <text x="1360" y="450" text-anchor="middle">15</text>
+        </g>
+
+        <!-- faixas acumuladas (10%..90%) -->
+        <rect class="seg a-seg10" x="820" y="375" width="27"  height="60"/>
+        <rect class="seg a-seg20" x="820" y="375" width="81"  height="60"/>
+        <rect class="seg a-seg30" x="820" y="375" width="135" height="60"/>
+        <rect class="seg a-seg40" x="820" y="375" width="189" height="60"/>
+        <rect class="seg a-seg50" x="820" y="375" width="243" height="60"/>
+        <rect class="seg a-seg60" x="820" y="375" width="297" height="60"/>
+        <rect class="seg a-seg70" x="820" y="375" width="351" height="60"/>
+        <rect class="seg a-seg80" x="820" y="375" width="405" height="60"/>
+        <rect class="seg a-seg90" x="820" y="375" width="486" height="60"/>
+
+        <!-- pontos do rol -->
+        <g class="a-dots">
+          <circle class="dot"      cx="820"  cy="405" r="7"/>
+          <circle class="dot soft" cx="874"  cy="405" r="7"/>
+          <circle class="dot"      cx="928"  cy="405" r="7"/>
+          <circle class="dot soft" cx="982"  cy="405" r="7"/>
+          <circle class="dot"      cx="1036" cy="405" r="7"/>
+          <circle class="dot soft" cx="1090" cy="405" r="7"/>
+          <circle class="dot"      cx="1144" cy="405" r="7"/>
+          <circle class="dot soft" cx="1198" cy="405" r="7"/>
+          <circle class="dot"      cx="1252" cy="405" r="7"/>
+          <circle class="dot soft" cx="1360" cy="405" r="7"/>
+        </g>
+
+        <!-- rótulos dos dados -->
+        <text class="data-lab" x="820"  y="355">5</text>
+        <text class="data-lab" x="874"  y="505">6</text>
+        <text class="data-lab" x="928"  y="355">7</text>
+        <text class="data-lab" x="982"  y="505">8</text>
+        <text class="data-lab" x="1036" y="355">9</text>
+        <text class="data-lab" x="1090" y="505">10</text>
+        <text class="data-lab" x="1144" y="355">11</text>
+        <text class="data-lab" x="1198" y="505">12</text>
+        <text class="data-lab" x="1252" y="355">13</text>
+        <text class="data-lab" x="1360" y="505">15</text>
+
+        <!-- linhas dos decis (topo com “faixa de cabeçalho”) -->
+        <line class="dline d1 a-d1" x1="847"  y1="305" x2="847"  y2="545"/>
+        <line class="dline d2 a-d2" x1="901"  y1="305" x2="901"  y2="545"/>
+        <line class="dline d3 a-d3" x1="955"  y1="305" x2="955"  y2="545"/>
+        <line class="dline d4 a-d4" x1="1009" y1="305" x2="1009" y2="545"/>
+        <line class="dline d5 a-d5" x1="1063" y1="305" x2="1063" y2="545"/>
+        <line class="dline d6 a-d6" x1="1117" y1="305" x2="1117" y2="545"/>
+        <line class="dline d7 a-d7" x1="1171" y1="305" x2="1171" y2="545"/>
+        <line class="dline d8 a-d8" x1="1225" y1="305" x2="1225" y2="545"/>
+        <line class="dline d9 a-d9" x1="1306" y1="305" x2="1306" y2="545"/>
+
+        <!-- rótulos Dk -->
+        <text class="dlab a-d1t" x="847"  y="238">D<tspan class="sub">1</tspan></text>
+        <text class="dlab a-d2t" x="901"  y="238">D<tspan class="sub">2</tspan></text>
+        <text class="dlab a-d3t" x="955"  y="238">D<tspan class="sub">3</tspan></text>
+        <text class="dlab a-d4t" x="1009" y="238">D<tspan class="sub">4</tspan></text>
+        <text class="dlab a-d5t" x="1063" y="238">D<tspan class="sub">5</tspan></text>
+        <text class="dlab a-d6t" x="1117" y="238">D<tspan class="sub">6</tspan></text>
+        <text class="dlab a-d7t" x="1171" y="238">D<tspan class="sub">7</tspan></text>
+        <text class="dlab a-d8t" x="1225" y="238">D<tspan class="sub">8</tspan></text>
+        <text class="dlab a-d9t" x="1306" y="238">D<tspan class="sub">9</tspan></text>
+
+        <!-- valores -->
+        <text class="dval a-d1v" x="847"  y="266">5,5</text>
+        <text class="dval a-d2v" x="901"  y="266">6,5</text>
+        <text class="dval a-d3v" x="955"  y="266">7,5</text>
+        <text class="dval a-d4v" x="1009" y="266">8,5</text>
+        <text class="dval a-d5v" x="1063" y="266">9,5</text>
+        <text class="dval a-d6v" x="1117" y="266">10,5</text>
+        <text class="dval a-d7v" x="1171" y="266">11,5</text>
+        <text class="dval a-d8v" x="1225" y="266">12,5</text>
+        <text class="dval a-d9v" x="1306" y="266">14,0</text>
+
+        <!-- percentuais (aparecem e “descem”, ficando abaixo) -->
+        <text class="pct a-p10" x="847"  y="450">10%</text>
+        <text class="pct a-p20" x="901"  y="450">20%</text>
+        <text class="pct a-p30" x="955"  y="450">30%</text>
+        <text class="pct a-p40" x="1009" y="450">40%</text>
+        <text class="pct a-p50" x="1063" y="450">50%</text>
+        <text class="pct a-p60" x="1117" y="450">60%</text>
+        <text class="pct a-p70" x="1171" y="450">70%</text>
+        <text class="pct a-p80" x="1225" y="450">80%</text>
+        <text class="pct a-p90" x="1306" y="450">90%</text>
+
+      </g>
+    </g>
+  </g>
+</svg>

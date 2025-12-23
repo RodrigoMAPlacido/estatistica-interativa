@@ -1,0 +1,407 @@
+schema: EconSchema
+aspectRatio: 1.6
+
+params:
+  # Frequências por valor (discreto)
+  - name: f2
+    value: 2
+    min: 0
+    max: 8
+    round: 1
+  - name: f3
+    value: 4
+    min: 0
+    max: 8
+    round: 1
+  - name: f4
+    value: 6
+    min: 0
+    max: 8
+    round: 1
+  - name: f5
+    value: 3
+    min: 0
+    max: 8
+    round: 1
+  - name: f6
+    value: 3
+    min: 0
+    max: 8
+    round: 1
+  - name: f7
+    value: 2
+    min: 0
+    max: 8
+    round: 1
+
+calcs:
+  # ============================
+  # 0) Total e acumuladas
+  # ============================
+  N: "(params.f2 + params.f3 + params.f4 + params.f5 + params.f6 + params.f7)"
+
+  F2: "(params.f2)"
+  F3: "(params.f2 + params.f3)"
+  F4: "(params.f2 + params.f3 + params.f4)"
+  F5: "(params.f2 + params.f3 + params.f4 + params.f5)"
+  F6: "(params.f2 + params.f3 + params.f4 + params.f5 + params.f6)"
+  F7: "(params.f2 + params.f3 + params.f4 + params.f5 + params.f6 + params.f7)"
+
+  # ============================
+  # 1) Posições dos décis
+  #    P_{D_k} = kN/10, k=1..9
+  # ============================
+  P1: "(0.10 * calcs.N)"
+  P2: "(0.20 * calcs.N)"
+  P3: "(0.30 * calcs.N)"
+  P4: "(0.40 * calcs.N)"
+  P5: "(0.50 * calcs.N)"
+  P6: "(0.60 * calcs.N)"
+  P7: "(0.70 * calcs.N)"
+  P8: "(0.80 * calcs.N)"
+  P9: "(0.90 * calcs.N)"
+
+  # ============================
+  # 2) Detecta se Pk é inteiro
+  # ============================
+  isIntP1: "(Math.abs(calcs.P1 - Math.round(calcs.P1)) < 1e-9)"
+  isIntP2: "(Math.abs(calcs.P2 - Math.round(calcs.P2)) < 1e-9)"
+  isIntP3: "(Math.abs(calcs.P3 - Math.round(calcs.P3)) < 1e-9)"
+  isIntP4: "(Math.abs(calcs.P4 - Math.round(calcs.P4)) < 1e-9)"
+  isIntP5: "(Math.abs(calcs.P5 - Math.round(calcs.P5)) < 1e-9)"
+  isIntP6: "(Math.abs(calcs.P6 - Math.round(calcs.P6)) < 1e-9)"
+  isIntP7: "(Math.abs(calcs.P7 - Math.round(calcs.P7)) < 1e-9)"
+  isIntP8: "(Math.abs(calcs.P8 - Math.round(calcs.P8)) < 1e-9)"
+  isIntP9: "(Math.abs(calcs.P9 - Math.round(calcs.P9)) < 1e-9)"
+
+  # ============================
+  # 3) x_(P) e x_(P+1) via acumuladas
+  #    (primeiro F >= P)
+  # ============================
+  xP1: "(calcs.F2 >= calcs.P1 ? 2 : (calcs.F3 >= calcs.P1 ? 3 : (calcs.F4 >= calcs.P1 ? 4 : (calcs.F5 >= calcs.P1 ? 5 : (calcs.F6 >= calcs.P1 ? 6 : 7)))))"
+  xP2: "(calcs.F2 >= calcs.P2 ? 2 : (calcs.F3 >= calcs.P2 ? 3 : (calcs.F4 >= calcs.P2 ? 4 : (calcs.F5 >= calcs.P2 ? 5 : (calcs.F6 >= calcs.P2 ? 6 : 7)))))"
+  xP3: "(calcs.F2 >= calcs.P3 ? 2 : (calcs.F3 >= calcs.P3 ? 3 : (calcs.F4 >= calcs.P3 ? 4 : (calcs.F5 >= calcs.P3 ? 5 : (calcs.F6 >= calcs.P3 ? 6 : 7)))))"
+  xP4: "(calcs.F2 >= calcs.P4 ? 2 : (calcs.F3 >= calcs.P4 ? 3 : (calcs.F4 >= calcs.P4 ? 4 : (calcs.F5 >= calcs.P4 ? 5 : (calcs.F6 >= calcs.P4 ? 6 : 7)))))"
+  xP5: "(calcs.F2 >= calcs.P5 ? 2 : (calcs.F3 >= calcs.P5 ? 3 : (calcs.F4 >= calcs.P5 ? 4 : (calcs.F5 >= calcs.P5 ? 5 : (calcs.F6 >= calcs.P5 ? 6 : 7)))))"
+  xP6: "(calcs.F2 >= calcs.P6 ? 2 : (calcs.F3 >= calcs.P6 ? 3 : (calcs.F4 >= calcs.P6 ? 4 : (calcs.F5 >= calcs.P6 ? 5 : (calcs.F6 >= calcs.P6 ? 6 : 7)))))"
+  xP7: "(calcs.F2 >= calcs.P7 ? 2 : (calcs.F3 >= calcs.P7 ? 3 : (calcs.F4 >= calcs.P7 ? 4 : (calcs.F5 >= calcs.P7 ? 5 : (calcs.F6 >= calcs.P7 ? 6 : 7)))))"
+  xP8: "(calcs.F2 >= calcs.P8 ? 2 : (calcs.F3 >= calcs.P8 ? 3 : (calcs.F4 >= calcs.P8 ? 4 : (calcs.F5 >= calcs.P8 ? 5 : (calcs.F6 >= calcs.P8 ? 6 : 7)))))"
+  xP9: "(calcs.F2 >= calcs.P9 ? 2 : (calcs.F3 >= calcs.P9 ? 3 : (calcs.F4 >= calcs.P9 ? 4 : (calcs.F5 >= calcs.P9 ? 5 : (calcs.F6 >= calcs.P9 ? 6 : 7)))))"
+
+  xP1p1: "(calcs.F2 >= (calcs.P1 + 1) ? 2 : (calcs.F3 >= (calcs.P1 + 1) ? 3 : (calcs.F4 >= (calcs.P1 + 1) ? 4 : (calcs.F5 >= (calcs.P1 + 1) ? 5 : (calcs.F6 >= (calcs.P1 + 1) ? 6 : 7)))))"
+  xP2p1: "(calcs.F2 >= (calcs.P2 + 1) ? 2 : (calcs.F3 >= (calcs.P2 + 1) ? 3 : (calcs.F4 >= (calcs.P2 + 1) ? 4 : (calcs.F5 >= (calcs.P2 + 1) ? 5 : (calcs.F6 >= (calcs.P2 + 1) ? 6 : 7)))))"
+  xP3p1: "(calcs.F2 >= (calcs.P3 + 1) ? 2 : (calcs.F3 >= (calcs.P3 + 1) ? 3 : (calcs.F4 >= (calcs.P3 + 1) ? 4 : (calcs.F5 >= (calcs.P3 + 1) ? 5 : (calcs.F6 >= (calcs.P3 + 1) ? 6 : 7)))))"
+  xP4p1: "(calcs.F2 >= (calcs.P4 + 1) ? 2 : (calcs.F3 >= (calcs.P4 + 1) ? 3 : (calcs.F4 >= (calcs.P4 + 1) ? 4 : (calcs.F5 >= (calcs.P4 + 1) ? 5 : (calcs.F6 >= (calcs.P4 + 1) ? 6 : 7)))))"
+  xP5p1: "(calcs.F2 >= (calcs.P5 + 1) ? 2 : (calcs.F3 >= (calcs.P5 + 1) ? 3 : (calcs.F4 >= (calcs.P5 + 1) ? 4 : (calcs.F5 >= (calcs.P5 + 1) ? 5 : (calcs.F6 >= (calcs.P5 + 1) ? 6 : 7)))))"
+  xP6p1: "(calcs.F2 >= (calcs.P6 + 1) ? 2 : (calcs.F3 >= (calcs.P6 + 1) ? 3 : (calcs.F4 >= (calcs.P6 + 1) ? 4 : (calcs.F5 >= (calcs.P6 + 1) ? 5 : (calcs.F6 >= (calcs.P6 + 1) ? 6 : 7)))))"
+  xP7p1: "(calcs.F2 >= (calcs.P7 + 1) ? 2 : (calcs.F3 >= (calcs.P7 + 1) ? 3 : (calcs.F4 >= (calcs.P7 + 1) ? 4 : (calcs.F5 >= (calcs.P7 + 1) ? 5 : (calcs.F6 >= (calcs.P7 + 1) ? 6 : 7)))))"
+  xP8p1: "(calcs.F2 >= (calcs.P8 + 1) ? 2 : (calcs.F3 >= (calcs.P8 + 1) ? 3 : (calcs.F4 >= (calcs.P8 + 1) ? 4 : (calcs.F5 >= (calcs.P8 + 1) ? 5 : (calcs.F6 >= (calcs.P8 + 1) ? 6 : 7)))))"
+  xP9p1: "(calcs.F2 >= (calcs.P9 + 1) ? 2 : (calcs.F3 >= (calcs.P9 + 1) ? 3 : (calcs.F4 >= (calcs.P9 + 1) ? 4 : (calcs.F5 >= (calcs.P9 + 1) ? 5 : (calcs.F6 >= (calcs.P9 + 1) ? 6 : 7)))))"
+
+  # ============================
+  # 4) Décis (regra do ponto médio quando P é inteiro)
+  # ============================
+  D1: "(calcs.isIntP1 ? 0.5*(calcs.xP1 + calcs.xP1p1) : calcs.xP1)"
+  D2: "(calcs.isIntP2 ? 0.5*(calcs.xP2 + calcs.xP2p1) : calcs.xP2)"
+  D3: "(calcs.isIntP3 ? 0.5*(calcs.xP3 + calcs.xP3p1) : calcs.xP3)"
+  D4: "(calcs.isIntP4 ? 0.5*(calcs.xP4 + calcs.xP4p1) : calcs.xP4)"
+  D5: "(calcs.isIntP5 ? 0.5*(calcs.xP5 + calcs.xP5p1) : calcs.xP5)"
+  D6: "(calcs.isIntP6 ? 0.5*(calcs.xP6 + calcs.xP6p1) : calcs.xP6)"
+  D7: "(calcs.isIntP7 ? 0.5*(calcs.xP7 + calcs.xP7p1) : calcs.xP7)"
+  D8: "(calcs.isIntP8 ? 0.5*(calcs.xP8 + calcs.xP8p1) : calcs.xP8)"
+  D9: "(calcs.isIntP9 ? 0.5*(calcs.xP9 + calcs.xP9p1) : calcs.xP9)"
+
+  # ============================
+  # 5) Mapa: valor (2..7) -> posição x no gráfico (0.7..5.7)
+  # ============================
+  PRxP1: "(calcs.xP1 <= 2 ? 0.7 : (calcs.xP1 <= 3 ? 1.7 : (calcs.xP1 <= 4 ? 2.7 : (calcs.xP1 <= 5 ? 3.7 : (calcs.xP1 <= 6 ? 4.7 : 5.7)))))"
+  PRxP2: "(calcs.xP2 <= 2 ? 0.7 : (calcs.xP2 <= 3 ? 1.7 : (calcs.xP2 <= 4 ? 2.7 : (calcs.xP2 <= 5 ? 3.7 : (calcs.xP2 <= 6 ? 4.7 : 5.7)))))"
+  PRxP3: "(calcs.xP3 <= 2 ? 0.7 : (calcs.xP3 <= 3 ? 1.7 : (calcs.xP3 <= 4 ? 2.7 : (calcs.xP3 <= 5 ? 3.7 : (calcs.xP3 <= 6 ? 4.7 : 5.7)))))"
+  PRxP4: "(calcs.xP4 <= 2 ? 0.7 : (calcs.xP4 <= 3 ? 1.7 : (calcs.xP4 <= 4 ? 2.7 : (calcs.xP4 <= 5 ? 3.7 : (calcs.xP4 <= 6 ? 4.7 : 5.7)))))"
+  PRxP5: "(calcs.xP5 <= 2 ? 0.7 : (calcs.xP5 <= 3 ? 1.7 : (calcs.xP5 <= 4 ? 2.7 : (calcs.xP5 <= 5 ? 3.7 : (calcs.xP5 <= 6 ? 4.7 : 5.7)))))"
+  PRxP6: "(calcs.xP6 <= 2 ? 0.7 : (calcs.xP6 <= 3 ? 1.7 : (calcs.xP6 <= 4 ? 2.7 : (calcs.xP6 <= 5 ? 3.7 : (calcs.xP6 <= 6 ? 4.7 : 5.7)))))"
+  PRxP7: "(calcs.xP7 <= 2 ? 0.7 : (calcs.xP7 <= 3 ? 1.7 : (calcs.xP7 <= 4 ? 2.7 : (calcs.xP7 <= 5 ? 3.7 : (calcs.xP7 <= 6 ? 4.7 : 5.7)))))"
+  PRxP8: "(calcs.xP8 <= 2 ? 0.7 : (calcs.xP8 <= 3 ? 1.7 : (calcs.xP8 <= 4 ? 2.7 : (calcs.xP8 <= 5 ? 3.7 : (calcs.xP8 <= 6 ? 4.7 : 5.7)))))"
+  PRxP9: "(calcs.xP9 <= 2 ? 0.7 : (calcs.xP9 <= 3 ? 1.7 : (calcs.xP9 <= 4 ? 2.7 : (calcs.xP9 <= 5 ? 3.7 : (calcs.xP9 <= 6 ? 4.7 : 5.7)))))"
+
+  PRxP1p1: "(calcs.xP1p1 <= 2 ? 0.7 : (calcs.xP1p1 <= 3 ? 1.7 : (calcs.xP1p1 <= 4 ? 2.7 : (calcs.xP1p1 <= 5 ? 3.7 : (calcs.xP1p1 <= 6 ? 4.7 : 5.7)))))"
+  PRxP2p1: "(calcs.xP2p1 <= 2 ? 0.7 : (calcs.xP2p1 <= 3 ? 1.7 : (calcs.xP2p1 <= 4 ? 2.7 : (calcs.xP2p1 <= 5 ? 3.7 : (calcs.xP2p1 <= 6 ? 4.7 : 5.7)))))"
+  PRxP3p1: "(calcs.xP3p1 <= 2 ? 0.7 : (calcs.xP3p1 <= 3 ? 1.7 : (calcs.xP3p1 <= 4 ? 2.7 : (calcs.xP3p1 <= 5 ? 3.7 : (calcs.xP3p1 <= 6 ? 4.7 : 5.7)))))"
+  PRxP4p1: "(calcs.xP4p1 <= 2 ? 0.7 : (calcs.xP4p1 <= 3 ? 1.7 : (calcs.xP4p1 <= 4 ? 2.7 : (calcs.xP4p1 <= 5 ? 3.7 : (calcs.xP4p1 <= 6 ? 4.7 : 5.7)))))"
+  PRxP5p1: "(calcs.xP5p1 <= 2 ? 0.7 : (calcs.xP5p1 <= 3 ? 1.7 : (calcs.xP5p1 <= 4 ? 2.7 : (calcs.xP5p1 <= 5 ? 3.7 : (calcs.xP5p1 <= 6 ? 4.7 : 5.7)))))"
+  PRxP6p1: "(calcs.xP6p1 <= 2 ? 0.7 : (calcs.xP6p1 <= 3 ? 1.7 : (calcs.xP6p1 <= 4 ? 2.7 : (calcs.xP6p1 <= 5 ? 3.7 : (calcs.xP6p1 <= 6 ? 4.7 : 5.7)))))"
+  PRxP7p1: "(calcs.xP7p1 <= 2 ? 0.7 : (calcs.xP7p1 <= 3 ? 1.7 : (calcs.xP7p1 <= 4 ? 2.7 : (calcs.xP7p1 <= 5 ? 3.7 : (calcs.xP7p1 <= 6 ? 4.7 : 5.7)))))"
+  PRxP8p1: "(calcs.xP8p1 <= 2 ? 0.7 : (calcs.xP8p1 <= 3 ? 1.7 : (calcs.xP8p1 <= 4 ? 2.7 : (calcs.xP8p1 <= 5 ? 3.7 : (calcs.xP8p1 <= 6 ? 4.7 : 5.7)))))"
+  PRxP9p1: "(calcs.xP9p1 <= 2 ? 0.7 : (calcs.xP9p1 <= 3 ? 1.7 : (calcs.xP9p1 <= 4 ? 2.7 : (calcs.xP9p1 <= 5 ? 3.7 : (calcs.xP9p1 <= 6 ? 4.7 : 5.7)))))"
+
+  # ============================
+  # 6) Posição final no gráfico (com ponto médio)
+  # ============================
+  PR1: "(calcs.isIntP1 ? 0.5*(calcs.PRxP1 + calcs.PRxP1p1) : calcs.PRxP1)"
+  PR2: "(calcs.isIntP2 ? 0.5*(calcs.PRxP2 + calcs.PRxP2p1) : calcs.PRxP2)"
+  PR3: "(calcs.isIntP3 ? 0.5*(calcs.PRxP3 + calcs.PRxP3p1) : calcs.PRxP3)"
+  PR4: "(calcs.isIntP4 ? 0.5*(calcs.PRxP4 + calcs.PRxP4p1) : calcs.PRxP4)"
+  PR5: "(calcs.isIntP5 ? 0.5*(calcs.PRxP5 + calcs.PRxP5p1) : calcs.PRxP5)"
+  PR6: "(calcs.isIntP6 ? 0.5*(calcs.PRxP6 + calcs.PRxP6p1) : calcs.PRxP6)"
+  PR7: "(calcs.isIntP7 ? 0.5*(calcs.PRxP7 + calcs.PRxP7p1) : calcs.PRxP7)"
+  PR8: "(calcs.isIntP8 ? 0.5*(calcs.PRxP8 + calcs.PRxP8p1) : calcs.PRxP8)"
+  PR9: "(calcs.isIntP9 ? 0.5*(calcs.PRxP9 + calcs.PRxP9p1) : calcs.PRxP9)"
+
+colors:
+  ink: "'#111827'"
+  grid: "'#e5e7eb'"
+  inkSoft: "'#64748b'"
+  bg: "'#ffffff'"
+  white: "'#ffffff'"
+
+layout:
+  OneWideGraphPlusSidebar:
+    graph:
+      title: "Frequências e décis"
+      xAxis:
+        min: 0
+        max: 6.4
+        ticks: 0
+      yAxis:
+        min: 0
+        max: 8
+        ticks: 4
+
+      objects:
+        # ---------------------------
+        # Grade horizontal (manual, estilo “limpo”)
+        # ---------------------------
+        - Segment: { a: [0, 2], b: [6.4, 2], color: colors.inkSoft, strokeWidth: 0.5 }
+        - Segment: { a: [0, 4], b: [6.4, 4], color: colors.inkSoft, strokeWidth: 0.5 }
+        - Segment: { a: [0, 6], b: [6.4, 6], color: colors.inkSoft, strokeWidth: 0.5 }
+        - Segment: { a: [0, 8], b: [6.4, 8], color: colors.inkSoft, strokeWidth: 0.5 }
+
+        # ---------------------------
+        # Barras (valores 2..7), drag no eixo y (frequência)
+        # width ~ 0.6
+        # ---------------------------
+        - Rectangle:
+            x1: 0.4
+            x2: 1
+            y1: 0
+            y2: params.f2
+            fill: colors.ink
+            opacity: 1
+            drag:
+              - directions: y
+                param: f2
+                expression: "drag.y"
+
+        - Rectangle:
+            x1: 1.4
+            x2: 2
+            y1: 0
+            y2: params.f3
+            fill: colors.ink
+            opacity: 1
+            drag:
+              - directions: y
+                param: f3
+                expression: "drag.y"
+
+        - Rectangle:
+            x1: 2.4
+            x2: 3
+            y1: 0
+            y2: params.f4
+            fill: colors.ink
+            opacity: 1
+            drag:
+              - directions: y
+                param: f4
+                expression: "drag.y"
+
+        - Rectangle:
+            x1: 3.4
+            x2: 4
+            y1: 0
+            y2: params.f5
+            fill: colors.ink
+            opacity: 1
+            drag:
+              - directions: y
+                param: f5
+                expression: "drag.y"
+
+        - Rectangle:
+            x1: 4.4
+            x2: 5
+            y1: 0
+            y2: params.f6
+            fill: colors.ink
+            opacity: 1
+            drag:
+              - directions: y
+                param: f6
+                expression: "drag.y"
+
+        - Rectangle:
+            x1: 5.4
+            x2: 6
+            y1: 0
+            y2: params.f7
+            fill: colors.ink
+            opacity: 1
+            drag:
+              - directions: y
+                param: f7
+                expression: "drag.y"
+
+        # ---------------------------
+        # Rótulos dos valores no “eixo” (2..7)
+        # ---------------------------
+        - Label: { coordinates: [0.7, 0], text: "'2'", color: colors.ink, fontSize: 12, position: t }
+        - Label: { coordinates: [1.7, 0], text: "'3'", color: colors.ink, fontSize: 12, position: t }
+        - Label: { coordinates: [2.7, 0], text: "'4'", color: colors.ink, fontSize: 12, position: t }
+        - Label: { coordinates: [3.7, 0], text: "'5'", color: colors.ink, fontSize: 12, position: t }
+        - Label: { coordinates: [4.7, 0], text: "'6'", color: colors.ink, fontSize: 12, position: t }
+        - Label: { coordinates: [5.7, 0], text: "'7'", color: colors.ink, fontSize: 12, position: t }
+
+        # ---------------------------
+        # Rótulo f no topo de cada barra
+        # ---------------------------
+        - Label: { coordinates: [0.7, params.f2], text: "`\\\\bf{f}=${params.f2.toFixed(0)}`", color: colors.white, bgcolor: colors.ink, fontSize: 10, position: t }
+        - Label: { coordinates: [1.7, params.f3], text: "`\\\\bf{f}=${params.f3.toFixed(0)}`", color: colors.white, bgcolor: colors.ink, fontSize: 10, position: t }
+        - Label: { coordinates: [2.7, params.f4], text: "`\\\\bf{f}=${params.f4.toFixed(0)}`", color: colors.white, bgcolor: colors.ink, fontSize: 10, position: t }
+        - Label: { coordinates: [3.7, params.f5], text: "`\\\\bf{f}=${params.f5.toFixed(0)}`", color: colors.white, bgcolor: colors.ink, fontSize: 10, position: t }
+        - Label: { coordinates: [4.7, params.f6], text: "`\\\\bf{f}=${params.f6.toFixed(0)}`", color: colors.white, bgcolor: colors.ink, fontSize: 10, position: t }
+        - Label: { coordinates: [5.7, params.f7], text: "`\\\\bf{f}=${params.f7.toFixed(0)}`", color: colors.white, bgcolor: colors.ink, fontSize: 10, position: t }
+
+        # ---------------------------
+        # Linhas verticais dos décis (D5 destacado)
+        # ---------------------------
+        - Segment: { a: [calcs.PR1, 0], b: [calcs.PR1, 8], color: colors.ink, strokeWidth: 1.2, lineStyle: dashed }
+        - Segment: { a: [calcs.PR2, 0], b: [calcs.PR2, 8], color: colors.ink, strokeWidth: 1.2, lineStyle: dashed }
+        - Segment: { a: [calcs.PR3, 0], b: [calcs.PR3, 8], color: colors.ink, strokeWidth: 1.2, lineStyle: dashed }
+        - Segment: { a: [calcs.PR4, 0], b: [calcs.PR4, 8], color: colors.ink, strokeWidth: 1.2, lineStyle: dashed }
+
+        - Segment: { a: [calcs.PR5, 0], b: [calcs.PR5, 8], color: colors.ink, strokeWidth: 2.8, lineStyle: solid }
+
+        - Segment: { a: [calcs.PR6, 0], b: [calcs.PR6, 8], color: colors.ink, strokeWidth: 1.2, lineStyle: dashed }
+        - Segment: { a: [calcs.PR7, 0], b: [calcs.PR7, 8], color: colors.ink, strokeWidth: 1.2, lineStyle: dashed }
+        - Segment: { a: [calcs.PR8, 0], b: [calcs.PR8, 8], color: colors.ink, strokeWidth: 1.2, lineStyle: dashed }
+        - Segment: { a: [calcs.PR9, 0], b: [calcs.PR9, 8], color: colors.ink, strokeWidth: 1.2, lineStyle: dashed }
+
+        # ---------------------------
+        # Rótulos no topo (alternando y para reduzir sobreposição)
+        # ---------------------------
+        - Label: { coordinates: [calcs.PR1, 8], text: "`D_{1}\\\\\\\\${calcs.D1.toFixed(2)}`", color: colors.ink, fontSize: 9, position: b, bgcolor: colors.bg }
+        - Label: { coordinates: [calcs.PR2, 7.55], text: "`D_{2}\\\\\\\\${calcs.D2.toFixed(2)}`", color: colors.ink, fontSize: 9, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [calcs.PR3, 8], text: "`D_{3}\\\\\\\\${calcs.D3.toFixed(2)}`", color: colors.ink, fontSize: 9, position: b, bgcolor: colors.bg }
+        - Label: { coordinates: [calcs.PR4, 7.55], text: "`D_{4}\\\\\\\\${calcs.D4.toFixed(2)}`", color: colors.ink, fontSize: 9, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [calcs.PR5, 8], text: "`D_{5}\\\\\\\\${calcs.D5.toFixed(2)}\\ \\\\\\\\ (mediana)`", color: colors.ink, fontSize: 8.8, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [calcs.PR6, 7.55], text: "`D_{6}\\\\\\\\${calcs.D6.toFixed(2)}`", color: colors.ink, fontSize: 9, position: b, bgcolor: colors.bg }
+        - Label: { coordinates: [calcs.PR7, 8], text: "`D_{7}\\\\\\\\${calcs.D7.toFixed(2)}`", color: colors.ink, fontSize: 9, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [calcs.PR8, 7.55], text: "`D_{8}\\\\\\\\${calcs.D8.toFixed(2)}`", color: colors.ink, fontSize: 9, position: b, bgcolor: colors.bg }
+        - Label: { coordinates: [calcs.PR9, 8], text: "`D_{9}\\\\\\\\${calcs.D9.toFixed(2)}`", color: colors.ink, fontSize: 9, position: c, bgcolor: colors.bg }
+
+    sidebar:
+      triggerWidth: 9999
+      controls:
+        - title: ""
+          divs:
+            # ---------------------------
+            # 1) TABELA (valores discretos)
+            # ---------------------------
+            - html: "`<figure class='sidebar-figure'>
+                <div class='sidebar-table-wrap'>
+                  <table class='sidebar-table'>
+                    <thead>
+                      <tr>
+                        <th>Valor</th>
+                        <th>Freq. <em>f</em></th>
+                        <th>Acum. <em>F</em></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>2</td><td>${params.f2.toFixed(0)}</td><td>${calcs.F2.toFixed(0)}</td></tr>
+                      <tr><td>3</td><td>${params.f3.toFixed(0)}</td><td>${calcs.F3.toFixed(0)}</td></tr>
+                      <tr><td>4</td><td>${params.f4.toFixed(0)}</td><td>${calcs.F4.toFixed(0)}</td></tr>
+                      <tr><td>5</td><td>${params.f5.toFixed(0)}</td><td>${calcs.F5.toFixed(0)}</td></tr>
+                      <tr><td>6</td><td>${params.f6.toFixed(0)}</td><td>${calcs.F6.toFixed(0)}</td></tr>
+                      <tr><td>7</td><td>${params.f7.toFixed(0)}</td><td>${calcs.F7.toFixed(0)}</td></tr>
+                      <tr>
+                        <td><b>Total</b></td>
+                        <td><b>${calcs.N.toFixed(0)}</b></td>
+                        <td><b>${calcs.N.toFixed(0)}</b></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <figcaption>Distribuição discreta: frequências e acumuladas</figcaption></figure>`"
+
+            - html: "<hr>"
+
+            # ---------------------------
+            # 2) CÁLCULOS DOS DÉCIS (discreto + ponto médio)
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Posição dos Décis:</b></div>"
+
+            - html: "`$$\\\\small P_{D_k}=\\\\frac{k\\\\,N}{10}\\\\quad (k=1,\\\\ldots,9;\\\\; N=${calcs.N.toFixed(0)})$$`"
+
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Aplicando:</b></div>"
+
+            - html: "`$$\\\\small
+                    \\\\begin{aligned}
+                    P_{D_1}&=\\\\frac{1\\\\cdot ${calcs.N.toFixed(0)}}{10}=${calcs.P1.toFixed(2)} &\\\\qquad
+                    P_{D_2}&=\\\\frac{2\\\\cdot ${calcs.N.toFixed(0)}}{10}=${calcs.P2.toFixed(2)}
+                    \\\\end{aligned}
+                    $$`"
+            - html: "`$$\\\\small
+                    \\\\begin{aligned}
+                    P_{D_3}&=\\\\frac{3\\\\cdot ${calcs.N.toFixed(0)}}{10}=${calcs.P3.toFixed(2)} &\\\\qquad
+                    P_{D_4}&=\\\\frac{4\\\\cdot ${calcs.N.toFixed(0)}}{10}=${calcs.P4.toFixed(2)}
+                    \\\\end{aligned}
+                    $$`"
+            - html: "`$$\\\\small
+                    \\\\begin{aligned}
+                    P_{D_5}&=\\\\frac{5\\\\cdot ${calcs.N.toFixed(0)}}{10}=${calcs.P5.toFixed(2)} &\\\\qquad
+                    P_{D_6}&=\\\\frac{6\\\\cdot ${calcs.N.toFixed(0)}}{10}=${calcs.P6.toFixed(2)}
+                    \\\\end{aligned}
+                    $$`"
+            - html: "`$$\\\\small
+                    \\\\begin{aligned}
+                    P_{D_7}&=\\\\frac{7\\\\cdot ${calcs.N.toFixed(0)}}{10}=${calcs.P7.toFixed(2)} &\\\\qquad
+                    P_{D_8}&=\\\\frac{8\\\\cdot ${calcs.N.toFixed(0)}}{10}=${calcs.P8.toFixed(2)}
+                    \\\\end{aligned}
+                    $$`"
+            - html: "`$$\\\\small
+                    \\\\begin{aligned}
+                    P_{D_9}&=\\\\frac{9\\\\cdot ${calcs.N.toFixed(0)}}{10}=${calcs.P9.toFixed(2)}
+                    \\\\end{aligned}
+                    $$`"
+
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Ponto Médio:</b></div>"
+
+            - html: "$$\\small D_k= \\frac{x_{(P_{D_k})} + x_{(P_{D_k}+1)}}{2}$$"
+
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Resultados:</b></div>"
+
+            - html: "`$$\\\\small
+                    \\\\begin{aligned}
+                    D_1=${calcs.D1.toFixed(2)} &\\\\qquad
+                    D_2=${calcs.D2.toFixed(2)} &\\\\qquad
+                    D_3=${calcs.D3.toFixed(2)}
+                    \\\\end{aligned}
+                    $$`"
+
+            - html: "`$$\\\\small
+                    \\\\begin{aligned}
+                    D_4=${calcs.D4.toFixed(2)} &\\\\qquad
+                    D_5=${calcs.D5.toFixed(2)} &\\\\qquad
+                    D_6=${calcs.D6.toFixed(2)}
+                    \\\\end{aligned}
+                    $$`"
+
+            - html: "`$$\\\\small
+                    \\\\begin{aligned}
+                    D_7=${calcs.D7.toFixed(2)} &\\\\qquad
+                    D_8=${calcs.D8.toFixed(2)} &\\\\qquad
+                    D_9=${calcs.D9.toFixed(2)}
+                    \\\\end{aligned}
+                    $$`"

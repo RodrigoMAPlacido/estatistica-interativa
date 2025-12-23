@@ -1,0 +1,334 @@
+---
+schema: EconSchema
+aspectRatio: 2
+
+params:
+  - name: x_1
+    value: 5.0
+    min: 5
+    max: 15
+    round: 0.1
+  - name: x_2
+    value: 6.0
+    min: 5
+    max: 15
+    round: 0.1
+  - name: x_3
+    value: 7.0
+    min: 5
+    max: 15
+    round: 0.1
+  - name: x_4
+    value: 8.0
+    min: 5
+    max: 15
+    round: 0.1
+  - name: x_5
+    value: 9.0
+    min: 5
+    max: 15
+    round: 0.1
+  - name: x_6
+    value: 10.0
+    min: 5
+    max: 15
+    round: 0.1
+  - name: x_7
+    value: 11.0
+    min: 5
+    max: 15
+    round: 0.1
+  - name: x_8
+    value: 12.0
+    min: 5
+    max: 15
+    round: 0.1
+  - name: x_9
+    value: 13.0
+    min: 5
+    max: 15
+    round: 0.1
+  - name: x_10
+    value: 15.0
+    min: 5
+    max: 15
+    round: 0.1
+
+calcs:
+  # ============================
+  # 0) Tamanho da amostra
+  # ============================
+  n: "10"
+
+  # ============================
+  # 1) Posições dos decis: P_Dk = k*n/10
+  # (aqui n=10, então P_Dk = k)
+  # ============================
+  P1: "(1*calcs.n/10)"
+  P2: "(2*calcs.n/10)"
+  P3: "(3*calcs.n/10)"
+  P4: "(4*calcs.n/10)"
+  P5: "(5*calcs.n/10)"
+  P6: "(6*calcs.n/10)"
+  P7: "(7*calcs.n/10)"
+  P8: "(8*calcs.n/10)"
+  P9: "(9*calcs.n/10)"
+
+  # ============================
+  # 2) Decis (regra do ponto médio quando P é inteiro)
+  # Como P_Dk = k é inteiro, então:
+  # D_k = (x_k + x_{k+1})/2  para k=1..9
+  # ============================
+  D1: "((params.x_1  + params.x_2 )/2)"
+  D2: "((params.x_2  + params.x_3 )/2)"
+  D3: "((params.x_3  + params.x_4 )/2)"
+  D4: "((params.x_4  + params.x_5 )/2)"
+  D5: "((params.x_5  + params.x_6 )/2)"
+  D6: "((params.x_6  + params.x_7 )/2)"
+  D7: "((params.x_7  + params.x_8 )/2)"
+  D8: "((params.x_8  + params.x_9 )/2)"
+  D9: "((params.x_9  + params.x_10)/2)"
+
+colors:
+  ink: "'#111827'"
+  inkSoft: "'#64748b'"
+  accent: "'#64748b'"
+  bg: "'#ffffff'"
+  point: "'#1f77b4'"
+
+layout:
+  OneWideGraphPlusSidebar:
+
+    graph:
+      xAxis:
+        min: 5
+        max: 15
+        ticks: 0
+        title: Decis com pontos arrastáveis (N=10)
+      yAxis:
+        show: false
+        min: -1
+        max: 1
+        ticks: 0
+
+      objects:
+        # ---------------------------
+        # Reta numérica
+        # ---------------------------
+        - Segment: { a: [5, 0], b: [15, 0], color: colors.ink, strokeWidth: 3 }
+
+        # ticks (extremos)
+        - Segment: { a: [5, -0.08],  b: [5,  0.08],  color: colors.ink, strokeWidth: 2 }
+        - Segment: { a: [15,-0.08],  b: [15, 0.08],  color: colors.ink, strokeWidth: 2 }
+        - Label:   { coordinates: [5,  -0.25], text: "'5'",  color: colors.inkSoft, fontSize: 10, position: c }
+        - Label:   { coordinates: [15, -0.25], text: "'15'", color: colors.inkSoft, fontSize: 10, position: c }
+
+        # ---------------------------
+        # Retas verticais dos decis (D1..D9)
+        # ---------------------------
+        - Segment: { a: [calcs.D1, -0.70], b: [calcs.D1,  0.70], color: colors.accent, strokeWidth: 1.2, lineStyle: dotted }
+        - Segment: { a: [calcs.D2, -0.70], b: [calcs.D2,  0.70], color: colors.accent, strokeWidth: 1.2, lineStyle: dotted }
+        - Segment: { a: [calcs.D3, -0.70], b: [calcs.D3,  0.70], color: colors.accent, strokeWidth: 1.2, lineStyle: dotted }
+        - Segment: { a: [calcs.D4, -0.70], b: [calcs.D4,  0.70], color: colors.accent, strokeWidth: 1.2, lineStyle: dashed }
+        - Segment: { a: [calcs.D5, -0.82], b: [calcs.D5,  0.82], color: colors.accent, strokeWidth: 2.0 }
+        - Segment: { a: [calcs.D6, -0.70], b: [calcs.D6,  0.70], color: colors.accent, strokeWidth: 1.2, lineStyle: dashed }
+        - Segment: { a: [calcs.D7, -0.70], b: [calcs.D7,  0.70], color: colors.accent, strokeWidth: 1.2, lineStyle: dotted }
+        - Segment: { a: [calcs.D8, -0.70], b: [calcs.D8,  0.70], color: colors.accent, strokeWidth: 1.2, lineStyle: dotted }
+        - Segment: { a: [calcs.D9, -0.70], b: [calcs.D9,  0.70], color: colors.accent, strokeWidth: 1.2, lineStyle: dotted }
+
+        # ---------------------------
+        # Labels Dk (alternando alturas) + valores
+        # ---------------------------
+        - Label: { coordinates: [calcs.D1, 0.94], text: "`\\\\bf{D_1}`", bgcolor: colors.bg, color: colors.ink, fontSize: 9, position: c }
+        - Label: { coordinates: [calcs.D1, 0.9], text: "`${calcs.D1.toFixed(2)}`", bgcolor: colors.bg, color: colors.inkSoft, fontSize: 8, position: t }
+
+        - Label: { coordinates: [calcs.D2, 0.74], text: "`\\\\bf{D_2}`", bgcolor: colors.bg, color: colors.ink, fontSize: 9, position: c }
+        - Label: { coordinates: [calcs.D2, 0.7], text: "`${calcs.D2.toFixed(2)}`", bgcolor: colors.bg, color: colors.inkSoft, fontSize: 8, position: t }
+
+        - Label: { coordinates: [calcs.D3, 0.94], text: "`\\\\bf{D_3}`", bgcolor: colors.bg, color: colors.ink, fontSize: 9, position: c }
+        - Label: { coordinates: [calcs.D3, 0.9], text: "`${calcs.D3.toFixed(2)}`", bgcolor: colors.bg, color: colors.inkSoft, fontSize: 8, position: t }
+
+        - Label: { coordinates: [calcs.D4, 0.74], text: "`\\\\bf{D_4}`", bgcolor: colors.bg, color: colors.ink, fontSize: 9, position: c }
+        - Label: { coordinates: [calcs.D4, 0.70], text: "`${calcs.D4.toFixed(2)}`", bgcolor: colors.bg, color: colors.inkSoft, fontSize: 8, position: t }
+
+        - Label: { coordinates: [calcs.D5, 0.94], text: "`\\\\bf{D_5}`", bgcolor: colors.bg, color: colors.ink, fontSize: 9, position: c }
+        - Label: { coordinates: [calcs.D5, 0.9], text: "`${calcs.D5.toFixed(2)}`", bgcolor: colors.bg, color: colors.inkSoft, fontSize: 8, position: t }
+        - Label: { coordinates: [calcs.D5, 1], text: "'(mediana)'", bgcolor: colors.bg, color: colors.inkSoft, fontSize: 7, position: b }
+
+        - Label: { coordinates: [calcs.D6, 0.74], text: "`\\\\bf{D_6}`", bgcolor: colors.bg, color: colors.ink, fontSize: 9, position: c }
+        - Label: { coordinates: [calcs.D6, 0.70], text: "`${calcs.D6.toFixed(2)}`", bgcolor: colors.bg, color: colors.inkSoft, fontSize: 8, position: t }
+
+        - Label: { coordinates: [calcs.D7, 0.94], text: "`\\\\bf{D_7}`", bgcolor: colors.bg, color: colors.ink, fontSize: 9, position: c }
+        - Label: { coordinates: [calcs.D7, 0.9], text: "`${calcs.D7.toFixed(2)}`", bgcolor: colors.bg, color: colors.inkSoft, fontSize: 8, position: t }
+
+        - Label: { coordinates: [calcs.D8, 0.74], text: "`\\\\bf{D_8}`", bgcolor: colors.bg, color: colors.ink, fontSize: 9, position: c }
+        - Label: { coordinates: [calcs.D8, 0.7], text: "`${calcs.D8.toFixed(2)}`", bgcolor: colors.bg, color: colors.inkSoft, fontSize: 8, position: t }
+
+        - Label: { coordinates: [calcs.D9, 0.94], text: "`\\\\bf{D_9}`", bgcolor: colors.bg, color: colors.ink, fontSize: 9, position: c }
+        - Label: { coordinates: [calcs.D9, 0.9], text: "`${calcs.D9.toFixed(2)}`", bgcolor: colors.bg, color: colors.inkSoft, fontSize: 8, position: t }
+
+        # ---------------------------
+        # Percentuais (10%..90%) alternando alturas
+        # ---------------------------
+        - Label: { coordinates: [calcs.D1, -0.82], text: "'10\\\\%'", color: colors.inkSoft, fontSize: 9, position: c }
+        - Label: { coordinates: [calcs.D2, -0.62], text: "'20\\\\%'", color: colors.inkSoft, fontSize: 9, position: c }
+        - Label: { coordinates: [calcs.D3, -0.82], text: "'30\\\\%'", color: colors.inkSoft, fontSize: 9, position: c }
+        - Label: { coordinates: [calcs.D4, -0.62], text: "'40\\\\%'", color: colors.inkSoft, fontSize: 9, position: c }
+        - Label: { coordinates: [calcs.D5, -0.82], text: "'50\\\\%'", color: colors.inkSoft, fontSize: 9, position: c }
+        - Label: { coordinates: [calcs.D6, -0.62], text: "'60\\\\%'", color: colors.inkSoft, fontSize: 9, position: c }
+        - Label: { coordinates: [calcs.D7, -0.82], text: "'70\\\\%'", color: colors.inkSoft, fontSize: 9, position: c }
+        - Label: { coordinates: [calcs.D8, -0.62], text: "'80\\\\%'", color: colors.inkSoft, fontSize: 9, position: c }
+        - Label: { coordinates: [calcs.D9, -0.82], text: "'90\\\\%'", color: colors.inkSoft, fontSize: 9, position: c }
+
+        # ---------------------------
+        # PONTOS (Point) com drag horizontal + clamp (sem cruzar)
+        # ---------------------------
+        - Point:
+            coordinates: [params.x_1, 0]
+            color: colors.ink
+            drag:
+              - directions: x
+                param: x_1
+                expression: "((drag.x >= 5) ? ((drag.x <= params.x_2) ? drag.x : params.x_2) : 5)"
+
+        - Point:
+            coordinates: [params.x_2, 0]
+            color: colors.inkSoft
+            drag:
+              - directions: x
+                param: x_2
+                expression: "((drag.x >= params.x_1) ? ((drag.x <= params.x_3) ? drag.x : params.x_3) : params.x_1)"
+
+        - Point:
+            coordinates: [params.x_3, 0]
+            color: colors.ink
+            drag:
+              - directions: x
+                param: x_3
+                expression: "((drag.x >= params.x_2) ? ((drag.x <= params.x_4) ? drag.x : params.x_4) : params.x_2)"
+
+        - Point:
+            coordinates: [params.x_4, 0]
+            color: colors.inkSoft
+            drag:
+              - directions: x
+                param: x_4
+                expression: "((drag.x >= params.x_3) ? ((drag.x <= params.x_5) ? drag.x : params.x_5) : params.x_3)"
+
+        - Point:
+            coordinates: [params.x_5, 0]
+            color: colors.ink
+            drag:
+              - directions: x
+                param: x_5
+                expression: "((drag.x >= params.x_4) ? ((drag.x <= params.x_6) ? drag.x : params.x_6) : params.x_4)"
+
+        - Point:
+            coordinates: [params.x_6, 0]
+            color: colors.inkSoft
+            drag:
+              - directions: x
+                param: x_6
+                expression: "((drag.x >= params.x_5) ? ((drag.x <= params.x_7) ? drag.x : params.x_7) : params.x_5)"
+
+        - Point:
+            coordinates: [params.x_7, 0]
+            color: colors.ink
+            drag:
+              - directions: x
+                param: x_7
+                expression: "((drag.x >= params.x_6) ? ((drag.x <= params.x_8) ? drag.x : params.x_8) : params.x_6)"
+
+        - Point:
+            coordinates: [params.x_8, 0]
+            color: colors.inkSoft
+            drag:
+              - directions: x
+                param: x_8
+                expression: "((drag.x >= params.x_7) ? ((drag.x <= params.x_9) ? drag.x : params.x_9) : params.x_7)"
+
+        - Point:
+            coordinates: [params.x_9, 0]
+            color: colors.ink
+            drag:
+              - directions: x
+                param: x_9
+                expression: "((drag.x >= params.x_8) ? ((drag.x <= params.x_10) ? drag.x : params.x_10) : params.x_8)"
+
+        - Point:
+            coordinates: [params.x_10, 0]
+            color: colors.inkSoft
+            drag:
+              - directions: x
+                param: x_10
+                expression: "((drag.x >= params.x_9) ? ((drag.x <= 15) ? drag.x : 15) : params.x_9)"
+
+        # rótulos dos valores (alternando cima/baixo)
+        - Label: { coordinates: [params.x_1,   0.18], text: "`${params.x_1.toFixed(1)}`",  color: colors.inkSoft, fontSize: 7, position: c, bgcolor: colors.bg, show: (params.x_1>5) }
+        - Label: { coordinates: [params.x_2,  -0.18], text: "`${params.x_2.toFixed(1)}`",  color: colors.inkSoft, fontSize: 7, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [params.x_3,   0.18], text: "`${params.x_3.toFixed(1)}`",  color: colors.inkSoft, fontSize: 7, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [params.x_4,  -0.18], text: "`${params.x_4.toFixed(1)}`",  color: colors.inkSoft, fontSize: 7, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [params.x_5,   0.18], text: "`${params.x_5.toFixed(1)}`",  color: colors.inkSoft, fontSize: 7, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [params.x_6,  -0.18], text: "`${params.x_6.toFixed(1)}`",  color: colors.inkSoft, fontSize: 7, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [params.x_7,   0.18], text: "`${params.x_7.toFixed(1)}`",  color: colors.inkSoft, fontSize: 7, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [params.x_8,  -0.18], text: "`${params.x_8.toFixed(1)}`",  color: colors.inkSoft, fontSize: 7, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [params.x_9,   0.18], text: "`${params.x_9.toFixed(1)}`",  color: colors.inkSoft, fontSize: 7, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [params.x_10, -0.18], text: "`${params.x_10.toFixed(1)}`", color: colors.inkSoft, fontSize: 7, position: c, bgcolor: colors.bg, show: (params.x_10<15) }
+
+    sidebar:
+      triggerWidth: 9999
+      controls:
+        - title: ""
+          divs:
+            # ---------------------------
+            # 2) POSIÇÕES DOS DECIS
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Posição dos Decis:</b></div>"
+
+            - html: "`$$\\\\tiny P_{D_k}=\\\\frac{k\\\\,n}{10}\\\\quad (k=1,\\\\ldots,9;\\\\; n=${calcs.n.toFixed(0)})$$`"
+
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Aplicando:</b></div>"
+
+            - html: "`$$\\\\tiny
+                      P_{D_1}=\\\\frac{1\\\\cdot ${calcs.n.toFixed(0)}}{10}=${calcs.P1.toFixed(1)},\\\\qquad
+                      P_{D_2}=\\\\frac{2\\\\cdot ${calcs.n.toFixed(0)}}{10}=${calcs.P2.toFixed(1)},\\\\qquad
+                      $$`"
+            - html: "`$$\\\\tiny
+                      P_{D_3}=\\\\frac{3\\\\cdot ${calcs.n.toFixed(0)}}{10}=${calcs.P3.toFixed(1)},\\\\qquad
+                      P_{D_4}=\\\\frac{4\\\\cdot ${calcs.n.toFixed(0)}}{10}=${calcs.P4.toFixed(1)},\\\\qquad
+                      $$`"
+            - html: "`$$\\\\tiny
+                      P_{D_5}=\\\\frac{5\\\\cdot ${calcs.n.toFixed(0)}}{10}=${calcs.P5.toFixed(1)},\\\\qquad
+                      P_{D_6}=\\\\frac{6\\\\cdot ${calcs.n.toFixed(0)}}{10}=${calcs.P6.toFixed(1)},\\\\qquad
+                      $$`"
+
+            - html: "`$$\\\\tiny
+                      P_{D_7}=\\\\frac{7\\\\cdot ${calcs.n.toFixed(0)}}{10}=${calcs.P7.toFixed(1)},\\\\qquad
+                      P_{D_8}=\\\\frac{8\\\\cdot ${calcs.n.toFixed(0)}}{10}=${calcs.P8.toFixed(1)},\\\\qquad
+                      $$`"
+            - html: "`$$\\\\tiny
+                      P_{D_9}=\\\\frac{9\\\\cdot ${calcs.n.toFixed(0)}}{10}=${calcs.P9.toFixed(1)}.
+                      $$`"
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Ponto Médio:</b></div>"
+
+            - html: "$$\\tiny D_k= \\frac{x_{(P_{D_k})} + x_{(P_{D_k}+1)}}{2}$$"
+
+            # ---------------------------
+            # 4) RESULTADOS
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Resultados:</b></div>"
+
+            - html: "`$$\\\\tiny
+                      D_1=${calcs.D1.toFixed(2)},\\\\;
+                      D_2=${calcs.D2.toFixed(2)},\\\\;
+                      D_3=${calcs.D3.toFixed(2)},\\\\;
+                      D_4=${calcs.D4.toFixed(2)},\\\\;
+                      D_5=${calcs.D5.toFixed(2)}.
+                      $$`"
+
+            - html: "`$$\\\\tiny
+                      D_6=${calcs.D6.toFixed(2)},\\\\;
+                      D_7=${calcs.D7.toFixed(2)},\\\\;
+                      D_8=${calcs.D8.toFixed(2)},\\\\;
+                      D_9=${calcs.D9.toFixed(2)}.
+                      $$`"

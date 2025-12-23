@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ===========================================
+   PERCENTIS EM DADOS AGRUPADOS (DISCRETOS) — N=20
+   Replicação do SVG de quartis: mesma estrutura, mesmas classes base,
+   agora com percentis exemplares (P10, P25, P50, P75, P90).
+   Dados: x={2,3,4,5,6,7}, f={2,4,6,3,3,2}, F={2,6,12,15,18,20}
+   P_p = (p/100)·N  → P10=2, P25=5, P50=10, P75=15, P90=18
+   Percentis: P10=2, P25=3, P50=4, P75=5, P90=6
+   =========================================== -->
+<svg viewBox="0 0 1500 780" xmlns="http://www.w3.org/2000/svg"
+     role="img" aria-labelledby="title desc">
+  <title id="title">Percentis em dados agrupados (valores discretos) — N=20</title>
+  <desc id="desc">
+    Painel esquerdo: tabela de valores, frequências e frequências acumuladas (N=20) com varredura.
+    Painel direito: barras de frequência por valor e linhas verticais marcando percentis exemplares
+    (P10, P25, P50, P75, P90) obtidos pela regra do primeiro acumulado F ≥ posição P_p.
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --font:"et-book","ETBook","Georgia",serif;
+        --cycle:8s;
+        --ease:ease-in-out;
+      }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        user-select:none;
+      }
+
+      .u-stroke{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+      }
+
+      .u-panel{
+        stroke-width:2;
+        rx:12;
+      }
+
+      .label{
+        font-size:32px;
+        font-weight:600;
+        text-anchor:middle;
+      }
+
+      .u-small{ font-size:18px; }
+      .tiny{ font-size:15px; }
+
+      /* Subscritos */
+      .subscript{
+        font-size:0.7em;
+        font-weight:600;
+        baseline-shift:-0.3em;
+      }
+
+      /* ====== Destaque sequencial das linhas da tabela ====== */
+      @keyframes rowHi{
+        0%,10%{opacity:0}
+        15%,25%{opacity:.18}
+        30%,100%{opacity:0}
+      }
+      .row-hi{ fill:var(--ink); opacity:0 }
+      .r1{ animation:rowHi var(--cycle) var(--ease) infinite 0s }
+      .r2{ animation:rowHi var(--cycle) var(--ease) infinite .7s }
+      .r3{ animation:rowHi var(--cycle) var(--ease) infinite 1.4s }
+      .r4{ animation:rowHi var(--cycle) var(--ease) infinite 2.1s }
+      .r5{ animation:rowHi var(--cycle) var(--ease) infinite 2.8s }
+      .r6{ animation:rowHi var(--cycle) var(--ease) infinite 3.5s }
+      .r7{ animation:rowHi var(--cycle) var(--ease) infinite 4.2s }
+
+      /* ====== Barras do histograma ====== */
+      @keyframes grow{
+        0%{ transform:scaleY(0) }
+        18%,82%{ transform:scaleY(1) }
+        100%{ transform:scaleY(0) }
+      }
+      .bar{
+        fill:var(--ink);
+        transform-box:fill-box;
+        transform-origin:bottom;
+        transform:scaleY(0);
+      }
+      .b1{ animation:grow var(--cycle) var(--ease) infinite 0s }
+      .b2{ animation:grow var(--cycle) var(--ease) infinite .15s }
+      .b3{ animation:grow var(--cycle) var(--ease) infinite .30s }
+      .b4{ animation:grow var(--cycle) var(--ease) infinite .45s }
+      .b5{ animation:grow var(--cycle) var(--ease) infinite .60s }
+      .b6{ animation:grow var(--cycle) var(--ease) infinite .75s }
+
+      /* ====== Linhas dos percentis no histograma ====== */
+      .u-p-line{
+        stroke:var(--ink);
+        stroke-width:2.5;
+        stroke-dasharray:320;
+        stroke-dashoffset:320;
+        opacity:.9;
+        animation:pLine var(--cycle) var(--ease) infinite;
+      }
+      .p-label{
+        font-size:16px;
+        font-weight:700;
+        text-anchor:middle;
+        opacity:0;
+        animation:pLabel var(--cycle) var(--ease) infinite;
+      }
+
+      @keyframes pLine{
+        0%{   stroke-dashoffset:320; opacity:0 }
+        20%,68%{ stroke-dashoffset:0;   opacity:1 }
+        86%,100%{ stroke-dashoffset:320; opacity:0 }
+      }
+
+      @keyframes pLabel{
+        0%,26%{ opacity:0 }
+        34%,72%{ opacity:1 }
+        86%,100%{ opacity:0 }
+      }
+
+      /* delays (stagger) */
+      .p10{ animation-delay:0.00s }
+      .p25{ animation-delay:0.15s }
+      .p50{ animation-delay:0.30s }
+      .p75{ animation-delay:0.45s }
+      .p90{ animation-delay:0.60s }
+
+      .t10{ animation-delay:0.00s }
+      .t25{ animation-delay:0.15s }
+      .t50{ animation-delay:0.30s }
+      .t75{ animation-delay:0.45s }
+      .t90{ animation-delay:0.60s }
+
+      @media (prefers-reduced-motion:reduce){
+        .row-hi{ animation:none; opacity:.12 }
+        .bar{ animation:none; transform:scaleY(1) }
+        .u-p-line{ animation:none; stroke-dashoffset:0; opacity:1 }
+        .p-label{ animation:none; opacity:1 }
+      }
+    </style>
+  </defs>
+
+  <!-- ================= PAINEL ESQUERDO: TABELA ================= -->
+  <g id="panel-table" transform="translate(-140,-200) scale(1.2)">
+    <g class="p-panel">
+      <!-- Moldura -->
+      <rect x="120" y="230" width="560" height="510" class="u-panel u-stroke"/>
+
+      <!-- Cabeçalho -->
+      <g class="p-header">
+        <text x="390" y="280" class="label">Percentis em dados agrupados</text>
+        <text x="390" y="308" class="u-small" text-anchor="middle">
+          Valores Discretos — N = 20
+        </text>
+      </g>
+
+      <!-- Corpo da tabela -->
+      <g class="p-body" transform="translate(8,-10)">
+        <!-- linha do cabeçalho -->
+        <line x1="160" y1="364" x2="620" y2="364" class="u-stroke" style="stroke-width:2"/>
+
+        <!-- rótulos das colunas -->
+        <g font-size="18" font-weight="600">
+          <text x="200" y="352" text-anchor="middle">Valor</text>
+
+          <text x="400" y="352" text-anchor="middle">
+            Frequência f<tspan class="subscript">j</tspan>
+          </text>
+          <text x="580" y="332" text-anchor="middle">Freq.</text>
+          <text x="580" y="352" text-anchor="middle">
+            acum. F<tspan class="subscript">j</tspan>
+          </text>
+        </g>
+
+        <!-- linhas horizontais -->
+        <g class="u-stroke">
+          <line x1="160" y1="404" x2="620" y2="404"/>
+          <line x1="160" y1="444" x2="620" y2="444"/>
+          <line x1="160" y1="484" x2="620" y2="484"/>
+          <line x1="160" y1="524" x2="620" y2="524"/>
+          <line x1="160" y1="564" x2="620" y2="564"/>
+          <line x1="160" y1="604" x2="620" y2="604"/>
+          <line x1="160" y1="644" x2="620" y2="644"/>
+        </g>
+
+        <!-- faixas animadas percorrendo as linhas -->
+        <rect x="160" y="374" width="460" height="30" class="row-hi r1"/>
+        <rect x="160" y="414" width="460" height="30" class="row-hi r2"/>
+        <rect x="160" y="454" width="460" height="30" class="row-hi r3"/>
+        <rect x="160" y="494" width="460" height="30" class="row-hi r4"/>
+        <rect x="160" y="534" width="460" height="30" class="row-hi r5"/>
+        <rect x="160" y="574" width="460" height="30" class="row-hi r6"/>
+        <rect x="160" y="614" width="460" height="30" class="row-hi r7"/>
+
+        <!-- dados da tabela -->
+        <g font-size="19">
+          <text x="175" y="396">2</text>
+          <text x="405" y="396" text-anchor="end">2</text>
+          <text x="590" y="396" text-anchor="end">2</text>
+
+          <text x="175" y="436">3</text>
+          <text x="405" y="436" text-anchor="end">4</text>
+          <text x="590" y="436" text-anchor="end">6</text>
+
+          <text x="175" y="476">4</text>
+          <text x="405" y="476" text-anchor="end">6</text>
+          <text x="590" y="476" text-anchor="end">12</text>
+
+          <text x="175" y="516">5</text>
+          <text x="405" y="516" text-anchor="end">3</text>
+          <text x="590" y="516" text-anchor="end">15</text>
+
+          <text x="175" y="556">6</text>
+          <text x="405" y="556" text-anchor="end">3</text>
+          <text x="590" y="556" text-anchor="end">18</text>
+
+          <text x="175" y="596">7</text>
+          <text x="405" y="596" text-anchor="end">2</text>
+          <text x="590" y="596" text-anchor="end">20</text>
+
+          <text x="175" y="636" font-weight="700">Totais</text>
+          <text x="405" y="636" text-anchor="end" font-weight="700">20</text>
+          <text x="590" y="636" text-anchor="end" font-weight="700">20</text>
+        </g>
+      </g>
+
+      <!-- Rodapé com fórmulas dos percentis -->
+      <g class="p-footer" transform="translate(0,15)">
+        <text x="390" y="655" class="u-small" text-anchor="middle">
+          P<tspan class="subscript">Per<tspan class="subscript">k</tspan></tspan> = (k·N/100)  → com N=20.
+        </text>
+
+        <text x="390" y="680" class="u-small" text-anchor="middle">
+          Regra: o percentil é o primeiro valor cujo acumulado F ≥ P<tspan class="subscript">p</tspan>.
+        </text>
+
+        <text x="390" y="705" class="u-small" text-anchor="middle">
+          Aqui: P<tspan class="subscript">10</tspan>=2, P<tspan class="subscript">25</tspan>=3, P<tspan class="subscript">50</tspan>=4, P<tspan class="subscript">75</tspan>=5, P<tspan class="subscript">90</tspan>=6.
+        </text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ================= PAINEL DIREITO: BARRAS + PERCENTIS ================= -->
+  <g id="panel-hist" transform="translate(-220,-200) scale(1.2)">
+    <g class="p-panel">
+      <!-- Moldura -->
+      <rect x="840" y="230" width="580" height="510" class="u-panel u-stroke"/>
+
+      <!-- Cabeçalho -->
+      <g class="p-header">
+        <text x="1130" y="280" class="label">Frequências e percentis</text>
+        <text x="1130" y="308" class="u-small" text-anchor="middle">
+          Barras de <tspan font-style="italic">f</tspan> por valor — N = 20
+        </text>
+      </g>
+
+      <g transform="translate(-125,-40) scale(1.1)">
+        <!-- Corpo -->
+        <g class="p-body">
+          <!-- Eixos -->
+          <g class="u-stroke" style="stroke-width:2.5">
+            <line x1="930" y1="650" x2="1355" y2="650"/>
+            <line x1="930" y1="650" x2="930"  y2="410"/>
+          </g>
+
+          <!-- Grades Y (0..6) -->
+          <g class="u-stroke u-small" opacity=".35" style="stroke-width:2">
+            <line x1="930" y1="650" x2="1355" y2="650"/><text x="915" y="654" text-anchor="end" opacity=".85">0</text>
+            <line x1="930" y1="610" x2="1355" y2="610"/><text x="915" y="614" text-anchor="end" opacity=".85">1</text>
+            <line x1="930" y1="570" x2="1355" y2="570"/><text x="915" y="574" text-anchor="end" opacity=".85">2</text>
+            <line x1="930" y1="530" x2="1355" y2="530"/><text x="915" y="534" text-anchor="end" opacity=".85">3</text>
+            <line x1="930" y1="490" x2="1355" y2="490"/><text x="915" y="494" text-anchor="end" opacity=".85">4</text>
+            <line x1="930" y1="450" x2="1355" y2="450"/><text x="915" y="454" text-anchor="end" opacity=".85">5</text>
+            <line x1="930" y1="410" x2="1355" y2="410"/><text x="915" y="414" text-anchor="end" opacity=".85">6</text>
+          </g>
+
+          <!-- Barras (2..7) com f = [2,4,6,3,3,2] -->
+          <rect x="960"  y="570" width="44" height="80"  class="bar b1"/>
+          <rect x="1026" y="490" width="44" height="160" class="bar b2"/>
+          <rect x="1092" y="410" width="44" height="240" class="bar b3"/>
+          <rect x="1158" y="530" width="44" height="120" class="bar b4"/>
+          <rect x="1224" y="530" width="44" height="120" class="bar b5"/>
+          <rect x="1290" y="570" width="44" height="80"  class="bar b6"/>
+
+          <!-- Ticks do eixo X -->
+          <g class="u-stroke" style="stroke-width:2" opacity=".85">
+            <line x1="982"  y1="650" x2="982"  y2="642"/>
+            <line x1="1048" y1="650" x2="1048" y2="642"/>
+            <line x1="1114" y1="650" x2="1114" y2="642"/>
+            <line x1="1180" y1="650" x2="1180" y2="642"/>
+            <line x1="1246" y1="650" x2="1246" y2="642"/>
+            <line x1="1312" y1="650" x2="1312" y2="642"/>
+          </g>
+
+          <!-- Rótulos 2..7 -->
+          <g class="u-small" font-weight="700">
+            <text x="982"  y="684" text-anchor="middle">2</text>
+            <text x="1048" y="684" text-anchor="middle">3</text>
+            <text x="1114" y="684" text-anchor="middle">4</text>
+            <text x="1180" y="684" text-anchor="middle">5</text>
+            <text x="1246" y="684" text-anchor="middle">6</text>
+            <text x="1312" y="684" text-anchor="middle">7</text>
+          </g>
+
+          <!-- Linhas verticais dos percentis (P10, P25, P50, P75, P90) -->
+          <g class="u-stroke" style="opacity:.95">
+            <!-- P10 = 2 (x=982) -->
+            <line x1="1015"  y1="380" x2="1015"  y2="650" class="u-p-line p10" style="stroke-dasharray:10 8"/>
+            <!-- P25 = 3 (x=1048) -->
+            <line x1="1048" y1="380" x2="1048" y2="650" class="u-p-line p25" style="stroke-dasharray:10 8"/>
+            <!-- P50 = 4 (x=1114) -->
+            <line x1="1114" y1="390" x2="1114" y2="650" class="u-p-line p50" style="stroke-dasharray:none"/>
+            <!-- P75 = 5 (x=1180) -->
+            <line x1="1213" y1="380" x2="1213" y2="650" class="u-p-line p75" style="stroke-dasharray:10 8"/>
+            <!-- P90 = 6 (x=1246) -->
+            <line x1="1278" y1="380" x2="1278" y2="650" class="u-p-line p90" style="stroke-dasharray:10 8"/>
+          </g>
+
+          <!-- RÓTULOS DOS PERCENTIS ACIMA DO GRÁFICO -->
+          <g font-weight="700" font-size="16">
+            <text x="1015"  y="352" class="p-label t10">P<tspan class="subscript">Per<tspan class="subscript">10</tspan></tspan></text>
+            <text x="1015"  y="372" class="p-label t10">2.5</text>
+            <text x="1048" y="352" class="p-label t25">P<tspan class="subscript">Per<tspan class="subscript">25</tspan></tspan></text>
+            <text x="1048"  y="372" class="p-label t10">3</text>
+            <text x="1114" y="352" class="p-label t50">P<tspan class="subscript">Per<tspan class="subscript">50</tspan></tspan></text>
+            <text x="1114"  y="372" class="p-label t10">4</text>
+            <text x="1213" y="352" class="p-label t75">P<tspan class="subscript">Per<tspan class="subscript">75</tspan></tspan></text>
+            <text x="1213"  y="372" class="p-label t10">5.5</text>
+            <text x="1278" y="352" class="p-label t90">P<tspan class="subscript">Per<tspan class="subscript">90</tspan></tspan></text>
+            <text x="1278"  y="372" class="p-label t10">6.5</text>
+
+
+          </g>
+
+        </g>
+      </g>
+    </g>
+  </g>
+
+</svg>

@@ -1,0 +1,476 @@
+schema: EconSchema
+aspectRatio: 1.6
+
+params:
+  # Frequências por classe (0–5, 5–10, 10–15, 15–20, 20–25)
+  - name: f1
+    value: 3
+    min: 0
+    max: 12
+    round: 1
+  - name: f2
+    value: 5
+    min: 0
+    max: 12
+    round: 1
+  - name: f3
+    value: 6
+    min: 0
+    max: 12
+    round: 1
+  - name: f4
+    value: 4
+    min: 0
+    max: 12
+    round: 1
+  - name: f5
+    value: 2
+    min: 0
+    max: 12
+    round: 1
+
+calcs:
+  # ============================================================
+  # BLOCO 0) TOTAL N E FREQUÊNCIAS ACUMULADAS (F)
+  # ------------------------------------------------------------
+  # Ideia estatística:
+  # - N é o total de observações (soma das frequências).
+  # - F1, F2, ..., F5 são as frequências acumuladas:
+  #   F_j = f1 + ... + f_j
+  #
+  # Ideia computacional:
+  # - Essas variáveis são a “base” para localizar onde cada quartil cai:
+  #   dado um Pk (posição), procuramos o primeiro Fj >= Pk.
+  # ============================================================
+  N: "(params.f1 + params.f2 + params.f3 + params.f4 + params.f5)"
+
+  F1: "(params.f1)"
+  F2: "(params.f1 + params.f2)"
+  F3: "(params.f1 + params.f2 + params.f3)"
+  F4: "(params.f1 + params.f2 + params.f3 + params.f4)"
+  F5: "(params.f1 + params.f2 + params.f3 + params.f4 + params.f5)"
+
+  # ============================================================
+  # BLOCO 1) POSIÇÕES DOS QUARTIS (P1, P2, P3)
+  # ------------------------------------------------------------
+  # Ideia estatística (posicional):
+  # - Quartis são cortes em 25%, 50% e 75% das observações.
+  # - Trabalhando com frequências, usamos as posições:
+  #     P1 = 0.25 * N
+  #     P2 = 0.50 * N
+  #     P3 = 0.75 * N
+  #
+  # Observação:
+  # - Aqui Pk é uma “posição” no sentido de contagem acumulada,
+  #   e não um valor do eixo x.
+  # ============================================================
+  P1: "(0.25 * calcs.N)"
+  P2: "(0.50 * calcs.N)"
+  P3: "(0.75 * calcs.N)"
+
+  # ============================================================
+  # BLOCO 2) AMPLITUDE DA CLASSE (h)
+  # ------------------------------------------------------------
+  # Ideia estatística:
+  # - Como as classes são 0–5, 5–10, 10–15, 15–20, 20–25,
+  #   todas têm largura (amplitude) igual a 5.
+  #
+  # Por que isso entra na fórmula?
+  # - O quartil dentro da classe é obtido por interpolação linear,
+  #   e a escala horizontal é medida em unidades do eixo x,
+  #   então precisamos da largura h para converter “fração da classe”
+  #   em deslocamento numérico.
+  # ============================================================
+  h: "5"
+
+  # ============================================================
+  # BLOCO 3) SELEÇÃO DA CLASSE DO QUARTIL (Lk, Fprevk, fCk)
+  # ------------------------------------------------------------
+  # Ideia estatística:
+  # - Para cada Pk, queremos a PRIMEIRA classe cuja acumulada Fj
+  #   ultrapassa (ou iguala) Pk:
+  #     "classe quartílica" = menor j tal que Fj >= Pk
+  #
+  # Uma vez encontrada a classe j:
+  # - Lk     = limite inferior da classe (0, 5, 10, 15, 20)
+  # - Fprevk = acumulada anterior (F_{j-1}; e 0 se j=1)
+  # - fCk    = frequência da classe j (f_j)
+  #
+  # Ideia computacional:
+  # - Fazemos isso com ternários encadeados.
+  # - Note que NÃO comparamos floats por igualdade; só usamos
+  #   comparações do tipo "Fj >= Pk", que são estáveis.
+  # ============================================================
+
+  # ---------- Limites inferiores (Lk) ----------
+  L1: "(calcs.F1 >= calcs.P1 ? 0  : (calcs.F2 >= calcs.P1 ? 5  : (calcs.F3 >= calcs.P1 ? 10 : (calcs.F4 >= calcs.P1 ? 15 : 20))))"
+  L2: "(calcs.F1 >= calcs.P2 ? 0  : (calcs.F2 >= calcs.P2 ? 5  : (calcs.F3 >= calcs.P2 ? 10 : (calcs.F4 >= calcs.P2 ? 15 : 20))))"
+  L3: "(calcs.F1 >= calcs.P3 ? 0  : (calcs.F2 >= calcs.P3 ? 5  : (calcs.F3 >= calcs.P3 ? 10 : (calcs.F4 >= calcs.P3 ? 15 : 20))))"
+
+  # ---------- Acumulada anterior (Fprevk) ----------
+  # Se Pk cair na 1ª classe: Fprev = 0
+  # Se cair na 2ª: Fprev = F1
+  # Se cair na 3ª: Fprev = F2
+  # Se cair na 4ª: Fprev = F3
+  # Se cair na 5ª: Fprev = F4
+  Fprev1: "(calcs.F1 >= calcs.P1 ? 0 : (calcs.F2 >= calcs.P1 ? calcs.F1 : (calcs.F3 >= calcs.P1 ? calcs.F2 : (calcs.F4 >= calcs.P1 ? calcs.F3 : calcs.F4))))"
+  Fprev2: "(calcs.F1 >= calcs.P2 ? 0 : (calcs.F2 >= calcs.P2 ? calcs.F1 : (calcs.F3 >= calcs.P2 ? calcs.F2 : (calcs.F4 >= calcs.P2 ? calcs.F3 : calcs.F4))))"
+  Fprev3: "(calcs.F1 >= calcs.P3 ? 0 : (calcs.F2 >= calcs.P3 ? calcs.F1 : (calcs.F3 >= calcs.P3 ? calcs.F2 : (calcs.F4 >= calcs.P3 ? calcs.F3 : calcs.F4))))"
+
+  # ---------- Frequência da classe do quartil (fCk) ----------
+  # Mesma lógica: uma vez identificada a classe pelo primeiro Fj >= Pk,
+  # selecionamos o f correspondente.
+  fC1: "(calcs.F1 >= calcs.P1 ? params.f1 : (calcs.F2 >= calcs.P1 ? params.f2 : (calcs.F3 >= calcs.P1 ? params.f3 : (calcs.F4 >= calcs.P1 ? params.f4 : params.f5))))"
+  fC2: "(calcs.F1 >= calcs.P2 ? params.f1 : (calcs.F2 >= calcs.P2 ? params.f2 : (calcs.F3 >= calcs.P2 ? params.f3 : (calcs.F4 >= calcs.P2 ? params.f4 : params.f5))))"
+  fC3: "(calcs.F1 >= calcs.P3 ? params.f1 : (calcs.F2 >= calcs.P3 ? params.f2 : (calcs.F3 >= calcs.P3 ? params.f3 : (calcs.F4 >= calcs.P3 ? params.f4 : params.f5))))"
+
+  # ============================================================
+  # BLOCO 4) “GUARDA” PARA DIVISÃO POR ZERO (d1, d2, d3)
+  # ------------------------------------------------------------
+  # Problema prático:
+  # - Como você deixou as frequências arrastáveis, o usuário pode
+  #   colocar f_j = 0.
+  # - Se um quartil cair justamente numa classe com f=0, a fórmula
+  #   teria divisão por zero e o motor pode produzir Infinity/NaN,
+  #   o que costuma “sumir” linhas e labels.
+  #
+  # Solução:
+  # - Criamos um denominador seguro:
+  #     d = (fC > 0 ? fC : 1e-6)
+  #
+  # Nota:
+  # - 1e-6 é pequeno o bastante para “não explodir” visualmente,
+  #   e evita quebrar o render.
+  # ============================================================
+  d1: "(calcs.fC1 > 0 ? calcs.fC1 : 0.000001)"
+  d2: "(calcs.fC2 > 0 ? calcs.fC2 : 0.000001)"
+  d3: "(calcs.fC3 > 0 ? calcs.fC3 : 0.000001)"
+
+  # ============================================================
+  # BLOCO 5) INTERPOLAÇÃO LINEAR DO QUARTIL DENTRO DA CLASSE (Q1,Q2,Q3)
+  # ------------------------------------------------------------
+  # Fórmula (dados agrupados em classes):
+  #   Qk = Lk + ((Pk - Fprevk) / fCk) * h
+  #
+  # Interpretação:
+  # - (Pk - Fprevk) = “quantas observações faltam” para chegar em Pk
+  #   já dentro da classe quartílica.
+  # - Dividindo por fCk obtemos a FRAÇÃO da classe onde o quartil está.
+  # - Multiplicando por h convertemos essa fração em unidades no eixo x.
+  # - Somando ao limite inferior Lk obtemos o valor do quartil.
+  #
+  # Observação:
+  # - Usamos d1/d2/d3 no denominador por segurança (bloco 4).
+  # ============================================================
+  Q1: "(calcs.L1 + ((calcs.P1 - calcs.Fprev1) / calcs.d1) * calcs.h)"
+  Q2: "(calcs.L2 + ((calcs.P2 - calcs.Fprev2) / calcs.d2) * calcs.h)"
+  Q3: "(calcs.L3 + ((calcs.P3 - calcs.Fprev3) / calcs.d3) * calcs.h)"
+
+colors:
+  ink: "'#111827'"
+  grid: "'#e5e7eb'"
+  inkSoft: "'#64748b'"
+  bg: "'#ffffff'"
+
+layout:
+  OneWideGraphPlusSidebar:
+    graph:
+      title: "Frequências e quartis"
+      xAxis:
+        min: 0
+        max: 25
+        ticks: 0
+      yAxis:
+        min: 0
+        max: 8
+        ticks: 4
+
+      objects:
+        # ---------------------------
+        # Grade horizontal (manual, estilo “limpo”)
+        # ---------------------------
+
+        - Segment:
+            a: [0, 2]
+            b: [25, 2]
+            color: colors.inkSoft
+            strokeWidth: 0.5
+
+        - Segment:
+            a: [0, 4]
+            b: [25, 4]
+            color: colors.inkSoft
+            strokeWidth: 0.5
+
+        - Segment:
+            a: [0, 6]
+            b: [25, 6]
+            color: colors.inkSoft
+            strokeWidth: 0.5
+
+        - Segment:
+            a: [0, 8]
+            b: [25, 8]
+            color: colors.inkSoft
+            strokeWidth: 0.5
+
+        # ---------------------------
+        # Barras por classe (largura 5)
+        # drag no eixo y (frequência)
+        # ---------------------------
+        - Rectangle:
+            x1: 0
+            x2: 5
+            y1: 0
+            y2: params.f1
+            fill: colors.ink
+            opacity: 1
+            drag:
+              - directions: y
+                param: f1
+                expression: "drag.y"
+
+        - Rectangle:
+            x1: 5
+            x2: 10
+            y1: 0
+            y2: params.f2
+            fill: colors.ink
+            opacity: 1
+            drag:
+              - directions: y
+                param: f2
+                expression: "drag.y"
+
+        - Rectangle:
+            x1: 10
+            x2: 15
+            y1: 0
+            y2: params.f3
+            fill: colors.ink
+            opacity: 1
+            drag:
+              - directions: y
+                param: f3
+                expression: "drag.y"
+
+        - Rectangle:
+            x1: 15
+            x2: 20
+            y1: 0
+            y2: params.f4
+            fill: colors.ink
+            opacity: 1
+            drag:
+              - directions: y
+                param: f4
+                expression: "drag.y"
+
+        - Rectangle:
+            x1: 20
+            x2: 25
+            y1: 0
+            y2: params.f5
+            fill: colors.ink
+            opacity: 1
+            drag:
+              - directions: y
+                param: f5
+                expression: "drag.y"
+
+        # ---------------------------
+        # Rótulos das classes (no “eixo”)
+        # ---------------------------
+
+        - Label:
+            coordinates: [2.5, 0]
+            text: "'0–5'"
+            color: colors.ink
+            fontSize: 10
+            position: t
+
+        - Label:
+            coordinates: [7.5, 0]
+            text: "'5–10'"
+            color: colors.ink
+            fontSize: 10
+            position: t
+
+        - Label:
+            coordinates: [12.5, 0]
+            text: "'10–15'"
+            color: colors.ink
+            fontSize: 10
+            position: t
+
+        - Label:
+            coordinates: [17.5, 0]
+            text: "'15–20'"
+            color: colors.ink
+            fontSize: 10
+            position: t
+
+        - Label:
+            coordinates: [22.5, 0]
+            text: "'20–25'"
+            color: colors.ink
+            fontSize: 10
+            position: t
+
+        # ---------------------------
+        # Rótulo f no topo de cada barra
+        # ---------------------------
+        - Label:
+            coordinates: [2.5, params.f1]
+            text: "`\\\\bf{f}=${params.f1.toFixed(0)}`"
+            color: white
+            bgcolor: colors.ink
+            fontSize: 7
+            position: t
+        - Label:
+            coordinates: [7.5, params.f2]
+            text: "`\\\\bf{f}=${params.f2.toFixed(0)}`"
+            color: white
+            bgcolor: colors.ink
+            fontSize: 7
+            position: t
+        - Label:
+            coordinates: [12.5, params.f3]
+            text: "`\\\\bf{f}=${params.f3.toFixed(0)}`"
+            color: white
+            bgcolor: colors.ink
+            fontSize: 7
+            position: t
+        - Label:
+            coordinates: [17.5, params.f4]
+            text: "`\\\\bf{f}=${params.f4.toFixed(0)}`"
+            color: white
+            bgcolor: colors.ink
+            fontSize: 7
+            position: t
+        - Label:
+            coordinates: [22.5, params.f5]
+            text: "`\\\\bf{f}=${params.f5.toFixed(0)}`"
+            color: white
+            bgcolor: colors.ink
+            fontSize: 7
+            position: t
+
+        # ---------------------------
+        # Linhas verticais dos quartis (garantir que aparecem)
+        # Coloque DEPOIS das barras/labels para ficar em cima
+        # ---------------------------
+        - Segment:
+            a: [calcs.Q1, 0]
+            b: [calcs.Q1, 8]
+            color: colors.ink
+            strokeWidth: 2
+            lineStyle: dashed
+
+        - Segment:
+            a: [calcs.Q2, 0]
+            b: [calcs.Q2, 8]
+            color: colors.ink
+            strokeWidth: 2.5
+            lineStyle: solid
+
+        - Segment:
+            a: [calcs.Q3, 0]
+            b: [calcs.Q3, 8]
+            color: colors.ink
+            strokeWidth: 2
+            lineStyle: dashed
+
+        # ---------------------------
+        # Rótulos acima do topo do gráfico (com fundo branco para não sobrepor)
+        # ---------------------------
+        - Label:
+            coordinates: [calcs.Q1, 7.85]
+            text: "`Q_{1}=${calcs.Q1.toFixed(2)}`"
+            color: colors.ink
+            fontSize: 8
+            position: c
+            bgcolor: colors.bg
+
+        - Label:
+            coordinates: [calcs.Q2, 7.85]
+            text: "`Q_{2}=${calcs.Q2.toFixed(2)}\\ \\\\\\\\ (mediana)`"
+            color: colors.ink
+            fontSize: 8
+            position: c
+            bgcolor: colors.bg
+
+        - Label:
+            coordinates: [calcs.Q3, 7.85]
+            text: "`Q_{3}=${calcs.Q3.toFixed(2)}`"
+            color: colors.ink
+            fontSize: 8
+            position: c
+            bgcolor: colors.bg
+
+    sidebar:
+      triggerWidth: 9999
+      controls:
+        - title: ""
+          divs:
+            # ---------------------------
+            # 1) TABELA (classes)
+            # ---------------------------
+            - html: "`<figure class='sidebar-figure'>
+                <div class='sidebar-table-wrap'>
+                  <table class='sidebar-table'>
+                    <thead>
+                      <tr>
+                        <th>Classe</th>
+                        <th>Freq. <em>f</em></th>
+                        <th>Acum. <em>F</em></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>0–5</td><td>${params.f1.toFixed(0)}</td><td>${calcs.F1.toFixed(0)}</td></tr>
+                      <tr><td>5–10</td><td>${params.f2.toFixed(0)}</td><td>${calcs.F2.toFixed(0)}</td></tr>
+                      <tr><td>10–15</td><td>${params.f3.toFixed(0)}</td><td>${calcs.F3.toFixed(0)}</td></tr>
+                      <tr><td>15–20</td><td>${params.f4.toFixed(0)}</td><td>${calcs.F4.toFixed(0)}</td></tr>
+                      <tr><td>20–25</td><td>${params.f5.toFixed(0)}</td><td>${calcs.F5.toFixed(0)}</td></tr>
+                      <tr>
+                        <td><b>Total</b></td>
+                        <td><b>${calcs.N.toFixed(0)}</b></td>
+                        <td><b>${calcs.N.toFixed(0)}</b></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <figcaption>Distribuição por classes: frequências e acumuladas</figcaption></figure>`"
+
+            - html: "<hr>"
+
+            # ---------------------------
+            # 2) CÁLCULOS DOS QUARTIS (classes + interpolação)
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Posição dos Quartis:</b></div>"
+
+            - html: "`$$\\\\tiny P_{Q_k}=\\\\frac{k\\\\,N}{4}\\\\quad (k=1,2,3;\\\\; N=${calcs.N.toFixed(0)})$$`"
+
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Aplicando:</b></div>"
+
+            - html: "`$$\\\\tiny P_{Q_1}=\\\\frac{1\\\\cdot ${calcs.N.toFixed(0)}}{4}=${calcs.P1.toFixed(2)},\\\\qquad
+                               P_{Q_2}=\\\\frac{2\\\\cdot ${calcs.N.toFixed(0)}}{4}=${calcs.P2.toFixed(2)}, $$`"
+
+            - html: "`$$\\\\tiny
+                               P_{Q_3}=\\\\frac{3\\\\cdot ${calcs.N.toFixed(0)}}{4}=${calcs.P3.toFixed(2)}$$`"
+
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Interpolação na classe:</b></div>"
+
+            - html: "`$$\\\\tiny
+                    Q_k=L_k+\\\\left(\\\\frac{P_{Q_k}-F_{\\\\text{anterior}}}{f_{\\\\text{classe}}}\\\\right)\\\\,h
+                    \\\\quad (h=5)
+                    $$`"
+
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Resultados:</b></div>"
+
+
+            - html: "`$$\\\\tiny
+                    Q_1=${calcs.Q1.toFixed(2)},\\\\qquad
+                    Q_2=${calcs.Q2.toFixed(2)}\\\\;\\\\;(\\\\text{mediana}),\\\\qquad
+                    Q_3=${calcs.Q3.toFixed(2)}.
+                    $$`"

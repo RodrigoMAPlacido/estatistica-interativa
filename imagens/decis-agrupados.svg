@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ===========================================
+   DÉCIS EM DADOS AGRUPADOS (DISCRETOS) — N=20
+   Mesma estrutura do seu exemplo.
+   Ajustes: footnote (sem sobrepor o quadro) +
+            labels dos DÉCIS alinhados às linhas (2 fileiras).
+   =========================================== -->
+<svg viewBox="0 0 1500 780" xmlns="http://www.w3.org/2000/svg"
+     role="img" aria-labelledby="title desc">
+  <title id="title">Décis em dados agrupados (valores discretos) — ponto médio</title>
+  <desc id="desc">
+    Painel esquerdo: tabela de valores, frequências e frequências acumuladas (N=20) com varredura.
+    Painel direito: barras de frequência por valor e linhas verticais marcando os décis calculados pelo ponto médio.
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --font:"et-book","ETBook","Georgia",serif;
+        --cycle:8s;
+        --ease:ease-in-out;
+      }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        user-select:none;
+      }
+
+      .u-stroke{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+      }
+
+      .u-panel{ stroke-width:2; rx:12; }
+
+      .label{
+        font-size:32px;
+        font-weight:600;
+        text-anchor:middle;
+      }
+
+      .u-small{ font-size:18px; }
+      .tiny{ font-size:15px; }
+
+      .subscript{
+        font-size:0.7em;
+        font-weight:600;
+        baseline-shift:-0.3em;
+      }
+
+      /* ====== Destaque sequencial das linhas da tabela ====== */
+      @keyframes rowHi{
+        0%,10%{opacity:0}
+        15%,25%{opacity:.18}
+        30%,100%{opacity:0}
+      }
+      .row-hi{ fill:var(--ink); opacity:0 }
+      .r1{ animation:rowHi var(--cycle) var(--ease) infinite 0s }
+      .r2{ animation:rowHi var(--cycle) var(--ease) infinite .7s }
+      .r3{ animation:rowHi var(--cycle) var(--ease) infinite 1.4s }
+      .r4{ animation:rowHi var(--cycle) var(--ease) infinite 2.1s }
+      .r5{ animation:rowHi var(--cycle) var(--ease) infinite 2.8s }
+      .r6{ animation:rowHi var(--cycle) var(--ease) infinite 3.5s }
+      .r7{ animation:rowHi var(--cycle) var(--ease) infinite 4.2s }
+
+      /* ====== Barras do histograma ====== */
+      @keyframes grow{
+        0%{ transform:scaleY(0) }
+        18%,82%{ transform:scaleY(1) }
+        100%{ transform:scaleY(0) }
+      }
+      .bar{
+        fill:var(--ink);
+        transform-box:fill-box;
+        transform-origin:bottom;
+        transform:scaleY(0);
+      }
+      .b1{ animation:grow var(--cycle) var(--ease) infinite 0s }
+      .b2{ animation:grow var(--cycle) var(--ease) infinite .15s }
+      .b3{ animation:grow var(--cycle) var(--ease) infinite .30s }
+      .b4{ animation:grow var(--cycle) var(--ease) infinite .45s }
+      .b5{ animation:grow var(--cycle) var(--ease) infinite .60s }
+      .b6{ animation:grow var(--cycle) var(--ease) infinite .75s }
+
+      @media (prefers-reduced-motion:reduce){
+        .row-hi{ animation:none; opacity:.12 }
+        .bar{ animation:none; transform:scaleY(1) }
+      }
+    </style>
+  </defs>
+<g transform="translate(-10,0)">
+  <!-- ================= PAINEL ESQUERDO: TABELA ================= -->
+  <g id="panel-table" transform="translate(-140,-200) scale(1.2)">
+    <g class="p-panel">
+      <rect x="128" y="230" width="560" height="510" class="u-panel u-stroke"/>
+
+      <g class="p-header">
+        <text x="390" y="280" class="label">Decis em dados agrupados</text>
+        <text x="390" y="308" class="u-small" text-anchor="middle">
+          Valores Discretos — N = 20
+        </text>
+      </g>
+
+      <g class="p-body" transform="translate(8,-10)">
+        <line x1="160" y1="364" x2="620" y2="364" class="u-stroke" style="stroke-width:2"/>
+
+        <g font-size="18" font-weight="600">
+          <text x="200" y="352" text-anchor="middle">Valor (x)</text>
+          <text x="400" y="352" text-anchor="middle">
+            Frequência f<tspan class="subscript">j</tspan>
+          </text>
+          <text x="580" y="332" text-anchor="middle">Frequência</text>
+          <text x="580" y="352" text-anchor="middle">
+            acumulada F<tspan class="subscript">j</tspan>
+          </text>
+        </g>
+
+        <g class="u-stroke">
+          <line x1="160" y1="404" x2="620" y2="404"/>
+          <line x1="160" y1="444" x2="620" y2="444"/>
+          <line x1="160" y1="484" x2="620" y2="484"/>
+          <line x1="160" y1="524" x2="620" y2="524"/>
+          <line x1="160" y1="564" x2="620" y2="564"/>
+          <line x1="160" y1="604" x2="620" y2="604"/>
+          <line x1="160" y1="644" x2="620" y2="644"/>
+        </g>
+
+        <rect x="160" y="374" width="460" height="30" class="row-hi r1"/>
+        <rect x="160" y="414" width="460" height="30" class="row-hi r2"/>
+        <rect x="160" y="454" width="460" height="30" class="row-hi r3"/>
+        <rect x="160" y="494" width="460" height="30" class="row-hi r4"/>
+        <rect x="160" y="534" width="460" height="30" class="row-hi r5"/>
+        <rect x="160" y="574" width="460" height="30" class="row-hi r6"/>
+        <rect x="160" y="614" width="460" height="30" class="row-hi r7"/>
+
+        <!-- dados (mantidos) -->
+        <g font-size="19">
+          <text x="175" y="396">2</text>
+          <text x="405" y="396" text-anchor="end">2</text>
+          <text x="590" y="396" text-anchor="end">2</text>
+
+          <text x="175" y="436">3</text>
+          <text x="405" y="436" text-anchor="end">4</text>
+          <text x="590" y="436" text-anchor="end">6</text>
+
+          <text x="175" y="476">4</text>
+          <text x="405" y="476" text-anchor="end">6</text>
+          <text x="590" y="476" text-anchor="end">12</text>
+
+          <text x="175" y="516">5</text>
+          <text x="405" y="516" text-anchor="end">3</text>
+          <text x="590" y="516" text-anchor="end">15</text>
+
+          <text x="175" y="556">6</text>
+          <text x="405" y="556" text-anchor="end">3</text>
+          <text x="590" y="556" text-anchor="end">18</text>
+
+          <text x="175" y="596">7</text>
+          <text x="405" y="596" text-anchor="end">2</text>
+          <text x="590" y="596" text-anchor="end">20</text>
+
+          <text x="175" y="636" font-weight="700">Totais</text>
+          <text x="405" y="636" text-anchor="end" font-weight="700">20</text>
+          <text x="590" y="636" text-anchor="end" font-weight="700">20</text>
+        </g>
+      </g>
+
+      <!-- FOOTNOTE (ponto médio) — agora em linhas curtas (não invade a moldura) -->
+      <g class="p-footer">
+        <text x="190" y="662" class="tiny" text-anchor="left">
+          P<tspan class="subscript">Dk</tspan> = k·N/10 (k=1,…,9).
+        </text>
+        <text x="190" y="680" class="tiny" text-anchor="left">
+          Com N=20: P<tspan class="subscript">Dk</tspan> = 2k.
+        </text>
+        <text x="190" y="698" class="tiny" text-anchor="left">
+          Se P<tspan class="subscript">Dk</tspan> é inteiro: 
+        </text>
+        <text x="190" y="718" class="tiny" text-anchor="left">
+          D<tspan class="subscript">k</tspan>=(x<tspan class="subscript">(P)</tspan>+x<tspan class="subscript">(P+1)</tspan>)/2.
+        </text>
+        <text x="390" y="662" class="tiny" text-anchor="left">
+          Aqui: D<tspan class="subscript">1</tspan>=2,5; D<tspan class="subscript">2</tspan>=3; D<tspan class="subscript">3</tspan>=3,5;
+        </text>
+        <text x="450" y="687" class="tiny" text-anchor="left">
+           D<tspan class="subscript">4</tspan>=D<tspan class="subscript">5</tspan>=4;
+        </text>
+        <text x="390" y="710" class="tiny" text-anchor="left">
+          D<tspan class="subscript">6</tspan>=4,5; D<tspan class="subscript">7</tspan>=5; D<tspan class="subscript">8</tspan>=6; D<tspan class="subscript">9</tspan>=6,5.
+        </text>
+      </g>
+
+    </g>
+  </g>
+
+  <!-- ================= PAINEL DIREITO: BARRAS + DÉCIS ================= -->
+  <g id="panel-hist" transform="translate(-280,-200) scale(1.2)">
+    <g class="p-panel">
+      <rect x="840" y="230" width="630" height="510" class="u-panel u-stroke"/>
+
+      <g class="p-header">
+        <text x="1155" y="280" class="label">Frequências e decis</text>
+        <text x="1155" y="308" class="u-small" text-anchor="middle">
+          Barras de <tspan font-style="italic">f</tspan> por valor — N = 20
+        </text>
+      </g>
+
+      <g transform="translate(-125,-40) scale(1.1)">
+        <!-- (1) Labels dos décis — agora com mais espaçamento horizontal -->
+<g font-weight="700" font-size="14">
+  <!-- fileira 1 -->
+  <text x="1060" y="340" text-anchor="middle">D<tspan class="subscript">2</tspan>=3</text>
+  <text x="1138" y="340" text-anchor="middle">D<tspan class="subscript">4</tspan>=D<tspan class="subscript">5</tspan>=4</text>
+  <text x="1216" y="340" text-anchor="middle">D<tspan class="subscript">7</tspan>=5</text>
+  <text x="1294" y="340" text-anchor="middle">D<tspan class="subscript">8</tspan>=6</text>
+
+  <!-- fileira 2 (meios) -->
+  <text x="1021" y="370" text-anchor="middle">D<tspan class="subscript">1</tspan>=2,5</text>
+  <text x="1099" y="370" text-anchor="middle">D<tspan class="subscript">3</tspan>=3,5</text>
+  <text x="1177" y="370" text-anchor="middle">D<tspan class="subscript">6</tspan>=4,5</text>
+  <text x="1333" y="370" text-anchor="middle">D<tspan class="subscript">9</tspan>=6,5</text>
+</g>
+
+
+
+<!-- (2) Eixos — esticados para caber a nova última barra -->
+<g class="u-stroke" style="stroke-width:2.5">
+  <line x1="930" y1="650" x2="1415" y2="650"/>
+  <line x1="930" y1="650" x2="930"  y2="410"/>
+</g>
+
+<!-- (3) Grades Y — também esticadas -->
+<g class="u-stroke u-small" opacity=".35" style="stroke-width:2">
+  <line x1="930" y1="650" x2="1415" y2="650"/><text x="915" y="654" text-anchor="end" opacity=".85">0</text>
+  <line x1="930" y1="610" x2="1415" y2="610"/><text x="915" y="614" text-anchor="end" opacity=".85">1</text>
+  <line x1="930" y1="570" x2="1415" y2="570"/><text x="915" y="574" text-anchor="end" opacity=".85">2</text>
+  <line x1="930" y1="530" x2="1415" y2="530"/><text x="915" y="534" text-anchor="end" opacity=".85">3</text>
+  <line x1="930" y1="490" x2="1415" y2="490"/><text x="915" y="494" text-anchor="end" opacity=".85">4</text>
+  <line x1="930" y1="450" x2="1415" y2="450"/><text x="915" y="454" text-anchor="end" opacity=".85">5</text>
+  <line x1="930" y1="410" x2="1415" y2="410"/><text x="915" y="414" text-anchor="end" opacity=".85">6</text>
+</g>
+
+<!-- (4) Barras — mesmas alturas, novos x -->
+<rect x="960"  y="570" width="44" height="80"  class="bar b1"/>  <!-- 2 -->
+<rect x="1038" y="490" width="44" height="160" class="bar b2"/>  <!-- 3 -->
+<rect x="1116" y="410" width="44" height="240" class="bar b3"/>  <!-- 4 -->
+<rect x="1194" y="530" width="44" height="120" class="bar b4"/>  <!-- 5 -->
+<rect x="1272" y="530" width="44" height="120" class="bar b5"/>  <!-- 6 -->
+<rect x="1350" y="570" width="44" height="80"  class="bar b6"/>  <!-- 7 -->
+
+<!-- (5) Ticks do eixo X — nos novos centros -->
+<g class="u-stroke" style="stroke-width:2" opacity=".85">
+  <line x1="982"  y1="650" x2="982"  y2="642"/>
+  <line x1="1060" y1="650" x2="1060" y2="642"/>
+  <line x1="1138" y1="650" x2="1138" y2="642"/>
+  <line x1="1216" y1="650" x2="1216" y2="642"/>
+  <line x1="1294" y1="650" x2="1294" y2="642"/>
+  <line x1="1372" y1="650" x2="1372" y2="642"/>
+</g>
+
+<!-- (6) Rótulos 2..7 — nos novos centros -->
+<g class="u-small" font-weight="700">
+  <text x="982"  y="684" text-anchor="middle">2</text>
+  <text x="1060" y="684" text-anchor="middle">3</text>
+  <text x="1138" y="684" text-anchor="middle">4</text>
+  <text x="1216" y="684" text-anchor="middle">5</text>
+  <text x="1294" y="684" text-anchor="middle">6</text>
+  <text x="1372" y="684" text-anchor="middle">7</text>
+</g>
+
+<!-- (7) Linhas verticais dos décis — recalculadas para o novo espaçamento -->
+<g class="u-stroke" style="stroke-width:2.5; opacity:.95">
+  <!-- D1 = 2,5 (meio entre 2 e 3) -->
+  <line x1="1021" y1="380" x2="1021" y2="650" style="stroke-dasharray:10 8"/>
+
+  <!-- D2 = 3 -->
+  <line x1="1060" y1="350" x2="1060" y2="650" style="stroke-dasharray:2 8"/>
+
+  <!-- D3 = 3,5 -->
+  <line x1="1099" y1="380" x2="1099" y2="650" style="stroke-dasharray:10 8"/>
+
+  <!-- D4 = 4 e D5 = 4 (mediana) -->
+  <line x1="1138" y1="350" x2="1138" y2="650"/>
+
+  <!-- D6 = 4,5 -->
+  <line x1="1177" y1="380" x2="1177" y2="650" style="stroke-dasharray:10 8"/>
+
+  <!-- D7 = 5 -->
+  <line x1="1216" y1="350" x2="1216" y2="650" style="stroke-dasharray:2 8"/>
+
+  <!-- D8 = 6 -->
+  <line x1="1294" y1="350" x2="1294" y2="650" style="stroke-dasharray:2 8"/>
+
+  <!-- D9 = 6,5 -->
+  <line x1="1333" y1="380" x2="1333" y2="650" style="stroke-dasharray:10 8"/>
+</g>
+      </g>
+    </g>
+  </g>
+</g>
+</svg>

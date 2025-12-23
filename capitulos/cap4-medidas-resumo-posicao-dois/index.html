@@ -5,7 +5,2800 @@ anterior: /capitulos/cap3-medidas-resumo-posicao/
 proximo: /capitulos/cap5-medidas-resumo-dispersao/
 ---
 
+<p class="subtitle">Objetivos de aprendizagem</p>
+<ul>
+  <li>Compreender o papel das <strong>separatrizes</strong> como <strong>medidas-resumo de posição</strong> que descrevem a distribuição por meio de <em>pontos de corte</em> associados a proporções acumuladas.</li>
+
+  <li>Entender a relação entre <strong>tendência central</strong> e <strong>posição relativa</strong>, reconhecendo que a mediana é um caso particular de separatriz.</li>
+
+  <li>Analisar criticamente a interpretação de separatrizes em contextos aplicados, evitando confusões comuns entre <strong>percentil</strong> e <strong>porcentagem do valor</strong>.</li>
+</ul>
+
+<hr>
+<h2>1. Introdução</h2>
+
+<p>
+  <span class="newthought">Ao longo do capítulo anterior,</span> estudamos as <strong>medidas-resumo de tendência central</strong> como instrumentos
+  para sintetizar o comportamento típico de uma distribuição por meio de um único valor representativo. Vimos que, embora partam do mesmo propósito
+  geral — descrever <em>onde</em> os dados se concentram —, <strong>média</strong>, <strong>mediana</strong> e <strong>moda</strong> se baseiam em
+  critérios distintos e, por isso, respondem de maneira diferente à forma da distribuição, à presença de valores extremos e ao tipo de variável
+  analisada. Essa diferença não é apenas operacional: ela reflete o fato de que a noção de “centralidade” pode ser definida por perspectivas distintas,
+  conforme o critério de síntese adotado.
+</p>
 <figure>
-  <img src="../../imagens/construcao.svg" alt="construção">
+  <img src="../../imagens/tendencia-central.svg" alt="Tendência Central">
 </figure>
+<p>
+  Em particular, a <strong>média</strong> combina as magnitudes observadas e pode ser interpretada como um ponto de equilíbrio da distribuição,
+  refletindo fortemente a escala dos valores. A <strong>mediana</strong>, por depender apenas da ordenação, identifica o valor que divide a
+  distribuição em duas metades, sendo menos sensível a assimetrias e outliers. Já a <strong>moda</strong> destaca a frequência, evidenciando o(s)
+  valor(es) mais recorrente(s) e indicando a possibilidade de diferentes padrões de concentração dentro do conjunto de dados. Em síntese, o capítulo
+  anterior mostrou que não existe uma medida de tendência central universalmente superior: a escolha adequada depende do <strong>tipo de variável</strong>,
+  da <strong>forma de registro dos dados</strong> e das <strong>características da distribuição</strong>.
+</p>
+
+<p>
+  Ainda assim, por mais informativa que seja a ideia de um “centro”, há uma limitação inevitável em qualquer medida que condense toda a distribuição
+  em um único número: ela não descreve <strong>como</strong> os dados se organizam ao longo da escala observada. Duas distribuições podem apresentar
+  a mesma média ou a mesma mediana e, ainda assim, diferirem substancialmente quanto à concentração de valores nos segmentos inferiores e superiores. Em termos analíticos,
+  conhecer uma medida central é útil, mas frequentemente insuficiente para caracterizar a <strong>estrutura interna</strong> da distribuição.
+</p>
+<figure>
+  <img src="../../imagens/media-media.svg" alt="Média Média">
+</figure>
+<p>
+  Neste capítulo, daremos continuidade ao estudo das <strong>medidas-resumo de posição</strong>, agora com foco nas <strong>separatrizes</strong>.
+  Em vez de representar a distribuição por um único ponto, as separatrizes estabelecem <em>pontos de referência</em> associados a proporções acumuladas,
+  permitindo descrever o conjunto em termos de segmentos comparáveis. Nos tópicos seguintes, trataremos esse conceito de forma sistemática e
+  desenvolveremos as principais famílias de separatrizes — <strong>quartis</strong>, <strong>decis</strong> e <strong>percentis</strong> —, bem como
+  seus métodos de cálculo e sua interpretação em diferentes contextos.
+</p>
+
+<hr>
+
+<h2>2. Medidas-resumo de Posição: Separatrizes</h2>
+
+<p>
+  As <strong>separatrizes</strong> têm como objetivo localizar <strong>pontos de corte</strong> que particionam uma distribuição em frações iguais,
+  permitindo descrever a posição relativa das observações ao longo da escala. A ideia central é ordenar os dados e identificar valores que correspondem a
+  proporções acumuladas predefinidas: por exemplo, o ponto abaixo do qual se encontram 25% das observações, ou o ponto abaixo do qual se encontram 90%.
+  Dessa forma, em vez de resumir a distribuição por um único valor central, obtém-se um conjunto de marcos numéricos que descrevem como os dados se
+  distribuem entre diferentes segmentos.
+</p>
+
+<figure>
+  <img src="../../imagens/separatrizes.svg" alt="Separatrizes: quartis, decis e percentis">
+</figure>
+
+<p>
+  As separatrizes mais utilizadas são organizadas em famílias conforme o número de partes iguais em que dividem a distribuição:
+  <strong>quartis</strong> (4 partes), <strong>decis</strong> (10 partes) e <strong>percentis</strong> (100 partes). É importante notar que a própria
+  <strong>mediana</strong> pode ser interpretada como um caso particular: ela corresponde ao ponto que divide a distribuição em duas metades,
+  isto é, ao <strong>percentil 50</strong>. Em termos práticos, isso significa que separatrizes generalizam a ideia de “centro”, substituindo um único
+  ponto por múltiplos pontos de referência distribuídos ao longo da escala.
+</p>
+
+<p>
+  Ao longo do capítulo, veremos como calcular separatrizes em <strong>dados não agrupados</strong>, <strong>dados agrupados</strong> e em <strong>dados agrupados em classes</strong>.
+  No primeiro caso, o cálculo se baseia na posição do dado no conjunto ordenado, podendo exigir interpolação quando a posição teórica não é inteira.
+  No segundo caso, como não dispomos das observações individualmente, a localização do ponto de corte é feita por meio de <strong>frequências acumuladas</strong>
+  e interpolação dentro da classe que contém a separatriz.
+</p>
+
+<h3>2.1 Quartis</h3>
+
+<p>
+  Os <strong>quartis</strong> são separatrizes que permitem descrever a distribuição a partir de <strong>pontos de corte</strong> associados a
+  proporções acumuladas. A ideia central é particionar o conjunto de observações (ordenado) em <strong>quatro partes iguais</strong>, produzindo
+  marcos numéricos que indicam onde se encontram os 25%, 50% e 75% menores valores. Em vez de resumir o conjunto por um único número central,
+  como ocorre com as medidas de tendência central, os quartis fornecem <em>múltiplas referências</em> que ajudam a caracterizar a
+  <strong>estrutura interna</strong> da distribuição.
+</p>
+
+<p>
+  Denotamos os quartis por <strong>Q<sub>1</sub></strong>, <strong>Q<sub>2</sub></strong> e <strong>Q<sub>3</sub></strong>.
+  O <strong>primeiro quartil</strong> (Q<sub>1</sub>) é o ponto abaixo do qual se encontram aproximadamente 25% das observações; o
+  <strong>segundo quartil</strong> (Q<sub>2</sub>) é o ponto abaixo do qual se encontram aproximadamente 50% das observações e coincide com a
+  <strong>mediana</strong>; e o <strong>terceiro quartil</strong> (Q<sub>3</sub>) é o ponto abaixo do qual se encontram aproximadamente 75% das
+  observações. Assim, os quartis generalizam a ideia de “centro”: em vez de um único ponto, obtemos uma <em>malha</em> de posições relativas
+  ao longo da escala.
+</p>
+
+<figure>
+  <img src="../../imagens/quartis.svg" alt="Quartis: Q1, Q2 e Q3">
+</figure>
+
+<p>
+  Um aspecto importante é que quartis não devem ser interpretados como “percentuais do valor”, mas como <strong>percentuais de observações</strong>.
+  Dizer que Q<sub>1</sub> é igual a 6, por exemplo, não significa “25% de 6”, mas sim que <strong>cerca de 25% dos dados</strong> estão em valores
+  menores ou iguais a 6. Essa distinção é essencial para evitar interpretações equivocadas em aplicações.
+</p>
+
+<h4>2.1.1 Quartis para dados não-agrupados</h4>
+
+<p>
+  Quando os dados aparecem como uma lista de observações, os <strong>quartis</strong> podem ser obtidos de forma direta a partir da
+  <strong>ordenação</strong>. Como se tratam de <strong>cortes posicionais</strong>, o procedimento é sempre o mesmo: os valores são
+  organizados em <strong>ordem crescente</strong> e, nessa sequência ordenada, procura-se a <strong>posição</strong> associada a
+  \(Q_1\), \(Q_2\) e \(Q_3\). Uma vez identificada essa posição, o quartil é lido como um valor da própria lista ordenada ou, quando o
+  corte recai exatamente entre duas observações consecutivas, como o <strong>ponto médio</strong> entre elas.
+</p>
+
+<figure>
+  <img src="../../imagens/quartis-nao-agrupados.svg" alt="Quartis Não Agrupados">
+</figure>
+
+<p>
+  Formalmente, considere um conjunto de <em>n</em> observações
+  <span class="formula-inline" data-tts=", xis um, xis dois, até xis ene,">\(x_1, x_2, \ldots, x_n\)</span>.
+  Após ordenar esses valores em ordem crescente, obtemos a sequência
+  <span class="formula-inline" data-tts=", xis um entre parênteses menor ou igual a xis dois entre parênteses, até xis ene entre parênteses,">
+    \(x_{(1)} \le x_{(2)} \le \cdots \le x_{(n)}\)
+  </span>,
+  em que \(x_{(1)}\) representa o menor valor da amostra, \(x_{(2)}\) o segundo menor e, de modo geral, \(x_{(i)}\) o <em>i</em>-ésimo
+  menor valor observado.
+</p>
+
+<p>
+  A noção central dos quartis é essencialmente <strong>posicional</strong>. O objetivo é identificar um índice, ou uma fronteira
+  entre dois índices consecutivos, tal que aproximadamente <strong>\(25\%\)</strong>, <strong>\(50\%\)</strong> e
+  <strong>\(75\%\)</strong> das observações permaneçam à esquerda do corte. Para expressar essa ideia de forma operacional,
+  definimos uma <strong>posição-alvo</strong> associada a cada quartil.
+</p>
+
+<p class="formula" data-tts="P de Q k é igual a k vezes n dividido por quatro, com k igual a um, dois e três.">
+\[
+  P_{Q_k}=\frac{k\cdot n}{4},
+  \qquad (k=1,2,3).
+\]
+</p>
+
+<p>
+  O símbolo \(P_{Q_k}\) representa uma <strong>posição teórica</strong> na lista ordenada, construída a partir de uma
+  <strong>proporção acumulada</strong> das observações. O fator \(\tfrac{k}{4}\) expressa diretamente a fração da amostra associada
+  ao quartil \(Q_k\), correspondendo a \(25\%\), \(50\%\) e \(75\%\) do total de dados. Ao multiplicar essa fração por \(n\),
+  obtemos o número de observações que devem situar-se à esquerda do corte.
+</p>
+
+<p>
+  Como as posições disponíveis na lista ordenada são inteiras, o valor de \(P_{Q_k}\) pode coincidir exatamente com uma
+  <strong>fronteira entre duas observações consecutivas</strong> ou situar-se mais próximo de uma observação específica. Essa
+  distinção determina a forma como o quartil é lido a partir da sequência ordenada.
+</p>
+
+<p>
+  Quando \(P_{Q_k}\) é um número inteiro, o corte não recai sobre um único valor, mas sobre a fronteira entre
+  \(x_{(P_{Q_k})}\) e \(x_{(P_{Q_k}+1)}\). Nesse caso, o quartil é definido como o <strong>ponto médio</strong> entre essas duas
+  observações,
+</p>
+
+<p class="formula" data-tts="Se P de Q k é inteiro, então Q k é a média entre o valor na posição P e o valor na posição P mais um.">
+\[
+  Q_k=\frac{x_{(P_{Q_k})}+x_{(P_{Q_k}+1)}}{2}.
+\]
+</p>
+
+<p>
+  Se \(P_{Q_k}\) não for inteiro, a posição-alvo situa-se no interior de um intervalo associado a uma observação específica. Nessa
+  situação, o quartil é definido como o valor correspondente ao índice inteiro imediatamente superior,
+</p>
+
+<p class="formula" data-tts="Se P de Q k não é inteiro, então Q k é o valor na posição inteira imediatamente superior.">
+\[
+  Q_k = x_{(\lceil P_{Q_k}\rceil)}.
+\]
+</p>
+
+<p>
+  Essa regra garante uma leitura consistente dos quartis como separatrizes empíricas. Quando o corte coincide exatamente com uma
+  fronteira, ele é posicionado no centro dessa fronteira por meio do ponto médio. Quando não coincide, ele é associado à
+  observação que completa a proporção acumulada desejada.
+</p>
+
+<p>
+  A seguir, esse procedimento é ilustrado por meio de um gráfico interativo construído com os mesmos dados que serão utilizados no
+  exemplo subsequente. A visualização permite acompanhar a ordenação das observações, a determinação das posições-alvo e a leitura
+  final dos quartis. Em seguida, os mesmos dados serão retomados em uma solução algébrica completa, seguindo o procedimento
+  tradicional.
+</p>
+
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para desktop -->
+  <div class="kg-wrapper kg-desktop">
+    <div class="kg-container kg--sidebar-centered" src="modelos/quartis-nao-agrupados.yml"></div>
+  </div>
+</figure>
+
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para mobile -->
+  <div class="kg-wrapper kg-mobile-sidebar">
+    <div class="kg-container kg--sidebar-centered" src="modelos/quartis-nao-agrupados-mobile.yml"></div>
+  </div>
+</figure>
+
+<div class="example-frame">
+  <h5>Exemplo</h5>
+
+  <p>
+    Considere um conjunto de dados obtido a partir de uma <strong>amostra</strong> com <strong>8 unidades de observação</strong>.
+    A variável analisada é uma medida quantitativa em escala numérica (por exemplo, tempo de estudo semanal, em horas), registrada para cada unidade da amostra.
+  </p>
+
+  <p>
+    Os valores observados foram:
+  </p>
+
+  <p class="formula" data-tts="x igual a doze, cinco, sete, nove, quinze, seis, dez, oito.">
+    \[
+      x = \{12,\;5,\;7,\;9,\;15,\;6,\;10,\;8\}.
+    \]
+  </p>
+
+  <p>
+    O primeiro passo é ordenar os valores em ordem crescente, obtendo a lista ordenada:
+  </p>
+
+  <p class="formula" data-tts="Conjunto ordenado: cinco, seis, sete, oito, nove, dez, doze, quinze.">
+    \[
+      x_{(1)} \le x_{(2)} \le \cdots \le x_{(8)}
+      \quad \Rightarrow \quad
+      \{5,\;6,\;7,\;8,\;9,\;10,\;12,\;15\}.
+    \]
+  </p>
+
+  <p>
+    Como <em>n</em> = 8, as posições teóricas associadas aos quartis são:
+  </p>
+
+  <p class="formula" data-tts="P de Q um: dois. P de Q dois: quatro. P de Q três: seis.">
+    \[
+      P_{Q_1}=\frac{1\cdot 8}{4}=2,
+      \quad
+      P_{Q_2}=\frac{2\cdot 8}{4}=4,
+      \quad
+      P_{Q_3}=\frac{3\cdot 8}{4}=6.
+    \]
+  </p>
+
+  <p>
+    Como as três posições são inteiras, cada quartil fica na fronteira entre duas observações consecutivas, e portanto é dado pelo <strong>ponto médio</strong>
+    dessas observações:
+  </p>
+
+  <p>
+    <strong>Q<sub>1</sub>:</strong> a fronteira está entre \(x_{(2)}=6\) e \(x_{(3)}=7\). Assim,
+  </p>
+
+  <p class="formula" data-tts="Q um é x dois mais x três dividido por dois, igual a seis vírgula cinco.">
+    \[
+      Q_1=\frac{x_{(2)}+x_{(3)}}{2}
+      =\frac{6+7}{2}
+      =6{,}5.
+    \]
+  </p>
+
+  <p>
+    <strong>Q<sub>2</sub> (mediana):</strong> a fronteira está entre \(x_{(4)}=8\) e \(x_{(5)}=9\). Logo,
+  </p>
+
+  <p class="formula" data-tts="Q dois é x quatro mais x cinco dividido por dois, igual a oito vírgula cinco.">
+    \[
+      Q_2=\frac{x_{(4)}+x_{(5)}}{2}
+      =\frac{8+9}{2}
+      =8{,}5.
+    \]
+  </p>
+
+  <p>
+    <strong>Q<sub>3</sub>:</strong> a fronteira está entre \(x_{(6)}=10\) e \(x_{(7)}=12\). Assim,
+  </p>
+
+  <p class="formula" data-tts="Q três é x seis mais x sete dividido por dois, igual a onze.">
+    \[
+      Q_3=\frac{x_{(6)}+x_{(7)}}{2}
+      =\frac{10+12}{2}
+      =11.
+    \]
+  </p>
+
+  <p>
+    <strong>Interpretação:</strong> os valores 6,5, 8,5 e 11 funcionam como cortes posicionais na lista ordenada.
+    Q<sub>1</sub> marca um patamar inferior, Q<sub>2</sub> marca o centro posicional e Q<sub>3</sub> marca um patamar superior.
+    A leitura correta é sempre em termos de <strong>percentuais de observações</strong>, e não como percentuais do valor numérico do quartil.
+  </p>
+</div>
+
+<h4>2.1.2 Quartis para dados agrupados</h4>
+
+<p>
+  Quando os dados aparecem organizados em uma <strong>tabela de frequências</strong>, os <strong>quartis</strong> continuam sendo
+  definidos como <strong>cortes posicionais</strong>, exatamente como no caso dos dados não-agrupados. A diferença está apenas na
+  forma como a ordenação é apresentada. Em vez de observar cada valor individualmente, a tabela reúne observações iguais em
+  <strong>blocos</strong>, resumidos por suas frequências. Ainda assim, a posição de cada observação na ordenação permanece bem
+  definida, ainda que de forma implícita.
+</p>
+<figure>
+  <img src="../../imagens/quartis-agrupados.svg" alt="Quartis Agrupados">
+</figure>
+<p>
+  Formalmente, considere uma amostra com <em>n</em> observações, apresentada na forma de uma tabela de frequências. Os valores
+  distintos observados, em ordem crescente, são
+  <span class="formula-inline" data-tts=", xis um, xis dois, até xis eme,">\(x_1, x_2, \ldots, x_m\)</span>,
+  com frequências associadas
+  <span class="formula-inline" data-tts=", f um, f dois, até f eme,">\(f_1, f_2, \ldots, f_m\)</span>,
+  de modo que
+  <span class="formula-inline" data-tts=", ene,">\(n=\sum_{j=1}^{m} f_j\)</span>.
+  Embora as observações individuais não estejam explicitadas, a tabela preserva toda a informação necessária para reconstruir a
+  ordenação, pois indica quantas vezes cada valor aparece e, consequentemente, quantas posições consecutivas ele ocupa.
+</p>
+
+<p>
+  Para tornar essa ordenação implícita operacional, definimos a <strong>frequência acumulada</strong> até o valor \(x_j\) como
+</p>
+
+<p class="formula" data-tts="F j é igual à soma das frequências até j.">
+\[
+  F_j=\sum_{i=1}^{j} f_i,
+  \qquad (j=1,2,\ldots,m),
+  \quad \text{com } F_0=0.
+\]
+</p>
+
+<p>
+  A frequência acumulada \(F_j\) indica quantas observações existem até, e incluindo, o valor \(x_j\). Assim, o bloco associado a
+  \(x_j\) ocupa, na ordenação implícita, as posições
+  \(F_{j-1}+1,\,F_{j-1}+2,\,\ldots,\,F_j\).
+  Em particular, para qualquer posição inteira \(r\in\{1,2,\ldots,n\}\), o valor correspondente na ordenação implícita é dado por
+</p>
+
+<p class="formula" data-tts="x na posição r é x j quando F j menos um é menor que r e r é menor ou igual a F j.">
+\[
+  x_{(r)}=x_j
+  \quad \text{quando} \quad
+  F_{j-1} < r \le F_j.
+\]
+</p>
+
+<p>
+  Com essa estrutura em mãos, o cálculo dos quartis segue a mesma lógica adotada para os dados não-agrupados. O primeiro passo é
+  definir uma <strong>posição teórica</strong> associada a cada quartil,
+</p>
+
+<p class="formula" data-tts="P de Q k é igual a k vezes n dividido por quatro, com k igual a um, dois e três.">
+\[
+  P_{Q_k}=\frac{k\cdot n}{4},
+  \qquad (k=1,2,3).
+\]
+</p>
+
+<p>
+  O valor \(P_{Q_k}\) representa uma posição-alvo na escala das \(n\) observações e expressa a ideia de proporção acumulada. As
+  quantidades \(\tfrac{n}{4}\), \(\tfrac{2n}{4}\) e \(\tfrac{3n}{4}\) correspondem, respectivamente, a um quarto, metade e três
+  quartos do total de dados. A tabela de frequências entra em cena apenas para permitir que essa posição seja associada a um valor
+  específico por meio das frequências acumuladas.
+</p>
+
+<p>
+  Como a ordenação implícita é composta apenas por posições inteiras, o valor de \(P_{Q_k}\) pode coincidir exatamente com uma
+  fronteira entre duas posições consecutivas ou situar-se no interior do intervalo ocupado por um único bloco. Cada uma dessas
+  situações conduz naturalmente a uma forma distinta de leitura do quartil.
+</p>
+
+<p>
+  Quando \(P_{Q_k}\) é um número inteiro, o corte recai exatamente entre as posições \(P_{Q_k}\) e \(P_{Q_k}+1\). Nessa situação,
+  o quartil é definido como o <strong>ponto médio</strong> entre os valores associados a essas duas posições,
+</p>
+
+<p class="formula" data-tts="Se P de Q k é inteiro, então Q k é a média entre x na posição P e x na posição P mais um.">
+\[
+  Q_k=\frac{x_{(P_{Q_k})}+x_{(P_{Q_k}+1)}}{2}.
+\]
+</p>
+
+<p>
+  A leitura dessas posições é feita por meio das frequências acumuladas. Caso ambas pertençam ao mesmo bloco, a média devolve o
+  próprio valor do bloco. Caso pertençam a blocos adjacentes, o ponto médio estabelece naturalmente o corte entre dois valores
+  distintos.
+</p>
+
+<p>
+  Quando \(P_{Q_k}\) não é inteiro, a posição-alvo situa-se no interior do intervalo ocupado por um único bloco. Nesse caso, o
+  quartil é definido como o valor correspondente à posição inteira imediatamente superior,
+</p>
+
+<p class="formula" data-tts="Se P de Q k não é inteiro, então Q k é o valor na posição inteira imediatamente superior.">
+\[
+  Q_k = x_{(\lceil P_{Q_k}\rceil)}.
+\]
+</p>
+
+<p>
+  Essa regra garante uma leitura consistente dos quartis como separatrizes empíricas. Quando o corte coincide com uma fronteira,
+  ele é posicionado no centro dessa fronteira por meio do ponto médio. Quando não coincide, ele é associado ao valor que completa
+  a proporção acumulada desejada.
+</p>
+
+<p>
+  A seguir, esse procedimento é ilustrado por meio de um gráfico interativo construído com os mesmos dados que serão utilizados no
+  exemplo subsequente. A visualização permite acompanhar a leitura das frequências acumuladas, a determinação das posições-alvo e
+  o resultado final dos quartis. Em seguida, os mesmos dados serão retomados em uma solução algébrica completa, seguindo o
+  procedimento tradicional.
+</p>
+
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para desktop -->
+  <div class="kg-wrapper kg-desktop">
+    <div class="kg-container kg--sidebar-centered" src="modelos/quartis-agrupados.yml"></div>
+  </div>
+</figure>
+
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para mobile -->
+  <div class="kg-wrapper kg-mobile-sidebar">
+    <div class="kg-container kg--sidebar-centered" src="modelos/quartis-agrupados-mobile.yml"></div>
+  </div>
+</figure>
+
+<div class="example-frame">
+  <h5>Exemplo</h5>
+
+  <p>
+    Considere uma amostra com <strong>n = 20</strong> observações de uma variável quantitativa discreta (por exemplo, número de questões acertadas em um simulado).
+    Os valores distintos observados e suas frequências estão organizados na tabela a seguir:
+  </p>
+
+  <figure class="figure table">
+    <table>
+      <thead>
+        <tr>
+          <th>Valor (<em>x</em>)</th>
+          <th>Frequência (<em>f</em>)</th>
+          <th>Frequência acumulada (<em>F</em>)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>2</td><td>2</td><td>2</td></tr>
+        <tr><td>3</td><td>4</td><td>6</td></tr>
+        <tr><td>4</td><td>6</td><td>12</td></tr>
+        <tr><td>5</td><td>3</td><td>15</td></tr>
+        <tr><td>6</td><td>3</td><td>18</td></tr>
+        <tr><td>7</td><td>2</td><td>20</td></tr>
+      </tbody>
+    </table>
+    <figcaption>Tabela de frequências e frequências acumuladas</figcaption>
+  </figure>
+
+  <p>
+    Pela regra adotada, as posições teóricas associadas aos quartis são:
+  </p>
+
+  <p class="formula" data-tts="P de Q um é cinco. P de Q dois é dez. P de Q três é quinze.">
+    \[
+      P_{Q_1}=\frac{1\cdot 20}{4}=5,
+      \quad
+      P_{Q_2}=\frac{2\cdot 20}{4}=10,
+      \quad
+      P_{Q_3}=\frac{3\cdot 20}{4}=15.
+    \]
+  </p>
+
+  <p>
+    Como as três posições são inteiras, cada quartil será lido como um corte entre duas posições consecutivas
+    \(r=P_{Q_k}\) e \(r=P_{Q_k}+1\). Para obter \(x_{(r)}\), basta localizar em qual linha a coluna acumulada satisfaz
+    \(F_{j-1}\lt r\le F_j\).
+  </p>
+
+  <p>
+    <strong>Q<sub>1</sub>:</strong> para \(r=5\), temos \(2 \lt 5 \le 6\), então \(x_{(5)}=3\).
+    Para \(r=6\), ainda vale \(2 \lt 6 \le 6\), então \(x_{(6)}=3\). Logo,
+  </p>
+
+  <p class="formula" data-tts="Q um é x cinco mais x seis dividido por dois, igual a três.">
+    \[
+      Q_1=\frac{x_{(5)}+x_{(6)}}{2}
+      =\frac{3+3}{2}
+      =3.
+    \]
+  </p>
+
+  <p>
+    <strong>Q<sub>2</sub> (mediana):</strong> para \(r=10\), temos \(6 \lt 10 \le 12\), então \(x_{(10)}=4\).
+    Para \(r=11\), ainda vale \(6 \lt 11 \le 12\), então \(x_{(11)}=4\). Portanto,
+  </p>
+
+  <p class="formula" data-tts="Q dois é x dez mais x onze dividido por dois, igual a quatro.">
+    \[
+      Q_2=\frac{x_{(10)}+x_{(11)}}{2}
+      =\frac{4+4}{2}
+      =4.
+    \]
+  </p>
+
+  <p>
+    <strong>Q<sub>3</sub>:</strong> para \(r=15\), temos \(12 \lt 15 \le 15\), então \(x_{(15)}=5\).
+    Já para \(r=16\), temos \(15 \lt 16 \le 18\), então \(x_{(16)}=6\). Assim,
+  </p>
+
+  <p class="formula" data-tts="Q três é x quinze mais x dezesseis dividido por dois, igual a cinco vírgula cinco.">
+    \[
+      Q_3=\frac{x_{(15)}+x_{(16)}}{2}
+      =\frac{5+6}{2}
+      =5{,}5.
+    \]
+  </p>
+
+  <p>
+    <strong>Interpretação:</strong> os valores 3, 4 e 5,5 funcionam como cortes posicionais na ordenação implícita construída pelas frequências.
+    Q<sub>1</sub> marca um patamar inferior, Q<sub>2</sub> marca o centro posicional e Q<sub>3</sub> marca um patamar superior.
+    A leitura correta é sempre em termos de <strong>percentuais de observações</strong>, e não como percentuais do valor numérico do quartil.
+  </p>
+</div>
+
+
+<h4>2.1.3 Quartis para dados agrupados em classes</h4>
+
+<p>
+  Quando os dados são apresentados em uma <strong>distribuição de frequências por classes</strong>, os <strong>quartis</strong>
+  continuam sendo definidos como <strong>cortes posicionais</strong>, assim como nos casos anteriores. A diferença agora é que a
+  ordenação não pode ser reconstruída em termos de valores isolados. Cada linha da tabela descreve um
+  <strong>intervalo numérico</strong> e informa apenas quantas observações estão contidas nesse intervalo.
+  Uma vez identificada a classe correspondente ao quartil, o valor do corte passa a ser estimado como um ponto
+  <strong>dentro do intervalo</strong>, por meio de <strong>interpolação</strong>.
+</p>
+<figure>
+  <img src="../../imagens/quartis-agrupado-classes.svg" alt="Quartis Agrupados em Classes">
+</figure>
+<p>
+  Considere uma amostra com <em>n</em> observações resumida em \(m\) classes
+  \(C_1, C_2, \ldots, C_m\), organizadas em ordem crescente, com frequências
+  <span class="formula-inline" data-tts=", f um, f dois, até f eme,">\(f_1, f_2, \ldots, f_m\)</span>
+  e total
+  <span class="formula-inline" data-tts=", ene,">\(n=\sum_{j=1}^{m} f_j\)</span>.
+  Embora os dados individuais não estejam disponíveis, a tabela preserva a informação necessária para localizar
+  posições relativas, pois a soma das frequências indica quantas observações já foram contabilizadas até o final
+  de cada classe.
+</p>
+
+<p>
+  Para tornar essa informação posicional explícita, definimos a <strong>frequência acumulada</strong> até a classe \(j\) por
+</p>
+
+<p class="formula" data-tts="F j é igual à soma das frequências até j.">
+\[
+  F_j=\sum_{i=1}^{j} f_i,
+  \qquad (j=1,2,\ldots,m),
+  \quad \text{com } F_0=0.
+\]
+</p>
+
+<p>
+  Mantendo a mesma lógica adotada para dados não-agrupados e dados agrupados por valores, começamos definindo uma
+  <strong>posição teórica</strong> associada a cada quartil,
+</p>
+
+<p class="formula" data-tts="P de Q k é igual a k vezes n dividido por quatro, com k igual a um, dois e três.">
+\[
+  P_{Q_k}=\frac{k\cdot n}{4},
+  \qquad (k=1,2,3).
+\]
+</p>
+
+<p>
+  O valor \(P_{Q_k}\) representa uma posição-alvo na escala das \(n\) observações e expressa a ideia de proporção acumulada.
+  As quantidades \(\tfrac{n}{4}\), \(\tfrac{2n}{4}\) e \(\tfrac{3n}{4}\) correspondem, respectivamente, a um quarto,
+  metade e três quartos do total de dados. A classe quartílica é aquela cuja frequência acumulada captura essa posição-alvo,
+  isto é, a classe \(j\) que satisfaz
+</p>
+
+<p class="formula" data-tts="A classe quartílica satisfaz F j menos um menor que P de Q k e P de Q k menor ou igual a F j.">
+\[
+  F_{j-1} < P_{Q_k} \le F_j.
+\]
+</p>
+
+<p>
+  Até esse ponto, o raciocínio é idêntico ao do caso agrupado por valores. A diferença surge no passo seguinte.
+  Como o bloco identificado é agora um <strong>intervalo contínuo</strong>, não é suficiente associar o quartil
+  a um único valor representativo. É necessário localizar o ponto do intervalo que corresponde à posição-alvo.
+</p>
+
+<p>
+  Para isso, adota-se a hipótese usual de que as observações estão aproximadamente
+  <strong>uniformemente distribuídas</strong> no interior de cada classe. Seja \(L_j\) o
+  <strong>limite inferior</strong> da classe quartílica, \(h\) a <strong>amplitude</strong> da classe,
+  \(f_j\) sua frequência e \(F_{j-1}\) a frequência acumulada até a classe anterior.
+  O termo \(P_{Q_k}-F_{j-1}\) indica quantas observações devem ser percorridas a partir do início da classe
+  para alcançar a posição-alvo. Ao dividir esse valor por \(f_j\), obtém-se a fração do intervalo correspondente.
+</p>
+
+<p>
+  Multiplicando essa fração pela amplitude da classe e somando o limite inferior, obtém-se a expressão de
+  interpolação que fornece o quartil
+</p>
+
+<p class="formula" data-tts="Q k é L j mais, P de Q k menos F j menos um, dividido por f j, vezes h.">
+\[
+  Q_k
+  = L_j + \left(\frac{P_{Q_k}-F_{j-1}}{f_j}\right)\,h.
+\]
+</p>
+
+<p>
+  Essa fórmula posiciona o quartil dentro da classe de modo coerente com a proporção acumulada desejada.
+  Quando \(P_{Q_k}\) está próximo do início da classe, o valor estimado permanece próximo de \(L_j\);
+  quando está próximo do final, aproxima-se do limite superior do intervalo.
+</p>
+
+<p>
+  A seguir, esse procedimento é ilustrado por meio de um gráfico interativo construído com os mesmos dados que
+  serão utilizados no exemplo subsequente. A visualização permite acompanhar a identificação da classe quartílica
+  e o deslocamento interpolado no interior do intervalo. Em seguida, os mesmos dados são retomados em uma
+  solução algébrica completa, seguindo o procedimento tradicional.
+</p>
+
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <div class="kg-wrapper kg-desktop">
+    <div class="kg-container kg--sidebar-centered" src="modelos/quartis-agrupados-classe.yml"></div>
+  </div>
+</figure>
+
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <div class="kg-wrapper kg-mobile-sidebar">
+    <div class="kg-container kg--sidebar-centered" src="modelos/quartis-agrupados-classe-mobile.yml"></div>
+  </div>
+</figure>
+
+<div class="example-frame">
+  <h5>Exemplo</h5>
+
+  <p>
+    Considere uma amostra com <strong>n = 20</strong> observações de uma variável quantitativa contínua (por exemplo, horas de estudo por semana),
+    resumida na seguinte distribuição de frequências por classes:
+  </p>
+
+  <figure class="figure table">
+    <table>
+      <thead>
+        <tr>
+          <th>Classe</th>
+          <th>Frequência (<em>f</em>)</th>
+          <th>Frequência acumulada (<em>F</em>)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>0–5</td><td>3</td><td>3</td></tr>
+        <tr><td>5–10</td><td>5</td><td>8</td></tr>
+        <tr><td>10–15</td><td>6</td><td>14</td></tr>
+        <tr><td>15–20</td><td>4</td><td>18</td></tr>
+        <tr><td>20–25</td><td>2</td><td>20</td></tr>
+      </tbody>
+    </table>
+    <figcaption>Distribuição por classes com frequências acumuladas</figcaption>
+  </figure>
+
+  <p>
+    Pela regra adotada, as posições dos quartis são:
+  </p>
+
+  <p class="formula" data-tts="P de Q um é cinco. P de Q dois é dez. P de Q três é quinze.">
+    \[
+      P_{Q_1}=\frac{1\cdot 20}{4}=5,
+      \quad
+      P_{Q_2}=\frac{2\cdot 20}{4}=10,
+      \quad
+      P_{Q_3}=\frac{3\cdot 20}{4}=15.
+    \]
+  </p>
+
+  <p>
+    <strong>Q<sub>1</sub>:</strong> \(P_{Q_1}=5\) satisfaz \(3 \lt 5 \le 8\), então a classe quartílica é <strong>5–10</strong>.
+    Aqui, \(L=5\), \(h=5\), \(F_{\text{ant}}=3\) e \(f=5\). Logo,
+  </p>
+
+  <p class="formula" data-tts="Q um é cinco mais, cinco menos três, dividido por cinco, vezes cinco, igual a sete.">
+    \[
+      Q_1 = 5 + \left(\frac{5-3}{5}\right)\cdot 5 = 7.
+    \]
+  </p>
+
+  <p>
+    <strong>Q<sub>2</sub> (mediana):</strong> \(P_{Q_2}=10\) satisfaz \(8 \lt 10 \le 14\), então a classe quartílica é <strong>10–15</strong>.
+    Aqui, \(L=10\), \(h=5\), \(F_{\text{ant}}=8\) e \(f=6\). Assim,
+  </p>
+
+  <p class="formula" data-tts="Q dois é dez mais, dez menos oito, dividido por seis, vezes cinco, igual a onze vírgula sessenta e sete.">
+    \[
+      Q_2 = 10 + \left(\frac{10-8}{6}\right)\cdot 5 \approx 11{,}67.
+    \]
+  </p>
+
+  <p>
+    <strong>Q<sub>3</sub>:</strong> \(P_{Q_3}=15\) satisfaz \(14 \lt 15 \le 18\), então a classe quartílica é <strong>15–20</strong>.
+    Aqui, \(L=15\), \(h=5\), \(F_{\text{ant}}=14\) e \(f=4\). Logo,
+  </p>
+
+  <p class="formula" data-tts="Q três é quinze mais, quinze menos quatorze, dividido por quatro, vezes cinco, igual a dezesseis vírgula vinte e cinco.">
+    \[
+      Q_3 = 15 + \left(\frac{15-14}{4}\right)\cdot 5 = 16{,}25.
+    \]
+  </p>
+
+  <p>
+    <strong>Interpretação:</strong> os valores \(Q_1\approx 7\), \(Q_2\approx 11{,}67\) e \(Q_3\approx 16{,}25\) são estimativas obtidas por interpolação
+    dentro das classes quartílicas. Eles funcionam como cortes posicionais na escala: aproximadamente 25% das observações ficam abaixo de \(Q_1\),
+    aproximadamente 50% ficam abaixo de \(Q_2\) e aproximadamente 75% ficam abaixo de \(Q_3\).
+  </p>
+</div>
+
+<h3>2.2 Decis</h3>
+
+<p>
+  Os <strong>decis</strong> são separatrizes que descrevem a distribuição por meio de <strong>pontos de corte</strong> associados a proporções acumuladas.
+  A ideia é análoga à dos quartis, mas com uma partição mais detalhada: ao ordenar as observações, os decis dividem o conjunto em
+  <strong>dez partes iguais</strong>. Assim, em vez de marcar apenas 25%, 50% e 75%, passamos a ter referências em 10%, 20%, 30%, ..., 90%,
+  o que produz uma <em>malha mais fina</em> de posições relativas ao longo da escala e ajuda a enxergar com maior precisão onde os dados se concentram.
+</p>
+
+<p>
+  Denotamos os decis por <strong>D<sub>1</sub></strong>, <strong>D<sub>2</sub></strong>, ..., <strong>D<sub>9</sub></strong>.
+  O <strong>primeiro decil</strong> (D<sub>1</sub>) é o ponto abaixo do qual se encontram aproximadamente 10% das observações; o
+  <strong>quinto decil</strong> (D<sub>5</sub>) é o ponto abaixo do qual se encontram aproximadamente 50% das observações e coincide com a
+  <strong>mediana</strong>; e o <strong>nono decil</strong> (D<sub>9</sub>) é o ponto abaixo do qual se encontram aproximadamente 90% dos dados.
+  Dessa forma, os decis refinam a noção de “centro” e de “extremos”: eles permitem identificar, por exemplo, onde termina o grupo dos 10% menores,
+  onde começa o grupo dos 20% maiores (acima de D<sub>8</sub>) e onde se situa o limite típico antes da faixa dos valores mais altos (próximo de
+  D<sub>9</sub>).
+</p>
+
+<figure>
+  <img src="../../imagens/decis.svg" alt="Decis: D1 a D9">
+</figure>
+
+<p>
+  Um ponto crucial — exatamente como no caso dos quartis — é evitar a confusão entre <strong>percentuais do valor</strong> e
+  <strong>percentuais de observações</strong>. Um decil não significa “10% de algum número”: ele é um <strong>valor de corte</strong> tal que
+  <strong>cerca de 10% dos dados</strong> ficam abaixo (ou no máximo iguais) a esse ponto. Portanto, decis devem ser interpretados sempre como
+  <strong>posições</strong> no conjunto ordenado, isto é, como referências sobre <strong>proporções acumuladas de observações</strong>.
+</p>
+
+<hr>
+
+<h4>2.2.1 Decis para dados não-agrupados</h4>
+
+<p>
+  Quando os dados aparecem como uma lista de observações, os <strong>decis</strong> podem ser obtidos de forma direta a partir da
+  <strong>ordenação</strong>. Assim como os quartis, eles são <strong>cortes posicionais</strong>. A diferença está apenas na
+  granularidade da divisão. Enquanto os quartis particionam o conjunto em quatro partes aproximadamente iguais, os decis o
+  dividem em <strong>dez</strong> partes. O procedimento, contudo, permanece o mesmo. Os valores são organizados em ordem crescente
+  e, nessa sequência ordenada, procura-se a <strong>posição</strong> associada a \(D_1, D_2, \ldots, D_9\).
+  Uma vez identificada essa posição, o decil é lido como um valor da própria lista ou, quando o corte recai exatamente entre duas
+  observações consecutivas, como o <strong>ponto médio</strong> entre elas.
+</p>
+<figure>
+  <img src="../../imagens/decis-nao-agrupados.svg" alt="Decis Não Agrupados">
+</figure>
+<p>
+  Formalmente, considere um conjunto de <em>n</em> observações
+  <span class="formula-inline" data-tts=", xis um, xis dois, até xis ene,">\(x_1, x_2, \ldots, x_n\)</span>.
+  Após ordenar esses valores em ordem crescente, obtemos a sequência
+  <span class="formula-inline" data-tts=", xis um entre parênteses menor ou igual a xis dois entre parênteses, até xis ene entre parênteses,">
+    \(x_{(1)} \le x_{(2)} \le \cdots \le x_{(n)}\)
+  </span>,
+  em que \(x_{(1)}\) representa o menor valor da amostra, \(x_{(2)}\) o segundo menor e, de modo geral,
+  \(x_{(i)}\) o <em>i</em>-ésimo menor valor observado.
+</p>
+
+<p>
+  A ideia subjacente aos decis é essencialmente <strong>posicional</strong>. O objetivo é localizar índices, ou fronteiras entre
+  índices consecutivos, tais que aproximadamente \(10\%\), \(20\%\), \(\ldots\), \(90\%\) das observações fiquem à esquerda do
+  respectivo corte. Para expressar essa ideia de forma operacional, definimos uma <strong>posição teórica</strong> associada a
+  cada decil.
+</p>
+
+<p class="formula" data-tts="P de D k é igual a k vezes n dividido por dez, com k de um até nove.">
+\[
+  P_{D_k}=\frac{k\cdot n}{10},
+  \qquad (k=1,2,\ldots,9).
+\]
+</p>
+
+<p>
+  O valor \(P_{D_k}\) representa uma posição-alvo na escala das \(n\) observações e traduz diretamente a proporção acumulada
+  desejada. As quantidades \(\tfrac{n}{10}\), \(\tfrac{2n}{10}\), \(\ldots\), \(\tfrac{9n}{10}\) correspondem, respectivamente,
+  a \(10\%\), \(20\%\), \(\ldots\), \(90\%\) do total de dados. Assim, \(P_{D_1}\) indica o primeiro corte posicional,
+  \(P_{D_5}\) localiza o centro da distribuição e \(P_{D_9}\) identifica o último decil.
+</p>
+
+<p>
+  Como as posições disponíveis na sequência ordenada são inteiras, o valor de \(P_{D_k}\) pode coincidir exatamente com uma
+  <strong>fronteira entre duas observações consecutivas</strong> ou situar-se no interior do intervalo ocupado por uma observação
+  específica. Cada uma dessas situações conduz naturalmente a uma forma distinta de leitura do decil.
+</p>
+
+<p>
+  Quando \(P_{D_k}\) é um número inteiro, o corte recai exatamente entre as posições \(P_{D_k}\) e \(P_{D_k}+1\). Nesse caso,
+  o decil é definido como o <strong>ponto médio</strong> entre os valores associados a essas duas posições,
+</p>
+
+<p class="formula" data-tts="Se P de D k é inteiro, então D k é a média entre o valor na posição P e o valor na posição P mais um.">
+\[
+  D_k=\frac{x_{(P_{D_k})}+x_{(P_{D_k}+1)}}{2}.
+\]
+</p>
+
+<p>
+  Quando \(P_{D_k}\) não é inteiro, a posição-alvo situa-se mais próxima de uma observação específica. Nessa situação, o decil é
+  definido como o valor correspondente à posição inteira imediatamente superior,
+</p>
+
+<p class="formula" data-tts="Se P de D k não é inteiro, então D k é o valor na posição inteira imediatamente superior.">
+\[
+  D_k = x_{(\lceil P_{D_k}\rceil)}.
+\]
+</p>
+
+<p>
+  Essa regra assegura uma leitura consistente dos decis como separatrizes empíricas. Quando o corte coincide com uma fronteira,
+  o ponto médio posiciona o decil no centro dessa separação. Quando não coincide, o decil é associado ao valor que completa a
+  proporção acumulada desejada.
+</p>
+
+<p>
+  A seguir, esse procedimento é ilustrado por meio de um gráfico interativo construído com os mesmos dados que serão utilizados
+  no exemplo subsequente. A visualização permite acompanhar a ordenação das observações, a determinação das posições-alvo e o
+  resultado final dos decis. Em seguida, os mesmos dados serão retomados em uma solução algébrica completa, seguindo o
+  procedimento tradicional.
+</p>
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <div class="kg-wrapper kg-desktop">
+    <div class="kg-container kg--sidebar-centered" src="modelos/decis-nao-agrupados.yml"></div>
+  </div>
+</figure>
+
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <div class="kg-wrapper kg-mobile-sidebar">
+    <div class="kg-container kg--sidebar-centered" src="modelos/decis-nao-agrupados-mobile.yml"></div>
+  </div>
+</figure>
+<div class="example-frame">
+  <h5>Exemplo</h5>
+
+  <p>
+    Considere um conjunto de dados obtido a partir de uma <strong>amostra</strong> com <strong>10 unidades de observação</strong>.
+    A variável analisada é uma medida quantitativa em escala numérica (por exemplo, uma pontuação, uma nota ou uma medida de desempenho),
+    registrada para cada unidade da amostra.
+  </p>
+
+  <p>
+    Os valores observados foram:
+  </p>
+
+  <p class="formula" data-tts="x igual a doze, cinco, sete, nove, quinze, seis, dez, oito, onze, treze.">
+    \[
+      x=\{12,\;5,\;7,\;9,\;15,\;6,\;10,\;8,\;11,\;13\}.
+    \]
+  </p>
+
+  <p>
+    O primeiro passo é ordenar os valores em ordem crescente, obtendo a lista ordenada:
+  </p>
+
+  <p class="formula" data-tts="Conjunto ordenado: cinco, seis, sete, oito, nove, dez, onze, doze, treze, quinze.">
+    \[
+      x_{(1)}\le x_{(2)}\le \cdots \le x_{(10)}
+      \\\\ \quad\Rightarrow\quad
+      \\\\ \{5,\;6,\;7,\;8,\;9,\;10,\;11,\;12,\;13,\;15\}.
+    \]
+  </p>
+
+  <p>
+    Para os <strong>décis</strong> (cortes em 10 partes iguais), a posição teórica do décil \(D_k\) é:
+  </p>
+
+  <p class="formula" data-tts="P de D k igual a k vezes n sobre dez, com k de um até nove e n igual a dez.">
+    \[
+      P_{D_k}=\frac{k\,n}{10}
+      \quad (k=1,\ldots,9;\; n=10).
+    \]
+  </p>
+
+  <p>
+    Aplicando \(n=10\), obtemos:
+  </p>
+
+  <p class="formula" data-tts="As posições ficam: P de D um igual a um, P de D dois igual a dois, até P de D nove igual a nove.">
+    \[
+      P_{D_1}=1,\; P_{D_2}=2,\; \ldots,\; P_{D_9}=9.
+    \]
+  </p>
+
+  <p>
+    Como todas as posições são <strong>inteiras</strong>, cada décil cai exatamente na fronteira entre duas observações consecutivas do rol.
+    Nesse caso, o décil é definido como o <strong>ponto médio</strong> entre \(x_{(P_{D_k})}\) e \(x_{(P_{D_k}+1)}\):
+  </p>
+
+  <p class="formula" data-tts="Como P é inteiro, D k é x de P mais x de P mais um, tudo sobre dois.">
+    \[
+      D_k=\frac{x_{(P_{D_k})}+x_{(P_{D_k}+1)}}{2}
+      \qquad \text{(quando } P_{D_k}\in\mathbb{Z}\text{).}
+    \]
+  </p>
+
+  <p>
+    Agora calculamos \(D_1,\ldots,D_9\) usando o rol \(\{5,6,7,8,9,10,11,12,13,15\}\).
+  </p>
+
+  <p>
+    <strong>D<sub>1</sub>:</strong> a fronteira está entre \(x_{(1)}=5\) e \(x_{(2)}=6\). Assim,
+  </p>
+  <p class="formula" data-tts="D um é cinco mais seis dividido por dois, igual a cinco vírgula cinco.">
+    \[
+      D_1=\frac{x_{(1)}+x_{(2)}}{2}
+      =\frac{5+6}{2}
+      =5{,}5.
+    \]
+  </p>
+
+  <p>
+    <strong>D<sub>2</sub>:</strong> a fronteira está entre \(x_{(2)}=6\) e \(x_{(3)}=7\). Logo,
+  </p>
+  <p class="formula" data-tts="D dois é seis mais sete dividido por dois, igual a seis vírgula cinco.">
+    \[
+      D_2=\frac{x_{(2)}+x_{(3)}}{2}
+      =\frac{6+7}{2}
+      =6{,}5.
+    \]
+  </p>
+
+  <p>
+    <strong>D<sub>3</sub>:</strong> a fronteira está entre \(x_{(3)}=7\) e \(x_{(4)}=8\). Assim,
+  </p>
+  <p class="formula" data-tts="D três é sete mais oito dividido por dois, igual a sete vírgula cinco.">
+    \[
+      D_3=\frac{x_{(3)}+x_{(4)}}{2}
+      =\frac{7+8}{2}
+      =7{,}5.
+    \]
+  </p>
+
+  <p>
+    <strong>D<sub>4</sub>:</strong> a fronteira está entre \(x_{(4)}=8\) e \(x_{(5)}=9\). Logo,
+  </p>
+  <p class="formula" data-tts="D quatro é oito mais nove dividido por dois, igual a oito vírgula cinco.">
+    \[
+      D_4=\frac{x_{(4)}+x_{(5)}}{2}
+      =\frac{8+9}{2}
+      =8{,}5.
+    \]
+  </p>
+
+  <p>
+    <strong>D<sub>5</sub> (mediana):</strong> a fronteira está entre \(x_{(5)}=9\) e \(x_{(6)}=10\). Assim,
+  </p>
+  <p class="formula" data-tts="D cinco é nove mais dez dividido por dois, igual a nove vírgula cinco.">
+    \[
+      D_5=\frac{x_{(5)}+x_{(6)}}{2}
+      =\frac{9+10}{2}
+      =9{,}5.
+    \]
+  </p>
+
+  <p>
+    <strong>D<sub>6</sub>:</strong> a fronteira está entre \(x_{(6)}=10\) e \(x_{(7)}=11\). Logo,
+  </p>
+  <p class="formula" data-tts="D seis é dez mais onze dividido por dois, igual a dez vírgula cinco.">
+    \[
+      D_6=\frac{x_{(6)}+x_{(7)}}{2}
+      =\frac{10+11}{2}
+      =10{,}5.
+    \]
+  </p>
+
+  <p>
+    <strong>D<sub>7</sub>:</strong> a fronteira está entre \(x_{(7)}=11\) e \(x_{(8)}=12\). Assim,
+  </p>
+  <p class="formula" data-tts="D sete é onze mais doze dividido por dois, igual a onze vírgula cinco.">
+    \[
+      D_7=\frac{x_{(7)}+x_{(8)}}{2}
+      =\frac{11+12}{2}
+      =11{,}5.
+    \]
+  </p>
+
+  <p>
+    <strong>D<sub>8</sub>:</strong> a fronteira está entre \(x_{(8)}=12\) e \(x_{(9)}=13\). Logo,
+  </p>
+  <p class="formula" data-tts="D oito é doze mais treze dividido por dois, igual a doze vírgula cinco.">
+    \[
+      D_8=\frac{x_{(8)}+x_{(9)}}{2}
+      =\frac{12+13}{2}
+      =12{,}5.
+    \]
+  </p>
+
+  <p>
+    <strong>D<sub>9</sub>:</strong> a fronteira está entre \(x_{(9)}=13\) e \(x_{(10)}=15\). Assim,
+  </p>
+  <p class="formula" data-tts="D nove é treze mais quinze dividido por dois, igual a quatorze.">
+    \[
+      D_9=\frac{x_{(9)}+x_{(10)}}{2}
+      =\frac{13+15}{2}
+      =14.
+    \]
+  </p>
+
+  <p>
+    <strong>Interpretação:</strong> os décis são <strong>cortes posicionais</strong> no rol.
+    Em particular, \(D_k\) está associado a <strong>\(k\cdot 10\%\)</strong> das observações.
+    Por exemplo, \(D_1\) marca o patamar inferior (10%), \(D_5\) coincide com a <strong>mediana</strong> (50%)
+    e \(D_9\) marca um patamar superior (90%). A leitura correta é sempre em termos de
+    <strong>percentuais de observações</strong>, e não como percentuais do valor numérico do décil.
+  </p>
+</div>
+
+<h4>2.2.2 Decis para dados agrupados</h4>
+
+<p>
+  Quando os dados são apresentados em uma <strong>tabela de frequências</strong>, os <strong>decis</strong> continuam sendo
+  definidos como <strong>cortes posicionais</strong>, assim como no caso dos dados não-agrupados. A diferença está na forma de
+  apresentação da informação. Em vez de uma lista completa de observações, os valores aparecem reunidos em
+  <strong>blocos</strong> de observações iguais, resumidos por suas frequências. Ainda assim, a posição de cada observação na
+  ordenação permanece bem definida, embora de forma implícita.
+</p>
+<figure>
+  <img src="../../imagens/decis-agrupados.svg" alt="Decis Agrupados">
+</figure>
+<p>
+  Formalmente, considere uma amostra com <em>n</em> observações apresentada na forma de uma tabela de frequências. Os valores
+  distintos observados, em ordem crescente, são
+  <span class="formula-inline" data-tts=", xis um, xis dois, até xis eme,">\(x_1, x_2, \ldots, x_m\)</span>,
+  com frequências associadas
+  <span class="formula-inline" data-tts=", f um, f dois, até f eme,">\(f_1, f_2, \ldots, f_m\)</span>,
+  de modo que
+  <span class="formula-inline" data-tts=", ene,">\(n=\sum_{j=1}^{m} f_j\)</span>.
+  Embora as observações individuais não estejam explicitadas, a tabela preserva toda a informação necessária para reconstruir a
+  ordenação, pois indica quantas vezes cada valor ocorre e, consequentemente, quantas posições consecutivas ele ocupa.
+</p>
+
+<p>
+  Para tornar essa ordenação implícita operacional, introduzimos a <strong>frequência acumulada</strong> até o valor \(x_j\),
+  definida por
+</p>
+
+<p class="formula" data-tts="F j é igual à soma das frequências até j.">
+\[
+  F_j=\sum_{i=1}^{j} f_i,
+  \qquad (j=1,2,\ldots,m),
+  \quad \text{com } F_0=0.
+\]
+</p>
+
+<p>
+  A frequência acumulada \(F_j\) indica quantas observações existem até, e incluindo, o valor \(x_j\). Assim, o bloco associado a
+  \(x_j\) ocupa, na ordenação implícita, as posições
+  \(F_{j-1}+1,\,F_{j-1}+2,\,\ldots,\,F_j\).
+  Em particular, para qualquer posição inteira \(r\in\{1,2,\ldots,n\}\), o valor correspondente na ordenação implícita é dado por
+</p>
+
+<p class="formula" data-tts="x na posição r é x j quando F j menos um é menor que r e r é menor ou igual a F j.">
+\[
+  x_{(r)}=x_j
+  \quad \text{quando} \quad
+  F_{j-1} < r \le F_j.
+\]
+</p>
+
+<p>
+  Com essa estrutura estabelecida, o cálculo dos decis segue exatamente a mesma lógica adotada para os dados não-agrupados. O
+  primeiro passo é definir uma <strong>posição teórica</strong> associada a cada decil,
+</p>
+
+<p class="formula" data-tts="P de D k é igual a k vezes n dividido por dez, com k de um até nove.">
+\[
+  P_{D_k}=\frac{k\cdot n}{10},
+  \qquad (k=1,2,\ldots,9).
+\]
+</p>
+
+<p>
+  O valor \(P_{D_k}\) representa uma posição-alvo na escala das \(n\) observações e expressa a proporção acumulada desejada.
+  As quantidades \(\tfrac{n}{10}\), \(\tfrac{2n}{10}\), \(\ldots\), \(\tfrac{9n}{10}\) correspondem, respectivamente, a
+  \(10\%\), \(20\%\), \(\ldots\), \(90\%\) do total de dados. A tabela de frequências permite associar essa posição-alvo a um
+  valor específico por meio das frequências acumuladas.
+</p>
+
+<p>
+  Como a ordenação implícita é composta apenas por posições inteiras, o valor de \(P_{D_k}\) pode coincidir exatamente com uma
+  fronteira entre duas posições consecutivas ou situar-se no interior do intervalo ocupado por um único bloco. Cada uma dessas
+  situações conduz naturalmente a uma forma distinta de leitura do decil.
+</p>
+
+<p>
+  Quando \(P_{D_k}\) é um número inteiro, o corte recai exatamente entre as posições \(P_{D_k}\) e \(P_{D_k}+1\). Nessa situação,
+  o decil é definido como o <strong>ponto médio</strong> entre os valores associados a essas duas posições,
+</p>
+
+<p class="formula" data-tts="Se P de D k é inteiro, então D k é a média entre x na posição P e x na posição P mais um.">
+\[
+  D_k=\frac{x_{(P_{D_k})}+x_{(P_{D_k}+1)}}{2}.
+\]
+</p>
+
+<p>
+  A leitura dessas posições é feita por meio das frequências acumuladas. Se ambas pertencem ao mesmo bloco, a média devolve o
+  próprio valor do bloco. Se pertencem a blocos adjacentes, o ponto médio estabelece naturalmente o corte entre dois valores
+  distintos.
+</p>
+
+<p>
+  Quando \(P_{D_k}\) não é inteiro, a posição-alvo situa-se no interior do intervalo ocupado por um único bloco. Nesse caso,
+  o decil é definido como o valor correspondente à posição inteira imediatamente superior,
+</p>
+
+<p class="formula" data-tts="Se P de D k não é inteiro, então D k é o valor na posição inteira imediatamente superior.">
+\[
+  D_k = x_{(\lceil P_{D_k}\rceil)}.
+\]
+</p>
+
+<p>
+  Essa regra assegura uma leitura consistente dos decis como separatrizes empíricas. Quando o corte coincide com uma fronteira,
+  o ponto médio posiciona o decil no centro dessa separação. Quando não coincide, o decil é associado ao valor que completa a
+  proporção acumulada desejada.
+</p>
+
+<p>
+  A seguir, esse procedimento é ilustrado por meio de um gráfico interativo construído com os mesmos dados que serão utilizados
+  no exemplo subsequente. A visualização permite acompanhar a tabela, a acumulação das frequências e a leitura final dos decis.
+  Em seguida, os mesmos dados serão retomados em uma solução algébrica completa, seguindo o procedimento tradicional.
+</p>
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <div class="kg-wrapper kg-desktop">
+    <div class="kg-container kg--sidebar-centered" src="modelos/decis-agrupados.yml"></div>
+  </div>
+</figure>
+
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <div class="kg-wrapper kg-mobile-sidebar">
+    <div class="kg-container kg--sidebar-centered" src="modelos/decis-agrupados-mobile.yml"></div>
+  </div>
+</figure>
+<div class="example-frame">
+  <h5>Exemplo</h5>
+
+  <p>
+    Considere uma amostra com <strong>n = 20</strong> observações de uma variável quantitativa discreta
+    (por exemplo, número de questões acertadas em um simulado). Os valores distintos observados e suas frequências
+    estão organizados na tabela a seguir:
+  </p>
+
+  <figure class="figure table">
+    <table>
+      <thead>
+        <tr>
+          <th>Valor (<em>x</em>)</th>
+          <th>Frequência (<em>f</em>)</th>
+          <th>Frequência acumulada (<em>F</em>)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>2</td><td>2</td><td>2</td></tr>
+        <tr><td>3</td><td>4</td><td>6</td></tr>
+        <tr><td>4</td><td>6</td><td>12</td></tr>
+        <tr><td>5</td><td>3</td><td>15</td></tr>
+        <tr><td>6</td><td>3</td><td>18</td></tr>
+        <tr><td>7</td><td>2</td><td>20</td></tr>
+      </tbody>
+    </table>
+    <figcaption>Tabela de frequências e frequências acumuladas</figcaption>
+  </figure>
+
+  <p>
+    Para obter os <strong>percentis</strong>, precisamos trabalhar com a lista ordenada (o <em>rol</em>).
+    Aqui, como os dados estão em tabela de frequências, o rol é <strong>implícito</strong>: repetimos cada valor \(x\)
+    exatamente \(f\) vezes. A frequência acumulada \(F\) mostra até qual posição cada valor vai.
+    Assim, a lista ordenada fica:
+  </p>
+
+  <p class="formula" data-tts="Lista ordenada: dois, dois, três, três, três, três, quatro, quatro, quatro, quatro, quatro, quatro, cinco, cinco, cinco, seis, seis, seis, sete, sete.">
+    \[
+      \{2,\;2,\;3,\;3,\;3,\;3,\;4,\;4,\;4,\;4,\;4,\;4,\;5,\;5,\;5,\;6,\;6,\;6,\;7,\;7\}.
+    \]
+  </p>
+
+  <p>
+    Para os percentis (cortes em 100 partes iguais), a posição teórica do percentil \(P_p\) é:
+  </p>
+
+  <p class="formula" data-tts="Posição do percentil p: P de p igual p vezes n sobre cem, com p de um até noventa e nove e n igual a vinte.">
+    \[
+      P_{p}=\frac{p\,n}{100}
+      \quad (p=1,\ldots,99;\; n=20).
+    \]
+  </p>
+
+  <p>
+    Vamos calcular os percentis \(P_{10}\), \(P_{25}\), \(P_{50}\), \(P_{75}\) e \(P_{90}\). Aplicando \(n=20\), obtemos:
+  </p>
+
+  <p class="formula" data-tts="As posições ficam: P dez igual a dois, P vinte e cinco igual a cinco, P cinquenta igual a dez, P setenta e cinco igual a quinze, P noventa igual a dezoito.">
+    \[
+      P_{10}=2,\; P_{25}=5,\; P_{50}=10,\; P_{75}=15,\; P_{90}=18.
+    \]
+  </p>
+
+  <p>
+    Como todas as posições são <strong>inteiras</strong>, cada percentil cai exatamente na fronteira entre duas observações consecutivas do rol.
+    Nesse caso, usamos <strong>apenas o ponto médio</strong> entre \(x_{(P_p)}\) e \(x_{(P_p+1)}\):
+  </p>
+
+  <p class="formula" data-tts="Como P é inteiro, P p é x de P mais x de P mais um, tudo sobre dois.">
+    \[
+      P_{p}=\frac{x_{(P_{p})}+x_{(P_{p}+1)}}{2}
+      \qquad \text{(quando } P_{p}\in\mathbb{Z}\text{).}
+    \]
+  </p>
+
+  <p>
+    Agora calculamos \(P_{10}\), \(P_{25}\), \(P_{50}\), \(P_{75}\) e \(P_{90}\) usando o rol acima.
+  </p>
+
+  <p>
+    <strong>P<sub>10</sub>:</strong> a fronteira está entre \(x_{(2)}=2\) e \(x_{(3)}=3\). Assim,
+  </p>
+  <p class="formula" data-tts="P dez é dois mais três dividido por dois, igual a dois vírgula cinco.">
+    \[
+      P_{10}=\frac{x_{(2)}+x_{(3)}}{2}
+      =\frac{2+3}{2}
+      =2{,}5.
+    \]
+  </p>
+
+  <p>
+    <strong>P<sub>25</sub>:</strong> a fronteira está entre \(x_{(5)}=3\) e \(x_{(6)}=3\). Logo,
+  </p>
+  <p class="formula" data-tts="P vinte e cinco é três.">
+    \[
+      P_{25}=\frac{x_{(5)}+x_{(6)}}{2}
+      =\frac{3+3}{2}
+      =3.
+    \]
+  </p>
+
+  <p>
+    <strong>P<sub>50</sub> (mediana):</strong> a fronteira está entre \(x_{(10)}=4\) e \(x_{(11)}=4\). Assim,
+  </p>
+  <p class="formula" data-tts="P cinquenta é quatro.">
+    \[
+      P_{50}=\frac{x_{(10)}+x_{(11)}}{2}
+      =\frac{4+4}{2}
+      =4.
+    \]
+  </p>
+
+  <p>
+    <strong>P<sub>75</sub>:</strong> a fronteira está entre \(x_{(15)}=5\) e \(x_{(16)}=6\). Logo,
+  </p>
+  <p class="formula" data-tts="P setenta e cinco é cinco mais seis dividido por dois, igual a cinco vírgula cinco.">
+    \[
+      P_{75}=\frac{x_{(15)}+x_{(16)}}{2}
+      =\frac{5+6}{2}
+      =5{,}5.
+    \]
+  </p>
+
+  <p>
+    <strong>P<sub>90</sub>:</strong> a fronteira está entre \(x_{(18)}=6\) e \(x_{(19)}=7\). Assim,
+  </p>
+  <p class="formula" data-tts="P noventa é seis mais sete dividido por dois, igual a seis vírgula cinco.">
+    \[
+      P_{90}=\frac{x_{(18)}+x_{(19)}}{2}
+      =\frac{6+7}{2}
+      =6{,}5.
+    \]
+  </p>
+
+  <p>
+    <strong>Interpretação:</strong> percentis são <strong>cortes posicionais</strong> no rol.
+    Em particular, \(P_p\) está associado a <strong>\(p\%\)</strong> das observações.
+    Aqui, como \(n=20\), os percentis escolhidos têm posições inteiras e caem exatamente entre duas posições consecutivas;
+    por isso usamos <strong>somente o ponto médio</strong> entre os valores adjacentes.
+    A leitura correta é sempre em termos de <strong>percentuais de observações</strong>, e não como percentuais do valor numérico do percentil.
+  </p>
+</div>
+
+<h4>2.2.3 Decis para dados agrupados em classes</h4>
+
+<p>
+  Quando os dados são apresentados em uma <strong>distribuição de frequências por classes</strong>, os <strong>decis</strong>
+  continuam sendo definidos como <strong>cortes posicionais</strong>, assim como nos casos anteriores. A diferença é que as
+  observações não aparecem como valores isolados, mas como <strong>intervalos</strong> que concentram um certo número de
+  ocorrências. Nessa situação, a posição associada a cada decil não pode ser lida diretamente como um valor único e passa a ser
+  estimada como um ponto <strong>dentro do intervalo</strong>, por meio de <strong>interpolação</strong>.
+</p>
+<figure>
+  <img src="../../imagens/decis-agrupado-classes.svg" alt="Decis Agrupados Classes">
+</figure>
+<p>
+  Considere uma amostra com <em>n</em> observações resumida em \(m\) classes
+  \(C_1, C_2, \ldots, C_m\), organizadas em ordem crescente, com frequências
+  <span class="formula-inline" data-tts=", f um, f dois, até f eme,">\(f_1, f_2, \ldots, f_m\)</span>
+  e total
+  <span class="formula-inline" data-tts=", ene,">\(n=\sum_{j=1}^{m} f_j\)</span>.
+  Embora os dados individuais não estejam disponíveis, a tabela preserva a informação necessária para localizar posições
+  relativas, pois a soma das frequências indica quantas observações já foram contabilizadas até o final de cada classe.
+</p>
+
+<p>
+  Para explicitar essa informação posicional, definimos a <strong>frequência acumulada</strong> até a classe \(j\) por
+</p>
+
+<p class="formula" data-tts="F j é igual à soma das frequências até j.">
+\[
+  F_j=\sum_{i=1}^{j} f_i,
+  \qquad (j=1,2,\ldots,m),
+  \quad \text{com } F_0=0.
+\]
+</p>
+
+<p>
+  Mantendo a mesma lógica adotada nos casos anteriores, começamos definindo uma <strong>posição teórica</strong> associada a cada
+  decil,
+</p>
+
+<p class="formula" data-tts="P de D k é igual a k vezes n dividido por dez, com k de um até nove.">
+\[
+  P_{D_k}=\frac{k\cdot n}{10},
+  \qquad (k=1,2,\ldots,9).
+\]
+</p>
+
+<p>
+  O valor \(P_{D_k}\) representa uma posição-alvo na escala das \(n\) observações e traduz a proporção acumulada desejada.
+  As quantidades \(\tfrac{n}{10}\), \(\tfrac{2n}{10}\), \(\ldots\), \(\tfrac{9n}{10}\) correspondem, respectivamente, a
+  \(10\%\), \(20\%\), \(\ldots\), \(90\%\) do total de dados. A <strong>classe decílica</strong> é aquela cuja frequência acumulada
+  captura essa posição-alvo, isto é, a classe \(j\) que satisfaz
+</p>
+
+<p class="formula" data-tts="A classe decílica satisfaz F j menos um menor que P de D k e P de D k menor ou igual a F j.">
+\[
+  F_{j-1} < P_{D_k} \le F_j.
+\]
+</p>
+
+<p>
+  Uma vez identificada a classe decílica, o corte não pode ser associado a um único valor representativo, pois dentro do intervalo
+  existem diversos valores possíveis. Para obter uma estimativa do decil, adota-se a hipótese usual de que as observações estão
+  aproximadamente <strong>uniformemente distribuídas</strong> no interior da classe.
+</p>
+
+<p>
+  Seja \(L_j\) o <strong>limite inferior</strong> da classe decílica, \(h\) a <strong>amplitude</strong> da classe,
+  \(f_j\) a frequência da classe e \(F_{j-1}\) a frequência acumulada até a classe anterior. O termo
+  \(P_{D_k}-F_{j-1}\) indica quantas observações devem ser percorridas, a partir do início da classe, para atingir a posição-alvo.
+  Ao dividir esse valor por \(f_j\), obtém-se a fração do intervalo correspondente.
+</p>
+
+<p>
+  Multiplicando essa fração pela amplitude da classe e somando o limite inferior, obtém-se a expressão de interpolação que fornece
+  o valor estimado do decil,
+</p>
+
+<p class="formula" data-tts="D k é L j mais, P de D k menos F j menos um, dividido por f j, vezes h.">
+\[
+  D_k
+  = L_j + \left(\frac{P_{D_k}-F_{j-1}}{f_j}\right)\,h.
+\]
+</p>
+
+<p>
+  Essa fórmula posiciona o decil dentro da classe de maneira coerente com a proporção acumulada desejada. Quando a posição-alvo
+  está próxima do início da classe, o valor estimado permanece próximo de \(L_j\). Quando está próxima do final, o decil se
+  aproxima do limite superior do intervalo.
+</p>
+
+<p>
+  A seguir, esse procedimento é ilustrado por meio de um gráfico interativo construído com os mesmos dados que serão utilizados
+  no exemplo subsequente. A visualização permite acompanhar a identificação da classe decílica e o deslocamento interpolado no
+  interior do intervalo. Em seguida, os mesmos dados são retomados em uma solução algébrica completa, seguindo o procedimento
+  tradicional.
+</p>
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <div class="kg-wrapper kg-desktop">
+    <div class="kg-container kg--sidebar-centered" src="modelos/decis-agrupados-classe.yml"></div>
+  </div>
+</figure>
+
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <div class="kg-wrapper kg-mobile-sidebar">
+    <div class="kg-container kg--sidebar-centered" src="modelos/decis-agrupados-classe-mobile.yml"></div>
+  </div>
+</figure>
+<div class="example-frame">
+  <h5>Exemplo</h5>
+
+  <p>
+    Considere uma amostra com <strong>n = 20</strong> observações de uma variável quantitativa em escala numérica,
+    organizadas em uma <strong>distribuição de frequências por classes</strong> (intervalos de mesma amplitude).
+    As classes, frequências e frequências acumuladas são:
+  </p>
+
+  <figure class="figure table">
+    <table>
+      <thead>
+        <tr>
+          <th>Classe</th>
+          <th>Frequência (<em>f</em>)</th>
+          <th>Frequência acumulada (<em>F</em>)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>0–5</td><td>3</td><td>3</td></tr>
+        <tr><td>5–10</td><td>5</td><td>8</td></tr>
+        <tr><td>10–15</td><td>6</td><td>14</td></tr>
+        <tr><td>15–20</td><td>4</td><td>18</td></tr>
+        <tr><td>20–25</td><td>2</td><td>20</td></tr>
+      </tbody>
+    </table>
+    <figcaption>Tabela de frequências e frequências acumuladas</figcaption>
+  </figure>
+
+  <p>
+    Para obter os <strong>décis</strong>, trabalhamos com a ideia de posição no rol: a posição \(P_{D_k}\) diz
+    “em que ponto do total \(n\)” está o corte do décil. Em dados agrupados em classes, o rol não é observável,
+    então localizamos primeiro a <strong>classe do décil</strong> e depois fazemos a leitura dentro da classe por
+    <strong>interpolação linear</strong>.
+  </p>
+
+  <p>
+    Para os décis (cortes em 10 partes iguais), a posição teórica do décil \(D_k\) é:
+  </p>
+
+  <p class="formula" data-tts="P de D k igual a k vezes n sobre dez, com k de um até nove e n igual a vinte.">
+    \[
+      P_{D_k}=\frac{k\,n}{10}
+      \quad (k=1,\ldots,9;\; n=20).
+    \]
+  </p>
+
+  <p>
+    Aplicando \(n=20\), obtemos:
+  </p>
+
+  <p class="formula" data-tts="As posições ficam: P de D um igual a dois, P de D dois igual a quatro, até P de D nove igual a dezoito.">
+    \[
+      P_{D_1}=2,\; P_{D_2}=4,\; \ldots,\; P_{D_9}=18.
+    \]
+  </p>
+
+  <p>
+    Em seguida, identificamos a <strong>classe do décil</strong> como a primeira classe cuja frequência acumulada satisfaz
+    \(F\ge P_{D_k}\). Dentro dessa classe, usamos a regra de interpolação:
+  </p>
+
+  <p class="formula" data-tts="D k é limite inferior mais a fração P menos F anterior sobre f da classe, vezes h.">
+    \[
+      D_k=L+\left(\frac{P_{D_k}-F_{\text{anterior}}}{f}\right)\,h.
+    \]
+  </p>
+
+  <p>
+    Aqui, \(L\) é o limite inferior da classe do décil, \(F_{\text{anterior}}\) é a acumulada até a classe anterior,
+    \(f\) é a frequência da classe do décil e \(h\) é a amplitude da classe (neste exemplo, \(h=5\)).
+  </p>
+
+  <p>
+    Agora calculamos \(D_1,\ldots,D_9\) usando a tabela.
+  </p>
+
+  <p>
+    <strong>D<sub>1</sub>:</strong> \(P_{D_1}=2\). Como \(0<2\le 3\), o décil está na classe \(0\text{–}5\).
+    Assim, \(L=0\), \(F_{\text{anterior}}=0\), \(f=3\), \(h=5\). Logo,
+  </p>
+  <p class="formula" data-tts="D um é zero mais a fração dois menos zero sobre três, vezes cinco, igual a três vírgula trinta e três.">
+    \[
+      D_1=0+\left(\frac{2-0}{3}\right)\cdot 5
+      =\frac{10}{3}
+      =3{,}33.
+    \]
+  </p>
+
+  <p>
+    <strong>D<sub>2</sub>:</strong> \(P_{D_2}=4\). Como \(3<4\le 8\), o décil está na classe \(5\text{–}10\).
+    Assim, \(L=5\), \(F_{\text{anterior}}=3\), \(f=5\), \(h=5\). Então,
+  </p>
+  <p class="formula" data-tts="D dois é cinco mais a fração quatro menos três sobre cinco, vezes cinco, igual a seis.">
+    \[
+      D_2=5+\left(\frac{4-3}{5}\right)\cdot 5
+      =5+1
+      =6.
+    \]
+  </p>
+
+  <p>
+    <strong>D<sub>3</sub>:</strong> \(P_{D_3}=6\). Ainda estamos na classe \(5\text{–}10\) (pois \(3<6\le 8\)).
+    Logo, \(L=5\), \(F_{\text{anterior}}=3\), \(f=5\), \(h=5\). Assim,
+  </p>
+  <p class="formula" data-tts="D três é cinco mais a fração seis menos três sobre cinco, vezes cinco, igual a oito.">
+    \[
+      D_3=5+\left(\frac{6-3}{5}\right)\cdot 5
+      =5+3
+      =8.
+    \]
+  </p>
+
+  <p>
+    <strong>D<sub>4</sub>:</strong> \(P_{D_4}=8\). Também cai na classe \(5\text{–}10\) (pois \(3<8\le 8\)).
+    Assim,
+  </p>
+  <p class="formula" data-tts="D quatro é cinco mais a fração oito menos três sobre cinco, vezes cinco, igual a dez.">
+    \[
+      D_4=5+\left(\frac{8-3}{5}\right)\cdot 5
+      =5+5
+      =10.
+    \]
+  </p>
+
+  <p>
+    <strong>D<sub>5</sub> (mediana):</strong> \(P_{D_5}=10\). Como \(8<10\le 14\), o décil está na classe \(10\text{–}15\).
+    Assim, \(L=10\), \(F_{\text{anterior}}=8\), \(f=6\), \(h=5\). Logo,
+  </p>
+  <p class="formula" data-tts="D cinco é dez mais a fração dez menos oito sobre seis, vezes cinco, igual a onze vírgula sessenta e sete.">
+    \[
+      D_5=10+\left(\frac{10-8}{6}\right)\cdot 5
+      =10+\frac{10}{6}
+      =11{,}67.
+    \]
+  </p>
+
+  <p>
+    <strong>D<sub>6</sub>:</strong> \(P_{D_6}=12\). Ainda estamos na classe \(10\text{–}15\) (pois \(8<12\le 14\)).
+    Logo,
+  </p>
+  <p class="formula" data-tts="D seis é dez mais a fração doze menos oito sobre seis, vezes cinco, igual a treze vírgula trinta e três.">
+    \[
+      D_6=10+\left(\frac{12-8}{6}\right)\cdot 5
+      =10+\frac{20}{6}
+      =13{,}33.
+    \]
+  </p>
+
+  <p>
+    <strong>D<sub>7</sub>:</strong> \(P_{D_7}=14\). Também cai na classe \(10\text{–}15\) (pois \(8<14\le 14\)).
+    Assim,
+  </p>
+  <p class="formula" data-tts="D sete é dez mais a fração quatorze menos oito sobre seis, vezes cinco, igual a quinze.">
+    \[
+      D_7=10+\left(\frac{14-8}{6}\right)\cdot 5
+      =10+5
+      =15.
+    \]
+  </p>
+
+  <p>
+    <strong>D<sub>8</sub>:</strong> \(P_{D_8}=16\). Como \(14<16\le 18\), o décil está na classe \(15\text{–}20\).
+    Assim, \(L=15\), \(F_{\text{anterior}}=14\), \(f=4\), \(h=5\). Logo,
+  </p>
+  <p class="formula" data-tts="D oito é quinze mais a fração dezesseis menos quatorze sobre quatro, vezes cinco, igual a dezessete vírgula cinco.">
+    \[
+      D_8=15+\left(\frac{16-14}{4}\right)\cdot 5
+      =15+\frac{10}{4}
+      =17{,}5.
+    \]
+  </p>
+
+  <p>
+    <strong>D<sub>9</sub>:</strong> \(P_{D_9}=18\). Ainda estamos na classe \(15\text{–}20\) (pois \(14<18\le 18\)).
+    Assim,
+  </p>
+  <p class="formula" data-tts="D nove é quinze mais a fração dezoito menos quatorze sobre quatro, vezes cinco, igual a vinte.">
+    \[
+      D_9=15+\left(\frac{18-14}{4}\right)\cdot 5
+      =15+5
+      =20.
+    \]
+  </p>
+
+  <p>
+    <strong>Interpretação:</strong> os décis são <strong>cortes posicionais</strong> no total de observações.
+    A posição \(P_{D_k}\) determina em que parte do conjunto está o corte, a condição \(F\ge P_{D_k}\) localiza a classe,
+    e a interpolação transforma essa posição em um valor dentro da classe. A leitura correta continua sendo em termos de
+    <strong>percentuais de observações</strong> (10%, 20%, …, 90%), e não como percentuais do valor numérico do décil.
+  </p>
+</div>
+
+
+<h3>2.3 Percentis</h3>
+
+<p>
+  Os <strong>percentis</strong> são separatrizes que descrevem a distribuição por meio de <strong>pontos de corte</strong> associados a proporções
+  acumuladas. A lógica é a mesma dos quartis e dos decis, mas levada ao máximo de detalhamento: após ordenar as observações, os percentis dividem o
+  conjunto em <strong>cem partes iguais</strong>, produzindo referências em 1%, 2%, 3%, ..., 99%. Por isso, percentis formam a malha mais “fina”
+  de posições relativas, muito útil quando queremos comparar indivíduos (ou unidades) dentro de um grupo e localizar com precisão onde cada valor se
+  encaixa na distribuição.
+</p>
+
+<p>
+  Denotamos o percentil de ordem <em>k</em> por <strong>P<sub>k</sub></strong>. O percentil <strong>P<sub>k</sub></strong> é o ponto abaixo do qual
+  se encontram aproximadamente <strong>k%</strong> das observações. Em particular, <strong>P<sub>50</sub></strong> coincide com a
+  <strong>mediana</strong>; <strong>P<sub>25</sub></strong> coincide com <strong>Q<sub>1</sub></strong>; e <strong>P<sub>75</sub></strong> coincide
+  com <strong>Q<sub>3</sub></strong>. De modo análogo, <strong>P<sub>10</sub></strong>, <strong>P<sub>20</sub></strong>, ..., <strong>P<sub>90</sub></strong>
+  correspondem aos decis <strong>D<sub>1</sub></strong>, <strong>D<sub>2</sub></strong>, ..., <strong>D<sub>9</sub></strong>. Essa relação deixa claro
+  que quartis e decis são casos particulares de uma mesma ideia: <strong>posição relativa</strong> no conjunto ordenado, com diferentes níveis de
+  granularidade.
+</p>
+
+<figure>
+  <img src="../../imagens/percentis.svg" alt="Percentis: P1 a P99 e relação com quartis e decis">
+</figure>
+
+<p>
+  Um cuidado essencial — e uma confusão extremamente comum — é interpretar percentil como “percentual do valor”. Isso está errado. Dizer que uma observação
+  está no <strong>percentil 90</strong> não significa “ter 90% do valor máximo” nem “acertar 90%”. Significa que o valor ocupa uma posição tal que
+  <strong>cerca de 90% das observações</strong> do grupo ficam abaixo (ou no máximo iguais) a ele. Portanto, percentil é sempre uma comparação
+  <em>com o conjunto</em>: ele traduz um valor em <strong>rank</strong> (posição) dentro da distribuição, e não em fração do próprio valor.
+</p>
+
+<hr>
+
+<h4>2.3.1 Percentis para dados não-agrupados</h4>
+
+<p>
+  Quando os dados aparecem como uma lista de observações, os <strong>percentis</strong> podem ser obtidos de forma direta a partir da
+  <strong>ordenação</strong>. Assim como quartis e decis, eles são <strong>cortes posicionais</strong>. A diferença está apenas no
+  nível de detalhamento: enquanto os quartis dividem o conjunto em quatro partes e os decis em dez, os percentis o particionam em
+  <strong>cem</strong> partes aproximadamente iguais. O procedimento, contudo, permanece o mesmo. Os valores são organizados em
+  ordem crescente e, nessa sequência, procura-se a <strong>posição</strong> associada ao percentil desejado.
+  Uma vez identificada essa posição, o percentil é lido como um valor da própria lista ou, quando o corte recai exatamente entre
+  duas observações consecutivas, como o <strong>ponto médio</strong> entre elas.
+</p>
+
+<figure>
+  <img src="../../imagens/percentis-nao-agrupados.svg" alt="Percentis Não Agrupados">
+</figure>
+
+<p>
+  Formalmente, considere um conjunto de <em>n</em> observações
+  <span class="formula-inline" data-tts=", xis um, xis dois, até xis ene,">\(x_1, x_2, \ldots, x_n\)</span>.
+  Após ordenar esses valores em ordem crescente, obtemos a sequência
+  <span class="formula-inline" data-tts=", xis um entre parênteses menor ou igual a xis dois entre parênteses, até xis ene entre parênteses,">
+    \(x_{(1)} \le x_{(2)} \le \cdots \le x_{(n)}\)
+  </span>,
+  em que \(x_{(1)}\) representa o menor valor da amostra, \(x_{(2)}\) o segundo menor e, de modo geral,
+  \(x_{(i)}\) o <em>i</em>-ésimo menor valor observado.
+</p>
+
+<p>
+  A ideia subjacente aos percentis é essencialmente <strong>posicional</strong>. O objetivo é identificar índices, ou fronteiras
+  entre índices consecutivos, tais que aproximadamente \(k\%\) das observações permaneçam à esquerda do corte correspondente.
+  Para expressar essa ideia de forma operacional, definimos primeiro a <strong>posição teórica</strong> do percentil \(\mathrm{Per}_k\).
+</p>
+
+<p class="formula" data-tts="P de k é igual a k vezes n dividido por cem, com k de um até noventa e nove.">
+\[
+  P_k=\frac{k\cdot n}{100},
+  \qquad (k=1,2,\ldots,99).
+\]
+</p>
+
+<p>
+  Aqui, \(P_k\) é a <strong>posição</strong> (no sentido de contagem acumulada) associada ao percentil \(\mathrm{Per}_k\).
+  Ou seja, \(P_k\) indica onde deve ocorrer o corte para que aproximadamente \(k\%\) das observações fiquem à esquerda.
+  Por exemplo, \(P_{10}\) é a posição do décimo percentil, \(P_{50}\) é a posição da mediana e \(P_{90}\) é a posição do nonagésimo percentil.
+</p>
+
+<p>
+  Como as posições disponíveis na sequência ordenada são inteiras, o valor de \(P_k\) pode coincidir exatamente com uma
+  <strong>fronteira entre duas observações consecutivas</strong> ou situar-se no interior do intervalo ocupado por uma observação
+  específica. Cada uma dessas situações conduz naturalmente a uma forma distinta de leitura do percentil \(\mathrm{Per}_k\).
+</p>
+
+<p>
+  Quando \(P_k\) é um número inteiro, o corte recai exatamente entre as posições \(P_k\) e \(P_k+1\). Nesse caso, o percentil
+  \(\mathrm{Per}_k\) é definido como o <strong>ponto médio</strong> entre os valores associados a essas duas posições,
+</p>
+
+<p class="formula" data-tts="Se P de k é inteiro, então Per k é a média entre o valor na posição P de k e o valor na posição P de k mais um.">
+\[
+  \mathrm{Per}_k=\frac{x_{(P_{k})}+x_{(P_{k}+1)}}{2}.
+\]
+</p>
+
+<p>
+  Quando \(P_k\) não é inteiro, a posição-alvo situa-se no interior do intervalo ocupado por uma observação específica. Nessa
+  situação, o percentil \(\mathrm{Per}_k\) é definido como o valor correspondente à posição inteira imediatamente superior,
+</p>
+
+<p class="formula" data-tts="Se P de k não é inteiro, então Per k é o valor na posição inteira imediatamente superior.">
+\[
+  \mathrm{Per}_k = x_{(\lceil P_k\rceil)}.
+\]
+</p>
+
+<p>
+  Essa regra assegura uma leitura consistente dos percentis como separatrizes empíricas. Quando o corte coincide com uma
+  fronteira, o ponto médio posiciona \(\mathrm{Per}_k\) no centro dessa separação. Quando não coincide, \(\mathrm{Per}_k\) é associado ao
+  valor que completa a proporção acumulada desejada.
+</p>
+
+<p>
+  A seguir, esse procedimento é ilustrado por meio de um gráfico interativo construído com os mesmos dados que serão utilizados
+  no exemplo subsequente. A visualização permite acompanhar a ordenação das observações, a determinação das posições-alvo \(P_k\) e o
+  resultado final dos percentis \(\mathrm{Per}_k\). Em seguida, os mesmos dados serão retomados em uma solução algébrica completa, seguindo o
+  procedimento tradicional.
+</p>
+
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <div class="kg-wrapper kg-desktop">
+    <div class="kg-container kg--sidebar-centered" src="modelos/percentis-nao-agrupados.yml"></div>
+  </div>
+</figure>
+
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <div class="kg-wrapper kg-mobile-sidebar">
+    <div class="kg-container kg--sidebar-centered" src="modelos/percentis-nao-agrupados-mobile.yml"></div>
+  </div>
+</figure>
+
+<div class="example-frame">
+  <h5>Exemplo</h5>
+
+  <p>
+    Considere um conjunto de dados obtido a partir de uma <strong>amostra</strong> com <strong>10 unidades de observação</strong>.
+    A variável analisada é uma medida quantitativa em escala numérica (por exemplo, uma pontuação, uma nota ou uma medida de desempenho),
+    registrada para cada unidade da amostra.
+  </p>
+
+  <p>
+    Os valores observados foram:
+  </p>
+
+  <p class="formula" data-tts="x igual a doze, cinco, sete, nove, quinze, seis, dez, oito, onze, treze.">
+    \[
+      x=\{12,\;5,\;7,\;9,\;15,\;6,\;10,\;8,\;11,\;13\}.
+    \]
+  </p>
+
+  <p>
+    O primeiro passo é ordenar os valores em ordem crescente, obtendo a lista ordenada:
+  </p>
+
+  <p class="formula" data-tts="Conjunto ordenado: cinco, seis, sete, oito, nove, dez, onze, doze, treze, quinze.">
+    \[
+      x_{(1)}\le x_{(2)}\le \cdots \le x_{(10)}
+      \\ \quad\Rightarrow\quad
+      \\ \{5,\;6,\;7,\;8,\;9,\;10,\;11,\;12,\;13,\;15\}.
+    \]
+  </p>
+
+  <p>
+    Para os <strong>percentis</strong>, definimos a <strong>posição</strong> associada a \(\mathrm{Per}_k\) por
+  </p>
+
+  <p class="formula" data-tts="P de k é k vezes n sobre cem, com n igual a dez.">
+    \[
+      P_k=\frac{k\,n}{100}
+      \quad (k=1,\ldots,99;\; n=10).
+    \]
+  </p>
+
+  <p>
+    Para \(n=10\), as posições dos percentis \(\mathrm{Per}_{10},\mathrm{Per}_{20},\ldots,\mathrm{Per}_{90}\) são:
+  </p>
+
+  <p class="formula" data-tts="P dez é um, P vinte é dois, até P noventa é nove.">
+    \[
+      P_{10}=1,\;
+      P_{20}=2,\;
+      \ldots,\;
+      P_{90}=9.
+    \]
+  </p>
+
+  <p>
+    Nesta abordagem, o percentil é definido como o <strong>ponto médio</strong> entre duas observações consecutivas do rol,
+    na fronteira indicada pela posição:
+  </p>
+
+  <p class="formula" data-tts="Per k é x de P k mais x de P k mais um, tudo sobre dois.">
+    \[
+      \mathrm{Per}_k=\frac{x_{(P_{k})}+x_{(P_{k}+1)}}{2}.
+    \]
+  </p>
+
+  <p>
+    Agora calculamos \(\mathrm{Per}_{10},\ldots,\mathrm{Per}_{90}\) usando o rol \(\{5,6,7,8,9,10,11,12,13,15\}\).
+  </p>
+
+  <p>
+    <strong>Per<sub>10</sub>:</strong> a fronteira está entre \(x_{(1)}=5\) e \(x_{(2)}=6\). Assim,
+  </p>
+  <p class="formula" data-tts="Per dez é cinco mais seis dividido por dois, igual a cinco vírgula cinco.">
+    \[
+      \mathrm{Per}_{10}
+      =\frac{x_{(1)}+x_{(2)}}{2}
+      =\frac{5+6}{2}
+      =5{,}5.
+    \]
+  </p>
+
+  <p>
+    <strong>Per<sub>20</sub>:</strong> a fronteira está entre \(x_{(2)}=6\) e \(x_{(3)}=7\). Logo,
+  </p>
+  <p class="formula" data-tts="Per vinte é seis mais sete dividido por dois, igual a seis vírgula cinco.">
+    \[
+      \mathrm{Per}_{20}
+      =\frac{x_{(2)}+x_{(3)}}{2}
+      =\frac{6+7}{2}
+      =6{,}5.
+    \]
+  </p>
+
+  <p>
+    <strong>Per<sub>30</sub>:</strong> a fronteira está entre \(x_{(3)}=7\) e \(x_{(4)}=8\). Assim,
+  </p>
+  <p class="formula" data-tts="Per trinta é sete mais oito dividido por dois, igual a sete vírgula cinco.">
+    \[
+      \mathrm{Per}_{30}
+      =\frac{x_{(3)}+x_{(4)}}{2}
+      =\frac{7+8}{2}
+      =7{,}5.
+    \]
+  </p>
+
+  <p>
+    <strong>Per<sub>40</sub>:</strong> a fronteira está entre \(x_{(4)}=8\) e \(x_{(5)}=9\). Logo,
+  </p>
+  <p class="formula" data-tts="Per quarenta é oito mais nove dividido por dois, igual a oito vírgula cinco.">
+    \[
+      \mathrm{Per}_{40}
+      =\frac{x_{(4)}+x_{(5)}}{2}
+      =\frac{8+9}{2}
+      =8{,}5.
+    \]
+  </p>
+
+  <p>
+    <strong>Per<sub>50</sub> (mediana):</strong> a fronteira está entre \(x_{(5)}=9\) e \(x_{(6)}=10\). Assim,
+  </p>
+  <p class="formula" data-tts="Per cinquenta é nove mais dez dividido por dois, igual a nove vírgula cinco.">
+    \[
+      \mathrm{Per}_{50}
+      =\frac{x_{(5)}+x_{(6)}}{2}
+      =\frac{9+10}{2}
+      =9{,}5.
+    \]
+  </p>
+
+  <p>
+    <strong>Per<sub>60</sub>:</strong> a fronteira está entre \(x_{(6)}=10\) e \(x_{(7)}=11\). Logo,
+  </p>
+  <p class="formula" data-tts="Per sessenta é dez mais onze dividido por dois, igual a dez vírgula cinco.">
+    \[
+      \mathrm{Per}_{60}
+      =\frac{x_{(6)}+x_{(7)}}{2}
+      =\frac{10+11}{2}
+      =10{,}5.
+    \]
+  </p>
+
+  <p>
+    <strong>Per<sub>70</sub>:</strong> a fronteira está entre \(x_{(7)}=11\) e \(x_{(8)}=12\). Assim,
+  </p>
+  <p class="formula" data-tts="Per setenta é onze mais doze dividido por dois, igual a onze vírgula cinco.">
+    \[
+      \mathrm{Per}_{70}
+      =\frac{x_{(7)}+x_{(8)}}{2}
+      =\frac{11+12}{2}
+      =11{,}5.
+    \]
+  </p>
+
+  <p>
+    <strong>Per<sub>80</sub>:</strong> a fronteira está entre \(x_{(8)}=12\) e \(x_{(9)}=13\). Logo,
+  </p>
+  <p class="formula" data-tts="Per oitenta é doze mais treze dividido por dois, igual a doze vírgula cinco.">
+    \[
+      \mathrm{Per}_{80}
+      =\frac{x_{(8)}+x_{(9)}}{2}
+      =\frac{12+13}{2}
+      =12{,}5.
+    \]
+  </p>
+
+  <p>
+    <strong>Per<sub>90</sub>:</strong> a fronteira está entre \(x_{(9)}=13\) e \(x_{(10)}=15\). Assim,
+  </p>
+  <p class="formula" data-tts="Per noventa é treze mais quinze dividido por dois, igual a quatorze.">
+    \[
+      \mathrm{Per}_{90}
+      =\frac{x_{(9)}+x_{(10)}}{2}
+      =\frac{13+15}{2}
+      =14.
+    \]
+  </p>
+
+  <p>
+    <strong>Interpretação:</strong> percentis são <strong>cortes posicionais</strong> no rol.
+    O percentil \(\mathrm{Per}_k\) está associado a <strong>\(k\%\)</strong> das observações.
+    Por exemplo, \(\mathrm{Per}_{10}\) marca um patamar inferior (10%),
+    \(\mathrm{Per}_{50}\) coincide com a <strong>mediana</strong> (50%),
+    e \(\mathrm{Per}_{90}\) marca um patamar superior (90%).
+    A leitura correta é sempre em termos de <strong>percentuais de observações</strong>, e não como percentuais do valor numérico.
+  </p>
+</div>
+<h4>2.3.2 Percentis para dados agrupados</h4>
+
+<p>
+  Quando os dados são apresentados em uma <strong>tabela de frequências</strong>, os <strong>percentis</strong> continuam sendo
+  definidos como <strong>cortes posicionais</strong>, assim como no caso dos dados não-agrupados. A diferença está na forma como
+  a informação é apresentada. Em vez de observar cada valor individualmente, os dados aparecem organizados em
+  <strong>blocos</strong> de observações iguais, resumidos por suas frequências. Ainda assim, a posição de cada observação na
+  ordenação permanece bem definida, embora de forma implícita.
+</p>
+
+<figure>
+  <img src="../../imagens/percentil-agrupados.svg" alt="Percentis Agrupados">
+</figure>
+
+<p>
+  Formalmente, considere uma amostra com <em>n</em> observações apresentada na forma de uma tabela de frequências. Os valores
+  distintos observados, em ordem crescente, são
+  <span class="formula-inline" data-tts=", xis um, xis dois, até xis eme,">\(x_1, x_2, \ldots, x_m\)</span>,
+  com frequências associadas
+  <span class="formula-inline" data-tts=", f um, f dois, até f eme,">\(f_1, f_2, \ldots, f_m\)</span>,
+  de modo que
+  <span class="formula-inline" data-tts=", ene,">\(n=\sum_{j=1}^{m} f_j\)</span>.
+  Embora as observações individuais não estejam explicitadas, a tabela preserva toda a informação necessária para reconstruir a
+  ordenação, pois indica quantas vezes cada valor ocorre e, consequentemente, quantas posições consecutivas ele ocupa.
+</p>
+
+<p>
+  Para tornar essa ordenação implícita operacional, introduzimos a <strong>frequência acumulada</strong> até o valor \(x_j\),
+  definida por
+</p>
+
+<p class="formula" data-tts="F j é igual à soma das frequências até j.">
+\[
+  F_j=\sum_{i=1}^{j} f_i,
+  \qquad (j=1,2,\ldots,m),
+  \quad \text{com } F_0=0.
+\]
+</p>
+
+<p>
+  A frequência acumulada \(F_j\) indica quantas observações existem até, e incluindo, o valor \(x_j\). Assim, o bloco associado a
+  \(x_j\) ocupa, na ordenação implícita, as posições
+  \(F_{j-1}+1,\,F_{j-1}+2,\,\ldots,\,F_j\).
+  Em particular, para qualquer posição inteira \(r\in\{1,2,\ldots,n\}\), o valor correspondente na ordenação implícita é dado por
+</p>
+
+<p class="formula" data-tts="x na posição r é x j quando F j menos um é menor que r e r é menor ou igual a F j.">
+\[
+  x_{(r)}=x_j
+  \quad \text{quando} \quad
+  F_{j-1} < r \le F_j.
+\]
+</p>
+
+<p>
+  Com essa estrutura estabelecida, o cálculo dos percentis segue a mesma lógica adotada para os dados não-agrupados. O primeiro
+  passo é definir a <strong>posição teórica</strong> associada ao percentil \(\mathrm{Per}_k\):
+</p>
+
+<p class="formula" data-tts="P de k é igual a k vezes n dividido por cem, com k de um até noventa e nove.">
+\[
+  P_k=\frac{k\cdot n}{100},
+  \qquad (k=1,2,\ldots,99).
+\]
+</p>
+
+<p>
+  Aqui, \(P_k\) é a <strong>posição</strong> (no sentido de contagem acumulada) associada ao percentil \(\mathrm{Per}_k\).
+  A tabela de frequências permite transformar essa posição-alvo em um valor específico por meio das frequências acumuladas.
+  O percentil \(\mathrm{Per}_k\) é lido na ordenação implícita a partir das posições \(P_k\) e \(P_k+1\) (quando o corte recai
+  na fronteira) ou a partir da posição inteira imediatamente superior (quando o corte recai no interior de um bloco).
+</p>
+
+<p>
+  Como a ordenação implícita é composta apenas por posições inteiras, o valor de \(P_k\) pode coincidir exatamente com uma
+  <strong>fronteira entre duas posições consecutivas</strong> ou situar-se no interior do intervalo ocupado por um único bloco.
+  Cada uma dessas situações conduz naturalmente a uma forma distinta de leitura do percentil \(\mathrm{Per}_k\).
+</p>
+
+<p>
+  Quando \(P_k\) é um número inteiro, o corte recai exatamente entre as posições \(P_k\) e \(P_k+1\). Nesse caso, o percentil
+  \(\mathrm{Per}_k\) é definido como o <strong>ponto médio</strong> entre os valores associados a essas duas posições:
+</p>
+
+<p class="formula" data-tts="Se P de k é inteiro, então Per k é a média entre x na posição P de k e x na posição P de k mais um.">
+\[
+  \mathrm{Per}_k=\frac{x_{(P_{k})}+x_{(P_{k}+1)}}{2}.
+\]
+</p>
+
+<p>
+  A leitura de \(x_{(P_k)}\) e \(x_{(P_k+1)}\) é feita por meio das frequências acumuladas: identificamos o índice \(j\) tal que
+  \(F_{j-1} < P_k \le F_j\) e, de modo análogo, o índice do bloco que contém \(P_k+1\). Se ambas as posições pertencem ao mesmo
+  bloco, o ponto médio devolve o próprio valor \(x_j\). Se pertencem a blocos adjacentes, o ponto médio estabelece naturalmente o
+  corte entre dois valores distintos.
+</p>
+
+<p>
+  Quando \(P_k\) não é inteiro, a posição-alvo situa-se no interior do intervalo ocupado por um único bloco. Nesse caso, o
+  percentil \(\mathrm{Per}_k\) é definido como o valor correspondente à posição inteira imediatamente superior:
+</p>
+
+<p class="formula" data-tts="Se P de k não é inteiro, então Per k é o valor na posição inteira imediatamente superior.">
+\[
+  \mathrm{Per}_k = x_{(\lceil P_k\rceil)}.
+\]
+</p>
+
+<p>
+  Essa regra assegura uma leitura consistente dos percentis como separatrizes empíricas. Quando o corte coincide com uma
+  fronteira, o ponto médio posiciona \(\mathrm{Per}_k\) no centro dessa separação. Quando não coincide, \(\mathrm{Per}_k\) é associado ao
+  valor que completa a proporção acumulada desejada.
+</p>
+
+<p>
+  A seguir, esse procedimento é ilustrado por meio de um gráfico interativo construído com os mesmos dados que serão utilizados
+  no exemplo subsequente. A visualização permite acompanhar a tabela, a acumulação das frequências e a leitura final dos
+  percentis \(\mathrm{Per}_k\). Em seguida, os mesmos dados serão retomados em uma solução algébrica completa, seguindo o procedimento
+  tradicional.
+</p>
+
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <div class="kg-wrapper kg-desktop">
+    <div class="kg-container kg--sidebar-centered" src="modelos/percentis-agrupados.yml"></div>
+  </div>
+</figure>
+
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <div class="kg-wrapper kg-mobile-sidebar">
+    <div class="kg-container kg--sidebar-centered" src="modelos/percentis-agrupados-mobile.yml"></div>
+  </div>
+</figure>
+
+<div class="example-frame">
+  <h5>Exemplo</h5>
+
+  <p>
+    Considere uma amostra com <strong>n = 20</strong> observações de uma variável quantitativa discreta
+    (por exemplo, número de questões acertadas em um simulado). Os valores distintos observados e suas frequências
+    estão organizados na tabela a seguir:
+  </p>
+
+  <figure class="figure table">
+    <table>
+      <thead>
+        <tr>
+          <th>Valor (<em>x</em>)</th>
+          <th>Frequência (<em>f</em>)</th>
+          <th>Frequência acumulada (<em>F</em>)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>2</td><td>2</td><td>2</td></tr>
+        <tr><td>3</td><td>4</td><td>6</td></tr>
+        <tr><td>4</td><td>6</td><td>12</td></tr>
+        <tr><td>5</td><td>3</td><td>15</td></tr>
+        <tr><td>6</td><td>3</td><td>18</td></tr>
+        <tr><td>7</td><td>2</td><td>20</td></tr>
+      </tbody>
+    </table>
+    <figcaption>Tabela de frequências e frequências acumuladas</figcaption>
+  </figure>
+
+  <p>
+    Para obter os <strong>percentis</strong>, trabalhamos com o rol \(x_{(1)},\ldots,x_{(n)}\). Aqui, como os dados estão em tabela de frequências,
+    esse rol é <strong>implícito</strong>: repetimos cada valor \(x_j\) exatamente \(f_j\) vezes. A frequência acumulada \(F_j\) mostra até qual posição
+    cada valor vai. Assim, a lista ordenada fica:
+  </p>
+
+  <p class="formula" data-tts="Lista ordenada: dois, dois, três, três, três, três, quatro, quatro, quatro, quatro, quatro, quatro, cinco, cinco, cinco, seis, seis, seis, sete, sete.">
+    \[
+      \{2,\;2,\;3,\;3,\;3,\;3,\;4,\;4,\;4,\;4,\;4,\;4,\;5,\;5,\;5,\;6,\;6,\;6,\;7,\;7\}.
+    \]
+  </p>
+
+  <p>
+    A <strong>posição</strong> associada ao percentil \(\mathrm{Per}_k\) é dada por:
+  </p>
+
+  <p class="formula" data-tts="P de k é k vezes n sobre cem, com n igual a vinte.">
+    \[
+      P_k=\frac{k\,n}{100}
+      \quad (k=1,\ldots,99;\; n=20).
+    \]
+  </p>
+
+  <p>
+    Vamos calcular \(\mathrm{Per}_{10}\), \(\mathrm{Per}_{25}\), \(\mathrm{Per}_{50}\), \(\mathrm{Per}_{75}\) e \(\mathrm{Per}_{90}\).
+    Aplicando \(n=20\), obtemos as posições:
+  </p>
+
+  <p class="formula" data-tts="As posições ficam: P dez igual a dois, P vinte e cinco igual a cinco, P cinquenta igual a dez, P setenta e cinco igual a quinze, P noventa igual a dezoito.">
+    \[
+      P_{10}=2,\; P_{25}=5,\; P_{50}=10,\; P_{75}=15,\; P_{90}=18.
+    \]
+  </p>
+
+  <p>
+    Como todas essas posições são <strong>inteiras</strong>, cada percentil \(\mathrm{Per}_k\) cai exatamente na fronteira entre duas posições consecutivas.
+    Nesse caso, usamos o <strong>ponto médio</strong>:
+  </p>
+
+  <p class="formula" data-tts="Quando P de k é inteiro, Per k é x na posição P de k mais x na posição P de k mais um, tudo sobre dois.">
+    \[
+      \mathrm{Per}_k=\frac{x_{(P_{k})}+x_{(P_{k}+1)}}{2}
+      \qquad \text{(quando } P_{k}\in\mathbb{Z}\text{).}
+    \]
+  </p>
+
+  <p>
+    Agora calculamos os percentis escolhidos usando o rol implícito acima.
+  </p>
+
+  <p>
+    <strong>Per<sub>10</sub>:</strong> \(P_{10}=2\), então a fronteira está entre \(x_{(2)}=2\) e \(x_{(3)}=3\). Assim,
+  </p>
+  <p class="formula" data-tts="Per dez é dois mais três dividido por dois, igual a dois vírgula cinco.">
+    \[
+      \mathrm{Per}_{10}=\frac{x_{(2)}+x_{(3)}}{2}
+      =\frac{2+3}{2}
+      =2{,}5.
+    \]
+  </p>
+
+  <p>
+    <strong>Per<sub>25</sub>:</strong> \(P_{25}=5\), então a fronteira está entre \(x_{(5)}=3\) e \(x_{(6)}=3\). Logo,
+  </p>
+  <p class="formula" data-tts="Per vinte e cinco é três.">
+    \[
+      \mathrm{Per}_{25}=\frac{x_{(5)}+x_{(6)}}{2}
+      =\frac{3+3}{2}
+      =3.
+    \]
+  </p>
+
+  <p>
+    <strong>Per<sub>50</sub> (mediana):</strong> \(P_{50}=10\), então a fronteira está entre \(x_{(10)}=4\) e \(x_{(11)}=4\). Assim,
+  </p>
+  <p class="formula" data-tts="Per cinquenta é quatro.">
+    \[
+      \mathrm{Per}_{50}=\frac{x_{(10)}+x_{(11)}}{2}
+      =\frac{4+4}{2}
+      =4.
+    \]
+  </p>
+
+  <p>
+    <strong>Per<sub>75</sub>:</strong> \(P_{75}=15\), então a fronteira está entre \(x_{(15)}=5\) e \(x_{(16)}=6\). Logo,
+  </p>
+  <p class="formula" data-tts="Per setenta e cinco é cinco mais seis dividido por dois, igual a cinco vírgula cinco.">
+    \[
+      \mathrm{Per}_{75}=\frac{x_{(15)}+x_{(16)}}{2}
+      =\frac{5+6}{2}
+      =5{,}5.
+    \]
+  </p>
+
+  <p>
+    <strong>Per<sub>90</sub>:</strong> \(P_{90}=18\), então a fronteira está entre \(x_{(18)}=6\) e \(x_{(19)}=7\). Assim,
+  </p>
+  <p class="formula" data-tts="Per noventa é seis mais sete dividido por dois, igual a seis vírgula cinco.">
+    \[
+      \mathrm{Per}_{90}=\frac{x_{(18)}+x_{(19)}}{2}
+      =\frac{6+7}{2}
+      =6{,}5.
+    \]
+  </p>
+
+  <p>
+    <strong>Interpretação:</strong> percentis são <strong>cortes posicionais</strong> no rol.
+    O percentil \(\mathrm{Per}_k\) está associado a <strong>\(k\%\)</strong> das observações.
+    Aqui, como \(n=20\), os percentis escolhidos têm posições inteiras e caem exatamente entre duas posições consecutivas;
+    por isso usamos o <strong>ponto médio</strong> entre os valores adjacentes.
+    A leitura correta é sempre em termos de <strong>percentuais de observações</strong>, e não como percentuais do valor numérico.
+  </p>
+</div>
+
+
+
+<h4>2.3.3 Percentis para dados agrupados em classes</h4>
+
+<p>
+  Quando os dados são apresentados em uma <strong>distribuição de frequências por classes</strong>, os <strong>percentis</strong>
+  continuam sendo definidos como <strong>cortes posicionais</strong>, assim como nos casos anteriores. A diferença agora é que a
+  ordenação não pode ser reconstruída em termos de valores isolados. Cada linha da tabela descreve um
+  <strong>intervalo numérico</strong> e informa apenas quantas observações estão contidas nesse intervalo.
+  Uma vez identificada a classe correspondente ao percentil, o valor do corte passa a ser estimado como um ponto
+  <strong>dentro do intervalo</strong>, por meio de <strong>interpolação</strong>.
+</p>
+
+<figure>
+  <img src="../../imagens/percentil-agrupados-classe.svg" alt="Percentis Agrupados em Classe">
+</figure>
+
+<p>
+  Considere uma amostra com <em>n</em> observações resumida em \(m\) classes
+  \(C_1, C_2, \ldots, C_m\), organizadas em ordem crescente, com frequências
+  <span class="formula-inline" data-tts=", f um, f dois, até f eme,">\(f_1, f_2, \ldots, f_m\)</span>
+  e total
+  <span class="formula-inline" data-tts=", ene,">\(n=\sum_{j=1}^{m} f_j\)</span>.
+  Embora os dados individuais não estejam disponíveis, a tabela preserva a informação necessária para localizar
+  posições relativas, pois a soma das frequências indica quantas observações já foram contabilizadas até o final
+  de cada classe.
+</p>
+
+<p>
+  Para tornar essa informação posicional explícita, definimos a <strong>frequência acumulada</strong> até a classe \(j\) por
+</p>
+
+<p class="formula" data-tts="F j é igual à soma das frequências até j.">
+\[
+  F_j=\sum_{i=1}^{j} f_i,
+  \qquad (j=1,2,\ldots,m),
+  \quad \text{com } F_0=0.
+\]
+</p>
+
+<p>
+  Mantendo a mesma lógica adotada para dados não-agrupados e dados agrupados por valores, começamos definindo a
+  <strong>posição teórica</strong> associada ao percentil \(\mathrm{Per}_k\):
+</p>
+
+<p class="formula" data-tts="P de k é igual a k vezes n dividido por cem, com k de um até noventa e nove.">
+\[
+  P_k=\frac{k\cdot n}{100},
+  \qquad (k=1,2,\ldots,99).
+\]
+</p>
+
+<p>
+  Aqui, \(P_k\) é a <strong>posição</strong> (no sentido de contagem acumulada) associada ao percentil \(\mathrm{Per}_k\).
+  O valor \(P_k\) é uma posição-alvo na escala das \(n\) observações e expressa a ideia de proporção acumulada.
+  As quantidades \(\tfrac{n}{100}\), \(\tfrac{2n}{100}\), \(\ldots\), \(\tfrac{99n}{100}\) correspondem, respectivamente,
+  a \(1\%\), \(2\%\), \(\ldots\), \(99\%\) do total de dados. A <strong>classe percentílica</strong> é aquela cuja frequência acumulada
+  captura essa posição-alvo, isto é, a classe \(j\) que satisfaz
+</p>
+
+<p class="formula" data-tts="A classe percentílica satisfaz F j menos um menor que P de k e P de k menor ou igual a F j.">
+\[
+  F_{j-1} < P_{k} \le F_j.
+\]
+</p>
+
+<p>
+  Até esse ponto, o raciocínio é idêntico ao do caso agrupado por valores. A diferença surge no passo seguinte.
+  Como o bloco identificado é agora um <strong>intervalo contínuo</strong>, não é suficiente associar o percentil
+  \(\mathrm{Per}_k\) a um único valor representativo. É necessário localizar o ponto do intervalo que corresponde à posição \(P_k\).
+</p>
+
+<p>
+  Para isso, adota-se a hipótese usual de que as observações estão aproximadamente
+  <strong>uniformemente distribuídas</strong> no interior de cada classe. Seja \(L_j\) o
+  <strong>limite inferior</strong> da classe percentílica, \(h\) a <strong>amplitude</strong> da classe,
+  \(f_j\) sua frequência e \(F_{j-1}\) a frequência acumulada até a classe anterior.
+  O termo \(P_{k}-F_{j-1}\) indica quantas observações devem ser percorridas a partir do início da classe
+  para alcançar a posição-alvo. Ao dividir esse valor por \(f_j\), obtém-se a fração do intervalo correspondente.
+</p>
+
+<p>
+  Multiplicando essa fração pela amplitude da classe e somando o limite inferior, obtém-se a expressão de
+  interpolação que fornece o percentil:
+</p>
+
+<p class="formula" data-tts="Per k é L j mais, P de k menos F j menos um, dividido por f j, vezes h.">
+\[
+  \mathrm{Per}_k
+  = L_j + \left(\frac{P_{k}-F_{j-1}}{f_j}\right)\,h.
+\]
+</p>
+
+<p>
+  Essa fórmula posiciona \(\mathrm{Per}_k\) dentro da classe de modo coerente com a proporção acumulada desejada.
+  Quando \(P_{k}\) está próximo do início da classe, o valor estimado permanece próximo de \(L_j\);
+  quando está próximo do final, aproxima-se do limite superior do intervalo.
+</p>
+
+<p>
+  A seguir, esse procedimento é ilustrado por meio de um gráfico interativo construído com os mesmos dados que
+  serão utilizados no exemplo subsequente. A visualização permite acompanhar a identificação da classe percentílica
+  e o deslocamento interpolado no interior do intervalo. Em seguida, os mesmos dados são retomados em uma
+  solução algébrica completa, seguindo o procedimento tradicional.
+</p>
+
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <div class="kg-wrapper kg-desktop">
+    <div class="kg-container kg--sidebar-centered" src="modelos/percentil-agrupados-classe.yml"></div>
+  </div>
+</figure>
+
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <div class="kg-wrapper kg-mobile-sidebar">
+    <div class="kg-container kg--sidebar-centered" src="modelos/percentil-agrupados-classe-mobile.yml"></div>
+  </div>
+</figure>
+
+<div class="example-frame">
+  <h5>Exemplo</h5>
+
+  <p>
+    Considere uma amostra com <strong>n = 20</strong> observações de uma variável quantitativa contínua (por exemplo, horas de estudo por semana),
+    resumida na seguinte distribuição de frequências por classes:
+  </p>
+
+  <figure class="figure table">
+    <table>
+      <thead>
+        <tr>
+          <th>Classe</th>
+          <th>Frequência (<em>f</em>)</th>
+          <th>Frequência acumulada (<em>F</em>)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>0–5</td><td>3</td><td>3</td></tr>
+        <tr><td>5–10</td><td>5</td><td>8</td></tr>
+        <tr><td>10–15</td><td>6</td><td>14</td></tr>
+        <tr><td>15–20</td><td>4</td><td>18</td></tr>
+        <tr><td>20–25</td><td>2</td><td>20</td></tr>
+      </tbody>
+    </table>
+    <figcaption>Distribuição por classes com frequências acumuladas</figcaption>
+  </figure>
+
+  <p>
+    Pela regra adotada, calculamos primeiro as <strong>posições</strong> \(P_k\) associadas aos percentis \(\mathrm{Per}_k\):
+  </p>
+
+<p class="formula" data-tts="P dez é dois. P vinte e cinco é cinco.">
+  \[
+    P_{10}=\frac{10\cdot 20}{100}=2,
+    \qquad
+    P_{25}=\frac{25\cdot 20}{100}=5.
+  \]
+</p>
+
+<p class="formula" data-tts="P cinquenta é dez. P setenta e cinco é quinze.">
+  \[
+    P_{50}=\frac{50\cdot 20}{100}=10,
+    \qquad
+    P_{75}=\frac{75\cdot 20}{100}=15.
+  \]
+</p>
+
+<p class="formula" data-tts="P noventa é dezoito.">
+  \[
+    P_{90}=\frac{90\cdot 20}{100}=18.
+  \]
+</p>
+
+
+  <p>
+    Em seguida, localizamos a <strong>classe percentílica</strong> de cada \(P_k\) usando
+    \(F_{j-1} < P_k \le F_j\) e aplicamos a interpolação
+    \(\mathrm{Per}_k = L + \left(\frac{P_k-F_{\text{ant}}}{f}\right)h\), com \(h=5\).
+  </p>
+
+  <p>
+    <strong>Per<sub>10</sub>:</strong> \(P_{10}=2\) satisfaz \(0 \lt 2 \le 3\), então a classe percentílica é <strong>0–5</strong>.
+    Aqui, \(L=0\), \(h=5\), \(F_{\text{ant}}=0\) e \(f=3\). Logo,
+  </p>
+
+  <p class="formula" data-tts="Per dez é zero mais, dois menos zero, dividido por três, vezes cinco, igual a três vírgula trinta e três.">
+    \[
+      \mathrm{Per}_{10}
+      = 0 + \left(\frac{2-0}{3}\right)\cdot 5
+      \approx 3{,}33.
+    \]
+  </p>
+
+  <p>
+    <strong>Per<sub>25</sub>:</strong> \(P_{25}=5\) satisfaz \(3 \lt 5 \le 8\), então a classe percentílica é <strong>5–10</strong>.
+    Aqui, \(L=5\), \(h=5\), \(F_{\text{ant}}=3\) e \(f=5\). Assim,
+  </p>
+
+  <p class="formula" data-tts="Per vinte e cinco é cinco mais, cinco menos três, dividido por cinco, vezes cinco, igual a sete.">
+    \[
+      \mathrm{Per}_{25}
+      = 5 + \left(\frac{5-3}{5}\right)\cdot 5
+      = 7.
+    \]
+  </p>
+
+  <p>
+    <strong>Per<sub>50</sub> (mediana):</strong> \(P_{50}=10\) satisfaz \(8 \lt 10 \le 14\), então a classe percentílica é <strong>10–15</strong>.
+    Aqui, \(L=10\), \(h=5\), \(F_{\text{ant}}=8\) e \(f=6\). Logo,
+  </p>
+
+  <p class="formula" data-tts="Per cinquenta é dez mais, dez menos oito, dividido por seis, vezes cinco, igual a onze vírgula sessenta e sete.">
+    \[
+      \mathrm{Per}_{50}
+      = 10 + \left(\frac{10-8}{6}\right)\cdot 5
+      \approx 11{,}67.
+    \]
+  </p>
+
+  <p>
+    <strong>Per<sub>75</sub>:</strong> \(P_{75}=15\) satisfaz \(14 \lt 15 \le 18\), então a classe percentílica é <strong>15–20</strong>.
+    Aqui, \(L=15\), \(h=5\), \(F_{\text{ant}}=14\) e \(f=4\). Assim,
+  </p>
+
+  <p class="formula" data-tts="Per setenta e cinco é quinze mais, quinze menos quatorze, dividido por quatro, vezes cinco, igual a dezesseis vírgula vinte e cinco.">
+    \[
+      \mathrm{Per}_{75}
+      = 15 + \left(\frac{15-14}{4}\right)\cdot 5
+      = 16{,}25.
+    \]
+  </p>
+
+  <p>
+    <strong>Per<sub>90</sub>:</strong> \(P_{90}=18\) satisfaz \(14 \lt 18 \le 18\), então a classe percentílica é <strong>15–20</strong>.
+    Aqui, \(L=15\), \(h=5\), \(F_{\text{ant}}=14\) e \(f=4\). Logo,
+  </p>
+
+  <p class="formula" data-tts="Per noventa é quinze mais, dezoito menos quatorze, dividido por quatro, vezes cinco, igual a vinte.">
+    \[
+      \mathrm{Per}_{90}
+      = 15 + \left(\frac{18-14}{4}\right)\cdot 5
+      = 20.
+    \]
+  </p>
+
+  <p>
+    <strong>Interpretação:</strong> os valores \(\mathrm{Per}_{10}\approx 3{,}33\), \(\mathrm{Per}_{25}=7\), \(\mathrm{Per}_{50}\approx 11{,}67\),
+    \(\mathrm{Per}_{75}=16{,}25\) e \(\mathrm{Per}_{90}=20\) são estimativas obtidas por interpolação dentro das classes percentílicas.
+    Eles funcionam como cortes posicionais: aproximadamente 10% das observações ficam abaixo de \(\mathrm{Per}_{10}\), 25% abaixo de \(\mathrm{Per}_{25}\),
+    50% abaixo de \(\mathrm{Per}_{50}\), 75% abaixo de \(\mathrm{Per}_{75}\) e 90% abaixo de \(\mathrm{Per}_{90}\).
+  </p>
+</div>
+<hr>
+<h2>3. Diagrama de Boxplot e Identificação de Outiliers</h2>
+
+
+<p>
+  O <strong>boxplot</strong> (ou diagrama de caixa), criado na década de 1970 pelo estatístico <strong>John W. Tukey</strong>, é uma representação gráfica construída a partir de medidas de <strong>separatrizes</strong>.
+  Ele resume um conjunto de dados em poucos elementos visuais, mas cada elemento tem um significado analítico bem definido:
+  a <strong>caixa</strong> descreve o comportamento do <strong>miolo da distribuição</strong>, a linha central marca o
+  <strong>centro posicional</strong> (mediana), os <strong>bigodes</strong> (ou <em>whiskers</em>) mostram a extensão dos valores ainda considerados
+  <strong>típicos</strong> e, por fim, os pontos fora dos bigodes são destacados como <strong>outliers</strong> por um critério
+  baseado na <strong>amplitude interquartil</strong>.
+</p>
+
+<figure>
+  <img src="../../imagens/boxplot.svg" alt="Construção do boxplot e identificação de outliers">
+</figure>
+
+<p>
+  A construção do boxplot parte da mesma ideia que usamos para quartis e percentis: um conjunto de dados é colocado em
+  <strong>ordem crescente</strong> e, nessa lista ordenada, buscamos cortes que dividem a amostra em partes associadas a proporções
+  acumuladas, como \(25\%\), \(50\%\) e \(75\%\). De outro modo, considerando uma amostra com <em>n</em> observações
+  <span class="formula-inline" data-tts=", xis um, xis dois, até xis ene,">\(x_1, x_2, \ldots, x_n\)</span>,
+  organizando esses valores em ordem crescente, obtemos a sequência
+  <span class="formula-inline" data-tts=", xis um entre parênteses menor ou igual a xis dois entre parênteses, até xis ene entre parênteses,">
+    \(x_{(1)} \le x_{(2)} \le \cdots \le x_{(n)}\)
+  </span>,
+  em que \(x_{(i)}\) representa o <em>i</em>-ésimo menor valor observado. É nessa lista ordenada que o boxplot localiza seus três
+  cortes fundamentais: \(Q_1\), que representa \(25\%\) dos elementos acumulados;  \(Q_2\),que representa \(50\%\); e \(Q_3\), representando \(75\%\).
+</p>
+
+<p>
+  Para expressar essa leitura de forma operacional, associamos a cada quartil \(Q_k\) uma <strong>posição-alvo</strong> na lista ordenada,
+  dada por
+</p>
+
+<p class="formula" data-tts="P de Q k é igual a k vezes n dividido por quatro, com k igual a um, dois e três.">
+\[
+  P_{Q_k}=\frac{k\cdot n}{4},
+  \qquad (k=1,2,3).
+\]
+</p>
+
+<p>
+  O valor de \(P_{Q_k}\) representa a quantidade de observações que deve situar-se à esquerda do corte. Como a lista ordenada possui apenas
+  posições inteiras, o corte pode coincidir exatamente com a <strong>fronteira</strong> entre duas observações consecutivas ou cair no interior
+  de um intervalo associado a uma observação específica. No primeiro caso, o quartil é lido como o <strong>ponto médio</strong> entre
+  \(x_{(P_{Q_k})}\) e \(x_{(P_{Q_k}+1)}\); no segundo, ele é associado ao valor que completa a proporção acumulada desejada na lista ordenada.
+</p>
+
+<p class="formula" data-tts="Quando P de Q k é inteiro, Q k é x na posição P de Q k mais x na posição P de Q k mais um, tudo sobre dois.">
+\[
+  Q_k=\frac{x_{(P_{Q_k})}+x_{(P_{Q_k}+1)}}{2}
+  \qquad \text{(quando } P_{Q_k}\in\mathbb{Z}\text{).}
+\]
+</p>
+
+<p>
+  O primeiro e o terceiro quartis, \(Q_1\) e \(Q_3\), são obtidos de forma análoga, como separações que deixam aproximadamente \(25\%\) e
+  \(75\%\) das observações à esquerda. No boxplot, esses dois quartis têm um papel estrutural: eles definem a <strong>caixa</strong>.
+  Graficamente, a caixa é o intervalo
+  <span class="formula-inline" data-tts=", de Q um até Q três,">\([Q_1,\,Q_3]\)</span>,
+  isto é, o trecho da escala numérica que contém o <strong>bloco central</strong> dos dados. A linha desenhada dentro da caixa marca \(Q_2\),
+  de modo que o boxplot já exibe, de uma só vez, três cortes posicionais fundamentais.
+</p>
+
+<p>
+  A distância entre \(Q_1\) e \(Q_3\) é chamada de <strong>amplitude interquartil</strong> e é representada por
+  <span class="formula-inline" data-tts=", i q r,">\(IQR\)</span>:
+</p>
+
+<p class="formula" data-tts="I Q R é igual a Q três menos Q um.">
+\[
+  IQR = Q_3 - Q_1.
+\]
+</p>
+
+<p>
+  O \(IQR\) mede a dispersão do <strong>miolo</strong> da distribuição, isto é, da metade central das observações. O motivo de ele ser
+  tão importante no boxplot é que se trata de uma medida <strong>robusta</strong>: como depende de quartis, ele é pouco sensível a valores
+  extremos. Essa robustez é exatamente o que permite usar o \(IQR\) como referência para identificar observações muito afastadas
+  do padrão central sem que o próprio extremo distorça o critério.
+</p>
+
+<p>
+  A identificação de outliers no boxplot é feita por meio de limites operacionais chamados de <strong>cercas</strong>
+  (ou <em>fences</em>). A ideia é construir um intervalo plausível a partir do bloco central e classificar como outliers as
+  observações que caem muito além desse intervalo. As cercas inferior e superior são definidas por:
+</p>
+
+<p class="formula" data-tts="Limite inferior é Q um menos um vírgula cinco vezes I Q R. Limite superior é Q três mais um vírgula cinco vezes I Q R.">
+\[
+  LI = Q_1 - 1{,}5\cdot IQR,
+  \qquad
+  LS = Q_3 + 1{,}5\cdot IQR.
+\]
+</p>
+
+<p>
+  O fator \(1{,}5\) é uma escolha arbitrária, que foi proposta por Tukey, como um critério que funcione bem em muitas distribuições.
+  O ponto essencial é que o intervalo \([LI,\,LS]\) é calibrado pela variabilidade do miolo (via \(IQR\)), e não pela variabilidade
+  total. Assim, uma observação é classificada como outlier se estiver fora dessas cercas: \(x < LI\) ou \(x > LS\).
+  Essa marcação deve ser entendida como uma classificação <strong>descritiva</strong>: outlier significa “muito afastado do padrão
+  central pelo critério do \(IQR\)”, e não necessariamente erro de medição.
+</p>
+
+<p>
+  Uma vez calculadas as cercas, o boxplot define os <strong>bigodes</strong>. No padrão mais usado, os bigodes não vão até o mínimo
+  e o máximo da amostra; eles vão até os extremos que ainda não são outliers. O bigode inferior termina no menor valor observado
+  que permanece dentro das cercas, e o bigode superior termina no maior valor observado dentro das cercas. Em termos práticos, isso
+  significa procurar, na lista ordenada, o menor \(x_{(i)}\) com \(x_{(i)} \ge LI\) e o maior \(x_{(i)}\) com \(x_{(i)} \le LS\).
+  Qualquer observação além desses extremos é desenhada como ponto isolado, destacando visualmente sua condição de outlier.
+</p>
+
+<p>
+  Esse mecanismo separa o comportamento típico do comportamento extremo. A caixa \([Q_1,Q_3]\) mostra a região onde está a metade central;
+  os bigodes mostram até onde os dados se estendem sem violar o critério; e os pontos fora dos bigodes mostram observações que excedem
+  a extensão considerada plausível a partir do miolo. Além disso, a posição da mediana dentro da caixa e o tamanho relativo dos bigodes
+  ajudam a sugerir <strong>assimetria</strong>: bigodes mais longos de um lado e maior concentração de outliers nesse lado indicam cauda
+  mais extensa naquela direção.
+</p>
+
+
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para desktop -->
+  <div class="kg-wrapper kg-desktop">
+    <div class="kg-container kg--sidebar-centered" src="modelos/boxplot.yml"></div>
+  </div>
+</figure>
+
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para mobile -->
+  <div class="kg-wrapper kg-mobile-sidebar">
+    <div class="kg-container kg--sidebar-centered" src="modelos/boxplot-mobile.yml"></div>
+  </div>
+</figure>
+<div class="example-frame">
+  <h5>Exemplo</h5>
+
+  <p>
+    Considere uma amostra com <strong>n = 8</strong> observações de uma variável quantitativa
+    (por exemplo, <em>tempo de atendimento</em>, em minutos), representada no gráfico interativo do boxplot por:
+  </p>
+
+  <p class="formula" data-tts="x igual a sete, dez, doze, treze, quatorze, quinze, dezoito, vinte e sete.">
+    \[
+      x=\{7,\;10,\;12,\;13,\;14,\;15,\;18,\;27\}.
+    \]
+  </p>
+
+  <p>
+    Como o boxplot é uma construção <strong>posicional</strong>, o primeiro passo é considerar esses valores em
+    <strong>ordem crescente</strong>. Aqui isso já está feito, de modo que podemos ler diretamente os quartis a partir das
+    <strong>posições teóricas</strong> na lista ordenada. Para \(n=8\), usamos as posições
+  </p>
+
+  <p class="formula" data-tts="P de Q um é um vezes oito dividido por quatro, igual a dois. P de Q dois é dois vezes oito dividido por quatro, igual a quatro. P de Q três é três vezes oito dividido por quatro, igual a seis.">
+    \[
+      P_{Q_1}=\frac{1\cdot 8}{4}=2,
+      \qquad
+      P_{Q_2}=\frac{2\cdot 8}{4}=4,
+      \qquad
+      P_{Q_3}=\frac{3\cdot 8}{4}=6.
+    \]
+  </p>
+
+  <p>
+    Como as três posições são <strong>inteiras</strong>, cada quartil cai exatamente na <strong>fronteira</strong> entre duas
+    observações consecutivas. Nessa situação, o quartil é definido como o <strong>ponto médio</strong> entre os dois valores
+    vizinhos.
+  </p>
+
+  <p>
+    No caso de \(Q_1\), a fronteira \(P_{Q_1}=2\) está entre \(x_{(2)}=10\) e \(x_{(3)}=12\). Logo,
+  </p>
+
+  <p class="formula" data-tts="Q um é dez mais doze dividido por dois, igual a onze.">
+    \[
+      Q_1=\frac{x_{(2)}+x_{(3)}}{2}
+      =\frac{10+12}{2}
+      =11.
+    \]
+  </p>
+
+  <p>
+    Para a mediana, \(P_{Q_2}=4\) está entre \(x_{(4)}=13\) e \(x_{(5)}=14\). Assim,
+  </p>
+
+  <p class="formula" data-tts="Q dois é treze mais quatorze dividido por dois, igual a treze vírgula cinco.">
+    \[
+      Q_2=\frac{x_{(4)}+x_{(5)}}{2}
+      =\frac{13+14}{2}
+      =13{,}5.
+    \]
+  </p>
+
+  <p>
+    Para \(Q_3\), a fronteira \(P_{Q_3}=6\) está entre \(x_{(6)}=15\) e \(x_{(7)}=18\). Então,
+  </p>
+
+  <p class="formula" data-tts="Q três é quinze mais dezoito dividido por dois, igual a dezesseis vírgula cinco.">
+    \[
+      Q_3=\frac{x_{(6)}+x_{(7)}}{2}
+      =\frac{15+18}{2}
+      =16{,}5.
+    \]
+  </p>
+
+  <p>
+    Esses três valores aparecem diretamente no gráfico interativo: a <strong>caixa</strong> vai de \(Q_1\) a \(Q_3\), e a linha
+    dentro da caixa marca \(Q_2\). A partir deles, calculamos a <strong>amplitude interquartílica</strong>:
+  </p>
+
+  <p class="formula" data-tts="A I Q é Q três menos Q um, igual a dezesseis vírgula cinco menos onze, igual a cinco vírgula cinco.">
+    \[
+      AIQ = Q_3 - Q_1 = 16{,}5 - 11 = 5{,}5.
+    \]
+  </p>
+
+  <p>
+    O critério de Tukey para identificar discrepantes usa a ideia de “distância típica” do miolo da distribuição. Para isso,
+    definimos as <strong>cercas</strong> \(\text{LI}_{1{,}5}\) e \(\text{LS}_{1{,}5}\) deslocando \(Q_1\) e \(Q_3\) de
+    \(1{,}5\cdot AIQ\):
+  </p>
+
+  <p class="formula" data-tts="Limite inferior é Q um menos um vírgula cinco A I Q, igual a onze menos oito vírgula vinte e cinco, igual a dois vírgula setenta e cinco.">
+    \[
+      \text{LI}_{1{,}5}=Q_1-1{,}5\cdot AIQ
+      =11-1{,}5\cdot 5{,}5
+      =2{,}75.
+    \]
+  </p>
+
+  <p class="formula" data-tts="Limite superior é Q três mais um vírgula cinco A I Q, igual a dezesseis vírgula cinco mais oito vírgula vinte e cinco, igual a vinte e quatro vírgula setenta e cinco.">
+    \[
+      \text{LS}_{1{,}5}=Q_3+1{,}5\cdot AIQ
+      =16{,}5+1{,}5\cdot 5{,}5
+      =24{,}75.
+    \]
+  </p>
+
+  <p>
+    A leitura agora é direta: qualquer observação <strong>acima</strong> de \(24{,}75\) (ou <strong>abaixo</strong> de \(2{,}75\))
+    é considerada um outlier. Na amostra, o maior valor é \(27\), e como
+    \(27&gt;24{,}75\), concluímos que <strong>27 é um outlier</strong> pelo critério \(1{,}5\cdot AIQ\).
+    Os demais valores estão dentro do intervalo \([2{,}75,\;24{,}75]\) e, portanto, são considerados <strong>típicos</strong> por
+    esse critério.
+  </p>
+
+  <p>
+    O boxplot traduz exatamente essa lógica em elementos visuais. A <strong>caixa</strong> vai de \(Q_1=11\) a \(Q_3=16{,}5\),
+    a <strong>mediana</strong> é \(Q_2=13{,}5\), o <strong>bigode inferior</strong> se estende até o menor valor não atípico (7),
+    o <strong>bigode superior</strong> vai até o maior valor não atípico (18), e o valor \(27\) aparece como <strong>ponto destacado</strong>
+    fora do bigode, porque ultrapassa \(\text{LS}_{1{,}5}\).
+  </p>
+</div>
+
+<p>
+  <strong>Nota final.</strong> O boxplot é especialmente útil para <strong>comparar distribuições</strong> entre grupos (turmas, regiões, períodos),
+  pois evidencia rapidamente diferenças de posição central, dispersão e presença de discrepantes. Ao mesmo tempo, ele é um resumo:
+  não mostra a forma completa da distribuição como um histograma. Por isso, costuma ser mais informativo quando combinado com outras visualizações
+  e medidas-resumo.
+</p>
+<hr>
+<h2>4. Conclusão</h2>
+
+<p>
+  Ao longo deste capítulo, aprofundamos o estudo das <strong>medidas-resumo de posição</strong> por meio das
+  <strong>separatrizes</strong>, ampliando a noção de síntese estatística para além da ideia de um único valor
+  representativo. Enquanto as medidas de tendência central descrevem <em>onde</em> os dados se concentram,
+  as separatrizes permitem compreender <em>como</em> a distribuição se organiza ao longo da escala, ao
+  introduzir <strong>pontos de corte associados a proporções acumuladas</strong>.
+</p>
+
+<p>
+  Vimos que <strong>quartis</strong>, <strong>décis</strong> e <strong>percentis</strong> não constituem conceitos
+  distintos, mas diferentes níveis de granularidade de uma mesma ideia fundamental: a <strong>posição relativa</strong>
+  de uma observação no conjunto ordenado. A mediana surge, nesse contexto, como um caso particular — simultaneamente
+  segundo quartil, quinto decil e percentil 50 — evidenciando a continuidade conceitual entre essas medidas.
+</p>
+
+<p>
+  Um ponto central do capítulo foi a ênfase no caráter <strong>posicional</strong> das separatrizes.
+  Em todos os contextos analisados — dados não-agrupados, dados agrupados por valores e dados agrupados em classes —
+  o procedimento parte da mesma lógica: definir uma <strong>posição teórica</strong> associada a uma proporção
+  acumulada e traduzi-la em um valor observável. As diferenças entre os casos dizem respeito apenas à forma como
+  essa posição é lida: diretamente no rol, por meio das frequências acumuladas ou por interpolação dentro de classes.
+</p>
+
+<p>
+  Destacamos também um cuidado interpretativo essencial: separatrizes não expressam “percentuais do valor”, mas
+  <strong>percentuais de observações</strong>. Confundir essas duas ideias leva a interpretações equivocadas,
+  especialmente em aplicações educacionais, econômicas e sociais. Dizer que um indivíduo está no percentil 90,
+  por exemplo, significa que ele supera cerca de 90% do grupo — não que atinge 90% de algum valor máximo.
+</p>
+
+<p>
+  O capítulo culminou na apresentação do <strong>boxplot</strong>, uma representação gráfica que sintetiza,
+  de forma visual e integrada, várias das medidas estudadas. Construído a partir de quartis e da
+  <strong>amplitude interquartil</strong>, o boxplot ilustra como separatrizes podem ser usadas não apenas para
+  localização, mas também para avaliar <strong>dispersão</strong>, <strong>assimetria</strong> e para identificar
+  <strong>outliers</strong> por um critério robusto. Ele mostra, de maneira clara, a distinção entre o comportamento
+  típico da distribuição e valores extremos, sem reduzir a análise a um único número.
+</p>
+
+<p>
+  Em conjunto, os conceitos desenvolvidos neste capítulo reforçam a ideia de que descrever uma distribuição
+  estatística exige múltiplas perspectivas complementares. As separatrizes ocupam um papel central nessa tarefa,
+  ao permitir comparações posicionais, análises de desigualdade, avaliações de desempenho relativo e leituras
+  mais finas da estrutura dos dados.
+</p>
+
+<p>
+  No próximo capítulo, avançaremos para as <strong>medidas-resumo de dispersão</strong>, que complementam as
+  medidas de posição ao quantificar o grau de variabilidade dos dados em torno desses pontos de referência.
+  Juntas, posição e dispersão formarão a base conceitual necessária para análises estatísticas mais completas
+  e interpretações mais robustas dos fenômenos observados.
+</p>
+
+<hr>
+<h2>5. Referências</h2>
+<p>
+  FÁVERO, Luiz Paulo; BELFIORE, Patrícia. Manual de análise de dados: estatística e modelagem multivariada com Excel®, SPSS® e Stata®. 1. ed. Rio de Janeiro: Elsevier, 2017.
+</p>
+<p>
+  MAGALHÃES, Marcos Nascimento; LIMA, Antonio Carlos Pedroso de. Noções de Probabilidade e Estatística. 7. ed., 1. reimpr. São Paulo: Editora da Universidade de São Paulo, 2011.
+</p>
+<p>
+  SARTORIS, Alexandre. Estatística e introdução à econometria. 2. ed. São Paulo: Saraiva, 2013.
+</p>
+<p>
+  BUSSAB, Wilton de Oliveira; MORETTIN, Pedro Alberto. <strong>Estatística básica</strong>. 10. ed. São Paulo: SaraivaUni, 2023.
+</p>
+<p>
+  LARSON, Ron; FARBER, Betsy. <strong>Estatística aplicada</strong>. 6. ed. Tradução José Fernando Pereira Gonçalves; Revisão técnica Manoel Henrique Salgado. São Paulo: Pearson Education do Brasil, 2015.
+</p>
+<p>
+  TRIOLA, Mario F. <strong>Introdução à estatística</strong>. 12. ed. Tradução e revisão técnica Ana Maria Lima de Farias, Vera Regina Lima de Farias e Flores. Rio de Janeiro: LTC — Livros Técnicos e Científicos Editora, 2017.
+</p>
+<p>
+  MOOD, Alexander McFarlane; GRAYBILL, Franklin A.; BOES, Duane C. Introduction to the theory of statistics. New York: McGraw-Hill, 1974.
+</p>
+<p>
+  SAVAGE, Leonard J. The Foundations of Statistics. 2. ed. rev. New York: Dover Publications, 1972.
+</p>
+<p>
+  WARE, William B.; FERRON, John M.; MILLER, Barbara M. Introductory Statistics: A Conceptual Approach Using R. New York: Routledge, 2013.
+</p>
 

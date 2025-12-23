@@ -1,0 +1,346 @@
+<!-- ===========================================
+   QUARTIS EM DADOS AGRUPADOS EM CLASSES
+   Horas de estudo por semana — N = 20
+   Padrão unificado (u-*/subscript/rowHi/grow)
+   (mesmo molde do SVG enviado; apenas dados + gráfico direito ajustados)
+   =========================================== -->
+<svg viewBox="0 0 1500 780" xmlns="http://www.w3.org/2000/svg"
+     role="img" aria-labelledby="title desc">
+  <title id="title">Quartis em dados agrupados em classes</title>
+  <desc id="desc">
+    À esquerda, tabela com classes de horas de estudo por semana, frequências e
+    frequências acumuladas. À direita, histograma da mesma distribuição com três
+    linhas verticais indicando Q1, Q2 (mediana) e Q3 (interpolados nas classes).
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --font:"et-book","ETBook","Georgia",serif;
+        --cycle:8s;
+        --ease:ease-in-out;
+      }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        user-select:none;
+      }
+
+      .u-stroke{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+      }
+
+      .u-panel{
+        stroke-width:2;
+        rx:12;
+      }
+
+      .label{
+        font-size:32px;
+        font-weight:600;
+        text-anchor:middle;
+      }
+
+      .u-small{ font-size:18px; }
+      .tiny{ font-size:15px; }
+
+      /* Subscritos (j, m, agr etc.) */
+      .subscript{
+        font-size:0.7em;
+        font-weight:600;
+        baseline-shift:-0.3em;
+      }
+
+      /* ====== Destaque sequencial das linhas da tabela ====== */
+      @keyframes rowHi{
+        0%,10%{opacity:0}
+        15%,25%{opacity:.18}
+        30%,100%{opacity:0}
+      }
+      .row-hi{ fill:var(--ink); opacity:0 }
+      .r1{ animation:rowHi var(--cycle) var(--ease) infinite 0s }
+      .r2{ animation:rowHi var(--cycle) var(--ease) infinite .7s }
+      .r3{ animation:rowHi var(--cycle) var(--ease) infinite 1.4s }
+      .r4{ animation:rowHi var(--cycle) var(--ease) infinite 2.1s }
+      .r5{ animation:rowHi var(--cycle) var(--ease) infinite 2.8s }
+      .r6{ animation:rowHi var(--cycle) var(--ease) infinite 3.5s }
+      .r7{ animation:rowHi var(--cycle) var(--ease) infinite 4.2s }
+
+      /* (mantido por compatibilidade com o molde; aqui não usamos mediana) */
+      @keyframes medPulse{
+        0%,35%,100%{ opacity:.14; transform:scale(1); }
+        45%,65%{ opacity:.32; transform:scale(1.02); }
+      }
+      .med-hi{
+        fill:var(--ink);
+        opacity:.14;
+        transform-box:fill-box;
+        transform-origin:center;
+        animation:medPulse var(--cycle) var(--ease) infinite 1.4s;
+      }
+
+      /* ====== Barras do histograma ====== */
+      @keyframes grow{
+        0%{ transform:scaleY(0) }
+        18%,82%{ transform:scaleY(1) }
+        100%{ transform:scaleY(0) }
+      }
+      .bar{
+        fill:var(--ink);
+        transform-box:fill-box;
+        transform-origin:bottom;
+        transform:scaleY(0);
+      }
+      .b1{ animation:grow var(--cycle) var(--ease) infinite 0s }
+      .b2{ animation:grow var(--cycle) var(--ease) infinite .15s }
+      .b3{ animation:grow var(--cycle) var(--ease) infinite .30s }
+      .b4{ animation:grow var(--cycle) var(--ease) infinite .45s }
+      .b5{ animation:grow var(--cycle) var(--ease) infinite .60s }
+      .b6{ animation:grow var(--cycle) var(--ease) infinite .75s }
+
+      /* ====== Linhas dos quartis (estilo “linha animada” do molde) ====== */
+      .u-q-line{
+        stroke:var(--ink);
+        stroke-width:2.6;
+        stroke-dasharray:260;
+        stroke-dashoffset:260;
+        opacity:.9;
+        animation:qLine var(--cycle) var(--ease) infinite;
+      }
+      /* diferenças visuais */
+      .q1{ stroke-dasharray:10 8; stroke-linecap:butt; }
+      .q2{ stroke-dasharray:none; }
+      .q3{ stroke-dasharray:4 7; stroke-linecap:butt; }
+
+      .q-label{
+        font-size:16px;
+        font-weight:600;
+        text-anchor:start;
+        opacity:0;
+        animation:qLabel var(--cycle) var(--ease) infinite;
+      }
+
+      @keyframes qLine{
+        0%{   stroke-dashoffset:260; opacity:0 }
+        20%,65%{ stroke-dashoffset:0;   opacity:1 }
+        85%,100%{ stroke-dashoffset:260; opacity:0 }
+      }
+      @keyframes qLabel{
+        0%,25%{ opacity:0 }
+        35%,70%{ opacity:1 }
+        85%,100%{ opacity:0 }
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        .row-hi{ animation:none; opacity:.12 }
+        .bar{ animation:none; transform:scaleY(1) }
+        .u-q-line{ animation:none; stroke-dashoffset:0; opacity:1 }
+        .q-label{ animation:none; opacity:1 }
+      }
+    </style>
+  </defs>
+
+  <!-- ================= PAINEL ESQUERDO: TABELA ================= -->
+  <g id="panel-table" transform="translate(-140,-200) scale(1.2)">
+    <g class="p-panel">
+      <!-- Moldura -->
+      <rect x="120" y="230" width="560" height="510" class="u-panel u-stroke"/>
+
+      <!-- Cabeçalho -->
+      <g class="p-header">
+        <text x="390" y="280" class="label">Quartis em dados agrupados</text>
+        <text x="390" y="308" class="u-small" text-anchor="middle">
+          Horas de estudo por semana — N = 20
+        </text>
+      </g>
+
+      <!-- Corpo da tabela -->
+      <g class="p-body" transform="translate(8,15)">
+        <!-- linha do cabeçalho -->
+        <line x1="160" y1="364" x2="620" y2="364" class="u-stroke" style="stroke-width:2"/>
+
+        <!-- rótulos das colunas -->
+        <g font-size="18" font-weight="600">
+          <text x="200" y="332" text-anchor="middle">Classe</text>
+          <text x="200" y="352" text-anchor="middle">(h/sem)</text>
+
+          <text x="400" y="352" text-anchor="middle">
+            Frequência f<tspan class="subscript">j</tspan>
+          </text>
+          <text x="580" y="332" text-anchor="middle">Freq.</text>
+          <text x="580" y="352" text-anchor="middle">
+            acum. F<tspan class="subscript">j</tspan>
+          </text>
+        </g>
+
+        <!-- linhas horizontais -->
+        <g class="u-stroke">
+          <line x1="160" y1="404" x2="620" y2="404"/>
+          <line x1="160" y1="444" x2="620" y2="444"/>
+          <line x1="160" y1="484" x2="620" y2="484"/>
+          <line x1="160" y1="524" x2="620" y2="524"/>
+          <line x1="160" y1="564" x2="620" y2="564"/>
+          <line x1="160" y1="604" x2="620" y2="604"/>
+        </g>
+
+        <!-- faixas animadas percorrendo as linhas -->
+        <rect x="160" y="374" width="460" height="30" class="row-hi r1"/>
+        <rect x="160" y="414" width="460" height="30" class="row-hi r2"/>
+        <rect x="160" y="454" width="460" height="30" class="row-hi r3"/>
+        <rect x="160" y="494" width="460" height="30" class="row-hi r4"/>
+        <rect x="160" y="534" width="460" height="30" class="row-hi r5"/>
+        <rect x="160" y="574" width="460" height="30" class="row-hi r6"/>
+
+        <!-- dados da tabela (SEUS DADOS) -->
+        <g font-size="19">
+          <text x="175" y="396">0–5</text>
+          <text x="405" y="396" text-anchor="end">3</text>
+          <text x="590" y="396" text-anchor="end">3</text>
+
+          <text x="175" y="436">5–10</text>
+          <text x="405" y="436" text-anchor="end">5</text>
+          <text x="590" y="436" text-anchor="end">8</text>
+
+          <text x="175" y="476">10–15</text>
+          <text x="405" y="476" text-anchor="end">6</text>
+          <text x="590" y="476" text-anchor="end">14</text>
+
+          <text x="175" y="516">15–20</text>
+          <text x="405" y="516" text-anchor="end">4</text>
+          <text x="590" y="516" text-anchor="end">18</text>
+
+          <text x="175" y="556">20–25</text>
+          <text x="405" y="556" text-anchor="end">2</text>
+          <text x="590" y="556" text-anchor="end">20</text>
+
+          <text x="175" y="596" font-weight="700">Totais</text>
+          <text x="405" y="596" text-anchor="end" font-weight="700">20</text>
+          <text x="590" y="596" text-anchor="end" font-weight="700">20</text>
+        </g>
+      </g>
+
+      <!-- Rodapé (ajustado para quartis em classes + interpolação) -->
+      <g class="p-footer" transform="translate(0,15)">
+        <text x="390" y="655" class="u-small" text-anchor="middle">
+          P<tspan class="subscript">Qk</tspan> = k·N/4 (k=1,2,3) → P<tspan class="subscript">Q1</tspan>=5, P<tspan class="subscript">Q2</tspan>=10, P<tspan class="subscript">Q3</tspan>=15.
+        </text>
+
+        <text x="390" y="680" class="u-small" text-anchor="middle">
+          Regra: Q<tspan class="subscript">k</tspan> é o primeiro valor cujo acumulado F ≥ P<tspan class="subscript">Qk</tspan>.
+        </text>
+
+        <text x="390" y="705" class="u-small" text-anchor="middle">
+          Interpolação: Q<tspan class="subscript">1</tspan>=7,00; Q<tspan class="subscript">2</tspan>=11,67 (mediana); Q<tspan class="subscript">3</tspan>=16,25.
+        </text>
+      </g>
+
+    </g>
+  </g>
+
+  <!-- ================= PAINEL DIREITO: HISTOGRAMA + QUARTIS (COM LINHAS ANIMADAS) ================= -->
+  <g id="panel-hist" transform="translate(-220,-200) scale(1.2)">
+    <g class="p-panel">
+      <!-- Moldura -->
+      <rect x="840" y="230" width="580" height="510" class="u-panel u-stroke"/>
+
+      <!-- Cabeçalho -->
+      <g class="p-header">
+        <text x="1128" y="280" class="label">Histograma e quartis</text>
+        <text x="1128" y="308" class="u-small" text-anchor="middle">
+          Frequências por classe e posição dos quartis
+        </text>
+      </g>
+
+      <!-- Corpo (mesma “arquitetura” do seu molde do painel direito) -->
+      <g class="p-body" transform="translate(-85,-70) scale(1.1)">
+        <!-- Eixos -->
+        <g class="u-stroke" style="stroke-width:2.5">
+          <line x1="890" y1="670" x2="1340" y2="670"/>
+          <line x1="890" y1="670" x2="890" y2="450"/>
+        </g>
+
+        <!-- Grades Y (0..6) -->
+        <g class="u-stroke u-small" opacity=".35" style="stroke-width:2">
+          <line x1="890" y1="670" x2="1340" y2="670"/><text x="872" y="674" text-anchor="end" opacity=".85">0</text>
+          <line x1="890" y1="633.3" x2="1340" y2="633.3"/><text x="872" y="637.3" text-anchor="end" opacity=".85">1</text>
+          <line x1="890" y1="596.7" x2="1340" y2="596.7"/><text x="872" y="600.7" text-anchor="end" opacity=".85">2</text>
+          <line x1="890" y1="560.0" x2="1340" y2="560.0"/><text x="872" y="564.0" text-anchor="end" opacity=".85">3</text>
+          <line x1="890" y1="523.3" x2="1340" y2="523.3"/><text x="872" y="527.3" text-anchor="end" opacity=".85">4</text>
+          <line x1="890" y1="486.7" x2="1340" y2="486.7"/><text x="872" y="490.7" text-anchor="end" opacity=".85">5</text>
+          <line x1="890" y1="450.0" x2="1340" y2="450.0"/><text x="872" y="454.0" text-anchor="end" opacity=".85">6</text>
+        </g>
+
+        <!-- Barras: f = [3,5,6,4,2]
+             alturaTotal=220 => 1 unidade = 36.6667 -->
+        <rect x="890"   y="560.0" width="80" height="110.0" class="bar b1"/> <!-- 3 -->
+        <rect x="971"   y="486.7" width="80" height="183.3" class="bar b2"/> <!-- 5 -->
+        <rect x="1052"  y="450.0" width="80" height="220.0" class="bar b3"/> <!-- 6 -->
+        <rect x="1133"  y="523.3" width="80" height="146.7" class="bar b4"/> <!-- 4 -->
+        <rect x="1214"  y="596.7" width="80" height="73.3"  class="bar b5"/> <!-- 2 -->
+
+<!-- Linhas verticais dos quartis (NÃO sobem acima do topo do gráfico) -->
+<line x1="1002"   y1="410" x2="1002"   y2="670" class="u-q-line q1"/>
+<line x1="1076.7" y1="410" x2="1076.7" y2="670" class="u-q-line q2"/>
+<line x1="1150"   y1="410" x2="1150"   y2="670" class="u-q-line q3"/>
+
+<!-- RÓTULOS ACIMA DO GRÁFICO (sem sobrepor as linhas) -->
+<g font-weight="700" font-size="16">
+  <!-- Q1 -->
+  <g transform="translate(1002,-50)">
+    <!-- fundo branco para não “bater” com a linha -->
+    <rect x="-44" y="408" width="88" height="20" fill="#fff" opacity="0.92"/>
+    <text x="0" y="424" text-anchor="middle">
+      Q<tspan class="subscript">1</tspan>=
+    </text>
+    <text x="0" y="444" text-anchor="middle">
+      7,00
+    </text>
+  </g>
+
+  <!-- Q2 (mediana) -->
+  <g transform="translate(1076.7,-50)">
+    <rect x="-52" y="404" width="104" height="38" fill="#fff" opacity="0.92"/>
+    <text x="0" y="420" text-anchor="middle">
+      Q<tspan class="subscript">2</tspan>=
+    </text>
+    <text x="0" y="454" text-anchor="middle" font-weight="600" font-size="12" opacity=".9">
+      (mediana)
+    </text>
+    <text x="0" y="438" text-anchor="middle">
+      11,67
+    </text>
+  </g>
+
+  <!-- Q3 -->
+  <g transform="translate(1150,-50)">
+    <rect x="-44" y="408" width="88" height="20" fill="#fff" opacity="0.92"/>
+    <text x="0" y="424" text-anchor="middle">
+      Q<tspan class="subscript">3</tspan>=
+    </text>
+    <text x="0" y="444" text-anchor="middle">
+    16,25
+    </text>
+  </g>
+</g>
+
+
+        <!-- Rodapé: rótulos das classes -->
+        <g class="p-footer u-small">
+          <text x="930"  y="695" text-anchor="middle">0–5</text>
+          <text x="1011" y="695" text-anchor="middle">5–10</text>
+          <text x="1092" y="695" text-anchor="middle">10–15</text>
+          <text x="1173" y="695" text-anchor="middle">15–20</text>
+          <text x="1254" y="695" text-anchor="middle">20–25</text>
+        </g>
+
+
+      </g>
+    </g>
+  </g>
+
+</svg>

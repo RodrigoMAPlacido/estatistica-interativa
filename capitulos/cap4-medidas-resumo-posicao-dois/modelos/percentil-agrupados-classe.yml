@@ -1,0 +1,325 @@
+---
+schema: EconSchema
+aspectRatio: 1.6
+
+params:
+  # Frequências por classe (0–5, 5–10, 10–15, 15–20, 20–25)
+  - name: f1
+    value: 3
+    min: 0
+    max: 12
+    round: 1
+  - name: f2
+    value: 5
+    min: 0
+    max: 12
+    round: 1
+  - name: f3
+    value: 6
+    min: 0
+    max: 12
+    round: 1
+  - name: f4
+    value: 4
+    min: 0
+    max: 12
+    round: 1
+  - name: f5
+    value: 2
+    min: 0
+    max: 12
+    round: 1
+
+calcs:
+  # ============================================================
+  # BLOCO 0) TOTAL N E FREQUÊNCIAS ACUMULADAS (F)
+  # ============================================================
+  N: "(params.f1 + params.f2 + params.f3 + params.f4 + params.f5)"
+
+  F1: "(params.f1)"
+  F2: "(params.f1 + params.f2)"
+  F3: "(params.f1 + params.f2 + params.f3)"
+  F4: "(params.f1 + params.f2 + params.f3 + params.f4)"
+  F5: "(params.f1 + params.f2 + params.f3 + params.f4 + params.f5)"
+
+  # ============================================================
+  # BLOCO 1) POSIÇÕES DOS PERCENTIS (P10, P25, P50, P75, P90)
+  # ============================================================
+  P10: "(0.10 * calcs.N)"
+  P25: "(0.25 * calcs.N)"
+  P50: "(0.50 * calcs.N)"
+  P75: "(0.75 * calcs.N)"
+  P90: "(0.90 * calcs.N)"
+
+  # ============================================================
+  # BLOCO 2) AMPLITUDE DA CLASSE (h)
+  # ============================================================
+  h: "5"
+
+  # ============================================================
+  # BLOCO 3) SELEÇÃO DA CLASSE DO PERCENTIL (Lp, Fprevp, fCp)
+  # ============================================================
+
+  # ---------- Limites inferiores (Lp) ----------
+  L10: "(calcs.F1 >= calcs.P10 ? 0  : (calcs.F2 >= calcs.P10 ? 5  : (calcs.F3 >= calcs.P10 ? 10 : (calcs.F4 >= calcs.P10 ? 15 : 20))))"
+  L25: "(calcs.F1 >= calcs.P25 ? 0  : (calcs.F2 >= calcs.P25 ? 5  : (calcs.F3 >= calcs.P25 ? 10 : (calcs.F4 >= calcs.P25 ? 15 : 20))))"
+  L50: "(calcs.F1 >= calcs.P50 ? 0  : (calcs.F2 >= calcs.P50 ? 5  : (calcs.F3 >= calcs.P50 ? 10 : (calcs.F4 >= calcs.P50 ? 15 : 20))))"
+  L75: "(calcs.F1 >= calcs.P75 ? 0  : (calcs.F2 >= calcs.P75 ? 5  : (calcs.F3 >= calcs.P75 ? 10 : (calcs.F4 >= calcs.P75 ? 15 : 20))))"
+  L90: "(calcs.F1 >= calcs.P90 ? 0  : (calcs.F2 >= calcs.P90 ? 5  : (calcs.F3 >= calcs.P90 ? 10 : (calcs.F4 >= calcs.P90 ? 15 : 20))))"
+
+  # ---------- Acumulada anterior (Fprevp) ----------
+  Fprev10: "(calcs.F1 >= calcs.P10 ? 0 : (calcs.F2 >= calcs.P10 ? calcs.F1 : (calcs.F3 >= calcs.P10 ? calcs.F2 : (calcs.F4 >= calcs.P10 ? calcs.F3 : calcs.F4))))"
+  Fprev25: "(calcs.F1 >= calcs.P25 ? 0 : (calcs.F2 >= calcs.P25 ? calcs.F1 : (calcs.F3 >= calcs.P25 ? calcs.F2 : (calcs.F4 >= calcs.P25 ? calcs.F3 : calcs.F4))))"
+  Fprev50: "(calcs.F1 >= calcs.P50 ? 0 : (calcs.F2 >= calcs.P50 ? calcs.F1 : (calcs.F3 >= calcs.P50 ? calcs.F2 : (calcs.F4 >= calcs.P50 ? calcs.F3 : calcs.F4))))"
+  Fprev75: "(calcs.F1 >= calcs.P75 ? 0 : (calcs.F2 >= calcs.P75 ? calcs.F1 : (calcs.F3 >= calcs.P75 ? calcs.F2 : (calcs.F4 >= calcs.P75 ? calcs.F3 : calcs.F4))))"
+  Fprev90: "(calcs.F1 >= calcs.P90 ? 0 : (calcs.F2 >= calcs.P90 ? calcs.F1 : (calcs.F3 >= calcs.P90 ? calcs.F2 : (calcs.F4 >= calcs.P90 ? calcs.F3 : calcs.F4))))"
+
+  # ---------- Frequência da classe do percentil (fCp) ----------
+  fC10: "(calcs.F1 >= calcs.P10 ? params.f1 : (calcs.F2 >= calcs.P10 ? params.f2 : (calcs.F3 >= calcs.P10 ? params.f3 : (calcs.F4 >= calcs.P10 ? params.f4 : params.f5))))"
+  fC25: "(calcs.F1 >= calcs.P25 ? params.f1 : (calcs.F2 >= calcs.P25 ? params.f2 : (calcs.F3 >= calcs.P25 ? params.f3 : (calcs.F4 >= calcs.P25 ? params.f4 : params.f5))))"
+  fC50: "(calcs.F1 >= calcs.P50 ? params.f1 : (calcs.F2 >= calcs.P50 ? params.f2 : (calcs.F3 >= calcs.P50 ? params.f3 : (calcs.F4 >= calcs.P50 ? params.f4 : params.f5))))"
+  fC75: "(calcs.F1 >= calcs.P75 ? params.f1 : (calcs.F2 >= calcs.P75 ? params.f2 : (calcs.F3 >= calcs.P75 ? params.f3 : (calcs.F4 >= calcs.P75 ? params.f4 : params.f5))))"
+  fC90: "(calcs.F1 >= calcs.P90 ? params.f1 : (calcs.F2 >= calcs.P90 ? params.f2 : (calcs.F3 >= calcs.P90 ? params.f3 : (calcs.F4 >= calcs.P90 ? params.f4 : params.f5))))"
+
+  # ============================================================
+  # BLOCO 4) “GUARDA” PARA DIVISÃO POR ZERO (d10..d90)
+  # ============================================================
+  d10: "(calcs.fC10 > 0 ? calcs.fC10 : 0.000001)"
+  d25: "(calcs.fC25 > 0 ? calcs.fC25 : 0.000001)"
+  d50: "(calcs.fC50 > 0 ? calcs.fC50 : 0.000001)"
+  d75: "(calcs.fC75 > 0 ? calcs.fC75 : 0.000001)"
+  d90: "(calcs.fC90 > 0 ? calcs.fC90 : 0.000001)"
+
+  # ============================================================
+  # BLOCO 5) INTERPOLAÇÃO LINEAR (valor do percentil na classe)
+  # ============================================================
+  P10v: "(calcs.L10 + ((calcs.P10 - calcs.Fprev10) / calcs.d10) * calcs.h)"
+  P25v: "(calcs.L25 + ((calcs.P25 - calcs.Fprev25) / calcs.d25) * calcs.h)"
+  P50v: "(calcs.L50 + ((calcs.P50 - calcs.Fprev50) / calcs.d50) * calcs.h)"
+  P75v: "(calcs.L75 + ((calcs.P75 - calcs.Fprev75) / calcs.d75) * calcs.h)"
+  P90v: "(calcs.L90 + ((calcs.P90 - calcs.Fprev90) / calcs.d90) * calcs.h)"
+
+  # Aliases (para o sidebar no padrão Per_10 etc.)
+  P_10: "(calcs.P10v)"
+  P_25: "(calcs.P25v)"
+  P_50: "(calcs.P50v)"
+  P_75: "(calcs.P75v)"
+  P_90: "(calcs.P90v)"
+
+colors:
+  ink: "'#111827'"
+  grid: "'#e5e7eb'"
+  inkSoft: "'#64748b'"
+  bg: "'#ffffff'"
+
+layout:
+  OneWideGraphPlusSidebar:
+    graph:
+      title: "Frequências e percentis"
+      xAxis:
+        min: 0
+        max: 25
+        ticks: 0
+      yAxis:
+        min: 0
+        max: 8
+        ticks: 4
+
+      objects:
+        # ---------------------------
+        # Grade horizontal (manual, estilo “limpo”)
+        # ---------------------------
+        - Segment: { a: [0, 2], b: [25, 2], color: colors.inkSoft, strokeWidth: 0.5 }
+        - Segment: { a: [0, 4], b: [25, 4], color: colors.inkSoft, strokeWidth: 0.5 }
+        - Segment: { a: [0, 6], b: [25, 6], color: colors.inkSoft, strokeWidth: 0.5 }
+        - Segment: { a: [0, 8], b: [25, 8], color: colors.inkSoft, strokeWidth: 0.5 }
+
+        # ---------------------------
+        # Barras por classe (largura 5)
+        # drag no eixo y (frequência)
+        # ---------------------------
+        - Rectangle:
+            x1: 0
+            x2: 5
+            y1: 0
+            y2: params.f1
+            fill: colors.ink
+            opacity: 1
+            drag:
+              - directions: y
+                param: f1
+                expression: "drag.y"
+
+        - Rectangle:
+            x1: 5
+            x2: 10
+            y1: 0
+            y2: params.f2
+            fill: colors.ink
+            opacity: 1
+            drag:
+              - directions: y
+                param: f2
+                expression: "drag.y"
+
+        - Rectangle:
+            x1: 10
+            x2: 15
+            y1: 0
+            y2: params.f3
+            fill: colors.ink
+            opacity: 1
+            drag:
+              - directions: y
+                param: f3
+                expression: "drag.y"
+
+        - Rectangle:
+            x1: 15
+            x2: 20
+            y1: 0
+            y2: params.f4
+            fill: colors.ink
+            opacity: 1
+            drag:
+              - directions: y
+                param: f4
+                expression: "drag.y"
+
+        - Rectangle:
+            x1: 20
+            x2: 25
+            y1: 0
+            y2: params.f5
+            fill: colors.ink
+            opacity: 1
+            drag:
+              - directions: y
+                param: f5
+                expression: "drag.y"
+
+        # ---------------------------
+        # Rótulos das classes (no “eixo”)
+        # ---------------------------
+        - Label: { coordinates: [2.5, 0],  text: "'0–5'",   color: colors.ink, fontSize: 12, position: t }
+        - Label: { coordinates: [7.5, 0],  text: "'5–10'",  color: colors.ink, fontSize: 12, position: t }
+        - Label: { coordinates: [12.5, 0], text: "'10–15'", color: colors.ink, fontSize: 12, position: t }
+        - Label: { coordinates: [17.5, 0], text: "'15–20'", color: colors.ink, fontSize: 12, position: t }
+        - Label: { coordinates: [22.5, 0], text: "'20–25'", color: colors.ink, fontSize: 12, position: t }
+
+        # ---------------------------
+        # Rótulo f no topo de cada barra
+        # ---------------------------
+        - Label:
+            coordinates: [2.5, params.f1]
+            text: "`\\\\bf{f}=${params.f1.toFixed(0)}`"
+            color: white
+            bgcolor: colors.ink
+            fontSize: 10
+            position: t
+        - Label:
+            coordinates: [7.5, params.f2]
+            text: "`\\\\bf{f}=${params.f2.toFixed(0)}`"
+            color: white
+            bgcolor: colors.ink
+            fontSize: 10
+            position: t
+        - Label:
+            coordinates: [12.5, params.f3]
+            text: "`\\\\bf{f}=${params.f3.toFixed(0)}`"
+            color: white
+            bgcolor: colors.ink
+            fontSize: 10
+            position: t
+        - Label:
+            coordinates: [17.5, params.f4]
+            text: "`\\\\bf{f}=${params.f4.toFixed(0)}`"
+            color: white
+            bgcolor: colors.ink
+            fontSize: 10
+            position: t
+        - Label:
+            coordinates: [22.5, params.f5]
+            text: "`\\\\bf{f}=${params.f5.toFixed(0)}`"
+            color: white
+            bgcolor: colors.ink
+            fontSize: 10
+            position: t
+
+        # ---------------------------
+        # Linhas verticais dos percentis (em cima das barras)
+        # ---------------------------
+        - Segment: { a: [calcs.P_10, 0], b: [calcs.P_10, 8], color: colors.ink, strokeWidth: 2,   lineStyle: dashed }
+        - Segment: { a: [calcs.P_25, 0], b: [calcs.P_25, 8], color: colors.ink, strokeWidth: 2,   lineStyle: dashed }
+        - Segment: { a: [calcs.P_50, 0], b: [calcs.P_50, 8], color: colors.ink, strokeWidth: 2.5, lineStyle: solid  }
+        - Segment: { a: [calcs.P_75, 0], b: [calcs.P_75, 8], color: colors.ink, strokeWidth: 2,   lineStyle: dashed }
+        - Segment: { a: [calcs.P_90, 0], b: [calcs.P_90, 8], color: colors.ink, strokeWidth: 2,   lineStyle: dashed }
+
+        # ---------------------------
+        # Rótulos no topo (com fundo branco)
+        # ---------------------------
+        - Label: { coordinates: [calcs.P_10, 7.85], text: "`Per_{10} \\\\\\\\ ${calcs.P_10.toFixed(2)}`", color: colors.ink, fontSize: 11, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [calcs.P_25, 7.85], text: "`Per_{25} \\\\\\\\ ${calcs.P_25.toFixed(2)}`", color: colors.ink, fontSize: 11, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [calcs.P_50, 7.85], text: "`Per_{50} \\\\\\\\ ${calcs.P_50.toFixed(2)}\\ \\\\\\\\ (mediana)`", color: colors.ink, fontSize: 10, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [calcs.P_75, 7.85], text: "`Per_{75} \\\\\\\\ ${calcs.P_75.toFixed(2)}`", color: colors.ink, fontSize: 11, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [calcs.P_90, 7.85], text: "`Per_{90} \\\\\\\\ ${calcs.P_90.toFixed(2)}`", color: colors.ink, fontSize: 11, position: c, bgcolor: colors.bg }
+
+    sidebar:
+      triggerWidth: 9999
+      controls:
+        - title: ""
+          divs:
+            # ---------------------------
+            # 1) TABELA
+            # ---------------------------
+            - html: "`<figure class='sidebar-figure'>
+                <div class='sidebar-table-wrap'>
+                  <table class='sidebar-table'>
+                    <thead>
+                      <tr>
+                        <th>Classe</th>
+                        <th>Freq. <em>f</em></th>
+                        <th>Acum. <em>F</em></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>0–5</td><td>${params.f1.toFixed(0)}</td><td>${calcs.F1.toFixed(0)}</td></tr>
+                      <tr><td>5–10</td><td>${params.f2.toFixed(0)}</td><td>${calcs.F2.toFixed(0)}</td></tr>
+                      <tr><td>10–15</td><td>${params.f3.toFixed(0)}</td><td>${calcs.F3.toFixed(0)}</td></tr>
+                      <tr><td>15–20</td><td>${params.f4.toFixed(0)}</td><td>${calcs.F4.toFixed(0)}</td></tr>
+                      <tr><td>20–25</td><td>${params.f5.toFixed(0)}</td><td>${calcs.F5.toFixed(0)}</td></tr>
+                      <tr>
+                        <td><b>Total</b></td>
+                        <td><b>${calcs.N.toFixed(0)}</b></td>
+                        <td><b>${calcs.N.toFixed(0)}</b></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <figcaption>Distribuição por classes: frequências e acumuladas</figcaption></figure>`"
+
+            - html: "<hr>"
+
+            # ---------------------------
+            # 2) PERCENTIS — MESMO PADRÃO (SEM BLOCO aligned PARA NÃO QUEBRAR)
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Posição dos Percentis:</b></div>"
+
+            - html: "`$$\\\\small P_{Per_{k}}=\\\\frac{k\\\\cdot N}{100}\\\\quad (k\\\\in\\\\{10,25,50,75,90\\\\};\\\\; N=${calcs.N.toFixed(0)})$$`"
+
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Aplicando:</b></div>"
+
+            # (quebra em linhas curtas, como no exemplo dos décis)
+            - html: "`$$\\\\small P_{Per_{10}}=\\\\frac{10\\\\cdot ${calcs.N.toFixed(0)}}{100}=${calcs.P10.toFixed(2)} \\\\qquad P_{Per_{25}}=\\\\frac{25\\\\cdot ${calcs.N.toFixed(0)}}{100}=${calcs.P25.toFixed(2)}$$`"
+            - html: "`$$\\\\small P_{Per_{50}}=\\\\frac{50\\\\cdot ${calcs.N.toFixed(0)}}{100}=${calcs.P50.toFixed(2)} \\\\qquad P_{Per_{75}}=\\\\frac{75\\\\cdot ${calcs.N.toFixed(0)}}{100}=${calcs.P75.toFixed(2)}$$`"
+            - html: "`$$\\\\small P_{Per_{90}}=\\\\frac{90\\\\cdot ${calcs.N.toFixed(0)}}{100}=${calcs.P90.toFixed(2)}$$`"
+
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Interpolação na classe:</b></div>"
+
+            - html: "`$$\\\\small Per_{k}=L+\\\\left(\\\\frac{P_{Per_{k}}-F_{\\\\text{anterior}}}{f_{\\\\text{classe}}}\\\\right)\\\\,h \\\\quad (h=5)$$`"
+
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Resultados:</b></div>"
+
+            - html: "`$$\\\\small Per_{10}=${calcs.P_10.toFixed(2)} \\\\qquad Per_{25}=${calcs.P_25.toFixed(2)}$$`"
+            - html: "`$$\\\\small Per_{50}=${calcs.P_50.toFixed(2)} \\\\qquad Per_{75}=${calcs.P_75.toFixed(2)}$$`"
+            - html: "`$$\\\\small Per_{90}=${calcs.P_90.toFixed(2)}$$`"

@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- QUARTIS — Exemplo (n=8): Dois quadros | CSS-only | Padrão u-*/a-* -->
+<svg viewBox="0 0 1500 780" xmlns="http://www.w3.org/2000/svg"
+     role="img" aria-labelledby="title desc">
+  <title id="title">Quartis - dados nao-agrupados (n=8)</title>
+  <desc id="desc">
+    Painel esquerdo: dados, ordem crescente, posicoes P_Qk=k·n/4 e quartis por ponto medio (caso P inteiro).
+    Painel direito: diagrama com faixas 25/50/75, percentuais que descem, pontos na escala e rotulos.
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --ink-soft:#64748b;
+        --grid:#e5e7eb;
+        --accent:#64748b;
+        --font:"et-book","ETBook","Georgia",serif;
+
+        --cycle:8s;
+        --ease:ease-in-out;
+      }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        user-select:none;
+      }
+
+      .u-stroke{ stroke:var(--ink); fill:none; stroke-linecap:round; stroke-linejoin:round; }
+      .u-panel{ stroke-width:2; }
+
+      .label{ font-size:48px; font-weight:700; text-anchor:middle; }
+      .small{ font-size:22px; text-anchor:middle; fill:var(--ink-soft); }
+
+      .mono{ font-variant-numeric: tabular-nums; }
+
+      /* Painel esquerdo */
+      .k{ font-size:20px; font-weight:700; fill:var(--ink); text-anchor:end; }
+      .v{ font-size:22px; fill:var(--ink); }
+      .f{ font-size:18px; fill:var(--ink-soft); }
+      .hr{ stroke:var(--grid); stroke-width:2; }
+
+      .hi{ fill:var(--grid); opacity:0; }
+      @keyframes h1{ 0%,10%{opacity:0} 14%,24%{opacity:.55} 28%,100%{opacity:0} }
+      @keyframes h2{ 0%,24%{opacity:0} 28%,38%{opacity:.45} 42%,100%{opacity:0} }
+      @keyframes h3{ 0%,40%{opacity:0} 44%,54%{opacity:.40} 58%,100%{opacity:0} }
+      @keyframes h4{ 0%,56%{opacity:0} 60%,100%{opacity:.35} }
+      .a-h1{ animation:h1 var(--cycle) var(--ease) infinite; }
+      .a-h2{ animation:h2 var(--cycle) var(--ease) infinite; }
+      .a-h3{ animation:h3 var(--cycle) var(--ease) infinite; }
+      .a-h4{ animation:h4 var(--cycle) var(--ease) infinite; }
+
+      /* Painel direito */
+      .axis{ stroke-width:2; }
+      .grid{ stroke:var(--grid); stroke-width:1; stroke-dasharray:6 8; }
+      .tick-label{ font-size:18px; fill:var(--ink-soft); }
+
+      .dot{ fill:var(--ink); opacity:.9; }
+      .dot.soft{ opacity:.55; }
+
+      .data-lab{ font-size:16px; fill:var(--ink-soft); text-anchor:middle; }
+
+      .seg{ fill:var(--accent); opacity:0; }
+
+      .qline{ stroke:var(--accent); stroke-width:4; opacity:0; }
+      .q1{ stroke-dasharray:10 10; }
+      .q2{ stroke-dasharray:none; }
+      .q3{ stroke-dasharray:2 10; }
+
+      .qlab{ font-size:26px; font-weight:600; fill:var(--ink); opacity:0; text-anchor:middle; }
+      .qlab .sub{ font-size:18px; baseline-shift:sub; }
+
+      .hint{ font-size:18px; font-weight:400; fill:var(--ink-soft); }
+
+      .qval{ font-size:18px; fill:var(--ink-soft); opacity:0; text-anchor:middle; }
+
+      .pct{
+        font-size:18px;
+        fill:var(--ink-soft);
+        text-anchor:middle;
+        transform-box:fill-box;
+        transform-origin:50% 50%;
+      }
+
+      .a-p25{ animation:pct25 var(--cycle) var(--ease) infinite; }
+      .a-p50{ animation:pct50 var(--cycle) var(--ease) infinite; }
+      .a-p75{ animation:pct75 var(--cycle) var(--ease) infinite; }
+
+      /* Mantive sua queda (92px). Agora ela cai “livre” porque o topo ganhou espaço. */
+      @keyframes pct25{ 0%,28%{ transform:translateY(0px); } 36%,100%{ transform:translateY(108px); } }
+      @keyframes pct50{ 0%,38%{ transform:translateY(0px); } 46%,100%{ transform:translateY(115px); } }
+      @keyframes pct75{ 0%,48%{ transform:translateY(0px); } 56%,100%{ transform:translateY(108px); } }
+
+      .a-dots{
+        transform-box:fill-box;
+        transform-origin:50% 50%;
+        animation:dotsIn var(--cycle) var(--ease) infinite;
+      }
+      @keyframes dotsIn{
+        0%,12%{ opacity:0; transform:scale(.985); }
+        20%,100%{ opacity:1; transform:scale(1); }
+      }
+
+      .a-seg25{ animation:seg25 var(--cycle) var(--ease) infinite; }
+      .a-seg50{ animation:seg50 var(--cycle) var(--ease) infinite; }
+      .a-seg75{ animation:seg75 var(--cycle) var(--ease) infinite; }
+      @keyframes seg25{ 0%,18%{opacity:0} 28%,60%{opacity:.18} 100%{opacity:.15} }
+      @keyframes seg50{ 0%,28%{opacity:0} 38%,70%{opacity:.16} 100%{opacity:.14} }
+      @keyframes seg75{ 0%,38%{opacity:0} 48%,80%{opacity:.14} 100%{opacity:.12} }
+
+      .a-q1{ animation:q1On var(--cycle) var(--ease) infinite; }
+      .a-q2{ animation:q2On var(--cycle) var(--ease) infinite; }
+      .a-q3{ animation:q3On var(--cycle) var(--ease) infinite; }
+      @keyframes q1On{ 0%,24%{opacity:0} 32%,100%{opacity:1} }
+      @keyframes q2On{ 0%,34%{opacity:0} 42%,100%{opacity:1} }
+      @keyframes q3On{ 0%,44%{opacity:0} 52%,100%{opacity:1} }
+
+      .a-q1t{ animation:q1T var(--cycle) var(--ease) infinite; }
+      .a-q2t{ animation:q2T var(--cycle) var(--ease) infinite; }
+      .a-q3t{ animation:q3T var(--cycle) var(--ease) infinite; }
+      @keyframes q1T{ 0%,26%{opacity:0} 34%,100%{opacity:1} }
+      @keyframes q2T{ 0%,36%{opacity:0} 44%,100%{opacity:1} }
+      @keyframes q3T{ 0%,46%{opacity:0} 54%,100%{opacity:1} }
+
+      .a-q1v{ animation:q1V var(--cycle) var(--ease) infinite; }
+      .a-q2v{ animation:q2V var(--cycle) var(--ease) infinite; }
+      .a-q3v{ animation:q3V var(--cycle) var(--ease) infinite; }
+      @keyframes q1V{ 0%,28%{opacity:0} 36%,100%{opacity:1} }
+      @keyframes q2V{ 0%,38%{opacity:0} 46%,100%{opacity:1} }
+      @keyframes q3V{ 0%,48%{opacity:0} 56%,100%{opacity:1} }
+
+      @media (prefers-reduced-motion:reduce){
+        .a-h1,.a-h2,.a-h3,.a-h4,
+        .a-dots,.a-seg25,.a-seg50,.a-seg75,
+        .a-q1,.a-q2,.a-q3,.a-q1t,.a-q2t,.a-q3t,.a-q1v,.a-q2v,.a-q3v,
+        .a-p25,.a-p50,.a-p75{ animation:none; }
+        .hi{ opacity:.35; }
+        .seg{ opacity:.14; }
+        .qline,.qlab,.qval{ opacity:1; }
+        .pct{ transform:translateY(92px); }
+      }
+    </style>
+  </defs>
+
+<!-- Painel esquerdo (AJUSTADO: gutter maior entre rótulo .k e valores .v/.f) -->
+<g id="panel-left">
+  <rect x="90" y="110" width="640" height="560" rx="14" ry="14" class="u-panel u-stroke"/>
+
+  <text x="410" y="168" class="label">Exemplo</text>
+  <text x="410" y="208" class="small">Ordenar e localizar cortes posicionais</text>
+<g transform="translate(0,30)">
+  <line x1="120" y1="268" x2="700" y2="268" class="hr"/>
+  <line x1="120" y1="352" x2="700" y2="352" class="hr"/>
+  <line x1="120" y1="456" x2="700" y2="456" class="hr"/>
+
+  <rect x="120" y="210" width="580" height="58" class="hi a-h1"/>
+  <rect x="120" y="264" width="580" height="88" class="hi a-h2"/>
+  <rect x="120" y="352" width="580" height="102" class="hi a-h3"/>
+  <rect x="120" y="458" width="580" height="150" class="hi a-h4"/>
+
+  <g class="mono">
+    <!-- coluna dos rótulos -->
+    <text x="245" y="246" class="k">Dados</text>
+    <text x="245" y="310" class="k">Ordem </text>
+    <text x="255" y="330" class="k">crescente</text>
+    <text x="245" y="410" class="k">Posições</text>
+    <text x="245" y="530" class="k">Quartis</text>
+
+    <!-- coluna dos valores / fórmulas (ANTES era x=270; agora x=305) -->
+    <text x="325" y="246" class="v">A = {12, 5, 7, 9, 15, 6, 10, 8}</text>
+
+    <text x="325" y="315" class="v">A = {5, 6, 7, 8, 9, 10, 12, 15}</text>
+
+    <text x="395" y="380" class="f">
+      P<tspan baseline-shift="sub" font-size="14">Qk</tspan> = k·n/4,  n = 8
+    </text>
+    <text x="315" y="422" class="v">
+      • P<tspan baseline-shift="sub" font-size="16">Q1</tspan>=2
+
+    </text>
+    <text x="435" y="422" class="v">
+      • P<tspan baseline-shift="sub" font-size="16">Q2</tspan>=4
+    </text>
+    <text x="555" y="422" class="v">
+      • P<tspan baseline-shift="sub" font-size="16">Q3</tspan>=6
+    </text>
+
+    <text x="345" y="492" class="f">
+      (P inteiro) Q<tspan baseline-shift="sub" font-size="14">k</tspan> =
+      (x<tspan baseline-shift="sub" font-size="14">(P)</tspan> + x<tspan baseline-shift="sub" font-size="14">(P+1)</tspan>)/2
+    </text>
+
+    <text x="305" y="538" class="v">
+      Q<tspan baseline-shift="sub" font-size="16">1</tspan>=(6+7)/2=6,5
+      <tspan dx="22"/>
+    </text>
+    <text x="515" y="538" class="v">
+      Q<tspan baseline-shift="sub" font-size="16">2</tspan>=(8+9)/2=8,5
+    </text>
+    <text x="390" y="588" class="v">
+      Q<tspan baseline-shift="sub" font-size="16">3</tspan>=(10+12)/2=11
+    </text>
+  </g>
+  </g>
+</g>
+  <!-- Painel direito -->
+  <g id="panel-right">
+    <rect x="770" y="110" width="640" height="560" rx="14" ry="14" class="u-panel u-stroke"/>
+
+    <text x="1090" y="168" class="label">Quartis</text>
+    <text x="1090" y="208" class="small">Pontos de corte por percentuais de observacoes</text>
+
+<g transform="translate(0,30)">
+    <!-- Escala: 5..15 em x0=820..x1=1360 (1 un = 54) -->
+    <g id="plot-right">
+      <g class="grid">
+        <line x1="820" y1="330" x2="1360" y2="330"/>
+        <line x1="820" y1="405" x2="1360" y2="405"/>
+        <line x1="820" y1="480" x2="1360" y2="480"/>
+      </g>
+
+      <g class="u-stroke axis">
+        <line x1="820" y1="405" x2="1360" y2="405"/>
+      </g>
+
+      <g class="u-stroke" style="stroke-width:2">
+        <line x1="820"  y1="395" x2="820"  y2="415"/>
+        <line x1="1360" y1="395" x2="1360" y2="415"/>
+      </g>
+      <g class="tick-label">
+        <text x="820"  y="450" text-anchor="middle">5</text>
+        <text x="1360" y="450" text-anchor="middle">15</text>
+      </g>
+
+      <!-- faixas acumuladas -->
+      <rect class="seg a-seg25" x="820" y="375" width="81"  height="60"/>
+      <rect class="seg a-seg50" x="820" y="375" width="189" height="60"/>
+      <rect class="seg a-seg75" x="820" y="375" width="324" height="60"/>
+
+      <!-- pontos -->
+      <g class="a-dots">
+        <circle class="dot"      cx="820"  cy="405" r="7"/>
+        <circle class="dot soft" cx="874"  cy="405" r="7"/>
+        <circle class="dot"      cx="928"  cy="405" r="7"/>
+        <circle class="dot soft" cx="982"  cy="405" r="7"/>
+        <circle class="dot"      cx="1036" cy="405" r="7"/>
+        <circle class="dot soft" cx="1090" cy="405" r="7"/>
+        <circle class="dot"      cx="1198" cy="405" r="7"/>
+        <circle class="dot soft" cx="1360" cy="405" r="7"/>
+      </g>
+
+      <!-- rotulos dos dados -->
+      <text class="data-lab" x="820"  y="355">5</text>
+      <text class="data-lab" x="874"  y="505">6</text>
+      <text class="data-lab" x="928"  y="355">7</text>
+      <text class="data-lab" x="982"  y="505">8</text>
+      <text class="data-lab" x="1036" y="355">9</text>
+      <text class="data-lab" x="1090" y="505">10</text>
+      <text class="data-lab" x="1198" y="355">12</text>
+      <text class="data-lab" x="1360" y="505">15</text>
+
+      <!--
+        AJUSTE-CHAVE:
+        cria “faixa de cabeçalho” (labels/valores) ao subir tudo que é texto
+        e descer o começo das linhas (y1=305).
+      -->
+      <!-- linhas dos quartis (topo desceu) -->
+      <line class="qline q1 a-q1" x1="901"  y1="305" x2="901"  y2="545"/>
+      <line class="qline q2 a-q2" x1="1009" y1="305" x2="1009" y2="550"/>
+      <line class="qline q3 a-q3" x1="1144" y1="305" x2="1144" y2="545"/>
+
+      <!-- rótulos Q (um pouco mais alto e uniforme) -->
+      <text class="qlab a-q1t" x="901" y="238">Q<tspan class="sub">1</tspan></text>
+      <text class="qlab a-q2t" x="1009" y="238">Q<tspan class="sub">2</tspan></text>
+      <text class="qlab a-q3t" x="1144" y="238">Q<tspan class="sub">3</tspan></text>
+
+      <!-- valores (abaixo do Q, sem encostar na linha) -->
+      <text class="qval a-q1v" x="901"  y="266">6,5</text>
+      <text class="qval a-q2v" x="1009" y="266">8,5</text>
+      <text class="qval a-q3v" x="1144" y="266">11</text>
+
+      <!-- hint do Q2 (abaixo do valor; não disputa com o título) -->
+      <text class="qval a-q2v" x="1009" y="292">(mediana)</text>
+
+      <!-- percentuais -->
+      <text class="pct a-p25" x="901"  y="450">25%</text>
+      <text class="pct a-p50" x="1009" y="450">50%</text>
+      <text class="pct a-p75" x="1144" y="450">75%</text>
+    </g>
+    </g>
+  </g>
+</svg>

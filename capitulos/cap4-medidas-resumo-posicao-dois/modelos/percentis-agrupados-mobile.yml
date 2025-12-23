@@ -1,0 +1,302 @@
+
+
+schema: EconSchema
+aspectRatio: 1.6
+
+params:
+  # Frequências por valor (discreto)
+  - name: f2
+    value: 2
+    min: 0
+    max: 8
+    round: 1
+  - name: f3
+    value: 4
+    min: 0
+    max: 8
+    round: 1
+  - name: f4
+    value: 6
+    min: 0
+    max: 8
+    round: 1
+  - name: f5
+    value: 3
+    min: 0
+    max: 8
+    round: 1
+  - name: f6
+    value: 3
+    min: 0
+    max: 8
+    round: 1
+  - name: f7
+    value: 2
+    min: 0
+    max: 8
+    round: 1
+
+calcs:
+  # Total
+  N: "(params.f2 + params.f3 + params.f4 + params.f5 + params.f6 + params.f7)"
+
+  # Acumuladas
+  F2: "(params.f2)"
+  F3: "(params.f2 + params.f3)"
+  F4: "(params.f2 + params.f3 + params.f4)"
+  F5: "(params.f2 + params.f3 + params.f4 + params.f5)"
+  F6: "(params.f2 + params.f3 + params.f4 + params.f5 + params.f6)"
+  F7: "(params.f2 + params.f3 + params.f4 + params.f5 + params.f6 + params.f7)"
+
+  # ============================
+  # Posições (P10, P25, P50, P75, P90)
+  # ============================
+  P10: "(0.10 * calcs.N)"
+  P25: "(0.25 * calcs.N)"
+  P50: "(0.50 * calcs.N)"
+  P75: "(0.75 * calcs.N)"
+  P90: "(0.90 * calcs.N)"
+
+  # ============================
+  # Detecta se Pp é inteiro
+  # ============================
+  isIntP10: "(Math.abs(calcs.P10 - Math.round(calcs.P10)) < 1e-9)"
+  isIntP25: "(Math.abs(calcs.P25 - Math.round(calcs.P25)) < 1e-9)"
+  isIntP50: "(Math.abs(calcs.P50 - Math.round(calcs.P50)) < 1e-9)"
+  isIntP75: "(Math.abs(calcs.P75 - Math.round(calcs.P75)) < 1e-9)"
+  isIntP90: "(Math.abs(calcs.P90 - Math.round(calcs.P90)) < 1e-9)"
+
+  # ============================
+  # x_(P): valor na posição P do rol implícito
+  # x_(P+1): valor na posição P+1
+  # ============================
+  xP10: "(calcs.F2 >= calcs.P10 ? 2 : (calcs.F3 >= calcs.P10 ? 3 : (calcs.F4 >= calcs.P10 ? 4 : (calcs.F5 >= calcs.P10 ? 5 : (calcs.F6 >= calcs.P10 ? 6 : 7)))))"
+  xP25: "(calcs.F2 >= calcs.P25 ? 2 : (calcs.F3 >= calcs.P25 ? 3 : (calcs.F4 >= calcs.P25 ? 4 : (calcs.F5 >= calcs.P25 ? 5 : (calcs.F6 >= calcs.P25 ? 6 : 7)))))"
+  xP50: "(calcs.F2 >= calcs.P50 ? 2 : (calcs.F3 >= calcs.P50 ? 3 : (calcs.F4 >= calcs.P50 ? 4 : (calcs.F5 >= calcs.P50 ? 5 : (calcs.F6 >= calcs.P50 ? 6 : 7)))))"
+  xP75: "(calcs.F2 >= calcs.P75 ? 2 : (calcs.F3 >= calcs.P75 ? 3 : (calcs.F4 >= calcs.P75 ? 4 : (calcs.F5 >= calcs.P75 ? 5 : (calcs.F6 >= calcs.P75 ? 6 : 7)))))"
+  xP90: "(calcs.F2 >= calcs.P90 ? 2 : (calcs.F3 >= calcs.P90 ? 3 : (calcs.F4 >= calcs.P90 ? 4 : (calcs.F5 >= calcs.P90 ? 5 : (calcs.F6 >= calcs.P90 ? 6 : 7)))))"
+
+  xP10p1: "(calcs.F2 >= (calcs.P10 + 1) ? 2 : (calcs.F3 >= (calcs.P10 + 1) ? 3 : (calcs.F4 >= (calcs.P10 + 1) ? 4 : (calcs.F5 >= (calcs.P10 + 1) ? 5 : (calcs.F6 >= (calcs.P10 + 1) ? 6 : 7)))))"
+  xP25p1: "(calcs.F2 >= (calcs.P25 + 1) ? 2 : (calcs.F3 >= (calcs.P25 + 1) ? 3 : (calcs.F4 >= (calcs.P25 + 1) ? 4 : (calcs.F5 >= (calcs.P25 + 1) ? 5 : (calcs.F6 >= (calcs.P25 + 1) ? 6 : 7)))))"
+  xP50p1: "(calcs.F2 >= (calcs.P50 + 1) ? 2 : (calcs.F3 >= (calcs.P50 + 1) ? 3 : (calcs.F4 >= (calcs.P50 + 1) ? 4 : (calcs.F5 >= (calcs.P50 + 1) ? 5 : (calcs.F6 >= (calcs.P50 + 1) ? 6 : 7)))))"
+  xP75p1: "(calcs.F2 >= (calcs.P75 + 1) ? 2 : (calcs.F3 >= (calcs.P75 + 1) ? 3 : (calcs.F4 >= (calcs.P75 + 1) ? 4 : (calcs.F5 >= (calcs.P75 + 1) ? 5 : (calcs.F6 >= (calcs.P75 + 1) ? 6 : 7)))))"
+  xP90p1: "(calcs.F2 >= (calcs.P90 + 1) ? 2 : (calcs.F3 >= (calcs.P90 + 1) ? 3 : (calcs.F4 >= (calcs.P90 + 1) ? 4 : (calcs.F5 >= (calcs.P90 + 1) ? 5 : (calcs.F6 >= (calcs.P90 + 1) ? 6 : 7)))))"
+
+  # ============================
+  # Percentis com regra do ponto médio quando Pp é inteiro
+  # ============================
+  P_10: "(calcs.isIntP10 ? 0.5*(calcs.xP10 + calcs.xP10p1) : calcs.xP10)"
+  P_25: "(calcs.isIntP25 ? 0.5*(calcs.xP25 + calcs.xP25p1) : calcs.xP25)"
+  P_50: "(calcs.isIntP50 ? 0.5*(calcs.xP50 + calcs.xP50p1) : calcs.xP50)"
+  P_75: "(calcs.isIntP75 ? 0.5*(calcs.xP75 + calcs.xP75p1) : calcs.xP75)"
+  P_90: "(calcs.isIntP90 ? 0.5*(calcs.xP90 + calcs.xP90p1) : calcs.xP90)"
+
+  # ============================
+  # Mapa: valor -> posição x no gráfico (2..7 -> 0.7..5.7)
+  # ============================
+  PRxP10: "(calcs.xP10 <= 2 ? 0.7 : (calcs.xP10 <= 3 ? 1.7 : (calcs.xP10 <= 4 ? 2.7 : (calcs.xP10 <= 5 ? 3.7 : (calcs.xP10 <= 6 ? 4.7 : 5.7)))))"
+  PRxP25: "(calcs.xP25 <= 2 ? 0.7 : (calcs.xP25 <= 3 ? 1.7 : (calcs.xP25 <= 4 ? 2.7 : (calcs.xP25 <= 5 ? 3.7 : (calcs.xP25 <= 6 ? 4.7 : 5.7)))))"
+  PRxP50: "(calcs.xP50 <= 2 ? 0.7 : (calcs.xP50 <= 3 ? 1.7 : (calcs.xP50 <= 4 ? 2.7 : (calcs.xP50 <= 5 ? 3.7 : (calcs.xP50 <= 6 ? 4.7 : 5.7)))))"
+  PRxP75: "(calcs.xP75 <= 2 ? 0.7 : (calcs.xP75 <= 3 ? 1.7 : (calcs.xP75 <= 4 ? 2.7 : (calcs.xP75 <= 5 ? 3.7 : (calcs.xP75 <= 6 ? 4.7 : 5.7)))))"
+  PRxP90: "(calcs.xP90 <= 2 ? 0.7 : (calcs.xP90 <= 3 ? 1.7 : (calcs.xP90 <= 4 ? 2.7 : (calcs.xP90 <= 5 ? 3.7 : (calcs.xP90 <= 6 ? 4.7 : 5.7)))))"
+
+  PRxP10p1: "(calcs.xP10p1 <= 2 ? 0.7 : (calcs.xP10p1 <= 3 ? 1.7 : (calcs.xP10p1 <= 4 ? 2.7 : (calcs.xP10p1 <= 5 ? 3.7 : (calcs.xP10p1 <= 6 ? 4.7 : 5.7)))))"
+  PRxP25p1: "(calcs.xP25p1 <= 2 ? 0.7 : (calcs.xP25p1 <= 3 ? 1.7 : (calcs.xP25p1 <= 4 ? 2.7 : (calcs.xP25p1 <= 5 ? 3.7 : (calcs.xP25p1 <= 6 ? 4.7 : 5.7)))))"
+  PRxP50p1: "(calcs.xP50p1 <= 2 ? 0.7 : (calcs.xP50p1 <= 3 ? 1.7 : (calcs.xP50p1 <= 4 ? 2.7 : (calcs.xP50p1 <= 5 ? 3.7 : (calcs.xP50p1 <= 6 ? 4.7 : 5.7)))))"
+  PRxP75p1: "(calcs.xP75p1 <= 2 ? 0.7 : (calcs.xP75p1 <= 3 ? 1.7 : (calcs.xP75p1 <= 4 ? 2.7 : (calcs.xP75p1 <= 5 ? 3.7 : (calcs.xP75p1 <= 6 ? 4.7 : 5.7)))))"
+  PRxP90p1: "(calcs.xP90p1 <= 2 ? 0.7 : (calcs.xP90p1 <= 3 ? 1.7 : (calcs.xP90p1 <= 4 ? 2.7 : (calcs.xP90p1 <= 5 ? 3.7 : (calcs.xP90p1 <= 6 ? 4.7 : 5.7)))))"
+
+  # ============================
+  # Posição final do percentil no gráfico:
+  # se tem ponto médio, usa a média das posições
+  # ============================
+  PR10: "(calcs.isIntP10 ? 0.5*(calcs.PRxP10 + calcs.PRxP10p1) : calcs.PRxP10)"
+  PR25: "(calcs.isIntP25 ? 0.5*(calcs.PRxP25 + calcs.PRxP25p1) : calcs.PRxP25)"
+  PR50: "(calcs.isIntP50 ? 0.5*(calcs.PRxP50 + calcs.PRxP50p1) : calcs.PRxP50)"
+  PR75: "(calcs.isIntP75 ? 0.5*(calcs.PRxP75 + calcs.PRxP75p1) : calcs.PRxP75)"
+  PR90: "(calcs.isIntP90 ? 0.5*(calcs.PRxP90 + calcs.PRxP90p1) : calcs.PRxP90)"
+
+colors:
+  ink: "'#111827'"
+  grid: "'#e5e7eb'"
+  inkSoft: "'#64748b'"
+  bg: "'#ffffff'"
+
+layout:
+  OneWideGraphPlusSidebar:
+    graph:
+      title: "Frequências e percentis"
+      xAxis:
+        min: 0
+        max: 6.4
+        ticks: 0
+      yAxis:
+        min: 0
+        max: 8
+        ticks: 4
+
+      objects:
+        # ---------------------------
+        # Grade horizontal (manual, estilo “limpo”)
+        # ---------------------------
+        - Segment: { a: [0, 2], b: [7.4, 2], color: colors.inkSoft, strokeWidth: 0.5 }
+        - Segment: { a: [0, 4], b: [7.4, 4], color: colors.inkSoft, strokeWidth: 0.5 }
+        - Segment: { a: [0, 6], b: [7.4, 6], color: colors.inkSoft, strokeWidth: 0.5 }
+
+        # ---------------------------
+        # Barras (valores 2..7), drag no eixo y (frequência)
+        # ---------------------------
+        - Rectangle:
+            x1: 0.4
+            x2: 1
+            y1: 0
+            y2: params.f2
+            fill: colors.ink
+            opacity: 1
+            drag: [{ directions: y, param: f2, expression: "drag.y" }]
+
+        - Rectangle:
+            x1: 1.4
+            x2: 2
+            y1: 0
+            y2: params.f3
+            fill: colors.ink
+            opacity: 1
+            drag: [{ directions: y, param: f3, expression: "drag.y" }]
+
+        - Rectangle:
+            x1: 2.4
+            x2: 3
+            y1: 0
+            y2: params.f4
+            fill: colors.ink
+            opacity: 1
+            drag: [{ directions: y, param: f4, expression: "drag.y" }]
+
+        - Rectangle:
+            x1: 3.4
+            x2: 4
+            y1: 0
+            y2: params.f5
+            fill: colors.ink
+            opacity: 1
+            drag: [{ directions: y, param: f5, expression: "drag.y" }]
+
+        - Rectangle:
+            x1: 4.4
+            x2: 5
+            y1: 0
+            y2: params.f6
+            fill: colors.ink
+            opacity: 1
+            drag: [{ directions: y, param: f6, expression: "drag.y" }]
+
+        - Rectangle:
+            x1: 5.4
+            x2: 6
+            y1: 0
+            y2: params.f7
+            fill: colors.ink
+            opacity: 1
+            drag: [{ directions: y, param: f7, expression: "drag.y" }]
+
+        # ---------------------------
+        # Rótulos dos valores no “eixo” (2..7)
+        # ---------------------------
+        - Label: { coordinates: [0.7, 0], text: "'2'", color: colors.ink, fontSize: 9, position: t }
+        - Label: { coordinates: [1.7, 0], text: "'3'", color: colors.ink, fontSize: 9, position: t }
+        - Label: { coordinates: [2.7, 0], text: "'4'", color: colors.ink, fontSize: 9, position: t }
+        - Label: { coordinates: [3.7, 0], text: "'5'", color: colors.ink, fontSize: 9, position: t }
+        - Label: { coordinates: [4.7, 0], text: "'6'", color: colors.ink, fontSize: 9, position: t }
+        - Label: { coordinates: [5.7, 0], text: "'7'", color: colors.ink, fontSize: 9, position: t }
+
+        # ---------------------------
+        # Rótulo f no topo de cada barra
+        # ---------------------------
+        - Label: { coordinates: [0.7, params.f2], text: "`\\\\bf{f}=${params.f2.toFixed(0)}`", color: white, bgcolor: colors.ink, fontSize: 7, position: t }
+        - Label: { coordinates: [1.7, params.f3], text: "`\\\\bf{f}=${params.f3.toFixed(0)}`", color: white, bgcolor: colors.ink, fontSize: 7, position: t }
+        - Label: { coordinates: [2.7, params.f4], text: "`\\\\bf{f}=${params.f4.toFixed(0)}`", color: white, bgcolor: colors.ink, fontSize: 7, position: t }
+        - Label: { coordinates: [3.7, params.f5], text: "`\\\\bf{f}=${params.f5.toFixed(0)}`", color: white, bgcolor: colors.ink, fontSize: 7, position: t }
+        - Label: { coordinates: [4.7, params.f6], text: "`\\\\bf{f}=${params.f6.toFixed(0)}`", color: white, bgcolor: colors.ink, fontSize: 7, position: t }
+        - Label: { coordinates: [5.7, params.f7], text: "`\\\\bf{f}=${params.f7.toFixed(0)}`", color: white, bgcolor: colors.ink, fontSize: 7, position: t }
+
+        # ---------------------------
+        # Linhas verticais dos percentis (P10, P25, P50, P75, P90)
+        # (mantém o estilo: tracejada / sólida / tracejada; extras também tracejadas)
+        # ---------------------------
+        - Segment: { a: [calcs.PR10, 0], b: [calcs.PR10, 8], color: colors.ink, strokeWidth: 1.2,   lineStyle: dashed }
+        - Segment: { a: [calcs.PR25, 0], b: [calcs.PR25, 8], color: colors.ink, strokeWidth: 1.2,   lineStyle: dashed }
+        - Segment: { a: [calcs.PR50, 0], b: [calcs.PR50, 8], color: colors.ink, strokeWidth: 2.5, lineStyle: solid }
+        - Segment: { a: [calcs.PR75, 0], b: [calcs.PR75, 8], color: colors.ink, strokeWidth: 1.2,   lineStyle: dashed }
+        - Segment: { a: [calcs.PR90, 0], b: [calcs.PR90, 8], color: colors.ink, strokeWidth: 1.2,   lineStyle: dashed }
+
+        # ---------------------------
+        # Rótulos “acima” do topo do gráfico
+        # ---------------------------
+        - Label: { coordinates: [calcs.PR10, 7.85], text: "`Per_{10} \\\\\\\\ ${calcs.P_10.toFixed(2)}`", color: colors.ink, fontSize: 7, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [calcs.PR25, 7.85], text: "`Per_{25} \\\\\\\\ ${calcs.P_25.toFixed(2)}`", color: colors.ink, fontSize: 7, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [calcs.PR50, 7.85], text: "`Per_{50} \\\\\\\\ ${calcs.P_50.toFixed(2)}\\ \\\\\\\\ (mediana)`", color: colors.ink, fontSize: 6, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [calcs.PR75, 7.85], text: "`Per_{75} \\\\\\\\ ${calcs.P_75.toFixed(2)}`", color: colors.ink, fontSize: 7, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [calcs.PR90, 7.85], text: "`Per_{90} \\\\\\\\ ${calcs.P_90.toFixed(2)}`", color: colors.ink, fontSize: 7, position: c, bgcolor: colors.bg }
+
+    sidebar:
+      triggerWidth: 9999
+      controls:
+        - title:
+
+          divs:
+            # ---------------------------
+            # 1) TABELA
+            # ---------------------------
+            - html: "`<figure class='sidebar-figure'>
+                <div class='sidebar-table-wrap'>
+                  <table class='sidebar-table'>
+                    <thead>
+                      <tr>
+                        <th>Valor <em>x</em></th>
+                        <th>Freq. <em>f</em></th>
+                        <th>Acum. <em>F</em></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>2</td><td>${params.f2.toFixed(0)}</td><td>${calcs.F2.toFixed(0)}</td></tr>
+                      <tr><td>3</td><td>${params.f3.toFixed(0)}</td><td>${calcs.F3.toFixed(0)}</td></tr>
+                      <tr><td>4</td><td>${params.f4.toFixed(0)}</td><td>${calcs.F4.toFixed(0)}</td></tr>
+                      <tr><td>5</td><td>${params.f5.toFixed(0)}</td><td>${calcs.F5.toFixed(0)}</td></tr>
+                      <tr><td>6</td><td>${params.f6.toFixed(0)}</td><td>${calcs.F6.toFixed(0)}</td></tr>
+                      <tr><td>7</td><td>${params.f7.toFixed(0)}</td><td>${calcs.F7.toFixed(0)}</td></tr>
+                      <tr>
+                        <td><b>Total</b></td>
+                        <td><b>${calcs.N.toFixed(0)}</b></td>
+                        <td><b>${calcs.N.toFixed(0)}</b></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <figcaption>Distribuição discreta: frequências e acumuladas</figcaption></figure>`"
+
+            - html: "<hr>"
+
+            # ---------------------------
+            # 2) PERCENTIS — MESMO PADRÃO (SEM BLOCO aligned PARA NÃO QUEBRAR)
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Posição dos Percentis:</b></div>"
+
+            - html: "`$$\\\\tiny P_{Per_{k}}=\\\\frac{k\\\\cdot N}{100}\\\\quad (k\\\\in\\\\{10,25,50,75,90\\\\};\\\\; N=${calcs.N.toFixed(0)})$$`"
+
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Aplicando:</b></div>"
+
+            # (quebra em linhas curtas, como no exemplo dos décis)
+            - html: "`$$\\\\tiny P_{Per_{10}}=\\\\frac{10\\\\cdot ${calcs.N.toFixed(0)}}{100}=${calcs.P10.toFixed(2)} \\\\qquad P_{Per_{25}}=\\\\frac{25\\\\cdot ${calcs.N.toFixed(0)}}{100}=${calcs.P25.toFixed(2)}$$`"
+            - html: "`$$\\\\tiny P_{Per_{50}}=\\\\frac{50\\\\cdot ${calcs.N.toFixed(0)}}{100}=${calcs.P50.toFixed(2)} \\\\qquad P_{Per_{75}}=\\\\frac{75\\\\cdot ${calcs.N.toFixed(0)}}{100}=${calcs.P75.toFixed(2)}$$`"
+            - html: "`$$\\\\tiny P_{Per_{90}}=\\\\frac{90\\\\cdot ${calcs.N.toFixed(0)}}{100}=${calcs.P90.toFixed(2)}$$`"
+
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Ponto Médio:</b></div>"
+
+            - html: "`$$\\\\tiny Per_{k}=\\\\frac{x_{(Per_{k})}+x_{(Per_{k}+1)}}{2}$$`"
+
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Resultados:</b></div>"
+
+            - html: "`$$\\\\tiny Per_{10}=${calcs.P_10.toFixed(2)} \\\\qquad Per_{25}=${calcs.P_25.toFixed(2)}$$`"
+            - html: "`$$\\\\tiny Per_{50}=${calcs.P_50.toFixed(2)} \\\\qquad Per_{75}=${calcs.P_75.toFixed(2)}$$`"
+            - html: "`$$\\\\tiny Per_{90}=${calcs.P_90.toFixed(2)}$$`"

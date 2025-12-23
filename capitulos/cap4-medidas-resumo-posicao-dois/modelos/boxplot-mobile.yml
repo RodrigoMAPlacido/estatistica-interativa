@@ -1,0 +1,271 @@
+schema: EconSchema
+aspectRatio: 2
+
+params:
+  - name: x_1
+    value: 7.0
+    min: 0
+    max: 30
+    round: 0.1
+  - name: x_2
+    value: 10.0
+    min: 0
+    max: 30
+    round: 0.1
+  - name: x_3
+    value: 12.0
+    min: 0
+    max: 30
+    round: 0.1
+  - name: x_4
+    value: 13.0
+    min: 0
+    max: 30
+    round: 0.1
+  - name: x_5
+    value: 14.0
+    min: 0
+    max: 30
+    round: 0.1
+  - name: x_6
+    value: 15.0
+    min: 0
+    max: 30
+    round: 0.1
+  - name: x_7
+    value: 18.0
+    min: 0
+    max: 30
+    round: 0.1
+  - name: x_8
+    value: 27.0
+    min: 0
+    max: 30
+    round: 0.1
+
+calcs:
+  # Quartis para n=8 (ponto médio nas fronteiras)
+  Q1: "((params.x_2 + params.x_3) / 2)"     # 11.00
+  Q2: "((params.x_4 + params.x_5) / 2)"     # 13.50
+  Q3: "((params.x_6 + params.x_7) / 2)"     # 16.50
+
+  IQR: "(calcs.Q3 - calcs.Q1)"
+  LI:  "(calcs.Q1 - 1.5 * calcs.IQR)"
+  LS:  "(calcs.Q3 + 1.5 * calcs.IQR)"
+
+  # Bigodes (sem Math.*)
+  Wlow:  "(params.x_1 >= calcs.LI ? params.x_1 : (params.x_2 >= calcs.LI ? params.x_2 : (params.x_3 >= calcs.LI ? params.x_3 : (params.x_4 >= calcs.LI ? params.x_4 : (params.x_5 >= calcs.LI ? params.x_5 : (params.x_6 >= calcs.LI ? params.x_6 : (params.x_7 >= calcs.LI ? params.x_7 : params.x_8)))))))"
+  Whigh: "(params.x_8 <= calcs.LS ? params.x_8 : (params.x_7 <= calcs.LS ? params.x_7 : (params.x_6 <= calcs.LS ? params.x_6 : (params.x_5 <= calcs.LS ? params.x_5 : (params.x_4 <= calcs.LS ? params.x_4 : (params.x_3 <= calcs.LS ? params.x_3 : (params.x_2 <= calcs.LS ? params.x_2 : params.x_1)))))))"
+
+  # Outliers e posições (somem com x=-999)
+  o1: "((params.x_1 < calcs.LI) || (params.x_1 > calcs.LS))"
+  o2: "((params.x_2 < calcs.LI) || (params.x_2 > calcs.LS))"
+  o3: "((params.x_3 < calcs.LI) || (params.x_3 > calcs.LS))"
+  o4: "((params.x_4 < calcs.LI) || (params.x_4 > calcs.LS))"
+  o5: "((params.x_5 < calcs.LI) || (params.x_5 > calcs.LS))"
+  o6: "((params.x_6 < calcs.LI) || (params.x_6 > calcs.LS))"
+  o7: "((params.x_7 < calcs.LI) || (params.x_7 > calcs.LS))"
+  o8: "((params.x_8 < calcs.LI) || (params.x_8 > calcs.LS))"
+
+  ox1: "(calcs.o1 ? params.x_1 : -999)"
+  ox2: "(calcs.o2 ? params.x_2 : -999)"
+  ox3: "(calcs.o3 ? params.x_3 : -999)"
+  ox4: "(calcs.o4 ? params.x_4 : -999)"
+  ox5: "(calcs.o5 ? params.x_5 : -999)"
+  ox6: "(calcs.o6 ? params.x_6 : -999)"
+  ox7: "(calcs.o7 ? params.x_7 : -999)"
+  ox8: "(calcs.o8 ? params.x_8 : -999)"
+
+colors:
+  ink: "'#111827'"
+  inkSoft: "'#64748b'"
+  accent: "'#64748b'"
+  bg: "'#ffffff'"
+  point: "'#1f77b4'"
+  out: "'#ef4444'"
+  grid: "'#e5e7eb'"
+
+layout:
+  OneWideGraphPlusSidebar:
+
+    graph:
+      xAxis:
+        min: 0
+        max: 30
+        ticks: 0
+        title: Boxplot (Tukey) na reta numérica
+      yAxis:
+        show: false
+        min: -1
+        max: 1
+        ticks: 0
+
+      objects:
+        # ---------------------------
+        # Reta numérica + "min/max" (com labels)
+        # ---------------------------
+        - Segment: { a: [0, 0], b: [30, 0], color: colors.ink, strokeWidth: 3 }
+        - Segment: { a: [0, -0.08],  b: [0,  0.08],  color: colors.ink, strokeWidth: 2 }
+        - Segment: { a: [30, -0.08], b: [30, 0.08], color: colors.ink, strokeWidth: 2 }
+
+        - Label: { coordinates: [calcs.Wlow,  -0.45], text: "'min'", color: colors.inkSoft, fontSize: 7, position: c }
+        - Label: { coordinates: [calcs.Whigh, -0.45], text: "'max'", color: colors.inkSoft, fontSize: 7, position: c }
+
+        # ---------------------------
+        # Cercas LI / LS
+        # ---------------------------
+        - Segment: { a: [calcs.LI, -0.85], b: [calcs.LI, 0.85], color: grey, strokeWidth: 2, lineStyle: dashed }
+        - Segment: { a: [calcs.LS, -0.85], b: [calcs.LS, 0.85], color: grey, strokeWidth: 2, lineStyle: dashed }
+        - Label:   { coordinates: [calcs.LI, -0.90], text: "'LI'", bgcolor: colors.bg, color: colors.inkSoft, fontSize: 7, position: c }
+        - Label:   { coordinates: [calcs.LS, -0.90], text: "'LS'", bgcolor: colors.bg, color: colors.inkSoft, fontSize: 7, position: c }
+
+        # ---------------------------
+        # Caixa [Q1,Q3] e mediana
+        # ---------------------------
+        - Segment: { a: [calcs.Q1, -0.25], b: [calcs.Q3, -0.25], color: colors.ink, strokeWidth: 2 }
+        - Segment: { a: [calcs.Q1,  0.25], b: [calcs.Q3,  0.25], color: colors.ink, strokeWidth: 2 }
+        - Segment: { a: [calcs.Q1, -0.25], b: [calcs.Q1,  0.25], color: colors.ink, strokeWidth: 2 }
+        - Segment: { a: [calcs.Q3, -0.25], b: [calcs.Q3,  0.25], color: colors.ink, strokeWidth: 2 }
+        - Segment: { a: [calcs.Q2, -0.25], b: [calcs.Q2,  0.25], color: colors.ink, strokeWidth: 2 }
+
+        # Bigodes + caps
+        - Segment: { a: [calcs.Wlow, 0], b: [calcs.Q1, 0], color: colors.ink, strokeWidth: 2 }
+        - Segment: { a: [calcs.Q3, 0], b: [calcs.Whigh, 0], color: colors.ink, strokeWidth: 2 }
+        - Segment: { a: [calcs.Wlow, -0.18],  b: [calcs.Wlow,  0.18],  color: colors.ink, strokeWidth: 2 }
+        - Segment: { a: [calcs.Whigh, -0.18], b: [calcs.Whigh, 0.18], color: colors.ink, strokeWidth: 2 }
+
+        # ---------------------------
+        # Linhas dos quartis + labels
+        # ---------------------------
+        - Segment: { a: [calcs.Q1, -0.70], b: [calcs.Q1, 0.70], color: colors.accent, strokeWidth: 2, lineStyle: dashed }
+        - Segment: { a: [calcs.Q2, -0.80], b: [calcs.Q2, 0.80], color: colors.accent, strokeWidth: 2 }
+        - Segment: { a: [calcs.Q3, -0.70], b: [calcs.Q3, 0.70], color: colors.accent, strokeWidth: 2, lineStyle: dotted }
+
+        - Label: { coordinates: [calcs.Q1, 0.84], text: "`\\\\bf{Q_1}`", bgcolor: colors.bg, color: colors.ink, fontSize: 7, position: c }
+        - Label: { coordinates: [calcs.Q1, 0.68], text: "`${calcs.Q1.toFixed(2)}`", bgcolor: colors.bg, color: colors.inkSoft, fontSize: 8, position: c }
+
+        - Label: { coordinates: [calcs.Q2, 0.84], text: "`\\\\bf{Q_2}`", bgcolor: colors.bg, color: colors.ink, fontSize: 7, position: c }
+        - Label: { coordinates: [calcs.Q2, 0.68], text: "`${calcs.Q2.toFixed(2)}`", bgcolor: colors.bg, color: colors.inkSoft, fontSize: 8, position: c }
+        - Label: { coordinates: [calcs.Q2, 0.54], text: "'(mediana)'", bgcolor: colors.bg, color: colors.inkSoft, fontSize: 6, position: c }
+
+        - Label: { coordinates: [calcs.Q3, 0.84], text: "`\\\\bf{Q_3}`", bgcolor: colors.bg, color: colors.ink, fontSize: 7, position: c }
+        - Label: { coordinates: [calcs.Q3, 0.68], text: "`${calcs.Q3.toFixed(2)}`", bgcolor: colors.bg, color: colors.inkSoft, fontSize: 8, position: c }
+
+        - Label: { coordinates: [calcs.Q1, -0.8], text: "'25\\\\%'", color: colors.inkSoft, fontSize: 7, position: c }
+        - Label: { coordinates: [calcs.Q2, -0.8], text: "'50\\\\%'", color: colors.inkSoft, fontSize: 7, position: c }
+        - Label: { coordinates: [calcs.Q3, -0.8], text: "'75\\\\%'", color: colors.inkSoft, fontSize: 7, position: c }
+
+        # ---------------------------
+        # Pontos (drag + clamp) mantendo ordem
+        # ---------------------------
+        - Point:
+            coordinates: [params.x_1, 0]
+            color: colors.ink
+            drag:
+              - directions: x
+                param: x_1
+                expression: "((drag.x >= 0) ? ((drag.x <= params.x_2) ? drag.x : params.x_2) : 0)"
+
+        - Point:
+            coordinates: [params.x_2, 0]
+            color: colors.inkSoft
+            drag:
+              - directions: x
+                param: x_2
+                expression: "((drag.x >= params.x_1) ? ((drag.x <= params.x_3) ? drag.x : params.x_3) : params.x_1)"
+
+        - Point:
+            coordinates: [params.x_3, 0]
+            color: colors.ink
+            drag:
+              - directions: x
+                param: x_3
+                expression: "((drag.x >= params.x_2) ? ((drag.x <= params.x_4) ? drag.x : params.x_4) : params.x_2)"
+
+        - Point:
+            coordinates: [params.x_4, 0]
+            color: colors.inkSoft
+            drag:
+              - directions: x
+                param: x_4
+                expression: "((drag.x >= params.x_3) ? ((drag.x <= params.x_5) ? drag.x : params.x_5) : params.x_3)"
+
+        - Point:
+            coordinates: [params.x_5, 0]
+            color: colors.ink
+            drag:
+              - directions: x
+                param: x_5
+                expression: "((drag.x >= params.x_4) ? ((drag.x <= params.x_6) ? drag.x : params.x_6) : params.x_4)"
+
+        - Point:
+            coordinates: [params.x_6, 0]
+            color: colors.inkSoft
+            drag:
+              - directions: x
+                param: x_6
+                expression: "((drag.x >= params.x_5) ? ((drag.x <= params.x_7) ? drag.x : params.x_7) : params.x_5)"
+
+        - Point:
+            coordinates: [params.x_7, 0]
+            color: colors.ink
+            drag:
+              - directions: x
+                param: x_7
+                expression: "((drag.x >= params.x_6) ? ((drag.x <= params.x_8) ? drag.x : params.x_8) : params.x_6)"
+
+        - Point:
+            coordinates: [params.x_8, 0]
+            color: colors.inkSoft
+            drag:
+              - directions: x
+                param: x_8
+                expression: "((drag.x >= params.x_7) ? ((drag.x <= 30) ? drag.x : 30) : params.x_7)"
+
+        # Labels dos valores (alternando)
+        - Label: { coordinates: [params.x_1,  0.14], text: "`${params.x_1.toFixed(1)}`", color: colors.inkSoft, fontSize: 7, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [params.x_2, -0.14], text: "`${params.x_2.toFixed(1)}`", color: colors.inkSoft, fontSize: 7, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [params.x_3,  0.14], text: "`${params.x_3.toFixed(1)}`", color: colors.inkSoft, fontSize: 7, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [params.x_4, -0.14], text: "`${params.x_4.toFixed(1)}`", color: colors.inkSoft, fontSize: 7, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [params.x_5,  0.14], text: "`${params.x_5.toFixed(1)}`", color: colors.inkSoft, fontSize: 7, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [params.x_6, -0.14], text: "`${params.x_6.toFixed(1)}`", color: colors.inkSoft, fontSize: 7, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [params.x_7,  0.14], text: "`${params.x_7.toFixed(1)}`", color: colors.inkSoft, fontSize: 7, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [params.x_8, -0.14], text: "`${params.x_8.toFixed(1)}`", color: colors.inkSoft, fontSize: 7, position: c, bgcolor: colors.bg }
+
+        # ---------------------------
+        # OUTLIERS DESTACADOS:
+        # 1) ponto vermelho acima da reta
+        # 2) marca "x" vermelha em cima do ponto
+        # ---------------------------
+        - Point: { coordinates: [calcs.ox1, 0.72], color: colors.out }
+        - Point: { coordinates: [calcs.ox2, 0.72], color: colors.out }
+        - Point: { coordinates: [calcs.ox3, 0.72], color: colors.out }
+        - Point: { coordinates: [calcs.ox4, 0.72], color: colors.out }
+        - Point: { coordinates: [calcs.ox5, 0.72], color: colors.out }
+        - Point: { coordinates: [calcs.ox6, 0.72], color: colors.out }
+        - Point: { coordinates: [calcs.ox7, 0.72], color: colors.out }
+        - Point: { coordinates: [calcs.ox8, 0.72], color: colors.out }
+
+        - Label: { coordinates: [calcs.ox1, 0.72], text: "'×'", color: colors.out, fontSize: 14, position: c }
+        - Label: { coordinates: [calcs.ox2, 0.72], text: "'×'", color: colors.out, fontSize: 14, position: c }
+        - Label: { coordinates: [calcs.ox3, 0.72], text: "'×'", color: colors.out, fontSize: 14, position: c }
+        - Label: { coordinates: [calcs.ox4, 0.72], text: "'×'", color: colors.out, fontSize: 14, position: c }
+        - Label: { coordinates: [calcs.ox5, 0.72], text: "'×'", color: colors.out, fontSize: 14, position: c }
+        - Label: { coordinates: [calcs.ox6, 0.72], text: "'×'", color: colors.out, fontSize: 14, position: c }
+        - Label: { coordinates: [calcs.ox7, 0.72], text: "'×'", color: colors.out, fontSize: 14, position: c }
+        - Label: { coordinates: [calcs.ox8, 0.72], text: "'×'", color: colors.out, fontSize: 14, position: c }
+
+    sidebar:
+      triggerWidth: 9999
+      controls:
+        - title: ""
+          divs:
+            - html: "$$\\tiny P_{Q_1}=\\frac{n \\cdot 1}{4},\\quad P_{Q_2}=\\frac{n \\cdot 2}{4},\\quad P_{Q_3}=\\frac{n \\cdot 3}{4}$$"
+            - html: "$$\\tiny Q_1=\\frac{x_2+x_3}{2},\\quad Q_2=\\frac{x_4+x_5}{2},\\quad Q_3=\\frac{x_6+x_7}{2}$$"
+            - html: "$$\\tiny IQR=Q_3-Q_1,$$"
+            - html: "$$\\tiny  LI=Q_1-1.5\\,IQR,\\quad LS=Q_3+1.5\\,IQR$$"
+            - html: "<hr>"
+            - html: "`$$\\\\tiny Q_1=${calcs.Q1.toFixed(2)},\\; Q_2=${calcs.Q2.toFixed(2)},\\; Q_3=${calcs.Q3.toFixed(2)}$$`"
+            - html: "`$$\\\\tiny IQR=${calcs.IQR.toFixed(2)},\\; LI=${calcs.LI.toFixed(2)},\\; LS=${calcs.LS.toFixed(2)}$$`"
+            - html: "`$$\\\\tiny W_{inf}=${calcs.Wlow.toFixed(2)},\\; W_{sup}=${calcs.Whigh.toFixed(2)}$$`"
+            - html: "`$$\\\\tiny Valores:\\; \\\\{ ${params.x_1.toFixed(1)}, ${params.x_2.toFixed(1)}, ${params.x_3.toFixed(1)}, ${params.x_4.toFixed(1)}, ${params.x_5.toFixed(1)}, ${params.x_6.toFixed(1)}, ${params.x_7.toFixed(1)}, ${params.x_8.toFixed(1)} \\\\}$$`"

@@ -1,0 +1,360 @@
+<!-- ===========================================
+   DECIS EM DADOS AGRUPADOS EM CLASSES
+   Horas de estudo por semana — N = 20
+   Padrão unificado (u-*/subscript/rowHi/grow)
+   (molde mantido; decis D1..D9; linhas atrás das barras; sem sobreposição)
+   =========================================== -->
+<svg viewBox="0 0 1500 780" xmlns="http://www.w3.org/2000/svg"
+     role="img" aria-labelledby="title desc">
+  <title id="title">Decis em dados agrupados em classes</title>
+  <desc id="desc">
+    À esquerda, tabela com classes de horas de estudo por semana, frequências e frequências acumuladas.
+    À direita, histograma da mesma distribuição com nove linhas verticais indicando D1 a D9 (com D5 como mediana),
+    interpolados nas classes. As linhas ficam atrás das barras.
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --font:"et-book","ETBook","Georgia",serif;
+        --cycle:8s;
+        --ease:ease-in-out;
+      }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        user-select:none;
+      }
+
+      .u-stroke{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+      }
+
+      .u-panel{
+        stroke-width:2;
+        rx:12;
+      }
+
+      .label{
+        font-size:32px;
+        font-weight:600;
+        text-anchor:middle;
+      }
+
+      .u-small{ font-size:18px; }
+      .tiny{ font-size:15px; }
+
+      /* Subscritos */
+      .subscript{
+        font-size:0.7em;
+        font-weight:600;
+        baseline-shift:-0.3em;
+      }
+
+      /* Rodapé (painel esquerdo) menor para caber */
+      .u-foot{ font-size:16px; }
+
+      /* ====== Destaque sequencial das linhas da tabela ====== */
+      @keyframes rowHi{
+        0%,10%{opacity:0}
+        15%,25%{opacity:.18}
+        30%,100%{opacity:0}
+      }
+      .row-hi{ fill:var(--ink); opacity:0 }
+      .r1{ animation:rowHi var(--cycle) var(--ease) infinite 0s }
+      .r2{ animation:rowHi var(--cycle) var(--ease) infinite .7s }
+      .r3{ animation:rowHi var(--cycle) var(--ease) infinite 1.4s }
+      .r4{ animation:rowHi var(--cycle) var(--ease) infinite 2.1s }
+      .r5{ animation:rowHi var(--cycle) var(--ease) infinite 2.8s }
+      .r6{ animation:rowHi var(--cycle) var(--ease) infinite 3.5s }
+      .r7{ animation:rowHi var(--cycle) var(--ease) infinite 4.2s }
+
+      /* ====== Barras do histograma ====== */
+      @keyframes grow{
+        0%{ transform:scaleY(0) }
+        18%,82%{ transform:scaleY(1) }
+        100%{ transform:scaleY(0) }
+      }
+      .bar{
+        fill:var(--ink);
+        transform-box:fill-box;
+        transform-origin:bottom;
+        transform:scaleY(0);
+      }
+      .b1{ animation:grow var(--cycle) var(--ease) infinite 0s }
+      .b2{ animation:grow var(--cycle) var(--ease) infinite .15s }
+      .b3{ animation:grow var(--cycle) var(--ease) infinite .30s }
+      .b4{ animation:grow var(--cycle) var(--ease) infinite .45s }
+      .b5{ animation:grow var(--cycle) var(--ease) infinite .60s }
+
+      /* ====== Linhas dos decis ====== */
+      .u-d-line{
+        stroke:var(--ink);
+        stroke-width:2.4;
+        stroke-dasharray:12 10;
+        stroke-linecap:butt;
+        stroke-dashoffset:260;
+        opacity:.9;
+        animation:dLine var(--cycle) var(--ease) infinite;
+      }
+      /* D5 destacado */
+      .d5{
+        stroke-dasharray:none;
+        stroke-width:3.2;
+        stroke-linecap:round;
+      }
+      @keyframes dLine{
+        0%{   stroke-dashoffset:260; opacity:0 }
+        20%,65%{ stroke-dashoffset:0;   opacity:1 }
+        85%,100%{ stroke-dashoffset:260; opacity:0 }
+      }
+
+      /* Rótulos Dk: sem caixas, com “halo” branco */
+      .d-label{
+        font-size:14px;
+        font-weight:700;
+        text-anchor:middle;
+        opacity:0;
+        animation:dLabel var(--cycle) var(--ease) infinite;
+        paint-order:stroke;
+        stroke:#fff;
+        stroke-width:6;
+        stroke-linejoin:round;
+      }
+      .d-note{ font-size:12px; font-weight:600; }
+      @keyframes dLabel{
+        0%,25%{ opacity:0 }
+        35%,70%{ opacity:1 }
+        85%,100%{ opacity:0 }
+      }
+
+      /* Textos f nas barras */
+      .bar-txt{
+        fill:#fff;
+        font-size:16px;
+        font-weight:700;
+        text-anchor:middle;
+        opacity:.95;
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        .row-hi{ animation:none; opacity:.12 }
+        .bar{ animation:none; transform:scaleY(1) }
+        .u-d-line{ animation:none; stroke-dashoffset:0; opacity:1 }
+        .d-label{ animation:none; opacity:1 }
+      }
+    </style>
+  </defs>
+
+  <!-- ================= PAINEL ESQUERDO: TABELA ================= -->
+  <g id="panel-table" transform="translate(-140,-200) scale(1.2)">
+    <g class="p-panel">
+      <!-- Moldura -->
+      <rect x="120" y="230" width="560" height="510" class="u-panel u-stroke"/>
+
+      <!-- Cabeçalho -->
+      <g class="p-header">
+        <text x="390" y="280" class="label">Decis em dados agrupados</text>
+        <text x="390" y="308" class="u-small" text-anchor="middle">
+          Horas de estudo por semana — N = 20
+        </text>
+      </g>
+
+      <!-- Corpo da tabela -->
+      <g class="p-body" transform="translate(8,15)">
+        <line x1="160" y1="364" x2="620" y2="364" class="u-stroke" style="stroke-width:2"/>
+
+        <!-- rótulos das colunas -->
+        <g font-size="18" font-weight="600">
+          <text x="200" y="332" text-anchor="middle">Classe</text>
+          <text x="200" y="352" text-anchor="middle">(h/sem)</text>
+
+          <text x="400" y="352" text-anchor="middle">
+            Frequência f<tspan class="subscript">j</tspan>
+          </text>
+          <text x="580" y="332" text-anchor="middle">Freq.</text>
+          <text x="580" y="352" text-anchor="middle">
+            acum. F<tspan class="subscript">j</tspan>
+          </text>
+        </g>
+
+        <!-- linhas horizontais -->
+        <g class="u-stroke">
+          <line x1="160" y1="404" x2="620" y2="404"/>
+          <line x1="160" y1="444" x2="620" y2="444"/>
+          <line x1="160" y1="484" x2="620" y2="484"/>
+          <line x1="160" y1="524" x2="620" y2="524"/>
+          <line x1="160" y1="564" x2="620" y2="564"/>
+          <line x1="160" y1="604" x2="620" y2="604"/>
+        </g>
+
+        <!-- faixas animadas -->
+        <rect x="160" y="374" width="460" height="30" class="row-hi r1"/>
+        <rect x="160" y="414" width="460" height="30" class="row-hi r2"/>
+        <rect x="160" y="454" width="460" height="30" class="row-hi r3"/>
+        <rect x="160" y="494" width="460" height="30" class="row-hi r4"/>
+        <rect x="160" y="534" width="460" height="30" class="row-hi r5"/>
+        <rect x="160" y="574" width="460" height="30" class="row-hi r6"/>
+
+        <!-- dados -->
+        <g font-size="19">
+          <text x="175" y="396">0–5</text>
+          <text x="405" y="396" text-anchor="end">3</text>
+          <text x="590" y="396" text-anchor="end">3</text>
+
+          <text x="175" y="436">5–10</text>
+          <text x="405" y="436" text-anchor="end">5</text>
+          <text x="590" y="436" text-anchor="end">8</text>
+
+          <text x="175" y="476">10–15</text>
+          <text x="405" y="476" text-anchor="end">6</text>
+          <text x="590" y="476" text-anchor="end">14</text>
+
+          <text x="175" y="516">15–20</text>
+          <text x="405" y="516" text-anchor="end">4</text>
+          <text x="590" y="516" text-anchor="end">18</text>
+
+          <text x="175" y="556">20–25</text>
+          <text x="405" y="556" text-anchor="end">2</text>
+          <text x="590" y="556" text-anchor="end">20</text>
+
+          <text x="175" y="596" font-weight="700">Totais</text>
+          <text x="405" y="596" text-anchor="end" font-weight="700">20</text>
+          <text x="590" y="596" text-anchor="end" font-weight="700">20</text>
+        </g>
+      </g>
+
+      <!-- Rodapé (quebrado) -->
+      <g class="p-footer" transform="translate(0,12)">
+        <text x="390" y="650" class="u-foot" text-anchor="middle">
+          P<tspan class="subscript">Dk</tspan> = k·N/10 (k=1,…,9; N=20) → P<tspan class="subscript">D1</tspan>=2, …, P<tspan class="subscript">D9</tspan>=18.
+        </text>
+        <text x="390" y="672" class="u-foot" text-anchor="middle">
+          Regra: D<tspan class="subscript">k</tspan> está na primeira classe cujo acumulado F ≥ P<tspan class="subscript">Dk</tspan>.
+        </text>
+        <text x="390" y="694" class="u-foot" text-anchor="middle">
+          Interpolação: D<tspan class="subscript">k</tspan> = L + h·(P<tspan class="subscript">Dk</tspan> − F<tspan class="subscript">ant</tspan>)/f.
+        </text>
+        <text x="390" y="716" class="u-foot" text-anchor="middle">
+          Resultados: 3,33; 6,00; 8,00; 10,00; 11,67; 13,33; 15,00; 17,50; 20,00.
+        </text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ================= PAINEL DIREITO: HISTOGRAMA + DECIS ================= -->
+  <g id="panel-hist" transform="translate(-220,-200) scale(1.2)">
+    <g class="p-panel">
+      <!-- Moldura -->
+      <rect x="840" y="230" width="580" height="510" class="u-panel u-stroke"/>
+
+      <!-- Cabeçalho -->
+      <g class="p-header">
+        <text x="1128" y="280" class="label">Histograma e decis</text>
+        <text x="1128" y="308" class="u-small" text-anchor="middle">
+          Frequências por classe e posição dos decis
+        </text>
+      </g>
+
+      <!-- Corpo -->
+      <g class="p-body" transform="translate(-85,-70) scale(1.1)">
+        <!-- Eixos -->
+        <g class="u-stroke" style="stroke-width:2.5">
+          <line x1="890" y1="670" x2="1340" y2="670"/>
+          <line x1="890" y1="670" x2="890" y2="450"/>
+        </g>
+
+        <!-- Grades Y (0..6) -->
+        <g class="u-stroke u-small" opacity=".35" style="stroke-width:2">
+          <line x1="890" y1="670" x2="1340" y2="670"/><text x="872" y="674" text-anchor="end" opacity=".85">0</text>
+          <line x1="890" y1="633.3" x2="1340" y2="633.3"/><text x="872" y="637.3" text-anchor="end" opacity=".85">1</text>
+          <line x1="890" y1="596.7" x2="1340" y2="596.7"/><text x="872" y="600.7" text-anchor="end" opacity=".85">2</text>
+          <line x1="890" y1="560.0" x2="1340" y2="560.0"/><text x="872" y="564.0" text-anchor="end" opacity=".85">3</text>
+          <line x1="890" y1="523.3" x2="1340" y2="523.3"/><text x="872" y="527.3" text-anchor="end" opacity=".85">4</text>
+          <line x1="890" y1="486.7" x2="1340" y2="486.7"/><text x="872" y="490.7" text-anchor="end" opacity=".85">5</text>
+          <line x1="890" y1="450.0" x2="1340" y2="450.0"/><text x="872" y="454.0" text-anchor="end" opacity=".85">6</text>
+        </g>
+
+        <!-- 1) LINHAS DOS DECIS (ATRÁS DAS BARRAS) -->
+        <g class="decis-lines">
+          <!-- x(valor) = 890 + 16*valor -->
+          <line x1="943.28"  y1="400" x2="943.28"  y2="670" class="u-d-line"/>
+          <line x1="986.00"  y1="440" x2="986.00"  y2="670" class="u-d-line"/>
+          <line x1="1018.00" y1="400" x2="1018.00" y2="670" class="u-d-line"/>
+          <line x1="1050.00" y1="440" x2="1050.00" y2="670" class="u-d-line"/>
+          <line x1="1076.72" y1="400" x2="1076.72" y2="670" class="u-d-line d5"/>
+          <line x1="1103.28" y1="440" x2="1103.28" y2="670" class="u-d-line"/>
+          <line x1="1130.00" y1="400" x2="1130.00" y2="670" class="u-d-line"/>
+          <line x1="1170.00" y1="440" x2="1170.00" y2="670" class="u-d-line"/>
+          <line x1="1210.00" y1="400" x2="1210.00" y2="670" class="u-d-line"/>
+        </g>
+
+        <!-- 2) BARRAS (NA FRENTE DAS LINHAS) -->
+        <g class="bars">
+          <rect x="890"   y="560.0" width="80" height="110.0" class="bar b1"/>
+          <rect x="971"   y="486.7" width="80" height="183.3" class="bar b2"/>
+          <rect x="1052"  y="450.0" width="80" height="220.0" class="bar b3"/>
+          <rect x="1133"  y="523.3" width="80" height="146.7" class="bar b4"/>
+          <rect x="1214"  y="596.7" width="80" height="73.3"  class="bar b5"/>
+        </g>
+
+        <!-- 4) RÓTULOS Dk (por cima de tudo; duas fileiras) -->
+        <g class="decis-labels">
+          <!-- ímpares em cima -->
+          <text x="943.28" y="372" class="d-label">
+            D<tspan class="subscript">1</tspan><tspan x="943.28" dy="18">3,33</tspan>
+          </text>
+
+          <text x="1018.00" y="372" class="d-label">
+            D<tspan class="subscript">3</tspan><tspan x="1018.00" dy="18">8,00</tspan>
+          </text>
+
+          <text x="1076.72" y="364" class="d-label">
+            D<tspan class="subscript">5</tspan><tspan x="1076.72" dy="18">11,67</tspan>
+            <tspan x="1076.72" dy="16" class="d-note">(mediana)</tspan>
+          </text>
+
+          <text x="1130.00" y="372" class="d-label">
+            D<tspan class="subscript">7</tspan><tspan x="1130.00" dy="18">15,00</tspan>
+          </text>
+
+          <text x="1210.00" y="372" class="d-label">
+            D<tspan class="subscript">9</tspan><tspan x="1210.00" dy="18">20,00</tspan>
+          </text>
+
+          <!-- pares em baixo -->
+          <text x="986.00" y="416" class="d-label">
+            D<tspan class="subscript">2</tspan><tspan x="986.00" dy="18">6,00</tspan>
+          </text>
+
+          <text x="1050.00" y="416" class="d-label">
+            D<tspan class="subscript">4</tspan><tspan x="1050.00" dy="18">10,00</tspan>
+          </text>
+
+          <text x="1103.28" y="416" class="d-label">
+            D<tspan class="subscript">6</tspan><tspan x="1103.28" dy="18">13,33</tspan>
+          </text>
+
+          <text x="1170.00" y="416" class="d-label">
+            D<tspan class="subscript">8</tspan><tspan x="1170.00" dy="18">17,50</tspan>
+          </text>
+        </g>
+
+        <!-- Rodapé: rótulos das classes -->
+        <g class="p-footer u-small">
+          <text x="930"  y="695" text-anchor="middle">0–5</text>
+          <text x="1011" y="695" text-anchor="middle">5–10</text>
+          <text x="1092" y="695" text-anchor="middle">10–15</text>
+          <text x="1173" y="695" text-anchor="middle">15–20</text>
+          <text x="1254" y="695" text-anchor="middle">20–25</text>
+        </g>
+      </g>
+    </g>
+  </g>
+
+</svg>

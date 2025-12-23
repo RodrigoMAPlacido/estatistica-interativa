@@ -1,0 +1,431 @@
+schema: EconSchema
+aspectRatio: 1.6
+
+params:
+  # Frequências por valor (discreto)
+  - name: f2
+    value: 2
+    min: 0
+    max: 8
+    round: 1
+  - name: f3
+    value: 4
+    min: 0
+    max: 8
+    round: 1
+  - name: f4
+    value: 6
+    min: 0
+    max: 8
+    round: 1
+  - name: f5
+    value: 3
+    min: 0
+    max: 8
+    round: 1
+  - name: f6
+    value: 3
+    min: 0
+    max: 8
+    round: 1
+  - name: f7
+    value: 2
+    min: 0
+    max: 8
+    round: 1
+
+calcs:
+  # Total
+  N: "(params.f2 + params.f3 + params.f4 + params.f5 + params.f6 + params.f7)"
+
+  # Acumuladas
+  F2: "(params.f2)"
+  F3: "(params.f2 + params.f3)"
+  F4: "(params.f2 + params.f3 + params.f4)"
+  F5: "(params.f2 + params.f3 + params.f4 + params.f5)"
+  F6: "(params.f2 + params.f3 + params.f4 + params.f5 + params.f6)"
+  F7: "(params.f2 + params.f3 + params.f4 + params.f5 + params.f6 + params.f7)"
+
+  # Posições
+  P1: "(0.25 * calcs.N)"
+  P2: "(0.50 * calcs.N)"
+  P3: "(0.75 * calcs.N)"
+
+   # ============================
+  # Detecta se Pk é inteiro
+  # (uso Math.round + tolerância para evitar pegadinha de float)
+  # ============================
+  isIntP1: "(Math.abs(calcs.P1 - Math.round(calcs.P1)) < 1e-9)"
+  isIntP2: "(Math.abs(calcs.P2 - Math.round(calcs.P2)) < 1e-9)"
+  isIntP3: "(Math.abs(calcs.P3 - Math.round(calcs.P3)) < 1e-9)"
+
+  # ============================
+  # x_(P): valor na posição P do rol implícito
+  # x_(P+1): valor na posição P+1
+  # ============================
+  xP1: "(calcs.F2 >= calcs.P1 ? 2 : (calcs.F3 >= calcs.P1 ? 3 : (calcs.F4 >= calcs.P1 ? 4 : (calcs.F5 >= calcs.P1 ? 5 : (calcs.F6 >= calcs.P1 ? 6 : 7)))))"
+  xP2: "(calcs.F2 >= calcs.P2 ? 2 : (calcs.F3 >= calcs.P2 ? 3 : (calcs.F4 >= calcs.P2 ? 4 : (calcs.F5 >= calcs.P2 ? 5 : (calcs.F6 >= calcs.P2 ? 6 : 7)))))"
+  xP3: "(calcs.F2 >= calcs.P3 ? 2 : (calcs.F3 >= calcs.P3 ? 3 : (calcs.F4 >= calcs.P3 ? 4 : (calcs.F5 >= calcs.P3 ? 5 : (calcs.F6 >= calcs.P3 ? 6 : 7)))))"
+
+  xP1p1: "(calcs.F2 >= (calcs.P1 + 1) ? 2 : (calcs.F3 >= (calcs.P1 + 1) ? 3 : (calcs.F4 >= (calcs.P1 + 1) ? 4 : (calcs.F5 >= (calcs.P1 + 1) ? 5 : (calcs.F6 >= (calcs.P1 + 1) ? 6 : 7)))))"
+  xP2p1: "(calcs.F2 >= (calcs.P2 + 1) ? 2 : (calcs.F3 >= (calcs.P2 + 1) ? 3 : (calcs.F4 >= (calcs.P2 + 1) ? 4 : (calcs.F5 >= (calcs.P2 + 1) ? 5 : (calcs.F6 >= (calcs.P2 + 1) ? 6 : 7)))))"
+  xP3p1: "(calcs.F2 >= (calcs.P3 + 1) ? 2 : (calcs.F3 >= (calcs.P3 + 1) ? 3 : (calcs.F4 >= (calcs.P3 + 1) ? 4 : (calcs.F5 >= (calcs.P3 + 1) ? 5 : (calcs.F6 >= (calcs.P3 + 1) ? 6 : 7)))))"
+
+  # ============================
+  # Quartis com regra do ponto médio quando Pk é inteiro
+  # ============================
+  Q1: "(calcs.isIntP1 ? 0.5*(calcs.xP1 + calcs.xP1p1) : calcs.xP1)"
+  Q2: "(calcs.isIntP2 ? 0.5*(calcs.xP2 + calcs.xP2p1) : calcs.xP2)"
+  Q3: "(calcs.isIntP3 ? 0.5*(calcs.xP3 + calcs.xP3p1) : calcs.xP3)"
+
+  # ============================
+  # Mapa: valor -> posição x no gráfico (2..7 -> 0.7..5.7)
+  # ============================
+  PRxP1: "(calcs.xP1 <= 2 ? 0.7 : (calcs.xP1 <= 3 ? 1.7 : (calcs.xP1 <= 4 ? 2.7 : (calcs.xP1 <= 5 ? 3.7 : (calcs.xP1 <= 6 ? 4.7 : 5.7)))))"
+  PRxP2: "(calcs.xP2 <= 2 ? 0.7 : (calcs.xP2 <= 3 ? 1.7 : (calcs.xP2 <= 4 ? 2.7 : (calcs.xP2 <= 5 ? 3.7 : (calcs.xP2 <= 6 ? 4.7 : 5.7)))))"
+  PRxP3: "(calcs.xP3 <= 2 ? 0.7 : (calcs.xP3 <= 3 ? 1.7 : (calcs.xP3 <= 4 ? 2.7 : (calcs.xP3 <= 5 ? 3.7 : (calcs.xP3 <= 6 ? 4.7 : 5.7)))))"
+
+  PRxP1p1: "(calcs.xP1p1 <= 2 ? 0.7 : (calcs.xP1p1 <= 3 ? 1.7 : (calcs.xP1p1 <= 4 ? 2.7 : (calcs.xP1p1 <= 5 ? 3.7 : (calcs.xP1p1 <= 6 ? 4.7 : 5.7)))))"
+  PRxP2p1: "(calcs.xP2p1 <= 2 ? 0.7 : (calcs.xP2p1 <= 3 ? 1.7 : (calcs.xP2p1 <= 4 ? 2.7 : (calcs.xP2p1 <= 5 ? 3.7 : (calcs.xP2p1 <= 6 ? 4.7 : 5.7)))))"
+  PRxP3p1: "(calcs.xP3p1 <= 2 ? 0.7 : (calcs.xP3p1 <= 3 ? 1.7 : (calcs.xP3p1 <= 4 ? 2.7 : (calcs.xP3p1 <= 5 ? 3.7 : (calcs.xP3p1 <= 6 ? 4.7 : 5.7)))))"
+
+  # ============================
+  # Posição final do quartil no gráfico:
+  # se tem ponto médio, usa a média das posições
+  # ============================
+  PR1: "(calcs.isIntP1 ? 0.5*(calcs.PRxP1 + calcs.PRxP1p1) : calcs.PRxP1)"
+  PR2: "(calcs.isIntP2 ? 0.5*(calcs.PRxP2 + calcs.PRxP2p1) : calcs.PRxP2)"
+  PR3: "(calcs.isIntP3 ? 0.5*(calcs.PRxP3 + calcs.PRxP3p1) : calcs.PRxP3)"
+
+colors:
+  ink: "'#111827'"
+  grid: "'#e5e7eb'"
+  inkSoft: "'#64748b'"
+  bg: "'#ffffff'"
+
+layout:
+  OneWideGraphPlusSidebar:
+    graph:
+      title: "Frequências e quartis"
+      xAxis:
+        min: 0
+        max: 6.4
+        ticks: 0
+      yAxis:
+        min: 0
+        max: 8
+        ticks: 4
+
+      objects:
+        # ---------------------------
+        # Grade horizontal (manual, estilo “limpo”)
+        # ---------------------------
+        - Segment:
+            a: [0, 2]
+            b: [7.4, 2]
+            color: colors.inkSoft
+            strokeWidth: 0.5
+
+        - Segment:
+            a: [0, 4]
+            b: [7.4, 4]
+            color: colors.inkSoft
+            strokeWidth: 0.5
+
+        - Segment:
+            a: [0, 6]
+            b: [7.4, 6]
+            color: colors.inkSoft
+            strokeWidth: 0.5
+
+        - Segment:
+            a: [0, 8]
+            b: [7.4, 8]
+            color: colors.inkSoft
+            strokeWidth: 0.5
+
+        # ---------------------------
+        # Barras (valores 2..7), drag no eixo y (frequência)
+        # width ~ 0.6
+        # ---------------------------
+        - Rectangle:
+            x1: 0.4
+            x2: 1
+            y1: 0
+            y2: params.f2
+            fill: colors.ink
+            opacity: 1
+            drag:
+              - directions: y
+                param: f2
+                expression: "drag.y"
+
+        - Rectangle:
+            x1: 1.4
+            x2: 2
+            y1: 0
+            y2: params.f3
+            fill: colors.ink
+            opacity: 1
+            drag:
+              - directions: y
+                param: f3
+                expression: "drag.y"
+
+        - Rectangle:
+            x1: 2.4
+            x2: 3
+            y1: 0
+            y2: params.f4
+            fill: colors.ink
+            opacity: 1
+            drag:
+              - directions: y
+                param: f4
+                expression: "drag.y"
+
+        - Rectangle:
+            x1: 3.4
+            x2: 4
+            y1: 0
+            y2: params.f5
+            fill: colors.ink
+            opacity: 1
+            drag:
+              - directions: y
+                param: f5
+                expression: "drag.y"
+
+        - Rectangle:
+            x1: 4.4
+            x2: 5
+            y1: 0
+            y2: params.f6
+            fill: colors.ink
+            opacity: 1
+            drag:
+              - directions: y
+                param: f6
+                expression: "drag.y"
+
+        - Rectangle:
+            x1: 5.4
+            x2: 6
+            y1: 0
+            y2: params.f7
+            fill: colors.ink
+            opacity: 1
+            drag:
+              - directions: y
+                param: f7
+                expression: "drag.y"
+
+        # ---------------------------
+        # Rótulos dos valores no “eixo” (2..7)
+        # ---------------------------
+        - Label:
+            coordinates: [0.7, 0]
+            text: "'2'"
+            color: colors.ink
+            fontSize: 12
+            position: t
+
+        - Label:
+            coordinates: [1.7, 0]
+            text: "'3'"
+            color: colors.ink
+            fontSize: 12
+            position: t
+
+        - Label:
+            coordinates: [2.7, 0]
+            text: "'4'"
+            color: colors.ink
+            fontSize: 12
+            position: t
+
+        - Label:
+            coordinates: [3.7, 0]
+            text: "'5'"
+            color: colors.ink
+            fontSize: 12
+            position: t
+
+        - Label:
+            coordinates: [4.7, 0]
+            text: "'6'"
+            color: colors.ink
+            fontSize: 12
+            position: t
+
+        - Label:
+            coordinates: [5.7, 0]
+            text: "'7'"
+            color: colors.ink
+            fontSize: 12
+            position: t
+
+        # ---------------------------
+        # Rótulo f no topo de cada barra
+        # ---------------------------
+        - Label:
+            coordinates: [0.7, params.f2]
+            text: "`\\\\bf{f}=${params.f2.toFixed(0)}`"
+            color: white
+            bgcolor: colors.ink
+            fontSize: 10
+            position: t
+
+        - Label:
+            coordinates: [1.7, params.f3]
+            text: "`\\\\bf{f}=${params.f3.toFixed(0)}`"
+            color: white
+            bgcolor: colors.ink
+            fontSize: 10
+            position: t
+
+        - Label:
+            coordinates: [2.7, params.f4]
+            text: "`\\\\bf{f}=${params.f4.toFixed(0)}`"
+            color: white
+            bgcolor: colors.ink
+            fontSize: 10
+            position: t
+
+        - Label:
+            coordinates: [3.7, params.f5]
+            text: "`\\\\bf{f}=${params.f5.toFixed(0)}`"
+            color: white
+            bgcolor: colors.ink
+            fontSize: 10
+            position: t
+
+        - Label:
+            coordinates: [4.7, params.f6]
+            text: "`\\\\bf{f}=${params.f6.toFixed(0)}`"
+            color: white
+            bgcolor: colors.ink
+            fontSize: 10
+            position: t
+
+        - Label:
+            coordinates: [5.7, params.f7]
+            text: "`\\\\bf{f}=${params.f7.toFixed(0)}`"
+            color: white
+            bgcolor: colors.ink
+            fontSize: 10
+            position: t
+
+
+        # ---------------------------
+        # Linhas verticais dos quartis (Q1 tracejada, Q2 sólida, Q3 pontilhada via dashed “curto”)
+        # ---------------------------
+        - Segment:
+            a: [calcs.PR1, 0]
+            b: [calcs.PR1, 8]
+            color: colors.ink
+            strokeWidth: 2
+            lineStyle: dashed
+
+        - Segment:
+            a: [calcs.PR2, 0]
+            b: [calcs.PR2, 8]
+            color: colors.ink
+            strokeWidth: 2.5
+            lineStyle: solid
+
+        - Segment:
+            a: [calcs.PR3, 0]
+            b: [calcs.PR3, 8]
+            color: colors.ink
+            strokeWidth: 2
+            lineStyle: dashed
+
+        # ---------------------------
+        # Rótulos “acima” do topo do gráfico (estilo conceitual)
+        # (y=7.85 fica no espaço branco superior)
+        # ---------------------------
+        - Label:
+            coordinates: [calcs.PR1, 7.85]
+            text: "`Q_{1}=${calcs.Q1.toFixed(2)}`"
+            color: colors.ink
+            fontSize: 11
+            position: c
+            bgcolor: colors.bg
+
+        - Label:
+            coordinates: [calcs.PR2, 7.85]
+            text: "`Q_{2}=${calcs.Q2.toFixed(2)}\\ \\\\\\\\ (mediana)`"
+            color: colors.ink
+            fontSize: 10
+            position: c
+            bgcolor: colors.bg
+
+        - Label:
+            coordinates: [calcs.PR3, 7.85]
+            text: "`Q_{3}=${calcs.Q3.toFixed(2)}`"
+            color: colors.ink
+            fontSize: 11
+            position: c
+            bgcolor: colors.bg
+
+    sidebar:
+      triggerWidth: 9999
+      controls:
+        - title: 
+
+          divs:
+            # ---------------------------
+            # 1) TABELA
+            # ---------------------------
+            - html: "`<figure class='sidebar-figure'>
+                <div class='sidebar-table-wrap'>
+                  <table class='sidebar-table'>
+                    <thead>
+                      <tr>
+                        <th>Valor <em>x</em></th>
+                        <th>Freq. <em>f</em></th>
+                        <th>Acum. <em>F</em></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>2</td><td>${params.f2.toFixed(0)}</td><td>${calcs.F2.toFixed(0)}</td></tr>
+                      <tr><td>3</td><td>${params.f3.toFixed(0)}</td><td>${calcs.F3.toFixed(0)}</td></tr>
+                      <tr><td>4</td><td>${params.f4.toFixed(0)}</td><td>${calcs.F4.toFixed(0)}</td></tr>
+                      <tr><td>5</td><td>${params.f5.toFixed(0)}</td><td>${calcs.F5.toFixed(0)}</td></tr>
+                      <tr><td>6</td><td>${params.f6.toFixed(0)}</td><td>${calcs.F6.toFixed(0)}</td></tr>
+                      <tr><td>7</td><td>${params.f7.toFixed(0)}</td><td>${calcs.F7.toFixed(0)}</td></tr>
+                      <tr>
+                        <td><b>Total</b></td>
+                        <td><b>${calcs.N.toFixed(0)}</b></td>
+                        <td><b>${calcs.N.toFixed(0)}</b></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <figcaption>Distribuição discreta: frequências e acumuladas</figcaption></figure>`"
+
+            - html: "<hr>"
+
+            # ---------------------------
+            # 2) CÁLCULOS DOS QUARTIS (com caso do ponto médio)
+            # ---------------------------
+
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Posição dos Quartis:</b></div>"
+
+            - html: "`$$\\\\small P_{Q_k}=\\\\frac{k\\\\,N}{4}\\\\quad (k=1,2,3;\\\\; N=${calcs.N.toFixed(0)})$$`"
+
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Aplicando a fórmula de posição dos Quartis:</b></div>"
+
+            - html: "`$$\\\\small P_{Q_1}=\\\\frac{1\\\\cdot ${calcs.N.toFixed(0)}}{4}=${calcs.P1.toFixed(2)},\\\\qquad P_{Q_2}=\\\\frac{2\\\\cdot ${calcs.N.toFixed(0)}}{4}=${calcs.P2.toFixed(2)},\\\\qquad P_{Q_3}=\\\\frac{3\\\\cdot ${calcs.N.toFixed(0)}}{4}=${calcs.P3.toFixed(2)}$$`"
+
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Encontrando o Valor dos Quartis com Ponto Médio</b></div>"
+
+            # --- Q1 detalhado só quando P1 é inteiro
+            - html: "`${calcs.isIntP1 ? `$$\\\\small P_{Q_1}=${calcs.P1.toFixed(0)}\\\\Rightarrow  Q_1=\\\\frac{x_{(${calcs.P1.toFixed(0)})}+x_{(${(calcs.P1+1).toFixed(0)})}}{2}  =\\\\frac{${calcs.xP1.toFixed(0)}+${calcs.xP1p1.toFixed(0)}}{2}  =${calcs.Q1.toFixed(2)} $$` : `$$\\\\small  P_{Q_1}=${calcs.P1.toFixed(2)}\\\\notin\\\\mathbb{Z}\\\\Rightarrow  Q_1=x_{(\\\\lceil P_{Q_1}\\\\rceil)}=${calcs.Q1.toFixed(0)} $$`}`"
+
+            # --- Q2 detalhado só quando P2 é inteiro
+            - html: "`${calcs.isIntP2 ? `$$\\\\small P_{Q_2}=${calcs.P2.toFixed(0)}\\\\Rightarrow Q_2=\\\\frac{x_{(${calcs.P2.toFixed(0)})}+x_{(${(calcs.P2+1).toFixed(0)})}}{2} =\\\\frac{${calcs.xP2.toFixed(0)}+${calcs.xP2p1.toFixed(0)}}{2} =${calcs.Q2.toFixed(2)}\\\\;\\\\;(\\\\text{mediana}) $$` : `$$\\\\small P_{Q_2}=${calcs.P2.toFixed(2)}\\\\notin\\\\mathbb{Z}\\\\Rightarrow Q_2=x_{(\\\\lceil P_{Q_2}\\\\rceil)}=${calcs.Q2.toFixed(0)}\\\\;\\\\;(\\\\text{mediana}) $$` }`"
+
+            # --- Q3 detalhado só quando P3 é inteiro
+            - html: "`${calcs.isIntP3 ? `$$\\\\small P_{Q_3}=${calcs.P3.toFixed(0)}\\\\Rightarrow Q_3=\\\\frac{x_{(${calcs.P3.toFixed(0)})}+x_{(${(calcs.P3+1).toFixed(0)})}}{2} =\\\\frac{${calcs.xP3.toFixed(0)}+${calcs.xP3p1.toFixed(0)}}{2} =${calcs.Q3.toFixed(2)} $$` : `$$\\\\small P_{Q_3}=${calcs.P3.toFixed(2)}\\\\notin\\\\mathbb{Z}\\\\Rightarrow Q_3=x_{(\\\\lceil P_{Q_3}\\\\rceil)}=${calcs.Q3.toFixed(0)} $$` }`"
