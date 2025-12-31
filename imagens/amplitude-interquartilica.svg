@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- =========================================================
+   AMPLITUDE INTERQUARTÍLICA (AIQ / IQR) — DADOS NÃO AGRUPADOS
+   x = {15, 18, 20, 22, 23, 24, 25, 35} (ordenados) | n=8
+   Q1 = (18+20)/2 = 19
+   Q3 = (24+25)/2 = 24,5
+   AIQ = Q3 − Q1 = 5,5
+   (Escala no eixo: 15..35)
+   CSS-only | paleta padrão | + TEMP: fundo branco (.tmp-bg)
+   ========================================================= -->
+<svg viewBox="0 0 1550 744" xmlns="http://www.w3.org/2000/svg"
+     role="img" aria-labelledby="title desc">
+  <title id="title">Amplitude interquartílica (AIQ): Q3 − Q1</title>
+  <desc id="desc">
+    Observações em uma reta numérica. Aparecem os quartis Q1 e Q3 e, entre eles,
+    a faixa correspondente aos 50% centrais. A amplitude interquartílica é a
+    distância Q3 − Q1 (aqui: 24,5 − 19 = 5,5).
+  </desc>
+
+  <!-- TEMP: fundo branco (remover depois) -->
+  <rect class="tmp-bg" x="0" y="0" width="100%" height="100%"/>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --ink-soft:#64748b;
+        --grid:#e5e7eb;
+        --accent:#64748b;
+        --font:"et-book","ETBook","Georgia",serif;
+        --cycle:7.5s;
+        --ease:ease-in-out;
+      }
+
+      /* TEMP */
+      .tmp-bg{ fill:#fff; }
+
+      text{ font-family:var(--font); fill:var(--ink); user-select:none; }
+
+      .u-stroke{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+      }
+      .u-panel{ stroke-width:2; rx:22; ry:22; }
+
+      .label{ font-size:46px; font-weight:600; text-anchor:middle; }
+      .small{ font-size:32px; text-anchor:middle; fill:var(--ink-soft); }
+
+      .axis{ stroke-width:2; }
+      .grid{ stroke:var(--grid); stroke-width:1; stroke-dasharray:6 8; }
+
+      .tick-label{ font-size:22px; fill:var(--ink-soft); }
+
+      .dot{ fill:var(--ink); opacity:.92; }
+
+      .qline{
+        stroke:var(--accent);
+        stroke-width:4;
+        opacity:0;
+      }
+      .q1{ stroke-dasharray:10 10; } /* Q1 tracejada */
+      .q3{ stroke-dasharray:2 10; }  /* Q3 pontilhada */
+
+      .qlab{
+        font-size:28px;
+        font-weight:700;
+        fill:var(--ink);
+        opacity:0;
+      }
+      .qlab .sub{ font-size:18px; baseline-shift:sub; }
+      .qlab .val{ font-size:22px; fill:var(--ink-soft); font-weight:600; }
+
+      .band{ fill:var(--accent); opacity:0; }
+      .band-text{
+        font-size:24px;
+        font-weight:700;
+        fill:var(--ink);
+        opacity:0;
+        text-anchor:middle;
+      }
+      .band-text .soft{ fill:var(--ink-soft); font-weight:600; }
+
+      /* ===== RÉGUA DA AIQ =====
+         Ajuste importante: o segmento tem 319px, então dasharray precisa ser > 319
+      */
+      .range-line{
+        stroke:var(--ink);
+        stroke-width:3.2;
+        stroke-dasharray:360;
+        stroke-dashoffset:360;
+        opacity:.95;
+      }
+      .cap{
+        stroke:var(--ink);
+        stroke-width:3.2;
+        opacity:0;
+      }
+      .range-label{
+        font-size:26px;
+        font-weight:800;
+        text-anchor:middle;
+        opacity:0;
+      }
+      .range-formula{
+        font-size:22px;
+        font-weight:700;
+        fill:var(--ink-soft);
+        text-anchor:middle;
+        opacity:0;
+      }
+
+      /* ===================== ANIMAÇÕES ===================== */
+      .a-dots{
+        transform-box:fill-box;
+        transform-origin:50% 50%;
+        animation:dotsIn var(--cycle) var(--ease) infinite;
+      }
+      @keyframes dotsIn{
+        0%,10%{ opacity:0; transform:scale(.985); }
+        18%,100%{ opacity:1; transform:scale(1); }
+      }
+
+      .a-q1{ animation:q1On var(--cycle) var(--ease) infinite; }
+      .a-q3{ animation:q3On var(--cycle) var(--ease) infinite; }
+      @keyframes q1On{ 0%,24%{opacity:0} 34%,100%{opacity:1} }
+      @keyframes q3On{ 0%,30%{opacity:0} 40%,100%{opacity:1} }
+
+      .a-q1t{ animation:q1T var(--cycle) var(--ease) infinite; }
+      .a-q3t{ animation:q3T var(--cycle) var(--ease) infinite; }
+      @keyframes q1T{ 0%,26%{opacity:0} 36%,100%{opacity:1} }
+      @keyframes q3T{ 0%,32%{opacity:0} 42%,100%{opacity:1} }
+
+      .a-band{ animation:bandOn var(--cycle) var(--ease) infinite; }
+      @keyframes bandOn{ 0%,40%{opacity:0} 50%,82%{opacity:.16} 100%{opacity:.13} }
+
+      .a-bandText{ animation:bandTextOn var(--cycle) var(--ease) infinite; }
+      @keyframes bandTextOn{
+        0%,46%{opacity:0; transform:translateY(6px);}
+        56%,82%{opacity:1; transform:translateY(0px);}
+        100%{opacity:0;}
+      }
+
+      .a-range{ animation:rangeOn var(--cycle) var(--ease) infinite; }
+      @keyframes rangeOn{
+        0%{ stroke-dashoffset:360; opacity:0 }
+        52%,82%{ stroke-dashoffset:0; opacity:1 }
+        92%,100%{ stroke-dashoffset:360; opacity:0 }
+      }
+      .a-cap{ animation:capOn var(--cycle) var(--ease) infinite; }
+      @keyframes capOn{
+        0%,54%{opacity:0}
+        60%,82%{opacity:1}
+        92%,100%{opacity:0}
+      }
+      .a-rlabel{ animation:rLabelOn var(--cycle) var(--ease) infinite; }
+      @keyframes rLabelOn{
+        0%,56%{opacity:0; transform:translateY(6px);}
+        66%,82%{opacity:1; transform:translateY(0px);}
+        92%,100%{opacity:0; transform:translateY(6px);}
+      }
+
+      /* realce: “puxa” atenção para os 50% centrais */
+      .outerFade{ animation:outerFade var(--cycle) var(--ease) infinite; }
+      @keyframes outerFade{
+        0%,44%{ opacity:.92; }
+        54%,100%{ opacity:.40; }
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        .a-dots,.a-q1,.a-q3,.a-q1t,.a-q3t,.a-band,.a-bandText,.a-range,.a-cap,.a-rlabel,.outerFade{
+          animation:none;
+        }
+        .qline,.qlab{ opacity:1; }
+        .band{ opacity:.14; }
+        .band-text{ opacity:1; transform:none; }
+        .range-line{ stroke-dashoffset:0; opacity:1; }
+        .cap,.range-label,.range-formula{ opacity:1; transform:none; }
+      }
+    </style>
+  </defs>
+
+  <g transform="translate(85,92)">
+    <rect x="0" y="0" width="1380" height="560" class="u-panel u-stroke"/>
+
+    <text x="690" y="55" class="label">Amplitude interquartílica</text>
+    <text x="690" y="90" class="small">Distância entre Q<tspan baseline-shift="sub" font-size="22">3</tspan> e Q<tspan baseline-shift="sub" font-size="22">1</tspan> (50% central)</text>
+
+    <g transform="translate(110,150)">
+      <g class="grid">
+        <line x1="0" y1="150" x2="1160" y2="150"/>
+        <line x1="0" y1="210" x2="1160" y2="210"/>
+        <line x1="0" y1="90"  x2="1160" y2="90"/>
+      </g>
+
+      <g class="u-stroke axis">
+        <line x1="0" y1="150" x2="1160" y2="150"/>
+      </g>
+
+      <!-- ticks (mín = 15, máx = 35) -->
+      <g class="u-stroke" style="stroke-width:2">
+        <line x1="0"    y1="140" x2="0"    y2="160"/>
+        <line x1="1160" y1="140" x2="1160" y2="160"/>
+      </g>
+      <g class="tick-label" font-weight="700">
+        <text x="0" y="190" text-anchor="middle">15</text>
+        <text x="1160" y="190" text-anchor="middle">35</text>
+      </g>
+
+      <!-- faixa IQR (Q1=19 → x=232 | Q3=24,5 → x=551) -->
+      <rect class="band a-band" x="232" y="120" width="319" height="60"/>
+
+      <!-- texto da faixa (um pouco acima, longe dos pontos) -->
+      <text class="band-text a-bandText" x="391.5" y="76">
+        50% central 
+      </text>
+      <!-- texto da faixa (um pouco acima, longe dos pontos) -->
+      <text class="band-text a-bandText" x="391.5" y="106">
+         <tspan class="soft">(entre Q1 e Q3)</tspan>
+      </text>
+      <!-- pontos -->
+      <g class="a-dots">
+        <!-- fora do intervalo interquartílico -->
+        <circle class="dot outerFade" cx="0"    cy="150" r="9"/>    <!-- 15 -->
+        <circle class="dot outerFade" cx="174"  cy="150" r="9"/>    <!-- 18 -->
+        <circle class="dot outerFade" cx="580"  cy="150" r="9"/>    <!-- 25 -->
+        <circle class="dot outerFade" cx="1160" cy="150" r="9"/>    <!-- 35 -->
+
+        <!-- 50% central -->
+        <circle class="dot" cx="290" cy="150" r="9"/>  <!-- 20 -->
+        <circle class="dot" cx="406" cy="150" r="9"/>  <!-- 22 -->
+        <circle class="dot" cx="464" cy="150" r="9"/>  <!-- 23 -->
+        <circle class="dot" cx="522" cy="150" r="9"/>  <!-- 24 -->
+      </g>
+
+      <!-- linhas Q1 e Q3 -->
+      <line class="qline q1 a-q1" x1="232" y1="40" x2="232" y2="240"/>
+      <line class="qline q3 a-q3" x1="551" y1="40" x2="551" y2="240"/>
+
+      <text class="qlab a-q1t" x="232" y="28" text-anchor="middle">
+        Q<tspan class="sub">1</tspan> <tspan class="val">= 19</tspan>
+      </text>
+      <text class="qlab a-q3t" x="551" y="28" text-anchor="middle">
+        Q<tspan class="sub">3</tspan> <tspan class="val">= 24,5</tspan>
+      </text>
+
+      <!-- RÉGUA DA AIQ (DESCIDA PARA NÃO SOBREPOR NADA) -->
+      <line class="range-line a-range" x1="232" y1="300" x2="551" y2="300"/>
+      <line class="cap a-cap" x1="232" y1="288" x2="232" y2="312"/>
+      <line class="cap a-cap" x1="551" y1="288" x2="551" y2="312"/>
+
+      <text class="range-label a-rlabel" x="391.5" y="344">AIQ (IQR)</text>
+      <text class="range-formula a-rlabel" x="391.5" y="372">
+        = Q<tspan baseline-shift="sub" font-size="16">3</tspan> − Q<tspan baseline-shift="sub" font-size="16">1</tspan>
+        = 24,5 − 19 = 5,5
+      </text>
+    </g>
+  </g>
+</svg>

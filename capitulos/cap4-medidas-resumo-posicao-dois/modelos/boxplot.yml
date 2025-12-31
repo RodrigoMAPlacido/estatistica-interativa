@@ -108,8 +108,8 @@ layout:
         - Segment: { a: [0, -0.08],  b: [0,  0.08],  color: colors.ink, strokeWidth: 2 }
         - Segment: { a: [30, -0.08], b: [30, 0.08], color: colors.ink, strokeWidth: 2 }
 
-        - Label: { coordinates: [calcs.Wlow,  -0.45], text: "'min'", color: colors.inkSoft, fontSize: 9, position: c }
-        - Label: { coordinates: [calcs.Whigh, -0.45], text: "'max'", color: colors.inkSoft, fontSize: 9, position: c }
+        - Label: { coordinates: [calcs.Wlow,  -0.25], text: "'min'", color: colors.inkSoft, fontSize: 9, position: c }
+        - Label: { coordinates: [calcs.Whigh, -0.25], text: "'max'", color: colors.inkSoft, fontSize: 9, position: c }
 
         # ---------------------------
         # Cercas LI / LS
@@ -260,6 +260,8 @@ layout:
       controls:
         - title: ""
           divs:
+            - html: "`$$\\\\footnotesize Valores: \\\\{ ${params.x_1.toFixed(1)}, ${params.x_2.toFixed(1)}, ${params.x_3.toFixed(1)}, ${params.x_4.toFixed(1)}, ${params.x_5.toFixed(1)}, ${params.x_6.toFixed(1)}, ${params.x_7.toFixed(1)}, ${params.x_8.toFixed(1)} \\\\}$$`"
+            - html: <hr>
             - html: "$$\\footnotesize P_{Q_1}=\\frac{n \\cdot 1}{4},\\quad P_{Q_2}=\\frac{n \\cdot 2}{4},\\quad P_{Q_3}=\\frac{n \\cdot 3}{4}$$"
             - html: "$$\\footnotesize Q_1=\\frac{x_2+x_3}{2},\\quad Q_2=\\frac{x_4+x_5}{2},\\quad Q_3=\\frac{x_6+x_7}{2}$$"
             - html: "$$\\footnotesize IQR=Q_3-Q_1,\\quad LI=Q_1-1.5\\,IQR,\\quad LS=Q_3+1.5\\,IQR$$"
@@ -267,4 +269,3 @@ layout:
             - html: "`$$\\\\footnotesize Q_1=${calcs.Q1.toFixed(2)},\\; Q_2=${calcs.Q2.toFixed(2)},\\; Q_3=${calcs.Q3.toFixed(2)}$$`"
             - html: "`$$\\\\footnotesize IQR=${calcs.IQR.toFixed(2)},\\; LI=${calcs.LI.toFixed(2)},\\; LS=${calcs.LS.toFixed(2)}$$`"
             - html: "`$$\\\\footnotesize W_{inf}=${calcs.Wlow.toFixed(2)},\\; W_{sup}=${calcs.Whigh.toFixed(2)}$$`"
-            - html: "`$$\\\\footnotesize Valores:\\; \\\\{ ${params.x_1.toFixed(1)}, ${params.x_2.toFixed(1)}, ${params.x_3.toFixed(1)}, ${params.x_4.toFixed(1)}, ${params.x_5.toFixed(1)}, ${params.x_6.toFixed(1)}, ${params.x_7.toFixed(1)}, ${params.x_8.toFixed(1)} \\\\}$$`"

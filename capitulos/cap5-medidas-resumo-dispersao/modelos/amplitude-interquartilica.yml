@@ -1,0 +1,365 @@
+schema: EconSchema
+aspectRatio: 2
+
+params:
+  - name: x_1
+    value: 15
+    min: 15
+    max: 35
+    round: 0.1
+  - name: x_2
+    value: 18
+    min: 15
+    max: 35
+    round: 0.1
+  - name: x_3
+    value: 20
+    min: 15
+    max: 35
+    round: 0.1
+  - name: x_4
+    value: 22
+    min: 15
+    max: 35
+    round: 0.1
+  - name: x_5
+    value: 23
+    min: 15
+    max: 35
+    round: 0.1
+  - name: x_6
+    value: 24
+    min: 15
+    max: 35
+    round: 0.1
+  - name: x_7
+    value: 25
+    min: 15
+    max: 35
+    round: 0.1
+  - name: x_8
+    value: 35
+    min: 15
+    max: 35
+    round: 0.1
+
+calcs:
+  # Quartis para n=8 (ordem mantida)
+  Q1: "((params.x_2 + params.x_3) / 2)"
+  Q2: "((params.x_4 + params.x_5) / 2)"
+  Q3: "((params.x_6 + params.x_7) / 2)"
+
+  # Amplitude interquartílica
+  AIQ: "(calcs.Q3 - calcs.Q1)"
+  midI: "((calcs.Q1 + calcs.Q3) / 2)"
+  SIQ: "(0.5 * calcs.AIQ)"
+
+colors:
+  ink: "'#111827'"
+  inkSoft: "'#64748b'"
+  accent: "'#64748b'"
+  bg: "'#ffffff'"
+
+layout:
+  OneWideGraphPlusSidebar:
+
+    graph:
+      xAxis:
+        min: 15
+        max: 35
+        ticks: 0
+        title: Amplitude interquartílica (arraste os pontos)
+      yAxis:
+        show: false
+        min: -1
+        max: 1
+        ticks: 0
+
+      objects:
+   
+        # ---------------------------
+        # Reta numérica
+        # ---------------------------
+        - Segment:
+            a: [15, 0]
+            b: [35, 0]
+            color: colors.ink
+            strokeWidth: 3
+
+        - Segment:
+            a: [15, -0.08]
+            b: [15,  0.08]
+            color: colors.ink
+            strokeWidth: 2
+
+        - Segment:
+            a: [35, -0.08]
+            b: [35,  0.08]
+            color: colors.ink
+            strokeWidth: 2
+
+        # Labels somente dos extremos (final)
+        - Label:
+            coordinates: [15, -0.25]
+            text: "'15'"
+            color: colors.inkSoft
+            fontSize: 10
+            position: c
+
+        - Label:
+            coordinates: [35, -0.25]
+            text: "'35'"
+            color: colors.inkSoft
+            fontSize: 10
+            position: c
+
+        # ---------------------------
+        # Linhas verticais Q1, Q2, Q3 (sem poluição)
+        # Q2 fica discreta, mas mantém referência
+        # ---------------------------
+        - Segment:
+            a: [calcs.Q1, -0.70]
+            b: [calcs.Q1,  0.70]
+            color: colors.accent
+            strokeWidth: 2
+            lineStyle: dashed
+
+        - Segment:
+            a: [calcs.Q2, -0.55]
+            b: [calcs.Q2,  0.55]
+            color: colors.inkSoft
+            strokeWidth: 1.2
+            lineStyle: dotted
+
+        - Segment:
+            a: [calcs.Q3, -0.70]
+            b: [calcs.Q3,  0.70]
+            color: colors.accent
+            strokeWidth: 2
+            lineStyle: dashed
+
+        # ---------------------------
+        # Labels SOMENTE dos quartis
+        # ---------------------------
+        - Label:
+            coordinates: [calcs.Q1, 0.70]
+            text: "`\\\\bf{Q_1}`"
+            bgcolor: colors.bg
+            color: colors.ink
+            fontSize: 10
+            position: c
+
+        - Label:
+            coordinates: [calcs.Q1, 0.54]
+            text: "`${calcs.Q1.toFixed(2)}`"
+            bgcolor: colors.bg
+            color: colors.inkSoft
+            fontSize: 9
+            position: c
+
+        - Label:
+            coordinates: [calcs.Q2, 0.70]
+            text: "`\\\\bf{Q_2}`"
+            bgcolor: colors.bg
+            color: colors.ink
+            fontSize: 10
+            position: c
+
+        - Label:
+            coordinates: [calcs.Q2, 0.54]
+            text: "`${calcs.Q2.toFixed(2)}`"
+            bgcolor: colors.bg
+            color: colors.inkSoft
+            fontSize: 9
+            position: c
+
+        - Label:
+            coordinates: [calcs.Q3, 0.70]
+            text: "`\\\\bf{Q_3}`"
+            bgcolor: colors.bg
+            color: colors.ink
+            fontSize: 10
+            position: c
+
+        - Label:
+            coordinates: [calcs.Q3, 0.54]
+            text: "`${calcs.Q3.toFixed(2)}`"
+            bgcolor: colors.bg
+            color: colors.inkSoft
+            fontSize: 9
+            position: c
+
+
+        # ---------------------------
+        # Colchete da AIQ (IQR) abaixo (mantém o cálculo final)
+        # ---------------------------
+        - Segment:
+            a: [calcs.Q1, 0]
+            b: [calcs.Q1, -0.32]
+            color: colors.inkSoft
+            strokeWidth: 1
+            lineStyle: dotted
+
+        - Segment:
+            a: [calcs.Q3, 0]
+            b: [calcs.Q3, -0.32]
+            color: colors.inkSoft
+            strokeWidth: 1
+            lineStyle: dotted
+
+        - Segment:
+            a: [calcs.Q1, -0.32]
+            b: [calcs.Q1, -0.52]
+            color: colors.ink
+            strokeWidth: 2
+
+        - Segment:
+            a: [calcs.Q3, -0.32]
+            b: [calcs.Q3, -0.52]
+            color: colors.ink
+            strokeWidth: 2
+
+        - Segment:
+            a: [calcs.Q1, -0.42]
+            b: [calcs.Q3, -0.42]
+            color: colors.ink
+            strokeWidth: 2
+
+        - Label:
+            coordinates: [calcs.midI, -0.66]
+            text: "`\\\\bf{AIQ\\\\ (IQR)}`"
+            color: colors.ink
+            fontSize: 12
+            position: c
+            bgcolor: colors.bg
+
+        - Label:
+            coordinates: [calcs.midI, -0.82]
+            text: "`=\\\\;Q_3-Q_1=${calcs.Q3.toFixed(2)}-${calcs.Q1.toFixed(2)}=${calcs.AIQ.toFixed(2)}`"
+            color: colors.inkSoft
+            fontSize: 11
+            position: c
+            bgcolor: colors.bg
+
+        # ---------------------------
+        # Pontos (arrastáveis, sem cruzar)
+        # ---------------------------
+        - Point:
+            coordinates: [params.x_1, 0]
+            color: colors.ink
+            drag:
+              - directions: x
+                param: x_1
+                expression: "((drag.x >= 15) ? ((drag.x <= params.x_2) ? drag.x : params.x_2) : 15)"
+
+        - Point:
+            coordinates: [params.x_2, 0]
+            color: colors.inkSoft
+            drag:
+              - directions: x
+                param: x_2
+                expression: "((drag.x >= params.x_1) ? ((drag.x <= params.x_3) ? drag.x : params.x_3) : params.x_1)"
+
+        - Point:
+            coordinates: [params.x_3, 0]
+            color: colors.ink
+            drag:
+              - directions: x
+                param: x_3
+                expression: "((drag.x >= params.x_2) ? ((drag.x <= params.x_4) ? drag.x : params.x_4) : params.x_2)"
+
+        - Point:
+            coordinates: [params.x_4, 0]
+            color: colors.inkSoft
+            drag:
+              - directions: x
+                param: x_4
+                expression: "((drag.x >= params.x_3) ? ((drag.x <= params.x_5) ? drag.x : params.x_5) : params.x_3)"
+
+        - Point:
+            coordinates: [params.x_5, 0]
+            color: colors.ink
+            drag:
+              - directions: x
+                param: x_5
+                expression: "((drag.x >= params.x_4) ? ((drag.x <= params.x_6) ? drag.x : params.x_6) : params.x_4)"
+
+        - Point:
+            coordinates: [params.x_6, 0]
+            color: colors.inkSoft
+            drag:
+              - directions: x
+                param: x_6
+                expression: "((drag.x >= params.x_5) ? ((drag.x <= params.x_7) ? drag.x : params.x_7) : params.x_5)"
+
+        - Point:
+            coordinates: [params.x_7, 0]
+            color: colors.ink
+            drag:
+              - directions: x
+                param: x_7
+                expression: "((drag.x >= params.x_6) ? ((drag.x <= params.x_8) ? drag.x : params.x_8) : params.x_6)"
+
+        - Point:
+            coordinates: [params.x_8, 0]
+            color: colors.inkSoft
+            drag:
+              - directions: x
+                param: x_8
+                expression: "((drag.x >= params.x_7) ? ((drag.x <= 35) ? drag.x : 35) : params.x_7)"
+
+    # Sidebar opcional no seu padrão (sem valores dos xi)
+    sidebar:
+      triggerWidth: 9999
+      controls:
+        - title: ""
+          divs:
+            # ---------------------------
+            # 1) DADOS
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Dados:</b></div>"
+
+            - html: "`$$\\\\small
+                      x=\\\\{${params.x_1.toFixed(0)},${params.x_2.toFixed(0)},${params.x_3.toFixed(0)},${params.x_4.toFixed(0)},
+                      ${params.x_5.toFixed(0)},${params.x_6.toFixed(0)},${params.x_7.toFixed(0)},${params.x_8.toFixed(0)}\\\\}
+                      $$`"
+
+            - html: "`$$\\\\small
+                      Q_1=${calcs.Q1.toFixed(2)},\\\\qquad Q_3=${calcs.Q3.toFixed(2)}.
+                      $$`"
+
+            # ---------------------------
+            # 2) AMPLITUDE INTERQUARTÍLICA
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Amplitude interquartílica (AIQ):</b></div>"
+
+            - html: "$$\\small AIQ = Q_3 - Q_1$$"
+
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Aplicando:</b></div>"
+
+            - html: "`$$\\\\small
+                      AIQ=${calcs.Q3.toFixed(2)}-${calcs.Q1.toFixed(2)}=${calcs.AIQ.toFixed(2)}
+                      $$`"
+
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Resultado:</b></div>"
+
+            - html: "`$$\\\\small AIQ=${calcs.AIQ.toFixed(2)} $$`"
+
+            - html: "<hr>"
+
+            # ---------------------------
+            # 3) SEMI-INTERQUARTÍLICA
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Semi-interquartílica:</b></div>"
+
+            - html: "$$\\small S = \\frac{AIQ}{2}$$"
+
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Aplicando:</b></div>"
+
+            - html: "`$$\\\\small
+                      S=\\\\frac${'{' }${calcs.AIQ.toFixed(2)}${'}'}{2}=${calcs.SIQ.toFixed(2)}
+                      $$`"
+
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Resultado:</b></div>"
+
+            - html: "`$$\\\\small S=${calcs.SIQ.toFixed(2)} $$`"

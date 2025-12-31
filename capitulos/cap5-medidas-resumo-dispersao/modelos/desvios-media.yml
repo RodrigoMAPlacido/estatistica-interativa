@@ -1,0 +1,222 @@
+schema: EconSchema
+aspectRatio: 2
+
+params:
+  # Dados (ordenados) — arraste sem cruzar
+  - { name: x_1, value: 2,  min: 0, max: 10, round: 0.1 }
+  - { name: x_2, value: 4,  min: 0, max: 10, round: 0.1 }
+  - { name: x_3, value: 6,  min: 0, max: 10, round: 0.1 }
+  - { name: x_4, value: 10, min: 0, max: 10, round: 0.1 }
+
+calcs:
+  xbar: "((params.x_1 + params.x_2 + params.x_3 + params.x_4) / 4)"
+  d1: "(params.x_1 - calcs.xbar)"
+  d2: "(params.x_2 - calcs.xbar)"
+  d3: "(params.x_3 - calcs.xbar)"
+  d4: "(params.x_4 - calcs.xbar)"
+  absd4: "Math.abs(calcs.d4)"
+  dir: "(calcs.d4 >= 0 ? 1 : -1)"         # só pra seta apontar corretamente
+  mid: "((params.x_4 + calcs.xbar)/2)"
+  signD4: "(calcs.d4 >= 0 ? '+' : '−')"
+
+colors:
+  ink: "'#111827'"
+  inkSoft: "'#64748b'"
+  accent: "'#64748b'"
+  bg: "'#ffffff'"
+
+layout:
+  OneWideGraphPlusSidebar:
+    graph:
+      title: "Desvios em relação à Média Aritmética"
+      xAxis:
+        min: 0
+        max: 10
+        ticks: 0
+      yAxis:
+        show: false
+        min: -1
+        max: 1
+        ticks: 0
+
+      objects:
+        # Subtítulo (como no seu SVG)
+
+
+        # Reta numérica
+        - Segment:
+            a: [0, 0]
+            b: [12, 0]
+            color: colors.inkSoft
+            strokeWidth: 3
+
+        # extremos
+        - Segment: { a: [0, -0.08],  b: [0,  0.08],  color: colors.inkSoft, strokeWidth: 2 }
+        - Segment: { a: [12, -0.08], b: [12, 0.08],  color: colors.inkSoft, strokeWidth: 2 }
+        - Label:   { coordinates: [0,  -0.24], text: "'0'",  color: colors.inkSoft, fontSize: 10, position: c }
+        - Label:   { coordinates: [12, -0.24], text: "'12'", color: colors.inkSoft, fontSize: 10, position: c }
+
+
+        # Linha da média (tracejada) + rótulo
+        - Segment:
+            a: [calcs.xbar, -0.55]
+            b: [calcs.xbar,  0.55]
+            color: colors.accent
+            strokeWidth: 2
+            lineStyle: dashed
+
+        - Label:
+            coordinates: [calcs.xbar, 0.60]
+            text: "'x̄'"
+            color: colors.ink
+            fontSize: 12
+            position: c
+            bgcolor: colors.bg
+
+        - Label:
+            coordinates: [calcs.xbar, 0.46]
+            text: "`${calcs.xbar.toFixed(2)}`"
+            color: colors.inkSoft
+            fontSize: 10
+            position: c
+            bgcolor: colors.bg
+
+        # ---------------------------
+        # Desvio mostrado: d4 = x4 - x̄ (seta)
+        # ---------------------------
+        - Arrow:
+            begin: [calcs.xbar, -0.22]
+            end: [params.x_4, -0.22]
+            color: colors.ink
+            strokeWidth: 2
+            trim: 0.01
+            label:
+              text: "`\\\\mathbf{d_{i}=x_{i}-\\\\bar{X}= ${params.x_4.toFixed(1)}-${calcs.xbar.toFixed(1)}=${calcs.d4.toFixed(1)}}`"
+              position: t
+              fontSize: 8
+
+        # x1
+        - Point:
+            coordinates: [params.x_1, 0]
+            color: colors.inkSoft
+            drag:
+              - directions: x
+                param: x_1
+                expression: "((drag.x >= 0) ? ((drag.x <= params.x_2) ? drag.x : params.x_2) : 0)"
+
+        # x2
+        - Point:
+            coordinates: [params.x_2, 0]
+            color: colors.inkSoft
+            drag:
+              - directions: x
+                param: x_2
+                expression: "((drag.x >= params.x_1) ? ((drag.x <= params.x_3) ? drag.x : params.x_3) : params.x_1)"
+
+        # x3
+        - Point:
+            coordinates: [params.x_3, 0]
+            color: colors.inkSoft
+            drag:
+              - directions: x
+                param: x_3
+                expression: "((drag.x >= params.x_2) ? ((drag.x <= params.x_4) ? drag.x : params.x_4) : params.x_2)"
+
+        # x4
+        - Point:
+            coordinates: [params.x_4, 0]
+            color: colors.ink
+            drag:
+              - directions: x
+                param: x_4
+                expression: "((drag.x >= params.x_3) ? ((drag.x <= 12) ? drag.x : 12) : params.x_3)"
+
+        # Labels dos pontos (como no print): alterna cima/baixo
+        - Label:
+            coordinates: [params.x_1, 0.16]
+            text: "`${params.x_1.toFixed(1)}`"
+            color: colors.inkSoft
+            fontSize: 10
+            position: c
+            bgcolor: colors.bg
+
+        - Label:
+            coordinates: [params.x_2, 0.16]
+            text: "`${params.x_2.toFixed(1)}`"
+            color: colors.inkSoft
+            fontSize: 10
+            position: c
+            bgcolor: colors.bg
+
+        - Label:
+            coordinates: [params.x_3, 0.16]
+            text: "`${params.x_3.toFixed(1)}`"
+            color: colors.inkSoft
+            fontSize: 10
+            position: c
+            bgcolor: colors.bg
+
+        - Label:
+            coordinates: [params.x_4, 0.16]
+            text: "`${params.x_4.toFixed(1)}`"
+            color: colors.inkSoft
+            fontSize: 10
+            position: c
+            bgcolor: colors.bg
+
+        
+
+    sidebar:
+      triggerWidth: 9999
+      controls:
+        - title: ""
+          divs:
+            # ---------------------------
+            # 1) DADOS
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Dados:</b></div>"
+
+            - html: "`$$\\\\small x=\\\\{${params.x_1.toFixed(1)},\\\\;${params.x_2.toFixed(1)},\\\\;${params.x_3.toFixed(1)},\\\\;${params.x_4.toFixed(1)}\\\\},\\\\quad n=4$$`"
+
+            # ---------------------------
+            # 2) FÓRMULAS
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Fórmulas:</b></div>"
+
+            - html: "$$\\small \\bar{x}=\\frac{1}{n}\\sum_{i=1}^{n}x_i,\\qquad d_i=x_i-\\bar{x}$$"
+
+            # ---------------------------
+            # 3) APLICANDO (MÉDIA)
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Aplicando (média):</b></div>"
+
+            - html: "`$$\\\\small
+                      \\\\bar{x}=\\\\frac{${params.x_1.toFixed(1)}+${params.x_2.toFixed(1)}+${params.x_3.toFixed(1)}+${params.x_4.toFixed(1)}}{4}
+                      =${calcs.xbar.toFixed(2)}\\\\,.
+                      $$`"
+
+            # ---------------------------
+            # 4) DESVIO MOSTRADO
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Desvio mostrado:</b></div>"
+
+            - html: "`$$\\\\small
+                      d_{1}=x_{1}-\\\\bar{x}
+                      =${params.x_1.toFixed(2)}-${calcs.xbar.toFixed(2)}
+                      =${calcs.d1.toFixed(2)}\\\\,.
+                      $$`"
+            - html: "`$$\\\\small
+                      d_{2}=x_{2}-\\\\bar{x}
+                      =${params.x_2.toFixed(2)}-${calcs.xbar.toFixed(2)}
+                      =${calcs.d2.toFixed(2)}\\\\,.
+                      $$`"
+            - html: "`$$\\\\small
+                      d_{3}=x_{3}-\\\\bar{x}
+                      =${params.x_3.toFixed(2)}-${calcs.xbar.toFixed(2)}
+                      =${calcs.d3.toFixed(2)}\\\\,.
+                      $$`"
+            - html: "`$$\\\\small
+                      d_{4}=x_{4}-\\\\bar{x}
+                      =${params.x_4.toFixed(2)}-${calcs.xbar.toFixed(2)}
+                      =${calcs.d4.toFixed(2)}\\\\,.
+                      $$`"

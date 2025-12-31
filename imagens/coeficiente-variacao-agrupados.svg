@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ===========================================
+   COEFICIENTE DE VARIAÇÃO (CV) — DADOS AGRUPADOS EM CLASSES
+   (usa pontos médios c_j)
+
+   Classes: [0,10), [10,20), [20,30)
+   Frequências: f = [2,5,3]  →  N = 10
+   Pontos médios: c = [5,15,25]
+
+   Σ f c = 2·5 + 5·15 + 3·25 = 160  →  x̄ ≈ 160/10 = 16
+   Σ f(c−x̄)² = 2·(5−16)² + 5·(15−16)² + 3·(25−16)² = 490
+   σ² ≈ 490/10 = 49  →  σ ≈ 7
+   CV = σ/x̄ ≈ 7/16 = 0,4375 ⇒ 43,75%
+   =========================================== -->
+<svg viewBox="0 0 1500 780" xmlns="http://www.w3.org/2000/svg"
+     role="img" aria-labelledby="title desc">
+  <title id="title">Coeficiente de variação em dados agrupados em classes</title>
+  <desc id="desc">
+    À esquerda, tabela de classes, frequências e pontos médios (N=10).
+    À direita, barras de frequências por classe (marcadas nos pontos médios) e a marcação do
+    desvio-padrão (σ) em torno da média aproximada x̄, com a indicação do coeficiente de variação
+    CV = σ/x̄ acima do segmento.
+  </desc>
+
+  <rect x="0" y="0" width="1500" height="780" fill="#ffffff"/>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --muted:#64748b;
+        --grid:#e5e7eb;
+        --accent:#64748b;
+        --font:"et-book","ETBook","Georgia",serif;
+
+        --cycle:8s;
+        --ease:ease-in-out;
+      }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        user-select:none;
+      }
+
+      .u-stroke{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+      }
+
+      .u-panel{ stroke-width:2; }
+
+      .label{
+        font-size:32px;
+        font-weight:600;
+        text-anchor:middle;
+      }
+
+      .u-small{ font-size:18px; fill:var(--muted); }
+      .u-small-ink{ font-size:18px; fill:var(--ink); }
+
+      .subscript{
+        font-size:0.7em;
+        font-weight:600;
+        baseline-shift:-0.3em;
+      }
+
+      /* ====== Destaque sequencial das linhas da tabela ====== */
+      @keyframes rowHi{
+        0%,10%{opacity:0}
+        15%,25%{opacity:.16}
+        30%,100%{opacity:0}
+      }
+      .row-hi{ fill:var(--ink); opacity:0 }
+      .r1{ animation:rowHi var(--cycle) var(--ease) infinite 0s }
+      .r2{ animation:rowHi var(--cycle) var(--ease) infinite .7s }
+      .r3{ animation:rowHi var(--cycle) var(--ease) infinite 1.4s }
+      .r4{ animation:rowHi var(--cycle) var(--ease) infinite 2.1s }
+
+      /* ====== Barras (frequência) ====== */
+      @keyframes grow{
+        0%{ transform:scaleY(0) }
+        18%,82%{ transform:scaleY(1) }
+        100%{ transform:scaleY(0) }
+      }
+      .bar{
+        fill:var(--ink);
+        transform-box:fill-box;
+        transform-origin:bottom;
+        transform:scaleY(0);
+      }
+      .b1{ animation:grow var(--cycle) var(--ease) infinite 0s }
+      .b2{ animation:grow var(--cycle) var(--ease) infinite .18s }
+      .b3{ animation:grow var(--cycle) var(--ease) infinite .36s }
+
+      /* ====== Linha vertical da média ====== */
+      .u-mean-line{
+        stroke-width:4.2;
+        stroke-dasharray:520;
+        stroke-dashoffset:520;
+        opacity:.95;
+        animation:meanLine var(--cycle) var(--ease) infinite;
+      }
+      @keyframes meanLine{
+        0%{   stroke-dashoffset:520; opacity:0 }
+        20%,72%{ stroke-dashoffset:0; opacity:1 }
+        86%,100%{ stroke-dashoffset:520; opacity:0 }
+      }
+
+      /* ====== σ: duas metades saindo do centro ====== */
+      .u-sig-halo{
+        stroke:#fff;
+        stroke-width:10;
+        opacity:0;
+        animation:sigHalo var(--cycle) var(--ease) infinite;
+      }
+      .u-sig-line{
+        stroke-width:4.2;
+        stroke-dasharray:14 10;
+        opacity:0;
+        stroke-dashoffset:260;
+        animation:sigDraw var(--cycle) var(--ease) infinite;
+      }
+      @keyframes sigHalo{
+        0%,24%{ opacity:0 }
+        34%,72%{ opacity:.98 }
+        86%,100%{ opacity:0 }
+      }
+      @keyframes sigDraw{
+        0%{ opacity:0; stroke-dashoffset:260 }
+        24%{ opacity:0; stroke-dashoffset:260 }
+        34%{ opacity:1; stroke-dashoffset:0 }
+        72%{ opacity:1; stroke-dashoffset:0 }
+        86%{ opacity:0; stroke-dashoffset:260 }
+        100%{ opacity:0; stroke-dashoffset:260 }
+      }
+
+      /* Halo do texto (sem caixa) */
+      .text-halo{
+        paint-order:stroke;
+        stroke:#fff;
+        stroke-width:6;
+        stroke-linejoin:round;
+      }
+
+      .end-label{
+        font-size:14px;
+        font-weight:800;
+        opacity:0;
+        animation:txtOn var(--cycle) var(--ease) infinite;
+      }
+      .mean-label{
+        font-size:16px;
+        font-weight:900;
+        text-anchor:middle;
+        opacity:0;
+        animation:txtOn var(--cycle) var(--ease) infinite;
+      }
+      .d-label{
+        font-size:16px;
+        font-weight:900;
+        text-anchor:middle;
+        opacity:0;
+        animation:txtOn var(--cycle) var(--ease) infinite;
+      }
+      .cv-label{
+        font-size:18px;
+        font-weight:900;
+        text-anchor:middle;
+        fill:var(--muted);
+        opacity:0;
+        animation:txtOn var(--cycle) var(--ease) infinite;
+      }
+
+      @keyframes txtOn{
+        0%,28%{ opacity:0 }
+        36%,72%{ opacity:1 }
+        86%,100%{ opacity:0 }
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        .row-hi{ animation:none; opacity:.12 }
+        .bar{ animation:none; transform:scaleY(1) }
+        .u-mean-line{ animation:none; stroke-dashoffset:0; opacity:1 }
+        .u-sig-halo{ animation:none; opacity:.98 }
+        .u-sig-line{ animation:none; opacity:1; stroke-dashoffset:0 }
+        .end-label,.mean-label,.d-label,.cv-label{ animation:none; opacity:1 }
+      }
+    </style>
+  </defs>
+
+  <!-- ================= PAINEL ESQUERDO: TABELA (SEM FREQ. ACUM.) ================= -->
+  <g id="panel-table" transform="translate(-140,-200) scale(1.2)">
+    <g class="p-panel">
+      <rect x="120" y="230" width="560" height="510" rx="12" ry="12" class="u-panel u-stroke"/>
+
+      <g class="p-header">
+        <text x="390" y="280" class="label">Coeficiente de variação</text>
+        <text x="390" y="308" class="u-small" text-anchor="middle">
+          Dados em classes — N = 10 (via pontos médios c<tspan class="subscript">j</tspan>)
+        </text>
+      </g>
+
+      <g class="p-body" transform="translate(8,10)">
+        <line x1="160" y1="364" x2="620" y2="364" class="u-stroke" style="stroke-width:2"/>
+
+        <!-- Cabeçalho (3 colunas) -->
+        <g font-size="18" font-weight="700">
+          <text x="240" y="352" text-anchor="middle">Classe</text>
+          <text x="390" y="352" text-anchor="middle">
+            Frequência f<tspan class="subscript">j</tspan>
+          </text>
+          <text x="540" y="352" text-anchor="middle">
+            Ponto médio c<tspan class="subscript">j</tspan>
+          </text>
+        </g>
+
+        <!-- Linhas -->
+        <g class="u-stroke" style="stroke-width:2">
+          <line x1="160" y1="404" x2="620" y2="404"/>
+          <line x1="160" y1="444" x2="620" y2="444"/>
+          <line x1="160" y1="484" x2="620" y2="484"/>
+          <line x1="160" y1="524" x2="620" y2="524"/>
+          <line x1="160" y1="564" x2="620" y2="564"/>
+        </g>
+
+        <!-- Destaques -->
+        <rect x="160" y="374" width="460" height="30" class="row-hi r1"/>
+        <rect x="160" y="414" width="460" height="30" class="row-hi r2"/>
+        <rect x="160" y="454" width="460" height="30" class="row-hi r3"/>
+        <rect x="160" y="494" width="460" height="30" class="row-hi r4"/>
+
+        <!-- Dados (3 colunas) -->
+        <g font-size="19" font-weight="650">
+          <text x="170" y="396" text-anchor="start">[0, 10)</text>
+          <text x="390" y="396" text-anchor="middle">2</text>
+          <text x="540" y="396" text-anchor="middle">5</text>
+
+          <text x="170" y="436" text-anchor="start">[10, 20)</text>
+          <text x="390" y="436" text-anchor="middle">5</text>
+          <text x="540" y="436" text-anchor="middle">15</text>
+
+          <text x="170" y="476" text-anchor="start">[20, 30)</text>
+          <text x="390" y="476" text-anchor="middle">3</text>
+          <text x="540" y="476" text-anchor="middle">25</text>
+
+          <text x="170" y="516" font-weight="800" text-anchor="start">Totais</text>
+          <text x="390" y="516" font-weight="800" text-anchor="middle">10</text>
+          <text x="540" y="516" font-weight="800" text-anchor="middle">—</text>
+        </g>
+      </g>
+
+      <!-- Rodapé -->
+      <g class="p-footer" transform="translate(0,0)">
+        <text x="390" y="652" class="u-small" text-anchor="middle">
+          Média (aprox.): x̄ ≈ (Σ f<tspan class="subscript">j</tspan> c<tspan class="subscript">j</tspan>)/N = 160/10 = 16.
+        </text>
+        <text x="390" y="678" class="u-small" text-anchor="middle">
+          Variância (aprox.): σ² ≈ (1/N) Σ f<tspan class="subscript">j</tspan>(c<tspan class="subscript">j</tspan> − x̄)² = 490/10 = 49.
+        </text>
+        <text x="390" y="704" class="u-small" text-anchor="middle">
+          Desvio-padrão: σ ≈ √49 = 7  ⇒  x̄ ± σ = 16 ± 7.
+        </text>
+        <text x="390" y="730" class="u-small" text-anchor="middle">
+          Coeficiente de variação: CV = σ/x̄ ≈ 7/16 = 0,4375 ⇒ 43,75%.
+        </text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ================= PAINEL DIREITO: BARRAS + σ + CV ================= -->
+  <g id="panel-hist" transform="translate(-220,-200) scale(1.2)">
+    <g class="p-panel">
+      <rect x="840" y="230" width="580" height="510" rx="12" ry="12" class="u-panel u-stroke"/>
+
+      <g class="p-header">
+        <text x="1130" y="280" class="label">Frequências, σ e CV</text>
+        <text x="1130" y="308" class="u-small" text-anchor="middle">
+          Barras por classe (marcadas em c<tspan class="subscript">j</tspan>) — N = 10
+        </text>
+      </g>
+
+      <g transform="translate(-125,-40) scale(1.1)">
+        <g class="p-body">
+<g transform="translate(0,15)">
+
+          <!-- Eixos -->
+          <g class="u-stroke" style="stroke-width:2.5">
+            <line x1="930" y1="650" x2="1355" y2="650"/>
+            <line x1="930" y1="650" x2="930"  y2="430"/>
+          </g>
+
+          <!-- Grades Y (0..5) -->
+          <g class="u-stroke u-small" opacity=".35" style="stroke-width:2">
+            <line x1="930" y1="650" x2="1355" y2="650"/><text x="915" y="654" text-anchor="end" opacity=".85">0</text>
+            <line x1="930" y1="606" x2="1355" y2="606"/><text x="915" y="610" text-anchor="end" opacity=".85">1</text>
+            <line x1="930" y1="562" x2="1355" y2="562"/><text x="915" y="566" text-anchor="end" opacity=".85">2</text>
+            <line x1="930" y1="518" x2="1355" y2="518"/><text x="915" y="522" text-anchor="end" opacity=".85">3</text>
+            <line x1="930" y1="474" x2="1355" y2="474"/><text x="915" y="478" text-anchor="end" opacity=".85">4</text>
+            <line x1="930" y1="430" x2="1355" y2="430"/><text x="915" y="434" text-anchor="end" opacity=".85">5</text>
+          </g>
+
+          <!-- Barras por classe (0..30 ↦ 930..1355) -->
+          <rect x="930"       y="562" width="141.6667" height="88"  class="bar b1"/>  <!-- [0,10): f=2 -->
+          <rect x="1071.6667" y="430" width="141.6667" height="220" class="bar b2"/>  <!-- [10,20): f=5 -->
+          <rect x="1213.3333" y="518" width="141.6667" height="132" class="bar b3"/>  <!-- [20,30): f=3 -->
+
+          <!-- Ticks e rótulos nos pontos médios (5,15,25) -->
+          <g class="u-stroke" style="stroke-width:2" opacity=".85">
+            <line x1="1000.8333" y1="650" x2="1000.8333" y2="642"/>
+            <line x1="1142.5"    y1="650" x2="1142.5"    y2="642"/>
+            <line x1="1284.1667" y1="650" x2="1284.1667" y2="642"/>
+          </g>
+          <g class="u-small-ink" font-weight="800">
+            <text x="1000.8333" y="674" text-anchor="middle">5</text>
+            <text x="1142.5"    y="674" text-anchor="middle">15</text>
+            <text x="1284.1667" y="674" text-anchor="middle">25</text>
+          </g>
+          <!-- Média aproximada: x̄ ≈ 16 -->
+          <line x1="1156.6667" y1="330" x2="1156.6667" y2="650" class="u-mean-line u-stroke"/>
+
+          <!-- σ ≈ 7: x̄±σ => 9 e 23 -->
+          <line x1="1156.6667" y1="382" x2="1057.5"    y2="382" class="u-sig-halo u-stroke"/>
+          <line x1="1156.6667" y1="382" x2="1057.5"    y2="382" class="u-sig-line u-stroke"/>
+
+          <line x1="1156.6667" y1="382" x2="1255.8333" y2="382" class="u-sig-halo u-stroke"/>
+          <line x1="1156.6667" y1="382" x2="1255.8333" y2="382" class="u-sig-line u-stroke"/>
+
+          <!-- marcadores dos extremos -->
+          <g class="u-stroke" style="stroke-width:3.2">
+            <line x1="1057.5"    y1="368" x2="1057.5"    y2="396" opacity=".95"/>
+            <line x1="1255.8333" y1="368" x2="1255.8333" y2="396" opacity=".95"/>
+          </g>
+
+          <!-- CV (posicionado para não encostar no subtítulo do painel) -->
+
+          <text x="1047.0" y="385" class="end-label text-halo" text-anchor="end">x̄ − σ = 9</text>
+          <text x="1266.5" y="385" class="end-label text-halo" text-anchor="start">x̄ + σ = 23</text>
+
+          <text x="1156.6667" y="358" class="mean-label text-halo">x̄ ≈ 16</text>
+
+          <text x="1107.0" y="402" class="d-label text-halo">−7</text>
+          <text x="1206.0" y="402" class="d-label text-halo">+7</text>
+
+</g>
+          <text x="1156.6667" y="342" class="cv-label text-halo">CV = σ/x̄ ≈ 43,75%</text>
+
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

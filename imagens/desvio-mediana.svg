@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- =========================================================
+   CONCEITO DE DESVIO EM RELAÇÃO À MEDIANA (1 desvio apenas)
+   Dados: x = {2, 4, 6, 10} | n=4
+   Mediana: x̃ = (4+6)/2 = 5
+   - Apenas MEDIANA
+   - Valores em cada ponto
+   - Rótulo do desvio: fórmula + resultado (eᵢ = xᵢ − x̃ = 10 − 5 = +5)
+   ========================================================= -->
+<svg viewBox="0 0 1550 744" xmlns="http://www.w3.org/2000/svg"
+     role="img" aria-labelledby="title desc">
+  <title id="title">Desvio em relação à mediana</title>
+  <desc id="desc">
+    Reta numérica com a amostra {2,4,6,10}. A referência é a mediana (x̃).
+    A animação mostra um único desvio: seta entre a mediana e a observação 10,
+    com rótulo exibindo a fórmula e o resultado.
+  </desc>
+
+  <rect class="tmp-bg" x="0" y="0" width="100%" height="100%"/>
+
+  <defs>
+    <marker id="arrowHead" viewBox="0 0 12 12" refX="10.5" refY="6"
+            markerWidth="10" markerHeight="10" orient="auto">
+      <path class="arrowFill" d="M 0 0 L 12 6 L 0 12 z"/>
+    </marker>
+
+    <style>
+      :root{
+        --ink:#111827;
+        --ink-soft:#64748b;
+        --grid:#e5e7eb;
+        --accent:#64748b;
+        --font:"et-book","ETBook","Georgia",serif;
+
+        --cycle:6.5s;
+        --ease:ease-in-out;
+
+        --dash:1400;
+      }
+
+      .tmp-bg{ fill:#fff; }
+      text{ font-family:var(--font); fill:var(--ink); user-select:none; }
+
+      .u-stroke{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+      }
+
+      .label{ font-size:46px; font-weight:600; text-anchor:middle; }
+      .small{ font-size:30px; text-anchor:middle; fill:var(--ink-soft); }
+
+      .grid{ stroke:var(--grid); stroke-width:1; stroke-dasharray:6 8; }
+      .axis{ stroke-width:2; }
+
+      .row-title{ font-size:28px; font-weight:800; }
+      .row-sub{ font-size:22px; font-weight:650; fill:var(--ink-soft); }
+
+      .tick{ stroke-width:2; }
+
+      /* valores nos pontos */
+      .val{
+        font-size:18px;
+        font-weight:900;
+        fill:var(--ink-soft);
+        text-anchor:middle;
+      }
+
+      /* nota */
+      .note{
+        font-size:22px;
+        font-weight:650;
+        fill:var(--ink-soft);
+      }
+      .note .k{ font-weight:900; fill:var(--ink); }
+
+      /* pontos-base */
+      .dotBase{ fill:var(--ink); opacity:.55; }
+
+      /* referência (mediana) */
+      .refLine{
+        stroke:var(--accent);
+        stroke-width:4;
+        stroke-dasharray:10 10;
+        opacity:0;
+      }
+      .refLab{
+        font-size:26px;
+        font-weight:900;
+        fill:var(--ink-soft);
+        opacity:0;
+      }
+      .refDot{ fill:var(--accent); opacity:0; }
+
+      .a-medRef{ animation:medRef var(--cycle) var(--ease) infinite; }
+      @keyframes medRef{
+        0%,18%   {opacity:0}
+        22%,86%  {opacity:1}
+        100%     {opacity:0}
+      }
+
+      /* seta do desvio */
+      .dev{
+        stroke:var(--accent);
+        stroke-width:3.2;
+        fill:none;
+        marker-end:url(#arrowHead);
+        stroke-dasharray:var(--dash);
+        stroke-dashoffset:var(--dash);
+        opacity:0;
+        animation:showDev var(--cycle) var(--ease) infinite;
+      }
+      @keyframes showDev{
+        0%,26%  {opacity:0; stroke-dashoffset:var(--dash)}
+        32%     {opacity:1}
+        70%     {opacity:1; stroke-dashoffset:0}
+        86%,100%{opacity:0; stroke-dashoffset:var(--dash)}
+      }
+
+      /* ponto-alvo + anel */
+      .dotHi{
+        fill:var(--ink);
+        opacity:0;
+        animation:hiOn var(--cycle) var(--ease) infinite;
+      }
+      .spot{
+        fill:none;
+        stroke:var(--accent);
+        stroke-width:3;
+        opacity:0;
+        animation:hiOn var(--cycle) var(--ease) infinite;
+      }
+
+      /* rótulo do desvio (caixa + texto) */
+      .tag{
+        fill:#fff;
+        stroke:var(--grid);
+        stroke-width:2;
+        rx:14; ry:14;
+        opacity:0;
+        animation:hiOn var(--cycle) var(--ease) infinite;
+      }
+      .tagText{
+        font-size:20px;
+        font-weight:900;
+        fill:var(--ink);
+        opacity:0;
+        animation:hiOn var(--cycle) var(--ease) infinite;
+      }
+      .tagText .soft{ fill:var(--ink-soft); font-weight:800; }
+      .tagText .pos{ fill:var(--ink); font-weight:900; }
+
+      @keyframes hiOn{
+        0%,30%  {opacity:0}
+        32%,86% {opacity:1}
+        100%    {opacity:0}
+      }
+
+      .arrowFill{ fill:var(--accent); }
+
+      @media (prefers-reduced-motion:reduce){
+        .a-medRef,.dev,.dotHi,.spot,.tag,.tagText{ animation:none; opacity:1; stroke-dashoffset:0; }
+        .refLine,.refLab,.refDot{ opacity:1; }
+        .dotBase{ opacity:.8; }
+      }
+    </style>
+  </defs>
+
+  <!-- Painel -->
+  <g transform="translate(85,92)">
+    <rect x="0" y="0" width="1380" height="520" rx="22" ry="22" class="u-stroke" stroke-width="2"/>
+
+    <text x="690" y="55" class="label">Desvios em relação à Mediana</text>
+    <text x="690" y="90" class="small">Referência: mediana → diferença com sinal (− / +)</text>
+
+    <!-- Miolo -->
+    <g transform="translate(110,140)">
+
+      <!-- linhas guia -->
+      <g class="grid">
+        <line x1="0" y1="90"  x2="1160" y2="90"/>
+        <line x1="0" y1="140" x2="1160" y2="140"/>
+        <line x1="0" y1="190" x2="1160" y2="190"/>
+      </g>
+
+      <text x="0" y="40" class="row-title">Referência: mediana</text>
+      <text x="0" y="68" class="row-sub">eᵢ = xᵢ − x̃</text>
+
+      <!-- eixo -->
+      <g class="u-stroke axis">
+        <line x1="0" y1="140" x2="1160" y2="140"/>
+      </g>
+
+      <!-- ticks (sem rótulos no eixo) -->
+      <g class="u-stroke tick">
+        <line x1="0"    y1="130" x2="0"    y2="150"/>
+        <line x1="1160" y1="130" x2="1160" y2="150"/>
+      </g>
+
+      <!-- ===================== ESCALA 2..10 =====================
+           Range: 2..10 (8 unidades) em 1160 px => 145 px por unidade
+           2  -> 0
+           4  -> 290
+           6  -> 580
+           10 -> 1160
+           x̃=5 -> (5-2)*145 = 435
+      =========================================================== -->
+
+      <!-- referência x̃ -->
+      <line class="refLine a-medRef" x1="435" y1="70" x2="435" y2="210"/>
+      <text class="refLab a-medRef" x="435" y="60" text-anchor="middle">x̃</text>
+      <circle class="refDot a-medRef" cx="435" cy="140" r="9"/>
+
+      <!-- pontos + valores -->
+      <circle class="dotBase" cx="0"    cy="140" r="9"/>
+      <text class="val" x="0" y="118">2</text>
+
+      <circle class="dotBase" cx="290"  cy="140" r="9"/>
+      <text class="val" x="290" y="118">4</text>
+
+      <circle class="dotBase" cx="580"  cy="140" r="9"/>
+      <text class="val" x="580" y="118">6</text>
+
+      <circle class="dotBase" cx="1160" cy="140" r="9"/>
+      <text class="val" x="1160" y="118">10</text>
+
+      <!-- desvio ilustrativo: do x̃ ao ponto 10 -->
+      <line class="dev" x1="435" y1="190" x2="1160" y2="190"/>
+
+      <!-- destaque no ponto 10 -->
+      <circle class="dotHi" cx="1160" cy="140" r="9"/>
+      <circle class="spot"  cx="1160" cy="140" r="16"/>
+
+      <!-- rótulo do desvio: fórmula + resultado -->
+      <text class="tagText" x="860" y="223" text-anchor="middle">
+        eᵢ <tspan class="soft">= xᵢ − x̃ = 10 − 5 =</tspan> <tspan class="pos">+5</tspan>
+      </text>
+
+    </g>
+
+    <!-- divisor do rodapé -->
+    <line class="grid" x1="110" y1="410" x2="1270" y2="410"/>
+
+    <!-- nota com os dados -->
+    <text x="110" y="452" class="note">
+      <tspan class="k">Dados:</tspan>
+      <tspan> x₁=2, x₂=4, x₃=6, x₄=10 (n=4)</tspan>
+    </text>
+  </g>
+</svg>

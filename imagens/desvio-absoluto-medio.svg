@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- =========================================================
+   DAM — CONCEITO (sincronização sem overlap)
+   - “Slot” (grupo) liga/desliga com cortes (sem fade): usa % com folga (26% vs 26.01%)
+   - Janela de cada slot maior e com “gap” entre slots
+   - Desenho do traço mais lento (leva mais tempo dentro do slot)
+   ========================================================= -->
+<svg viewBox="0 0 1550 744" xmlns="http://www.w3.org/2000/svg"
+     role="img" aria-labelledby="title desc">
+  <title id="title">Desvio Absoluto Médio (DAM) — conceito</title>
+  <desc id="desc">
+    Um eixo com cinco pontos x_i e a média x̄. A animação percorre os cinco pontos:
+    para cada um, destaca o ponto e mostra a distância até x̄. Ao final, apresenta a fórmula do DAM.
+  </desc>
+
+  <rect x="0" y="0" width="100%" height="100%" fill="#fff"/>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --muted:#64748b;
+        --grid:#e5e7eb;
+        --accent:#64748b;
+        --font:"et-book","ETBook","Georgia",serif;
+
+        --cycle:12s;
+        --dash:1400;
+      }
+
+      text{ font-family:var(--font); fill:var(--ink); user-select:none; }
+
+      .frame{ fill:none; stroke:var(--ink); stroke-width:2; }
+      .title{ font-size:46px; font-weight:600; text-anchor:middle; }
+      .subtitle{ font-size:28px; font-weight:650; fill:var(--muted); text-anchor:middle; }
+
+      .axis{ stroke:var(--ink); stroke-width:2; stroke-linecap:round; }
+      .tick{ stroke:var(--ink); stroke-width:2; opacity:.55; }
+
+      .dot{ fill:var(--ink); opacity:.22; }
+      .dotHi{ fill:var(--ink); }
+      .spot{ fill:none; stroke:var(--accent); stroke-width:3; }
+
+      .meanLine{
+        stroke:var(--accent);
+        stroke-width:4;
+        stroke-dasharray:10 10;
+        opacity:1;
+      }
+      .meanDot{ fill:var(--accent); opacity:1; }
+      .meanLab{ font-size:26px; font-weight:900; fill:var(--muted); opacity:1; }
+
+      /* Etapas */
+      .steps{ font-size:22px; font-weight:800; fill:var(--muted); }
+      .step{ opacity:.35; }
+      .step .k{ fill:var(--ink); font-weight:900; }
+
+      .step1{ animation:step1On var(--cycle) linear infinite; }
+      .step2{ animation:step2On var(--cycle) linear infinite; }
+      .step3{ animation:step3On var(--cycle) linear infinite; }
+      .step4{ animation:step4On var(--cycle) linear infinite; }
+
+      @keyframes step1On{ 0%,13.99%{opacity:.35} 14%,26%{opacity:1} 26.01%,100%{opacity:.35} }
+      @keyframes step2On{ 0%,27.99%{opacity:.35} 28%,82%{opacity:1} 82.01%,100%{opacity:.35} }
+      @keyframes step3On{ 0%,41.99%{opacity:.35} 42%,82%{opacity:1} 82.01%,100%{opacity:.35} }
+      @keyframes step4On{ 0%,83.99%{opacity:.35} 84%,96%{opacity:1} 96.01%,100%{opacity:.35} }
+
+      /* Linha (distância) */
+      .abs{
+        stroke:var(--accent);
+        stroke-width:6;
+        stroke-linecap:round;
+        stroke-dasharray:var(--dash);
+        stroke-dashoffset:var(--dash);
+      }
+      .cap{ fill:var(--accent); }
+
+      /* Rótulo */
+      .lbl{
+        font-size:22px;
+        font-weight:900;
+        fill:var(--muted);
+      }
+      .lbl .k{ fill:var(--ink); }
+      .lbl .m{ fill:var(--muted); font-weight:800; }
+
+      /* Slot = bloco inteiro (sem fade) */
+      .slot{ opacity:0; }
+
+      /* Janelas (com gaps):
+         s1: 14–26  | gap 26–28
+         s2: 28–40  | gap 40–42
+         s3: 42–54  | gap 54–56
+         s4: 56–68  | gap 68–70
+         s5: 70–82  | gap 82–84
+         final: 84–96
+      */
+      .s1{ animation:slot1 var(--cycle) linear infinite; }
+      .s2{ animation:slot2 var(--cycle) linear infinite; }
+      .s3{ animation:slot3 var(--cycle) linear infinite; }
+      .s4{ animation:slot4 var(--cycle) linear infinite; }
+      .s5{ animation:slot5 var(--cycle) linear infinite; }
+
+      @keyframes slot1{ 0%,13.99%{opacity:0} 14%,26%{opacity:1} 26.01%,100%{opacity:0} }
+      @keyframes slot2{ 0%,27.99%{opacity:0} 28%,40%{opacity:1} 40.01%,100%{opacity:0} }
+      @keyframes slot3{ 0%,41.99%{opacity:0} 42%,54%{opacity:1} 54.01%,100%{opacity:0} }
+      @keyframes slot4{ 0%,55.99%{opacity:0} 56%,68%{opacity:1} 68.01%,100%{opacity:0} }
+      @keyframes slot5{ 0%,69.99%{opacity:0} 70%,82%{opacity:1} 82.01%,100%{opacity:0} }
+
+      /* dashoffset (desenho mais lento dentro do slot) */
+      .draw1{ animation:draw1 var(--cycle) linear infinite; }
+      .draw2{ animation:draw2 var(--cycle) linear infinite; }
+      .draw3{ animation:draw3 var(--cycle) linear infinite; }
+      .draw4{ animation:draw4 var(--cycle) linear infinite; }
+      .draw5{ animation:draw5 var(--cycle) linear infinite; }
+
+      @keyframes draw1{
+        0%,13.99%{stroke-dashoffset:var(--dash)}
+        14%      {stroke-dashoffset:var(--dash)}
+        21%      {stroke-dashoffset:0}
+        26%      {stroke-dashoffset:0}
+        26.01%,100%{stroke-dashoffset:var(--dash)}
+      }
+      @keyframes draw2{
+        0%,27.99%{stroke-dashoffset:var(--dash)}
+        28%      {stroke-dashoffset:var(--dash)}
+        35%      {stroke-dashoffset:0}
+        40%      {stroke-dashoffset:0}
+        40.01%,100%{stroke-dashoffset:var(--dash)}
+      }
+      @keyframes draw3{
+        0%,41.99%{stroke-dashoffset:var(--dash)}
+        42%      {stroke-dashoffset:var(--dash)}
+        49%      {stroke-dashoffset:0}
+        54%      {stroke-dashoffset:0}
+        54.01%,100%{stroke-dashoffset:var(--dash)}
+      }
+      @keyframes draw4{
+        0%,55.99%{stroke-dashoffset:var(--dash)}
+        56%      {stroke-dashoffset:var(--dash)}
+        63%      {stroke-dashoffset:0}
+        68%      {stroke-dashoffset:0}
+        68.01%,100%{stroke-dashoffset:var(--dash)}
+      }
+      @keyframes draw5{
+        0%,69.99%{stroke-dashoffset:var(--dash)}
+        70%      {stroke-dashoffset:var(--dash)}
+        77%      {stroke-dashoffset:0}
+        82%      {stroke-dashoffset:0}
+        82.01%,100%{stroke-dashoffset:var(--dash)}
+      }
+
+      /* Card final */
+      .card{
+        fill:#fff;
+        stroke:var(--grid);
+        stroke-width:2;
+        rx:18; ry:18;
+        opacity:0;
+        transform-box:fill-box;
+        transform-origin:50% 50%;
+      }
+      .formula{
+        font-size:26px;
+        font-weight:900;
+        text-anchor:middle;
+        opacity:0;
+      }
+      .formula .m{ fill:var(--muted); font-weight:800; }
+
+      .final{ animation:finalOn var(--cycle) linear infinite; }
+      @keyframes finalOn{
+        0%,83.99%{opacity:0; transform:translateY(6px) scale(.99);}
+        84%,96%  {opacity:1; transform:translateY(0px) scale(1);}
+        96.01%,100%{opacity:0; transform:translateY(6px) scale(.99);}
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        .s1,.s2,.s3,.s4,.s5,
+        .draw1,.draw2,.draw3,.draw4,.draw5,
+        .final,
+        .step1,.step2,.step3,.step4{ animation:none; }
+
+        .slot{ opacity:1; }
+        .abs{ stroke-dashoffset:0; }
+        .card,.formula{ opacity:1; transform:none; }
+        .step{ opacity:1; }
+      }
+    </style>
+  </defs>
+
+  <!-- Quadro -->
+  <g transform="translate(85,92)">
+    <rect x="0" y="0" width="1380" height="560" rx="22" ry="22" class="frame"/>
+
+    <text x="690" y="58" class="title">Desvio Absoluto Médio</text>
+    <text x="690" y="94" class="subtitle">percorrer os pontos e medir a distância até x̄</text>
+
+    <!-- Conteúdo centralizado: (1380 - 1120)/2 = 130 -->
+    <g transform="translate(130,80)">
+
+      <!-- Etapas -->
+      <g class="steps" transform="translate(0,80)">
+        <text class="step step1" x="0" y="0">
+          <tspan class="k">1)</tspan> escolha um ponto xᵢ
+        </text>
+        <text class="step step2" x="1120" y="0" text-anchor="end">
+          <tspan class="k">2)</tspan> meça xᵢ − x̄ (distância)
+        </text>
+
+        <text class="step step3" x="0" y="30">
+          <tspan class="k">3)</tspan> repita para todos
+        </text>
+        <text class="step step4" x="1120" y="30" text-anchor="end">
+          <tspan class="k">4)</tspan> faça a média
+        </text>
+      </g>
+
+      <!-- Eixo + animação -->
+      <g transform="translate(0,76)">
+
+        <!-- eixo -->
+        <line x1="0" y1="210" x2="1120" y2="210" class="axis"/>
+        <line x1="0" y1="198" x2="0" y2="222" class="tick"/>
+        <line x1="1120" y1="198" x2="1120" y2="222" class="tick"/>
+
+        <!-- 5 pontos -->
+        <circle class="dot" cx="120"  cy="210" r="9"/>
+        <circle class="dot" cx="320"  cy="210" r="9"/>
+        <circle class="dot" cx="520"  cy="210" r="9"/>
+        <circle class="dot" cx="720"  cy="210" r="9"/>
+        <circle class="dot" cx="920"  cy="210" r="9"/>
+
+        <!-- média x̄ -->
+        <line class="meanLine" x1="560" y1="100" x2="560" y2="265"/>
+        <text class="meanLab" x="560" y="84" text-anchor="middle">x̄</text>
+        <circle class="meanDot" cx="560" cy="210" r="9"/>
+
+        <!-- SLOT 1 -->
+        <g class="slot s1">
+          <line class="abs draw1" x1="560" y1="150" x2="120" y2="150"/>
+          <circle class="cap" cx="560" cy="150" r="6"/>
+          <circle class="cap" cx="120" cy="150" r="6"/>
+          <circle class="dotHi" cx="120" cy="210" r="9"/>
+          <circle class="spot"  cx="120" cy="210" r="16"/>
+          <text class="lbl" x="340" y="134" text-anchor="middle">
+            <tspan class="k">|x₁</tspan> <tspan class="m">−</tspan> <tspan class="k">x̄|= d₁</tspan>
+          </text>
+        </g>
+
+        <!-- SLOT 2 -->
+        <g class="slot s2">
+          <line class="abs draw2" x1="560" y1="150" x2="320" y2="150"/>
+          <circle class="cap" cx="560" cy="150" r="6"/>
+          <circle class="cap" cx="320" cy="150" r="6"/>
+          <circle class="dotHi" cx="320" cy="210" r="9"/>
+          <circle class="spot"  cx="320" cy="210" r="16"/>
+          <text class="lbl" x="440" y="134" text-anchor="middle">
+            <tspan class="k">|x₂</tspan> <tspan class="m">−</tspan> <tspan class="k">x̄| = d₂</tspan>
+          </text>
+        </g>
+
+        <!-- SLOT 3 -->
+        <g class="slot s3">
+          <line class="abs draw3" x1="560" y1="150" x2="520" y2="150"/>
+          <circle class="cap" cx="560" cy="150" r="6"/>
+          <circle class="cap" cx="520" cy="150" r="6"/>
+          <circle class="dotHi" cx="520" cy="210" r="9"/>
+          <circle class="spot"  cx="520" cy="210" r="16"/>
+          <text class="lbl" x="510" y="115" text-anchor="middle">
+            <tspan class="k">|x₃</tspan> <tspan class="m">−</tspan> <tspan class="k">x̄|</tspan>
+            <tspan class="k" y="138" x="500">= d₃</tspan>  
+
+          </text>
+        </g>
+
+        <!-- SLOT 4 -->
+        <g class="slot s4">
+          <line class="abs draw4" x1="560" y1="150" x2="720" y2="150"/>
+          <circle class="cap" cx="560" cy="150" r="6"/>
+          <circle class="cap" cx="720" cy="150" r="6"/>
+          <circle class="dotHi" cx="720" cy="210" r="9"/>
+          <circle class="spot"  cx="720" cy="210" r="16"/>
+          <text class="lbl" x="640" y="134" text-anchor="middle">
+            <tspan class="k">|x₄</tspan> <tspan class="m">−</tspan> <tspan class="k">x̄| = d₄</tspan>
+          </text>
+        </g>
+
+        <!-- SLOT 5 -->
+        <g class="slot s5">
+          <line class="abs draw5" x1="560" y1="150" x2="920" y2="150"/>
+          <circle class="cap" cx="560" cy="150" r="6"/>
+          <circle class="cap" cx="920" cy="150" r="6"/>
+          <circle class="dotHi" cx="920" cy="210" r="9"/>
+          <circle class="spot"  cx="920" cy="210" r="16"/>
+          <text class="lbl" x="740" y="134" text-anchor="middle">
+            <tspan class="k">|x₅</tspan> <tspan class="m">−</tspan> <tspan class="k">x̄| = d₅</tspan>
+          </text>
+        </g>
+<g transform="translate(0,50)">
+        <!-- fórmula final -->
+        <rect class="card final" x="120" y="238" width="880" height="92"/>
+        <text class="formula final" x="560" y="278">
+          DAM <tspan class="m">=</tspan> (1/n) Σ |xᵢ − x̄|
+        </text>
+        <text class="formula final" x="560" y="310" style="font-size:22px;">
+          <tspan class="m">média das distâncias absolutas até</tspan> x̄
+        </text>
+</g>
+      </g>
+    </g>
+  </g>
+</svg>

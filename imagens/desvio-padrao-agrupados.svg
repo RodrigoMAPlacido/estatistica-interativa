@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ===========================================
+   DESVIO-PADRÃO (σ) — DADOS AGRUPADOS (DISCRETOS)
+
+   Tabela (sem intervalos):
+   Valores {2, 3, 4}
+   Frequências f = [2, 4, 2]  →  N = 8
+
+   Σ x f = 2·2 + 3·4 + 4·2 = 24  →  x̄ = 24/8 = 3
+   Σ f(x−x̄)² = 2·(−1)² + 4·0² + 2·(+1)² = 4
+   σ² = (1/N) Σ f(x−x̄)² = 4/8 = 0,5
+   σ = √0,5 ≈ 0,71
+   x̄ − σ ≈ 2,29   |   x̄ + σ ≈ 3,71
+
+   Observação: como os valores são igualmente espaçados (passo 1),
+   o eixo “categórico” uniforme preserva o sentido do comprimento de σ.
+   =========================================== -->
+<svg viewBox="0 0 1500 780" xmlns="http://www.w3.org/2000/svg"
+     role="img" aria-labelledby="title desc">
+  <title id="title">Desvio-padrão em dados agrupados (discretos)</title>
+  <desc id="desc">
+    À esquerda, tabela de valores discretos e frequências (N=8).
+    À direita, barras de frequências e a marcação do desvio-padrão (σ)
+    em torno da média: x̄−σ e x̄+σ, com a linha tracejada surgindo do centro.
+  </desc>
+
+  <!-- Fundo branco global -->
+  <rect x="0" y="0" width="1500" height="780" fill="#ffffff"/>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --font:"et-book","ETBook","Georgia",serif;
+        --cycle:8s;
+        --ease:ease-in-out;
+      }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        user-select:none;
+      }
+
+      .u-stroke{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+      }
+
+      .u-panel{ stroke-width:2; rx:12; }
+
+      .label{
+        font-size:32px;
+        font-weight:600;
+        text-anchor:middle;
+      }
+
+      .u-small{ font-size:18px; }
+
+      .subscript{
+        font-size:0.7em;
+        font-weight:600;
+        baseline-shift:-0.3em;
+      }
+
+      /* ====== Destaque sequencial das linhas da tabela ====== */
+      @keyframes rowHi{
+        0%,10%{opacity:0}
+        15%,25%{opacity:.18}
+        30%,100%{opacity:0}
+      }
+      .row-hi{ fill:var(--ink); opacity:0 }
+      .r1{ animation:rowHi var(--cycle) var(--ease) infinite 0s }
+      .r2{ animation:rowHi var(--cycle) var(--ease) infinite .7s }
+      .r3{ animation:rowHi var(--cycle) var(--ease) infinite 1.4s }
+      .r4{ animation:rowHi var(--cycle) var(--ease) infinite 2.1s }
+
+      /* ====== Barras do histograma ====== */
+      @keyframes grow{
+        0%{ transform:scaleY(0) }
+        18%,82%{ transform:scaleY(1) }
+        100%{ transform:scaleY(0) }
+      }
+      .bar{
+        fill:var(--ink);
+        transform-box:fill-box;
+        transform-origin:bottom;
+        transform:scaleY(0);
+      }
+      .b1{ animation:grow var(--cycle) var(--ease) infinite 0s }
+      .b2{ animation:grow var(--cycle) var(--ease) infinite .18s }
+      .b3{ animation:grow var(--cycle) var(--ease) infinite .36s }
+
+      /* ====== Linha vertical da média ====== */
+      .u-mean-line{
+        stroke-width:4.2;
+        stroke-dasharray:420;
+        stroke-dashoffset:420;
+        opacity:.95;
+        animation:meanLine var(--cycle) var(--ease) infinite;
+      }
+      @keyframes meanLine{
+        0%{   stroke-dashoffset:420; opacity:0 }
+        20%,72%{ stroke-dashoffset:0; opacity:1 }
+        86%,100%{ stroke-dashoffset:420; opacity:0 }
+      }
+
+      /* ====== σ: duas metades saindo do centro (como no DAM) ====== */
+      .u-sig-halo{
+        stroke:#fff;
+        stroke-width:10;
+        opacity:0;
+        animation:sigHalo var(--cycle) var(--ease) infinite;
+      }
+      .u-sig-line{
+        stroke-width:4.2;
+        stroke-dasharray:14 10;
+        opacity:0;
+        stroke-dashoffset:220;
+        animation:sigDraw var(--cycle) var(--ease) infinite;
+      }
+      @keyframes sigHalo{
+        0%,24%{ opacity:0 }
+        34%,72%{ opacity:.98 }
+        86%,100%{ opacity:0 }
+      }
+      @keyframes sigDraw{
+        0%{ opacity:0; stroke-dashoffset:220 }
+        24%{ opacity:0; stroke-dashoffset:220 }
+        34%{ opacity:1; stroke-dashoffset:0 }
+        72%{ opacity:1; stroke-dashoffset:0 }
+        86%{ opacity:0; stroke-dashoffset:220 }
+        100%{ opacity:0; stroke-dashoffset:220 }
+      }
+
+      /* Halo do texto (sem caixa) */
+      .text-halo{
+        paint-order:stroke;
+        stroke:#fff;
+        stroke-width:6;
+        stroke-linejoin:round;
+      }
+
+      .end-label{
+        font-size:14px;
+        font-weight:800;
+        opacity:0;
+        animation:txtOn var(--cycle) var(--ease) infinite;
+      }
+      .mean-label{
+        font-size:16px;
+        font-weight:900;
+        text-anchor:middle;
+        opacity:0;
+        animation:txtOn var(--cycle) var(--ease) infinite;
+      }
+      .d-label{
+        font-size:16px;
+        font-weight:900;
+        text-anchor:middle;
+        opacity:0;
+        animation:txtOn var(--cycle) var(--ease) infinite;
+      }
+      @keyframes txtOn{
+        0%,28%{ opacity:0 }
+        36%,72%{ opacity:1 }
+        86%,100%{ opacity:0 }
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        .row-hi{ animation:none; opacity:.12 }
+        .bar{ animation:none; transform:scaleY(1) }
+        .u-mean-line{ animation:none; stroke-dashoffset:0; opacity:1 }
+        .u-sig-halo{ animation:none; opacity:.98 }
+        .u-sig-line{ animation:none; opacity:1; stroke-dashoffset:0 }
+        .end-label,.mean-label,.d-label{ animation:none; opacity:1 }
+      }
+    </style>
+  </defs>
+
+  <!-- ================= PAINEL ESQUERDO: TABELA ================= -->
+  <g id="panel-table" transform="translate(-140,-200) scale(1.2)">
+    <g class="p-panel">
+      <rect x="120" y="230" width="560" height="510" class="u-panel u-stroke"/>
+
+      <g class="p-header">
+        <text x="390" y="280" class="label">Desvio-padrão</text>
+        <text x="390" y="308" class="u-small" text-anchor="middle">
+          Valores discretos — N = 8
+        </text>
+      </g>
+
+      <g class="p-body" transform="translate(8,10)">
+        <line x1="160" y1="364" x2="620" y2="364" class="u-stroke" style="stroke-width:2"/>
+
+        <g font-size="18" font-weight="600">
+          <text x="200" y="352" text-anchor="middle">Valor</text>
+          <text x="400" y="352" text-anchor="middle">
+            Frequência f<tspan class="subscript">j</tspan>
+          </text>
+          <text x="580" y="332" text-anchor="middle">Freq.</text>
+          <text x="580" y="352" text-anchor="middle">
+            acum. F<tspan class="subscript">j</tspan>
+          </text>
+        </g>
+
+        <!-- Linhas (3 linhas de dados + totais) -->
+        <g class="u-stroke">
+          <line x1="160" y1="404" x2="620" y2="404"/>
+          <line x1="160" y1="444" x2="620" y2="444"/>
+          <line x1="160" y1="484" x2="620" y2="484"/>
+          <line x1="160" y1="524" x2="620" y2="524"/>
+          <line x1="160" y1="564" x2="620" y2="564"/>
+        </g>
+
+        <!-- Destaques: 3 linhas + totais -->
+        <rect x="160" y="374" width="460" height="30" class="row-hi r1"/>
+        <rect x="160" y="414" width="460" height="30" class="row-hi r2"/>
+        <rect x="160" y="454" width="460" height="30" class="row-hi r3"/>
+        <rect x="160" y="494" width="460" height="30" class="row-hi r4"/>
+
+        <!-- dados: x = {2,3,4}; f = [2,4,2]; F = [2,6,8] -->
+        <g font-size="19">
+          <text x="175" y="396">2</text>
+          <text x="405" y="396" text-anchor="end">2</text>
+          <text x="590" y="396" text-anchor="end">2</text>
+
+          <text x="175" y="436">3</text>
+          <text x="405" y="436" text-anchor="end">4</text>
+          <text x="590" y="436" text-anchor="end">6</text>
+
+          <text x="175" y="476">4</text>
+          <text x="405" y="476" text-anchor="end">2</text>
+          <text x="590" y="476" text-anchor="end">8</text>
+
+          <text x="175" y="516" font-weight="700">Totais</text>
+          <text x="405" y="516" text-anchor="end" font-weight="700">8</text>
+          <text x="590" y="516" text-anchor="end" font-weight="700">8</text>
+        </g>
+      </g>
+
+      <g class="p-footer" transform="translate(0,10)">
+        <text x="390" y="655" class="u-small" text-anchor="middle">
+          Média: x̄ = (Σ x<tspan class="subscript">j</tspan> f<tspan class="subscript">j</tspan>)/N = 24/8 = 3.
+        </text>
+        <text x="390" y="680" class="u-small" text-anchor="middle">
+          Variância: σ² = (1/N) Σ f<tspan class="subscript">j</tspan>(x<tspan class="subscript">j</tspan> − x̄)² = 4/8 = 0,5.
+        </text>
+        <text x="390" y="705" class="u-small" text-anchor="middle">
+          Desvio-padrão: σ = √0,5 ≈ 0,71  ⇒  x̄±σ ≈ 2,29 e 3,71.
+        </text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ================= PAINEL DIREITO: BARRAS + σ (EIXO UNIFORME) ================= -->
+  <g id="panel-hist" transform="translate(-220,-200) scale(1.2)">
+    <g class="p-panel">
+      <rect x="840" y="230" width="580" height="510" class="u-panel u-stroke"/>
+
+      <g class="p-header">
+        <text x="1130" y="280" class="label">Frequências e σ</text>
+        <text x="1130" y="308" class="u-small" text-anchor="middle">
+          Barras de <tspan font-style="italic">f</tspan> por valor — N = 8
+        </text>
+      </g>
+
+      <g transform="translate(-125,-40) scale(1.1)">
+        <g class="p-body">
+
+          <!-- Eixos -->
+          <g class="u-stroke" style="stroke-width:2.5">
+            <line x1="930" y1="650" x2="1355" y2="650"/>
+            <line x1="930" y1="650" x2="930"  y2="430"/>
+          </g>
+
+          <!-- Grades Y (0..4) -->
+          <g class="u-stroke u-small" opacity=".35" style="stroke-width:2">
+            <line x1="930" y1="650" x2="1355" y2="650"/><text x="915" y="654" text-anchor="end" opacity=".85">0</text>
+            <line x1="930" y1="595" x2="1355" y2="595"/><text x="915" y="599" text-anchor="end" opacity=".85">1</text>
+            <line x1="930" y1="540" x2="1355" y2="540"/><text x="915" y="544" text-anchor="end" opacity=".85">2</text>
+            <line x1="930" y1="485" x2="1355" y2="485"/><text x="915" y="489" text-anchor="end" opacity=".85">3</text>
+            <line x1="930" y1="430" x2="1355" y2="430"/><text x="915" y="434" text-anchor="end" opacity=".85">4</text>
+          </g>
+
+          <!-- Barras (3 barras largas preenchendo bem o eixo X)
+               eixo: 930..1355 (425)
+               barras: width 95, gap 45, início 960
+               centros: 1007.5, 1147.5, 1287.5
+               valores: 2, 3, 4
+          -->
+          <!-- escala Y: 0..4 -> 650..430 (220px); 1 unidade = 55px -->
+          <rect x="960"  y="540" width="95" height="110" class="bar b1"/>  <!-- 2 : f=2 -->
+          <rect x="1100" y="430" width="95" height="220" class="bar b2"/>  <!-- 3 : f=4 -->
+          <rect x="1240" y="540" width="95" height="110" class="bar b3"/>  <!-- 4 : f=2 -->
+
+          <!-- Ticks e rótulos do eixo X (nos centros) -->
+          <g class="u-stroke" style="stroke-width:2" opacity=".85">
+            <line x1="1007.5" y1="650" x2="1007.5" y2="642"/>
+            <line x1="1147.5" y1="650" x2="1147.5" y2="642"/>
+            <line x1="1287.5" y1="650" x2="1287.5" y2="642"/>
+          </g>
+
+          <g class="u-small" font-weight="700">
+            <text x="1007.5" y="684" text-anchor="middle">2</text>
+            <text x="1147.5" y="684" text-anchor="middle">3</text>
+            <text x="1287.5" y="684" text-anchor="middle">4</text>
+          </g>
+
+          <!-- Média: x̄ = 3  (centro do valor 3) -->
+          <line x1="1147.5" y1="330" x2="1147.5" y2="650" class="u-mean-line u-stroke"/>
+
+          <!-- σ em torno da média (aprox.):
+               σ ≈ 0,71
+               passo 1 -> 140px entre centros (1007.5→1147.5)
+               deslocamento = 0,7071*140 ≈ 99px
+               leftX ≈ 1147.5 - 99 = 1048.5
+               rightX≈ 1147.5 + 99 = 1246.5
+          -->
+          <!-- duas metades saindo do centro -->
+          <line x1="1147.5" y1="382" x2="1048.5" y2="382" class="u-sig-halo u-stroke"/>
+          <line x1="1147.5" y1="382" x2="1048.5" y2="382" class="u-sig-line u-stroke"/>
+
+          <line x1="1147.5" y1="382" x2="1246.5" y2="382" class="u-sig-halo u-stroke"/>
+          <line x1="1147.5" y1="382" x2="1246.5" y2="382" class="u-sig-line u-stroke"/>
+
+          <!-- marcadores dos extremos -->
+          <g class="u-stroke" style="stroke-width:3.2">
+            <line x1="1048.5" y1="368" x2="1048.5" y2="396" opacity=".95"/>
+            <line x1="1246.5" y1="368" x2="1246.5" y2="396" opacity=".95"/>
+          </g>
+
+          <!-- Labels -->
+          <text x="1038" y="385" class="end-label text-halo" text-anchor="end">x̄ − σ ≈ 2,29</text>
+          <text x="1257" y="385" class="end-label text-halo" text-anchor="start">x̄ + σ ≈ 3,71</text>
+
+          <text x="1147.5" y="350" class="mean-label text-halo">x̄ = 3</text>
+
+          <text x="1098" y="402" class="d-label text-halo">−0,71</text>
+          <text x="1197" y="402" class="d-label text-halo">+0,71</text>
+
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

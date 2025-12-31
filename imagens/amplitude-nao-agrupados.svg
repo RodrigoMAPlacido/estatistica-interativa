@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- =========================================================
+   AMPLITUDE TOTAL — DADOS NÃO AGRUPADOS (n=8)
+   x = {15, 18, 20, 22, 23, 24, 25, 50}
+   xmin=15, xmax=50, A=35
+   CSS-only | padrão visual do projeto
+   ========================================================= -->
+<svg viewBox="0 0 1550 744" xmlns="http://www.w3.org/2000/svg"
+     role="img" aria-labelledby="title desc">
+
+  <title id="title">Amplitude total (dados não agrupados)</title>
+  <desc id="desc">
+    Observações em uma reta numérica: 15, 18, 20, 22, 23, 24, 25, 50.
+    A animação destaca o menor e o maior valor e desenha o segmento da amplitude total,
+    rotulado como Amplitude total e A = 35.
+  </desc>
+
+  <!-- TEMP: fundo branco (remover depois, se quiser transparência) -->
+  <rect class="tmp-bg" x="0" y="0" width="100%" height="100%"/>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --ink-soft:#64748b;
+        --grid:#e5e7eb;
+        --accent:#64748b;
+        --font:"et-book","ETBook","Georgia",serif;
+
+        --cycle:7.6s;
+        --ease:ease-in-out;
+      }
+
+      .tmp-bg{ fill:#fff; }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        user-select:none;
+      }
+
+      .u-stroke{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+      }
+
+      .u-panel{
+        stroke-width:2;
+        rx:22; ry:22;
+      }
+
+      .label{
+        font-size:46px;
+        font-weight:600;
+        text-anchor:middle;
+      }
+
+      .small{
+        font-size:32px;
+        fill:var(--ink-soft);
+        text-anchor:middle;
+      }
+
+      .axis{ stroke-width:2; }
+
+      .grid{
+        stroke:var(--grid);
+        stroke-width:1;
+        stroke-dasharray:6 8;
+      }
+
+      .tick-label{
+        font-size:22px;
+        fill:var(--ink-soft);
+      }
+
+      .dot{ fill:var(--ink); opacity:.92; }
+      .dot.soft{ opacity:.55; }
+
+      .vlabel{
+        font-size:20px;
+        fill:var(--ink-soft);
+        text-anchor:middle;
+        opacity:0;
+      }
+
+      /* extremos */
+      .ext-ring{
+        fill:none;
+        stroke:var(--accent);
+        stroke-width:3;
+        opacity:0;
+      }
+      .ext-tag{
+        font-size:24px;
+        font-weight:700;
+        fill:var(--ink);
+        text-anchor:middle;
+        opacity:0;
+      }
+      .ext-sub{
+        font-size:20px;
+        font-weight:500;
+        fill:var(--ink-soft);
+      }
+
+      /* amplitude */
+      .range{
+        stroke:var(--accent);
+        stroke-width:4;
+        fill:none;
+        stroke-linecap:round;
+      }
+      .range-cap{
+        stroke:var(--accent);
+        stroke-width:4;
+        stroke-linecap:round;
+        opacity:0;
+      }
+      .range-label{
+        font-size:28px;
+        font-weight:600;
+        fill:var(--ink);
+        text-anchor:middle;
+        opacity:0;
+      }
+      .range-a{
+        font-size:26px;
+        fill:var(--ink-soft);
+        font-weight:600;
+        text-anchor:middle;
+        opacity:0;
+      }
+
+      /* ===================== ANIMAÇÕES ===================== */
+      /* 0–18%  : entra pontos + valores
+         22–40% : destaca extremos
+         44–100%: desenha amplitude + caps + labels
+      */
+
+      .a-dots{
+        transform-box:fill-box;
+        transform-origin:50% 50%;
+        animation:dotsIn var(--cycle) var(--ease) infinite;
+      }
+      @keyframes dotsIn{
+        0%,10%{ opacity:0; transform:scale(.99); }
+        18%,100%{ opacity:1; transform:scale(1); }
+      }
+
+      .a-vlab{
+        animation:vlabOn var(--cycle) var(--ease) infinite;
+      }
+      @keyframes vlabOn{
+        0%,14%{ opacity:0; transform:translateY(6px); }
+        22%,100%{ opacity:1; transform:translateY(0px); }
+      }
+
+      .a-ext{
+        animation:extOn var(--cycle) var(--ease) infinite;
+      }
+      @keyframes extOn{
+        0%,22%{ opacity:0; transform:translateY(6px); }
+        30%,100%{ opacity:1; transform:translateY(0px); }
+      }
+
+      /* desenha linha por dash */
+      .a-range{
+        stroke-dasharray:902;      /* ~ (xmax-xmin) em px no eixo (1031-129) ≈ 902 */
+        stroke-dashoffset:902;
+        opacity:0;
+        animation:rangeDraw var(--cycle) var(--ease) infinite;
+      }
+      @keyframes rangeDraw{
+        0%,42%{ opacity:0; stroke-dashoffset:902; }
+        52%{ opacity:1; stroke-dashoffset:902; }
+        70%{ opacity:1; stroke-dashoffset:0; }
+        100%{ opacity:1; stroke-dashoffset:0; }
+      }
+
+      .a-cap{
+        animation:capOn var(--cycle) var(--ease) infinite;
+      }
+      @keyframes capOn{
+        0%,56%{ opacity:0; }
+        64%,100%{ opacity:1; }
+      }
+
+      .a-lab{
+        animation:labOn var(--cycle) var(--ease) infinite;
+      }
+      @keyframes labOn{
+        0%,62%{ opacity:0; transform:translateY(6px); }
+        72%,100%{ opacity:1; transform:translateY(0px); }
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        .a-dots,.a-vlab,.a-ext,.a-range,.a-cap,.a-lab{ animation:none; }
+        .vlabel,.ext-ring,.ext-tag,.range-cap,.range-label,.range-a{ opacity:1; transform:none; }
+        .a-range{ opacity:1; stroke-dashoffset:0; }
+      }
+    </style>
+  </defs>
+
+  <g transform="translate(85,92)">
+    <rect x="0" y="0" width="1380" height="560"
+          class="u-panel u-stroke"/>
+
+    <text x="690" y="55" class="label">Amplitude total — dados não agrupados</text>
+    <text x="690" y="90" class="small">x = {15, 18, 20, 22, 23, 24, 25, 50}</text>
+
+    <g transform="translate(110,220)">
+
+      <!-- grade -->
+      <g class="grid">
+        <line x1="0" y1="80"  x2="1160" y2="80"/>
+        <line x1="0" y1="140" x2="1160" y2="140"/>
+      </g>
+
+      <!-- eixo -->
+      <line class="u-stroke axis" x1="0" y1="110" x2="1160" y2="110"/>
+
+      <!-- ticks (escala ilustrativa 10–55) -->
+      <g class="u-stroke" style="stroke-width:2">
+        <line x1="0"    y1="100" x2="0"    y2="120"/>
+        <line x1="258"  y1="100" x2="258"  y2="120"/>
+        <line x1="516"  y1="100" x2="516"  y2="120"/>
+        <line x1="773"  y1="100" x2="773"  y2="120"/>
+        <line x1="1031" y1="100" x2="1031" y2="120"/>
+        <line x1="1160" y1="100" x2="1160" y2="120"/>
+      </g>
+      <g class="tick-label">
+        <text x="0"    y="155" text-anchor="middle">10</text>
+        <text x="258"  y="155" text-anchor="middle">20</text>
+        <text x="516"  y="155" text-anchor="middle">30</text>
+        <text x="773"  y="155" text-anchor="middle">40</text>
+        <text x="1031" y="155" text-anchor="middle">50</text>
+        <text x="1160" y="155" text-anchor="middle">55</text>
+      </g>
+
+      <!-- pontos (posicionados proporcionalmente na escala 10–55) -->
+      <!-- posições (px): 15->129 | 18->206 | 20->258 | 22->309 | 23->335 | 24->361 | 25->387 | 50->1031 -->
+      <g class="a-dots">
+        <circle class="dot"      cx="128.9" cy="110" r="9"/>
+        <circle class="dot soft" cx="206.2" cy="110" r="9"/>
+        <circle class="dot"      cx="257.8" cy="110" r="9"/>
+        <circle class="dot soft" cx="309.3" cy="110" r="9"/>
+        <circle class="dot"      cx="335.1" cy="110" r="9"/>
+        <circle class="dot soft" cx="360.9" cy="110" r="9"/>
+        <circle class="dot"      cx="386.7" cy="110" r="9"/>
+        <circle class="dot soft" cx="1031.1" cy="110" r="9"/>
+      </g>
+
+      <!-- valores (aparecem junto com os pontos) -->
+      <g class="a-vlab">
+        <text class="vlabel" x="128.9"  y="70">15</text>
+        <text class="vlabel" x="206.2"  y="70">18</text>
+        <text class="vlabel" x="257.8"  y="70">20</text>
+        <text class="vlabel" x="309.3"  y="70">22</text>
+        <text class="vlabel" x="335.1"  y="70">23</text>
+        <text class="vlabel" x="360.9"  y="70">24</text>
+        <text class="vlabel" x="386.7"  y="70">25</text>
+        <text class="vlabel" x="1031.1" y="70">50</text>
+      </g>
+
+      <!-- destaque extremos -->
+      <g class="a-ext">
+        <circle class="ext-ring" cx="128.9" cy="110" r="15"/>
+        <circle class="ext-ring" cx="1031.1" cy="110" r="15"/>
+
+        <text class="ext-tag" x="128.9" y="38">
+          x<tspan class="ext-sub" baseline-shift="sub">min</tspan> = 15
+        </text>
+        <text class="ext-tag" x="1031.1" y="38">
+          x<tspan class="ext-sub" baseline-shift="sub">max</tspan> = 50
+        </text>
+      </g>
+
+      <!-- segmento da amplitude (desenha) -->
+      <line class="range a-range" x1="128.9" y1="205" x2="1031.1" y2="205"/>
+
+      <!-- caps -->
+      <line class="range-cap a-cap" x1="128.9" y1="190" x2="128.9" y2="220"/>
+      <line class="range-cap a-cap" x1="1031.1" y1="190" x2="1031.1" y2="220"/>
+
+      <!-- label amplitude -->
+      <text class="range-label a-lab" x="580" y="250">Amplitude total</text>
+      <text class="range-a a-lab" x="580" y="282">A = 50 − 15 = 35</text>
+
+    </g>
+  </g>
+</svg>

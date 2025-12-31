@@ -1,0 +1,225 @@
+schema: EconSchema
+aspectRatio: 2
+
+params:
+  # Dados (ordenados) — arraste sem cruzar
+  - { name: x_1, value: 2,  min: 0, max: 10, round: 0.1 }
+  - { name: x_2, value: 4,  min: 0, max: 10, round: 0.1 }
+  - { name: x_3, value: 6,  min: 0, max: 10, round: 0.1 }
+  - { name: x_4, value: 10, min: 0, max: 10, round: 0.1 }
+
+calcs:
+  # Mediana para n=4: x̃ = (x2 + x3)/2
+  xmed: "((params.x_2 + params.x_3) / 2)"
+
+  # Desvios em relação à mediana
+  e1: "(params.x_1 - calcs.xmed)"
+  e2: "(params.x_2 - calcs.xmed)"
+  e3: "(params.x_3 - calcs.xmed)"
+  e4: "(params.x_4 - calcs.xmed)"
+
+colors:
+  ink: "'#111827'"
+  inkSoft: "'#64748b'"
+  accent: "'#64748b'"
+  bg: "'#ffffff'"
+
+layout:
+  OneWideGraphPlusSidebar:
+    graph:
+      title: "Desvios em relação à Mediana"
+      xAxis:
+        min: 0
+        max: 10
+        ticks: 0
+      yAxis:
+        show: false
+        min: -1
+        max: 1
+        ticks: 0
+
+      objects:
+        # ---------------------------
+        # Reta numérica (0..10)
+        # ---------------------------
+        - Segment:
+            a: [0, 0]
+            b: [10, 0]
+            color: colors.inkSoft
+            strokeWidth: 3
+
+        # extremos
+        - Segment: { a: [0, -0.08],  b: [0,  0.08],  color: colors.inkSoft, strokeWidth: 2 }
+        - Segment: { a: [10, -0.08], b: [10, 0.08],  color: colors.inkSoft, strokeWidth: 2 }
+        - Label:   { coordinates: [0,  -0.24], text: "'0'",  color: colors.inkSoft, fontSize: 10, position: c }
+        - Label:   { coordinates: [10, -0.24], text: "'10'", color: colors.inkSoft, fontSize: 10, position: c }
+
+        # ---------------------------
+        # Linha da mediana (tracejada) + rótulo
+        # ---------------------------
+        - Segment:
+            a: [calcs.xmed, -0.55]
+            b: [calcs.xmed,  0.55]
+            color: colors.accent
+            strokeWidth: 2
+            lineStyle: dashed
+
+        - Label:
+            coordinates: [calcs.xmed, 0.60]
+            text: "'\\\\tilde{X}'"
+            color: colors.ink
+            fontSize: 12
+            position: b
+            bgcolor: colors.bg
+
+        - Label:
+            coordinates: [calcs.xmed, 0.46]
+            text: "`${calcs.xmed.toFixed(2)}`"
+            color: colors.inkSoft
+            fontSize: 10
+            position: c
+            bgcolor: colors.bg
+
+        # ---------------------------
+        # Desvio mostrado (fixo): e4 = x4 - x̃
+        # ---------------------------
+        - Arrow:
+            begin: [calcs.xmed, -0.22]
+            end: [params.x_4, -0.22]
+            color: colors.ink
+            strokeWidth: 2
+            trim: 0.01
+            label:
+              text: "`\\\\mathbf{e_{4}=x_{4}-\\\\tilde{x}= ${params.x_4.toFixed(1)}-${calcs.xmed.toFixed(1)}=${calcs.e4.toFixed(1)}}`"
+              position: t
+              fontSize: 8
+
+        # ---------------------------
+        # Pontos arrastáveis (sem cruzar) — padrão ternário
+        # ---------------------------
+        # x1
+        - Point:
+            coordinates: [params.x_1, 0]
+            color: colors.inkSoft
+            drag:
+              - directions: x
+                param: x_1
+                expression: "((drag.x >= 0) ? ((drag.x <= params.x_2) ? drag.x : params.x_2) : 0)"
+
+        # x2
+        - Point:
+            coordinates: [params.x_2, 0]
+            color: colors.inkSoft
+            drag:
+              - directions: x
+                param: x_2
+                expression: "((drag.x >= params.x_1) ? ((drag.x <= params.x_3) ? drag.x : params.x_3) : params.x_1)"
+
+        # x3
+        - Point:
+            coordinates: [params.x_3, 0]
+            color: colors.inkSoft
+            drag:
+              - directions: x
+                param: x_3
+                expression: "((drag.x >= params.x_2) ? ((drag.x <= params.x_4) ? drag.x : params.x_4) : params.x_2)"
+
+        # x4
+        - Point:
+            coordinates: [params.x_4, 0]
+            color: colors.ink
+            drag:
+              - directions: x
+                param: x_4
+                expression: "((drag.x >= params.x_3) ? ((drag.x <= 10) ? drag.x : 10) : params.x_3)"
+
+        # Labels dos pontos
+        - Label:
+            coordinates: [params.x_1, 0.2]
+            text: "`${params.x_1.toFixed(1)}`"
+            color: colors.inkSoft
+            fontSize: 9
+            position: c
+            bgcolor: colors.bg
+
+        - Label:
+            coordinates: [params.x_2, 0.2]
+            text: "`${params.x_2.toFixed(1)}`"
+            color: colors.inkSoft
+            fontSize: 9
+            position: c
+            bgcolor: colors.bg
+
+        - Label:
+            coordinates: [params.x_3, 0.2]
+            text: "`${params.x_3.toFixed(1)}`"
+            color: colors.inkSoft
+            fontSize: 9
+            position: c
+            bgcolor: colors.bg
+
+        - Label:
+            coordinates: [params.x_4, 0.2]
+            text: "`${params.x_4.toFixed(1)}`"
+            color: colors.inkSoft
+            fontSize: 9
+            position: c
+            bgcolor: colors.bg
+
+    sidebar:
+      triggerWidth: 9999
+      controls:
+        - title: ""
+          divs:
+            # ---------------------------
+            # 1) DADOS
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Dados:</b></div>"
+
+            - html: "`$$\\\\tiny x=\\\\{${params.x_1.toFixed(1)},\\\\;${params.x_2.toFixed(1)},\\\\;${params.x_3.toFixed(1)},\\\\;${params.x_4.toFixed(1)}\\\\},\\\\quad n=4$$`"
+
+            # ---------------------------
+            # 2) FÓRMULAS (MEDIANA + DESVIO)
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Fórmulas:</b></div>"
+
+            - html: "$$\\tiny \\tilde{x}=\\frac{x_{(2)}+x_{(3)}}{2},\\qquad e_i=x_i-\\tilde{x}$$"
+
+            # ---------------------------
+            # 3) APLICANDO (MEDIANA)
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Aplicando (mediana):</b></div>"
+
+            - html: "`$$\\\\tiny
+                      \\\\tilde{x}=\\\\frac{${params.x_2.toFixed(1)}+${params.x_3.toFixed(1)}}{2}
+                      =${calcs.xmed.toFixed(2)}\\\\,.
+                      $$`"
+
+            # ---------------------------
+            # 4) DESVIOS (EM RELAÇÃO À MEDIANA)
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Desvios:</b></div>"
+
+            - html: "`$$\\\\tiny
+                      e_{1}=x_{1}-\\\\tilde{x}
+                      =${params.x_1.toFixed(2)}-${calcs.xmed.toFixed(2)}
+                      =${calcs.e1.toFixed(2)}\\\\,.
+                      $$`"
+
+            - html: "`$$\\\\tiny
+                      e_{2}=x_{2}-\\\\tilde{x}
+                      =${params.x_2.toFixed(2)}-${calcs.xmed.toFixed(2)}
+                      =${calcs.e2.toFixed(2)}\\\\,.
+                      $$`"
+
+            - html: "`$$\\\\tiny
+                      e_{3}=x_{3}-\\\\tilde{x}
+                      =${params.x_3.toFixed(2)}-${calcs.xmed.toFixed(2)}
+                      =${calcs.e3.toFixed(2)}\\\\,.
+                      $$`"
+
+            - html: "`$$\\\\tiny
+                      e_{4}=x_{4}-\\\\tilde{x}
+                      =${params.x_4.toFixed(2)}-${calcs.xmed.toFixed(2)}
+                      =${calcs.e4.toFixed(2)}\\\\,.
+                      $$`"

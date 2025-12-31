@@ -1,13 +1,1627 @@
 ---
 layout: capitulo
-title: "Capítulo 5 — Medidas-resumo: Medidas de Dispersão"
+title: "Capítulo 5 — Medidas-resumo: Medidas de Dispersão I"
 anterior: /capitulos/cap4-medidas-resumo-posicao-dois/
-proximo: /capitulos/cap6-probabilidade/
+proximo: /capitulos/cap6-medidas-resumo-dispersao-dois/
 ---
 
+<p class="subtitle">Objetivos de aprendizagem</p>
+<ul>
+  <li>Compreender o papel das <strong>medidas de dispersão</strong> na descrição do <em>espalhamento</em> dos dados e sua complementaridade em relação às medidas de posição.</li>
+
+  <li>Reconhecer que distribuições podem apresentar a mesma <strong>tendência central</strong> e, ainda assim, diferir substancialmente quanto à <strong>variabilidade</strong>, exigindo medidas específicas para quantificar essa diferença.</li>
+
+  <li>Calcular e interpretar medidas de dispersão baseadas em <strong>extremos</strong> e em <strong>desvios</strong> — em particular a <strong>amplitude</strong> e os <strong>desvios em relação a valores de referência</strong> — entendendo seu significado e suas limitações.</li>
+
+  <li>Analisar criticamente a sensibilidade dessas medidas a <strong>valores extremos</strong> e a importância de escolher um <strong>referencial</strong> (média, mediana etc.) coerente com o objetivo da análise.</li>
+</ul>
+
+<hr>
+<h2>1. Introdução</h2>
+
+<p>
+  <span class="newthought">No capítulo anterior,</span> aprofundamos a descrição da distribuição por meio das <strong>medidas de posição</strong>,
+  em especial as <strong>separatrizes</strong>, que localizam observações e pontos de corte associados a proporções acumuladas.
+  Essas ferramentas refinam a leitura dos dados ao indicar <em>onde</em> os valores se situam na escala e como se distribuem entre segmentos.
+  Ainda assim, a posição, por si só, não esgota a caracterização de um conjunto de observações. Duas distribuições podem compartilhar a mesma mediana
+  (ou a mesma média) e, mesmo assim, diferir de modo relevante quanto ao <strong>espalhamento</strong>, isto é, quanto ao grau em que os valores se afastam
+  do centro ou se concentram em torno de certos níveis.
+</p>
+
 <figure>
-  <img src="../../imagens/construcao.svg" alt="construção">
+  <img src="../../imagens/dispersao.svg" alt="Dispersão dos dados em torno de um valor central">
+</figure>
+
+<p>
+  É justamente essa dimensão que motiva as <strong>medidas de dispersão</strong>. Enquanto as medidas de posição informam um valor típico
+  — ou marcos ao longo da escala —, as medidas de dispersão quantificam <strong>quanto</strong> os dados variam em torno desses referenciais.
+  Em termos práticos, a dispersão condiciona a interpretação de qualquer valor representativo. Quando a variabilidade é pequena,
+  uma medida central tende a resumir bem o conjunto; quando a variabilidade é grande, a mesma medida central pode ocultar diferenças
+  importantes entre observações. Assim, a dispersão é parte essencial da síntese numérica de uma distribuição, sobretudo quando se pretende
+  comparar grupos, avaliar regularidade e compreender a presença de valores extremos.
+</p>
+
+<p>
+  Para evitar que o conteúdo fique muito extenso, as <strong>medidas de dispersão</strong> serão apresentadas em dois capítulos.
+  Neste capítulo, começaremos por medidas ligadas à <strong>amplitude</strong> e aos <strong>desvios</strong>.
+  Elas traduzem a variabilidade como <strong>distância</strong> na própria escala dos dados e oferecem uma primeira leitura estruturada
+  do espalhamento, ao mesmo tempo em que deixam claras limitações importantes, sobretudo a sensibilidade a valores extremos e a dependência
+  do valor de referência adotado.
+</p>
+
+<p>
+  <strong>No capítulo seguinte</strong>, avançaremos para medidas baseadas nos <strong>quadrados dos desvios</strong>, chegando à
+  <strong>variância</strong> e ao <strong>desvio-padrão</strong>. Em seguida, introduziremos o <strong>coeficiente de variação</strong>,
+  que expressa a dispersão em termos <strong>relativos</strong> e facilita comparações entre escalas e grupos distintos.
+  Essa separação permite avançar de noções mais imediatas de dispersão para medidas com propriedades analíticas mais ricas e grande
+  importância na estatística.
+</p>
+
+<figure>
+  <img src="../../imagens/tipos-medidas-dispersao.svg"
+       alt="Tipos de medidas de dispersão abordadas neste capítulo e no capítulo seguinte">
+</figure>
+
+<p>
+  Ao longo do capítulo, o objetivo é apresentar cada medida de dispersão de forma completa, explicitando sua definição, seu procedimento de cálculo,
+  sua interpretação e os limites do que ela permite inferir em uma análise descritiva.
+</p>
+
+
+<hr>
+
+
+<h2>2. Amplitude Total</h2>
+
+<p>
+  A <strong>amplitude total</strong> é a medida de dispersão mais simples utilizada em estatística descritiva.
+  Seu objetivo é fornecer uma primeira noção do <strong>espalhamento global</strong> dos dados ao longo da
+  escala observada, considerando apenas os valores extremos da distribuição.  A ideia central da amplitude total é puramente comparativa.
+  Ao identificar o <strong>menor</strong> e o <strong>maior</strong> valor observados,
+  estabelece-se um intervalo que contém todos os dados da amostra.
+  A largura desse intervalo expressa o alcance máximo da variação,
+  independentemente de como as observações se distribuem em seu interior.
+  
+</p>
+
+<figure>
+  <img src="../../imagens/amplitude-total.svg" alt="Amplitude Total: mínimo e máximo">
 </figure>
 
 
 
+<p>
+  Por essa razão, a amplitude total deve ser interpretada como uma medida
+  de <strong>dispersão extrema</strong>, e não como uma descrição detalhada da variabilidade interna.
+  Dois conjuntos de dados podem apresentar a mesma amplitude total e,
+  ainda assim, comportamentos completamente distintos quanto à concentração
+  ou ao espalhamento das observações em torno de valores centrais.
+</p>
+
+<p>
+  Um aspecto importante da amplitude total é sua elevada <strong>sensibilidade a valores extremos</strong>.
+  A presença de um único valor muito pequeno ou muito grande é suficiente para alterar
+  significativamente essa medida, mesmo que a maior parte das observações permaneça
+  fortemente concentrada em uma região estreita da escala.
+  Essa característica limita seu uso em análises mais refinadas,
+  mas não invalida sua utilidade como uma primeira descrição do conjunto.
+</p>
+
+<p>
+  Ao longo desta seção, a amplitude total será analisada em dois contextos distintos.
+  Inicialmente, consideraremos o caso de <strong>dados não agrupados</strong>,
+  em que os valores individuais são observados diretamente.
+  Em seguida, discutiremos sua definição e interpretação quando os dados
+  estão <strong>agrupados em classes</strong>, situação em que os valores extremos
+  são aproximados a partir dos limites dos intervalos.
+</p>
+<h3>2.1 Amplitude Total para dados não agrupados</h3>
+
+<p>
+  Quando os dados são apresentados na forma de uma <strong>lista de observações individuais</strong>,
+  a amplitude total pode ser obtida de maneira direta, a partir da identificação dos
+  <strong>valores extremos</strong> da amostra. Nesse contexto, a noção de dispersão associada à
+  amplitude total corresponde simplesmente à distância entre o menor e o maior valor observados.
+</p>
+<figure>
+  <img src="../../imagens/amplitude-nao-agrupados.svg" alt="Amplitude Total: mínimo e máximo">
+</figure>
+<p>
+  Formalmente, considere um conjunto de <em>n</em> observações
+  <span class="formula-inline" data-tts="xis um, xis dois, até xis ene">\(x_1, x_2, \ldots, x_n\)</span>.
+  Denotando por
+  <span class="formula-inline" data-tts="xis mínimo">\(x_{\min}\)</span>
+  o menor valor da amostra e por
+  <span class="formula-inline" data-tts="xis máximo">\(x_{\max}\)</span>
+  o maior, a <strong>amplitude total</strong> é definida como
+</p>
+
+
+<p class="formula" data-tts="Amplitude é igual ao valor máximo menos o valor mínimo.">
+\[
+  A = x_{\max} - x_{\min}.
+\]
+</p>
+
+
+<p>
+  A interpretação da amplitude total é direta e está associada ao comprimento do menor intervalo
+  que contém todas as observações. Uma amplitude igual a 12, por exemplo, indica que a diferença
+  entre o maior e o menor valor observados é de 12 unidades na escala da variável analisada.
+  No entanto, é importante reconhecer que a amplitude total resume a dispersão com base em apenas
+  <strong>duas observações</strong>. Por esse motivo, ela fornece uma descrição extremamente agregada
+  do espalhamento dos dados e deve ser utilizada com cautela, sempre em conjunto com outras medidas.
+</p>
+
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para desktop -->
+  <div class="kg-wrapper kg-desktop">
+    <div
+      class="kg-container kg--sidebar-centered"
+      src="modelos/amplitude-total.yml">
+    </div>
+  </div>
+</figure>
+
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para mobile -->
+  <div class="kg-wrapper kg-mobile-sidebar">
+    <div
+      class="kg-container kg--sidebar-centered"
+      src="modelos/amplitude-total-mobile.yml">
+    </div>
+  </div>
+</figure>
+
+<div class="example-frame">
+  <h5>Exemplo</h5>
+
+  <p>
+    Considere uma amostra com <strong>n = 8</strong> observações de uma variável quantitativa
+    (por exemplo, tempo diário de uso de um aplicativo, em minutos), dada por:
+  </p>
+
+  <p class="formula" data-tts="x igual a quinze, dezoito, vinte, vinte e dois, vinte e três, vinte e quatro, vinte e cinco, cinquenta.">
+    \[
+      x = \{15,\;18,\;20,\;22,\;23,\;24,\;25,\;50\}.
+    \]
+  </p>
+
+<p>
+  O menor valor observado é
+  <span class="formula-inline" data-tts="xis mínimo igual a quinze">\(x_{\min}=15\)</span>
+  e o maior é
+  <span class="formula-inline" data-tts="xis máximo igual a cinquenta">\(x_{\max}=50\)</span>.
+  Assim, a <strong>amplitude total</strong> é:
+</p>
+
+
+  <p class="formula" data-tts="Amplitude é cinquenta menos quinze, igual a trinta e cinco.">
+    \[
+      A = x_{\max} - x_{\min} = 50 - 15 = 35.
+    \]
+  </p>
+
+  <p>
+    <strong>Interpretação:</strong> a diferença entre o maior e o menor tempo observado é de
+    35 minutos. Esse valor indica a extensão total do intervalo ocupado pelos dados,
+    mas não informa como as observações estão distribuídas nesse intervalo.
+  </p>
+
+  <p>
+    Note que sete das oito observações estão concentradas entre 15 e 25 minutos.
+    Ainda assim, a presença de um único valor extremo (50) amplia significativamente
+    a amplitude total, ilustrando sua <strong>sensibilidade a valores extremos</strong>.
+  </p>
+</div>
+
+<h3>2.2 Amplitude total para dados agrupados em classes</h3>
+
+<p>
+  Quando os dados são apresentados <strong>agrupados em classes</strong>, não observamos os valores individuais da amostra. O que se
+  dispõe é uma coleção de intervalos do tipo <span class="formula-inline" data-tts="L jota, U jota">\( [L_j,U_j) \)</span>,
+  acompanhados de frequências. Essa forma de apresentação é adequada para resumir grandes conjuntos, mas impõe uma limitação direta
+  para medidas que dependem dos extremos. Em particular, os valores mínimo e máximo não aparecem explicitamente, pois a tabela informa
+  apenas em quais classes eles se encontram.
+</p>
+
+<figure>
+  <img src="../../imagens/amplitude-agrupados-classes.svg" alt="Amplitude total em classes: limites da primeira e da última classe">
+</figure>
+
+<p>
+  Considere
+  <span class="formula-inline" data-tts="cá">\(k\)</span>
+  classes ordenadas
+  <span class="formula-inline" data-tts="intervalos: de L um a U um; de L dois a U dois; até de L cá a U cá">
+    \([L_1,U_1), [L_2,U_2), \ldots, [L_k,U_k)\)
+  </span>.
+  A primeira classe contém as menores observações e a última contém as maiores. Isso permite estabelecer as desigualdades
+  <span class="formula-inline" data-tts="L um menor ou igual a mínimo de xis, menor que U um">
+    \(L_1 \le \min(x) < U_1\)
+  </span>
+  e
+  <span class="formula-inline" data-tts="L cá menor ou igual a máximo de xis, menor que U cá">
+    \(L_k \le \max(x) < U_k\)
+  </span>.
+  Os extremos reais pertencem às classes extremas, mas a tabela não informa sua posição exata no interior desses intervalos.
+</p>
+
+
+<p>
+  Por esse motivo, a diferença entre os extremos não pode ser recuperada de forma exata apenas com a tabela. O que se conhece com
+  certeza é o intervalo global que contém todas as observações no nível do agrupamento, que vai do limite inferior da primeira classe
+  ao limite superior da última. A amplitude total, nesse caso, é tratada como uma medida baseada nos limites das classes extremas,
+  fornecendo um valor operacional compatível com a informação disponível.
+</p>
+
+<p class="formula" data-tts="A é aproximadamente U ká menos L um">
+\[
+  A \approx U_k - L_1.
+\]
+</p>
+
+<p>
+  Essa quantidade mede a largura do intervalo coberto pelas classes, isto é, o tamanho do suporte observado quando os dados são vistos
+  apenas por intervalos. Ela resume o espalhamento máximo compatível com a tabela, sem pretender reproduzir a distância exata entre o
+  maior e o menor valores individuais, que permanece indeterminada dentro das classes extremas.
+</p>
+
+<p>
+  Como a amplitude total depende dos limites escolhidos na construção das classes, ela também é sensível ao
+  <strong>critério de agrupamento</strong>. Alterações nos limites extremos, como ampliar ou reduzir a primeira ou a última classe,
+  modificam diretamente
+  <span class="formula-inline" data-tts="U ká menos L um">\(U_k-L_1\)</span>,
+  mesmo que a distribuição dentro das classes internas permaneça semelhante. Por essa razão, a amplitude total em classes é mais adequada
+  como leitura inicial do intervalo global, enquanto medidas baseadas em posições internas da distribuição, como a
+  <strong>amplitude interquartílica</strong>, tendem a produzir resumos mais informativos da dispersão.
+</p>
+
+
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para desktop -->
+  <div class="kg-wrapper kg-desktop">
+    <div
+      class="kg-container kg--sidebar-centered"
+      src="modelos/amplitude-total-agrupados.yml">
+    </div>
+  </div>
+</figure>
+
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para mobile -->
+  <div class="kg-wrapper kg-mobile-sidebar">
+    <div
+      class="kg-container kg--sidebar-centered"
+      src="modelos/amplitude-total-agrupados-mobile.yml">
+    </div>
+  </div>
+</figure>
+
+<div class="example-frame">
+  <h5>Exemplo</h5>
+
+  <p>
+    Considere uma amostra de tempos semanais de estudo (em horas),
+    organizada na forma de uma <strong>tabela de dados agrupados em classes</strong>:
+  </p>
+
+  <figure class="figure table">
+    <table>
+      <thead>
+        <tr>
+          <th>Classe (horas)</th>
+          <th>Frequência</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>[0, 5)</td><td>4</td></tr>
+        <tr><td>[5, 10)</td><td>9</td></tr>
+        <tr><td>[10, 15)</td><td>6</td></tr>
+        <tr><td>[15, 20)</td><td>1</td></tr>
+      </tbody>
+    </table>
+    <figcaption>Distribuição de frequências por classes</figcaption>
+  </figure>
+
+<p>
+  A menor classe observada inicia-se em
+  <span class="formula-inline" data-tts="L um igual a zero">\(L_1 = 0\)</span>
+  e a maior classe termina em
+  <span class="formula-inline" data-tts="U quatro igual a vinte">\(U_4 = 20\)</span>.
+  Assim, a <strong>amplitude total</strong> é dada por:
+</p>
+
+
+  <p class="formula" data-tts="Amplitude é vinte menos zero, igual a vinte.">
+    \[
+      A = U_4 - L_1 = 20 - 0 = 20.
+    \]
+  </p>
+
+  <p>
+    <strong>Interpretação:</strong> os dados ocupam, aproximadamente, um intervalo de
+    20 horas semanais. Esse valor representa a extensão total coberta pelas classes,
+    e não necessariamente a diferença exata entre o maior e o menor valor observados.
+  </p>
+
+  <p>
+    Como os dados estão agrupados, a amplitude total depende diretamente
+    da <strong>definição dos intervalos de classe</strong>.
+    Alterações nos limites podem modificar a amplitude,
+    mesmo que a distribuição subjacente permaneça essencialmente a mesma.
+  </p>
+</div>
+
+<hr>
+<h2>3. Amplitude Interquartílica e Semi-interquartílica</h2>
+
+<p>
+  A <strong>amplitude interquartílica</strong> constitui uma medida de dispersão que busca
+  descrever o <strong>espalhamento típico</strong> dos dados, concentrando-se na região
+  central da distribuição.
+  Diferentemente da amplitude total, que considera apenas os valores extremos,
+  a amplitude interquartílica baseia-se nos <strong>quartis</strong> e, portanto,
+  utiliza informações posicionais mais representativas do conjunto de dados.
+</p>
+
+<figure>
+  <img src="../../imagens/amplitude-interquartilica.svg" alt="Amplitude interquartílica entre Q1 e Q3">
+</figure>
+
+<p>
+  A ideia central dessa medida está diretamente associada às separatrizes estudadas
+  no capítulo anterior.
+  Ao identificar o <strong>primeiro quartil</strong> (Q<sub>1</sub>) e o
+  <strong>terceiro quartil</strong> (Q<sub>3</sub>), delimitamos um intervalo que contém,
+  aproximadamente, os <strong>50%</strong> centrais das observações.
+  A largura desse intervalo expressa o grau de dispersão dos valores mais típicos da
+  distribuição, desconsiderando as regiões extremas.
+</p>
+
+<p>
+  Formalmente, definimos a <strong>amplitude interquartílica</strong> (AIQ) como a diferença
+  entre o terceiro e o primeiro quartil:
+</p>
+
+<p class="formula" data-tts="Amplitude interquartílica é Q três menos Q um.">
+\[
+  AIQ = Q_3 - Q_1.
+\]
+</p>
+
+<p>
+  Por construção, a amplitude interquartílica é uma medida
+  <strong>robusta à presença de valores extremos</strong>.
+  Observações muito pequenas ou muito grandes, localizadas abaixo de Q<sub>1</sub>
+  ou acima de Q<sub>3</sub>, não afetam seu valor.
+  Essa característica torna a medida especialmente adequada em distribuições assimétricas
+  ou em contextos nos quais outliers podem distorcer medidas baseadas em extremos.
+</p>
+
+<p>
+  Em termos interpretativos, a amplitude interquartílica deve ser lida como a
+  <strong>extensão do intervalo ocupado pela metade central dos dados</strong>.
+  Ela não descreve a dispersão total da distribuição, mas sim o grau de concentração
+  das observações que se situam em torno da posição central.
+</p>
+
+<p>
+  Associada à amplitude interquartílica, define-se a <strong>semi-interquartílica</strong>
+  (SIQ), que corresponde à metade da amplitude interquartílica:
+</p>
+
+<p class="formula" data-tts="Semi interquartílica é a amplitude interquartílica dividida por dois, ou Q três menos Q um sobre dois.">
+\[
+  SIQ = \frac{AIQ}{2}
+  \;=\;
+  \frac{Q_3 - Q_1}{2}.
+\]
+</p>
+
+<p>
+  A semi-interquartílica pode ser interpretada como um <strong>afastamento típico</strong>
+  dos dados centrais em relação à mediana, desempenhando papel análogo ao do desvio-padrão,
+  porém com maior robustez à influência de valores extremos.
+</p>
+<figure>
+  <img src="../../imagens/amplitude-semi-interquartilica.svg" alt="Amplitude interquartílica entre Q1 e Q3">
+</figure>
+<p>
+  A amplitude interquartílica e a semi-interquartílica não dependem da forma como os
+  dados são apresentados.
+  Uma vez determinados Q<sub>1</sub> e Q<sub>3</sub> (pelos métodos do capítulo anterior),
+  essas medidas são obtidas diretamente e mantêm a mesma interpretação estatística.
+  Nas seções seguintes, avançaremos para medidas de dispersão baseadas em
+  <strong>desvios em relação a valores de referência</strong>, que permitem uma análise
+  mais detalhada da variabilidade dos dados.
+</p>
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para desktop -->
+  <div class="kg-wrapper kg-desktop">
+    <div
+      class="kg-container kg--sidebar-centered"
+      src="modelos/amplitude-interquartilica.yml">
+    </div>
+  </div>
+</figure>
+
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para mobile -->
+  <div class="kg-wrapper kg-mobile-sidebar">
+    <div
+      class="kg-container kg--sidebar-centered"
+      src="modelos/amplitude-interquartilica-mobile.yml">
+    </div>
+  </div>
+</figure>
+
+<div class="example-frame">
+  <h5>Exemplo</h5>
+
+  <p>
+    Considere a seguinte amostra com <strong>n = 8</strong> observações (por exemplo, tempos de atendimento, em minutos),
+    já organizada em ordem crescente:
+  </p>
+
+  <p class="formula" data-tts="x igual a quinze, dezoito, vinte, vinte e dois, vinte e três, vinte e quatro, vinte e cinco, cinquenta.">
+    \[
+      x = \{15,\;18,\;20,\;22,\;23,\;24,\;25,\;50\}.
+    \]
+  </p>
+
+  <p>
+    Pelo critério posicional já adotado no capítulo anterior, as posições teóricas dos quartis são:
+  </p>
+
+  <p class="formula" data-tts="P de Q um é dois, e P de Q três é seis.">
+    \[
+      P_{Q_1}=\frac{1\cdot 8}{4}=2,
+      \qquad
+      P_{Q_3}=\frac{3\cdot 8}{4}=6.
+    \]
+  </p>
+
+<p>
+  Como
+  <span class="formula-inline" data-tts="P de Q um">\(P_{Q_1}\)</span>
+  e
+  <span class="formula-inline" data-tts="P de Q três">\(P_{Q_3}\)</span>
+  são inteiros, cada quartil é lido como o <strong>ponto médio</strong>
+  entre duas observações consecutivas:
+</p>
+
+
+  <p class="formula" data-tts="Q um é x dois mais x três dividido por dois, igual a dezenove.">
+    \[
+      Q_1=\frac{x_{(2)}+x_{(3)}}{2}
+      =\frac{18+20}{2}
+      =19.
+    \]
+  </p>
+
+  <p class="formula" data-tts="Q três é x seis mais x sete dividido por dois, igual a vinte e quatro vírgula cinco.">
+    \[
+      Q_3=\frac{x_{(6)}+x_{(7)}}{2}
+      =\frac{24+25}{2}
+      =24{,}5.
+    \]
+  </p>
+
+  <p>
+    Assim, a <strong>amplitude interquartílica</strong> é:
+  </p>
+
+  <p class="formula" data-tts="Amplitude interquartílica é vinte e quatro vírgula cinco menos dezenove, igual a cinco vírgula cinco.">
+    \[
+      AIQ = Q_3 - Q_1 = 24{,}5 - 19 = 5{,}5.
+    \]
+  </p>
+
+  <p>
+    E a <strong>semi-interquartílica</strong> é:
+  </p>
+
+  <p class="formula" data-tts="Semi interquartílica é cinco vírgula cinco dividido por dois, igual a dois vírgula setenta e cinco.">
+    \[
+      SIQ = \frac{AIQ}{2}=\frac{5{,}5}{2}=2{,}75.
+    \]
+  </p>
+
+<p>
+  <strong>Interpretação:</strong> o intervalo interquartílico
+  <span class="formula-inline" data-tts="de Q um até Q três">\([Q_1,\;Q_3]=[19,\;24{,}5]\)</span>
+  contém <strong>50%</strong> dos elementos centrais da amostra e tem largura
+  <span class="formula-inline" data-tts="cinco vírgula cinco">\(5{,}5\)</span>.
+  Note que o valor extremo
+  <span class="formula-inline" data-tts="cinquenta">\(50\)</span>,
+  apesar de ampliar bastante a <strong>amplitude total</strong>, não modifica a AIQ nem a SIQ,
+  evidenciando a maior <strong>robustez</strong> dessas medidas.
+</p>
+
+
+</div>
+<hr>
+<h2>4. Desvios em relação à média aritmética e à mediana</h2>
+
+<p>
+  As medidas de dispersão apresentadas anteriormente descrevem o espalhamento dos dados com base
+  em <strong>valores extremos</strong>, como na amplitude total, ou com base em <strong>pontos de corte</strong>,
+  como na amplitude interquartílica. Essas abordagens são úteis, mas não capturam diretamente o
+  comportamento de <em>todas</em> as observações em torno de um valor central. Em muitas aplicações,
+  interessa medir a variabilidade a partir de uma comparação sistemática entre cada observação e
+  um referencial comum.
+</p>
+
+<figure>
+  <img src="../../imagens/desvios.svg" alt="Desvios">
+</figure>
+
+<p>
+  Essa comparação é expressa pela noção de <strong>desvio</strong>, dado um valor de referência. Dois referenciais aparecem
+  naturalmente no estudo de distribuições: a <strong>média aritmética</strong>, que resume os dados
+  por equilíbrio das somas; e a <strong>mediana</strong>, que resume os dados por equilíbrio de posições.
+  Em ambos os casos, o desvio indica se a observação está acima ou abaixo do centro e qual é a
+  magnitude desse afastamento na própria escala da variável.
+</p>
+
+<p>
+  Nesta seção, serão formalizados os desvios em relação à média e à mediana e discutidas propriedades
+  que orientam a construção de medidas de dispersão baseadas em desvios. Em particular, será mostrada
+  uma propriedade fundamental dos desvios em relação à média que torna inadequado utilizar a soma
+  simples desses desvios como medida direta de dispersão, o que motiva o uso de transformações como
+  o <strong>valor absoluto</strong> em medidas do tipo desvio médio.
+</p>
+
+<h3>4.1 Desvios em relação à média aritmética</h3>
+
+<p>
+  Quando o valor de referência é a <strong>média aritmética</strong>, a dispersão é analisada a partir
+  das diferenças entre cada observação da amostra e esse centro. A média desempenha um papel central
+  nesse contexto por resumir os dados em um único valor e por satisfazer uma propriedade de equilíbrio
+  que se manifesta diretamente na soma dos desvios. Por essa razão, os desvios em relação à média
+  constituem o ponto de partida para a construção de diversas medidas de variabilidade.
+</p>
+
+
+<figure>
+  <img src="../../imagens/desvio-media.svg" alt="Desvios em relação à média">
+</figure>
+
+<p>
+  Considere uma amostra com
+  <span class="formula-inline" data-tts="ene">\(n\)</span>
+  observações
+  <span class="formula-inline" data-tts="xis um, xis dois, até xis ene">\(x_1,x_2,\ldots,x_n\)</span>
+  e média aritmética
+  <span class="formula-inline" data-tts=", xis barra">\(\bar{x}\)</span>.
+  O <strong>desvio em relação à média</strong> associado à observação
+  <span class="formula-inline" data-tts="xis i">\(x_i\)</span>
+  é definido como:
+</p>
+
+
+<p class="formula" data-tts="d i é igual a x i menos x barra">
+\[
+  d_i = x_i - \bar{x},
+  \qquad (i=1,2,\ldots,n).
+\]
+</p>
+
+<p>
+  Essa definição permite interpretar o sinal e a magnitude do afastamento. Se
+  <span class="formula-inline" data-tts="d i maior que zero">\(d_i>0\)</span>,
+  então
+  <span class="formula-inline" data-tts="x i">\(x_i\)</span>
+  está acima de
+  <span class="formula-inline" data-tts="xis barra">\( \bar{x} \)</span>;
+  se
+  <span class="formula-inline" data-tts="d i menor que zero">\(d_i < 0 \)</span>,
+  então
+  <span class="formula-inline" data-tts="x i">\(x_i\)</span>
+  está abaixo de
+  <span class="formula-inline" data-tts="xis barra">\( \bar{x} \)</span>;
+  e se
+  <span class="formula-inline" data-tts="d i igual a zero">\(d_i=0\)</span>,
+  a observação coincide com o valor médio. Assim, cada desvio registra simultaneamente a direção do
+  afastamento e o seu tamanho na escala da variável.
+</p>
+
+
+<p>
+  Uma propriedade característica da média aparece quando se somam todos os desvios definidos dessa forma.
+  A soma algébrica dos desvios em relação a
+  <span class="formula-inline"
+        data-tts="média">
+    \(\bar{x}\)
+  </span>
+  é sempre nula:
+</p>
+
+<p class="formula" data-tts="A soma dos desvios em relação à média é zero">
+\[
+  \sum_{i=1}^{n} (x_i-\bar{x}) = 0.
+\]
+</p>
+
+<p>
+  Essa identidade expressa a média como ponto de equilíbrio da amostra. Desvios positivos, associados a
+  valores acima de
+  <span class="formula-inline" data-tts="xis barra">\( \bar{x} \)</span>,
+  são compensados por desvios negativos, associados a valores abaixo de
+  <span class="formula-inline" data-tts="xis barra">\( \bar{x} \)</span>,
+  de modo que ocorre cancelamento perfeito. Por essa razão, a soma simples dos desvios não pode ser
+  utilizada como medida de dispersão, pois seu valor é sempre
+  <span class="formula-inline" data-tts="zero">\(0\)</span>,
+  independentemente do grau de concentração ou espalhamento dos dados.
+</p>
+
+
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para desktop -->
+  <div class="kg-wrapper kg-desktop">
+    <div
+      class="kg-container kg--sidebar-centered"
+      src="modelos/desvios-media.yml">
+    </div>
+  </div>
+</figure>
+
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para mobile -->
+  <div class="kg-wrapper kg-mobile-sidebar">
+    <div
+      class="kg-container kg--sidebar-centered"
+      src="modelos/desvios-media-mobile.yml">
+    </div>
+  </div>
+</figure>
+ <div class="example-frame">
+  <h5>Exemplo</h5>
+
+  <p>
+    Considere uma amostra com <strong>4 unidades de observação</strong>, representada pelo conjunto
+    <span class="formula-inline" data-tts="xis igual a dois, quatro, seis, dez">\(x=\{2,\;4,\;6,\;10\}\)</span>.
+  </p>
+
+  <p>
+    O primeiro passo consiste em calcular a média aritmética da amostra.
+  </p>
+
+  <p class="formula" data-tts="xis barra é igual a dois mais quatro mais seis mais dez, tudo dividido por quatro, igual a cinco vírgula cinco">
+  \[
+    \bar{x}=\frac{2+4+6+10}{4}=5{,}5.
+  \]
+  </p>
+
+  <p>
+    Em seguida, calculam-se os desvios de cada observação em relação à média, definidos por
+    <span class="formula-inline" data-tts="d i é igual a x i menos x barra">\(d_i=x_i-\bar{x}\)</span>.
+  </p>
+
+  <p class="formula" data-tts="d um menos três vírgula cinco, d dois menos um vírgula cinco">
+  \[
+    d_1=2-5{,}5=-3{,}5,\qquad
+    d_2=4-5{,}5=-1{,}5,\qquad
+
+  \]
+  </p>
+  <p class="formula" data-tts="d três zero vírgula cinco, d quatro quatro vírgula cinco">
+  \[
+
+    d_3=6-5{,}5=0{,}5,\qquad
+    d_4=10-5{,}5=4{,}5.
+  \]
+  </p>
+  <p>
+    A soma dos desvios obtidos é dada por:
+  </p>
+
+  <p class="formula" data-tts="somatório de d i de um até quatro igual a zero">
+  \[
+    \sum_{i=1}^{4} d_i
+    =(-3{,}5)+(-1{,}5)+(0{,}5)+(4{,}5)
+    =0.
+  \]
+  </p>
+
+  <p>
+    Esse resultado confirma que, ao tomar a média aritmética como valor de referência,
+    os desvios positivos e negativos se compensam exatamente.
+  </p>
+</div>
+
+<h3>4.2 Desvios em relação à mediana</h3>
+
+<p>
+  Quando o valor de referência é a <strong>mediana</strong>, os desvios são definidos a partir da
+  comparação entre cada observação da amostra e esse ponto central. Diferentemente da média,
+  a mediana é determinada exclusivamente pela <strong>ordenação</strong> dos dados e corresponde
+  a um corte posicional que divide a amostra em duas partes aproximadamente iguais. Por esse
+  motivo, os desvios em relação à mediana oferecem uma leitura alternativa do afastamento das
+  observações em torno de um centro.
+</p>
+
+<figure>
+  <img src="../../imagens/desvio-mediana.svg" alt="Desvios em relação à mediana">
+</figure>
+
+<p>
+  Considere uma amostra com
+  <span class="formula-inline" data-tts="ene">\(n\)</span>
+  observações
+  <span class="formula-inline" data-tts="xis um, xis dois, até xis ene">\(x_1,x_2,\ldots,x_n\)</span>
+  e mediana
+  <span class="formula-inline" data-tts="xis til">\( \tilde{x} \)</span>.
+  O <strong>desvio em relação à mediana</strong> associado à observação
+  <span class="formula-inline" data-tts="xis i">\(x_i\)</span>
+  é definido como:
+</p>
+
+
+<p class="formula" data-tts="e i é igual a x i menos x til">
+\[
+  e_i = x_i - \tilde{x},
+  \qquad (i=1,2,\ldots,n).
+\]
+</p>
+
+<p>
+  Essa definição permite interpretar o afastamento de cada observação em relação ao ponto mediano.
+  Se
+  <span class="formula-inline" data-tts="e i maior que zero">\(e_i>0\)</span>,
+  então
+  <span class="formula-inline" data-tts="xis i">\(x_i\)</span>
+  está acima de
+  <span class="formula-inline" data-tts="xis til">\(\tilde{x}\)</span>;
+  se
+  <span class="formula-inline" data-tts="e i menor que zero">\(e_i< 0 \)</span>,
+  então
+  <span class="formula-inline" data-tts="xis i">\(x_i\)</span>
+  está abaixo; e se
+  <span class="formula-inline" data-tts="e i igual a zero">\(e_i=0\)</span>,
+  a observação coincide com a mediana. Assim como no caso da média, os desvios em relação
+  à mediana registram simultaneamente a direção e a magnitude do afastamento.
+</p>
+
+
+<p>
+  A principal diferença em relação aos desvios em torno da média está nas propriedades do ponto de
+  referência. A mediana é construída de modo que aproximadamente metade das observações fique abaixo
+  e metade acima, independentemente dos valores extremos. Como consequência, deslocamentos grandes
+  em poucas observações tendem a afetar pouco o valor de
+  <span class="formula-inline" data-tts="xis til">\(\tilde{x}\)</span>,
+  desde que a posição central da ordenação seja preservada.
+</p>
+
+
+
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para desktop -->
+  <div class="kg-wrapper kg-desktop">
+    <div
+      class="kg-container kg--sidebar-centered"
+      src="modelos/desvios-mediana.yml">
+    </div>
+  </div>
+</figure>
+
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para mobile -->
+  <div class="kg-wrapper kg-mobile-sidebar">
+    <div
+      class="kg-container kg--sidebar-centered"
+      src="modelos/desvios-mediana-mobile.yml">
+    </div>
+  </div>
+</figure>
+<div class="example-frame">
+  <h5>Exemplo</h5>
+
+  <p>
+    Considere uma amostra com <strong>n = 4</strong> observações, dada por
+    <span class="formula-inline" data-tts="xis igual a dois, quatro, seis, dez">\(x=\{2,\;4,\;6,\;10\}\)</span>.
+  </p>
+
+  <p>
+    O primeiro passo consiste em ordenar os valores em ordem crescente:
+  </p>
+
+  <p class="formula" data-tts="xis um entre parênteses menor ou igual a xis dois entre parênteses, até xis quatro entre parênteses, igual a dois, quatro, seis, dez">
+  \[
+    x_{(1)} \le x_{(2)} \le x_{(3)} \le x_{(4)}
+    \;\Rightarrow\;
+    \{2,\;4,\;6,\;10\}.
+  \]
+  </p>
+
+<p>
+  Como
+  <span class="formula-inline" data-tts="ene igual a quatro">\(n=4\)</span>
+  é par, a mediana é definida como o ponto médio entre as duas observações centrais
+  <span class="formula-inline" data-tts="xis, abre parênteses, dois, fecha parênteses">\(x_{(2)}\)</span>
+  e
+  <span class="formula-inline" data-tts="xis, abre parênteses, três, fecha parênteses">\(x_{(3)}\)</span>:
+</p>
+
+
+  <p class="formula" data-tts="xis til é igual a xis dois entre parênteses mais xis três entre parênteses sobre dois, igual a quatro mais seis sobre dois, igual a cinco">
+  \[
+    \tilde{x}=\frac{x_{(2)}+x_{(3)}}{2}
+    =\frac{4+6}{2}
+    =5.
+  \]
+  </p>
+
+  <p>
+    Em seguida, definem-se os desvios em relação à mediana por
+    <span class="formula-inline" data-tts="e i é igual a x i menos x til">\(e_i=x_i-\tilde{x}\)</span>
+    e calculam-se os valores correspondentes:
+  </p>
+  <p class="formula" data-tts="e um é igual a dois menos cinco igual a menos três, e dois é igual a quatro menos cinco igual a menos um,">
+  \[
+    e_1=2-5=-3,\qquad
+    e_2=4-5=-1,\qquad
+
+  \]
+  <p class="formula" data-tts="e três é igual a seis menos cinco igual a um, e quatro é igual a dez menos cinco igual a cinco">
+  \[
+
+    e_3=6-5=1,\qquad
+    e_4=10-5=5.
+  \]
+  </p>
+
+<p>
+  Os sinais dos desvios indicam a posição das observações em relação à mediana. Valores com
+  <span class="formula-inline" data-tts="e i menor que zero">\(e_i<0\)</span>
+  estão abaixo de
+  <span class="formula-inline" data-tts="xis til">\(\tilde{x}\)</span>
+  e valores com
+  <span class="formula-inline" data-tts="e i maior que zero">\(e_i>0\)</span>
+  estão acima de
+  <span class="formula-inline" data-tts="xis til">\(\tilde{x}\)</span>.
+</p>
+
+</div>
+
+<hr>
+<h2>5. Desvio absoluto médio</h2>
+
+<p>
+  Quando os desvios são definidos em relação a um valor de referência, como a média aritmética,
+  eles podem assumir valores positivos e negativos. Em consequência, a soma simples dos desvios
+  não fornece uma medida de dispersão, pois cancelamentos entre sinais podem ocorrer. Para obter
+  uma medida operacional baseada em afastamentos, é necessário transformar os desvios de modo que
+  todos contribuam de forma não negativa.
+</p>
+
+<figure>
+  <img src="../../imagens/desvio-absoluto-medio.svg" alt="Desvio absoluto médio">
+</figure>
+
+<p>
+  Uma transformação natural consiste em substituir cada desvio pelo seu <strong>valor absoluto</strong>.
+  O <strong>desvio absoluto médio</strong> (DAM) é então definido como a média dos desvios absolutos
+  em relação à média aritmética. Sua interpretação é direta. Ele representa um afastamento médio
+  das observações em torno de
+  <span class="formula-inline" data-tts=", xis barra">\(\bar{x}\)</span>,
+  expresso na mesma unidade da variável analisada.
+</p>
+
+
+<p>
+  Formalmente, para uma amostra com observações
+  <span class="formula-inline" data-tts="xis um, até xis ene">\(x_1,\ldots,x_n\)</span>
+  e média
+  <span class="formula-inline" data-tts="média, xis barra">\(\bar{x}\)</span>,
+  define-se:
+</p>
+
+
+<p class="formula" data-tts="d a m é um sobre ene vezes a soma do módulo de x i menos x barra">
+\[
+  DAM = \frac{1}{n}\sum_{i=1}^{n} \left|x_i-\bar{x}\right|.
+\]
+</p>
+
+<p>
+  Nas seções seguintes, o cálculo do desvio absoluto médio será apresentado em três situações:
+  dados não agrupados, dados agrupados em tabela de frequências sem intervalos de classe e dados
+  agrupados em classes, caso em que se utiliza uma aproximação por representantes das classes.
+</p>
+
+<h3>5.1 Desvio absoluto médio para dados não agrupados</h3>
+
+<p>
+  Quando os dados são apresentados <strong>não agrupados</strong>, isto é, como uma lista completa de
+  observações, o desvio absoluto médio pode ser calculado diretamente a partir de sua definição.
+  Nesse caso, cada valor
+  <span class="formula-inline" data-tts="xis i">\(x_i\)</span>
+  está disponível explicitamente e a soma
+  <span class="formula-inline" data-tts="de i igual a um até ene, de módulo de xis i menos, xis barra">
+    \(\sum_{i=1}^{n}\left|x_i-\bar{x}\right|\)
+  </span>
+  pode ser construída sem necessidade de reescrita.
+</p>
+
+<figure>
+  <img src="../../imagens/desvio-absoluto-media-nao-agrupados.svg" alt="Desvio absoluto médio em dados não agrupados">
+</figure>
+
+<p>
+  O cálculo é organizado em etapas. Primeiro determina-se a média aritmética
+  <span class="formula-inline" data-tts="média, xis barra">\(\bar{x}\)</span>.
+  Em seguida, calcula-se o desvio absoluto
+  <span class="formula-inline" data-tts="módulo de xis i menos média, xis barra">\(\left|x_i-\bar{x}\right|\)</span>
+  para cada observação.
+  Por fim, toma-se a média desses desvios absolutos, obtendo uma medida de dispersão expressa
+  na mesma unidade da variável analisada.
+</p>
+
+<p>
+  O exemplo a seguir apresenta esse procedimento de forma completa em um conjunto pequeno de dados.
+</p>
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para desktop -->
+  <div class="kg-wrapper kg-desktop">
+    <div
+      class="kg-container kg--sidebar-centered"
+      src="modelos/desvio-absoluto-medio.yml">
+    </div>
+  </div>
+</figure>
+
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para mobile -->
+  <div class="kg-wrapper kg-mobile-sidebar">
+    <div
+      class="kg-container kg--sidebar-centered"
+      src="modelos/desvio-absoluto-medio-mobile.yml">
+    </div>
+  </div>
+</figure>
+<div class="example-frame">
+  <h5>Exemplo</h5>
+
+  <p>
+    Considere a amostra
+    <span class="formula-inline" data-tts="x igual a dois, quatro, seis, nove, onze">\(x=\{2,4,6,9,11\}\)</span>.
+    Como temos os <strong>dados não agrupados</strong> (a lista completa das observações),
+    podemos calcular o desvio absoluto médio diretamente a partir da definição:
+    primeiro obtemos a média
+    <span class="formula-inline" data-tts="média, xis barra">\(\bar{x}\)</span>
+    e, depois, medimos as distâncias
+    <span class="formula-inline" data-tts="módulo de xis i menos média, xis barra">\(|x_i-\bar{x}|\)</span>.
+  </p>
+
+  <p>
+    A média é:
+  </p>
+
+  <p class="formula" data-tts="x barra é a soma dos cinco valores dividido por cinco, igual a seis vírgula quatro.">
+    \[
+      \bar{x}
+      =\frac{2+4+6+9+11}{5}
+      =\frac{32}{5}
+      =6{,}4.
+    \]
+  </p>
+
+  <p>
+    Agora calculamos os <strong>desvios absolutos</strong> em relação à média.
+    Repare que o módulo transforma qualquer desvio em uma <em>distância</em> (sempre não negativa):
+    pontos à esquerda de
+    <span class="formula-inline" data-tts="média, xis barra">\(\bar{x}\)</span>
+    e pontos à direita de
+    <span class="formula-inline" data-tts="média, xis barra">\(\bar{x}\)</span>
+    contam igualmente para o afastamento.
+  </p>
+
+  <p class="formula" data-tts="desvios absolutos: módulo de dois menos seis vírgula quatro é quatro vírgula quatro; módulo de quatro menos seis vírgula quatro é dois vírgula quatro; módulo de seis menos seis vírgula quatro é zero vírgula quatro.">
+    \[
+      |2-6{,}4|=4{,}4,\qquad
+      |4-6{,}4|=2{,}4,\qquad
+      |6-6{,}4|=0{,}4.
+    \]
+  </p>
+
+  <p class="formula" data-tts="módulo de nove menos seis vírgula quatro é dois vírgula seis; módulo de onze menos seis vírgula quatro é quatro vírgula seis.">
+    \[
+      |9-6{,}4|=2{,}6,\qquad
+      |11-6{,}4|=4{,}6.
+    \]
+  </p>
+
+  <p>
+    Somando essas distâncias, obtemos o “afastamento total” em relação à média:
+  </p>
+
+  <p class="formula" data-tts="quatro vírgula quatro mais dois vírgula quatro mais zero vírgula quatro mais dois vírgula seis mais quatro vírgula seis é igual a quatorze vírgula quatro.">
+    \[
+      4{,}4+2{,}4+0{,}4+2{,}6+4{,}6=14{,}4.
+    \]
+  </p>
+
+  <p>
+    O <strong>desvio absoluto médio</strong> é essa soma dividida pelo número de observações
+    <span class="formula-inline" data-tts="ene igual a cinco">\(n=5\)</span>,
+    isto é, a <strong>média</strong> das distâncias:
+  </p>
+
+  <p class="formula" data-tts="d a m é quatorze vírgula quatro dividido por cinco, igual a dois vírgula oitenta e oito.">
+    \[
+      DAM
+      =\frac{4{,}4+2{,}4+0{,}4+2{,}6+4{,}6}{5}
+      =\frac{14{,}4}{5}
+      =2{,}88.
+    \]
+  </p>
+
+  <p>
+    Em termos geométricos (na escala original), isso significa que os valores do conjunto
+    ficam, em média, a aproximadamente
+    <span class="formula-inline" data-tts="dois vírgula oitenta e oito">\(2{,}88\)</span>
+    unidades de distância da média
+    <span class="formula-inline" data-tts="média, xis barra igual a seis vírgula quatro">\(\bar{x}=6{,}4\)</span>.
+  </p>
+
+  <p>
+    <strong>Interpretação:</strong> em média, as observações se afastam
+    <span class="formula-inline" data-tts="dois vírgula oitenta e oito">\(2{,}88\)</span>
+    unidades da média aritmética.
+  </p>
+</div>
+
+<h3>5.2 Desvio absoluto médio para dados agrupados sem intervalo de classes</h3>
+
+<p>
+  Quando os dados não aparecem como uma lista de observações individuais, mas sim organizados em uma
+  <strong>tabela de frequências</strong> com valores discretos, o cálculo do desvio absoluto médio exige
+  apenas uma adaptação formal. A ideia fundamental permanece a mesma: medir a distância média das
+  observações em relação à média aritmética. A diferença está no modo como essas observações são
+  incorporadas e manipuladas.
+</p>
+
+<p>
+  Em uma tabela de frequências, cada valor distinto não representa uma única observação, mas um
+  <strong>conjunto de observações idênticas</strong>. Assim, ao calcular desvios, não é necessário repetir
+  explicitamente cada valor na soma. Em vez disso, a contribuição de cada valor deve refletir
+  quantas vezes ele ocorre na amostra.
+</p>
+
+<figure>
+  <img src="../../imagens/desvio-medio-absoluto-agrupados.svg"
+       alt="Desvio absoluto médio em dados agrupados sem intervalos de classe">
+</figure>
+
+<p>
+  A noção central nesse contexto é a de <strong>ponderação por frequência</strong>. Cada desvio absoluto
+  em relação à média é multiplicado pela frequência associada ao valor correspondente, de modo que
+  observações mais frequentes tenham maior peso no cálculo final. O desvio absoluto médio passa,
+  assim, a ser interpretado como uma <strong>média ponderada dos desvios</strong>.
+</p>
+
+<p>
+  Formalmente, considere um conjunto de <em>m</em> valores distintos
+  <span class="formula-inline" data-tts="xis um, até xis eme">\(x_1,\ldots,x_m\)</span>,
+  com frequências associadas
+  <span class="formula-inline" data-tts="efe um, até efe eme">\(f_1,\ldots,f_m\)</span>.
+  O tamanho total da amostra é dado por
+  <span class="formula-inline" data-tts="ene igual a soma das frequências">\(n=\sum_{j=1}^{m} f_j\)</span>.
+</p>
+
+<p>
+  A média aritmética da amostra pode ser escrita como:
+</p>
+
+<p class="formula" data-tts="x barra é um sobre ene vezes a soma de f j vezes x j">
+\[
+  \bar{x}=\frac{1}{n}\sum_{j=1}^{m} f_j\,x_j.
+\]
+</p>
+
+<p>
+  Com base nessa média, o desvio absoluto médio é definido como:
+</p>
+
+<p class="formula" data-tts="desvio absoluto médio é um sobre ene vezes a soma de f j vezes o módulo de x j menos x barra">
+\[
+  DAM=\frac{1}{n}\sum_{j=1}^{m} f_j\,\left|x_j-\bar{x}\right|.
+\]
+</p>
+
+<p>
+  Essa expressão evidencia que o DAM é obtido somando-se as distâncias absolutas entre cada valor
+  distinto e a média, ponderadas por suas frequências, e normalizando-se pelo tamanho total da
+  amostra. Valores mais frequentes exercem maior influência sobre o resultado final, enquanto
+  valores menos frequentes contribuem proporcionalmente menos.
+</p>
+
+<p>
+  A seguir, esse procedimento é ilustrado por meio de um <strong>gráfico interativo</strong>, construído
+  com os mesmos dados utilizados na formulação algébrica. A visualização permite observar como cada
+  valor distinto contribui para o cálculo do desvio absoluto médio por meio de seu desvio em relação
+  à média e de sua frequência associada.
+</p>
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para desktop -->
+  <div class="kg-wrapper kg-desktop">
+    <div
+      class="kg-container kg--sidebar-centered"
+      src="modelos/desvio-absoluto-medio-agrupado.yml">
+    </div>
+  </div>
+</figure>
+
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para mobile -->
+  <div class="kg-wrapper kg-mobile-sidebar">
+    <div
+      class="kg-container kg--sidebar-centered"
+      src="modelos/desvio-absoluto-medio-agrupado-mobile.yml">
+    </div>
+  </div>
+</figure>
+<div class="example-frame">
+  <h5>Exemplo</h5>
+
+  <p>
+    Considere uma distribuição discreta apresentada em tabela de frequências. Cada valor
+    <span class="formula-inline" data-tts="xis">\(x\)</span>
+    ocorre um número de vezes indicado por
+    <span class="formula-inline" data-tts="efe">\(f\)</span>.
+  </p>
+
+  <figure class="figure table">
+    <table>
+      <thead>
+        <tr>
+          <th>Valor (<em>x</em>)</th>
+          <th>Frequência (<em>f</em>)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>0</td><td>2</td></tr>
+        <tr><td>2</td><td>4</td></tr>
+        <tr><td>4</td><td>6</td></tr>
+        <tr><td>6</td><td>4</td></tr>
+        <tr><td>8</td><td>3</td></tr>
+      </tbody>
+    </table>
+    <figcaption>Tabela de frequências (dados agrupados sem classes)</figcaption>
+  </figure>
+
+  <p>
+    O total de observações é dado pela soma das frequências:
+    <span class="formula-inline" data-tts="ene igual a dois mais quatro mais seis mais quatro mais três, igual a dezenove">
+      \(n=2+4+6+4+3=19\)
+    </span>.
+  </p>
+
+  <p>
+    A média aritmética é calculada como média ponderada:
+  </p>
+
+  <p class="formula" data-tts="xis barra é igual a um sobre dezenove vezes dois vezes zero, mais quatro vezes dois, mais seis vezes quatro, mais quatro vezes seis, mais três vezes oito, igual a oitenta sobre dezenove, aproximadamente quatro vírgula vinte e um">
+  \[
+    \bar{x}
+    =\frac{1}{19}\,\big(2\cdot 0 + 4\cdot 2 + 6\cdot 4 + 4\cdot 6 + 3\cdot 8\big)
+    =\frac{80}{19}
+    \approx 4{,}21.
+  \]
+  </p>
+
+  <p>
+    Para o cálculo do desvio absoluto médio, utiliza-se a definição ponderada:
+  </p>
+
+  <p class="formula" data-tts="d a m é um sobre ene vezes a soma de f i vezes o módulo de x i menos xis barra">
+  \[
+    DAM=\frac{1}{n}\sum f_i\,|x_i-\bar{x}|.
+  \]
+  </p>
+
+  <p>
+    Para manter as contas exatas, adote
+    <span class="formula-inline" data-tts="xis barra igual a oitenta sobre dezenove">\(\bar{x}=\frac{80}{19}\)</span>.
+    Calculam-se os desvios absolutos associados a cada valor:
+  </p>
+
+  <p class="formula" data-tts="módulo de zero menos oitenta sobre dezenove igual a oitenta sobre dezenove, módulo de dois menos oitenta sobre dezenove igual a quarenta e dois sobre dezenove, módulo de quatro menos oitenta sobre dezenove igual a quatro sobre dezenove">
+  \[
+    \left|0-\frac{80}{19}\right|=\frac{80}{19},\qquad
+    \left|2-\frac{80}{19}\right|=\frac{42}{19},\qquad
+    \left|4-\frac{80}{19}\right|=\frac{4}{19}.
+  \]
+  </p>
+
+  <p class="formula" data-tts="módulo de seis menos oitenta sobre dezenove igual a trinta e quatro sobre dezenove, módulo de oito menos oitenta sobre dezenove igual a setenta e dois sobre dezenove">
+  \[
+    \left|6-\frac{80}{19}\right|=\frac{34}{19},\qquad
+    \left|8-\frac{80}{19}\right|=\frac{72}{19}.
+  \]
+  </p>
+
+  <p>
+    Em seguida, ponderam-se os desvios absolutos pelas frequências:
+  </p>
+
+  <p class="formula" data-tts="dois vezes oitenta sobre dezenove igual a cento e sessenta sobre dezenove, quatro vezes quarenta e dois sobre dezenove igual a cento e sessenta e oito sobre dezenove, seis vezes quatro sobre dezenove igual a vinte e quatro sobre dezenove">
+  \[
+    2\cdot\frac{80}{19}=\frac{160}{19},\qquad
+    4\cdot\frac{42}{19}=\frac{168}{19},\qquad
+    6\cdot\frac{4}{19}=\frac{24}{19}.
+  \]
+  </p>
+
+  <p class="formula" data-tts="quatro vezes trinta e quatro sobre dezenove igual a cento e trinta e seis sobre dezenove, três vezes setenta e dois sobre dezenove igual a duzentos e dezesseis sobre dezenove">
+  \[
+    4\cdot\frac{34}{19}=\frac{136}{19},\qquad
+    3\cdot\frac{72}{19}=\frac{216}{19}.
+  \]
+  </p>
+
+  <p>
+    A soma dos afastamentos ponderados é:
+  </p>
+
+  <p class="formula" data-tts="cento e sessenta sobre dezenove mais cento e sessenta e oito sobre dezenove mais vinte e quatro sobre dezenove mais cento e trinta e seis sobre dezenove mais duzentos e dezesseis sobre dezenove igual a setecentos e quatro sobre dezenove">
+  \[
+    \frac{160}{19}+\frac{168}{19}+\frac{24}{19}+\frac{136}{19}+\frac{216}{19}
+    =\frac{704}{19}.
+  \]
+  </p>
+
+  <p>
+    Dividindo por
+    <span class="formula-inline" data-tts="ene igual a dezenove">\(n=19\)</span>,
+    obtém-se o desvio absoluto médio:
+  </p>
+
+  <p class="formula" data-tts="d a m é setecentos e quatro sobre trezentos e sessenta e um, aproximadamente um vírgula noventa e cinco">
+  \[
+    DAM
+    =\frac{1}{19}\cdot\frac{704}{19}
+    =\frac{704}{361}
+    \approx 1{,}95.
+  \]
+  </p>
+
+  <p>
+    Para referência no eixo, utiliza-se
+    <span class="formula-inline" data-tts="xis barra mais ou menos d">\(\bar{x}\pm d\)</span>
+    com
+    <span class="formula-inline" data-tts="d aproximadamente um vírgula noventa e cinco">\(d\approx 1{,}95\)</span>:
+  </p>
+
+  <p class="formula" data-tts="xis barra menos d aproximadamente quatro vírgula vinte e um menos um vírgula noventa e cinco aproximadamente dois vírgula vinte e seis, xis barra mais d aproximadamente quatro vírgula vinte e um mais um vírgula noventa e cinco aproximadamente seis vírgula dezesseis">
+  \[
+    \bar{x}-d \approx 4{,}21-1{,}95 \approx 2{,}26
+    \qquad\text{e}\qquad
+    \bar{x}+d \approx 4{,}21+1{,}95 \approx 6{,}16.
+  \]
+  </p>
+
+  <p>
+    O valor obtido é exato para a distribuição descrita pela tabela, pois não há intervalos de classe.
+  </p>
+</div>
+<h3>5.3 Desvio absoluto médio para dados agrupados em classes</h3>
+
+<p>
+  Quando os dados estão <strong>agrupados em classes</strong>, a informação disponível é ainda mais
+  limitada do que no caso de valores discretos com frequência. Em vez de observar valores
+  individuais, conhecemos apenas <strong>intervalos</strong>
+  <span class="formula-inline" data-tts="L jota, U jota">\( [L_j,U_j) \)</span>
+  e o número de observações que caem em cada um deles. Como os valores dentro de uma mesma classe
+  podem estar distribuídos de diferentes formas, não é possível reconstruir exatamente os dados
+  originais a partir da tabela.
+</p>
+
+<p>
+  Essa perda de informação implica que medidas de dispersão baseadas em distâncias, como o
+  <strong>desvio absoluto médio</strong>, não podem ser calculadas de forma exata. Qualquer resultado
+  obtido nesse contexto depende necessariamente de uma <strong>aproximação</strong>, isto é, de uma
+  hipótese simplificadora sobre como as observações se distribuem no interior de cada classe.
+</p>
+
+<p>
+  A aproximação mais comum consiste em representar cada classe por um valor típico, geralmente o
+  <strong>ponto médio</strong> do intervalo. Ao assumir que todas as observações da classe
+  <span class="formula-inline" data-tts="jota">\(j\)</span>
+  estão concentradas em
+  <span class="formula-inline" data-tts="c jota igual a L jota mais U jota, sobre dois">
+    \(c_j=\frac{L_j+U_j}{2}\)
+  </span>,
+  passamos a tratar os dados agrupados como se fossem dados discretos, o que torna o cálculo
+  operacionalmente viável.
+</p>
+
+
+<figure>
+  <img src="../../imagens/desvio-medio-absoluto-classe.svg"
+       alt="Desvio absoluto médio aproximado em dados agrupados em classes">
+</figure>
+
+<p>
+  Essa hipótese não descreve a distribuição real dos dados dentro de cada classe, mas fornece um
+  <strong>resumo representativo</strong> que permite obter estimativas aproximadas da média e do
+  desvio absoluto médio. A qualidade da aproximação depende, em particular, da largura das classes:
+  quanto mais estreitos os intervalos, menor tende a ser o erro introduzido.
+</p>
+
+<p>
+  Formalmente, considere classes
+  <span class="formula-inline" data-tts="intervalos: de L um a U um; até de L cá a U cá">
+    \([L_1,U_1),\ldots,[L_k,U_k)\)
+  </span>
+  com frequências associadas
+  <span class="formula-inline" data-tts="efe um, até efe cá">\(f_1,\ldots,f_k\)</span>.
+  Denote por
+  <span class="formula-inline" data-tts="c jota igual a L jota mais U jota, sobre dois">
+    \(c_j=\frac{L_j+U_j}{2}\)
+  </span>
+  o ponto médio da classe
+  <span class="formula-inline" data-tts="jota">\(j\)</span>
+  e por
+  <span class="formula-inline" data-tts="ene igual ao somatório de jota igual a um até cá, de efe jota">
+    \(n=\sum_{j=1}^{k} f_j\)
+  </span>
+  o total de observações.
+</p>
+
+<p>
+  A média aritmética aproximada é dada por:
+</p>
+
+<p class="formula" data-tts="x barra aproximada é um sobre ene vezes a soma de f j vezes c j">
+\[
+  \bar{x}\approx \frac{1}{n}\sum_{j=1}^{k} f_j\,c_j.
+\]
+</p>
+
+<p>
+  Com base nessa média aproximada, define-se o desvio absoluto médio aproximado como:
+</p>
+
+<p class="formula" data-tts="desvio absoluto médio aproximado é um sobre ene vezes a soma de f j vezes o módulo de c j menos x barra">
+\[
+  DAM \approx \frac{1}{n}\sum_{j=1}^{k} f_j\,\left|c_j-\bar{x}\right|.
+\]
+</p>
+
+<p>
+  Essa expressão mostra que o DAM aproximado é uma <strong>média ponderada das distâncias</strong>
+  entre os pontos médios das classes e a média aproximada, em que os pesos são dados pelas
+  frequências. Trata-se, portanto, de uma medida de dispersão construída a partir de uma
+  representação simplificada dos dados originais.
+</p>
+
+<p>
+  A seguir, esse procedimento é ilustrado por meio de um <strong>gráfico interativo</strong>, no qual
+  cada classe é representada por seu ponto médio e sua frequência. A visualização permite observar
+  como a hipótese de concentração no ponto médio afeta o cálculo do desvio absoluto médio e como
+  diferentes classes contribuem para o valor final da medida.
+</p>
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para desktop -->
+  <div class="kg-wrapper kg-desktop">
+    <div
+      class="kg-container kg--sidebar-centered"
+      src="modelos/desvio-absoluto-medio-agrupado-classe.yml">
+    </div>
+  </div>
+</figure>
+
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para mobile -->
+  <div class="kg-wrapper kg-mobile-sidebar">
+    <div
+      class="kg-container kg--sidebar-centered"
+      src="modelos/desvio-absoluto-medio-agrupado-classe-mobile.yml">
+    </div>
+  </div>
+</figure>
+<div class="example-frame">
+  <h5>Exemplo</h5>
+
+  <p>
+    Considere uma distribuição de frequências por classes, como no caso de
+    <em>horas de estudo por semana</em>. Como os dados estão agrupados,
+    as observações individuais não são conhecidas; a informação disponível
+    resume-se aos intervalos de classe e às respectivas frequências.
+  </p>
+
+  <figure class="figure table">
+    <table>
+      <thead>
+        <tr>
+          <th>Classe</th>
+          <th>Frequência (<em>f</em>)</th>
+          <th>Ponto médio (<em>m</em>)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>[0, 5)</td><td>4</td><td>2,5</td></tr>
+        <tr><td>[5, 10)</td><td>9</td><td>7,5</td></tr>
+        <tr><td>[10, 15)</td><td>6</td><td>12,5</td></tr>
+        <tr><td>[15, 20)</td><td>1</td><td>17,5</td></tr>
+      </tbody>
+    </table>
+    <figcaption>Distribuição em classes e pontos médios</figcaption>
+  </figure>
+
+  <p>
+    O total de observações é
+    <span class="formula-inline"
+          data-tts="ene igual a quatro mais nove mais seis mais um, igual a vinte">
+      \(n=4+9+6+1=20\)
+    </span>.
+    Para obter uma estimativa da média, cada classe é representada por seu
+    <strong>ponto médio</strong>, e calcula-se uma média ponderada pelas frequências.
+  </p>
+
+  <p class="formula"
+     data-tts="xis barra aproximadamente igual a um sobre vinte vezes quatro vezes dois vírgula cinco,
+               mais nove vezes sete vírgula cinco, mais seis vezes doze vírgula cinco,
+               mais um vezes dezessete vírgula cinco, igual a oito vírgula cinco">
+    \[
+      \bar{x}\approx
+      \frac{1}{20}\,\big(4\cdot 2{,}5 + 9\cdot 7{,}5 + 6\cdot 12{,}5 + 1\cdot 17{,}5\big)
+      =\frac{170}{20}
+      =8{,}5.
+    \]
+  </p>
+
+  <p>
+    Para calcular o <strong>desvio absoluto médio</strong>, utilizam-se novamente
+    os pontos médios. Em cada classe, calcula-se a distância absoluta entre
+    o ponto médio e a média e, em seguida, pondera-se essa distância pela
+    frequência da classe.
+  </p>
+
+  <p class="formula" data-tts="distâncias absolutas dos pontos médios em relação à média">
+    \[
+      |2{,}5-8{,}5|=6,\qquad
+      |7{,}5-8{,}5|=1,
+    \]
+  </p>
+
+
+  <p class="formula" data-tts="">
+    \[
+      |12{,}5-8{,}5|=4,\qquad
+      |17{,}5-8{,}5|=9.
+    \]
+  </p>
+
+
+  <p>
+    Ponderando pelas frequências
+    <span class="formula-inline" data-tts="efe j">( \(f_j\) )</span>,
+    obtêm-se os afastamentos totais por classe:
+  </p>
+
+  <p class="formula" data-tts="ponderação das distâncias pelas frequências">
+    \[
+      4\cdot 6=24,\qquad
+      9\cdot 1=9,\qquad
+      6\cdot 4=24,\qquad
+      1\cdot 9=9.
+    \]
+  </p>
+
+  <p>
+    A soma dos afastamentos é
+    <span class="formula-inline"
+          data-tts="vinte e quatro mais nove mais vinte e quatro mais nove igual a sessenta e seis">
+      \(24+9+24+9=66\)
+    </span>.
+    Dividindo pelo total de observações
+    <span class="formula-inline" data-tts="ene igual a vinte">\(n=20\)</span>,
+    obtém-se:
+  </p>
+
+  <p class="formula"
+     data-tts="d a m aproximadamente igual a sessenta e seis sobre vinte, igual a três vírgula três">
+    \[
+      DAM \approx \frac{66}{20}=3{,}3.
+    \]
+  </p>
+
+  <p>
+    Para referência no eixo, considera-se
+    <span class="formula-inline" data-tts="xis barra mais ou menos d">\(\bar{x}\pm d\)</span>:
+  </p>
+
+  <p class="formula"
+     data-tts="xis barra menos d aproximadamente oito vírgula cinco menos três vírgula três igual a cinco vírgula dois,
+               xis barra mais d aproximadamente oito vírgula cinco mais três vírgula três igual a onze vírgula oito">
+    \[
+      \bar{x}-d \approx 8{,}5-3{,}3=5{,}2
+      \qquad\text{e}\qquad
+      \bar{x}+d \approx 8{,}5+3{,}3=11{,}8.
+    \]
+  </p>
+
+  <p>
+    O valor obtido é uma <strong>aproximação</strong>, pois os pontos médios são usados
+    como representantes das classes. A dispersão real pode variar conforme a distribuição
+    interna das observações em cada intervalo.
+  </p>
+</div>
+<hr>
+
+
+<h2>6. Conclusão</h2>
+
+<p>
+  Este capítulo introduziu as <strong>medidas de dispersão</strong> como ferramentas destinadas a descrever a variabilidade de uma distribuição
+  na própria escala dos dados. O objetivo foi complementar as medidas de posição estudadas anteriormente, mostrando que distribuições com centros
+  semelhantes podem apresentar níveis distintos de espalhamento.
+</p>
+
+<p>
+  A discussão iniciou-se pela <strong>amplitude total</strong>, definida pela diferença entre o maior e o menor valor observado. Essa medida fornece
+  uma leitura imediata do intervalo ocupado pelos dados, mas depende exclusivamente dos extremos e, por isso, é sensível a valores atípicos.
+  Em seguida, foi apresentada a <strong>amplitude interquartílica</strong>, baseada em
+  <span class="formula-inline" data-tts="q um">\(Q_1\)</span>
+  e
+  <span class="formula-inline" data-tts="q três">\(Q_3\)</span>,
+  que resume o espalhamento do conjunto por meio de uma região interna da distribuição e tende a ser mais robusta a extremos.
+</p>
+
+<p>
+  Na sequência, o capítulo formalizou a noção de <strong>desvio</strong> como a diferença entre cada observação e um valor de referência. Foram
+  considerados dois referenciais centrais. Em relação à <strong>média aritmética</strong>, os desvios apresentam a propriedade
+  <span class="formula-inline"
+        data-tts="somatório de i igual a um até ene, de xis i menos média, xis barra, igual a zero">
+    \(\sum_{i=1}^{n}(x_i-\bar{x})=0\)
+  </span>,
+  o que impede o uso da soma simples como medida de dispersão. Em relação à <strong>mediana</strong>, os desvios
+  preservam a interpretação de afastamento em torno de um centro posicional, com maior estabilidade frente a valores extremos.
+</p>
+
+<p>
+  Para obter uma medida agregada de variabilidade a partir de desvios, foi introduzido o <strong>desvio absoluto médio</strong>, definido como a média
+  dos desvios em valor absoluto em torno da média. Foram apresentados procedimentos de cálculo para dados não agrupados, para dados agrupados em tabela
+  de frequências e para dados agrupados em classes, caso em que se utiliza uma aproximação por representantes das classes. Esse conjunto de casos
+  explicitou o papel do formato de apresentação dos dados na forma de cálculo e na necessidade de aproximações.
+</p>
+
+<p>
+  No capítulo seguinte, serão estudadas medidas baseadas nos <strong>quadrados dos desvios</strong>, em particular a <strong>variância</strong> e o
+  <strong>desvio-padrão</strong>. A passagem do valor absoluto ao quadrado introduz propriedades analíticas que tornam essas medidas centrais em
+  estatística descritiva e inferencial.
+</p>
+
+<hr>
+<h2>7. Referências</h2>
+<p>
+  FÁVERO, Luiz Paulo; BELFIORE, Patrícia. Manual de análise de dados: estatística e modelagem multivariada com Excel®, SPSS® e Stata®. 1. ed. Rio de Janeiro: Elsevier, 2017.
+</p>
+<p>
+  MAGALHÃES, Marcos Nascimento; LIMA, Antonio Carlos Pedroso de. Noções de Probabilidade e Estatística. 7. ed., 1. reimpr. São Paulo: Editora da Universidade de São Paulo, 2011.
+</p>
+<p>
+  SARTORIS, Alexandre. Estatística e introdução à econometria. 2. ed. São Paulo: Saraiva, 2013.
+</p>
+<p>
+  BUSSAB, Wilton de Oliveira; MORETTIN, Pedro Alberto. <strong>Estatística básica</strong>. 10. ed. São Paulo: SaraivaUni, 2023.
+</p>
+<p>
+  LARSON, Ron; FARBER, Betsy. <strong>Estatística aplicada</strong>. 6. ed. Tradução José Fernando Pereira Gonçalves; Revisão técnica Manoel Henrique Salgado. São Paulo: Pearson Education do Brasil, 2015.
+</p>
+<p>
+  TRIOLA, Mario F. <strong>Introdução à estatística</strong>. 12. ed. Tradução e revisão técnica Ana Maria Lima de Farias, Vera Regina Lima de Farias e Flores. Rio de Janeiro: LTC — Livros Técnicos e Científicos Editora, 2017.
+</p>
+<p>
+  MOOD, Alexander McFarlane; GRAYBILL, Franklin A.; BOES, Duane C. Introduction to the theory of statistics. New York: McGraw-Hill, 1974.
+</p>
+<p>
+  SAVAGE, Leonard J. The Foundations of Statistics. 2. ed. rev. New York: Dover Publications, 1972.
+</p>
+<p>
+  WARE, William B.; FERRON, John M.; MILLER, Barbara M. Introductory Statistics: A Conceptual Approach Using R. New York: Routledge, 2013.
+</p>

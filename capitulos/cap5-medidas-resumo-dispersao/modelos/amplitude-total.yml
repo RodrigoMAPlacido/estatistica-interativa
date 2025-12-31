@@ -1,0 +1,266 @@
+schema: EconSchema
+aspectRatio: 2
+
+params:
+  - { name: x_1, value: 15, min: 10, max: 55, round: 1 }
+  - { name: x_2, value: 18, min: 10, max: 55, round: 1 }
+  - { name: x_3, value: 20, min: 10, max: 55, round: 1 }
+  - { name: x_4, value: 22, min: 10, max: 55, round: 1 }
+  - { name: x_5, value: 23, min: 10, max: 55, round: 1 }
+  - { name: x_6, value: 24, min: 10, max: 55, round: 1 }
+  - { name: x_7, value: 25, min: 10, max: 55, round: 1 }
+  - { name: x_8, value: 50, min: 10, max: 55, round: 1 }
+
+calcs:
+  xmin: "params.x_1"
+  xmax: "params.x_8"
+  A: "(params.x_8 - params.x_1)"
+  midA: "((params.x_1 + params.x_8) / 2)"
+
+colors:
+  ink: "'#111827'"
+  inkSoft: "'#64748b'"
+  accent: "'#64748b'"
+  bg: "'#ffffff'"
+
+layout:
+  OneWideGraphPlusSidebar:
+
+    graph:
+      xAxis:
+        min: 10
+        max: 55
+        ticks: 0
+        title: Amplitude total (arraste os pontos)
+      yAxis:
+        show: false
+        min: -1
+        max: 1
+        ticks: 0
+
+      objects:
+        # ---------------------------
+        # TÍTULO + CONJUNTO x (como na imagem)
+        # ---------------------------
+
+        - Label:
+            coordinates: [32.5, 0.80]
+            text: "\\textbf{Dados não-agrupados:}"
+            color: colors.ink
+            fontSize: 13
+            position: c
+        - Label:
+            coordinates: [32.5, 0.55]
+            text: "`${'x = \\\\{' + params.x_1.toFixed(0) + ', ' + params.x_2.toFixed(0) + ', ' + params.x_3.toFixed(0) + ', ' + params.x_4.toFixed(0) + ', ' + params.x_5.toFixed(0) + ', ' + params.x_6.toFixed(0) + ', ' + params.x_7.toFixed(0) + ', ' + params.x_8.toFixed(0) + '\\\\}'}`"
+            color: colors.inkSoft
+            fontSize: 11
+            position: c
+
+        # ---------------------------
+        # RETA NUMÉRICA (eixo desenhado “na mão”)
+        # ---------------------------
+        - Segment:
+            a: [10, 0]
+            b: [55, 0]
+            color: colors.ink
+            strokeWidth: 3
+
+        # ticks principais (10, 20, 30, 40, 50, 55)
+        - Segment: { a: [10, -0.08], b: [10, 0.08], color: colors.ink, strokeWidth: 2 }
+        - Segment: { a: [20, -0.08], b: [20, 0.08], color: colors.ink, strokeWidth: 2 }
+        - Segment: { a: [30, -0.08], b: [30, 0.08], color: colors.ink, strokeWidth: 2 }
+        - Segment: { a: [40, -0.08], b: [40, 0.08], color: colors.ink, strokeWidth: 2 }
+        - Segment: { a: [50, -0.08], b: [50, 0.08], color: colors.ink, strokeWidth: 2 }
+        - Segment: { a: [55, -0.08], b: [55, 0.08], color: colors.ink, strokeWidth: 2 }
+
+        - Label: { coordinates: [10, -0.25], text: "'10'", color: colors.inkSoft, fontSize: 10, position: c }
+        - Label: { coordinates: [20, -0.25], text: "'20'", color: colors.inkSoft, fontSize: 10, position: c }
+        - Label: { coordinates: [30, -0.25], text: "'30'", color: colors.inkSoft, fontSize: 10, position: c }
+        - Label: { coordinates: [40, -0.25], text: "'40'", color: colors.inkSoft, fontSize: 10, position: c }
+        - Label: { coordinates: [50, -0.25], text: "'50'", color: colors.inkSoft, fontSize: 10, position: c }
+        - Label: { coordinates: [55, -0.25], text: "'55'", color: colors.inkSoft, fontSize: 10, position: c }
+
+        # ---------------------------
+        # RÓTULOS DOS VALORES (alternando acima/abaixo)
+        # ---------------------------
+
+        - Label:
+            coordinates: [params.x_1, 0.16]
+            text: "`${params.x_1.toFixed(1)}`"
+            color: colors.ink
+            fontSize: 10
+            position: c
+            bgcolor: colors.bg
+
+
+        - Label:
+            coordinates: [params.x_8, 0.16]
+            text: "`${params.x_8.toFixed(1)}`"
+            color: colors.inkSoft
+            fontSize: 10
+            position: c
+            bgcolor: colors.bg
+
+
+        # ---------------------------
+        # AMPLITUDE TOTAL (colchete abaixo do eixo)
+        # ---------------------------
+        # guias discretas (do ponto até o colchete)
+        - Segment:
+            a: [calcs.xmin, 0]
+            b: [calcs.xmin, -0.30]
+            color: colors.inkSoft
+            strokeWidth: 1
+            lineStyle: dotted
+
+        - Segment:
+            a: [calcs.xmax, 0]
+            b: [calcs.xmax, -0.30]
+            color: colors.inkSoft
+            strokeWidth: 1
+            lineStyle: dotted
+
+        # colchete: tampas + barra
+        - Segment:
+            a: [calcs.xmin, -0.30]
+            b: [calcs.xmin, -0.52]
+            color: colors.accent
+            strokeWidth: 2
+
+        - Segment:
+            a: [calcs.xmax, -0.30]
+            b: [calcs.xmax, -0.52]
+            color: colors.accent
+            strokeWidth: 2
+
+        - Segment:
+            a: [calcs.xmin, -0.42]
+            b: [calcs.xmax, -0.42]
+            color: colors.accent
+            strokeWidth: 2
+
+        - Label:
+            coordinates: [calcs.midA, -0.66]
+            text:  '\textbf{Amplitude Total}'
+            color: colors.ink
+            fontSize: 12
+            position: c
+
+        - Label:
+            coordinates: [calcs.midA, -0.82]
+            text: "`${'A = ' + calcs.xmax.toFixed(0) + ' - ' + calcs.xmin.toFixed(0) + ' = ' + calcs.A.toFixed(0)}`"
+            color: colors.inkSoft
+            fontSize: 11
+            position: c
+
+        # ---------------------------
+        # PONTOS (arrastáveis, ordenados)
+        # ---------------------------
+        - Point:
+            coordinates: [params.x_1, 0]
+            color: colors.ink
+            drag:
+              - directions: x
+                param: x_1
+                expression: "((drag.x >= 10) ? ((drag.x <= params.x_2) ? drag.x : params.x_2) : 10)"
+
+        - Point:
+            coordinates: [params.x_2, 0]
+            color: colors.inkSoft
+            drag:
+              - directions: x
+                param: x_2
+                expression: "((drag.x >= params.x_1) ? ((drag.x <= params.x_3) ? drag.x : params.x_3) : params.x_1)"
+
+        - Point:
+            coordinates: [params.x_3, 0]
+            color: colors.ink
+            drag:
+              - directions: x
+                param: x_3
+                expression: "((drag.x >= params.x_2) ? ((drag.x <= params.x_4) ? drag.x : params.x_4) : params.x_2)"
+
+        - Point:
+            coordinates: [params.x_4, 0]
+            color: colors.inkSoft
+            drag:
+              - directions: x
+                param: x_4
+                expression: "((drag.x >= params.x_3) ? ((drag.x <= params.x_5) ? drag.x : params.x_5) : params.x_3)"
+
+        - Point:
+            coordinates: [params.x_5, 0]
+            color: colors.ink
+            drag:
+              - directions: x
+                param: x_5
+                expression: "((drag.x >= params.x_4) ? ((drag.x <= params.x_6) ? drag.x : params.x_6) : params.x_4)"
+
+        - Point:
+            coordinates: [params.x_6, 0]
+            color: colors.inkSoft
+            drag:
+              - directions: x
+                param: x_6
+                expression: "((drag.x >= params.x_5) ? ((drag.x <= params.x_7) ? drag.x : params.x_7) : params.x_5)"
+
+        - Point:
+            coordinates: [params.x_7, 0]
+            color: colors.ink
+            drag:
+              - directions: x
+                param: x_7
+                expression: "((drag.x >= params.x_6) ? ((drag.x <= params.x_8) ? drag.x : params.x_8) : params.x_6)"
+
+        - Point:
+            coordinates: [params.x_8, 0]
+            color: colors.inkSoft
+            drag:
+              - directions: x
+                param: x_8
+                expression: "((drag.x >= params.x_7) ? ((drag.x <= 55) ? drag.x : 55) : params.x_7)"
+
+    sidebar:
+      triggerWidth: 9999
+      controls:
+        - title: ""
+          divs:
+            # ---------------------------
+            # 1) DADOS
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Dados:</b></div>"
+
+            - html: "`$$\\\\small
+                      x=\\\\{${params.x_1.toFixed(0)},${params.x_2.toFixed(0)},${params.x_3.toFixed(0)},${params.x_4.toFixed(0)},
+                      ${params.x_5.toFixed(0)},${params.x_6.toFixed(0)},${params.x_7.toFixed(0)},${params.x_8.toFixed(0)}\\\\}
+                      $$`"
+
+            - html: "`$$\\\\small
+                      x_{\\\\min}=${calcs.xmin.toFixed(0)},\\\\qquad
+                      x_{\\\\max}=${calcs.xmax.toFixed(0)}.
+                      $$`"
+
+            # ---------------------------
+            # 2) FÓRMULA
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Fórmula:</b></div>"
+
+            - html: "$$\\small A = x_{\\max} - x_{\\min}$$"
+
+            # ---------------------------
+            # 3) APLICANDO
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Aplicando:</b></div>"
+
+            - html: "`$$\\\\small
+                      A=${calcs.xmax.toFixed(0)}-${calcs.xmin.toFixed(0)}
+                      $$`"
+
+            # ---------------------------
+            # 4) RESULTADO
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Resultado:</b></div>"
+
+            - html: "`$$\\\\small
+                      A=${calcs.A.toFixed(0)}
+                      $$`"

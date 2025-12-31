@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- =========================================================
+   CONCEITO DE DESVIOS (1 desvio apenas): média vs mediana
+   - Sem valores numéricos
+   - Ponto-alvo NÃO aumenta: só fica destacado (opacidade = 1)
+   - Sinalização: anel (spotlight) + “xᵢ” (sem número)
+   ========================================================= -->
+<svg viewBox="0 0 1550 744" xmlns="http://www.w3.org/2000/svg"
+     role="img" aria-labelledby="title desc">
+  <title id="title">Desvios em relação à média e à mediana</title>
+  <desc id="desc">
+    Duas retas numéricas com a mesma amostra. No painel superior, a referência é a média (x̄);
+    no inferior, a mediana (x̃). A animação mostra um único exemplo de desvio por fase:
+    seta entre a referência e uma observação destacada, rotulada como "desvio".
+  </desc>
+
+  <rect class="tmp-bg" x="0" y="0" width="100%" height="100%"/>
+
+  <defs>
+    <marker id="arrowHead" viewBox="0 0 12 12" refX="10.5" refY="6"
+            markerWidth="10" markerHeight="10" orient="auto">
+      <path class="arrowFill" d="M 0 0 L 12 6 L 0 12 z"/>
+    </marker>
+
+    <style>
+      :root{
+        --ink:#111827;
+        --ink-soft:#64748b;
+        --grid:#e5e7eb;
+        --accent:#64748b;
+        --font:"et-book","ETBook","Georgia",serif;
+
+        --cycle:8s;
+        --ease:ease-in-out;
+
+        --dash:1400;
+      }
+
+      .tmp-bg{ fill:#fff; }
+      text{ font-family:var(--font); fill:var(--ink); user-select:none; }
+
+      .u-stroke{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+      }
+
+      .label{ font-size:46px; font-weight:600; text-anchor:middle; }
+      .small{ font-size:30px; text-anchor:middle; fill:var(--ink-soft); }
+
+      .grid{ stroke:var(--grid); stroke-width:1; stroke-dasharray:6 8; }
+      .axis{ stroke-width:2; }
+
+      .row-title{ font-size:28px; font-weight:800; }
+      .row-sub{ font-size:22px; font-weight:650; fill:var(--ink-soft); }
+
+      .tick{ stroke-width:2; }
+
+      /* ======= pontos-base ======= */
+      .dotBase{
+        fill:var(--ink);
+        opacity:.62;
+      }
+      .dotBase.mean{ animation:meanDots var(--cycle) var(--ease) infinite; }
+      .dotBase.med { animation:medDots  var(--cycle) var(--ease) infinite; }
+
+      @keyframes meanDots{
+        0%,16%  { opacity:.62; }
+        20%,52% { opacity:.28; }
+        56%,88% { opacity:.14; }
+        88%,100%{ opacity:.50; }
+      }
+      @keyframes medDots{
+        0%,16%  { opacity:.62; }
+        20%,52% { opacity:.14; }
+        56%,88% { opacity:.28; }
+        88%,100%{ opacity:.50; }
+      }
+
+      /* ======= referência ======= */
+      .refLine{
+        stroke:var(--accent);
+        stroke-width:4;
+        stroke-dasharray:10 10;
+        opacity:0;
+      }
+      .refLab{
+        font-size:26px;
+        font-weight:900;
+        fill:var(--ink-soft);
+        opacity:0;
+      }
+      .refDot{
+        fill:var(--accent);
+        opacity:0;
+      }
+
+      .a-meanRef{ animation:meanRef var(--cycle) var(--ease) infinite; }
+      .a-medRef { animation:medRef  var(--cycle) var(--ease) infinite; }
+
+      @keyframes meanRef{
+        0%,18%   {opacity:0}
+        20%,52%  {opacity:1}
+        56%,100% {opacity:0}
+      }
+      @keyframes medRef{
+        0%,52%   {opacity:0}
+        56%,88%  {opacity:1}
+        92%,100% {opacity:0}
+      }
+
+      /* ======= seta do desvio ======= */
+      .dev{
+        stroke:var(--accent);
+        stroke-width:3.2;
+        fill:none;
+        marker-end:url(#arrowHead);
+        stroke-dasharray:var(--dash);
+        stroke-dashoffset:var(--dash);
+        opacity:0;
+      }
+
+      /* ======= ponto-alvo (mesmo tamanho): só opacidade=1 quando ativo ======= */
+      .dotHi{
+        fill:var(--ink);
+        opacity:0;
+      }
+
+      /* ======= anel ======= */
+      .spot{
+        fill:none;
+        stroke:var(--accent);
+        stroke-width:3;
+        opacity:0;
+      }
+
+      /* ======= “xᵢ” (sem número) ======= */
+      .xiTag{
+        fill:#fff;
+        stroke:var(--grid);
+        stroke-width:2;
+        rx:12; ry:12;
+        opacity:0;
+      }
+      .xiText{
+        font-size:18px;
+        font-weight:900;
+        fill:var(--ink);
+        opacity:0;
+      }
+
+      /* ======= rótulo “desvio” ======= */
+      .devLab{
+        font-size:22px;
+        font-weight:900;
+        fill:var(--ink);
+        opacity:0;
+      }
+
+      /* ======= timing global ======= */
+      .a-dots{ animation:dotsIn var(--cycle) var(--ease) infinite; }
+      @keyframes dotsIn{
+        0%,10% { opacity:0; }
+        16%,88%{ opacity:1; }
+        100%  { opacity:0; }
+      }
+
+      /* Fase média (1 desvio) */
+      .m1{ animation:showMeanDev var(--cycle) var(--ease) infinite; }
+      @keyframes showMeanDev{
+        0%,20%  {opacity:0; stroke-dashoffset:var(--dash)}
+        26%     {opacity:1}
+        44%     {opacity:1; stroke-dashoffset:0}
+        52%,100%{opacity:0; stroke-dashoffset:var(--dash)}
+      }
+
+      /* Fase mediana (1 desvio) */
+      .d1{ animation:showMedDev var(--cycle) var(--ease) infinite; }
+      @keyframes showMedDev{
+        0%,56%  {opacity:0; stroke-dashoffset:var(--dash)}
+        62%     {opacity:1}
+        80%     {opacity:1; stroke-dashoffset:0}
+        88%,100%{opacity:0; stroke-dashoffset:var(--dash)}
+      }
+
+      /* “Liga/desliga” do ponto-alvo e sinalizadores */
+      .dotHi.m1,.spot.m1,.devLab.m1,.xiTag.m1,.xiText.m1{ animation:meanOn var(--cycle) var(--ease) infinite; }
+      @keyframes meanOn{
+        0%,24%  {opacity:0}
+        26%,52% {opacity:1}
+        56%,100%{opacity:0}
+      }
+
+      .dotHi.d1,.spot.d1,.devLab.d1,.xiTag.d1,.xiText.d1{ animation:medOn var(--cycle) var(--ease) infinite; }
+      @keyframes medOn{
+        0%,60%  {opacity:0}
+        62%,88% {opacity:1}
+        92%,100%{opacity:0}
+      }
+
+      .arrowFill{ fill:var(--accent); }
+
+      @media (prefers-reduced-motion:reduce){
+        .a-dots,.a-meanRef,.a-medRef,.m1,.d1,
+        .dotHi.m1,.spot.m1,.devLab.m1,.xiTag.m1,.xiText.m1,
+        .dotHi.d1,.spot.d1,.devLab.d1,.xiTag.d1,.xiText.d1{ animation:none; }
+
+        .refLine,.refLab,.refDot{ opacity:1; }
+        .dev{ opacity:1; stroke-dashoffset:0; }
+        .dotBase{ opacity:.85; }
+        .dotHi{ opacity:1; }
+        .spot,.devLab,.xiTag,.xiText{ opacity:1; }
+      }
+    </style>
+  </defs>
+
+  <!-- Painel -->
+  <g transform="translate(85,92)">
+    <rect x="0" y="0" width="1380" height="560" rx="22" ry="22" class="u-stroke" stroke-width="2"/>
+
+    <text x="690" y="55" class="label">Desvios</text>
+    <text x="690" y="90" class="small">Um valor de referência → diferenças com sinal (− / +)</text>
+
+    <!-- Miolo -->
+    <g transform="translate(110,140)">
+
+      <!-- linhas guia -->
+      <g class="grid">
+        <line x1="0" y1="90"  x2="1160" y2="90"/>
+        <line x1="0" y1="140" x2="1160" y2="140"/>
+        <line x1="0" y1="190" x2="1160" y2="190"/>
+
+        <line x1="0" y1="270" x2="1160" y2="270"/>
+        <line x1="0" y1="320" x2="1160" y2="320"/>
+        <line x1="0" y1="370" x2="1160" y2="370"/>
+      </g>
+
+      <!-- títulos -->
+      <text x="0" y="40" class="row-title">Referência: média</text>
+      <text x="0" y="68" class="row-sub">dᵢ = xᵢ − x̄</text>
+
+      <text x="0" y="220" class="row-title">Referência: mediana</text>
+      <text x="0" y="248" class="row-sub">eᵢ = xᵢ − x̃</text>
+
+      <!-- eixos -->
+      <g class="u-stroke axis">
+        <line x1="0" y1="140" x2="1160" y2="140"/>
+        <line x1="0" y1="320" x2="1160" y2="320"/>
+      </g>
+
+      <!-- ticks (sem rótulos numéricos) -->
+      <g class="u-stroke tick">
+        <line x1="0"    y1="130" x2="0"    y2="150"/>
+        <line x1="1160" y1="130" x2="1160" y2="150"/>
+        <line x1="0"    y1="310" x2="0"    y2="330"/>
+        <line x1="1160" y1="310" x2="1160" y2="330"/>
+      </g>
+
+      <!-- referências (sem valores) -->
+      <line class="refLine a-meanRef" x1="449.5" y1="70"  x2="449.5" y2="210"/>
+      <text class="refLab a-meanRef" x="449.5" y="60" text-anchor="middle">x̄</text>
+      <circle class="refDot a-meanRef" cx="449.5" cy="140" r="9"/>
+
+      <line class="refLine a-medRef" x1="435" y1="250" x2="435" y2="390"/>
+      <text class="refLab a-medRef" x="435" y="240" text-anchor="middle">x̃</text>
+      <circle class="refDot a-medRef" cx="435" cy="320" r="9"/>
+
+      <!-- pontos-base -->
+      <g class="a-dots">
+        <!-- linha da média (y=140) -->
+        <circle class="dotBase mean" cx="0"    cy="140" r="9"/>
+        <circle class="dotBase mean" cx="174"  cy="140" r="9"/>
+        <circle class="dotBase mean" cx="290"  cy="140" r="9"/>
+        <circle class="dotBase mean" cx="406"  cy="140" r="9"/>
+        <circle class="dotBase mean" cx="464"  cy="140" r="9"/>
+        <circle class="dotBase mean" cx="522"  cy="140" r="9"/>
+        <circle class="dotBase mean" cx="580"  cy="140" r="9"/>
+        <circle class="dotBase mean" cx="1160" cy="140" r="9"/>
+
+        <!-- linha da mediana (y=320) -->
+        <circle class="dotBase med"  cx="0"    cy="320" r="9"/>
+        <circle class="dotBase med"  cx="174"  cy="320" r="9"/>
+        <circle class="dotBase med"  cx="290"  cy="320" r="9"/>
+        <circle class="dotBase med"  cx="406"  cy="320" r="9"/>
+        <circle class="dotBase med"  cx="464"  cy="320" r="9"/>
+        <circle class="dotBase med"  cx="522"  cy="320" r="9"/>
+        <circle class="dotBase med"  cx="580"  cy="320" r="9"/>
+        <circle class="dotBase med"  cx="1160" cy="320" r="9"/>
+      </g>
+
+      <!-- ÚNICO ponto-alvo (extremo direito) -->
+      <!-- MÉDIA -->
+      <line class="dev m1" x1="449.5" y1="190" x2="1160" y2="190"/>
+      <circle class="dotHi m1" cx="1160" cy="140" r="9"/>
+      <circle class="spot m1"  cx="1160" cy="140" r="9"/>
+      <text class="devLab m1" x="805" y="178" text-anchor="middle">Desvio Média (x̄)</text>
+
+      <!-- MEDIANA -->
+      <line class="dev d1" x1="435" y1="370" x2="1160" y2="370"/>
+      <circle class="dotHi d1" cx="1160" cy="320" r="9"/>
+      <circle class="spot d1"  cx="1160" cy="320" r="9"/>
+      <text class="devLab d1" x="798" y="358" text-anchor="middle">Desvio Mediana (x̃)</text>
+
+    </g>
+  </g>
+</svg>

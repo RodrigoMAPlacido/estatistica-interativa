@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ===========================================
+   VARIÂNCIA (POPULACIONAL) — DADOS DISCRETOS COM FREQUÊNCIAS
+
+   Valores: x = {2, 3, 4}
+   Frequências: f = {2, 4, 2}  →  N = 8
+
+   Σ x f = 2·2 + 3·4 + 4·2 = 24  →  x̄ = 24/8 = 3
+
+   Variância (populacional, discreta):
+     σ² = (1/N) Σ f_j (x_j − x̄)²
+
+   Contribuições:
+     x=2: (−1)²=1 → f·( )=2
+     x=3: ( 0)²=0 → f·( )=0
+     x=4: (+1)²=1 → f·( )=2
+
+   Σ contrib = 4 → σ² = 4/8 = 0,5
+   =========================================== -->
+<svg viewBox="0 0 1500 780" xmlns="http://www.w3.org/2000/svg"
+     role="img" aria-labelledby="title desc">
+  <title id="title">Variância em dados discretos com frequências</title>
+  <desc id="desc">
+    À esquerda, tabela de valores e frequências, mostrando desvios ao quadrado e contribuições f_j(x_j−x̄)^2.
+    À direita, gráfico com barras dessas contribuições e uma linha horizontal em σ²=0,5.
+    A média x̄=3 aparece como linha vertical no eixo x.
+  </desc>
+
+  <rect x="0" y="0" width="1500" height="780" fill="#ffffff"/>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --muted:#64748b;
+        --grid:#e5e7eb;
+        --font:"et-book","ETBook","Georgia",serif;
+        --cycle:8s;
+        --ease:ease-in-out;
+      }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        user-select:none;
+      }
+
+      .u-stroke{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+      }
+
+      .u-panel{ stroke-width:2; rx:12; }
+
+      .label{
+        font-size:32px;
+        font-weight:600;
+        text-anchor:middle;
+      }
+
+      .u-small{ font-size:18px; }
+      .u-muted{ fill:var(--muted); }
+
+      .subscript{
+        font-size:0.7em;
+        font-weight:600;
+        baseline-shift:-0.3em;
+      }
+
+      /* ====== Destaque sequencial das linhas da tabela ====== */
+      @keyframes rowHi{
+        0%,10%{opacity:0}
+        16%,26%{opacity:.16}
+        32%,100%{opacity:0}
+      }
+      .row-hi{ fill:var(--ink); opacity:0 }
+      .r1{ animation:rowHi var(--cycle) var(--ease) infinite 0s }
+      .r2{ animation:rowHi var(--cycle) var(--ease) infinite .75s }
+      .r3{ animation:rowHi var(--cycle) var(--ease) infinite 1.50s }
+      .r4{ animation:rowHi var(--cycle) var(--ease) infinite 2.25s } /* linha final σ² */
+
+      /* ====== Barras (contribuições f_j (x_j−x̄)^2 ) ====== */
+      @keyframes grow{
+        0%{ transform:scaleY(0) }
+        18%,82%{ transform:scaleY(1) }
+        100%{ transform:scaleY(0) }
+      }
+      .bar{
+        fill:var(--ink);
+        transform-box:fill-box;
+        transform-origin:bottom;
+        transform:scaleY(0);
+      }
+      .b1{ animation:grow var(--cycle) var(--ease) infinite 0s }
+      .b2{ animation:grow var(--cycle) var(--ease) infinite .15s }
+      .b3{ animation:grow var(--cycle) var(--ease) infinite .30s }
+
+      /* ====== Linha vertical da média x̄ ====== */
+      .u-mean-line{
+        stroke-width:4.2;
+        stroke-dasharray:420;
+        stroke-dashoffset:420;
+        opacity:.95;
+        animation:meanLine var(--cycle) var(--ease) infinite;
+      }
+      @keyframes meanLine{
+        0%{   stroke-dashoffset:420; opacity:0 }
+        18%,72%{ stroke-dashoffset:0; opacity:1 }
+        86%,100%{ stroke-dashoffset:420; opacity:0 }
+      }
+
+      /* ====== Linha horizontal σ² ====== */
+      .u-var-halo{
+        stroke:#fff;
+        stroke-width:10;
+        opacity:0;
+        animation:varHalo var(--cycle) var(--ease) infinite;
+      }
+      .u-var-line{
+        stroke-width:4.2;
+        stroke-dasharray:14 10;
+        opacity:0;
+        stroke-dashoffset:260;
+        animation:varDraw var(--cycle) var(--ease) infinite;
+      }
+      @keyframes varHalo{
+        0%,26%{ opacity:0 }
+        36%,72%{ opacity:.98 }
+        86%,100%{ opacity:0 }
+      }
+      @keyframes varDraw{
+        0%{ opacity:0; stroke-dashoffset:260 }
+        26%{ opacity:0; stroke-dashoffset:260 }
+        36%{ opacity:1; stroke-dashoffset:0 }
+        72%{ opacity:1; stroke-dashoffset:0 }
+        86%{ opacity:0; stroke-dashoffset:260 }
+        100%{ opacity:0; stroke-dashoffset:260 }
+      }
+
+      /* ====== Texto com halo (sem caixa) ====== */
+      .text-halo{
+        paint-order:stroke;
+        stroke:#fff;
+        stroke-width:6;
+        stroke-linejoin:round;
+      }
+
+      .mean-label{
+        font-size:16px;
+        font-weight:900;
+        text-anchor:middle;
+        opacity:0;
+        animation:txtOn var(--cycle) var(--ease) infinite;
+      }
+      .var-label{
+        font-size:16px;
+        font-weight:900;
+        opacity:0;
+        animation:txtOn var(--cycle) var(--ease) infinite;
+      }
+      .bar-top{
+        font-size:14px;
+        font-weight:900;
+        opacity:0;
+        animation:txtOn var(--cycle) var(--ease) infinite;
+      }
+
+      @keyframes txtOn{
+        0%,30%{ opacity:0 }
+        38%,72%{ opacity:1 }
+        86%,100%{ opacity:0 }
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        .row-hi{ animation:none; opacity:.12 }
+        .bar{ animation:none; transform:scaleY(1) }
+        .u-mean-line{ animation:none; stroke-dashoffset:0; opacity:1 }
+        .u-var-halo{ animation:none; opacity:.98 }
+        .u-var-line{ animation:none; opacity:1; stroke-dashoffset:0 }
+        .mean-label,.var-label,.bar-top{ animation:none; opacity:1 }
+      }
+    </style>
+  </defs>
+
+  <!-- ================= PAINEL ESQUERDO: TABELA ================= -->
+  <g id="panel-table" transform="translate(-140,-200) scale(1.2)">
+    <rect x="120" y="230" width="560" height="510" class="u-panel u-stroke"/>
+
+    <g class="p-header">
+      <text x="390" y="280" class="label">Variância (populacional)</text>
+      <text x="390" y="308" class="u-small u-muted" text-anchor="middle">
+        Tabela discreta (sem classes) — N = 8, x̄ = 3
+      </text>
+    </g>
+
+    <g class="p-body" transform="translate(8,-10)">
+      <line x1="160" y1="364" x2="620" y2="364" class="u-stroke" style="stroke-width:2"/>
+
+      <g font-size="18" font-weight="600">
+        <text x="185" y="352" text-anchor="middle">Valor x</text>
+        <text x="320" y="352" text-anchor="middle">Freq. f</text>
+        <text x="455" y="352" text-anchor="middle">(x−x̄)²</text>
+        <text x="595" y="352" text-anchor="middle">f·(x−x̄)²</text>
+      </g>
+
+      <g class="u-stroke" style="stroke-width:2">
+        <line x1="160" y1="404" x2="620" y2="404"/>
+        <line x1="160" y1="444" x2="620" y2="444"/>
+        <line x1="160" y1="484" x2="620" y2="484"/>
+        <line x1="160" y1="524" x2="620" y2="524"/>
+        <line x1="160" y1="564" x2="620" y2="564"/>
+      </g>
+
+      <!-- destaques -->
+      <rect x="160" y="374" width="460" height="30" class="row-hi r1"/>
+      <rect x="160" y="414" width="460" height="30" class="row-hi r2"/>
+      <rect x="160" y="454" width="460" height="30" class="row-hi r3"/>
+      <rect x="160" y="494" width="460" height="30" class="row-hi r4"/>
+
+      <!-- linhas (x, f, (x−x̄)^2, f·(x−x̄)^2) -->
+      <g font-size="19">
+        <text x="185" y="396" text-anchor="middle">2</text>
+        <text x="320" y="396" text-anchor="middle">2</text>
+        <text x="455" y="396" text-anchor="middle">1</text>
+        <text x="595" y="396" text-anchor="middle">2</text>
+
+        <text x="185" y="436" text-anchor="middle">3</text>
+        <text x="320" y="436" text-anchor="middle">4</text>
+        <text x="455" y="436" text-anchor="middle">0</text>
+        <text x="595" y="436" text-anchor="middle">0</text>
+
+        <text x="185" y="476" text-anchor="middle">4</text>
+        <text x="320" y="476" text-anchor="middle">2</text>
+        <text x="455" y="476" text-anchor="middle">1</text>
+        <text x="595" y="476" text-anchor="middle">2</text>
+
+        <text x="185" y="516" text-anchor="middle" font-weight="700">Totais</text>
+        <text x="320" y="516" text-anchor="middle" font-weight="700">8</text>
+        <text x="455" y="516" text-anchor="middle" font-weight="700">—</text>
+        <text x="595" y="516" text-anchor="middle" font-weight="700">4</text>
+
+        <text x="185" y="556" text-anchor="middle" font-weight="700">σ²</text>
+        <text x="320" y="556" text-anchor="middle" font-weight="700">
+          (1/8)·4
+        </text>
+        <text x="455" y="556" text-anchor="middle" font-weight="700">=</text>
+        <text x="595" y="556" text-anchor="middle" font-weight="700">0,5</text>
+      </g>
+
+      <g class="p-footer" transform="translate(0,18)">
+        <text x="390" y="610" class="u-small u-muted" text-anchor="middle">
+          σ² = (1/N) Σ f<tspan class="subscript">j</tspan>(x<tspan class="subscript">j</tspan>−x̄)²
+          = 4/8 = 0,5.
+        </text>
+        <text x="390" y="635" class="u-small u-muted" text-anchor="middle">
+          No gráfico: cada barra é a contribuição f<tspan class="subscript">j</tspan>(x<tspan class="subscript">j</tspan>−x̄)² (unidade²·contagem).
+        </text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ================= PAINEL DIREITO: BARRAS + σ² ================= -->
+  <g id="panel-bars" transform="translate(-220,-200) scale(1.2)">
+    <rect x="840" y="230" width="580" height="510" class="u-panel u-stroke"/>
+
+    <g class="p-header">
+      <text x="1130" y="280" class="label">Contribuições para σ²</text>
+      <text x="1130" y="308" class="u-small u-muted" text-anchor="middle">
+        barras de f·(x−x̄)² e linha em σ² = 0,5
+      </text>
+    </g>
+
+    <g transform="translate(-125,-40) scale(1.1)">
+      <!-- área útil: x 930..1355, y 410..650 -->
+      <g class="u-stroke" style="stroke-width:2.5">
+        <line x1="930" y1="650" x2="1355" y2="650"/>
+        <line x1="930" y1="650" x2="930"  y2="410"/>
+      </g>
+
+      <!-- grade Y (0..2) porque as contribuições são 2,0,2 -->
+      <!-- escala: 0->650, 2->410 (240px). Logo 1->530. -->
+      <g class="u-stroke u-small" opacity=".35" style="stroke-width:2">
+        <line x1="930" y1="650" x2="1355" y2="650"/><text x="915" y="654" text-anchor="end" opacity=".85">0</text>
+        <line x1="930" y1="530" x2="1355" y2="530"/><text x="915" y="534" text-anchor="end" opacity=".85">1</text>
+        <line x1="930" y1="410" x2="1355" y2="410"/><text x="915" y="414" text-anchor="end" opacity=".85">2</text>
+      </g>
+
+      <text x="930" y="388" class="u-small u-muted" text-anchor="start">f·(x−x̄)²</text>
+
+      <!-- X categórico uniforme (centros) para 2,3,4 -->
+      <!-- centros: 1010, 1142.5, 1275 -->
+      <g class="u-stroke" style="stroke-width:2" opacity=".85">
+        <line x1="1010"   y1="650" x2="1010"   y2="642"/>
+        <line x1="1142.5" y1="650" x2="1142.5" y2="642"/>
+        <line x1="1275"   y1="650" x2="1275"   y2="642"/>
+      </g>
+      <g class="u-small" font-weight="700">
+        <text x="1010"   y="684" text-anchor="middle">2</text>
+        <text x="1142.5" y="684" text-anchor="middle">3</text>
+        <text x="1275"   y="684" text-anchor="middle">4</text>
+      </g>
+
+      <!-- Barras: contribuições (2,0,2) -->
+      <!-- altura(2)=240; altura(0)=0 -->
+      <rect x="975"  y="410" width="70" height="240" class="bar b1"/> <!-- 2 -->
+      <rect x="1107.5" y="650" width="70" height="0" class="bar b2"/> <!-- 0 -->
+      <rect x="1240" y="410" width="70" height="240" class="bar b3"/> <!-- 2 -->
+
+      <!-- rótulos no topo -->
+      <text x="1010"   y="402" class="bar-top text-halo" text-anchor="middle">2</text>
+      <text x="1142.5" y="642" class="bar-top text-halo" text-anchor="middle">0</text>
+      <text x="1275"   y="402" class="bar-top text-halo" text-anchor="middle">2</text>
+
+      <!-- Linha vertical da média x̄=3 (no centro do x=3) -->
+      <line x1="1142.5" y1="350" x2="1142.5" y2="650" class="u-mean-line u-stroke"/>
+      <text x="1142.5" y="368" class="mean-label text-halo">x̄ = 3</text>
+
+      <!-- Linha horizontal σ² = 0,5.
+           Na escala 0..2: 0,5 é 1/4 do máximo → 240*(0,5/2)=60px acima da base.
+           y = 650 - 60 = 590
+      -->
+      <line x1="940" y1="590" x2="1345" y2="590" class="u-var-halo u-stroke"/>
+      <line x1="940" y1="590" x2="1345" y2="590" class="u-var-line u-stroke"/>
+
+      <text x="1348" y="586" class="var-label text-halo" text-anchor="start">σ² = 0,5</text>
+      <text x="940"  y="586" class="var-label text-halo" text-anchor="start">média por observação</text>
+    </g>
+  </g>
+</svg>

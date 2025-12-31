@@ -1,0 +1,240 @@
+schema: EconSchema
+aspectRatio: 1.6
+
+params:
+  - name: f1
+    value: 4
+    min: 0
+    max: 12
+    round: 1
+  - name: f2
+    value: 9
+    min: 0
+    max: 12
+    round: 1
+  - name: f3
+    value: 6
+    min: 0
+    max: 12
+    round: 1
+  - name: f4
+    value: 1
+    min: 0
+    max: 12
+    round: 1
+
+calcs:
+  # Total
+  N: "(params.f1 + params.f2 + params.f3 + params.f4)"
+
+  # Acumuladas
+  F1: "(params.f1)"
+  F2: "(params.f1 + params.f2)"
+  F3: "(params.f1 + params.f2 + params.f3)"
+  F4: "(params.f1 + params.f2 + params.f3 + params.f4)"
+
+  # Extremos por classes (fixos)
+  L1: "0"
+  U4: "20"
+
+  # Amplitude total
+  A: "(calcs.U4 - calcs.L1)"
+  midA: "((calcs.L1 + calcs.U4)/2)"
+
+colors:
+  ink: "'#111827'"
+  grid: "'#e5e7eb'"
+  inkSoft: "'#64748b'"
+  bg: "'#ffffff'"
+
+layout:
+  OneWideGraphPlusSidebar:
+    graph:
+      title: "Histograma e amplitude"
+      xAxis:
+        min: 0
+        max: 20.1
+        ticks: 0
+      yAxis:
+        min: 0
+        max: 12
+        ticks: 4
+
+      objects:
+        # ---------------------------
+        # Grade horizontal (manual)
+        # ---------------------------
+        - Segment: { a: [0, 3],  b: [20, 3],  color: colors.inkSoft, strokeWidth: 0.5 }
+        - Segment: { a: [0, 6],  b: [20, 6],  color: colors.inkSoft, strokeWidth: 0.5 }
+        - Segment: { a: [0, 9],  b: [20, 9],  color: colors.inkSoft, strokeWidth: 0.5 }
+
+        # ---------------------------
+        # Barras (classes de largura 5)
+        # ---------------------------
+        - Rectangle:
+            x1: 0
+            x2: 5
+            y1: 0
+            y2: params.f1
+            fill: colors.ink
+            opacity: 1
+            drag:
+              - directions: y
+                param: f1
+                expression: "drag.y"
+
+        - Rectangle:
+            x1: 5
+            x2: 10
+            y1: 0
+            y2: params.f2
+            fill: colors.ink
+            opacity: 1
+            drag:
+              - directions: y
+                param: f2
+                expression: "drag.y"
+
+        - Rectangle:
+            x1: 10
+            x2: 15
+            y1: 0
+            y2: params.f3
+            fill: colors.ink
+            opacity: 1
+            drag:
+              - directions: y
+                param: f3
+                expression: "drag.y"
+
+        - Rectangle:
+            x1: 15
+            x2: 20
+            y1: 0
+            y2: params.f4
+            fill: colors.ink
+            opacity: 1
+            drag:
+              - directions: y
+                param: f4
+                expression: "drag.y"
+
+        # ---------------------------
+        # Rótulos das classes no eixo x
+        # ---------------------------
+        - Label: { coordinates: [2.5, 0],  text: "'[0,5)'",   color: colors.ink, fontSize: 10, position: t }
+        - Label: { coordinates: [7.5, 0],  text: "'[5,10)'",  color: colors.ink, fontSize: 10, position: t }
+        - Label: { coordinates: [12.5, 0], text: "'[10,15)'", color: colors.ink, fontSize: 10, position: t }
+        - Label: { coordinates: [17.5, 0], text: "'[15,20)'", color: colors.ink, fontSize: 10, position: t }
+
+        # ---------------------------
+        # Rótulo f no topo de cada barra
+        # ---------------------------
+        - Label:
+            coordinates: [2.5, params.f1]
+            text: "`\\\\bf{f}=${params.f1.toFixed(0)}`"
+            color: white
+            bgcolor: colors.ink
+            fontSize: 9
+            position: t
+
+        - Label:
+            coordinates: [7.5, params.f2]
+            text: "`\\\\bf{f}=${params.f2.toFixed(0)}`"
+            color: white
+            bgcolor: colors.ink
+            fontSize: 9
+            position: t
+
+        - Label:
+            coordinates: [12.5, params.f3]
+            text: "`\\\\bf{f}=${params.f3.toFixed(0)}`"
+            color: white
+            bgcolor: colors.ink
+            fontSize: 9
+            position: t
+
+        - Label:
+            coordinates: [17.5, params.f4+0.4]
+            text: "`\\\\bf{f}=${params.f4.toFixed(0)}`"
+            color: white
+            bgcolor: colors.ink
+            fontSize: 9
+            position: t
+
+        # ---------------------------
+        # “Colchete” da amplitude total acima do histograma
+        # ---------------------------
+        - Segment:
+            a: [calcs.L1+0.1, 10.6]
+            b: [calcs.U4, 10.6]
+            color: colors.ink
+            strokeWidth: 2
+
+        - Segment: { a: [calcs.L1+0.1, 10.1], b: [calcs.L1+0.1, 11.1], color: colors.ink, strokeWidth: 2 }
+        - Segment: { a: [calcs.U4, 10.1], b: [calcs.U4, 11.1], color: colors.ink, strokeWidth: 2 }
+
+
+        - Label:
+            coordinates: [calcs.midA, 11.05]
+            text: "`A=U_4-L_1\\\\;\\\\Rightarrow\\\\; ${calcs.U4.toFixed(0)}-${calcs.L1.toFixed(0)}=${calcs.A.toFixed(0)}`"
+            color: colors.ink
+            fontSize: 8
+            position: c
+            bgcolor: colors.bg
+
+    sidebar:
+      triggerWidth: 9999
+      controls:
+        - title: ""
+          divs:
+            # ---------------------------
+            # 1) TABELA
+            # ---------------------------
+            - html: "`<figure class='sidebar-figure'>
+                <div class='sidebar-table-wrap'>
+                  <table class='sidebar-table'>
+                    <thead>
+                      <tr>
+                        <th>Classe (h/sem)</th>
+                        <th>Freq. <em>f</em></th>
+                        <th>Acum. <em>F</em></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>[0,5)</td><td>${params.f1.toFixed(0)}</td><td>${calcs.F1.toFixed(0)}</td></tr>
+                      <tr><td>[5,10)</td><td>${params.f2.toFixed(0)}</td><td>${calcs.F2.toFixed(0)}</td></tr>
+                      <tr><td>[10,15)</td><td>${params.f3.toFixed(0)}</td><td>${calcs.F3.toFixed(0)}</td></tr>
+                      <tr><td>[15,20)</td><td>${params.f4.toFixed(0)}</td><td>${calcs.F4.toFixed(0)}</td></tr>
+                      <tr>
+                        <td><b>Total</b></td>
+                        <td><b>${calcs.N.toFixed(0)}</b></td>
+                        <td><b>${calcs.N.toFixed(0)}</b></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <figcaption>Distribuição em classes: frequências e acumuladas</figcaption></figure>`"
+
+            - html: "<hr>"
+
+            # ---------------------------
+            # 2) FÓRMULA DA AMPLITUDE (CLASSES)
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Amplitude total (classes):</b></div>"
+
+            - html: "$$\\tiny A = U_k - L_1$$"
+
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Aplicando:</b></div>"
+
+            - html: "`$$\\\\tiny
+                      L_1=${calcs.L1.toFixed(0)},\\\\qquad U_4=${calcs.U4.toFixed(0)}
+                      $$`"
+
+            - html: "`$$\\\\tiny
+                      A=U_4-L_1=${calcs.U4.toFixed(0)}-${calcs.L1.toFixed(0)}=${calcs.A.toFixed(0)}
+                      $$`"
+
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Resultado:</b></div>"
+
+            - html: "`$$\\\\tiny A=${calcs.A.toFixed(0)} $$`"

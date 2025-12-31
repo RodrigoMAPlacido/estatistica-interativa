@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- =========================================================
+   VARIÂNCIA — CONCEITO (no mesmo molde do DAM)
+   Dados: x = {2,4,6,8}  |  n = 4  |  x̄ = 5
+   e_i = x_i − x̄ :  -3, -1, +1, +3
+   e_i^2 :             9,  1,  1,  9
+   σ² = (1/n) Σ (x_i − x̄)² = 5
+   CSS-only | slots sem overlap | gaps entre slots
+   ========================================================= -->
+<svg viewBox="0 0 1550 744" xmlns="http://www.w3.org/2000/svg"
+     role="img" aria-labelledby="title desc">
+  <title id="title">Variância — exemplo com notas</title>
+  <desc id="desc">
+    Um eixo numérico com quatro pontos x_i = 2, 4, 6, 8 e a média x̄ = 5.
+    A animação percorre os pontos: para cada um, destaca o ponto e mostra o desvio com sinal
+    (x_i − x̄) = e_i; em seguida mostra o quadrado (x_i − x̄)² = e_i². Ao final, apresenta
+    a fórmula da variância e o valor σ² = 5.
+  </desc>
+
+  <rect x="0" y="0" width="100%" height="100%" fill="#fff"/>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --muted:#64748b;
+        --grid:#e5e7eb;
+        --accent:#64748b;
+        --font:"et-book","ETBook","Georgia",serif;
+
+        --cycle:12s;
+        --dash:1400;
+      }
+
+      text{ font-family:var(--font); fill:var(--ink); user-select:none; }
+
+      .frame{ fill:none; stroke:var(--ink); stroke-width:2; }
+      .title{ font-size:46px; font-weight:600; text-anchor:middle; }
+      .subtitle{ font-size:28px; font-weight:650; fill:var(--muted); text-anchor:middle; }
+
+      .axis{ stroke:var(--ink); stroke-width:2; stroke-linecap:round; }
+      .tick{ stroke:var(--ink); stroke-width:2; opacity:.55; }
+      .tickLab{ font-size:20px; fill:var(--muted); font-weight:800; }
+
+      .dot{ fill:var(--ink); opacity:.22; }
+      .dotHi{ fill:var(--ink); opacity:1; }
+      .spot{ fill:none; stroke:var(--accent); stroke-width:3; }
+
+      .meanLine{
+        stroke:var(--accent);
+        stroke-width:4;
+        stroke-dasharray:10 10;
+        opacity:1;
+      }
+      .meanDot{ fill:var(--accent); opacity:1; }
+      .meanLab{ font-size:26px; font-weight:900; fill:var(--muted); opacity:1; }
+
+      /* Steps */
+      .steps{ font-size:22px; font-weight:800; fill:var(--muted); }
+      .step{ opacity:.35; }
+      .step .k{ fill:var(--ink); font-weight:900; }
+
+      .step1{ animation:step1On var(--cycle) linear infinite; }
+      .step2{ animation:step2On var(--cycle) linear infinite; }
+      .step3{ animation:step3On var(--cycle) linear infinite; }
+      .step4{ animation:step4On var(--cycle) linear infinite; }
+
+      @keyframes step1On{ 0%,13.99%{opacity:.35} 14%,90%{opacity:1} 90.01%,100%{opacity:.35} }
+      @keyframes step2On{ 0%,13.99%{opacity:.35} 14%,90%{opacity:1} 90.01%,100%{opacity:.35} }
+      @keyframes step3On{ 0%,20.99%{opacity:.35} 21%,90%{opacity:1} 90.01%,100%{opacity:.35} }
+      @keyframes step4On{ 0%,90.99%{opacity:.35} 91%,98%{opacity:1} 98.01%,100%{opacity:.35} }
+
+      /* Linha do desvio */
+      .dev{
+        stroke:var(--accent);
+        stroke-width:6;
+        stroke-linecap:round;
+        stroke-dasharray:var(--dash);
+        stroke-dashoffset:var(--dash);
+      }
+      .cap{ fill:var(--accent); }
+
+      /* Rótulos */
+      .lbl{
+        font-size:22px;
+        font-weight:900;
+        fill:var(--muted);
+      }
+      .lbl .k{ fill:var(--ink); }
+      .lbl .m{ fill:var(--muted); font-weight:800; }
+
+      /* Quadrado (após o draw) */
+      .sq{ opacity:0; }
+      .sqFill{ fill:#fff; stroke:var(--grid); stroke-width:2; rx:12; ry:12; }
+
+      /* Slot */
+      .slot{ opacity:0; }
+
+      /* Janelas com gaps (4 pontos + final):
+         s1: 14–32 | gap 32–34
+         s2: 34–52 | gap 52–54
+         s3: 54–72 | gap 72–74
+         s4: 74–90 | gap 90–91
+         final: 91–98
+      */
+      .s1{ animation:slot1 var(--cycle) linear infinite; }
+      .s2{ animation:slot2 var(--cycle) linear infinite; }
+      .s3{ animation:slot3 var(--cycle) linear infinite; }
+      .s4{ animation:slot4 var(--cycle) linear infinite; }
+
+      @keyframes slot1{ 0%,13.99%{opacity:0} 14%,32%{opacity:1} 32.01%,100%{opacity:0} }
+      @keyframes slot2{ 0%,33.99%{opacity:0} 34%,52%{opacity:1} 52.01%,100%{opacity:0} }
+      @keyframes slot3{ 0%,53.99%{opacity:0} 54%,72%{opacity:1} 72.01%,100%{opacity:0} }
+      @keyframes slot4{ 0%,73.99%{opacity:0} 74%,90%{opacity:1} 90.01%,100%{opacity:0} }
+
+      /* draw dentro de cada slot */
+      .draw1{ animation:draw1 var(--cycle) linear infinite; }
+      .draw2{ animation:draw2 var(--cycle) linear infinite; }
+      .draw3{ animation:draw3 var(--cycle) linear infinite; }
+      .draw4{ animation:draw4 var(--cycle) linear infinite; }
+
+      @keyframes draw1{
+        0%,13.99%{stroke-dashoffset:var(--dash)}
+        14%      {stroke-dashoffset:var(--dash)}
+        23%      {stroke-dashoffset:0}
+        32%      {stroke-dashoffset:0}
+        32.01%,100%{stroke-dashoffset:var(--dash)}
+      }
+      @keyframes draw2{
+        0%,33.99%{stroke-dashoffset:var(--dash)}
+        34%      {stroke-dashoffset:var(--dash)}
+        43%      {stroke-dashoffset:0}
+        52%      {stroke-dashoffset:0}
+        52.01%,100%{stroke-dashoffset:var(--dash)}
+      }
+      @keyframes draw3{
+        0%,53.99%{stroke-dashoffset:var(--dash)}
+        54%      {stroke-dashoffset:var(--dash)}
+        63%      {stroke-dashoffset:0}
+        72%      {stroke-dashoffset:0}
+        72.01%,100%{stroke-dashoffset:var(--dash)}
+      }
+      @keyframes draw4{
+        0%,73.99%{stroke-dashoffset:var(--dash)}
+        74%      {stroke-dashoffset:var(--dash)}
+        83%      {stroke-dashoffset:0}
+        90%      {stroke-dashoffset:0}
+        90.01%,100%{stroke-dashoffset:var(--dash)}
+      }
+
+      /* Quadrado aparece depois do draw */
+      .sq1{ animation:sq1 var(--cycle) linear infinite; }
+      .sq2{ animation:sq2 var(--cycle) linear infinite; }
+      .sq3{ animation:sq3 var(--cycle) linear infinite; }
+      .sq4{ animation:sq4 var(--cycle) linear infinite; }
+
+      @keyframes sq1{ 0%,22.99%{opacity:0} 23%,32%{opacity:1} 32.01%,100%{opacity:0} }
+      @keyframes sq2{ 0%,42.99%{opacity:0} 43%,52%{opacity:1} 52.01%,100%{opacity:0} }
+      @keyframes sq3{ 0%,62.99%{opacity:0} 63%,72%{opacity:1} 72.01%,100%{opacity:0} }
+      @keyframes sq4{ 0%,82.99%{opacity:0} 83%,90%{opacity:1} 90.01%,100%{opacity:0} }
+
+      /* Card final */
+      .card{
+        fill:#fff;
+        stroke:var(--grid);
+        stroke-width:2;
+        rx:18; ry:18;
+        opacity:0;
+        transform-box:fill-box;
+        transform-origin:50% 50%;
+      }
+      .formula{
+        font-size:26px;
+        font-weight:900;
+        text-anchor:middle;
+        opacity:0;
+      }
+      .formula .m{ fill:var(--muted); font-weight:800; }
+
+      .final{ animation:finalOn var(--cycle) linear infinite; }
+      @keyframes finalOn{
+        0%,90.99%{opacity:0; transform:translateY(6px) scale(.99);}
+        91%,98%  {opacity:1; transform:translateY(0px) scale(1);}
+        98.01%,100%{opacity:0; transform:translateY(6px) scale(.99);}
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        .s1,.s2,.s3,.s4,
+        .draw1,.draw2,.draw3,.draw4,
+        .sq1,.sq2,.sq3,.sq4,
+        .final,
+        .step1,.step2,.step3,.step4{ animation:none; }
+
+        .slot{ opacity:1; }
+        .dev{ stroke-dashoffset:0; }
+        .sq{ opacity:1; }
+        .card,.formula{ opacity:1; transform:none; }
+        .step{ opacity:1; }
+      }
+    </style>
+  </defs>
+
+  <!-- Quadro -->
+  <g transform="translate(85,92)">
+    <rect x="0" y="0" width="1380" height="560" rx="22" ry="22" class="frame"/>
+
+    <text x="690" y="58" class="title">Variância</text>
+    <text x="690" y="94" class="subtitle">desvio com sinal → quadrado → média dos quadrados</text>
+
+    <!-- Conteúdo centralizado -->
+    <g transform="translate(130,80)">
+
+      <!-- Etapas -->
+      <g class="steps" transform="translate(0,80)">
+        <text class="step step1" x="0" y="0">
+          <tspan class="k">1)</tspan> escolha um ponto xᵢ
+        </text>
+        <text class="step step2" x="1120" y="0" text-anchor="end">
+          <tspan class="k">2)</tspan> calcule xᵢ − x̄ (com sinal)
+        </text>
+
+        <text class="step step3" x="0" y="30">
+          <tspan class="k">3)</tspan> eleve ao quadrado
+        </text>
+        <text class="step step4" x="1120" y="30" text-anchor="end">
+          <tspan class="k">4)</tspan> tire a média
+        </text>
+      </g>
+
+      <!-- Eixo + animação -->
+      <g transform="translate(0,76)">
+
+        <!-- eixo numérico 0..10 -->
+        <line x1="0" y1="210" x2="1120" y2="210" class="axis"/>
+
+        <!-- ticks principais -->
+        <line x1="0"    y1="198" x2="0"    y2="222" class="tick"/>
+        <line x1="1120" y1="198" x2="1120" y2="222" class="tick"/>
+
+        <text class="tickLab" x="0" y="250" text-anchor="middle">0</text>
+        <text class="tickLab" x="1120" y="250" text-anchor="middle">10</text>
+
+        <!-- ticks dos valores usados -->
+        <!-- mapeamento: x = (v/10)*1120 -->
+        <line x1="224" y1="200" x2="224" y2="220" class="tick"/>
+        <line x1="448" y1="200" x2="448" y2="220" class="tick"/>
+        <line x1="560" y1="196" x2="560" y2="224" class="tick" style="opacity:.85"/>
+        <line x1="672" y1="200" x2="672" y2="220" class="tick"/>
+        <line x1="896" y1="200" x2="896" y2="220" class="tick"/>
+
+        <text class="tickLab" x="224" y="250" text-anchor="middle">2</text>
+        <text class="tickLab" x="448" y="250" text-anchor="middle">4</text>
+        <text class="tickLab" x="672" y="250" text-anchor="middle">6</text>
+        <text class="tickLab" x="896" y="250" text-anchor="middle">8</text>
+
+        <!-- 4 pontos (dados) -->
+        <circle class="dot" cx="224" cy="210" r="9"/>
+        <circle class="dot" cx="448" cy="210" r="9"/>
+        <circle class="dot" cx="672" cy="210" r="9"/>
+        <circle class="dot" cx="896" cy="210" r="9"/>
+
+        <!-- média x̄ = 5 -->
+        <line class="meanLine" x1="560" y1="100" x2="560" y2="265"/>
+        <text class="meanLab" x="560" y="84" text-anchor="middle">x̄ = 5</text>
+        <circle class="meanDot" cx="560" cy="210" r="9"/>
+
+        <!-- SLOT 1: x1 = 2 -->
+        <g class="slot s1">
+          <line class="dev draw1" x1="560" y1="150" x2="224" y2="150"/>
+          <circle class="cap" cx="560" cy="150" r="6"/>
+          <circle class="cap" cx="224" cy="150" r="6"/>
+
+          <circle class="dotHi" cx="224" cy="210" r="9"/>
+          <circle class="spot"  cx="224" cy="210" r="16"/>
+
+          <text class="lbl" x="392" y="134" text-anchor="middle">
+            <tspan class="k">(2</tspan> <tspan class="m">−</tspan> <tspan class="k">5)</tspan>
+            <tspan class="m"> = </tspan>
+            <tspan class="k">−3</tspan>
+          </text>
+
+          <g class="sq sq1" transform="translate(0,120)">
+            <rect class="sqFill" x="380" y="165" width="360" height="54"/>
+            <text class="lbl" x="560" y="201" text-anchor="middle">
+              <tspan class="k">(2</tspan> <tspan class="m">−</tspan> <tspan class="k">5)²</tspan>
+              <tspan class="m"> = </tspan>
+              <tspan class="k">9</tspan>
+            </text>
+          </g>
+        </g>
+
+        <!-- SLOT 2: x2 = 4 -->
+        <g class="slot s2">
+          <line class="dev draw2" x1="560" y1="150" x2="448" y2="150"/>
+          <circle class="cap" cx="560" cy="150" r="6"/>
+          <circle class="cap" cx="448" cy="150" r="6"/>
+
+          <circle class="dotHi" cx="448" cy="210" r="9"/>
+          <circle class="spot"  cx="448" cy="210" r="16"/>
+<g transform="translate(-20,0)">
+
+          <text class="lbl" x="504" y="134" text-anchor="middle">
+            <tspan class="k">(4</tspan> <tspan class="m">−</tspan> <tspan class="k">5)</tspan>
+            <tspan class="m"> = </tspan>
+            <tspan class="k">−1</tspan>
+          </text>
+</g>
+          <g class="sq sq2" transform="translate(0,120)">
+            <rect class="sqFill" x="380" y="165" width="360" height="54"/>
+            <text class="lbl" x="560" y="201" text-anchor="middle">
+              <tspan class="k">(4</tspan> <tspan class="m">−</tspan> <tspan class="k">5)²</tspan>
+              <tspan class="m"> = </tspan>
+              <tspan class="k">1</tspan>
+            </text>
+          </g>
+        </g>
+
+        <!-- SLOT 3: x3 = 6 -->
+        <g class="slot s3">
+          <line class="dev draw3" x1="560" y1="150" x2="672" y2="150"/>
+          <circle class="cap" cx="560" cy="150" r="6"/>
+          <circle class="cap" cx="672" cy="150" r="6"/>
+
+          <circle class="dotHi" cx="672" cy="210" r="9"/>
+          <circle class="spot"  cx="672" cy="210" r="16"/>
+<g transform="translate(20,0)">
+          <text class="lbl" x="616" y="134" text-anchor="middle">
+            <tspan class="k">(6</tspan> <tspan class="m">−</tspan> <tspan class="k">5)</tspan>
+            <tspan class="m"> = </tspan>
+            <tspan class="k">+1</tspan>
+          </text>
+</g>          
+          <g class="sq sq3" transform="translate(0,120)">
+            <rect class="sqFill" x="380" y="165" width="360" height="54"/>
+            <text class="lbl" x="560" y="201" text-anchor="middle">
+              <tspan class="k">(6</tspan> <tspan class="m">−</tspan> <tspan class="k">5)²</tspan>
+              <tspan class="m"> = </tspan>
+              <tspan class="k">1</tspan>
+            </text>
+          </g>
+        </g>
+
+        <!-- SLOT 4: x4 = 8 -->
+        <g class="slot s4">
+          <line class="dev draw4" x1="560" y1="150" x2="896" y2="150"/>
+          <circle class="cap" cx="560" cy="150" r="6"/>
+          <circle class="cap" cx="896" cy="150" r="6"/>
+
+          <circle class="dotHi" cx="896" cy="210" r="9"/>
+          <circle class="spot"  cx="896" cy="210" r="16"/>
+
+          <text class="lbl" x="728" y="134" text-anchor="middle">
+            <tspan class="k">(8</tspan> <tspan class="m">−</tspan> <tspan class="k">5)</tspan>
+            <tspan class="m"> = </tspan>
+            <tspan class="k">+3</tspan>
+          </text>
+
+          <g class="sq sq4" transform="translate(0,120)">
+            <rect class="sqFill" x="380" y="165" width="360" height="54"/>
+            <text class="lbl" x="560" y="201" text-anchor="middle">
+              <tspan class="k">(8</tspan> <tspan class="m">−</tspan> <tspan class="k">5)²</tspan>
+              <tspan class="m"> = </tspan>
+              <tspan class="k">9</tspan>
+            </text>
+          </g>
+        </g>
+
+        <!-- fórmula final -->
+        <g transform="translate(0,50)">
+          <rect class="card final" x="120" y="238" width="880" height="92"/>
+          <text class="formula final" x="560" y="276">
+            σ² <tspan class="m">=</tspan> (1/4) Σ (xᵢ − x̄)² <tspan class="m">=</tspan> 5
+          </text>
+          <text class="formula final" x="560" y="310" style="font-size:22px;">
+            <tspan class="m">média dos quadrados dos desvios em relação a</tspan> x̄
+          </text>
+        </g>
+
+      </g>
+    </g>
+  </g>
+</svg>

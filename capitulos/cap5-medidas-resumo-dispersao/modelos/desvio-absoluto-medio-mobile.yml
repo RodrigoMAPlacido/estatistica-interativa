@@ -1,0 +1,226 @@
+schema: EconSchema
+aspectRatio: 2
+
+params:
+  - { name: x_1, value: 2.0,  min: 0, max: 12, round: 0.1 }
+  - { name: x_2, value: 4.0,  min: 0, max: 12, round: 0.1 }
+  - { name: x_3, value: 6.0,  min: 0, max: 12, round: 0.1 }
+  - { name: x_4, value: 9.0,  min: 0, max: 12, round: 0.1 }
+  - { name: x_5, value: 12.0, min: 0, max: 12, round: 0.1 }
+
+calcs:
+  n: "5"
+
+  xbar: "((1*params.x_1 + 1*params.x_2 + 1*params.x_3 + 1*params.x_4 + 1*params.x_5) / 5)"
+
+  d1: "(1*params.x_1 - 1*calcs.xbar)"
+  d2: "(1*params.x_2 - 1*calcs.xbar)"
+  d3: "(1*params.x_3 - 1*calcs.xbar)"
+  d4: "(1*params.x_4 - 1*calcs.xbar)"
+  d5: "(1*params.x_5 - 1*calcs.xbar)"
+
+  a1: "(calcs.d1 >= 0 ? calcs.d1 : -calcs.d1)"
+  a2: "(calcs.d2 >= 0 ? calcs.d2 : -calcs.d2)"
+  a3: "(calcs.d3 >= 0 ? calcs.d3 : -calcs.d3)"
+  a4: "(calcs.d4 >= 0 ? calcs.d4 : -calcs.d4)"
+  a5: "(calcs.d5 >= 0 ? calcs.d5 : -calcs.d5)"
+
+  sumAbs: "(1*calcs.a1 + 1*calcs.a2 + 1*calcs.a3 + 1*calcs.a4 + 1*calcs.a5)"
+  DAM: "(calcs.sumAbs / 5)"
+  DAMl: "(calcs.xbar - calcs.DAM)"
+  DAMr: "(calcs.xbar + calcs.DAM)"
+
+  leftEnd:  "(calcs.xbar - calcs.DAM)"
+  rightEnd: "(calcs.xbar + calcs.DAM)"
+
+  leftEndDraw:  "(calcs.leftEnd < 0 ? 0 : (calcs.leftEnd > 12 ? 12 : calcs.leftEnd))"
+  rightEndDraw: "(calcs.rightEnd < 0 ? 0 : (calcs.rightEnd > 12 ? 12 : calcs.rightEnd))"
+
+colors:
+  ink: "'#111827'"
+  inkSoft: "'#64748b'"
+  grid: "'#e5e7eb'"
+  bg: "'#ffffff'"
+
+layout:
+  OneWideGraphPlusSidebar:
+    graph:
+      title: ""   # evita o título externo bugado
+      xAxis: { min: 0, max: 12, ticks: 0 }
+      yAxis: { show: false, min: -1, max: 1, ticks: 0 }
+
+      objects:
+        # Título interno
+        - Label:
+            coordinates: [6, 0.92]
+            text: "'\\\\textbf{Desvio Absoluto Médio}'"
+            color: colors.ink
+            fontSize: 12
+            position: b
+            bgcolor: colors.bg
+
+        # Reta numérica
+        - Segment: { a: [0, 0], b: [12, 0], color: colors.ink, strokeWidth: 2 }
+        - Segment: { a: [0, -0.08],  b: [0,  0.08],  color: colors.inkSoft, strokeWidth: 2 }
+        - Segment: { a: [12, -0.08], b: [12, 0.08],  color: colors.inkSoft, strokeWidth: 2 }
+        - Label:   { coordinates: [0,  -0.24], text: "'0'",  color: colors.inkSoft, fontSize: 10, position: c }
+        - Label:   { coordinates: [12, -0.24], text: "'12'", color: colors.inkSoft, fontSize: 10, position: c }
+
+        # Média
+        - Segment:
+            a: [calcs.xbar, -0.55]
+            b: [calcs.xbar,  0.55]
+            color: colors.inkSoft
+            strokeWidth: 2
+            lineStyle: dashed
+
+        - Label:
+            coordinates: [calcs.xbar, 0.62]
+            text: "'\\\\bar{X}'"
+            color: colors.ink
+            fontSize: 10
+            position: b
+            bgcolor: colors.bg
+
+        - Label:
+            coordinates: [calcs.xbar, 0.56]
+            text: "`${calcs.xbar.toFixed(2)}`"
+            color: colors.inkSoft
+            fontSize: 9
+            position: c
+            bgcolor: colors.bg
+
+        # Braços (mesma geometria pros dois)
+        # y do braço e das "capas"
+        # armY=0.30, capLo=0.24, capHi=0.36, labelY=0.44
+
+        # Esquerdo: [x̄ - DAM, x̄]
+        - Segment:
+            a: [calcs.leftEndDraw, 0.30]
+            b: [calcs.xbar,        0.30]
+            color: colors.ink
+            strokeWidth: 2
+
+        - Segment: { a: [calcs.leftEndDraw, 0.24], b: [calcs.leftEndDraw, 0.36], color: colors.ink, strokeWidth: 2 }
+
+        - Label:
+            coordinates: [(calcs.leftEndDraw + calcs.xbar)/2, 0.45]
+            text: "`-${calcs.DAM.toFixed(2)}`"
+            color: colors.ink
+            fontSize: 9
+            position: c
+            bgcolor: colors.bg
+
+        - Label:
+            coordinates: [calcs.rightEnd, 0.30]
+            text: "`${calcs.DAMr.toFixed(2)}`"
+            color: colors.ink
+            fontSize: 9
+            position: l
+            bgcolor: colors.bg
+
+        # Direito: [x̄, x̄ + DAM]
+        - Segment:
+            a: [calcs.xbar,         0.30]
+            b: [calcs.rightEndDraw, 0.30]
+            color: colors.ink
+            strokeWidth: 2
+
+        - Segment: { a: [calcs.rightEndDraw, 0.24], b: [calcs.rightEndDraw, 0.36], color: colors.ink, strokeWidth: 2 }
+
+        - Label:
+            coordinates: [(calcs.rightEndDraw + calcs.xbar)/2, 0.45]
+            text: "`+${calcs.DAM.toFixed(2)}`"
+            color: colors.ink
+            fontSize: 9
+            position: c
+            bgcolor: colors.bg
+        - Label:
+            coordinates: [calcs.leftEnd, 0.30]
+            text: "`${calcs.DAMl.toFixed(2)}`"
+            color: colors.ink
+            fontSize: 9
+            position: r
+            bgcolor: colors.bg
+        # Pontos arrastáveis (sem cruzar)
+        - Point:
+            coordinates: [params.x_1, 0]
+            color: colors.ink
+            drag:
+              - directions: x
+                param: x_1
+                expression: "((drag.x >= 0) ? ((drag.x <= params.x_2) ? drag.x : params.x_2) : 0)"
+
+        - Point:
+            coordinates: [params.x_2, 0]
+            color: colors.inkSoft
+            drag:
+              - directions: x
+                param: x_2
+                expression: "((drag.x >= params.x_1) ? ((drag.x <= params.x_3) ? drag.x : params.x_3) : params.x_1)"
+
+        - Point:
+            coordinates: [params.x_3, 0]
+            color: colors.ink
+            drag:
+              - directions: x
+                param: x_3
+                expression: "((drag.x >= params.x_2) ? ((drag.x <= params.x_4) ? drag.x : params.x_4) : params.x_2)"
+
+        - Point:
+            coordinates: [params.x_4, 0]
+            color: colors.inkSoft
+            drag:
+              - directions: x
+                param: x_4
+                expression: "((drag.x >= params.x_3) ? ((drag.x <= params.x_5) ? drag.x : params.x_5) : params.x_3)"
+
+        - Point:
+            coordinates: [params.x_5, 0]
+            color: colors.ink
+            drag:
+              - directions: x
+                param: x_5
+                expression: "((drag.x >= params.x_4) ? ((drag.x <= 12) ? drag.x : 12) : params.x_4)"
+
+        # Labels dos pontos
+        - Label: { coordinates: [params.x_1, -0.2], text: "`${params.x_1.toFixed(1)}`", color: colors.inkSoft, fontSize: 9, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [params.x_2, -0.2], text: "`${params.x_2.toFixed(1)}`", color: colors.inkSoft, fontSize: 9, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [params.x_3, -0.2], text: "`${params.x_3.toFixed(1)}`", color: colors.inkSoft, fontSize: 9, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [params.x_4, -0.2], text: "`${params.x_4.toFixed(1)}`", color: colors.inkSoft, fontSize: 9, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [params.x_5, -0.2], text: "`${params.x_5.toFixed(1)}`", color: colors.inkSoft, fontSize: 9, position: c, bgcolor: colors.bg }
+
+
+
+    sidebar:
+      triggerWidth: 9999
+      controls:
+        - title: ""
+          divs:
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Dados:</b></div>"
+            - html: "`$$\\\\tiny
+                      x=\\\\{${params.x_1.toFixed(1)},\\\\;${params.x_2.toFixed(1)},\\\\;${params.x_3.toFixed(1)},\\\\;${params.x_4.toFixed(1)},\\\\;${params.x_5.toFixed(1)}\\\\},\\\\quad n=${calcs.n}
+                      $$`"
+
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Fórmula:</b></div>"
+            - html: "$$\\tiny DAM=\\frac{1}{n}\\sum_{i=1}^{n}\\lvert x_i-\\bar{x}\\rvert $$"
+
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Aplicando (média):</b></div>"
+            - html: "`$$\\\\tiny
+                      \\\\bar{x}=\\\\frac{${params.x_1.toFixed(1)}+${params.x_2.toFixed(1)}+${params.x_3.toFixed(1)}+${params.x_4.toFixed(1)}+${params.x_5.toFixed(1)}}{${calcs.n}}
+                      =${calcs.xbar.toFixed(2)}\\\\,.
+                      $$`"
+
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Desvios absolutos:</b></div>"
+            - html: "`$$\\\\tiny
+                      |x_1-\\\\bar{x}|=${calcs.a1.toFixed(2)},\\\\;
+                      |x_2-\\\\bar{x}|=${calcs.a2.toFixed(2)},\\\\;
+                      |x_3-\\\\bar{x}|=${calcs.a3.toFixed(2)}.
+                      $$`"
+            - html: "`$$\\\\tiny
+                      |x_4-\\\\bar{x}|=${calcs.a4.toFixed(2)},\\\\;
+                      |x_5-\\\\bar{x}|=${calcs.a5.toFixed(2)}.
+                      $$`"
+
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Resultado:</b></div>"
+            - html: "`$$\\\\tiny DAM=${calcs.DAM.toFixed(2)}. $$`"

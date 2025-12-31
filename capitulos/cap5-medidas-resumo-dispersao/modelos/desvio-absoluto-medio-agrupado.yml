@@ -1,0 +1,338 @@
+schema: EconSchema
+aspectRatio: 1.6
+
+params:
+  - { name: f0, value: 2, min: 0, max: 8, round: 1 }
+  - { name: f2, value: 4, min: 0, max: 8, round: 1 }
+  - { name: f4, value: 6, min: 0, max: 8, round: 1 }
+  - { name: f6, value: 4, min: 0, max: 8, round: 1 }
+  - { name: f8, value: 3, min: 0, max: 8, round: 1 }
+
+calcs:
+  # Totais e acumuladas
+  N: "(1*params.f0 + 1*params.f2 + 1*params.f4 + 1*params.f6 + 1*params.f8)"
+
+  F0: "(1*params.f0)"
+  F2: "(1*params.f0 + 1*params.f2)"
+  F4: "(1*params.f0 + 1*params.f2 + 1*params.f4)"
+  F6: "(1*params.f0 + 1*params.f2 + 1*params.f4 + 1*params.f6)"
+  F8: "(1*params.f0 + 1*params.f2 + 1*params.f4 + 1*params.f6 + 1*params.f8)"
+
+  # Média: xbar = Σ x f / N
+  Sx: "(0*(1*params.f0) + 2*(1*params.f2) + 4*(1*params.f4) + 6*(1*params.f6) + 8*(1*params.f8))"
+  xbar: "(calcs.N > 0 ? (calcs.Sx / calcs.N) : 0)"
+
+  # |x - xbar| sem Math.abs
+  d0: "(0 - calcs.xbar)"
+  d2: "(2 - calcs.xbar)"
+  d4: "(4 - calcs.xbar)"
+  d6: "(6 - calcs.xbar)"
+  d8: "(8 - calcs.xbar)"
+
+  a0: "(calcs.d0 >= 0 ? calcs.d0 : -calcs.d0)"
+  a2: "(calcs.d2 >= 0 ? calcs.d2 : -calcs.d2)"
+  a4: "(calcs.d4 >= 0 ? calcs.d4 : -calcs.d4)"
+  a6: "(calcs.d6 >= 0 ? calcs.d6 : -calcs.d6)"
+  a8: "(calcs.d8 >= 0 ? calcs.d8 : -calcs.d8)"
+
+  # DAM ponderado por frequências
+  sumAbsW: "((1*params.f0)*calcs.a0 + (1*params.f2)*calcs.a2 + (1*params.f4)*calcs.a4 + (1*params.f6)*calcs.a6 + (1*params.f8)*calcs.a8)"
+  DAM: "(calcs.N > 0 ? (calcs.sumAbsW / calcs.N) : 0)"
+
+  # Extremos do colchete
+  xL: "(calcs.xbar - calcs.DAM)"
+  xR: "(calcs.xbar + calcs.DAM)"
+
+  ok: "(calcs.N > 0)"
+
+  # y dos rótulos f dentro da barra (se barra pequena, sobe um pouco)
+  f0Y: "(params.f0 > 0.8 ? (1*params.f0 - 0.40) : (1*params.f0 + 0.35))"
+  f2Y: "(params.f2 > 0.8 ? (1*params.f2 - 0.40) : (1*params.f2 + 0.35))"
+  f4Y: "(params.f4 > 0.8 ? (1*params.f4 - 0.40) : (1*params.f4 + 0.35))"
+  f6Y: "(params.f6 > 0.8 ? (1*params.f6 - 0.40) : (1*params.f6 + 0.35))"
+  f8Y: "(params.f8 > 0.8 ? (1*params.f8 - 0.40) : (1*params.f8 + 0.35))"
+
+colors:
+  ink: "'#111827'"
+  inkSoft: "'#64748b'"
+  grid: "'#64748b'"
+  bg: "'#ffffff'"
+  bar: "'#111827'"   
+
+layout:
+  OneWideGraphPlusSidebar:
+    graph:
+      xAxis: { min: -1, max: 9, ticks: 0, show: false }
+      yAxis: { min: -0.8, max: 9.2, ticks: 0, show: false }
+
+      objects:
+        # ---------------------------
+        # Título e subtítulo (com folga)
+        # ---------------------------
+
+        - Segment: { a: [-0.8, 0], b: [-0.8, 8.2], color: grey, strokeWidth: 2 }
+
+        # ---------------------------
+        # Grid horizontal “limpo”
+        # ---------------------------
+        - Segment: { a: [-1, 2], b: [9, 2], color: colors.grid, strokeWidth: 0.5 }
+        - Segment: { a: [-1, 4], b: [9, 4], color: colors.grid, strokeWidth: 0.5 }
+        - Segment: { a: [-1, 6], b: [9, 6], color: colors.grid, strokeWidth: 0.5 }
+
+        # ---------------------------
+        # Baseline e marcas do eixo x (manual)
+        # ---------------------------
+        - Segment: { a: [-0.8, 0], b: [8.8, 0], color: colors.inkSoft, strokeWidth: 2 }
+        - Segment: { a: [0, -0.5], b: [0, 0.10], color: colors.inkSoft, strokeWidth: 2 }
+        - Segment: { a: [2, -0.5], b: [2, 0.10], color: colors.inkSoft, strokeWidth: 2 }
+        - Segment: { a: [4, -0.5], b: [4, 0.10], color: colors.inkSoft, strokeWidth: 2 }
+        - Segment: { a: [6, -0.5], b: [6, 0.10], color: colors.inkSoft, strokeWidth: 2 }
+        - Segment: { a: [8, -0.5], b: [8, 0.10], color: colors.inkSoft, strokeWidth: 2 }
+
+        - Label: { coordinates: [0, 0], text: "'0'", color: colors.inkSoft, fontSize: 11, position: t, bgcolor: colors.bg }
+        - Label: { coordinates: [2, 0], text: "'2'", color: colors.inkSoft, fontSize: 11, position: t, bgcolor: colors.bg }
+        - Label: { coordinates: [4, 0], text: "'4'", color: colors.inkSoft, fontSize: 11, position: t, bgcolor: colors.bg }
+        - Label: { coordinates: [6, 0], text: "'6'", color: colors.inkSoft, fontSize: 11, position: t, bgcolor: colors.bg }
+        - Label: { coordinates: [8, 0], text: "'8'", color: colors.inkSoft, fontSize: 11, position: t, bgcolor: colors.bg }
+
+        - Label: { coordinates: [-0.8, 0], text: "'0'", color: colors.inkSoft, fontSize: 11, position: r, bgcolor: colors.bg }
+        - Label: { coordinates: [-0.8, 2], text: "'2'", color: colors.inkSoft, fontSize: 11, position: r, bgcolor: colors.bg }
+        - Label: { coordinates: [-0.8, 4], text: "'4'", color: colors.inkSoft, fontSize: 11, position: r, bgcolor: colors.bg }
+        - Label: { coordinates: [-0.8, 6], text: "'6'", color: colors.inkSoft, fontSize: 11, position: r, bgcolor: colors.bg }
+
+        # ---------------------------
+        # Barras (cinza) com drag em y (clamp 0..8)
+        # ---------------------------
+        - Rectangle:
+            x1: -0.55
+            x2:  0.55
+            y1: 0
+            y2: params.f0
+            fill: colors.bar
+            opacity: 1
+            drag:
+              - directions: y
+                param: f0
+                expression: "(drag.y < 0 ? 0 : (drag.y > 8 ? 8 : drag.y))"
+
+        - Rectangle:
+            x1: 1.45
+            x2: 2.55
+            y1: 0
+            y2: params.f2
+            fill: colors.bar
+            opacity: 1
+            drag:
+              - directions: y
+                param: f2
+                expression: "(drag.y < 0 ? 0 : (drag.y > 8 ? 8 : drag.y))"
+
+        - Rectangle:
+            x1: 3.45
+            x2: 4.55
+            y1: 0
+            y2: params.f4
+            fill: colors.bar
+            opacity: 1
+            drag:
+              - directions: y
+                param: f4
+                expression: "(drag.y < 0 ? 0 : (drag.y > 8 ? 8 : drag.y))"
+
+        - Rectangle:
+            x1: 5.45
+            x2: 6.55
+            y1: 0
+            y2: params.f6
+            fill: colors.bar
+            opacity: 1
+            drag:
+              - directions: y
+                param: f6
+                expression: "(drag.y < 0 ? 0 : (drag.y > 8 ? 8 : drag.y))"
+
+        - Rectangle:
+            x1: 7.45
+            x2: 8.55
+            y1: 0
+            y2: params.f8
+            fill: colors.bar
+            opacity: 1
+            drag:
+              - directions: y
+                param: f8
+                expression: "(drag.y < 0 ? 0 : (drag.y > 8 ? 8 : drag.y))"
+
+        # ---------------------------
+        # Rótulos f dentro das barras (caixinha escura)
+        # ---------------------------
+        - Label: { coordinates: [0, calcs.f0Y], text: "`\\\\bf{f}=${params.f0.toFixed(0)}`", color: white, bgcolor: colors.ink, fontSize: 10, position: c }
+        - Label: { coordinates: [2, calcs.f2Y], text: "`\\\\bf{f}=${params.f2.toFixed(0)}`", color: white, bgcolor: colors.ink, fontSize: 10, position: c }
+        - Label: { coordinates: [4, calcs.f4Y], text: "`\\\\bf{f}=${params.f4.toFixed(0)}`", color: white, bgcolor: colors.ink, fontSize: 10, position: c }
+        - Label: { coordinates: [6, calcs.f6Y], text: "`\\\\bf{f}=${params.f6.toFixed(0)}`", color: white, bgcolor: colors.ink, fontSize: 10, position: c }
+        - Label: { coordinates: [8, calcs.f8Y], text: "`\\\\bf{f}=${params.f8.toFixed(0)}`", color: white, bgcolor: colors.ink, fontSize: 10, position: c }
+
+        # ---------------------------
+        # Linha da média (tracejada) e rótulo xbar
+        # ---------------------------
+        - Segment:
+            a: [calcs.xbar, 0]
+            b: [calcs.xbar, 9]
+            color: colors.inkSoft
+            strokeWidth: 2
+            lineStyle: dashed
+            show: calcs.ok
+
+        - Label:
+            coordinates: [calcs.xbar, 8.5]
+            text: "`\\\\bar{X}\\\\approx ${calcs.xbar.toFixed(2)}`"
+            color: colors.ink
+            fontSize: 11
+            position: b
+            bgcolor: colors.bg
+            show: calcs.ok
+
+        # ---------------------------
+        # Colchete do DAM (mais “respirado”)
+        # ---------------------------
+        # Linha do colchete (em duas metades)
+        - Segment: { a: [calcs.xL, 7.70], b: [calcs.xbar, 7.70], color: colors.ink, strokeWidth: 2, show: calcs.ok }
+        - Segment: { a: [calcs.xbar, 7.70], b: [calcs.xR, 7.70], color: colors.ink, strokeWidth: 2, show: calcs.ok }
+
+        # Tampas
+        - Segment: { a: [calcs.xL, 7.55], b: [calcs.xL, 7.85], color: colors.ink, strokeWidth: 2, show: calcs.ok }
+        - Segment: { a: [calcs.xbar, 7.55], b: [calcs.xbar, 7.85], color: colors.ink, strokeWidth: 2, show: calcs.ok }
+        - Segment: { a: [calcs.xR, 7.55], b: [calcs.xR, 7.85], color: colors.ink, strokeWidth: 2, show: calcs.ok }
+
+        # Rótulos “xbar ± d ≈ ...” (como na referência)
+        - Label:
+            coordinates: [(calcs.xL), 7.7]
+            text: "`\\\\bf{\\\\bar{X}-d\\\\approx ${calcs.xL.toFixed(2)}}`"
+            color: colors.ink
+            fontSize: 10
+            position: r
+            bgcolor: colors.bg
+            show: calcs.ok
+
+        - Label:
+            coordinates: [(calcs.xR), 7.7]
+            text: "`\\\\bf{\\\\bar{X}+d\\\\approx ${calcs.xR.toFixed(2)}}`"
+            color: colors.ink
+            fontSize: 10
+            position: l
+            bgcolor: colors.bg
+            show: calcs.ok
+
+        # Rótulos ±DAM embaixo do colchete
+        - Label:
+            coordinates: [(calcs.xL + calcs.xbar)/2, 7.38]
+            text: "`${(-calcs.DAM).toFixed(2)}`"
+            color: colors.ink
+            fontSize: 10
+            position: c
+            bgcolor: colors.bg
+            show: calcs.ok
+
+        - Label:
+            coordinates: [(calcs.xbar + calcs.xR)/2, 7.38]
+            text: "`+${calcs.DAM.toFixed(2)}`"
+            color: colors.ink
+            fontSize: 10
+            position: c
+            bgcolor: colors.bg
+            show: calcs.ok
+
+    sidebar:
+      triggerWidth: 9999
+      controls:
+        - title:
+
+          divs:
+            # ---------------------------
+            # 1) TABELA
+            # ---------------------------
+            - html: "`<figure class='sidebar-figure'>
+                <div class='sidebar-table-wrap'>
+                  <table class='sidebar-table'>
+                    <thead>
+                      <tr>
+                        <th>Valor <em>x</em></th>
+                        <th>Freq. <em>f</em></th>
+                        <th>Acum. <em>F</em></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>0</td><td>${params.f0.toFixed(0)}</td><td>${calcs.F0.toFixed(0)}</td></tr>
+                      <tr><td>2</td><td>${params.f2.toFixed(0)}</td><td>${calcs.F2.toFixed(0)}</td></tr>
+                      <tr><td>4</td><td>${params.f4.toFixed(0)}</td><td>${calcs.F4.toFixed(0)}</td></tr>
+                      <tr><td>6</td><td>${params.f6.toFixed(0)}</td><td>${calcs.F6.toFixed(0)}</td></tr>
+                      <tr><td>8</td><td>${params.f8.toFixed(0)}</td><td>${calcs.F8.toFixed(0)}</td></tr>
+                      <tr>
+                        <td><b>Total</b></td>
+                        <td><b>${calcs.N.toFixed(0)}</b></td>
+                        <td><b>${calcs.N.toFixed(0)}</b></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <figcaption>Distribuição discreta: frequências e acumuladas</figcaption>
+              </figure>`"
+
+            - html: "<hr>"
+
+            # ---------------------------
+            # 2) MÉDIA (x̄) — DADOS AGRUPADOS (DISCRETO)
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Média:</b></div>"
+
+            - html: "`$$\\\\small
+                      \\\\bar{x}=\\\\frac{\\\\sum x_i f_i}{N}
+                      \\\\quad (N=${calcs.N.toFixed(0)})
+                      $$`"
+
+            - html: "`$$\\\\small
+                      \\\\bar{x}
+                      =\\\\frac{
+                        0\\\\cdot ${params.f0.toFixed(0)}
+                        +2\\\\cdot ${params.f2.toFixed(0)}
+                        +4\\\\cdot ${params.f4.toFixed(0)}
+                        +6\\\\cdot ${params.f6.toFixed(0)}
+                        +8\\\\cdot ${params.f8.toFixed(0)}
+                      }{${calcs.N.toFixed(0)}}
+                      =${calcs.xbar.toFixed(2)}.
+                      $$`"
+
+            - html: "<hr>"
+
+            # ---------------------------
+            # 3) DAM — DESVIO ABSOLUTO MÉDIO
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Desvio absoluto médio:</b></div>"
+
+            - html: "`$$\\\\small
+                      DAM=\\\\frac{1}{N}\\\\sum f_i\\\\,|x_i-\\\\bar{x}|
+                      \\\\quad (N=${calcs.N.toFixed(0)})
+                      $$`"
+
+            - html: "`$$\\\\small
+                      DAM
+                      =\\\\frac{
+                        ${params.f0.toFixed(0)}\\\\cdot ${calcs.a0.toFixed(2)}
+                        +${params.f2.toFixed(0)}\\\\cdot ${calcs.a2.toFixed(2)}
+                        +${params.f4.toFixed(0)}\\\\cdot ${calcs.a4.toFixed(2)}
+                        +${params.f6.toFixed(0)}\\\\cdot ${calcs.a6.toFixed(2)}
+                        +${params.f8.toFixed(0)}\\\\cdot ${calcs.a8.toFixed(2)}
+                      }{${calcs.N.toFixed(0)}}
+                      =${calcs.DAM.toFixed(2)}.
+                      $$`"
+
+            # ---------------------------
+            # 4) REFERÊNCIAS NO EIXO (x̄ ± d)
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Pontos de referência no eixo:</b></div>"
+
+            - html: "`$$\\\\small
+                      \\\\bar{x}-d\\\\approx ${calcs.xL.toFixed(2)},
+                      \\\\qquad
+                      \\\\bar{x}+d\\\\approx ${calcs.xR.toFixed(2)}.
+                      $$`"

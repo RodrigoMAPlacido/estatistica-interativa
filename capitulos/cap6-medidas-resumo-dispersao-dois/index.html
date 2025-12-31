@@ -1,0 +1,1637 @@
+---
+layout: capitulo
+title: "Capítulo 6 — Medidas-resumo: Medidas de Dispersão II"
+anterior: /capitulos/cap5-medidas-resumo-dispersao/
+proximo: /capitulos/cap7-probabilidade/
+---
+<p class="subtitle">Objetivos de aprendizagem</p>
+<ul>
+  <li>
+    Compreender a <strong>variância</strong> como uma medida de dispersão baseada em <strong>desvios ao quadrado</strong> em relação à média,
+    interpretando o efeito do quadrado na eliminação de sinais e na maior sensibilidade a afastamentos grandes.
+  </li>
+
+  <li>
+    Calcular e interpretar <strong>variância</strong> e <strong>desvio-padrão</strong> para <strong>dados não agrupados</strong> e para
+    <strong>tabelas de frequências</strong>, reconhecendo o papel das ponderações pelas frequências.
+  </li>
+
+  <li>
+    Estimar variância e desvio-padrão para <strong>dados agrupados em classes</strong> por meio de <strong>pontos médios</strong>,
+    compreendendo o caráter aproximado do resultado e sua dependência da definição das classes.
+  </li>
+
+  <li>
+    Interpretar corretamente a questão das <strong>unidades</strong>, distinguindo variância em unidades ao quadrado e desvio-padrão na unidade original.
+  </li>
+
+  <li>
+    Aplicar o <strong>coeficiente de variação</strong> como medida de <strong>dispersão relativa</strong> para comparar distribuições em níveis médios ou escalas diferentes.
+  </li>
+</ul>
+
+<hr>
+<h2>1. Introdução</h2>
+
+<p>
+  <span class="newthought">Ao longo do capítulo anterior,</span> estudamos medidas de dispersão cuja construção se apoia diretamente
+  na ideia de <strong>espalhamento</strong> dos dados ao longo da escala.
+  Vimos que medidas como a <strong>amplitude</strong> e o <strong>intervalo interquartílico</strong> descrevem a variabilidade a partir
+  de <strong>extremos</strong> e <strong>separatrizes</strong>, enquanto medidas baseadas em <strong>desvios absolutos</strong> quantificam
+  afastamentos em torno de um valor de referência sem o problema do cancelamento entre sinais.
+  Essas abordagens evidenciam que duas distribuições podem apresentar a mesma posição central e,
+  ainda assim, diferir de maneira relevante quanto ao grau de dispersão.
+</p>
+
+<figure>
+  <img src="../../imagens/dispersao.svg"
+       alt="Distribuições com mesma posição central e dispersões diferentes">
+</figure>
+
+<p>
+  Ainda assim, essas medidas apresentam limitações importantes. Medidas baseadas em extremos podem ser fortemente influenciadas
+  por poucas observações, enquanto medidas baseadas em desvios absolutos descrevem a variabilidade essencialmente como
+  uma <strong>distância média</strong> em relação a um valor central.
+  Em muitas situações, essa leitura não é suficiente para distinguir distribuições que diferem quanto à
+  presença e à intensidade de afastamentos mais pronunciados.
+  Torna-se, portanto, útil dispor de uma medida que sintetize a dispersão de modo mais sensível às diferenças
+  entre observações próximas do centro e observações situadas mais longe dele.
+</p>
+
+<p>
+  É nesse contexto que se introduz a <strong>variância</strong>, definida a partir do <strong>quadrado</strong> dos desvios em relação à média.
+  Ao considerar os desvios ao quadrado, a medida passa a refletir com mais intensidade a presença de observações mais afastadas do centro,
+  distinguindo distribuições em que os valores se concentram em torno da média daquelas em que há afastamentos mais pronunciados.
+  Em seguida, apresentamos o <strong>desvio-padrão</strong>, que é a raiz quadrada da variância e expressa a dispersão novamente
+  na <strong>unidade original</strong> dos dados, facilitando sua interpretação.
+</p>
+
+<figure>
+  <img src="../../imagens/variancia-desvio.svg"
+       alt="Variância e desvio-padrão: desvios ao quadrado e retorno à unidade original">
+</figure>
+
+
+<p>
+  Por fim, abordaremos medidas de <strong>dispersão relativa</strong>.
+  Medidas absolutas, como o desvio-padrão, são informativas quando comparamos distribuições expressas
+  na mesma escala, mas podem ser pouco adequadas quando os grupos apresentam
+  <strong>níveis médios</strong> muito distintos ou quando as variáveis estão em unidades diferentes.
+  O <strong>coeficiente de variação</strong> e a <strong>variância relativa</strong> expressam a dispersão
+  em termos <strong>adimensionais</strong>, permitindo comparações mais diretas,
+  desde que utilizadas com atenção às características do contexto analisado.
+</p>
+
+<hr>
+
+<h2>2. Variância</h2>
+
+<p>
+  O desvio absoluto médio resolve o problema do cancelamento entre desvios positivos e negativos
+  ao utilizar o <strong>valor absoluto</strong>. Ainda assim, na prática estatística, a medida de
+  dispersão mais central é a <strong>variância</strong>, construída a partir do <strong>quadrado</strong>
+  dos desvios em relação à média. Essa escolha não é apenas uma alternativa técnica: ela produz
+  uma medida com propriedades matemáticas particularmente convenientes, que aparecem de forma
+  recorrente em estatística inferencial, probabilidade e econometria.
+</p>
+<figure>
+  <img src="../../imagens/variancia-desvio.svg"
+       alt="Variância">
+</figure>
+<p>
+  A ideia é simples. Para cada observação, medimos o desvio em relação à média, elevamos esse
+  desvio ao quadrado — eliminando sinais e penalizando desvios grandes— e, em seguida, tomamos
+  a média desses quadrados. O resultado é uma medida que cresce quando as observações se afastam
+  mais da média e que atribui maior peso a afastamentos mais intensos.
+</p>
+
+<p>
+  Para uma amostra com
+  <span class="formula-inline" data-tts="ene">\(n\)</span>
+  observações
+  <span class="formula-inline" data-tts="xis um até xis ene">\(x_1,\ldots,x_n\)</span>
+  e média
+  <span class="formula-inline" data-tts="xis barra">\( \bar{x} \)</span>,
+  definimos a variância amostral (na forma descritiva, com divisor
+  <span class="formula-inline" data-tts="ene">\(n\)</span>)
+  como
+</p>
+
+<p class="formula" data-tts="ésse ao quadrado é um sobre ene vezes a soma de x i menos xis barra ao quadrado">
+\[
+  s^2 = \frac{1}{n}\sum_{i=1}^{n} (x_i-\bar{x})^2.
+\]
+</p>
+
+<p>
+  É importante notar que a variância é expressa em <strong>unidades ao quadrado</strong>
+  — por exemplo, minutos ao quadrado, reais ao quadrado —, o que dificulta sua interpretação direta.
+  Essa limitação será resolvida na próxima seção por meio do <strong>desvio-padrão</strong>, que é
+  a raiz quadrada da variância.
+</p>
+
+<p>
+  A seguir, veremos como calcular a variância em três contextos. Dados não agrupados,
+  dados agrupados sem intervalos de classe (valores discretos) e dados agrupados em classes,
+  caso em que é necessário trabalhar com aproximações por representantes (pontos médios).
+</p>
+
+<h3>2.1 Variância para dados não agrupados</h3>
+
+<p>
+  Quando os dados são apresentados <strong>não agrupados</strong>, isto é, como uma lista explícita de
+  observações, a variância pode ser calculada diretamente a partir da definição. Nesse caso, cada valor
+  <span class="formula-inline" data-tts="x i">\(x_i\)</span>
+  está disponível individualmente, o que permite formar a soma dos desvios ao quadrado sem qualquer
+  reestruturação prévia dos dados.
+  A variância é construída a partir dos <strong>desvios em relação à média</strong>. Para cada observação,
+  calcula-se a diferença
+  <span class="formula-inline" data-tts="x i menos xis barra">\(x_i-\bar{x}\)</span>
+  e, em seguida, eleva-se esse desvio ao quadrado. Essa elevação cumpre dois papéis simultâneos. Elimina
+  o efeito do sinal e atribui maior peso a afastamentos maiores em relação ao centro.
+</p>
+<figure>
+  <img src="../../imagens/variancia-nao-agrupados.svg"
+       alt="Variância para dados não-agrupados.">
+</figure>
+<p>
+  Formalmente, considere uma amostra com
+  <span class="formula-inline" data-tts="ene">\(n\)</span>
+  observações
+  <span class="formula-inline" data-tts="x um até x ene">\(x_1,x_2,\ldots,x_n\)</span>
+  e média
+  <span class="formula-inline" data-tts="xis barra">\( \bar{x} \)</span>.
+  A variância amostral, na forma descritiva com divisor
+  <span class="formula-inline" data-tts="ene">\(n\)</span>,
+  é definida por
+</p>
+
+<p class="formula"
+   data-tts="ésse ao quadrado é um sobre ene vezes a soma de x i menos xis barra ao quadrado">
+\[
+  s^2 = \frac{1}{n}\sum_{i=1}^{n} (x_i-\bar{x})^2.
+\]
+</p>
+
+<p>
+  Essa expressão deve ser lida como a <strong>média dos quadrados dos desvios</strong> em relação à média.
+  O valor de \(s^2\) aumenta quando as observações se afastam mais de
+  <span class="formula-inline" data-tts="xis barra">\( \bar{x} \)</span>
+  e cresce de forma mais acentuada quando há valores muito distantes do centro, devido ao efeito do
+  quadrado.
+</p>
+
+<p>
+  Do ponto de vista operacional, o cálculo segue uma sequência fixa. Primeiro determina-se a média
+  <span class="formula-inline" data-tts="xis barra">\( \bar{x} \)</span>.
+  Em seguida, para cada observação, calcula-se o desvio
+  <span class="formula-inline" data-tts="x i menos xis barra">\(x_i-\bar{x}\)</span>
+  e o respectivo quadrado
+  <span class="formula-inline" data-tts="x i menos xis barra ao quadrado">\((x_i-\bar{x})^2\)</span>.
+  Por fim, somam-se esses valores e divide-se o resultado por
+  <span class="formula-inline" data-tts="ene">\(n\)</span>.
+</p>
+
+<p>
+  Como a variância envolve quadrados, seu resultado é expresso em <strong>unidades ao quadrado</strong>,
+  o que dificulta a interpretação direta na escala original da variável. Ainda assim, essa forma é
+  fundamental por suas propriedades analíticas e serve de base para a definição do
+  <strong>desvio-padrão</strong>, que será apresentado a seguir.
+</p>
+
+<p>
+  O exemplo a seguir ilustra passo a passo o cálculo da variância para um conjunto pequeno de dados
+  não agrupados.
+</p>
+<div class="example-frame">
+  <h5>Exemplo</h5>
+
+  <p>
+    Considere um conjunto de dados obtido a partir de uma <strong>amostra</strong> composta pelas
+    <strong>notas finais de um estudante em quatro disciplinas</strong>. A variável analisada é a
+    <strong>nota em cada disciplina</strong>, classificada como quantitativa contínua e medida em
+    <strong>escala de razão</strong>.
+  </p>
+
+  <p>
+    O objetivo é quantificar a <strong>dispersão</strong> dessas notas em torno da média por meio da
+    <strong>variância</strong>, que é definida como a <strong>média dos desvios ao quadrado</strong>
+    em relação à média.
+  </p>
+
+  <p>
+    As notas observadas estão organizadas na tabela a seguir:
+  </p>
+
+  <figure class="figure table">
+    <table>
+      <thead>
+        <tr>
+          <th>Disciplina</th>
+          <th>Nota (<em>x</em>)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Matemática</td><td>2,0</td></tr>
+        <tr><td>Estatística</td><td>4,0</td></tr>
+        <tr><td>História</td><td>6,0</td></tr>
+        <tr><td>Educação Física</td><td>8,0</td></tr>
+      </tbody>
+    </table>
+    <figcaption>Notas obtidas nas disciplinas</figcaption>
+  </figure>
+
+  <p>
+    Representando os mesmos dados na forma de conjunto:
+  </p>
+
+  <p class="formula" data-tts="xis igual a dois, quatro, seis e oito.">
+    \[
+      x = \{2,\;4,\;6,\;8\}.
+    \]
+  </p>
+
+  <p>
+    Primeiro, calculamos a <strong>média aritmética</strong>:
+  </p>
+
+  <p class="formula" data-tts="x barra é dois mais quatro mais seis mais oito, sobre quatro, igual a cinco.">
+    \[
+      \bar{x}=\frac{2+4+6+8}{4}=5.
+    \]
+  </p>
+
+  <p>
+    Em seguida, calculamos os <strong>desvios em relação à média</strong> e seus <strong>quadrados</strong>:
+  </p>
+
+  <p class="formula" data-tts="desvios: menos três, menos um, um, três; quadrados: nove, um, um, nove.">
+    \[
+      2-5=-3,\quad 4-5=-1,\quad 6-5=1,\quad 8-5=3,
+    \]
+    \[
+      (2-5)^2=9,\quad (4-5)^2=1,\quad (6-5)^2=1,\quad (8-5)^2=9.
+    \]
+  </p>
+
+  <p>
+    Aplicando a definição da variância (na forma <span class="formula-inline" data-tts="um sobre ene">\(1/n\)</span>):
+  </p>
+
+  <p class="formula" data-tts="variância é nove mais um mais um mais nove sobre quatro, igual a cinco.">
+    \[
+      s^2=\frac{(2-5)^2+(4-5)^2+(6-5)^2+(8-5)^2}{4}
+    \]
+  </p>
+
+  <p class="formula" data-tts="">
+    \[
+      \Longleftrightarrow
+    \]
+  </p>
+
+  <p class="formula" data-tts="">
+    \[
+      s^2= \frac{9+1+1+9}{4}=5.
+    \]
+  </p>
+
+  <p>
+    O valor <strong>5</strong> representa a <strong>média dos desvios ao quadrado</strong> em relação à média,
+    isto é, uma medida de dispersão que dá <strong>maior peso</strong> a afastamentos grandes.
+    Note também que o resultado está em <strong>unidades ao quadrado</strong>, o que motiva a introdução do
+    <strong>desvio-padrão</strong> como uma medida na mesma unidade das observações.
+  </p>
+</div>
+
+<h3>2.2 Variância para dados agrupados sem intervalos de classes</h3>
+
+<p>
+  Quando os dados são apresentados em uma <strong>tabela de frequências</strong> com valores discretos,
+  o cálculo da variância segue a mesma lógica do caso não agrupado. A dispersão continua sendo medida
+  a partir dos desvios em relação à média e de seus quadrados. A diferença é que agora os valores
+  iguais já estão agregados, e a tabela informa explicitamente quantas vezes cada valor ocorre.
+</p>
+
+<p>
+  Nesse contexto, não é necessário repetir o mesmo cálculo para observações idênticas. Se um valor
+  distinto
+  <span class="formula-inline" data-tts="x j">\(x_j\)</span>
+  aparece
+  <span class="formula-inline" data-tts="efe j">\(f_j\)</span>
+  vezes, então o desvio quadrático
+  <span class="formula-inline" data-tts="x j menos xis barra ao quadrado">\((x_j-\bar{x})^2\)</span>
+  contribui
+  <span class="formula-inline" data-tts="efe j">\(f_j\)</span>
+  vezes para a soma total. A agregação por frequências apenas reorganiza a soma, sem alterar o
+  significado da variância.
+</p>
+
+<p>
+  Formalmente, considere um conjunto de
+  <span class="formula-inline" data-tts="eme">\(m\)</span>
+  valores distintos
+  <span class="formula-inline" data-tts="x um até x eme">\(x_1,x_2,\ldots,x_m\)</span>,
+  com frequências associadas
+  <span class="formula-inline" data-tts="efe um até efe eme">\(f_1,f_2,\ldots,f_m\)</span>.
+  O total de observações é
+  <span class="formula-inline" data-tts="ene igual à soma dos efe j">\(n=\sum_{j=1}^{m} f_j\)</span>.
+  A média aritmética é calculada como uma média ponderada,
+</p>
+
+<p class="formula"
+   data-tts="xis barra é um sobre ene vezes a soma de f j vezes x j">
+\[
+  \bar{x}=\frac{1}{n}\sum_{j=1}^{m} f_j\,x_j.
+\]
+</p>
+
+<p>
+  Uma vez determinada a média
+  <span class="formula-inline" data-tts="xis barra">\( \bar{x} \)</span>,
+  a variância amostral (na forma descritiva, com divisor
+  <span class="formula-inline" data-tts="ene">\(n\)</span>)
+  é obtida tomando-se a média ponderada dos quadrados dos desvios,
+</p>
+
+<p class="formula"
+   data-tts="ésse ao quadrado é um sobre ene vezes a soma de f j vezes x j menos xis barra ao quadrado">
+\[
+  s^2=\frac{1}{n}\sum_{j=1}^{m} f_j\,(x_j-\bar{x})^2.
+\]
+</p>
+
+<p>
+  Essa expressão deve ser interpretada como a <strong>média dos desvios quadráticos</strong>,
+  em que cada termo é ponderado pela frequência correspondente. Valores que aparecem mais vezes
+  exercem maior influência no resultado final, refletindo sua maior participação na distribuição.
+</p>
+
+<p>
+  Do ponto de vista operacional, o procedimento segue etapas bem definidas. Primeiro calcula-se a
+  média ponderada
+  <span class="formula-inline" data-tts="xis barra">\( \bar{x} \)</span>.
+  Em seguida, para cada valor distinto
+  <span class="formula-inline" data-tts="x j">\(x_j\)</span>,
+  calcula-se o desvio em relação à média, eleva-se esse desvio ao quadrado e multiplica-se o resultado
+  pela frequência
+  <span class="formula-inline" data-tts="efe j">\(f_j\)</span>.
+  Por fim, somam-se todos os termos e divide-se o total por
+  <span class="formula-inline" data-tts="ene">\(n\)</span>.
+</p>
+
+<p>
+  Assim como no caso não agrupado, a variância obtida é expressa em <strong>unidades ao quadrado</strong>.
+  Apesar dessa limitação interpretativa, essa forma é fundamental por suas propriedades analíticas
+  e constitui a base para a definição do desvio-padrão.
+</p>
+
+<p>
+  O exemplo a seguir ilustra esse procedimento para uma distribuição discreta apresentada em tabela
+  de frequências.
+</p>
+
+<div class="example-frame">
+  <h5>Exemplo</h5>
+
+  <p>
+    Considere um conjunto de dados obtido a partir de uma <strong>amostra</strong> na qual a variável
+    analisada é um <strong>valor quantitativo discreto</strong>. Em vez de listarmos todas as observações
+    individualmente, os dados foram organizados em uma <strong>tabela de frequências</strong>
+    (isto é, <strong>dados agrupados sem intervalos de classe</strong>).
+  </p>
+
+  <p>
+    A tabela informa <strong>quais valores</strong> a variável pode assumir e <strong>quantas vezes</strong>
+    cada um deles ocorre na amostra:
+  </p>
+
+  <figure class="figure table">
+    <table>
+      <thead>
+        <tr>
+          <th>Valor (<em>x</em>)</th>
+          <th>Frequência (<em>f</em>)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>2</td><td>2</td></tr>
+        <tr><td>3</td><td>4</td></tr>
+        <tr><td>4</td><td>2</td></tr>
+      </tbody>
+    </table>
+    <figcaption>Tabela de frequências (sem intervalos de classe)</figcaption>
+  </figure>
+
+  <p>
+    O tamanho da amostra é a soma das frequências:
+    <span class="formula-inline" data-tts="ene igual a dois mais quatro mais dois, igual a oito">\(n=2+4+2=8\)</span>.
+    Para calcular a variância, começamos pela <strong>média ponderada</strong> pelos totais
+    <span class="formula-inline" data-tts="efe">\(f\)</span>:
+  </p>
+
+  <p class="formula"
+     data-tts="x barra é um sobre oito, vezes dois vezes dois, mais quatro vezes três, mais dois vezes quatro, igual a vinte e quatro sobre oito, igual a três.">
+    \[
+      \bar{x}
+      =\frac{1}{8}\big(2\cdot 2 + 4\cdot 3 + 2\cdot 4\big)
+      =\frac{4+12+8}{8}
+      =\frac{24}{8}
+      =3.
+    \]
+  </p>
+
+  <p>
+    Em seguida, calculamos a <strong>soma ponderada</strong> dos desvios quadráticos em relação à média,
+    multiplicando cada desvio ao quadrado por sua frequência:
+  </p>
+
+  <p class="formula"
+     data-tts="variância é um sobre oito, vezes dois vezes dois menos três ao quadrado, mais quatro vezes três menos três ao quadrado, mais dois vezes quatro menos três ao quadrado. ">
+    \[
+      s^2
+      =\frac{1}{8}\Big(2(2-3)^2 + 4(3-3)^2 + 2(4-3)^2\Big).
+    \]
+  </p>
+  <p class="formula"
+     data-tts="Igual a um sobre oito, vezes dois vezes um, mais quatro vezes zero, mais dois vezes um, igual a quatro sobre oito, igual a zero vírgula cinco.">
+    \[
+    \Longleftrightarrow
+    \]
+  </p>
+
+  <p class="formula"
+     data-tts="Igual a um sobre oito, vezes dois vezes um, mais quatro vezes zero, mais dois vezes um, igual a quatro sobre oito, igual a zero vírgula cinco.">
+    \[
+      s^2
+      =\frac{1}{8}\big(2\cdot 1 + 4\cdot 0 + 2\cdot 1\big)
+      =\frac{4}{8}
+      =0{,}5.
+    \]
+  </p>
+
+  <p>
+    <strong>Interpretação:</strong> a variância mede a dispersão em torno da média levando em conta
+    <strong>quantas vezes</strong> cada valor ocorre. Aqui, como metade da amostra está concentrada em
+    <span class="formula-inline" data-tts="xis igual a três">\(x=3\)</span> (onde o desvio é zero),
+    a soma dos desvios quadráticos fica relativamente pequena, reduzindo a variabilidade do conjunto.
+  </p>
+</div>
+
+<h3>2.3 Variância para dados agrupados em classes</h3>
+
+<p>
+  Quando os dados estão <strong>agrupados em classes</strong>, a informação disponível é menos detalhada
+  do que nos casos anteriores. A tabela informa quantas observações pertencem a cada intervalo, mas
+  não fornece os valores individuais dentro das classes. Por essa razão, não é possível reconstruir
+  exatamente a soma dos desvios quadráticos
+  <span class="formula-inline" data-tts="somatório de x i menos xis barra ao quadrado">\(\sum (x_i-\bar{x})^2\)</span>
+  apenas com os dados agrupados.
+</p>
+
+<p>
+  Para obter uma medida operacional de variância, introduz-se uma <strong>aproximação</strong>.
+  Cada classe é representada por um valor típico, usualmente o <strong>ponto médio</strong>.
+  Ao adotar esse representante, assume-se que todas as observações da classe estão concentradas
+  em um único valor, permitindo reescrever o cálculo de forma análoga ao caso de frequências discretas.
+</p>
+
+<p>
+  Seja uma partição em
+  <span class="formula-inline" data-tts="ká">\(k\)</span>
+  classes ordenadas
+  <span class="formula-inline" data-tts="L um U um até L ká U ká">\([L_1,U_1),\ldots,[L_k,U_k)\)</span>,
+  com frequências
+  <span class="formula-inline" data-tts="efe um até efe ká">\(f_1,\ldots,f_k\)</span>.
+  Define-se o ponto médio da classe
+  <span class="formula-inline" data-tts="j">\(j\)</span>
+  por
+  <span class="formula-inline" data-tts="c j igual a L j mais U j sobre dois">\(c_j=\frac{L_j+U_j}{2}\)</span>,
+  e o total de observações por
+  <span class="formula-inline" data-tts="ene igual à soma dos efe j">\(n=\sum_{j=1}^{k} f_j\)</span>.
+</p>
+
+<p>
+  A média aritmética passa a ser calculada de forma aproximada, como uma média ponderada dos pontos médios,
+</p>
+
+<p class="formula"
+   data-tts="xis barra aproximadamente é um sobre ene vezes a soma de f j vezes c j">
+\[
+  \bar{x}\approx \frac{1}{n}\sum_{j=1}^{k} f_j\,c_j.
+\]
+</p>
+
+<p>
+  Uma vez determinada a média aproximada
+  <span class="formula-inline" data-tts="xis barra">\( \bar{x} \)</span>,
+  a variância amostral é obtida tomando-se a média ponderada dos quadrados dos desvios dos pontos médios
+  em relação a essa média,
+</p>
+
+<p class="formula"
+   data-tts="ésse ao quadrado aproximadamente é um sobre ene vezes a soma de f j vezes c j menos xis barra ao quadrado">
+\[
+  s^2 \approx \frac{1}{n}\sum_{j=1}^{k} f_j\,(c_j-\bar{x})^2.
+\]
+</p>
+
+<p>
+  O resultado deve ser interpretado como uma <strong>variância aproximada</strong>, pois depende da
+  hipótese de que os pontos médios representam adequadamente os valores dentro de cada classe.
+  Como a variância envolve quadrados, classes mais afastadas da média tendem a contribuir de forma
+  desproporcional para o valor final, tornando essa medida particularmente sensível à escolha dos
+  intervalos.
+</p>
+
+<p>
+  Do ponto de vista operacional, o procedimento segue etapas bem definidas. Primeiro calculam-se os
+  pontos médios das classes e a média aproximada. Em seguida, para cada classe, calcula-se o desvio
+  entre o ponto médio e a média, eleva-se esse desvio ao quadrado e multiplica-se o resultado pela
+  frequência da classe. Por fim, somam-se todos os termos e divide-se o total por
+  <span class="formula-inline" data-tts="ene">\(n\)</span>.
+</p>
+
+<p>
+  O exemplo a seguir apresenta esse procedimento completo para dados agrupados em classes, evidenciando
+  o papel dos pontos médios e o caráter aproximado do resultado obtido.
+</p>
+
+<div class="example-frame">
+  <h5>Exemplo</h5>
+
+  <p>
+    Considere um conjunto de dados obtido a partir de uma <strong>amostra</strong> em que a variável
+    é quantitativa e os valores foram organizados em uma <strong>distribuição por classes</strong>.
+    Como não conhecemos as observações individuais dentro de cada intervalo, representaremos cada classe
+    por um <strong>ponto médio</strong>, obtendo assim cálculos <strong>aproximados</strong> para a média
+    e para a variância.
+  </p>
+
+  <p>
+    As classes, suas frequências e os respectivos pontos médios estão organizados na tabela a seguir:
+  </p>
+
+  <figure class="figure table">
+    <table>
+      <thead>
+        <tr>
+          <th>Classe</th>
+          <th>Frequência (<em>f</em>)</th>
+          <th>Ponto médio (<em>c</em>)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>[0, 10)</td><td>2</td><td>5</td></tr>
+        <tr><td>[10, 20)</td><td>5</td><td>15</td></tr>
+        <tr><td>[20, 30)</td><td>3</td><td>25</td></tr>
+      </tbody>
+    </table>
+    <figcaption>Classes, frequências e pontos médios</figcaption>
+  </figure>
+
+  <p>
+    O tamanho da amostra é
+    <span class="formula-inline" data-tts="ene igual a dois mais cinco mais três, igual a dez">\(n=2+5+3=10\)</span>.
+    Para calcular a variância em dados por classes, seguimos dois passos:
+    (i) calcular a <strong>média aproximada</strong> usando os pontos médios;
+    (ii) calcular a <strong>média ponderada</strong> dos desvios quadráticos desses pontos médios em relação à média.
+  </p>
+
+  <p>
+    Primeiro, a média aproximada é:
+  </p>
+
+  <p class="formula"
+     data-tts="x barra aproximado é um sobre dez, vezes dois vezes cinco, mais cinco vezes quinze, mais três vezes vinte e cinco, igual a cento e sessenta sobre dez, igual a dezesseis.">
+    \[
+      \bar{x}\approx\frac{1}{10}\big(2\cdot 5 + 5\cdot 15 + 3\cdot 25\big)
+      =\frac{160}{10}
+      =16.
+    \]
+  </p>
+
+  <p>
+    Em seguida, calculamos a soma ponderada dos <strong>desvios quadráticos</strong> usando os pontos médios:
+  </p>
+
+  <p class="formula"
+     data-tts="variância aproximada é um sobre dez, vezes dois vezes cinco menos dezesseis ao quadrado, mais cinco vezes quinze menos dezesseis ao quadrado, mais três vezes vinte e cinco menos dezesseis ao quadrado. Igual a um sobre dez, vezes dois vezes cento e vinte e um, mais cinco vezes um, mais três vezes oitenta e um, igual a quatrocentos e noventa sobre dez, igual a quarenta e nove.">
+    \[
+      s^2 \approx \frac{1}{10}\Big(2(5-16)^2 + 5(15-16)^2 + 3(25-16)^2\Big)
+      
+    \]
+  </p>
+
+  <p class="formula"
+     data-tts="">
+    \[
+      \Longleftrightarrow
+    \]
+  </p>
+  <p class="formula"
+     data-tts="variância aproximada é um sobre dez, vezes dois vezes cinco menos dezesseis ao quadrado, mais cinco vezes quinze menos dezesseis ao quadrado, mais três vezes vinte e cinco menos dezesseis ao quadrado. Igual a um sobre dez, vezes dois vezes cento e vinte e um, mais cinco vezes um, mais três vezes oitenta e um, igual a quatrocentos e noventa sobre dez, igual a quarenta e nove.">
+    \[
+      s^2 \approx \frac{490}{10}
+      =\frac{1}{10}\big(2\cdot 121 + 5\cdot 1 + 3\cdot 81\big)
+      =49.
+    \]
+  </p>
+
+  <p>
+    <strong>Interpretação:</strong> como trabalhamos com <strong>pontos médios</strong>, a variância obtida é
+    uma <strong>aproximação</strong> da variabilidade real. Note que o termo ao quadrado faz com que classes
+    mais afastadas da média (como a classe centrada em <span class="formula-inline" data-tts="vinte e cinco">\(25\)</span>
+    e a classe centrada em <span class="formula-inline" data-tts="cinco">\(5\)</span>) contribuam mais para o resultado,
+    mesmo quando suas frequências não são as maiores.
+  </p>
+</div>
+
+<hr>
+
+<h2>3. Desvio-padrão</h2>
+
+<p>
+  A variância é uma medida central de dispersão, mas apresenta uma limitação do ponto de vista
+  interpretativo. Como resulta do quadrado dos desvios, ela é expressa em
+  <strong>unidades ao quadrado</strong>.
+  Se os dados são medidos em minutos, a variância está em minutos ao quadrado; se são medidos em reais,
+  a variância está em reais ao quadrado. Essa característica dificulta a leitura direta do valor obtido
+  como um afastamento típico na escala original da variável.
+</p>
+<figure>
+  <img src="../../imagens/desvio-padrao.svg"
+       alt="Desvio-padrão">
+</figure>
+<p>
+  O <strong>desvio-padrão</strong> contorna essa limitação ao ser definido como a
+  <strong>raiz quadrada</strong> da variância. Com essa transformação, a medida retorna à
+  <strong>mesma unidade dos dados</strong> e pode ser interpretada como um afastamento típico em torno da
+  média, preservando ao mesmo tempo a maior sensibilidade a desvios grandes herdada da variância.
+</p>
+
+<p>
+  Formalmente, se a variância amostral, na forma descritiva com divisor
+  <span class="formula-inline" data-tts="ene">\(n\)</span>,
+  é denotada por
+  <span class="formula-inline" data-tts="ésse ao quadrado">\(s^2\)</span>,
+  então o desvio-padrão é definido por
+</p>
+
+<p class="formula" data-tts="ésse é a raiz quadrada de ésse ao quadrado">
+\[
+  s = \sqrt{s^2}.
+\]
+</p>
+
+<p>
+  De forma equivalente, para dados não agrupados, o desvio-padrão pode ser escrito diretamente como
+</p>
+
+<p class="formula"
+   data-tts="ésse é a raiz quadrada de um sobre ene vezes a soma de x i menos xis barra ao quadrado">
+\[
+  s=\sqrt{\frac{1}{n}\sum_{i=1}^{n}(x_i-\bar{x})^2}.
+\]
+</p>
+
+<p>
+  Nas seções seguintes, o cálculo do desvio-padrão será apresentado em três contextos.
+  Dados não agrupados, dados agrupados em tabela de frequências sem intervalos de classe e
+  dados agrupados em classes, caso em que se utiliza uma aproximação por pontos médios.
+</p>
+
+<h3>3.1 Desvio-padrão para dados não agrupados</h3>
+
+<p>
+  No caso de <strong>dados não agrupados</strong>, o desvio-padrão é obtido diretamente a partir da variância
+  calculada com a lista completa de observações. Como cada valor
+  <span class="formula-inline" data-tts="x i">\(x_i\)</span>
+  está disponível, a variância
+  <span class="formula-inline" data-tts="ésse ao quadrado">\(s^2\)</span>
+  é formada pela média dos desvios ao quadrado em relação à média. O desvio-padrão é então definido como a
+  raiz quadrada dessa variância, retornando a medida para a unidade original dos dados.
+</p>
+<figure>
+  <img src="../../imagens/desvio-padrao-nao-agrupados.svg"
+       alt="Desvio-padrão não-agrupados">
+</figure>
+<p>
+  A estrutura conceitual permanece a mesma. A média
+  <span class="formula-inline" data-tts="xis barra">\( \bar{x} \)</span>
+  funciona como referência; os desvios
+  <span class="formula-inline" data-tts="x i menos xis barra">\(x_i-\bar{x}\)</span>
+  são elevados ao quadrado e agregados na variância. Ao tomar a raiz quadrada, obtém-se uma medida na mesma
+  escala da variável, que pode ser lida como um afastamento típico em torno da média, preservando a maior
+  sensibilidade a desvios grandes herdada da variância.
+</p>
+
+<p>
+  Formalmente, para uma amostra com
+  <span class="formula-inline" data-tts="ene">\(n\)</span>
+  observações
+  <span class="formula-inline" data-tts="x um até x ene">\(x_1,x_2,\ldots,x_n\)</span>,
+  média
+  <span class="formula-inline" data-tts="xis barra">\( \bar{x} \)</span>
+  e variância descritiva
+  <span class="formula-inline" data-tts="ésse ao quadrado">\(s^2\)</span>,
+  o desvio-padrão é definido por
+</p>
+
+<p class="formula" data-tts="ésse é a raiz quadrada de ésse ao quadrado">
+\[
+  s=\sqrt{s^2}.
+\]
+</p>
+
+<p>
+  Substituindo a expressão da variância para dados não agrupados, obtém-se diretamente
+</p>
+
+<p class="formula"
+   data-tts="ésse é a raiz quadrada de um sobre ene vezes a soma de x i menos xis barra ao quadrado">
+\[
+  s=\sqrt{\frac{1}{n}\sum_{i=1}^{n}(x_i-\bar{x})^2}.
+\]
+</p>
+
+<p>
+  Do ponto de vista operacional, o cálculo segue duas etapas. Primeiro calcula-se a variância
+  <span class="formula-inline" data-tts="ésse ao quadrado">\(s^2\)</span>
+  pela média dos desvios quadráticos. Em seguida, calcula-se o desvio-padrão
+  <span class="formula-inline" data-tts="ésse">\(s\)</span>
+  tomando a raiz quadrada. O exemplo a seguir explicita essa passagem e destaca a mudança de unidade
+  entre
+  <span class="formula-inline" data-tts="ésse ao quadrado">\(s^2\)</span>
+  e
+  <span class="formula-inline" data-tts="ésse">\(s\)</span>.
+</p>
+
+
+<div class="example-frame">
+  <h5>Exemplo</h5>
+
+  <p>
+    Considere um conjunto de dados obtido a partir de uma <strong>amostra</strong> composta pelas
+    <strong>notas finais de um estudante em quatro disciplinas</strong>. A variável analisada é a
+    <strong>nota em cada disciplina</strong>, classificada como quantitativa contínua e medida em
+    <strong>escala de razão</strong>.
+  </p>
+
+  <p>
+    As notas observadas estão organizadas na tabela a seguir:
+  </p>
+
+  <figure class="figure table">
+    <table>
+      <thead>
+        <tr>
+          <th>Disciplina</th>
+          <th>Nota (<em>x</em>)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Matemática</td><td>2,0</td></tr>
+        <tr><td>Estatística</td><td>4,0</td></tr>
+        <tr><td>História</td><td>6,0</td></tr>
+        <tr><td>Educação Física</td><td>8,0</td></tr>
+      </tbody>
+    </table>
+    <figcaption>Notas obtidas nas disciplinas</figcaption>
+  </figure>
+
+  <p>
+    Representando os mesmos dados na forma de conjunto:
+  </p>
+
+  <p class="formula" data-tts="xis igual a dois, quatro, seis e oito.">
+    \[
+      x=\{2,\;4,\;6,\;8\}.
+    \]
+  </p>
+
+  <p>
+    Primeiro, calculamos a média:
+  </p>
+
+  <p class="formula" data-tts="x barra é dois mais quatro mais seis mais oito sobre quatro, igual a cinco.">
+    \[
+      \bar{x}=\frac{2+4+6+8}{4}=5.
+    \]
+  </p>
+
+  <p>
+    Em seguida, calculamos a variância (na forma <span class="formula-inline" data-tts="um sobre ene">\(1/n\)</span>):
+  </p>
+
+  <p class="formula" data-tts="variância é nove mais um mais um mais nove sobre quatro, igual a cinco.">
+    \[
+      s^2=\frac{(2-5)^2+(4-5)^2+(6-5)^2+(8-5)^2}{4}
+    \]
+  </p>
+  <p class="formula" data-tts="">
+    \[
+    \Longleftrightarrow
+    \]
+  </p>
+  <p class="formula" data-tts="">
+    \[
+      s^2
+      =\frac{9+1+1+9}{4}
+      =5.
+    \]
+  </p>
+  <p>
+    O <strong>desvio-padrão</strong> é a <strong>raiz quadrada</strong> da variância:
+  </p>
+
+  <p class="formula" data-tts="ésse é a raiz quadrada de cinco, aproximadamente dois vírgula vinte e quatro.">
+    \[
+      s=\sqrt{s^2}=\sqrt{5}\approx 2{,}24.
+    \]
+  </p>
+
+  <p>
+    <strong>Interpretação:</strong> o valor <strong>2,24</strong> está na <strong>mesma unidade</strong> dos dados
+    e descreve um afastamento “típico” das observações em torno da média: as notas ficam, em geral,
+    a cerca de <strong>2,24 pontos</strong> da média.
+  </p>
+</div>
+<h3>3.2 Desvio-padrão para dados agrupados sem intervalos de classes</h3>
+
+<p>
+  Quando os dados são apresentados em uma <strong>tabela de frequências</strong> com valores discretos,
+  o cálculo do desvio-padrão segue a mesma lógica do caso não agrupado. A diferença é que os valores
+  iguais já estão agregados, e a tabela informa explicitamente quantas vezes cada valor distinto
+  <span class="formula-inline" data-tts="x j">\(x_j\)</span>
+  ocorre na amostra.
+</p>
+<figure>
+  <img src="../../imagens/desvio-padrao-agrupados.svg"
+       alt="Desvio-padrão agrupados">
+</figure>
+<p>
+  Nesse contexto, tanto a média quanto a variância são calculadas como <strong>médias ponderadas</strong>,
+  em que cada valor é ponderado por sua frequência
+  <span class="formula-inline" data-tts="efe j">\(f_j\)</span>.
+  A variância sintetiza a dispersão por meio dos desvios quadráticos ponderados e o desvio-padrão é
+  obtido tomando-se a raiz quadrada dessa variância, retornando o resultado à unidade original dos dados.
+</p>
+
+<p>
+  Formalmente, considere um conjunto de
+  <span class="formula-inline" data-tts="eme">\(m\)</span>
+  valores distintos
+  <span class="formula-inline" data-tts="x um até x eme">\(x_1,x_2,\ldots,x_m\)</span>,
+  com frequências associadas
+  <span class="formula-inline" data-tts="efe um até efe eme">\(f_1,f_2,\ldots,f_m\)</span>.
+  O total de observações é
+  <span class="formula-inline" data-tts="ene igual à soma dos efe j">\(n=\sum_{j=1}^{m} f_j\)</span>,
+  e a média aritmética é dada pela média ponderada
+</p>
+
+<p class="formula"
+   data-tts="xis barra é um sobre ene vezes a soma de f j vezes x j">
+\[
+  \bar{x}=\frac{1}{n}\sum_{j=1}^{m} f_j\,x_j.
+\]
+</p>
+
+<p>
+  Uma vez determinada a média
+  <span class="formula-inline" data-tts="xis barra">\( \bar{x} \)</span>,
+  a variância amostral, na forma descritiva com divisor
+  <span class="formula-inline" data-tts="ene">\(n\)</span>,
+  é calculada como a média ponderada dos desvios quadráticos,
+</p>
+
+<p class="formula"
+   data-tts="ésse ao quadrado é um sobre ene vezes a soma de f j vezes x j menos xis barra ao quadrado">
+\[
+  s^2=\frac{1}{n}\sum_{j=1}^{m} f_j\,(x_j-\bar{x})^2.
+\]
+</p>
+
+<p>
+  O desvio-padrão é então definido como a raiz quadrada da variância,
+</p>
+
+<p class="formula" data-tts="ésse é a raiz quadrada de ésse ao quadrado">
+\[
+  s=\sqrt{s^2}.
+\]
+</p>
+
+<p>
+  Do ponto de vista operacional, o procedimento segue etapas bem definidas. Primeiro calcula-se a média
+  ponderada
+  <span class="formula-inline" data-tts="xis barra">\( \bar{x} \)</span>.
+  Em seguida, para cada valor distinto
+  <span class="formula-inline" data-tts="x j">\(x_j\)</span>,
+  calcula-se o desvio em relação à média, eleva-se esse desvio ao quadrado e multiplica-se o resultado
+  pela frequência
+  <span class="formula-inline" data-tts="efe j">\(f_j\)</span>.
+  Por fim, somam-se todos os termos, divide-se por
+  <span class="formula-inline" data-tts="ene">\(n\)</span>
+  e toma-se a raiz quadrada para obter o desvio-padrão.
+</p>
+
+<p>
+  Assim como nos casos anteriores, o desvio-padrão preserva a informação essencial da variância,
+  mas a expressa na <strong>mesma unidade da variável</strong>, o que facilita sua interpretação como
+  um afastamento típico em torno da média.
+</p>
+
+<div class="example-frame">
+  <h5>Exemplo</h5>
+
+  <p>
+    Considere um conjunto de dados obtido a partir de uma <strong>amostra</strong> em que a variável é
+    <strong>quantitativa discreta</strong>. Em vez de listar todas as observações individualmente,
+    os dados foram organizados em uma <strong>tabela de frequências</strong>, isto é, em
+    <strong>dados agrupados sem intervalos de classe</strong>.
+  </p>
+
+  <p>
+    Os valores observados e suas frequências estão organizados na tabela a seguir:
+  </p>
+
+  <figure class="figure table">
+    <table>
+      <thead>
+        <tr>
+          <th>Valor (<em>x</em>)</th>
+          <th>Frequência (<em>f</em>)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>2</td><td>2</td></tr>
+        <tr><td>3</td><td>4</td></tr>
+        <tr><td>4</td><td>2</td></tr>
+      </tbody>
+    </table>
+    <figcaption>Tabela de frequências (sem intervalos de classe)</figcaption>
+  </figure>
+
+  <p>
+    O tamanho da amostra é
+    <span class="formula-inline" data-tts="ene igual a dois mais quatro mais dois, igual a oito">\(n=2+4+2=8\)</span>.
+    A média ponderada pelos valores de
+    <span class="formula-inline" data-tts="efe">\(f\)</span> é:
+  </p>
+
+  <p class="formula"
+     data-tts="x barra é um sobre oito, vezes dois vezes dois, mais quatro vezes três, mais dois vezes quatro, igual a vinte e quatro sobre oito, igual a três.">
+    \[
+      \bar{x}
+      =\frac{1}{8}\big(2\cdot 2 + 4\cdot 3 + 2\cdot 4\big)
+      =\frac{24}{8}
+      =3.
+    \]
+  </p>
+
+  <p>
+    Em seguida, calculamos a variância como a <strong>média ponderada dos desvios ao quadrado</strong>:
+  </p>
+
+  <p class="formula"
+     data-tts="variância é um sobre oito, vezes dois vezes dois menos três ao quadrado, mais quatro vezes três menos três ao quadrado, mais dois vezes quatro menos três ao quadrado, igual a zero vírgula cinco.">
+    \[
+      s^2
+      =\frac{1}{8}\Big(2(2-3)^2 + 4(3-3)^2 + 2(4-3)^2\Big)
+      =\frac{4}{8}
+      =0{,}5.
+    \]
+  </p>
+
+  <p>
+    O <strong>desvio-padrão</strong> é definido como a <strong>raiz quadrada</strong> da variância:
+  </p>
+
+  <p class="formula"
+     data-tts="ésse é a raiz quadrada de zero vírgula cinco, aproximadamente zero vírgula setenta e um.">
+    \[
+      s=\sqrt{s^2}=\sqrt{0{,}5}\approx 0{,}71.
+    \]
+  </p>
+
+  <p>
+    <strong>Interpretação:</strong> o valor <strong>0,71</strong> está na <strong>mesma unidade</strong> da variável
+    e representa um afastamento típico em torno da média. Como o valor
+    <span class="formula-inline" data-tts="três">\(3\)</span> ocorre com maior frequência,
+    a dispersão global do conjunto é relativamente pequena.
+  </p>
+</div>
+
+<h3>3.3 Desvio-padrão para dados agrupados em classes</h3>
+
+<p>
+  Para <strong>dados agrupados em classes</strong>, o desvio-padrão é definido, assim como nos casos
+  anteriores, como a raiz quadrada da variância. A diferença fundamental é que agora a informação
+  disponível é mais agregada: conhecemos apenas os intervalos de classe e suas frequências, mas não
+  as observações individuais. Por isso, o cálculo é necessariamente <strong>aproximado</strong>.
+</p>
+<figure>
+  <img src="../../imagens/desvio-padrao-agrupados-classe.svg"
+       alt="Desvio-padrão agrupados classe">
+</figure>
+<p>
+  A estratégia adotada consiste em representar cada classe por um valor típico, usualmente o
+  <strong>ponto médio</strong>
+  <span class="formula-inline" data-tts="c j">\(c_j\)</span>.
+  Ao fazer isso, tratamos as
+  <span class="formula-inline" data-tts="efe j">\(f_j\)</span>
+  observações da classe
+  <span class="formula-inline" data-tts="jota">\(j\)</span>
+  como se estivessem concentradas nesse ponto. A partir dessa representação, calculamos uma média
+  aproximada e, em seguida, uma variância aproximada, cujo resultado serve de base para o
+  desvio-padrão.
+</p>
+
+<p>
+  Do ponto de vista interpretativo, a passagem da variância aproximada para o desvio-padrão tem o
+  mesmo papel dos casos anteriores: a raiz quadrada recoloca a medida na <strong>unidade original
+  da variável</strong>, permitindo ler o resultado como um afastamento típico em torno da média.
+  Ao mesmo tempo, por envolver desvios ao quadrado, classes mais afastadas do centro continuam
+  exercendo influência maior sobre o valor final.
+</p>
+
+<p>
+  Operacionalmente, o procedimento segue uma sequência natural. Primeiro determinam-se os pontos
+  médios das classes; depois calcula-se a média aproximada por uma média ponderada; em seguida,
+  obtém-se a variância aproximada como uma média ponderada dos desvios quadráticos; por fim,
+  toma-se a raiz quadrada para obter o desvio-padrão.
+</p>
+
+<p>
+  Formalmente, considere classes
+  <span class="formula-inline" data-tts="intervalos l um u um até l k u k">
+    \([L_1,U_1),\ldots,[L_k,U_k)\)
+  </span>
+  com frequências
+  <span class="formula-inline" data-tts="efe um até efe k">
+    \(f_1,\ldots,f_k\)
+  </span>.
+  Definindo o ponto médio da classe
+  <span class="formula-inline" data-tts="jota">\(j\)</span>
+  por
+  <span class="formula-inline" data-tts="c j igual a l j mais u j sobre dois">
+    \(c_j=\frac{L_j+U_j}{2}\)
+  </span>
+  e o total
+  <span class="formula-inline" data-tts="ene igual à soma dos efe j">
+    \(n=\sum_{j=1}^{k} f_j\)
+  </span>,
+  a média aproximada é dada por
+</p>
+
+<p class="formula"
+   data-tts="xis barra aproximada é um sobre ene vezes a soma de f j vezes c j">
+\[
+  \bar{x}\approx \frac{1}{n}\sum_{j=1}^{k} f_j\,c_j.
+\]
+</p>
+
+<p>
+  A variância aproximada é então calculada como
+</p>
+
+<p class="formula"
+   data-tts="ésse ao quadrado aproximado é um sobre ene vezes a soma de f j vezes c j menos xis barra ao quadrado">
+\[
+  s^2 \approx \frac{1}{n}\sum_{j=1}^{k} f_j\,(c_j-\bar{x})^2.
+\]
+</p>
+
+<p>
+  O desvio-padrão aproximado é obtido tomando a raiz quadrada da variância,
+</p>
+
+<p class="formula" data-tts="ésse aproximado é a raiz quadrada de ésse ao quadrado aproximado">
+\[
+  s \approx \sqrt{s^2}.
+\]
+</p>
+
+<p>
+  Como nos demais casos, o valor obtido deve ser interpretado com atenção ao <strong>nível de
+  agregação</strong> dos dados. Ao representar cada classe por um único ponto médio, a variação
+  interna dos intervalos é comprimida, o que torna o desvio-padrão uma medida útil para descrição
+  global da dispersão, mas inevitavelmente <strong>aproximada</strong>.
+</p>
+
+<div class="example-frame">
+  <h5>Exemplo</h5>
+
+  <p>
+    Considere um conjunto de dados obtido a partir de uma <strong>amostra</strong> em que a variável é
+    quantitativa e os valores foram organizados em uma <strong>distribuição por classes</strong>.
+    Como as observações individuais não são conhecidas, representaremos cada classe por seu
+    <strong>ponto médio</strong>, de modo que o cálculo do desvio-padrão será <strong>aproximado</strong>.
+  </p>
+
+  <p>
+    As classes, suas frequências e os respectivos pontos médios estão organizados na tabela a seguir:
+  </p>
+
+  <figure class="figure table">
+    <table>
+      <thead>
+        <tr>
+          <th>Classe</th>
+          <th>Frequência (<em>f</em>)</th>
+          <th>Ponto médio (<em>c</em>)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>[0, 10)</td><td>2</td><td>5</td></tr>
+        <tr><td>[10, 20)</td><td>5</td><td>15</td></tr>
+        <tr><td>[20, 30)</td><td>3</td><td>25</td></tr>
+      </tbody>
+    </table>
+    <figcaption>Classes, frequências e pontos médios</figcaption>
+  </figure>
+
+  <p>
+    O tamanho da amostra é
+    <span class="formula-inline" data-tts="ene igual a dois mais cinco mais três, igual a dez">\(n=2+5+3=10\)</span>.
+    Usando os pontos médios como representantes das classes, a média aproximada é:
+  </p>
+
+  <p class="formula"
+     data-tts="x barra aproximado é um sobre dez, vezes dois vezes cinco, mais cinco vezes quinze, mais três vezes vinte e cinco, igual a cento e sessenta sobre dez, igual a dezesseis.">
+    \[
+      \bar{x}\approx\frac{1}{10}\big(2\cdot 5 + 5\cdot 15 + 3\cdot 25\big)
+      =\frac{160}{10}
+      =16.
+    \]
+  </p>
+
+  <p>
+    A variância aproximada (média ponderada dos desvios quadráticos dos pontos médios) é:
+  </p>
+
+  <p class="formula"
+     data-tts="variância aproximada é um sobre dez, vezes dois vezes cinco menos dezesseis ao quadrado, mais cinco vezes quinze menos dezesseis ao quadrado, mais três vezes vinte e cinco menos dezesseis ao quadrado, igual a quarenta e nove.">
+    \[
+      s^2 \approx \frac{1}{10}\Big(2(5-16)^2 + 5(15-16)^2 + 3(25-16)^2\Big)
+      =49.
+    \]
+  </p>
+
+  <p>
+    O <strong>desvio-padrão</strong> é definido como a <strong>raiz quadrada</strong> da variância:
+  </p>
+
+  <p class="formula" data-tts="ésse aproximado é a raiz quadrada de quarenta e nove, igual a sete.">
+    \[
+      s \approx \sqrt{s^2}=\sqrt{49}=7.
+    \]
+  </p>
+
+  <p>
+    <strong>Interpretação:</strong> o valor <strong>7</strong> está na <strong>mesma unidade</strong> da variável
+    e descreve um afastamento “típico” em torno da média, <strong>na aproximação por pontos médios</strong>.
+    Esse resultado é apenas uma <strong>aproximação</strong>, pois dentro de cada classe as observações reais
+    podem não estar concentradas no ponto médio.
+  </p>
+</div>
+
+<hr>
+
+<h2>4. Coeficiente de Variação (ou Dispersão Relativa)</h2>
+
+<p>
+  Até aqui, todas as medidas de dispersão que estudamos — como o <strong>desvio absoluto médio</strong>,
+  a <strong>variância</strong> e o <strong>desvio-padrão</strong> — têm uma característica em comum:
+  elas dependem da <strong>escala</strong> da variável. Se medimos uma grandeza em reais, minutos ou
+  quilômetros, o valor da dispersão aparece nessas unidades (ou, no caso da variância, em unidades
+  ao quadrado). Isso é adequado quando queremos quantificar a variabilidade em termos absolutos,
+  mas pode dificultar comparações quando as médias são muito diferentes ou quando estamos lidando
+  com variáveis medidas em escalas distintas.
+</p>
+<figure>
+  <img src="../../imagens/coeficiente-variacao.svg"
+       alt="Coeficiente de Variação">
+</figure>
+<p>
+  O <strong>coeficiente de variação</strong> (CV), também chamado de
+  <strong>dispersão relativa</strong>, resolve esse problema ao medir a variabilidade
+  <em>em proporção</em> ao nível médio da variável. A ideia é simples: tomamos uma medida de
+  dispersão na unidade original — o desvio-padrão
+  <span class="formula-inline" data-tts="ésse">\(s\)</span> —
+  e a comparamos com a média
+  <span class="formula-inline" data-tts="xis barra">\(\bar{x}\)</span>.
+  O resultado é um número <strong>adimensional</strong>, que pode ser interpretado como
+  o “tamanho típico da oscilação em torno da média” em termos relativos, e não absolutos.
+</p>
+
+<p>
+  Para uma amostra com média
+  <span class="formula-inline" data-tts="xis barra">\(\bar{x}\)</span>
+  e desvio-padrão
+  <span class="formula-inline" data-tts="ésse">\(s\)</span>,
+  definimos o coeficiente de variação como:
+</p>
+
+<p class="formula" data-tts="Coeficiente de variação é ésse dividido por xis barra.">
+\[
+  CV=\frac{s}{\bar{x}}.
+\]
+</p>
+
+<p>
+  Muitas vezes, expressamos o coeficiente de variação em <strong>porcentagem</strong>,
+  multiplicando o valor por 100:
+</p>
+
+<p class="formula" data-tts="Coeficiente de variação em porcentagem é cem vezes ésse sobre xis barra.">
+\[
+  CV(\%)=100\cdot\frac{s}{\bar{x}}.
+\]
+</p>
+
+<p>
+  O uso do coeficiente de variação é particularmente útil quando o objetivo é
+  <strong>comparar dispersões em termos relativos</strong>.
+  Por exemplo, duas distribuições podem apresentar desvios-padrão distintos, mas a variabilidade
+  proporcional pode ser maior naquela cuja média é menor. A seguir, veremos como calcular o
+  coeficiente de variação para (i) <strong>dados não agrupados</strong> e (ii)
+  <strong>dados agrupados em classes</strong>, caso em que trabalhamos com aproximações por
+  pontos médios.
+</p>
+
+<h3>4.1 Coeficiente de variação para dados não agrupados</h3>
+
+<p>
+  Para <strong>dados não agrupados</strong>, o coeficiente de variação é calculado diretamente a partir de duas quantidades
+  já obtidas nas seções anteriores. Primeiro determinamos a média
+  <span class="formula-inline" data-tts="xis barra">\(\bar{x}\)</span>
+  e o desvio-padrão
+  <span class="formula-inline" data-tts="ésse">\(s\)</span>.
+  Em seguida, formamos a razão entre essas duas medidas.
+  Como
+  <span class="formula-inline" data-tts="xis barra">\(\bar{x}\)</span>
+  e
+  <span class="formula-inline" data-tts="ésse">\(s\)</span>
+  estão na mesma unidade, essa unidade se cancela e o resultado é <strong>adimensional</strong>.
+</p>
+<figure>
+  <img src="../../imagens/coeficiente-variacao-nao-agrupados.svg"
+       alt="Coeficiente de Variação Dados Não Agrupados">
+</figure>
+<p>
+  Formalmente, para uma amostra com média
+  <span class="formula-inline" data-tts="xis barra">\(\bar{x}\)</span>
+  e desvio-padrão
+  <span class="formula-inline" data-tts="ésse">\(s\)</span>,
+  o coeficiente de variação é definido por
+</p>
+
+<p class="formula" data-tts="cê vê é igual a ésse dividido por xis barra">
+\[
+  CV=\frac{s}{\bar{x}}.
+\]
+</p>
+
+<p>
+  Quando se deseja expressar o resultado em porcentagem, multiplica-se por 100, obtendo
+</p>
+
+<p class="formula" data-tts="cê vê em porcentagem é cem vezes ésse sobre xis barra">
+\[
+  CV(\%)=100\cdot\frac{s}{\bar{x}}.
+\]
+</p>
+
+<p>
+  Essa construção torna o coeficiente de variação especialmente útil para <strong>comparações relativas</strong>.
+  O desvio-padrão
+  <span class="formula-inline" data-tts="ésse">\(s\)</span>
+  mede dispersão em termos absolutos, enquanto o coeficiente de variação mede dispersão em proporção ao nível médio.
+  Assim, dois conjuntos podem ter o mesmo desvio-padrão em valor absoluto, mas apresentarem dispersões relativas
+  diferentes se suas médias forem distintas.
+</p>
+
+<p>
+  Na forma percentual, a leitura é direta. Um valor
+  <span class="formula-inline" data-tts="cê vê por cento">\(CV(\%)\)</span>
+  indica que o desvio-padrão corresponde aproximadamente a
+  <span class="formula-inline" data-tts="cê vê por cento">\(CV(\%)\)</span>
+  por cento da média, isto é, a variabilidade típica é dessa ordem de grandeza em relação ao nível médio.
+</p>
+
+<p>
+  Do ponto de vista operacional, o procedimento segue etapas bem definidas. Primeiro calcula-se a média
+  <span class="formula-inline" data-tts="xis barra">\(\bar{x}\)</span>.
+  Em seguida, calcula-se o desvio-padrão
+  <span class="formula-inline" data-tts="ésse">\(s\)</span>
+  a partir da variância descritiva com divisor
+  <span class="formula-inline" data-tts="ene">\(n\)</span>.
+  Por fim, calcula-se
+  <span class="formula-inline" data-tts="cê vê">\(CV\)</span>
+  pela razão
+  <span class="formula-inline" data-tts="ésse sobre xis barra">\(s/\bar{x}\)</span>.
+  O exemplo a seguir ilustra o procedimento e explicita a diferença entre dispersão absoluta e dispersão relativa.
+</p>
+
+<div class="example-frame">
+  <h5>Exemplo</h5>
+
+  <p>
+    Considere um conjunto de dados obtido a partir de uma <strong>amostra</strong> composta por
+    <strong>quatro observações</strong> de uma variável quantitativa contínua, medida em
+    <strong>escala de razão</strong>. Os valores observados são:
+    <span class="formula-inline" data-tts="xis igual a dois, quatro, seis e oito">\(x=\{2,\;4,\;6,\;8\}\)</span>.
+  </p>
+
+  <p>
+    A média aritmética da amostra é
+    <span class="formula-inline" data-tts="x barra igual a cinco">\( \bar{x}=5 \)</span>,
+    e o desvio-padrão correspondente é
+    <span class="formula-inline" data-tts="ésse igual a raiz de cinco, aproximadamente dois vírgula vinte e quatro">
+      \( s=\sqrt{5}\approx 2{,}24 \)
+    </span>.
+    Com base nesses valores, podemos calcular o <strong>coeficiente de variação</strong>.
+  </p>
+
+  <p>
+    O coeficiente de variação é definido como a razão entre o desvio-padrão e a média:
+  </p>
+
+  <p class="formula"
+     data-tts="coeficiente de variação é dois vírgula vinte e quatro dividido por cinco, aproximadamente zero vírgula quatro quatro oito.">
+    \[
+      CV=\frac{s}{\bar{x}}=\frac{2{,}24}{5}\approx 0{,}448.
+    \]
+  </p>
+
+  <p>
+    Expressando o resultado em porcentagem:
+  </p>
+
+  <p class="formula"
+     data-tts="coeficiente de variação em porcentagem é quarenta e quatro vírgula oito por cento.">
+    \[
+      CV(\%)\approx 100\cdot 0{,}448 = 44{,}8\%.
+    \]
+  </p>
+
+  <p>
+    <strong>Interpretação:</strong> o valor obtido indica que o <strong>desvio-padrão</strong>
+    corresponde a aproximadamente <strong>44,8%</strong> da média da amostra. Como o coeficiente
+    de variação é uma <strong>medida relativa de dispersão</strong>, esse resultado mostra que a
+    variabilidade típica em torno da média é elevada quando comparada ao nível médio dos dados,
+    permitindo comparações diretas com outras distribuições, mesmo que estejam em escalas diferentes.
+  </p>
+</div>
+
+
+<h3>4.2 Coeficiente de variação para dados agrupados em classes</h3>
+
+<p>
+  Para <strong>dados agrupados em classes</strong>, o coeficiente de variação é definido da mesma forma que no caso
+  não agrupado, mas o cálculo é feito com as versões <strong>aproximadas</strong> da média e do desvio-padrão.
+  Como os valores individuais não são observados, cada classe
+  <span class="formula-inline" data-tts="intervalo L j U j">\([L_j,U_j)\)</span>
+  é representada pelo seu <strong>ponto médio</strong>
+  <span class="formula-inline" data-tts="c j">\(c_j\)</span>,
+  e as ponderações são dadas pelas frequências
+  <span class="formula-inline" data-tts="efe j">\(f_j\)</span>.
+</p>
+<figure>
+  <img src="../../imagens/coeficiente-variacao-agrupados.svg"
+       alt="Coeficiente de Variação Dados Agrupados Classe">
+</figure>
+<p>
+  Considere classes
+  <span class="formula-inline" data-tts="intervalos L um U um até L ká U ká">
+    \([L_1,U_1),\ldots,[L_k,U_k)\)
+  </span>
+  com frequências
+  <span class="formula-inline" data-tts="efe um até efe ká">
+    \(f_1,\ldots,f_k\)
+  </span>,
+  total
+  <span class="formula-inline" data-tts="ene igual à soma dos efe j">
+    \(n=\sum_{j=1}^{k} f_j\)
+  </span>
+  e pontos médios
+  <span class="formula-inline" data-tts="c j igual a L j mais U j sobre dois">
+    \(c_j=\frac{L_j+U_j}{2}\)
+  </span>.
+  A média aproximada é dada por
+</p>
+
+<p class="formula"
+   data-tts="xis barra aproximada é um sobre ene vezes a soma de f j vezes c j">
+\[
+  \bar{x}\approx \frac{1}{n}\sum_{j=1}^{k} f_j\,c_j.
+\]
+</p>
+
+<p>
+  A variância aproximada é obtida por
+</p>
+
+<p class="formula"
+   data-tts="ésse ao quadrado aproximado é um sobre ene vezes a soma de f j vezes c j menos xis barra ao quadrado">
+\[
+  s^2 \approx \frac{1}{n}\sum_{j=1}^{k} f_j\,(c_j-\bar{x})^2,
+\]
+</p>
+
+<p>
+  e o desvio-padrão aproximado é
+</p>
+
+<p class="formula" data-tts="ésse aproximado é a raiz quadrada de ésse ao quadrado aproximado">
+\[
+  s \approx \sqrt{s^2}.
+\]
+</p>
+
+<p>
+  Com essas quantidades, o coeficiente de variação é calculado como
+</p>
+
+<p class="formula" data-tts="cê vê aproximado é igual a ésse aproximado dividido por xis barra aproximada">
+\[
+  CV \approx \frac{s}{\bar{x}}.
+\]
+</p>
+
+<p>
+  O cancelamento de unidades continua valendo, pois
+  <span class="formula-inline" data-tts="ésse">\(s\)</span>
+  e
+  <span class="formula-inline" data-tts="xis barra">\( \bar{x} \)</span>
+  permanecem na mesma unidade. A interpretação também é a mesma: o coeficiente de variação expressa a dispersão
+  em proporção ao nível médio, agora com base nos representantes das classes.
+</p>
+
+<p>
+  Como o desvio-padrão é influenciado por classes mais afastadas do centro, o coeficiente de variação tende a refletir
+  tanto a distribuição das frequências quanto a posição das classes em relação à média. O exemplo a seguir utiliza a
+  mesma tabela de classes das seções anteriores e apresenta o cálculo numérico do coeficiente de variação nesse contexto
+  aproximado.
+</p>
+<div class="example-frame">
+  <h5>Exemplo</h5>
+
+  <p>
+    Considere um conjunto de dados obtido a partir de uma <strong>amostra</strong> em que a variável é quantitativa
+    e os valores foram organizados em uma <strong>distribuição por classes</strong>. Como não conhecemos as
+    observações individuais dentro de cada intervalo, representaremos cada classe por seu <strong>ponto médio</strong>,
+    de modo que as medidas numéricas a seguir serão <strong>aproximadas</strong>.
+  </p>
+
+  <p>
+    As classes, suas frequências e os respectivos pontos médios estão organizados na tabela a seguir:
+  </p>
+
+  <figure class="figure table">
+    <table>
+      <thead>
+        <tr>
+          <th>Classe</th>
+          <th>Frequência (<em>f</em>)</th>
+          <th>Ponto médio (<em>c</em>)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>[0, 10)</td><td>2</td><td>5</td></tr>
+        <tr><td>[10, 20)</td><td>5</td><td>15</td></tr>
+        <tr><td>[20, 30)</td><td>3</td><td>25</td></tr>
+      </tbody>
+    </table>
+    <figcaption>Classes, frequências e pontos médios</figcaption>
+  </figure>
+
+  <p>
+    Usando os pontos médios como representantes das classes, obtemos a média aproximada
+    <span class="formula-inline" data-tts="x barra aproximado igual a dezesseis">\( \bar{x}\approx 16 \)</span>
+    e o desvio-padrão aproximado
+    <span class="formula-inline" data-tts="ésse aproximado igual a sete">\( s\approx 7 \)</span>.
+    Com esses valores, calculamos o <strong>coeficiente de variação</strong>, que mede a dispersão de forma
+    <strong>relativa</strong> (sem unidade).
+  </p>
+
+  <p>
+    Pela definição:
+  </p>
+
+  <p class="formula"
+     data-tts="coeficiente de variação aproximado é sete dividido por dezesseis, aproximadamente zero vírgula quatro três sete cinco.">
+    \[
+      CV \approx \frac{s}{\bar{x}}=\frac{7}{16}\approx 0{,}4375.
+    \]
+  </p>
+
+  <p>
+    Em porcentagem:
+  </p>
+
+  <p class="formula"
+     data-tts="coeficiente de variação em porcentagem é quarenta e três vírgula setenta e cinco por cento.">
+    \[
+      CV(\%)\approx 100\cdot 0{,}4375 = 43{,}75\%.
+    \]
+  </p>
+
+  <p>
+    <strong>Interpretação:</strong> o resultado indica que, <strong>na aproximação por pontos médios</strong>,
+    o desvio-padrão corresponde a cerca de <strong>43,75%</strong> do valor médio. Em termos relativos,
+    isso significa que a dispersão típica é da ordem de <strong>quase metade</strong> da média, lembrando que
+    a precisão do número depende de quão bem os pontos médios representam a distribuição dentro de cada classe.
+  </p>
+</div>
+
+
+<hr>
+
+<h2>5. Conclusão</h2>
+
+<p>
+  Ao longo deste capítulo, desenvolvemos uma segunda camada de compreensão sobre as <strong>medidas-resumo de dispersão</strong>,
+  avançando além das medidas baseadas em <strong>extremos</strong> e em <strong>distâncias lineares</strong> estudadas anteriormente.
+  A ideia central foi mostrar que, para descrever a variabilidade de modo mais informativo, é útil abandonar distâncias médias
+  em valor absoluto e passar a trabalhar com <strong>desvios ao quadrado</strong>, que transformam a dispersão em uma grandeza
+  mais sensível à presença de afastamentos pronunciados em relação ao centro.
+</p>
+
+<p>
+  Nesse contexto, introduzimos a <strong>variância</strong> como a <strong>média dos desvios ao quadrado</strong> em relação à média.
+  Vimos que essa escolha não é uma mera convenção. O uso do quadrado elimina o problema de sinais e, ao mesmo tempo,
+  produz uma medida que <strong>penaliza</strong> mais fortemente desvios grandes, distinguindo distribuições que podem ter
+  a mesma tendência central, mas padrões de espalhamento muito diferentes. Também ressaltamos um aspecto interpretativo inevitável.
+  A variância é expressa em <strong>unidades ao quadrado</strong>, o que limita sua leitura direta na escala original dos dados.
+</p>
+
+<p>
+  Em seguida, apresentamos o <strong>desvio-padrão</strong> como a <strong>raiz quadrada</strong> da variância.
+  Essa passagem tem um papel conceitual e prático. Ela preserva a informação de dispersão construída a partir dos quadrados,
+  mas devolve o resultado à <strong>unidade original</strong> da variável, permitindo interpretá-lo como um afastamento típico
+  em torno da média. Assim, variância e desvio-padrão formam um par complementar. A primeira é analiticamente central e
+  amplamente reutilizada em probabilidade e inferência, enquanto o segundo é a forma mais natural de comunicação da dispersão
+  em termos da escala observável.
+</p>
+
+<p>
+  Por fim, discutimos a passagem de dispersão absoluta para <strong>dispersão relativa</strong>, destacando o papel do
+  <strong>coeficiente de variação</strong>. Vimos que medidas absolutas são informativas quando comparamos distribuições na mesma unidade,
+  mas podem induzir interpretações frágeis quando os grupos têm <strong>níveis médios</strong> muito distintos ou quando a variável é medida
+  em escalas diferentes. Ao normalizar o desvio-padrão pela média, o coeficiente de variação fornece uma medida <strong>adimensional</strong>,
+  apropriada para comparações relativas, desde que aplicada com atenção às limitações usuais, especialmente em situações em que a média é muito
+  pequena ou não representa um referencial estável.
+</p>
+
+<p>
+  Em conjunto, o capítulo consolidou uma ideia fundamental. Descrever variabilidade não é apenas medir o quanto os dados se espalham,
+  mas escolher uma forma de medir que seja compatível com o objetivo analítico. Medidas quadráticas capturam com mais força a presença de
+  afastamentos grandes, a raiz quadrada recupera interpretabilidade na unidade original, e a normalização por média permite comparações em
+  termos relativos. Essas escolhas reaparecem continuamente em estatística inferencial e econometria, onde variância, desvio-padrão e medidas
+  relativas se tornam ferramentas de base.
+</p>
+
+<p>
+  No próximo capítulo, avançaremos para <strong>probabilidade</strong>, que fornece a linguagem formal para tratar variabilidade quando os dados são vistos como
+  realizações de um processo aleatório. É nesse novo enquadramento que os conceitos de média e variância reaparecem como propriedades de
+  <strong>variáveis aleatórias</strong>, preparando o terreno para distribuições, modelos e inferência estatística.
+</p>
+
+
+<hr>
+
+
+<h2>6. Referências</h2>
+<p>
+  FÁVERO, Luiz Paulo; BELFIORE, Patrícia. Manual de análise de dados: estatística e modelagem multivariada com Excel®, SPSS® e Stata®. 1. ed. Rio de Janeiro: Elsevier, 2017.
+</p>
+<p>
+  MAGALHÃES, Marcos Nascimento; LIMA, Antonio Carlos Pedroso de. Noções de Probabilidade e Estatística. 7. ed., 1. reimpr. São Paulo: Editora da Universidade de São Paulo, 2011.
+</p>
+<p>
+  SARTORIS, Alexandre. Estatística e introdução à econometria. 2. ed. São Paulo: Saraiva, 2013.
+</p>
+<p>
+  BUSSAB, Wilton de Oliveira; MORETTIN, Pedro Alberto. <strong>Estatística básica</strong>. 10. ed. São Paulo: SaraivaUni, 2023.
+</p>
+<p>
+  LARSON, Ron; FARBER, Betsy. <strong>Estatística aplicada</strong>. 6. ed. Tradução José Fernando Pereira Gonçalves; Revisão técnica Manoel Henrique Salgado. São Paulo: Pearson Education do Brasil, 2015.
+</p>
+<p>
+  TRIOLA, Mario F. <strong>Introdução à estatística</strong>. 12. ed. Tradução e revisão técnica Ana Maria Lima de Farias, Vera Regina Lima de Farias e Flores. Rio de Janeiro: LTC — Livros Técnicos e Científicos Editora, 2017.
+</p>
+<p>
+  MOOD, Alexander McFarlane; GRAYBILL, Franklin A.; BOES, Duane C. Introduction to the theory of statistics. New York: McGraw-Hill, 1974.
+</p>
+<p>
+  SAVAGE, Leonard J. The Foundations of Statistics. 2. ed. rev. New York: Dover Publications, 1972.
+</p>
+<p>
+  WARE, William B.; FERRON, John M.; MILLER, Barbara M. Introductory Statistics: A Conceptual Approach Using R. New York: Routledge, 2013.
+</p>
+
+
+

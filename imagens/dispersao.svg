@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- =========================================================
+   CONCEITO DE DISPERSÃO (ESPALHAMENTO)
+   Mesmo centro (média/mediana) → baixa vs alta dispersão
+   CSS-only | versão robusta (sem var() em transform)
+   + TEMP: background branco fácil de remover (.tmp-bg)
+   ========================================================= -->
+<svg viewBox="0 0 1550 744" xmlns="http://www.w3.org/2000/svg"
+     role="img" aria-labelledby="title desc">
+  <title id="title">Conceito de dispersão: espalhamento em torno do centro</title>
+  <desc id="desc">
+    Duas retas numéricas com o mesmo centro (média/mediana). Os pontos surgem concentrados e,
+    em seguida, se espalham: pouco no caso de baixa dispersão e muito no caso de alta dispersão.
+    Faixas e setas reforçam a ideia de “largura típica” em torno do centro.
+  </desc>
+
+  <!-- TEMP: fundo branco (remover depois) -->
+  <rect class="tmp-bg" x="0" y="0" width="100%" height="100%"/>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --ink-soft:#64748b;
+        --grid:#e5e7eb;
+        --accent:#64748b;
+        --font:"et-book","ETBook","Georgia",serif;
+        --cycle:8s;
+        --ease:ease-in-out;
+      }
+
+      /* TEMP: fundo branco (remover depois) */
+      .tmp-bg{ fill:#fff; }
+
+      text{ font-family:var(--font); fill:var(--ink); user-select:none; }
+
+      .u-stroke{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+      }
+      .u-panel{ stroke-width:2; rx:22; ry:22; }
+
+      .label{ font-size:46px; font-weight:600; text-anchor:middle; }
+      .small{ font-size:32px; text-anchor:middle; fill:var(--ink-soft); }
+
+      .axis{ stroke-width:2; }
+      .grid{ stroke:var(--grid); stroke-width:1; stroke-dasharray:6 8; }
+      .tick-label{ font-size:22px; fill:var(--ink-soft); }
+
+      .dot{ fill:var(--ink); opacity:.9; }
+      .dot.soft{ opacity:.55; }
+
+      .centerline{
+        stroke:var(--accent);
+        stroke-width:4;
+        stroke-dasharray:10 10;
+        opacity:0;
+      }
+
+      .row-title{
+        font-size:28px;
+        font-weight:600;
+        fill:var(--ink);
+        opacity:0;
+      }
+      .row-sub{
+        font-size:22px;
+        font-weight:500;
+        fill:var(--ink-soft);
+        opacity:0;
+      }
+
+      .band{ fill:var(--accent); opacity:0; }
+
+      .arrow{ stroke:var(--accent); stroke-width:3.5; fill:none; }
+      .arrowhead{ fill:var(--accent); }
+      .siglab{ font-size:24px; font-weight:600; fill:var(--ink); }
+
+      /* ===================== ANIMAÇÕES GERAIS ===================== */
+      .a-dots{
+        transform-box:fill-box;
+        transform-origin:50% 50%;
+        animation:dotsIn var(--cycle) var(--ease) infinite;
+      }
+      @keyframes dotsIn{
+        0%,10%{ opacity:0; transform:scale(.985); }
+        18%,100%{ opacity:1; transform:scale(1); }
+      }
+
+      .a-center{ animation:centerOn var(--cycle) var(--ease) infinite; }
+      @keyframes centerOn{ 0%,22%{opacity:0} 30%,100%{opacity:1} }
+
+      .a-rowt{ animation:rowT var(--cycle) var(--ease) infinite; }
+      @keyframes rowT{
+        0%,24%{ opacity:0; transform:translateY(6px); }
+        32%,100%{ opacity:1; transform:translateY(0px); }
+      }
+
+      .a-bandLow{ animation:bandLow var(--cycle) var(--ease) infinite; }
+      .a-bandHigh{ animation:bandHigh var(--cycle) var(--ease) infinite; }
+      @keyframes bandLow{ 0%,44%{opacity:0} 60%,80%{opacity:.18} 100%{opacity:.14} }
+      @keyframes bandHigh{ 0%,44%{opacity:0} 60%,80%{opacity:.14} 100%{opacity:.11} }
+
+      /* ===================== ESPALHAMENTO (SEM var()) ===================== */
+      /* --- Baixa dispersão (L) --- */
+      .dxL1{ animation:dxL1 var(--cycle) var(--ease) infinite; }
+      .dxL2{ animation:dxL2 var(--cycle) var(--ease) infinite; }
+      .dxL3{ animation:dxL3 var(--cycle) var(--ease) infinite; }
+      .dxL4{ animation:dxL4 var(--cycle) var(--ease) infinite; }
+      .dxL5{ animation:dxL5 var(--cycle) var(--ease) infinite; }
+      .dxL6{ animation:dxL6 var(--cycle) var(--ease) infinite; }
+      .dxL7{ animation:dxL7 var(--cycle) var(--ease) infinite; }
+      .dxL8{ animation:dxL8 var(--cycle) var(--ease) infinite; }
+      .dxL9{ animation:dxL9 var(--cycle) var(--ease) infinite; }
+      .dxL10{ animation:dxL10 var(--cycle) var(--ease) infinite; }
+      .dxL11{ animation:dxL11 var(--cycle) var(--ease) infinite; }
+      .dxL12{ animation:dxL12 var(--cycle) var(--ease) infinite; }
+      .dxL13{ animation:dxL13 var(--cycle) var(--ease) infinite; }
+      .dxL14{ animation:dxL14 var(--cycle) var(--ease) infinite; }
+      .dxL15{ animation:dxL15 var(--cycle) var(--ease) infinite; }
+      .dxL16{ animation:dxL16 var(--cycle) var(--ease) infinite; }
+      .dxL17{ animation:dxL17 var(--cycle) var(--ease) infinite; }
+      .dxL18{ animation:dxL18 var(--cycle) var(--ease) infinite; }
+      .dxL19{ animation:dxL19 var(--cycle) var(--ease) infinite; }
+      .dxL20{ animation:dxL20 var(--cycle) var(--ease) infinite; }
+
+      @keyframes dxL1{ 0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(-90px)} }
+      @keyframes dxL2{ 0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(-75px)} }
+      @keyframes dxL3{ 0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(-60px)} }
+      @keyframes dxL4{ 0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(-45px)} }
+      @keyframes dxL5{ 0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(-35px)} }
+      @keyframes dxL6{ 0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(-25px)} }
+      @keyframes dxL7{ 0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(-18px)} }
+      @keyframes dxL8{ 0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(-12px)} }
+      @keyframes dxL9{ 0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(-6px)} }
+      @keyframes dxL10{0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(-3px)} }
+      @keyframes dxL11{0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(3px)} }
+      @keyframes dxL12{0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(6px)} }
+      @keyframes dxL13{0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(12px)} }
+      @keyframes dxL14{0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(18px)} }
+      @keyframes dxL15{0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(25px)} }
+      @keyframes dxL16{0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(35px)} }
+      @keyframes dxL17{0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(45px)} }
+      @keyframes dxL18{0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(60px)} }
+      @keyframes dxL19{0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(75px)} }
+      @keyframes dxL20{0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(90px)} }
+
+      /* --- Alta dispersão (H) --- */
+      .dxH1{ animation:dxH1 var(--cycle) var(--ease) infinite; }
+      .dxH2{ animation:dxH2 var(--cycle) var(--ease) infinite; }
+      .dxH3{ animation:dxH3 var(--cycle) var(--ease) infinite; }
+      .dxH4{ animation:dxH4 var(--cycle) var(--ease) infinite; }
+      .dxH5{ animation:dxH5 var(--cycle) var(--ease) infinite; }
+      .dxH6{ animation:dxH6 var(--cycle) var(--ease) infinite; }
+      .dxH7{ animation:dxH7 var(--cycle) var(--ease) infinite; }
+      .dxH8{ animation:dxH8 var(--cycle) var(--ease) infinite; }
+      .dxH9{ animation:dxH9 var(--cycle) var(--ease) infinite; }
+      .dxH10{ animation:dxH10 var(--cycle) var(--ease) infinite; }
+      .dxH11{ animation:dxH11 var(--cycle) var(--ease) infinite; }
+      .dxH12{ animation:dxH12 var(--cycle) var(--ease) infinite; }
+      .dxH13{ animation:dxH13 var(--cycle) var(--ease) infinite; }
+      .dxH14{ animation:dxH14 var(--cycle) var(--ease) infinite; }
+      .dxH15{ animation:dxH15 var(--cycle) var(--ease) infinite; }
+      .dxH16{ animation:dxH16 var(--cycle) var(--ease) infinite; }
+      .dxH17{ animation:dxH17 var(--cycle) var(--ease) infinite; }
+      .dxH18{ animation:dxH18 var(--cycle) var(--ease) infinite; }
+      .dxH19{ animation:dxH19 var(--cycle) var(--ease) infinite; }
+      .dxH20{ animation:dxH20 var(--cycle) var(--ease) infinite; }
+
+      @keyframes dxH1{ 0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(-520px)} }
+      @keyframes dxH2{ 0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(-450px)} }
+      @keyframes dxH3{ 0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(-380px)} }
+      @keyframes dxH4{ 0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(-320px)} }
+      @keyframes dxH5{ 0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(-260px)} }
+      @keyframes dxH6{ 0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(-210px)} }
+      @keyframes dxH7{ 0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(-170px)} }
+      @keyframes dxH8{ 0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(-130px)} }
+      @keyframes dxH9{ 0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(-90px)} }
+      @keyframes dxH10{0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(-50px)} }
+      @keyframes dxH11{0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(50px)} }
+      @keyframes dxH12{0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(90px)} }
+      @keyframes dxH13{0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(130px)} }
+      @keyframes dxH14{0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(170px)} }
+      @keyframes dxH15{0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(210px)} }
+      @keyframes dxH16{0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(260px)} }
+      @keyframes dxH17{0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(320px)} }
+      @keyframes dxH18{0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(380px)} }
+      @keyframes dxH19{0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(450px)} }
+      @keyframes dxH20{0%,40%{transform:translateX(0)} 58%,100%{transform:translateX(520px)} }
+
+      @media (prefers-reduced-motion:reduce){
+        .a-dots,.a-center,.a-rowt,.a-bandLow,.a-bandHigh,
+        .dxL1,.dxL2,.dxL3,.dxL4,.dxL5,.dxL6,.dxL7,.dxL8,.dxL9,.dxL10,
+        .dxL11,.dxL12,.dxL13,.dxL14,.dxL15,.dxL16,.dxL17,.dxL18,.dxL19,.dxL20,
+        .dxH1,.dxH2,.dxH3,.dxH4,.dxH5,.dxH6,.dxH7,.dxH8,.dxH9,.dxH10,
+        .dxH11,.dxH12,.dxH13,.dxH14,.dxH15,.dxH16,.dxH17,.dxH18,.dxH19,.dxH20{
+          animation:none;
+        }
+        .centerline{ opacity:1; }
+        .row-title,.row-sub{ opacity:1; }
+        .band{ opacity:.12; }
+      }
+    </style>
+  </defs>
+
+  <g transform="translate(85,92)">
+    <rect x="0" y="0" width="1380" height="560" class="u-panel u-stroke"/>
+
+    <text x="690" y="55" class="label">Dispersão</text>
+    <text x="690" y="90" class="small">Mesmo centro, “abertura” diferente dos valores</text>
+
+    <g transform="translate(110,100)">
+      <g class="grid">
+        <line x1="0" y1="150" x2="1160" y2="150"/>
+        <line x1="0" y1="330" x2="1160" y2="330"/>
+        <line x1="0" y1="90"  x2="1160" y2="90"/>
+        <line x1="0" y1="390" x2="1160" y2="390"/>
+      </g>
+
+      <g class="u-stroke axis">
+        <line x1="0" y1="150" x2="1160" y2="150"/>
+        <line x1="0" y1="330" x2="1160" y2="330"/>
+      </g>
+
+      <g class="u-stroke" style="stroke-width:2">
+        <line x1="0"    y1="140" x2="0"    y2="160"/>
+        <line x1="1160" y1="140" x2="1160" y2="160"/>
+        <line x1="0"    y1="320" x2="0"    y2="340"/>
+        <line x1="1160" y1="320" x2="1160" y2="340"/>
+      </g>
+
+      <g class="tick-label">
+        <text x="0" y="190"  text-anchor="middle">mín</text>
+        <text x="1160" y="190" text-anchor="middle">máx</text>
+        <text x="0" y="370"  text-anchor="middle">mín</text>
+        <text x="1160" y="370" text-anchor="middle">máx</text>
+      </g>
+
+      <line class="centerline a-center" x1="580" y1="55" x2="580" y2="425"/>
+      <text x="580" y="45" text-anchor="middle" class="row-sub a-rowt">centro (média/mediana)</text>
+
+      <!-- rótulos -->
+      <text x="0" y="100" text-anchor="start" class="row-title a-rowt">Baixa dispersão</text>
+      <text x="0" y="130" text-anchor="start" class="row-sub a-rowt">(valores ficam perto do centro)</text>
+
+      <!-- AJUSTE: sobe o bloco de texto da Alta dispersão para não encostar no eixo y=330 -->
+      <text x="0" y="265" text-anchor="start" class="row-title a-rowt">Alta dispersão</text>
+      <text x="0" y="295" text-anchor="start" class="row-sub a-rowt">(valores ficam longe do centro)</text>
+
+      <rect class="band a-bandLow"  x="480" y="120" width="200" height="60"/>
+      <rect class="band a-bandHigh" x="150" y="300" width="860" height="60"/>
+
+      <!-- baixa dispersão -->
+      <g class="a-dots">
+        <g class="dxL1"><circle class="dot" cx="580" cy="150" r="7"/></g>
+        <g class="dxL2"><circle class="dot soft" cx="580" cy="150" r="7"/></g>
+        <g class="dxL3"><circle class="dot" cx="580" cy="150" r="7"/></g>
+        <g class="dxL4"><circle class="dot soft" cx="580" cy="150" r="7"/></g>
+        <g class="dxL5"><circle class="dot" cx="580" cy="150" r="7"/></g>
+        <g class="dxL6"><circle class="dot soft" cx="580" cy="150" r="7"/></g>
+        <g class="dxL7"><circle class="dot" cx="580" cy="150" r="7"/></g>
+        <g class="dxL8"><circle class="dot soft" cx="580" cy="150" r="7"/></g>
+        <g class="dxL9"><circle class="dot" cx="580" cy="150" r="7"/></g>
+        <g class="dxL10"><circle class="dot soft" cx="580" cy="150" r="7"/></g>
+
+        <g class="dxL11"><circle class="dot" cx="580" cy="150" r="7"/></g>
+        <g class="dxL12"><circle class="dot soft" cx="580" cy="150" r="7"/></g>
+        <g class="dxL13"><circle class="dot" cx="580" cy="150" r="7"/></g>
+        <g class="dxL14"><circle class="dot soft" cx="580" cy="150" r="7"/></g>
+        <g class="dxL15"><circle class="dot" cx="580" cy="150" r="7"/></g>
+        <g class="dxL16"><circle class="dot soft" cx="580" cy="150" r="7"/></g>
+        <g class="dxL17"><circle class="dot" cx="580" cy="150" r="7"/></g>
+        <g class="dxL18"><circle class="dot soft" cx="580" cy="150" r="7"/></g>
+        <g class="dxL19"><circle class="dot" cx="580" cy="150" r="7"/></g>
+        <g class="dxL20"><circle class="dot soft" cx="580" cy="150" r="7"/></g>
+      </g>
+
+      <!-- alta dispersão -->
+      <g class="a-dots">
+        <g class="dxH1"><circle class="dot" cx="580" cy="330" r="7"/></g>
+        <g class="dxH2"><circle class="dot soft" cx="580" cy="330" r="7"/></g>
+        <g class="dxH3"><circle class="dot" cx="580" cy="330" r="7"/></g>
+        <g class="dxH4"><circle class="dot soft" cx="580" cy="330" r="7"/></g>
+        <g class="dxH5"><circle class="dot" cx="580" cy="330" r="7"/></g>
+        <g class="dxH6"><circle class="dot soft" cx="580" cy="330" r="7"/></g>
+        <g class="dxH7"><circle class="dot" cx="580" cy="330" r="7"/></g>
+        <g class="dxH8"><circle class="dot soft" cx="580" cy="330" r="7"/></g>
+        <g class="dxH9"><circle class="dot" cx="580" cy="330" r="7"/></g>
+        <g class="dxH10"><circle class="dot soft" cx="580" cy="330" r="7"/></g>
+
+        <g class="dxH11"><circle class="dot" cx="580" cy="330" r="7"/></g>
+        <g class="dxH12"><circle class="dot soft" cx="580" cy="330" r="7"/></g>
+        <g class="dxH13"><circle class="dot" cx="580" cy="330" r="7"/></g>
+        <g class="dxH14"><circle class="dot soft" cx="580" cy="330" r="7"/></g>
+        <g class="dxH15"><circle class="dot" cx="580" cy="330" r="7"/></g>
+        <g class="dxH16"><circle class="dot soft" cx="580" cy="330" r="7"/></g>
+        <g class="dxH17"><circle class="dot" cx="580" cy="330" r="7"/></g>
+        <g class="dxH18"><circle class="dot soft" cx="580" cy="330" r="7"/></g>
+        <g class="dxH19"><circle class="dot" cx="580" cy="330" r="7"/></g>
+        <g class="dxH20"><circle class="dot soft" cx="580" cy="330" r="7"/></g>
+      </g>
+
+      <!-- setas -->
+      <g>
+        <line class="arrow" x1="480" y1="215" x2="680" y2="215"/>
+        <polygon class="arrowhead" points="475,215 487,208 487,222"/>
+        <polygon class="arrowhead" points="690,215 678,208 678,222"/>
+        <text class="siglab" x="530" y="202" text-anchor="middle">Menor </text>
+        <text class="siglab" x="650" y="202" text-anchor="middle">Dispersão</text>
+      </g>
+
+      <g>
+        <line class="arrow" x1="160" y1="420" x2="1000" y2="420"/>
+        <polygon class="arrowhead" points="158,420 170,413 170,427"/>
+        <polygon class="arrowhead" points="1002,420 990,413 990,427"/>
+        <text class="siglab" x="530" y="412" text-anchor="middle">Maior</text>
+        <text class="siglab" x="650" y="412" text-anchor="middle">Dispersão</text>
+      </g>
+
+    </g>
+  </g>
+</svg>
