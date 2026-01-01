@@ -1,0 +1,237 @@
+schema: EconSchema
+aspectRatio: 2
+
+params:
+  - { name: x_1, value: 2.0, min: 0, max: 12, round: 0.1 }
+  - { name: x_2, value: 4.0, min: 0, max: 12, round: 0.1 }
+  - { name: x_3, value: 6.0, min: 0, max: 12, round: 0.1 }
+  - { name: x_4, value: 8.0, min: 0, max: 12, round: 0.1 }
+
+calcs:
+  n: "4"
+
+  # Média
+  xbar: "((1*params.x_1 + 1*params.x_2 + 1*params.x_3 + 1*params.x_4) / 4)"
+
+  # Desvios
+  d1: "(1*params.x_1 - 1*calcs.xbar)"
+  d2: "(1*params.x_2 - 1*calcs.xbar)"
+  d3: "(1*params.x_3 - 1*calcs.xbar)"
+  d4: "(1*params.x_4 - 1*calcs.xbar)"
+
+  # Quadrados dos desvios
+  q1: "(calcs.d1 * calcs.d1)"
+  q2: "(calcs.d2 * calcs.d2)"
+  q3: "(calcs.d3 * calcs.d3)"
+  q4: "(calcs.d4 * calcs.d4)"
+
+  sumSq: "(1*calcs.q1 + 1*calcs.q2 + 1*calcs.q3 + 1*calcs.q4)"
+
+  # Variância e desvio-padrão (POPULACIONAL)
+  sigma2: "(calcs.sumSq / 4)"
+  sigma: "(calcs.sigma2)^0.5"
+
+  # Coeficiente de variação (CV = sigma / xbar)
+  CV: "(calcs.xbar != 0 ? (calcs.sigma / calcs.xbar) : 0)"
+
+  # Braços: x̄ ± σ
+  leftEnd:  "(calcs.xbar - calcs.sigma)"
+  rightEnd: "(calcs.xbar + calcs.sigma)"
+
+  leftEndDraw:  "(calcs.leftEnd < 0 ? 0 : (calcs.leftEnd > 12 ? 12 : calcs.leftEnd))"
+  rightEndDraw: "(calcs.rightEnd < 0 ? 0 : (calcs.rightEnd > 12 ? 12 : calcs.rightEnd))"
+
+colors:
+  ink: "'#111827'"
+  inkSoft: "'#64748b'"
+  grid: "'#e5e7eb'"
+  bg: "'#ffffff'"
+
+layout:
+  OneWideGraphPlusSidebar:
+    graph:
+      title: ""   # evita o título externo bugado
+      xAxis: { min: 0, max: 12, ticks: 0 }
+      yAxis: { show: false, min: -1, max: 1, ticks: 0 }
+
+      objects:
+        # Título interno
+        - Label:
+            coordinates: [6, 1]
+            text: "'\\\\textbf{Coeficiente de Variação}'"
+            color: colors.ink
+            fontSize: 12
+            position: b
+            bgcolor: colors.bg
+
+        # Reta numérica
+        - Segment: { a: [0, 0], b: [12, 0], color: colors.ink, strokeWidth: 2 }
+        - Segment: { a: [0, -0.08],  b: [0,  0.08],  color: colors.inkSoft, strokeWidth: 2 }
+        - Segment: { a: [12, -0.08], b: [12, 0.08],  color: colors.inkSoft, strokeWidth: 2 }
+        - Label:   { coordinates: [0,  -0.24], text: "'0'",  color: colors.inkSoft, fontSize: 10, position: c }
+        - Label:   { coordinates: [12, -0.24], text: "'12'", color: colors.inkSoft, fontSize: 10, position: c }
+
+        # Média
+        - Segment:
+            a: [calcs.xbar, -0.55]
+            b: [calcs.xbar,  0.55]
+            color: colors.inkSoft
+            strokeWidth: 2
+            lineStyle: dashed
+
+        # CV (acima da média)
+        - Label:
+            coordinates: [calcs.xbar, 0.90]
+            text: "`CV=${calcs.CV.toFixed(2)}`"
+            color: colors.ink
+            fontSize: 10
+            position: c
+            bgcolor: colors.bg
+
+        - Label:
+            coordinates: [calcs.xbar, 0.72]
+            text: "'\\\\bar{X}'"
+            color: colors.ink
+            fontSize: 9
+            position: c
+            bgcolor: colors.bg
+
+        - Label:
+            coordinates: [calcs.xbar, 0.56]
+            text: "`${calcs.xbar.toFixed(2)}`"
+            color: colors.inkSoft
+            fontSize: 9
+            position: c
+            bgcolor: colors.bg
+
+        # Braços (acima da linha): x̄ − σ e x̄ + σ
+        # armY=0.30, capLo=0.24, capHi=0.36
+
+        # Esquerdo: [x̄ − σ, x̄]
+        - Segment:
+            a: [calcs.leftEndDraw, 0.30]
+            b: [calcs.xbar,        0.30]
+            color: colors.ink
+            strokeWidth: 2
+
+        - Segment: { a: [calcs.leftEndDraw, 0.24], b: [calcs.leftEndDraw, 0.36], color: colors.ink, strokeWidth: 2 }
+
+        - Label:
+            coordinates: [(calcs.leftEndDraw + calcs.xbar)/2, 0.45]
+            text: "`-${calcs.sigma.toFixed(2)}`"
+            color: colors.ink
+            fontSize: 9
+            position: c
+            bgcolor: colors.bg
+
+        - Label:
+            coordinates: [calcs.leftEndDraw, 0.3]
+            text: "`${calcs.leftEnd.toFixed(2)}`"
+            color: colors.ink
+            fontSize: 9
+            position: r
+            bgcolor: colors.bg
+
+        # Direito: [x̄, x̄ + σ]
+        - Segment:
+            a: [calcs.xbar,         0.30]
+            b: [calcs.rightEndDraw, 0.30]
+            color: colors.ink
+            strokeWidth: 2
+
+        - Segment: { a: [calcs.rightEndDraw, 0.24], b: [calcs.rightEndDraw, 0.36], color: colors.ink, strokeWidth: 2 }
+
+        - Label:
+            coordinates: [(calcs.rightEndDraw + calcs.xbar)/2, 0.45]
+            text: "`+${calcs.sigma.toFixed(2)}`"
+            color: colors.ink
+            fontSize: 9
+            position: c
+            bgcolor: colors.bg
+
+        - Label:
+            coordinates: [calcs.rightEndDraw, 0.3]
+            text: "`${calcs.rightEnd.toFixed(2)}`"
+            color: colors.ink
+            fontSize: 9
+            position: l
+            bgcolor: colors.bg
+
+        # Pontos arrastáveis (sem cruzar)
+        - Point:
+            coordinates: [params.x_1, 0]
+            color: colors.ink
+            drag:
+              - directions: x
+                param: x_1
+                expression: "((drag.x >= 0) ? ((drag.x <= params.x_2) ? drag.x : params.x_2) : 0)"
+
+        - Point:
+            coordinates: [params.x_2, 0]
+            color: colors.inkSoft
+            drag:
+              - directions: x
+                param: x_2
+                expression: "((drag.x >= params.x_1) ? ((drag.x <= params.x_3) ? drag.x : params.x_3) : params.x_1)"
+
+        - Point:
+            coordinates: [params.x_3, 0]
+            color: colors.ink
+            drag:
+              - directions: x
+                param: x_3
+                expression: "((drag.x >= params.x_2) ? ((drag.x <= params.x_4) ? drag.x : params.x_4) : params.x_2)"
+
+        - Point:
+            coordinates: [params.x_4, 0]
+            color: colors.inkSoft
+            drag:
+              - directions: x
+                param: x_4
+                expression: "((drag.x >= params.x_3) ? ((drag.x <= 12) ? drag.x : 12) : params.x_3)"
+
+        # Labels dos pontos
+        - Label: { coordinates: [params.x_1, -0.2], text: "`${params.x_1.toFixed(1)}`", color: colors.inkSoft, fontSize: 9, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [params.x_2, -0.2], text: "`${params.x_2.toFixed(1)}`", color: colors.inkSoft, fontSize: 9, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [params.x_3, -0.2], text: "`${params.x_3.toFixed(1)}`", color: colors.inkSoft, fontSize: 9, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [params.x_4, -0.2], text: "`${params.x_4.toFixed(1)}`", color: colors.inkSoft, fontSize: 9, position: c, bgcolor: colors.bg }
+
+    sidebar:
+      triggerWidth: 9999
+      controls:
+        - title: ""
+          divs:
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Dados:</b></div>"
+            - html: "`$$\\\\tiny
+                      x=\\\\{${params.x_1.toFixed(1)},\\\\;${params.x_2.toFixed(1)},\\\\;${params.x_3.toFixed(1)},\\\\;${params.x_4.toFixed(1)}\\\\},\\\\quad n=${calcs.n}
+                      $$`"
+
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Fórmula (desvio-padrão):</b></div>"
+            - html: "$$\\tiny \\sigma=\\sqrt{\\frac{1}{n}\\sum_{i=1}^{n}(x_i-\\bar{x})^2} \\qquad \\sigma^2=\\frac{1}{n}\\sum_{i=1}^{n}(x_i-\\bar{x})^2 $$"
+
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Fórmula (coeficiente de variação):</b></div>"
+            - html: "$$\\tiny CV=\\frac{\\sigma}{\\bar{x}} $$"
+
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Aplicando (média):</b></div>"
+            - html: "`$$\\\\tiny
+                      \\\\bar{x}=\\\\frac{${params.x_1.toFixed(1)}+${params.x_2.toFixed(1)}+${params.x_3.toFixed(1)}+${params.x_4.toFixed(1)}}{${calcs.n}}
+                      =${calcs.xbar.toFixed(2)}\\\\,.
+                      $$`"
+
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Quadrados dos desvios:</b></div>"
+            - html: "`$$\\\\tiny
+                      (x_1-\\\\bar{x})^2=${calcs.q1.toFixed(2)},\\\\;
+                      (x_2-\\\\bar{x})^2=${calcs.q2.toFixed(2)}.
+                      $$`"
+            - html: "`$$\\\\tiny
+                      (x_3-\\\\bar{x})^2=${calcs.q3.toFixed(2)},\\\\;
+                      (x_4-\\\\bar{x})^2=${calcs.q4.toFixed(2)}.
+                      $$`"
+
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Resultado:</b></div>"
+            - html: "`$$\\\\tiny
+                      \\\\sum (x_i-\\\\bar{x})^2=${calcs.sumSq.toFixed(2)},\\\\quad
+                      \\\\sigma^2=${calcs.sigma2.toFixed(2)},\\\\quad
+                      \\\\sigma=${calcs.sigma.toFixed(2)},\\\\quad
+                      CV=${calcs.CV.toFixed(2)}.
+                      $$`"

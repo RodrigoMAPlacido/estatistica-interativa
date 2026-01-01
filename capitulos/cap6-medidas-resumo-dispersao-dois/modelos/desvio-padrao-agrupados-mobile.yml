@@ -1,0 +1,282 @@
+schema: EconSchema
+aspectRatio: 1.6
+
+params:
+  - { name: f2, value: 2, min: 0, max: 8, round: 1 }
+  - { name: f3, value: 4, min: 0, max: 8, round: 1 }
+  - { name: f4, value: 2, min: 0, max: 8, round: 1 }
+
+calcs:
+  # Total
+  N: "(1*params.f2 + 1*params.f3 + 1*params.f4)"
+
+  # Média: xbar = Σ x f / N
+  Sx: "(2*(1*params.f2) + 3*(1*params.f3) + 4*(1*params.f4))"
+  xbar: "(calcs.N > 0 ? (calcs.Sx / calcs.N) : 0)"
+
+  # Desvios e quadrados (sem Math.*)
+  d2: "(2 - calcs.xbar)"
+  d3: "(3 - calcs.xbar)"
+  d4: "(4 - calcs.xbar)"
+
+  q2: "(calcs.d2 * calcs.d2)"
+  q3: "(calcs.d3 * calcs.d3)"
+  q4: "(calcs.d4 * calcs.d4)"
+
+  # Soma ponderada dos quadrados: Σ f (x-xbar)^2
+  sumSqW: "((1*params.f2)*calcs.q2 + (1*params.f3)*calcs.q3 + (1*params.f4)*calcs.q4)"
+
+  # Variância e desvio-padrão (POPULACIONAL)
+  sigma2: "(calcs.N > 0 ? (calcs.sumSqW / calcs.N) : 0)"
+  sigma: "((calcs.sigma2)^0.5)"
+
+  # Extremos do colchete: xbar ± sigma
+  xL: "(calcs.xbar - calcs.sigma)"
+  xR: "(calcs.xbar + calcs.sigma)"
+
+  ok: "(calcs.N > 0)"
+
+  # y dos rótulos f dentro da barra (se barra pequena, sobe um pouco)
+  f2Y: "(params.f2 > 0.8 ? (1*params.f2 - 0.40) : (1*params.f2 + 0.35))"
+  f3Y: "(params.f3 > 0.8 ? (1*params.f3 - 0.40) : (1*params.f3 + 0.35))"
+  f4Y: "(params.f4 > 0.8 ? (1*params.f4 - 0.40) : (1*params.f4 + 0.35))"
+
+colors:
+  ink: "'#111827'"
+  inkSoft: "'#64748b'"
+  grid: "'#64748b'"
+  bg: "'#ffffff'"
+  bar: "'#111827'"
+
+layout:
+  OneWideGraphPlusSidebar:
+    graph:
+      xAxis: { min: 1.2, max: 4.8, ticks: 0, show: false }
+      yAxis: { min: -0.8, max: 7.4, ticks: 0, show: false }
+
+      objects:
+        # ---------------------------
+        # Grid horizontal “limpo”
+        # ---------------------------
+        - Segment: { a: [1.2, 2], b: [4.8, 2], color: colors.grid, strokeWidth: 0.5 }
+        - Segment: { a: [1.2, 4], b: [4.8, 4], color: colors.grid, strokeWidth: 0.5 }
+
+        # ---------------------------
+        # Baseline e marcas do eixo x (manual)
+        # ---------------------------
+        - Segment: { a: [1.4, 0], b: [4.6, 0], color: colors.inkSoft, strokeWidth: 2 }
+        - Segment: { a: [2, -0.5], b: [2, 0.10], color: colors.inkSoft, strokeWidth: 2 }
+        - Segment: { a: [3, -0.5], b: [3, 0.10], color: colors.inkSoft, strokeWidth: 2 }
+        - Segment: { a: [4, -0.5], b: [4, 0.10], color: colors.inkSoft, strokeWidth: 2 }
+
+        - Label: { coordinates: [2, 0], text: "'2'", color: colors.inkSoft, fontSize: 10, position: t, bgcolor: colors.bg }
+        - Label: { coordinates: [3, 0], text: "'3'", color: colors.inkSoft, fontSize: 10, position: t, bgcolor: colors.bg }
+        - Label: { coordinates: [4, 0], text: "'4'", color: colors.inkSoft, fontSize: 10, position: t, bgcolor: colors.bg }
+
+        # Marcas do eixo y (manual)
+        - Segment: { a: [1.35, 0], b: [1.35, 6.6], color: colors.inkSoft, strokeWidth: 2 }
+        - Label: { coordinates: [1.35, 0], text: "'0'", color: colors.inkSoft, fontSize: 10, position: r, bgcolor: colors.bg }
+        - Label: { coordinates: [1.35, 2], text: "'2'", color: colors.inkSoft, fontSize: 10, position: r, bgcolor: colors.bg }
+        - Label: { coordinates: [1.35, 4], text: "'4'", color: colors.inkSoft, fontSize: 10, position: r, bgcolor: colors.bg }
+        - Label: { coordinates: [1.35, 6], text: "'6'", color: colors.inkSoft, fontSize: 10, position: r, bgcolor: colors.bg }
+
+        # ---------------------------
+        # Barras com drag em y (clamp 0..8)
+        # ---------------------------
+        - Rectangle:
+            x1: 1.55
+            x2: 2.45
+            y1: 0
+            y2: params.f2
+            fill: colors.bar
+            opacity: 1
+            drag:
+              - directions: y
+                param: f2
+                expression: "(drag.y < 0 ? 0 : (drag.y > 8 ? 8 : drag.y))"
+
+        - Rectangle:
+            x1: 2.55
+            x2: 3.45
+            y1: 0
+            y2: params.f3
+            fill: colors.bar
+            opacity: 1
+            drag:
+              - directions: y
+                param: f3
+                expression: "(drag.y < 0 ? 0 : (drag.y > 8 ? 8 : drag.y))"
+
+        - Rectangle:
+            x1: 3.55
+            x2: 4.45
+            y1: 0
+            y2: params.f4
+            fill: colors.bar
+            opacity: 1
+            drag:
+              - directions: y
+                param: f4
+                expression: "(drag.y < 0 ? 0 : (drag.y > 8 ? 8 : drag.y))"
+
+        # Rótulos f dentro das barras
+        - Label: { coordinates: [2, calcs.f2Y], text: "`\\\\bf{f}=${params.f2.toFixed(0)}`", color: white, bgcolor: colors.ink, fontSize: 7, position: c }
+        - Label: { coordinates: [3, calcs.f3Y], text: "`\\\\bf{f}=${params.f3.toFixed(0)}`", color: white, bgcolor: colors.ink, fontSize: 7, position: c }
+        - Label: { coordinates: [4, calcs.f4Y], text: "`\\\\bf{f}=${params.f4.toFixed(0)}`", color: white, bgcolor: colors.ink, fontSize: 7, position: c }
+
+        # ---------------------------
+        # Linha da média (tracejada) e rótulo
+        # ---------------------------
+        - Segment:
+            a: [calcs.xbar, 0]
+            b: [calcs.xbar, 6.6]
+            color: colors.inkSoft
+            strokeWidth: 2
+            lineStyle: dashed
+            show: calcs.ok
+
+        - Label:
+            coordinates: [calcs.xbar, 6.85]
+            text: "`\\\\bar{x}=${calcs.xbar.toFixed(2)}`"
+            color: colors.ink
+            fontSize: 10
+            position: b
+            bgcolor: colors.bg
+            show: calcs.ok
+
+        # ---------------------------
+        # Colchete do DESVIO-PADRÃO: xbar ± sigma
+        # ---------------------------
+        - Segment: { a: [calcs.xL, 6.10], b: [calcs.xbar, 6.10], color: colors.ink, strokeWidth: 2, show: calcs.ok }
+        - Segment: { a: [calcs.xbar, 6.10], b: [calcs.xR, 6.10], color: colors.ink, strokeWidth: 2, show: calcs.ok }
+
+        - Segment: { a: [calcs.xL, 5.95], b: [calcs.xL, 6.25], color: colors.ink, strokeWidth: 2, show: calcs.ok }
+        - Segment: { a: [calcs.xbar, 5.95], b: [calcs.xbar, 6.25], color: colors.ink, strokeWidth: 2, show: calcs.ok }
+        - Segment: { a: [calcs.xR, 5.95], b: [calcs.xR, 6.25], color: colors.ink, strokeWidth: 2, show: calcs.ok }
+
+        - Label:
+            coordinates: [calcs.xL, 6.10]
+            text: "`\\\\bf{\\\\bar{x}-\\\\sigma\\\\approx ${calcs.xL.toFixed(2)}}`"
+            color: colors.ink
+            fontSize: 8
+            position: r
+            bgcolor: colors.bg
+            show: calcs.ok
+
+        - Label:
+            coordinates: [calcs.xR, 6.10]
+            text: "`\\\\bf{\\\\bar{x}+\\\\sigma\\\\approx ${calcs.xR.toFixed(2)}}`"
+            color: colors.ink
+            fontSize: 8
+            position: l
+            bgcolor: colors.bg
+            show: calcs.ok
+
+        - Label:
+            coordinates: [(calcs.xL + calcs.xbar)/2, 5.6]
+            text: "`${(-calcs.sigma).toFixed(2)}`"
+            color: colors.ink
+            fontSize: 8
+            position: c
+            bgcolor: colors.bg
+            show: calcs.ok
+
+        - Label:
+            coordinates: [(calcs.xbar + calcs.xR)/2, 5.6]
+            text: "`+${calcs.sigma.toFixed(2)}`"
+            color: colors.ink
+            fontSize: 8
+            position: c
+            bgcolor: colors.bg
+            show: calcs.ok
+
+    sidebar:
+      triggerWidth: 9999
+      controls:
+        - title: ""
+          divs:
+            # ---------------------------
+            # 1) TABELA (sem acumulada)
+            # ---------------------------
+            - html: "`<figure class='sidebar-figure'>
+                <div class='sidebar-table-wrap'>
+                  <table class='sidebar-table'>
+                    <thead>
+                      <tr>
+                        <th>Valor <em>x</em></th>
+                        <th>Frequência <em>f</em></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>2</td><td>${params.f2.toFixed(0)}</td></tr>
+                      <tr><td>3</td><td>${params.f3.toFixed(0)}</td></tr>
+                      <tr><td>4</td><td>${params.f4.toFixed(0)}</td></tr>
+                      <tr>
+                        <td><b>Total</b></td>
+                        <td><b>${calcs.N.toFixed(0)}</b></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <figcaption>Distribuição discreta: valores e frequências</figcaption>
+              </figure>`"
+
+            - html: "<hr>"
+
+            # ---------------------------
+            # 2) MÉDIA
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Média:</b></div>"
+
+            - html: "`$$\\\\tiny
+                      \\\\bar{x}=\\\\frac{\\\\sum x_i f_i}{N}
+                      \\\\quad (N=${calcs.N.toFixed(0)})
+                      $$`"
+
+            - html: "`$$\\\\tiny
+                      \\\\bar{x}
+                      =\\\\frac{
+                        2\\\\cdot ${params.f2.toFixed(0)}
+                        +3\\\\cdot ${params.f3.toFixed(0)}
+                        +4\\\\cdot ${params.f4.toFixed(0)}
+                      }{${calcs.N.toFixed(0)}}
+                      =${calcs.xbar.toFixed(2)}.
+                      $$`"
+
+            - html: "<hr>"
+
+            # ---------------------------
+            # 3) DESVIO-PADRÃO (POPULACIONAL)
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Desvio-padrão:</b></div>"
+
+            - html: "`$$\\\\tiny
+                      \\\\sigma ^2=\\\\frac{1}{N}\\\\sum f_i(x_i-\\\\bar{x})^2,
+                      \\\\qquad
+                      \\\\sigma=\\\\sqrt{\\\\sigma ^2}.
+                      $$`"
+
+            - html: "`$$\\\\tiny
+                      \\\\sigma^2
+                      =\\\\frac{
+                        ${params.f2.toFixed(0)}\\\\cdot ${calcs.q2.toFixed(2)}
+                        +${params.f3.toFixed(0)}\\\\cdot ${calcs.q3.toFixed(2)}
+                        +${params.f4.toFixed(0)}\\\\cdot ${calcs.q4.toFixed(2)}
+                      }{${calcs.N.toFixed(0)}}
+                      =${calcs.sigma2.toFixed(2)},
+                      \\\\qquad
+                      \\\\sigma=${calcs.sigma.toFixed(2)}.
+                      $$`"
+
+            - html: "<hr>"
+
+            # ---------------------------
+            # 4) REFERÊNCIAS NO EIXO (x̄ ± σ)
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Pontos de referência no eixo:</b></div>"
+
+            - html: "`$$\\\\tiny
+                      \\\\bar{x}-\\\\sigma\\\\approx ${calcs.xL.toFixed(2)},
+                      \\\\qquad
+                      \\\\bar{x}+\\\\sigma\\\\approx ${calcs.xR.toFixed(2)}.
+                      $$`"

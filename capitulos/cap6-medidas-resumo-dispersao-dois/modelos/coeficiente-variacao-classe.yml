@@ -1,0 +1,292 @@
+schema: EconSchema
+aspectRatio: 1.6
+
+params:
+  - { name: f1, value: 2, min: 0, max: 8, round: 1 }
+  - { name: f2, value: 5, min: 0, max: 8, round: 1 }
+  - { name: f3, value: 3, min: 0, max: 8, round: 1 }
+
+calcs:
+  # Total e acumuladas
+  N: "(1*params.f1 + 1*params.f2 + 1*params.f3)"
+  F1: "(1*params.f1)"
+  F2: "(1*params.f1 + 1*params.f2)"
+  F3: "(1*params.f1 + 1*params.f2 + 1*params.f3)"
+
+  # Classes fixas: [0,10), [10,20), [20,30)  |  pontos médios: 5, 15, 25
+  c1: "5"
+  c2: "15"
+  c3: "25"
+
+  # Média aproximada por pontos médios
+  Sx: "((calcs.c1)*(1*params.f1) + (calcs.c2)*(1*params.f2) + (calcs.c3)*(1*params.f3))"
+  xbar: "(calcs.N > 0 ? (calcs.Sx / calcs.N) : 0)"
+
+  # Desvios e quadrados (potência é ^)
+  d1: "(calcs.c1 - calcs.xbar)"
+  d2: "(calcs.c2 - calcs.xbar)"
+  d3: "(calcs.c3 - calcs.xbar)"
+  q1: "(calcs.d1 ^ 2)"
+  q2: "(calcs.d2 ^ 2)"
+  q3: "(calcs.d3 ^ 2)"
+
+  # Σ f_j (c_j - xbar)^2
+  sumSqW: "((1*params.f1)*calcs.q1 + (1*params.f2)*calcs.q2 + (1*params.f3)*calcs.q3)"
+
+  # σ² e σ (populacional)
+  sigma2: "(calcs.N > 0 ? (calcs.sumSqW / calcs.N) : 0)"
+  sigma: "((calcs.sigma2) ^ 0.5)"
+
+  # Coeficiente de variação
+  CV: "(calcs.xbar != 0 ? (calcs.sigma / calcs.xbar) : 0)"
+  CVpct: "(100 * calcs.CV)"
+
+  # Colchete: xbar ± sigma (com clamp em [0,30])
+  xL: "(calcs.xbar - calcs.sigma)"
+  xR: "(calcs.xbar + calcs.sigma)"
+  xLdraw: "(calcs.xL < 0 ? 0 : (calcs.xL > 30 ? 30 : calcs.xL))"
+  xRdraw: "(calcs.xR < 0 ? 0 : (calcs.xR > 30 ? 30 : calcs.xR))"
+
+  ok: "(calcs.N > 0)"
+
+  # y do rótulo f dentro da barra (evita colidir quando f é pequeno)
+  f1Y: "(params.f1 > 0.9 ? (1*params.f1 - 0.55) : (1*params.f1 + 0.35))"
+  f2Y: "(params.f2 > 0.9 ? (1*params.f2 - 0.55) : (1*params.f2 + 0.35))"
+  f3Y: "(params.f3 > 0.9 ? (1*params.f3 - 0.55) : (1*params.f3 + 0.35))"
+
+colors:
+  ink: "'#111827'"
+  inkSoft: "'#64748b'"
+  grid: "'#64748b'"
+  bg: "'#ffffff'"
+  bar: "'#111827'"
+
+layout:
+  OneWideGraphPlusSidebar:
+    graph:
+      xAxis: { min: -1, max: 30, ticks: 0, show: false }
+      yAxis: { min: -1.6, max: 8, ticks: 0, show: false }
+
+      objects:
+        # Grid horizontal (até 8)
+        - Segment: { a: [0, 2], b: [30, 2], color: colors.grid, strokeWidth: 0.5 }
+        - Segment: { a: [0, 4], b: [30, 4], color: colors.grid, strokeWidth: 0.5 }
+        - Segment: { a: [0, 6], b: [30, 6], color: colors.grid, strokeWidth: 0.5 }
+        - Segment: { a: [0, 8], b: [30, 8], color: colors.grid, strokeWidth: 0.5 }
+
+        - Label: { coordinates: [0, 2], text: "'2'", color: colors.inkSoft, fontSize: 11, position: r, bgcolor: colors.bg }
+        - Label: { coordinates: [0, 4], text: "'4'", color: colors.inkSoft, fontSize: 11, position: r, bgcolor: colors.bg }
+        - Label: { coordinates: [0, 6], text: "'6'", color: colors.inkSoft, fontSize: 11, position: r, bgcolor: colors.bg }
+        - Label: { coordinates: [0, 8], text: "'8'", color: colors.inkSoft, fontSize: 11, position: r, bgcolor: colors.bg }
+
+        # Eixos (manual)
+        - Segment: { a: [0, 0], b: [30, 0], color: colors.inkSoft, strokeWidth: 2 }
+        - Segment: { a: [0, 0], b: [0, 8],  color: colors.inkSoft, strokeWidth: 2 }
+
+        - Segment: { a: [0,  -0.12], b: [0,  0.12], color: colors.inkSoft, strokeWidth: 2 }
+        - Segment: { a: [10, -0.12], b: [10, 0.12], color: colors.inkSoft, strokeWidth: 2 }
+        - Segment: { a: [20, -0.12], b: [20, 0.12], color: colors.inkSoft, strokeWidth: 2 }
+        - Segment: { a: [30, -0.12], b: [30, 0.12], color: colors.inkSoft, strokeWidth: 2 }
+
+        - Label: { coordinates: [0, 0],  text: "'0'",  color: colors.inkSoft, fontSize: 11, position: t, bgcolor: colors.bg }
+        - Label: { coordinates: [10, 0], text: "'10'", color: colors.inkSoft, fontSize: 11, position: t, bgcolor: colors.bg }
+        - Label: { coordinates: [20, 0], text: "'20'", color: colors.inkSoft, fontSize: 11, position: t, bgcolor: colors.bg }
+        - Label: { coordinates: [30, 0], text: "'30'", color: colors.inkSoft, fontSize: 11, position: t, bgcolor: colors.bg }
+
+        # Rótulos das classes
+        - Label: { coordinates: [5,  -0.85], text: "'[0,10)'",  color: colors.ink, fontSize: 11, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [15, -0.85], text: "'[10,20)'", color: colors.ink, fontSize: 11, position: c, bgcolor: colors.bg }
+        - Label: { coordinates: [25, -0.85], text: "'[20,30)'", color: colors.ink, fontSize: 11, position: c, bgcolor: colors.bg }
+
+        # Barras (largura 10) — drag clamp 0..8
+        - Rectangle:
+            x1: 0
+            x2: 10
+            y1: 0
+            y2: params.f1
+            fill: colors.bar
+            opacity: 1
+            drag:
+              - directions: y
+                param: f1
+                expression: "(drag.y < 0 ? 0 : (drag.y > 8 ? 8 : drag.y))"
+
+        - Rectangle:
+            x1: 10
+            x2: 20
+            y1: 0
+            y2: params.f2
+            fill: colors.bar
+            opacity: 1
+            drag:
+              - directions: y
+                param: f2
+                expression: "(drag.y < 0 ? 0 : (drag.y > 8 ? 8 : drag.y))"
+
+        - Rectangle:
+            x1: 20
+            x2: 30
+            y1: 0
+            y2: params.f3
+            fill: colors.bar
+            opacity: 1
+            drag:
+              - directions: y
+                param: f3
+                expression: "(drag.y < 0 ? 0 : (drag.y > 8 ? 8 : drag.y))"
+
+        # rótulos f
+        - Label: { coordinates: [5,  calcs.f1Y], text: "`\\\\bf{f}=${params.f1.toFixed(0)}`", color: white, bgcolor: colors.ink, fontSize: 10, position: c }
+        - Label: { coordinates: [15, calcs.f2Y], text: "`\\\\bf{f}=${params.f2.toFixed(0)}`", color: white, bgcolor: colors.ink, fontSize: 10, position: c }
+        - Label: { coordinates: [25, calcs.f3Y], text: "`\\\\bf{f}=${params.f3.toFixed(0)}`", color: white, bgcolor: colors.ink, fontSize: 10, position: c }
+
+        # Linha da média (tracejada)
+        - Segment:
+            a: [calcs.xbar, 0]
+            b: [calcs.xbar, 8]
+            color: colors.inkSoft
+            strokeWidth: 2
+            lineStyle: dashed
+            show: calcs.ok
+
+        # CV acima da média
+        - Label:
+            coordinates: [calcs.xbar, 8]
+            text: "`CV=${calcs.CV.toFixed(2)}`"
+            color: colors.ink
+            fontSize: 11
+            position: b
+            bgcolor: colors.bg
+            show: calcs.ok
+
+        # Rótulo da média (abaixado)
+        - Label:
+            coordinates: [calcs.xbar, 7.42]
+            text: "`\\\\bar{X}=${calcs.xbar.toFixed(2)}`"
+            color: colors.ink
+            fontSize: 11
+            position: b
+            bgcolor: colors.bg
+            show: calcs.ok
+
+        # Colchete do desvio-padrão (para referência visual)
+        - Segment: { a: [calcs.xLdraw, 7.10], b: [calcs.xbar, 7.10], color: colors.ink, strokeWidth: 2.5, show: calcs.ok }
+        - Segment: { a: [calcs.xbar,   7.10], b: [calcs.xRdraw, 7.10], color: colors.ink, strokeWidth: 2.5, show: calcs.ok }
+
+        - Segment: { a: [calcs.xLdraw, 6.75], b: [calcs.xLdraw, 7.45], color: colors.ink, strokeWidth: 2, show: calcs.ok }
+        - Segment: { a: [calcs.xbar,   6.75], b: [calcs.xbar,   7.45], color: colors.ink, strokeWidth: 2, show: calcs.ok }
+        - Segment: { a: [calcs.xRdraw, 6.75], b: [calcs.xRdraw, 7.45], color: colors.ink, strokeWidth: 2, show: calcs.ok }
+
+        - Label:
+            coordinates: [calcs.xL, 7.10]
+            text: "`\\\\mathbf{\\\\bar{X}-\\\\sigma\\\\approx ${calcs.xL.toFixed(2)}}`"
+            color: colors.ink
+            fontSize: 10
+            position: r
+            bgcolor: colors.bg
+            show: calcs.ok
+
+        - Label:
+            coordinates: [calcs.xR, 7.10]
+            text: "`\\\\mathbf{\\\\bar{X}+\\\\sigma\\\\approx ${calcs.xR.toFixed(2)}}`"
+            color: colors.ink
+            fontSize: 10
+            position: l
+            bgcolor: colors.bg
+            show: calcs.ok
+
+        - Label:
+            coordinates: [(calcs.xLdraw + calcs.xbar)/2, 6.68]
+            text: "`${(-calcs.sigma).toFixed(2)}`"
+            color: colors.ink
+            fontSize: 10
+            position: c
+            bgcolor: colors.bg
+            show: calcs.ok
+
+        - Label:
+            coordinates: [(calcs.xbar + calcs.xRdraw)/2, 6.68]
+            text: "`+${calcs.sigma.toFixed(2)}`"
+            color: colors.ink
+            fontSize: 10
+            position: c
+            bgcolor: colors.bg
+            show: calcs.ok
+
+    sidebar:
+      triggerWidth: 9999
+      controls:
+        - title: ""
+          divs:
+            - html: "`<figure class='sidebar-figure'>
+                <div class='sidebar-table-wrap'>
+                  <table class='sidebar-table'>
+                    <thead>
+                      <tr>
+                        <th>Classe</th>
+                        <th>Frequência <em>f</em></th>
+                        <th>Ponto médio <em>c</em></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>[0,10)</td>   <td>${params.f1.toFixed(0)}</td><td>5</td></tr>
+                      <tr><td>[10,20)</td>  <td>${params.f2.toFixed(0)}</td><td>15</td></tr>
+                      <tr><td>[20,30)</td>  <td>${params.f3.toFixed(0)}</td><td>25</td></tr>
+                      <tr>
+                        <td><b>Total</b></td>
+                        <td><b>${calcs.N.toFixed(0)}</b></td>
+                        <td>—</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <figcaption>Classes, frequências e pontos médios</figcaption>
+              </figure>`"
+
+            - html: "<hr>"
+
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Média (aprox.):</b></div>"
+            - html: "`$$\\\\small
+                      \\\\bar{x}\\\\approx\\\\frac{\\\\sum c_j f_j}{N}
+                      \\\\quad (N=${calcs.N.toFixed(0)})
+                      $$`"
+            - html: "`$$\\\\small
+                      \\\\bar{x}
+                      \\\\approx
+                      \\\\frac{
+                        5\\\\cdot ${params.f1.toFixed(0)}
+                        +15\\\\cdot ${params.f2.toFixed(0)}
+                        +25\\\\cdot ${params.f3.toFixed(0)}
+                      }{${calcs.N.toFixed(0)}}
+                      =${calcs.xbar.toFixed(2)}.
+                      $$`"
+
+            - html: "<hr>"
+
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Desvio-padrão (aprox.):</b></div>"
+            - html: "`$$\\\\small
+                      \\\\sigma^2\\\\approx\\\\frac{1}{N}\\\\sum f_j(c_j-\\\\bar{x})^2,
+                      \\\\qquad
+                      \\\\sigma=\\\\sqrt{\\\\sigma^2}.
+                      $$`"
+            - html: "`$$\\\\small
+                      \\\\sigma^2
+                      \\\\approx
+                      \\\\frac{
+                        ${params.f1.toFixed(0)}\\\\cdot ${calcs.q1.toFixed(2)}
+                        +${params.f2.toFixed(0)}\\\\cdot ${calcs.q2.toFixed(2)}
+                        +${params.f3.toFixed(0)}\\\\cdot ${calcs.q3.toFixed(2)}
+                      }{${calcs.N.toFixed(0)}}
+                      =${calcs.sigma2.toFixed(2)},
+                      \\\\qquad
+                      \\\\sigma=${calcs.sigma.toFixed(2)}.
+                      $$`"
+
+            - html: "<hr>"
+
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Coeficiente de variação:</b></div>"
+            - html: "$$\\small CV=\\frac{\\sigma}{\\bar{x}} $$"
+            - html: "`$$\\\\small
+                      CV=\\\\frac{${calcs.sigma.toFixed(2)}}{${calcs.xbar.toFixed(2)}}=${calcs.CV.toFixed(2)}
+                      \\\\qquad (\\\\approx ${calcs.CVpct.toFixed(1)}\\\\%)
+                      $$`"
