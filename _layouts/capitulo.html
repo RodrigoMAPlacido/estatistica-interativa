@@ -98,6 +98,39 @@
     }
   });
 </script>
+<!-- apoiar -->
+<script src="{{ '/js/apoiar.js' | relative_url }}"></script>
+<div id="support-widget" class="support-widget" aria-label="Apoiar o projeto">
+  <!-- Hint: TEXTO + SETA (um bloco só) -->
+  <div  id="support-hint" class="support-hint" role="note" aria-hidden="false">
+    <div class="support-hint__text">
+      Este projeto valeria<br>
+      um refrigerante<br>
+      para você?
+    </div>
+
+<svg class="support-hint__arrow" viewBox="0 0 100 120" aria-hidden="true">
+  <!-- arco suave (sem “quebra”), terminando com tangente para cima-direita -->
+  <path d="M46,112
+           C20,96 16,64 30,44
+           C42,26 64,26 84,36" />
+  <!-- ponta alinhada à tangente final, com vértice em (84,36) -->
+  <path d="M74,26 L84,36 L72,44" />
+</svg>
+
+  </div>
+
+  <!-- Botão fixo -->
+  <a
+    id="support-button"
+    class="support-button"
+    href=""
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    Apoiar
+  </a>
+</div>
 
 <div id="tts-speed-btn">
   <span id="tts-speed-value">1.0×</span>
