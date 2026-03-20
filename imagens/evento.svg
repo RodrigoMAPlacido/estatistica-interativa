@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ===========================================
+   EVENTOS (DADO) — padrão unificado (u-*/a-*)
+   - Dois painéis lado a lado, cada um com 3 faces visíveis (como “Espaço amostral”)
+   - Esquerda: Evento A (par) → {2,4,6}
+   - Direita : Evento B (≥4) → {4,5,6}
+
+   Animação:
+   1) Traçado dos quadros (k-drawLine)
+   2) Textos com stroke + fill “anti-vazio” (MESMO PADRÃO do SVG "Resultados possíveis"):
+      - fill começa ANTES e chega a 1 no fim do traço
+      - stroke some logo após o fill “assentar” (corte instantâneo)
+   3) Pips aparecem por corte (sem semi-opacidade)
+   =========================================== -->
+<svg viewBox="0 0 1180 320" xmlns="http://www.w3.org/2000/svg"
+     role="img" aria-labelledby="title desc" style="background:transparent">
+
+  <title id="title">Eventos no espaço amostral de um dado</title>
+  <desc id="desc">
+    Dois painéis. À esquerda: Evento A (obter número par) com as faces 2, 4 e 6; notação A = {2,4,6}.
+    À direita: Evento B (obter pelo menos 4) com as faces 4, 5 e 6; notação B = {4,5,6}.
+    Quadros são traçados; textos desenham e preenchem sem “vazio”; pips aparecem sem sombras.
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#1f2937;
+        --font:"et-book","ETBembo","Georgia",serif;
+
+        --cycle:8s;
+        --ease:ease-in-out;
+
+        --dash:4000;     /* maior que o perímetro dos retângulos */
+        --dashText:900;  /* “comprimento virtual” do texto */
+      }
+
+      /* ===== Base/utilitários ===== */
+      text{ font-family:var(--font); fill:var(--ink); user-select:none; }
+      .u-stroke{ stroke:var(--ink); fill:none; stroke-linecap:round; stroke-linejoin:round; }
+      .u-center{ text-anchor:middle; dominant-baseline:middle; }
+      .u-bold{ font-weight:700; }
+      .u-italic{ font-style:italic; }
+
+      /* ===== Quadros (traçado padrão) ===== */
+      @keyframes k-drawLine{
+        0%   { stroke-dashoffset:var(--dash); opacity:0; }
+        10%  { opacity:1; }
+        42%  { stroke-dashoffset:0;           opacity:1; }
+        58%  { stroke-dashoffset:0;           opacity:1; }
+        90%  { stroke-dashoffset:var(--dash); opacity:1; }
+        100% { stroke-dashoffset:var(--dash); opacity:0; }
+      }
+      .a-draw{
+        stroke-dasharray:var(--dash);
+        stroke-dashoffset:var(--dash);
+        animation:k-drawLine var(--cycle) var(--ease) infinite both;
+        animation-delay:var(--delay,0s);
+      }
+
+      /* =========================================================
+         TEXTO (stroke + fill) — MESMO PADRÃO do "Resultados possíveis"
+         - Fill: começa a aparecer antes e chega a 1 no fim do traço (30%)
+         - Stroke: desenha até 30% e some logo após (30.8%) por corte limpo
+         ========================================================= */
+
+      @keyframes k-textFillOpacity{
+        0%,5.5% { opacity:0; }
+        6%      { opacity:0.15; }  /* já começa a surgir */
+        9.5%    { opacity:0.70; }
+        11.2%   { opacity:0.92; }
+        30%     { opacity:1; }     /* cheio no fim do traço */
+        92%     { opacity:1; }
+        94%,100%{ opacity:0; }
+      }
+
+      @keyframes k-textStrokeDrawThenOff{
+        0%    { stroke-dashoffset:var(--dashText); opacity:0; }
+        6%    { opacity:1; }
+        30%   { stroke-dashoffset:0; opacity:1; }   /* fim do traço */
+        30% { stroke-dashoffset:0; opacity:0; }   /* corte logo após o fill assentar */
+        93%   { stroke-dashoffset:0; opacity:0; }
+        94%   { stroke-dashoffset:var(--dashText); opacity:0; } /* “reset” invisível */
+        100%  { stroke-dashoffset:var(--dashText); opacity:0; }
+      }
+
+      .a-textFill{
+        opacity:0;
+        font-size:var(--fs,30px);
+        font-weight:var(--fw,600);
+        letter-spacing:var(--ls,.35px);
+        animation:k-textFillOpacity var(--cycle) linear infinite both;
+        animation-delay:var(--delay,0s);
+      }
+
+      .a-textStroke{
+        fill:transparent;
+        font-size:var(--fs,30px);
+        font-weight:var(--fw,600);
+        letter-spacing:var(--ls,.35px);
+
+        stroke:var(--ink);
+        stroke-width:.85;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+
+        stroke-dasharray:var(--dashText);
+        stroke-dashoffset:var(--dashText);
+
+        animation:k-textStrokeDrawThenOff var(--cycle) var(--ease) infinite both;
+        animation-delay:var(--delay,0s);
+      }
+
+      /* ===== Pips: aparecem por corte (sem “meio tom”) ===== */
+      .pip{ fill:var(--ink); }
+      @keyframes k-pipsCut{
+        0% { opacity:0; }
+        12% { opacity:0; }
+        32%       { opacity:1; }
+        90%       { opacity:1; }
+        90.01%    { opacity:0; }
+        100%      { opacity:0; }
+      }
+      .a-pips{
+        opacity:0;
+        animation:k-pipsCut var(--cycle) linear infinite both;
+        animation-delay:var(--delay,0s);
+      }
+
+      /* ===== Acessibilidade ===== */
+      @media (prefers-reduced-motion:reduce){
+        .a-draw,.a-pips,.a-textFill,.a-textStroke{ animation:none !important; opacity:1 !important; }
+        .a-draw{ stroke-dashoffset:0; }
+        .a-textStroke{ opacity:0 !important; }
+        .a-textFill{ opacity:1 !important; }
+      }
+    </style>
+  </defs>
+
+  <!-- ===== Títulos (duas camadas) ===== -->
+  <g style="--delay:0s">
+    <!-- A -->
+    <text x="300" y="46" class="u-center u-bold a-textFill" style="--fs:26px; --fw:700; --ls:.2px;">
+      Evento: Obter número par
+    </text>
+    <text x="300" y="46" class="u-center u-bold a-textStroke" style="--fs:26px; --fw:700; --ls:.2px;">
+      Evento: Obter número par
+    </text>
+
+    <!-- B -->
+    <text x="880" y="46" class="u-center u-bold a-textFill" style="--fs:26px; --fw:700; --ls:.2px;">
+      Evento: Obter pelo menos 4
+    </text>
+    <text x="880" y="46" class="u-center u-bold a-textStroke" style="--fs:26px; --fw:700; --ls:.2px;">
+      Evento: Obter pelo menos 4
+    </text>
+  </g>
+
+  <!-- =========================
+       PAINEL A: 2,4,6
+       ========================= -->
+  <g style="--delay:0s">
+    <!-- Face 2 -->
+    <g transform="translate(160,84)">
+      <rect x="0" y="0" width="92" height="92" rx="18" ry="18" class="u-stroke a-draw" stroke-width="2.4"/>
+      <g class="a-pips">
+        <circle class="pip" cx="28" cy="28" r="7"/>
+        <circle class="pip" cx="64" cy="64" r="7"/>
+      </g>
+    </g>
+
+    <!-- Face 4 -->
+    <g transform="translate(274,84)">
+      <rect x="0" y="0" width="92" height="92" rx="18" ry="18" class="u-stroke a-draw" stroke-width="2.4"/>
+      <g class="a-pips">
+        <circle class="pip" cx="28" cy="28" r="7"/>
+        <circle class="pip" cx="64" cy="28" r="7"/>
+        <circle class="pip" cx="28" cy="64" r="7"/>
+        <circle class="pip" cx="64" cy="64" r="7"/>
+      </g>
+    </g>
+
+    <!-- Face 6 -->
+    <g transform="translate(388,84)">
+      <rect x="0" y="0" width="92" height="92" rx="18" ry="18" class="u-stroke a-draw" stroke-width="2.4"/>
+      <g class="a-pips">
+        <circle class="pip" cx="28" cy="28" r="7"/>
+        <circle class="pip" cx="28" cy="46" r="7"/>
+        <circle class="pip" cx="28" cy="64" r="7"/>
+        <circle class="pip" cx="64" cy="28" r="7"/>
+        <circle class="pip" cx="64" cy="46" r="7"/>
+        <circle class="pip" cx="64" cy="64" r="7"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- Notação A (duas camadas) -->
+  <g style="--delay:0s">
+    <text x="300" y="268" class="u-center u-italic a-textFill" style="--fs:24px; --fw:600; --ls:.15px;">
+      A = {2, 4, 6}
+    </text>
+    <text x="300" y="268" class="u-center u-italic a-textStroke" style="--fs:24px; --fw:600; --ls:.15px;">
+      A = {2, 4, 6}
+    </text>
+  </g>
+
+  <!-- =========================
+       PAINEL B: 4,5,6
+       ========================= -->
+  <g style="--delay:0s">
+    <!-- Face 4 -->
+    <g transform="translate(740,84)">
+      <rect x="0" y="0" width="92" height="92" rx="18" ry="18" class="u-stroke a-draw" stroke-width="2.4"/>
+      <g class="a-pips">
+        <circle class="pip" cx="28" cy="28" r="7"/>
+        <circle class="pip" cx="64" cy="28" r="7"/>
+        <circle class="pip" cx="28" cy="64" r="7"/>
+        <circle class="pip" cx="64" cy="64" r="7"/>
+      </g>
+    </g>
+
+    <!-- Face 5 -->
+    <g transform="translate(854,84)">
+      <rect x="0" y="0" width="92" height="92" rx="18" ry="18" class="u-stroke a-draw" stroke-width="2.4"/>
+      <g class="a-pips">
+        <circle class="pip" cx="28" cy="28" r="7"/>
+        <circle class="pip" cx="64" cy="28" r="7"/>
+        <circle class="pip" cx="46" cy="46" r="7"/>
+        <circle class="pip" cx="28" cy="64" r="7"/>
+        <circle class="pip" cx="64" cy="64" r="7"/>
+      </g>
+    </g>
+
+    <!-- Face 6 -->
+    <g transform="translate(968,84)">
+      <rect x="0" y="0" width="92" height="92" rx="18" ry="18" class="u-stroke a-draw" stroke-width="2.4"/>
+      <g class="a-pips">
+        <circle class="pip" cx="28" cy="28" r="7"/>
+        <circle class="pip" cx="28" cy="46" r="7"/>
+        <circle class="pip" cx="28" cy="64" r="7"/>
+        <circle class="pip" cx="64" cy="28" r="7"/>
+        <circle class="pip" cx="64" cy="46" r="7"/>
+        <circle class="pip" cx="64" cy="64" r="7"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- Notação B (duas camadas) -->
+  <g style="--delay:0s">
+    <text x="880" y="268" class="u-center u-italic a-textFill" style="--fs:24px; --fw:600; --ls:.15px;">
+      B = {4, 5, 6}
+    </text>
+    <text x="880" y="268" class="u-center u-italic a-textStroke" style="--fs:24px; --fw:600; --ls:.15px;">
+      B = {4, 5, 6}
+    </text>
+  </g>
+
+</svg>

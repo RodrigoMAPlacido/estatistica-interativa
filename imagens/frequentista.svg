@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- =========================================================
+   TÍTULO ANIMADO — "Interpretação Clássica"
+   Pedido:
+   - Quadro e texto: traçado reverso SIMÉTRICO
+   - Texto sólido: começa a desaparecer ANTES
+   - Depois começa o traçado reverso
+   - Fundo #ffffff
+   Duração: 6s (loop)
+   ========================================================= -->
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 1100 220"
+     width="1100" height="220"
+     role="img"
+     aria-labelledby="title desc">
+
+  <title id="title">Interpretação Clássica</title>
+  <desc id="desc">
+    O quadro e o texto são desenhados com traçado, o preenchimento aparece, depois o preenchimento
+    começa a sumir e só então ocorre o retraço (animação reversa) do traçado, de forma simétrica.
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --stroke:2.25;
+
+        --t:6s;
+        --ease:ease-in-out;
+
+        /* Ajuste se o traço não completar: aumente */
+        --dashText:1600;
+        --dashFrame:3600;
+      }
+
+      text{
+        font-family:"et-book","ETBook","Georgia",serif;
+        fill:var(--ink);
+        user-select:none;
+        letter-spacing:.13px;
+      }
+
+      .u-stroke{
+        fill:none;
+        stroke:var(--ink);
+        stroke-width:var(--stroke);
+        stroke-linecap:round;
+        stroke-linejoin:round;
+      }
+
+      /* =========================================================
+         TIMELINE (simétrica para traço)
+         - 0%  -> 26% : desenha (dash -> 0)
+         - 26% -> 74% : pausa
+         - 74% -> 100%: reverso (0 -> dash)
+         ========================================================= */
+
+      @keyframes k-dashSymText{
+        0%     { stroke-dashoffset:var(--dashText); }
+        56%    { stroke-dashoffset:0; opacity: 0%}
+        74%    { stroke-dashoffset:0; opacity: 0%}
+        100%   { stroke-dashoffset:var(--dashText); }
+      }
+
+      @keyframes k-dashSymFrame{
+        0%     { stroke-dashoffset:var(--dashFrame); }
+        26%    { stroke-dashoffset:0; }
+        74%    { stroke-dashoffset:0; }
+        100%   { stroke-dashoffset:var(--dashFrame); }
+      }
+
+      /* Quadro (reverso simétrico) */
+      .a-frame{
+        stroke-dasharray:var(--dashFrame);
+        stroke-dashoffset:var(--dashFrame);
+        animation:k-dashSymFrame var(--t) var(--ease) infinite;
+      }
+
+      /* Texto: stroke (reverso simétrico) */
+      .tStroke{
+        fill:transparent;
+        stroke:var(--ink);
+        stroke-width:1.0;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        stroke-dasharray:var(--dashText);
+        stroke-dashoffset:var(--dashText);
+        animation:k-dashSymText var(--t) var(--ease) infinite;
+      }
+
+      /* =========================================================
+         Texto: fill
+         - entra durante a ida
+         - fica 1 durante a pausa
+         - COMEÇA A SUMIR em 70% (antes do reverso)
+         - termina de sumir em 74% (exatamente quando o reverso começa)
+         (não é “fade-out longo”: é uma queda curta e controlada)
+         ========================================================= */
+      @keyframes k-fillOutBeforeReverse{
+        0%,14%  { opacity:0; }
+        18%     { opacity:0.35; }
+        22%     { opacity:0.80; }
+        26%     { opacity:1; }     /* cheio quando o traço termina */
+
+        85%     { opacity:1; }     /* ainda cheio */
+        87%     { opacity:0.35; }  /* começa a desaparecer */
+        89%     { opacity:0; }     /* some antes do reverso */
+
+        100%    { opacity:0; }
+      }
+      .a-fill{
+        opacity:0;
+        animation:k-fillOutBeforeReverse var(--t) linear infinite;
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        *{ animation:none !important; }
+        .a-fill{ opacity:1 !important; }
+      }
+    </style>
+  </defs>
+
+  <!-- FUNDO BRANCO -->
+  <rect x="0" y="0" width="100%" height="100%" fill="#ffffff"/>
+
+  <!-- QUADRO -->
+  <rect x="40" y="26" width="1020" height="168" rx="18" ry="18"
+        class="u-stroke a-frame"/>
+
+  <!-- TEXTO CENTRAL -->
+  <g aria-hidden="true">
+    <text x="550" y="125" text-anchor="middle" font-size="44" font-weight="700"
+          class="a-fill">
+      Interpretação Frequentista
+    </text>
+
+    <text x="550" y="125" text-anchor="middle" font-size="44" font-weight="600"
+          class="tStroke">
+      Interpretação Frequentista
+    </text>
+  </g>
+
+</svg>

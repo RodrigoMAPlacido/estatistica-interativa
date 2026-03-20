@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ===========================================
+   5.1 VARIABILIDADE AMOSTRAL E ERRO AMOSTRAL — padrão unificado (u-*/a-*)
+   - Mesma “linguagem” do exemplo: u-stroke/u-box/u-panel + a-draw + a-text
+   - Animação em blocos (3 repetições) com pausas claras
+   - População com μ fixo; amostra com scanner; régua com x̄_i e erro x̄−μ
+   =========================================== -->
+<svg viewBox="0 0 1500 750"
+     xmlns="http://www.w3.org/2000/svg"
+     role="graphics-document"
+     aria-labelledby="title desc">
+  <title id="title">Variabilidade amostral e erro amostral — animação didática (CSS only)</title>
+  <desc id="desc">
+    Três painéis: População (μ fixo), Amostra (scanner coleta o mesmo n em 3 repetições),
+    Estatística (x̄1, x̄2, x̄3) e erro amostral (distância x̄−μ). O loop mostra que x̄ varia entre repetições.
+  </desc>
+
+  <defs>
+    <!-- ======= “biblioteca” simples de pontos para o fundo da população ======= -->
+    <g id="pop-dots">
+      <!-- grade 7x5 (pontos suaves) -->
+      <circle cx="0" cy="0" r="5"/>
+      <circle cx="60" cy="0" r="5"/>
+      <circle cx="120" cy="0" r="5"/>
+      <circle cx="180" cy="0" r="5"/>
+      <circle cx="240" cy="0" r="5"/>
+      <circle cx="300" cy="0" r="5"/>
+      <circle cx="360" cy="0" r="5"/>
+
+      <circle cx="0" cy="60" r="5"/>
+      <circle cx="60" cy="60" r="5"/>
+      <circle cx="120" cy="60" r="5"/>
+      <circle cx="180" cy="60" r="5"/>
+      <circle cx="240" cy="60" r="5"/>
+      <circle cx="300" cy="60" r="5"/>
+      <circle cx="360" cy="60" r="5"/>
+
+      <circle cx="0" cy="120" r="5"/>
+      <circle cx="60" cy="120" r="5"/>
+      <circle cx="120" cy="120" r="5"/>
+      <circle cx="180" cy="120" r="5"/>
+      <circle cx="240" cy="120" r="5"/>
+      <circle cx="300" cy="120" r="5"/>
+      <circle cx="360" cy="120" r="5"/>
+
+      <circle cx="0" cy="180" r="5"/>
+      <circle cx="60" cy="180" r="5"/>
+      <circle cx="120" cy="180" r="5"/>
+      <circle cx="180" cy="180" r="5"/>
+      <circle cx="240" cy="180" r="5"/>
+      <circle cx="300" cy="180" r="5"/>
+      <circle cx="360" cy="180" r="5"/>
+
+      <circle cx="0" cy="240" r="5"/>
+      <circle cx="60" cy="240" r="5"/>
+      <circle cx="120" cy="240" r="5"/>
+      <circle cx="180" cy="240" r="5"/>
+      <circle cx="240" cy="240" r="5"/>
+      <circle cx="300" cy="240" r="5"/>
+      <circle cx="360" cy="240" r="5"/>
+    </g>
+
+    <style>
+      /* ============ Variáveis globais ============ */
+      :root{
+        --ink:#111827;
+        --font:"et-book","ETBook","Georgia",serif;
+
+        /* ciclo e easing como no exemplo */
+        --cycle:10s;
+        --ease:ease-in-out;
+
+        /* dash padrão */
+        --dash:4000;
+        --dashText:900;
+      }
+
+      /* ============ Base/utilitárias (u-*) ============ */
+      text{ font-family:var(--font); fill:var(--ink); user-select:none; }
+      .u-stroke{ stroke:var(--ink); fill:none; stroke-linecap:round; stroke-linejoin:round; }
+      .u-box{ stroke-width:3; rx:15; }
+      .u-panel{ stroke-width:2; rx:12; }
+      .u-center{ text-anchor:middle; }
+      .u-title{ font-weight:700; font-size:45px; text-anchor:middle; }
+      .u-label{ font-size:34px; font-weight:500; text-anchor:middle; }
+      .u-mini{ font-size:22px; font-weight:500; }
+      .u-amostra{ font-size:28px; font-weight:500; }
+      .u-muted{ fill:rgba(17,24,39,.65); }
+      .u-softFill{ fill:rgba(17,24,39,.03); }
+
+      /* ============ Traçado tipo tronco/ramo (a-*) ============ */
+      @keyframes k-drawLine{
+        0%   { stroke-dashoffset:var(--dash); opacity:0; }
+        10%  { opacity:1; }
+        42%  { stroke-dashoffset:0;           opacity:1; }
+        62%  { stroke-dashoffset:0;           opacity:1; }
+        92%  { stroke-dashoffset:var(--dash); opacity:1; }
+        100% { stroke-dashoffset:var(--dash); opacity:0; }
+      }
+      .a-draw{
+        stroke-dasharray:var(--dash);
+        stroke-dashoffset:var(--dash);
+        animation:k-drawLine var(--cycle) var(--ease) infinite both;
+        animation-delay:var(--delay,0s);
+      }
+
+      /* ============ Texto com stroke + fill sincronizados (a-text) ============ */
+      @keyframes k-textStroke{
+        0%   { stroke-dashoffset:var(--dashText); opacity:0; }
+        10%  { opacity:1; }
+        45%  { stroke-dashoffset:0; opacity:1; }
+        60%  { stroke-dashoffset:0; opacity:1; }
+        92%  { stroke-dashoffset:var(--dashText); opacity:1; }
+        100% { stroke-dashoffset:var(--dashText); opacity:0; }
+      }
+      @keyframes k-textFill{
+        /* fill começa antes do fim do traço; quando está quase cheio, o stroke “pode sumir”
+           (aqui, o sumiço do stroke fica visualmente “absorvido” pela transição do ciclo) */
+        0%,18%   { fill:transparent; }
+        34%,74%  { fill:var(--ink); }
+        92%,100% { fill:transparent; }
+      }
+      .a-text{
+        stroke:var(--ink);
+        stroke-width:.9;
+        fill:transparent;
+        stroke-dasharray:var(--dashText);
+        stroke-dashoffset:var(--dashText);
+        animation:
+          k-textStroke var(--cycle) var(--ease) infinite both,
+          k-textFill   var(--cycle) var(--ease) infinite both;
+        animation-delay:var(--delay,0s), var(--delay,0s);
+      }
+
+      /* ============ Blocos (3 repetições) ============ */
+      /* Calendário (em % do ciclo):
+         - 0–18%: entrada/título/conectores
+         - Bloco 1: 20–36% (anima) + 36–42% (pausa)
+         - Bloco 2: 44–60% (anima) + 60–66% (pausa)
+         - Bloco 3: 68–84% (anima+sintese) + 84–90% (pausa)
+         - 90–100%: retraço/fim
+      */
+
+      /* ===== scanner (vai e volta dentro da janela da amostra) ===== */
+      @keyframes scanMove{
+        0%,19%{ transform:translateX(0); opacity:0; }
+
+        /* bloco 1 */
+        20%{ opacity:1; transform:translateX(0); }
+        32%{ opacity:1; transform:translateX(150px); }
+        36%{ opacity:0; transform:translateX(150px); }
+
+        /* bloco 2 */
+        44%{ opacity:1; transform:translateX(0); }
+        56%{ opacity:1; transform:translateX(150px); }
+        60%{ opacity:0; transform:translateX(150px); }
+
+        /* bloco 3 */
+        68%{ opacity:1; transform:translateX(0); }
+        80%{ opacity:1; transform:translateX(150px); }
+        84%{ opacity:0; transform:translateX(150px); }
+
+        100%{ opacity:0; transform:translateX(150px); }
+      }
+      .scanner{ animation:scanMove var(--cycle) cubic-bezier(.42,0,.58,1) infinite both; }
+
+      /* ===== pontos das amostras (3 conjuntos) ===== */
+      @keyframes showS1{ 0%,22%{opacity:0} 26%,40%{opacity:1} 42%,100%{opacity:0} }
+      @keyframes showS2{ 0%,46%{opacity:0} 50%,64%{opacity:1} 66%,100%{opacity:0} }
+      @keyframes showS3{ 0%,70%{opacity:0} 74%,90%{opacity:1} 92%,100%{opacity:0} }
+
+      .s1{ opacity:0; animation:showS1 var(--cycle) var(--ease) infinite both; }
+      .s2{ opacity:0; animation:showS2 var(--cycle) var(--ease) infinite both; }
+      .s3{ opacity:0; animation:showS3 var(--cycle) var(--ease) infinite both; }
+
+      /* ===== marcadores x̄ e erro na régua ===== */
+      @keyframes showX1{ 0%,25%{opacity:0} 29%,40%{opacity:1} 42%,100%{opacity:0} }
+      @keyframes showX2{ 0%,49%{opacity:0} 53%,64%{opacity:1} 66%,100%{opacity:0} }
+      @keyframes showX3{ 0%,73%{opacity:0} 77%,90%{opacity:1} 92%,100%{opacity:0} }
+
+      .x1{ opacity:0; animation:showX1 var(--cycle) var(--ease) infinite both; }
+      .x2{ opacity:0; animation:showX2 var(--cycle) var(--ease) infinite both; }
+      .x3{ opacity:0; animation:showX3 var(--cycle) var(--ease) infinite both; }
+
+      /* ===== síntese final (bloco 3) ===== */
+      @keyframes synth{
+        0%,74%{opacity:0}
+        78%,90%{opacity:1}
+        92%,100%{opacity:0}
+      }
+      .synth{ opacity:0; animation:synth var(--cycle) var(--ease) infinite both; }
+
+      /* ===== acessibilidade ===== */
+      @media (prefers-reduced-motion:reduce){
+        .a-draw,.a-text{ animation:none; stroke-dashoffset:0; opacity:1; }
+        .a-text{ fill:var(--ink); }
+        .scanner,.s1,.s2,.s3,.x1,.x2,.x3,.synth{ animation:none; opacity:1; }
+      }
+    </style>
+
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#111827"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="100%" height="100%" fill="#ffffff"/>
+
+  <!-- ===== TÍTULO ===== -->
+  <g>
+    <rect x="390" y="60" width="720" height="110" class="u-stroke u-box"/>
+    <text x="750" y="110" class="u-title a-text u-center" style="--delay:0s">VARIABILIDADE AMOSTRAL</text>
+    <text x="750" y="155" class="u-title a-text u-center" style="--delay:0s">E ERRO AMOSTRAL</text>
+  </g>
+
+  <!-- ===== CONECTORES (com traçado animado, “tronco e ramos”) ===== -->
+  <g class="u-stroke" stroke-width="3">
+    <line x1="750" y1="170" x2="750" y2="235" class="a-draw" style="--delay:0s"/>
+    <line x1="120" y1="235" x2="1380" y2="235" class="a-draw" style="--delay:.10s"/>
+    <line x1="300" y1="235" x2="300" y2="290" class="a-draw" style="--delay:.20s"/>
+    <line x1="750" y1="235" x2="750" y2="290" class="a-draw" style="--delay:.26s"/>
+    <line x1="1200" y1="235" x2="1200" y2="290" class="a-draw" style="--delay:.32s"/>
+  </g>
+
+  <!-- =========================================================
+       PAINEL 1: POPULAÇÃO (μ fixo)
+       ========================================================= -->
+  <g>
+    <rect x="120" y="290" width="360" height="400" class="u-panel u-stroke"/>
+    <text x="300" y="340" class="u-label">POPULAÇÃO</text>
+
+    <!-- caixa interna -->
+    <rect x="170" y="390" width="260" height="220" class="u-stroke" rx="10" fill="rgba(17,24,39,.03)"/>
+
+    <!-- fundo de pontos (suave) -->
+    <g fill="rgba(17,24,39,.18)" transform="translate(190,410) scale(.58)">
+      <use href="#pop-dots" x="0" y="0"/>
+    </g>
+
+    <!-- μ fixo como “linha de referência” -->
+    <g class="u-stroke" stroke-width="2.4" opacity=".85">
+      <line x1="300" y1="410" x2="300" y2="600"/>
+      <circle cx="300" cy="430" r="6" fill="#111827"/>
+    </g>
+    <text x="320" y="440" class="u-amostra">μ</text>
+    <text x="300" y="650" class="u-mini u-muted u-center">parâmetro fixo no modelo</text>
+  </g>
+
+  <!-- =========================================================
+       PAINEL 2: AMOSTRA (mesmo n) — scanner + 3 conjuntos
+       ========================================================= -->
+  <g>
+    <rect x="570" y="290" width="360" height="400" class="u-panel u-stroke"/>
+    <text x="750" y="340" class="u-label">AMOSTRA</text>
+    <text x="750" y="372" class="u-mini u-muted u-center">(a coleta é repetida)</text>
+
+    <!-- universo “de onde tira” (apenas decorativo) -->
+    <rect x="620" y="410" width="260" height="220" class="u-stroke" rx="10" fill="rgba(17,24,39,.03)"/>
+   
+    <g class="x1">
+      <text x="750" y="670" class="u-amostra u-center">x̄₁</text>
+    </g>
+        <!-- x̄2 (à esquerda) + erro -->
+    <g class="x2">
+      <text x="750" y="670" class="u-amostra u-center">x̄₂</text>
+    </g>
+
+    <!-- x̄3 (mais à direita) + erro -->
+    <g class="x3">
+      <text x="750" y="670" class="u-amostra u-center">x̄₃</text>
+    </g>
+
+    <!-- scanner (móvel) -->
+    <g class="scanner">
+      <rect x="635" y="425" width="90" height="190" class="u-stroke" rx="12" fill="rgba(17,24,39,.10)"/>
+    </g>
+
+    <!-- Conjunto 1 (bloco 1) — variação de tons e tamanhos -->
+    <g class="s1">
+      <circle cx="670" cy="460" r="6" fill="rgba(17,24,39,.80)"/>
+      <circle cx="705" cy="520" r="5" fill="rgba(17,24,39,.55)"/>
+      <circle cx="740" cy="480" r="7" fill="rgba(17,24,39,.35)"/>
+      <circle cx="780" cy="560" r="5.5" fill="rgba(17,24,39,.65)"/>
+      <circle cx="820" cy="500" r="6.5" fill="rgba(17,24,39,.45)"/>
+      <circle cx="850" cy="585" r="5" fill="rgba(17,24,39,.75)"/>
+    </g>
+
+    <!-- Conjunto 2 (bloco 2) -->
+    <g class="s2">
+      <circle cx="665" cy="575" r="6.5" fill="rgba(17,24,39,.70)"/>
+      <circle cx="700" cy="470" r="5" fill="rgba(17,24,39,.40)"/>
+      <circle cx="735" cy="535" r="6" fill="rgba(17,24,39,.85)"/>
+      <circle cx="780" cy="490" r="7" fill="rgba(17,24,39,.55)"/>
+      <circle cx="820" cy="595" r="5" fill="rgba(17,24,39,.35)"/>
+      <circle cx="855" cy="520" r="6" fill="rgba(17,24,39,.65)"/>
+    </g>
+
+    <!-- Conjunto 3 (bloco 3) -->
+    <g class="s3">
+      <circle cx="670" cy="490" r="5.5" fill="rgba(17,24,39,.60)"/>
+      <circle cx="705" cy="585" r="7" fill="rgba(17,24,39,.80)"/>
+      <circle cx="740" cy="455" r="6" fill="rgba(17,24,39,.35)"/>
+      <circle cx="785" cy="600" r="5" fill="rgba(17,24,39,.55)"/>
+      <circle cx="825" cy="515" r="7" fill="rgba(17,24,39,.75)"/>
+      <circle cx="855" cy="565" r="5.5" fill="rgba(17,24,39,.42)"/>
+    </g>
+  </g>
+
+  <!-- =========================================================
+       PAINEL 3: ESTATÍSTICA E ERRO (régua com μ e x̄_i)
+       ========================================================= -->
+  <g>
+    <rect x="1020" y="290" width="360" height="400" class="u-panel u-stroke"/>
+    <text x="1200" y="340" class="u-label">ESTATÍSTICA</text>
+    <text x="1200" y="372" class="u-mini u-muted u-center">x̄ e erro amostral (x̄ − μ)</text>
+
+    <!-- régua -->
+    <g class="u-stroke" stroke-width="3">
+      <line x1="1070" y1="520" x2="1330" y2="520"/>
+      <line x1="1100" y1="505" x2="1100" y2="535" stroke-width="2.2"/>
+      <line x1="1150" y1="505" x2="1150" y2="535" stroke-width="2.2"/>
+      <line x1="1200" y1="505" x2="1200" y2="535" stroke-width="2.2"/>
+      <line x1="1250" y1="505" x2="1250" y2="535" stroke-width="2.2"/>
+      <line x1="1300" y1="505" x2="1300" y2="535" stroke-width="2.2"/>
+    </g>
+
+    <!-- μ fixo no centro -->
+    <g>
+      <line x1="1200" y1="450" x2="1200" y2="590" class="u-stroke" stroke-width="2.2" opacity=".8"/>
+      <circle cx="1200" cy="520" r="7" fill="#111827"/>
+      <text x="1200" y="440" class="u-mini u-center">μ</text>
+    </g>
+
+    <!-- x̄1 (à direita) + erro -->
+    <g class="x1">
+      <circle cx="1260" cy="520" r="8" fill="#111827"/>
+      <text x="1260" y="480" class="u-mini u-center">x̄₁</text>
+      <line x1="1200" y1="560" x2="1260" y2="560" class="u-stroke" stroke-width="2.6" marker-end="url(#arrow)"/>
+      <text x="1230" y="596" class="u-mini u-center u-muted">erro</text>
+    </g>
+
+    <!-- x̄2 (à esquerda) + erro -->
+    <g class="x2">
+      <circle cx="1145" cy="520" r="8" fill="#111827"/>
+      <text x="1145" y="480" class="u-mini u-center">x̄₂</text>
+      <line x1="1200" y1="560" x2="1145" y2="560" class="u-stroke" stroke-width="2.6" marker-end="url(#arrow)"/>
+      <text x="1172" y="596" class="u-mini u-center u-muted">erro</text>
+    </g>
+
+    <!-- x̄3 (mais à direita) + erro -->
+    <g class="x3">
+      <circle cx="1295" cy="520" r="8" fill="#111827"/>
+      <text x="1295" y="480" class="u-mini u-center">x̄₃</text>
+      <line x1="1200" y1="560" x2="1295" y2="560" class="u-stroke" stroke-width="2.6" marker-end="url(#arrow)"/>
+      <text x="1248" y="596" class="u-mini u-center u-muted">erro</text>
+    </g>
+
+    <!-- síntese (bloco 3) -->
+    <g class="synth">
+      <text x="1200" y="640" class="u-mini u-center">
+        x̄ varia entre repetições
+      </text>
+      <text x="1200" y="665" class="u-mini u-center u-muted" style="font-size:18px">
+        (variabilidade amostral)
+      </text>
+    </g>
+  </g>
+</svg>

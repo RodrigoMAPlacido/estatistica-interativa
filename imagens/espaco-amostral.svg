@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ===========================================
+   ESPAÇO AMOSTRAL (DADO) — 6 FACES EM LINHA
+   - Sem contorno externo (sem painel)
+   - Título centralizado e estático (sem animação)
+   - Faces surgem em sequência (contorno com traçado; pips entram depois)
+   - Padrão visual compatível com u-*/a-* (sem precisar do painel)
+   =========================================== -->
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 820 220"
+     width="820" height="220"
+     role="img"
+     aria-labelledby="title desc"
+     style="background:#ffffff">
+
+  <title id="title">Espaço amostral</title>
+  <desc id="desc">
+    Seis faces de dado aparecem em sequência em uma linha, representando o espaço amostral
+    do lançamento de um dado quando se registra o número da face superior.
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --paper:#ffffff;
+        --font:"et-book","ETBook","Georgia",serif;
+
+        --cycle:7.2s;
+        --ease:ease-in-out;
+
+        --dash:900;
+
+        /* atrasos */
+        --delay-faces:.15s;
+        --step:.32s;
+        --pip-offset:.26s;
+      }
+
+      /* base */
+      text{ font-family:var(--font); fill:var(--ink); user-select:none; letter-spacing:.13px }
+      .u-center{ text-anchor:middle }
+      .u-bold{ font-weight:700 }
+      .u-stroke{ stroke:var(--ink); fill:none; stroke-linecap:round; stroke-linejoin:round; stroke-width: 2px }
+      .u-ns{ vector-effect:non-scaling-stroke }
+
+      /* contorno das faces (traçado) */
+      @keyframes k-drawFace{
+        0%   { stroke-dashoffset:var(--dash); opacity:0; }
+        12%  { opacity:1; }
+        40%  { stroke-dashoffset:0;          opacity:1; }
+        78%  { stroke-dashoffset:0;          opacity:1; }
+        96%  { stroke-dashoffset:var(--dash); opacity:1; }
+        100% { stroke-dashoffset:var(--dash); opacity:0; }
+      }
+      .a-faceOutline{
+        stroke-dasharray:var(--dash);
+        stroke-dashoffset:var(--dash);
+        animation:k-drawFace var(--cycle) var(--ease) infinite both;
+        animation-delay:var(--delay,0s);
+      }
+
+      /* pips: aparecem depois do contorno da face */
+      @keyframes k-pip{
+        0%,18% { opacity:0; }
+        34%,82%{ opacity:1; }
+        100%   { opacity:0; }
+      }
+      .a-pip{
+        opacity:0;
+        animation:k-pip var(--cycle) var(--ease) infinite both;
+        animation-delay:var(--delay,0s);
+      }
+      .pip{ fill:var(--ink); }
+
+      @media (prefers-reduced-motion:reduce){
+        .a-faceOutline,.a-pip{ animation:none !important; opacity:1 }
+      }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="100%" height="100%" fill="#ffffff"/>
+
+  <!-- título estático -->
+  <text x="410" y="52" font-size="30" class="u-center u-bold">Espaço amostral</text>
+
+  <!-- =======================================================
+       6 faces em linha
+       - início x = 85
+       - y = 86
+       - tamanho = 90
+       - gap = 20
+       ======================================================= -->
+
+  <!-- FACE 1 -->
+  <g transform="translate(85 86)">
+    <rect x="0" y="0" width="90" height="90" rx="16"
+          class="u-stroke u-ns a-faceOutline"
+          style="--delay:calc(var(--delay-faces) + 0*var(--step))"/>
+    <g class="a-pip" style="--delay:calc(var(--delay-faces) + 0*var(--step) + var(--pip-offset))">
+      <circle class="pip" cx="45" cy="45" r="7.8"/>
+    </g>
+  </g>
+
+  <!-- FACE 2 -->
+  <g transform="translate(195 86)">
+    <rect x="0" y="0" width="90" height="90" rx="16"
+          class="u-stroke u-ns a-faceOutline"
+          style="--delay:calc(var(--delay-faces) + 1*var(--step))"/>
+    <g class="a-pip" style="--delay:calc(var(--delay-faces) + 1*var(--step) + var(--pip-offset))">
+      <circle class="pip" cx="20" cy="20" r="7.8"/>
+      <circle class="pip" cx="70" cy="70" r="7.8"/>
+    </g>
+  </g>
+
+  <!-- FACE 3 -->
+  <g transform="translate(305 86)">
+    <rect x="0" y="0" width="90" height="90" rx="16"
+          class="u-stroke u-ns a-faceOutline"
+          style="--delay:calc(var(--delay-faces) + 2*var(--step))"/>
+    <g class="a-pip" style="--delay:calc(var(--delay-faces) + 2*var(--step) + var(--pip-offset))">
+      <circle class="pip" cx="20" cy="20" r="7.8"/>
+      <circle class="pip" cx="45" cy="45" r="7.8"/>
+      <circle class="pip" cx="70" cy="70" r="7.8"/>
+    </g>
+  </g>
+
+  <!-- FACE 4 -->
+  <g transform="translate(415 86)">
+    <rect x="0" y="0" width="90" height="90" rx="16"
+          class="u-stroke u-ns a-faceOutline"
+          style="--delay:calc(var(--delay-faces) + 3*var(--step))"/>
+    <g class="a-pip" style="--delay:calc(var(--delay-faces) + 3*var(--step) + var(--pip-offset))">
+      <circle class="pip" cx="20" cy="20" r="7.8"/>
+      <circle class="pip" cx="70" cy="20" r="7.8"/>
+      <circle class="pip" cx="20" cy="70" r="7.8"/>
+      <circle class="pip" cx="70" cy="70" r="7.8"/>
+    </g>
+  </g>
+
+  <!-- FACE 5 -->
+  <g transform="translate(525 86)">
+    <rect x="0" y="0" width="90" height="90" rx="16"
+          class="u-stroke u-ns a-faceOutline"
+          style="--delay:calc(var(--delay-faces) + 4*var(--step))"/>
+    <g class="a-pip" style="--delay:calc(var(--delay-faces) + 4*var(--step) + var(--pip-offset))">
+      <circle class="pip" cx="20" cy="20" r="7.8"/>
+      <circle class="pip" cx="70" cy="20" r="7.8"/>
+      <circle class="pip" cx="45" cy="45" r="7.8"/>
+      <circle class="pip" cx="20" cy="70" r="7.8"/>
+      <circle class="pip" cx="70" cy="70" r="7.8"/>
+    </g>
+  </g>
+
+  <!-- FACE 6 -->
+  <g transform="translate(635 86)">
+    <rect x="0" y="0" width="90" height="90" rx="16"
+          class="u-stroke u-ns a-faceOutline"
+          style="--delay:calc(var(--delay-faces) + 5*var(--step))"/>
+    <g class="a-pip" style="--delay:calc(var(--delay-faces) + 5*var(--step) + var(--pip-offset))">
+      <circle class="pip" cx="20" cy="20" r="7.8"/>
+      <circle class="pip" cx="20" cy="45" r="7.8"/>
+      <circle class="pip" cx="20" cy="70" r="7.8"/>
+      <circle class="pip" cx="70" cy="20" r="7.8"/>
+      <circle class="pip" cx="70" cy="45" r="7.8"/>
+      <circle class="pip" cx="70" cy="70" r="7.8"/>
+    </g>
+  </g>
+
+</svg>

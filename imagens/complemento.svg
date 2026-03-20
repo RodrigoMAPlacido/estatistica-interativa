@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ===========================================
+   PROBABILIDADE DO COMPLEMENTO — seguindo o MESMO padrão do seu SVG
+   - Reverso por retraço (stroke-dashoffset), NÃO fade-out
+   - Sem animação do quadro de Ω (formas estáticas)
+   - Delay longo (pausa antes do retraço final)
+   - Mesmos nomes/classes/keyframes do modelo
+   =========================================== -->
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 520 300"
+     width="570" height="250"
+     role="img"
+     aria-labelledby="title desc"
+     style="background:#ffffff">
+
+  <title id="title">Probabilidade do complemento</title>
+  <desc id="desc">
+    Ω contém o evento A. O complemento A^c é a parte de Ω fora de A.
+    Título e rodapé seguem o padrão anti-vazio com retraço final e delay longo.
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --font:"et-book","ETBook","Georgia",serif;
+
+        --cycle:10.8s;
+        --ease:ease-in-out;
+
+        /* dashes (sobra é bom; título é maior aqui) */
+        --dashTitle:100;
+        --dashLbl:100;
+      }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        user-select:none;
+        letter-spacing:.13px;
+      }
+
+      .u-center{ text-anchor:middle; }
+      .u-bold{ font-weight:700; }
+
+      /* formas estáticas */
+      .u-thin{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        stroke-width:1.5px;
+      }
+
+      /* fills (janela temporal; degraus, sem “sumir por fade contínuo”) */
+      @keyframes k-softFillCut{
+        0%,10%  { opacity:0; }
+        20%     { opacity:1; }
+        75.99%  { opacity:1; }
+        86%     { opacity:0.5; }
+        100%    { opacity:0; }
+      }
+      .a-softFillCut{
+        opacity:0;
+        animation:k-softFillCut var(--cycle) linear infinite both;
+      }
+
+      /* tons EI */
+      .fillComp{ fill:rgba(17,24,39,0.07); } /* A^c */
+      .fillA{ fill:rgba(4, 6, 10, 0.29); }    /* A */
+
+      /* =========================================
+         TÍTULO — anti-vazio + delay + retraço final
+         ========================================= */
+      @keyframes k-titleFill{
+        0%,5.5% { opacity:0; }
+        6%      { opacity:0.15; }
+        9.5%    { opacity:0.70; }
+        11.2%   { opacity:0.92; }
+        11.3%     { opacity:1; }
+        85.99%  { opacity:1; }
+        95%     { opacity:0.5; }
+        100%    { opacity:0; }
+      }
+      .a-titleFill{
+        opacity:0;
+        animation:k-titleFill var(--cycle) linear infinite both;
+      }
+
+      @keyframes k-titleStrokeDrawPauseRetract{
+        0%     { stroke-dashoffset:var(--dashTitle); opacity:1; }
+        10%    { stroke-dashoffset:0; opacity:1; }
+
+        /* some após o fill “assentar” */
+        11.8%  { stroke-dashoffset:0; opacity:0; }
+
+        /* DELAY */
+        85.99% { stroke-dashoffset:0; opacity:0; }
+
+        /* retraço final */
+        86%    { stroke-dashoffset:0; opacity:1; }
+        100%   { stroke-dashoffset:var(--dashTitle); opacity:1; }
+      }
+      .a-titleStroke{
+        fill:transparent;
+        stroke:var(--ink);
+        stroke-width:.25;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        stroke-dasharray:var(--dashTitle);
+        stroke-dashoffset:var(--dashTitle);
+        animation:k-titleStrokeDrawPauseRetract var(--cycle) var(--ease) infinite both;
+      }
+
+      /* =========================================
+         RÓTULO/RODAPÉ — usa o bloco lbl do seu padrão
+         ========================================= */
+      @keyframes k-lblFill{
+        0%,26%  { opacity:0; }
+        28%     { opacity:0.15; }
+        31.5%   { opacity:0.70; }
+        33%     { opacity:0.92; }
+        40%     { opacity:1; }
+        85.99%  { opacity:1; }
+        95%     { opacity:0.5; }
+        100%    { opacity:0; }
+      }
+      .a-lblFill{
+        opacity:0;
+        animation:k-lblFill var(--cycle) linear infinite both;
+      }
+
+      @keyframes k-lblStrokeDrawPauseRetract{
+        0%     { stroke-dashoffset:var(--dashLbl); opacity:0; }
+        28%    { opacity:1; }
+        40%    { stroke-dashoffset:0; opacity:1; }
+
+        40.8%  { stroke-dashoffset:0; opacity:0; }
+        85.99% { stroke-dashoffset:0; opacity:0; }
+
+        90%    { stroke-dashoffset:0; opacity:1; }
+        100%   { stroke-dashoffset:var(--dashLbl); opacity:1; }
+      }
+      .a-lblStroke{
+        fill:transparent;
+        stroke:var(--ink);
+        stroke-width:.9;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        stroke-dasharray:var(--dashLbl);
+        stroke-dashoffset:var(--dashLbl);
+        animation:k-lblStrokeDrawPauseRetract var(--cycle) var(--ease) infinite both;
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        .a-titleFill,.a-titleStroke,.a-lblFill,.a-lblStroke,.a-softFillCut{ animation:none !important; }
+        .a-titleFill,.a-lblFill,.a-softFillCut{ opacity:1 !important; }
+        .a-titleStroke,.a-lblStroke{ opacity:0 !important; }
+      }
+    </style>
+
+    <!-- máscara do complemento: mostra Ω, mas “fura” A -->
+    <mask id="maskComp">
+      <!-- preto = invisível -->
+      <rect x="0" y="0" width="520" height="300" fill="black"/>
+      <!-- branco = visível (toda Ω) -->
+      <rect x="70" y="62" width="380" height="180" rx="16" fill="white"/>
+      <!-- furo de A (preto) -->
+      <circle cx="240" cy="155" r="56" fill="black"/>
+    </mask>
+  </defs>
+
+  <!-- fundo -->
+  <rect x="0" y="0" width="100%" height="100%" fill="#ffffff"/>
+
+  <!-- ===== título (2 camadas) ===== -->
+  <text x="260" y="38" font-size="24" class="u-center u-bold a-titleFill">Probabilidade do complemento</text>
+  <text x="260" y="38" font-size="24" class="u-center u-bold a-titleStroke">Probabilidade do complemento</text>
+
+  <!-- ===== Ω (estático) ===== -->
+  <rect x="70" y="62" width="380" height="180" rx="16" class="u-thin"/>
+  <text x="88" y="86" font-size="22" class="u-bold">Ω</text>
+
+  <!-- ===== A^c (complemento) — preenchimento via máscara ===== -->
+  <rect x="70" y="62" width="380" height="180" rx="16"
+        class="fillComp a-softFillCut" mask="url(#maskComp)"/>
+
+  <!-- ===== A (estático) ===== -->
+  <circle cx="240" cy="155" r="56" class="u-thin"/>
+  <circle cx="240" cy="155" r="56" class="fillA a-softFillCut"/>
+
+  <!-- labels internos (estáticos) -->
+  <text x="240" y="162" font-size="18" class="u-center u-bold">A</text>
+  <text x="370" y="158" font-size="18" class="u-center u-bold">A<tspan dy="-6" font-size="14">c</tspan></text>
+
+  <!-- ===== rodapé (2 camadas, mesma lógica do padrão) ===== -->
+  <text x="260" y="276" font-size="18" class="u-center u-bold a-titleFill">
+    A ∩ A<tspan dy="-6" font-size="14">c</tspan><tspan dy="6"></tspan> = ∅  e  A ∪ A<tspan dy="-6" font-size="14">c</tspan><tspan dy="6"></tspan> = Ω
+  </text>
+  <text x="260" y="276" font-size="18" class="u-center u-bold a-titleStroke">
+    A ∩ A<tspan dy="-6" font-size="14">c</tspan><tspan dy="6"></tspan> = ∅  e  A ∪ A<tspan dy="-6" font-size="14">c</tspan><tspan dy="6"></tspan> = Ω
+  </text>
+
+</svg>

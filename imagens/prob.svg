@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- =========================================================
+   SEQUÊNCIA FINAL — com PAUSAS DE 2s AO FIM DE CADA BLOCO
+   Bloco 1 (Ω)    : termina e PAUSA 2s na imagem 1
+   Bloco 2 (Evento): termina e PAUSA 2s na imagem 2
+   Bloco 3 (Razão): termina e PAUSA 2s na imagem 3
+   ========================================================= -->
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 1100 360"
+     width="1100" height="360"
+     role="img"
+     aria-labelledby="title desc"
+     style="background:#ffffff">
+
+  <title id="title">Probabilidade como medida associada a eventos</title>
+  <desc id="desc">
+    Ω aparece e fica 2s parado; evento A={2,4,6} aparece; remove 1,3,5; junta 2,4,6 e fica 2s parado;
+    some texto do evento; trio sobe; aparece imagem da razão; aparece 3/6 e fica 2s parado;
+    3/6 some; imagem some; aparece P(A)=3/6=0.5.
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --muted:#6b7280;
+        --paper:#ffffff;
+
+        --stroke:2.25;
+
+        /* duração total (agora com pausas de 2s) */
+        --t:18s;
+        --ease:ease-in-out;
+
+        --dashFrame:3600;
+        --dashText:900;
+        --dashTile:420;
+        --dashBar:1600;
+      }
+
+      /* ===== Base ===== */
+      text{
+        font-family:"et-book","ETBook","Georgia",serif;
+        fill:var(--ink);
+        user-select:none;
+        letter-spacing:.13px;
+      }
+      .u-left{ text-anchor:start; }
+      .u-center{ text-anchor:middle; }
+
+      .u-stroke{
+        fill:none;
+        stroke:var(--ink);
+        stroke-width:var(--stroke);
+        stroke-linecap:round;
+        stroke-linejoin:round;
+      }
+      .u-stroke2{
+        fill:none;
+        stroke:var(--ink);
+        stroke-width:3px;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+      }
+      .tileFill{ fill:var(--paper); }
+      .tileStroke{
+        fill:none;
+        stroke:var(--ink);
+        stroke-width:var(--stroke);
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        stroke-dasharray:var(--dashTile);
+        stroke-dashoffset:0;
+      }
+
+      .u-num{ font-size:26px; font-weight:700; }
+      .u-label{ font-size:26px; font-weight:700; }
+      .u-micro{ font-size:20px; fill:var(--muted); }
+      .u-foot{ font-size:22px; }
+
+      .u-hit{ fill: rgba(31,41,55,0.10); }
+
+      /* =========================================================
+         NOVA TIMELINE (18s) — com 3 pausas de 2s
+         (valores em % já recalculados)
+
+         Ω desenha/enche até 12.44%
+         PAUSA 1: 12.44–23.56%  (2s)
+         Ω sai:   23.56–25.11%
+
+         Evento entra até 28.22%
+         Remove 1,3,5 até 32.89%
+         Junta trio até 37.56%
+         PAUSA 2: 37.56–48.67%  (2s)
+         Texto evento sai até 53.33%
+
+         Trio sobe até 59.56%
+         Imagem razão (barra+den) desenha até 65.78%
+         "3/6" enche até 69.28%
+         PAUSA 3: 69.28–80.39%  (2s)
+         "3/6" sai até 82.72%
+         Imagem some: 85.06–86.61%
+         Final enche até 90.11%
+         Segura final até 92.83%
+         ========================================================= */
+
+      /* ===== Moldura ===== */
+      @keyframes k-frame{
+        0%   { stroke-dashoffset:var(--dashFrame); opacity:0; }
+        6%   { opacity:1; }
+        16%  { stroke-dashoffset:0;               opacity:1; }
+        100% { stroke-dashoffset:0;               opacity:1; }
+      }
+      .a-frame{
+        stroke-dasharray:var(--dashFrame);
+        stroke-dashoffset:var(--dashFrame);
+        animation:k-frame var(--t) var(--ease) infinite both;
+      }
+
+      /* ===== helper stroke texto ===== */
+      .tStroke{
+        fill:transparent;
+        stroke:var(--ink);
+        stroke-width:1.0;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        stroke-dasharray:var(--dashText);
+        stroke-dashoffset:var(--dashText);
+      }
+
+      /* ===== Ω (com PAUSA 1) ===== */
+      @keyframes k-omFill{
+        0%,2.0%   {opacity:0;}
+        4.0%      {opacity:0.15;}
+        7.0%      {opacity:0.70;}
+        9.5%      {opacity:0.92;}
+        12.44%    {opacity:1;}      /* Ω pronto */
+        23.56%    {opacity:1;}      /* PAUSA 1 (2s) */
+        25.11%    {opacity:0;}      /* some rápido */
+        100%      {opacity:0;}
+      }
+      @keyframes k-omStroke{
+        0%      { stroke-dashoffset:var(--dashText); opacity:0; }
+        0.1%    { stroke-dashoffset:var(--dashText); opacity:1; }
+        7.78%   { stroke-dashoffset:0;               opacity:1; } /* ~1.4s */
+        10.89%  { stroke-dashoffset:0;               opacity:0; } /* some quando fill ~1 */
+        100%    { stroke-dashoffset:var(--dashText); opacity:0; }
+      }
+      .a-omFill{ opacity:0; animation:k-omFill var(--t) linear infinite both; }
+      .a-omStroke{ opacity:0; animation:k-omStroke var(--t) var(--ease) infinite both; }
+
+      /* ===== Evento (com PAUSA 2) ===== */
+      @keyframes k-evFill{
+        0%,25.11% {opacity:0;}
+        26.10%    {opacity:0.15;}
+        27.20%    {opacity:0.70;}
+        27.85%    {opacity:0.92;}
+        28.22%    {opacity:1;}      /* evento pronto */
+        48.67%    {opacity:1;}      /* inclui PAUSA 2 */
+        50.50%    {opacity:0.92;}
+        52.20%    {opacity:0.70;}
+        53.00%    {opacity:0.15;}
+        53.33%    {opacity:0;}
+        100%      {opacity:0;}
+      }
+      @keyframes k-evStroke{
+        0%,25.11%  { stroke-dashoffset:var(--dashText); opacity:0; }
+        25.20%     { stroke-dashoffset:var(--dashText); opacity:1; }
+        27.85%     { stroke-dashoffset:0;               opacity:1; }
+        29.20%     { stroke-dashoffset:0;               opacity:0; }
+
+        48.67%     { stroke-dashoffset:0;               opacity:0; }
+        48.80%     { stroke-dashoffset:0;               opacity:1; }
+        53.33%     { stroke-dashoffset:var(--dashText); opacity:1; }
+        53.50%     { stroke-dashoffset:var(--dashText); opacity:0; }
+
+        100%       { stroke-dashoffset:var(--dashText); opacity:0; }
+      }
+      .a-evFill{ opacity:0; animation:k-evFill var(--t) linear infinite both; }
+      .a-evStroke{ opacity:0; animation:k-evStroke var(--t) var(--ease) infinite both; }
+
+      /* ===== Highlight ===== */
+      @keyframes k-hit{
+        0%,28.21% {opacity:0;}
+        28.22%    {opacity:1;}
+        92.83%    {opacity:1;}
+        100%      {opacity:0;}
+      }
+      .a-hit{ opacity:0; animation:k-hit var(--t) linear infinite both; }
+
+      /* ===== Remoção rápida 1,3,5 ===== */
+      @keyframes k-hideStrokeFast{
+        0%,28.22%   { stroke-dashoffset:0;               opacity:1; }
+        32.89%      { stroke-dashoffset:var(--dashTile); opacity:1; }
+        33.00%      { stroke-dashoffset:var(--dashTile); opacity:0; }
+        100%        { stroke-dashoffset:var(--dashTile); opacity:0; }
+      }
+      @keyframes k-hideBodyFast{
+        0%,32.88% { opacity:1; }
+        32.89%    { opacity:0; }
+        100%      { opacity:0; }
+      }
+      .a-hide .tileStroke{ animation:k-hideStrokeFast var(--t) var(--ease) infinite both; }
+      .a-hide .tileFill,
+      .a-hide .num{ animation:k-hideBodyFast var(--t) linear infinite both; }
+
+      /* ===== Move trio: junta (X), PAUSA 2, sobe (Y), some com a imagem ===== */
+      .face{ transform-box: fill-box; transform-origin:center; }
+
+      /* dx:
+         2: +105 ; 4: -20 ; 6: -145
+         dyUp: -38
+      */
+      @keyframes k-m2{
+        0%,32.89% { transform:translate(0px,0px);       opacity:1; }
+        37.56%    { transform:translate(105px,0px);     opacity:1; } /* juntou */
+        53.33%    { transform:translate(105px,0px);     opacity:1; } /* inclui PAUSA 2 */
+        59.56%    { transform:translate(105px,-38px);   opacity:1; } /* subiu */
+        80.06%    { transform:translate(105px,-38px);   opacity:1; } /* imagem ainda visível */
+        81.61%    { transform:translate(105px,-38px);   opacity:0; } /* some com imagem */
+        92.83%    { transform:translate(105px,-38px);   opacity:0; }
+        100%      { transform:translate(0px,0px);       opacity:0; }
+      }
+      @keyframes k-m4{
+        0%,32.89% { transform:translate(0px,0px);       opacity:1; }
+        37.56%    { transform:translate(-20px,0px);     opacity:1; }
+        53.33%    { transform:translate(-20px,0px);     opacity:1; }
+        59.56%    { transform:translate(-20px,-38px);   opacity:1; }
+        80.06%    { transform:translate(-20px,-38px);   opacity:1; }
+        81.61%    { transform:translate(-20px,-38px);   opacity:0; }
+        92.83%    { transform:translate(-20px,-38px);   opacity:0; }
+        100%      { transform:translate(0px,0px);       opacity:0; }
+      }
+      @keyframes k-m6{
+        0%,32.89% { transform:translate(0px,0px);       opacity:1; }
+        37.56%    { transform:translate(-145px,0px);    opacity:1; }
+        53.33%    { transform:translate(-145px,0px);    opacity:1; }
+        59.56%    { transform:translate(-145px,-38px);  opacity:1; }
+        80.06%    { transform:translate(-145px,-38px);  opacity:1; }
+        81.61%    { transform:translate(-145px,-38px);  opacity:0; }
+        92.83%    { transform:translate(-145px,-38px);  opacity:0; }
+        100%      { transform:translate(0px,0px);       opacity:0; }
+      }
+      .a-m2{ animation:k-m2 var(--t) var(--ease) infinite both; }
+      .a-m4{ animation:k-m4 var(--t) var(--ease) infinite both; }
+      .a-m6{ animation:k-m6 var(--t) var(--ease) infinite both; }
+
+      /* ===== Razão "3/6" (com PAUSA 3) ===== */
+      .ratio{ text-anchor:middle; font-size:28px; font-weight:700; }
+
+      @keyframes k-ratioFill{
+        0%,65.77% {opacity:0;}
+        66.20%    {opacity:0.15;}
+        67.80%    {opacity:0.70;}
+        68.60%    {opacity:0.92;}
+        69.28%    {opacity:1;}      /* 3/6 pronto */
+        80.39%    {opacity:1;}      /* PAUSA 3 (2s) */
+        81.60%    {opacity:0.70;}
+        82.30%    {opacity:0.15;}
+        82.72%    {opacity:0;}
+        100%      {opacity:0;}
+      }
+      @keyframes k-ratioStroke{
+        0%,65.77% { stroke-dashoffset:var(--dashText); opacity:0; }
+        65.90%    { stroke-dashoffset:var(--dashText); opacity:1; }
+        68.60%    { stroke-dashoffset:0;               opacity:1; }
+        69.40%    { stroke-dashoffset:0;               opacity:0; }
+
+        80.39%    { stroke-dashoffset:0;               opacity:0; }
+        80.55%    { stroke-dashoffset:0;               opacity:1; }
+        82.72%    { stroke-dashoffset:var(--dashText); opacity:1; }
+        82.90%    { stroke-dashoffset:var(--dashText); opacity:0; }
+
+        100%      { stroke-dashoffset:var(--dashText); opacity:0; }
+      }
+      .a-ratioFill{ opacity:0; animation:k-ratioFill var(--t) linear infinite both; }
+      .a-ratioStroke{ opacity:0; animation:k-ratioStroke var(--t) var(--ease) infinite both; }
+
+      /* ===== IMAGEM DA RAZÃO (barra + 6 faces) ===== */
+      @keyframes k-bar{
+        0%,59.55% { stroke-dashoffset:var(--dashBar); opacity:0; }
+        59.56%    { stroke-dashoffset:var(--dashBar); opacity:1; }
+        65.78%    { stroke-dashoffset:0;              opacity:1; } /* desenhada */
+        80.06%    { stroke-dashoffset:0;              opacity:1; } /* segura até começar a sumir */
+        81.61%    { stroke-dashoffset:var(--dashBar); opacity:0; }
+        100%      { stroke-dashoffset:var(--dashBar); opacity:0; }
+      }
+      .a-bar{
+        stroke-dasharray:var(--dashBar);
+        stroke-dashoffset:var(--dashBar);
+        animation:k-bar var(--t) var(--ease) infinite both;
+      }
+
+      @keyframes k-denStroke{
+        0%,59.55% { stroke-dashoffset:var(--dashTile); opacity:0; }
+        59.56%    { stroke-dashoffset:var(--dashTile); opacity:1; }
+        66.00%    { stroke-dashoffset:0;               opacity:1; }
+        80.06%    { stroke-dashoffset:0;               opacity:1; }
+        81.61%    { stroke-dashoffset:var(--dashTile); opacity:0; }
+        100%      { stroke-dashoffset:var(--dashTile); opacity:0; }
+      }
+      @keyframes k-denFill{
+        0%,59.55% { opacity:0; }
+        59.56%    { opacity:1; }
+        80.06%    { opacity:1; }
+        81.61%    { opacity:0; }
+        100%      { opacity:0; }
+      }
+      @keyframes k-denNum{
+        0%,61.80% { opacity:0; }
+        63.80%    { opacity:1; }
+        80.06%    { opacity:1; }
+        81.61%    { opacity:0; }
+        100%      { opacity:0; }
+      }
+      .a-denFill{ opacity:0; animation:k-denFill var(--t) linear infinite both; }
+      .a-denStroke{
+        opacity:0;
+        stroke-dasharray:var(--dashTile);
+        stroke-dashoffset:var(--dashTile);
+        animation:k-denStroke var(--t) var(--ease) infinite both;
+      }
+      .a-denNum{ opacity:0; animation:k-denNum var(--t) linear infinite both; }
+
+      /* ===== FINAL "P(A) = 3/6 = 0.5" ===== */
+      .final{ text-anchor:middle; font-size:26px; font-weight:700; }
+
+      @keyframes k-finalFill{
+        0%,81.60% {opacity:0;}
+        82.20%    {opacity:0.15;}
+        83.70%    {opacity:0.70;}
+        84.50%    {opacity:0.92;}
+        90.11%    {opacity:1;}      /* cheio */
+        98.83%    {opacity:1;}      /* segura */
+        99.00%    {opacity:0.15;}
+        100%      {opacity:0;}
+      }
+      @keyframes k-finalStroke{
+        0%,81.60% { stroke-dashoffset:var(--dashText); opacity:0; }
+        82.70%    { stroke-dashoffset:var(--dashText); opacity:1; }
+        83.80%    { stroke-dashoffset:0;               opacity:1; }
+        95.60%    { stroke-dashoffset:0;               opacity:0; }
+        100%      { stroke-dashoffset:var(--dashText); opacity:0; }
+      }
+      .a-finalFill{ opacity:0; animation:k-finalFill var(--t) linear infinite both; }
+      .a-finalStroke{ opacity:0; animation:k-finalStroke var(--t) var(--ease) infinite both; }
+
+      /* ===== Texto Evento alinhado no eixo X do 4 ===== */
+      .eventText{ text-anchor:middle; }
+
+      @media (prefers-reduced-motion:reduce){
+        *{ animation:none !important; }
+      }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="100%" height="100%" fill="#ffffff"/>
+
+  <!-- moldura -->
+  <rect x="40" y="26" width="1020" height="308" rx="18" ry="18"
+        class="u-stroke a-frame"/>
+
+  <!-- =========================
+       GRID ORIGINAL (6 faces)
+       ========================= -->
+
+  <!-- Face 1 (some) -->
+  <g class="face a-hide" aria-hidden="true">
+    <rect x="140" y="120" width="110" height="88" rx="12" ry="12" class="tileFill"/>
+    <rect x="140" y="120" width="110" height="88" rx="12" ry="12" class="tileStroke"/>
+    <text x="195" y="176" class="u-center u-num num">1</text>
+  </g>
+
+  <!-- Face 2 -->
+  <g class="face a-m2" aria-hidden="true">
+    <rect x="265" y="120" width="110" height="88" rx="12" ry="12" class="tileFill"/>
+    <rect x="265" y="120" width="110" height="88" rx="12" ry="12" class="tileStroke"/>
+    <rect x="265" y="120" width="110" height="88" rx="12" ry="12" class="u-hit a-hit"/>
+    <text x="320" y="176" class="u-center u-num">2</text>
+  </g>
+
+  <!-- Face 3 (some) -->
+  <g class="face a-hide" aria-hidden="true">
+    <rect x="390" y="120" width="110" height="88" rx="12" ry="12" class="tileFill"/>
+    <rect x="390" y="120" width="110" height="88" rx="12" ry="12" class="tileStroke"/>
+    <text x="445" y="176" class="u-center u-num num">3</text>
+  </g>
+
+  <!-- Face 4 -->
+  <g class="face a-m4" aria-hidden="true">
+    <rect x="515" y="120" width="110" height="88" rx="12" ry="12" class="tileFill"/>
+    <rect x="515" y="120" width="110" height="88" rx="12" ry="12" class="tileStroke"/>
+    <rect x="515" y="120" width="110" height="88" rx="12" ry="12" class="u-hit a-hit"/>
+    <text x="570" y="176" class="u-center u-num">4</text>
+  </g>
+
+  <!-- Face 5 (some) -->
+  <g class="face a-hide" aria-hidden="true">
+    <rect x="640" y="120" width="110" height="88" rx="12" ry="12" class="tileFill"/>
+    <rect x="640" y="120" width="110" height="88" rx="12" ry="12" class="tileStroke"/>
+    <text x="695" y="176" class="u-center u-num num">5</text>
+  </g>
+
+  <!-- Face 6 -->
+  <g class="face a-m6" aria-hidden="true">
+    <rect x="765" y="120" width="110" height="88" rx="12" ry="12" class="tileFill"/>
+    <rect x="765" y="120" width="110" height="88" rx="12" ry="12" class="tileStroke"/>
+    <rect x="765" y="120" width="110" height="88" rx="12" ry="12" class="u-hit a-hit"/>
+    <text x="820" y="176" class="u-center u-num">6</text>
+  </g>
+
+  <!-- =========================
+       TEXTO: Ω
+       ========================= -->
+  <g aria-hidden="true">
+    <text x="80" y="70" class="u-left u-label a-omFill">Espaço amostral</text>
+    <text x="80" y="70" class="u-left u-label tStroke a-omStroke">Espaço amostral</text>
+
+    <text x="80" y="96" class="u-left u-micro a-omFill">Ω = {1,2,3,4,5,6}</text>
+    <text x="80" y="96" class="u-left u-micro tStroke a-omStroke">Ω = {1,2,3,4,5,6}</text>
+
+
+  </g>
+
+  <!-- =========================
+       TEXTO: Evento
+       ========================= -->
+  <g aria-hidden="true" transform="translate(-20,0)">
+    <text x="570" y="78" class="eventText u-label a-evFill">Evento</text>
+    <text x="570" y="78" class="eventText u-label tStroke a-evStroke">Evento</text>
+
+    <text x="570" y="104" class="eventText u-micro a-evFill">A ⊂ Ω</text>
+    <text x="570" y="104" class="eventText u-micro tStroke a-evStroke">A ⊂ Ω</text>
+
+    <text x="570" y="258" class="eventText u-foot a-evFill">A = {2,4,6}</text>
+    <text x="570" y="258" class="eventText u-foot tStroke a-evStroke">A = {2,4,6}</text>
+  </g>
+
+
+  <!-- =========================
+       IMAGEM DA RAZÃO: barra + 6 faces
+       ========================= -->
+  <g transform="translate(10,-40)">     
+  <path d="M140,230 L875,230" class="u-stroke2 a-bar" aria-hidden="true"/>
+
+  <g aria-hidden="true">
+    <rect x="140" y="244" width="110" height="88" rx="12" ry="12" class="tileFill a-denFill"/>
+    <rect x="140" y="244" width="110" height="88" rx="12" ry="12" class="tileStroke a-denStroke"/>
+    <text x="195" y="300" class="u-center u-num a-denNum">1</text>
+
+    <rect x="265" y="244" width="110" height="88" rx="12" ry="12" class="tileFill a-denFill"/>
+    <rect x="265" y="244" width="110" height="88" rx="12" ry="12" class="tileStroke a-denStroke"/>
+    <text x="320" y="300" class="u-center u-num a-denNum">2</text>
+
+    <rect x="390" y="244" width="110" height="88" rx="12" ry="12" class="tileFill a-denFill"/>
+    <rect x="390" y="244" width="110" height="88" rx="12" ry="12" class="tileStroke a-denStroke"/>
+    <text x="445" y="300" class="u-center u-num a-denNum">3</text>
+
+    <rect x="515" y="244" width="110" height="88" rx="12" ry="12" class="tileFill a-denFill"/>
+    <rect x="515" y="244" width="110" height="88" rx="12" ry="12" class="tileStroke a-denStroke"/>
+    <text x="570" y="300" class="u-center u-num a-denNum">4</text>
+
+    <rect x="640" y="244" width="110" height="88" rx="12" ry="12" class="tileFill a-denFill"/>
+    <rect x="640" y="244" width="110" height="88" rx="12" ry="12" class="tileStroke a-denStroke"/>
+    <text x="695" y="300" class="u-center u-num a-denNum">5</text>
+
+    <rect x="765" y="244" width="110" height="88" rx="12" ry="12" class="tileFill a-denFill"/>
+    <rect x="765" y="244" width="110" height="88" rx="12" ry="12" class="tileStroke a-denStroke"/>
+    <text x="820" y="300" class="u-center u-num a-denNum">6</text>
+  </g>
+</g>
+  <!-- =========================
+       FINAL
+       ========================= -->
+  <g aria-hidden="true" transform="translate(-10,-20)">
+    <text x="570" y="210" class="final a-finalFill">P(A) = 3/6 = 0.5</text>
+    <text x="570" y="210" class="final tStroke a-finalStroke">P(A) = 3/6 = 0.5</text>
+  </g>
+
+</svg>

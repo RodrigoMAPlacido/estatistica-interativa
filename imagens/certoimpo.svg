@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ===========================================
+  EVENTOS CERTOS E IMPOSSÍVEIS — padrão EI (u-*/a-*)
+  Pedido: “pegar a animação de traçado daqui”
+  Implementação (caprichada):
+  - Textos destacados (∅, P(∅)=0, Ω, P(Ω)=1):
+      * traçado com reverso SIMÉTRICO (dashoffset: dash → 0 → dash)
+      * preenchimento (fill) entra na ida, fica, e COMEÇA a sumir ANTES do reverso
+      * fill zera exatamente quando o reverso começa
+  - Quadros e escala: traçado simples (sem reverso) para não competir com o foco
+  Fundo: #ffffff
+  =========================================== -->
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 920 360"
+     width="920" height="360"
+     role="img"
+     aria-labelledby="title desc">
+
+  <title id="title">Eventos certos e impossíveis</title>
+  <desc id="desc">
+    Dois cartões: “Evento impossível” (∅) com P(∅)=0 e “Evento certo” (Ω) com P(Ω)=1.
+    Os textos destacados surgem por traçado e preenchimento; o preenchimento some antes do retraço simétrico.
+    A escala 0–1 é marcada primeiro em 0 e depois em 1.
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --muted:#6b7280;
+        --paper:#ffffff;
+
+        --stroke:2.6;
+        --thin:1.7;
+
+        --font:"et-book","ETBook","Georgia",serif;
+
+        /* loop */
+        --T:12s;
+        --ease:ease-in-out;
+
+        /* dash para formas com pathLength=100 */
+        --dash:100;
+
+        /* dash “seguro” para texto (ajuste fino se quiser mais “completar”) */
+        --dashBig:900;
+        --dashEq:1200;
+      }
+
+      /* fundo */
+      .bg{ fill:var(--paper); }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        user-select:none;
+        letter-spacing:.13px;
+      }
+
+      .u-stroke{
+        fill:none;
+        stroke:var(--ink);
+        stroke-width:var(--stroke);
+        stroke-linecap:round;
+        stroke-linejoin:round;
+      }
+      .u-thin{
+        fill:none;
+        stroke:var(--ink);
+        stroke-width:var(--thin);
+        stroke-linecap:round;
+        stroke-linejoin:round;
+      }
+
+      .u-center{ text-anchor:middle; }
+      .u-bold{ font-weight:700; }
+
+      .h{ font-size:24px; }
+      .k{ font-size:18px; fill:var(--muted); }
+      .big{ font-size:56px; letter-spacing:0; }
+      .eq{ font-size:22px; }
+      .mono{ font-variant-numeric: lining-nums; }
+
+      /* =========================
+         1) Formas: draw simples
+         ========================= */
+      .a-draw{
+        stroke-dasharray:var(--dash);
+        stroke-dashoffset:var(--dash);
+        animation:k-draw var(--T) var(--ease) infinite;
+      }
+      @keyframes k-draw{
+        0%   { stroke-dashoffset:var(--dash); }
+        16%  { stroke-dashoffset:0; }
+        100% { stroke-dashoffset:0; }
+      }
+
+      /* =========================
+         2) Glow de foco por bloco
+         ========================= */
+      .a-glowL{ opacity:0; animation:k-glowL var(--T) var(--ease) infinite; }
+      @keyframes k-glowL{
+        0%   { opacity:0; }
+        22%  { opacity:0; }
+        30%  { opacity:1; }
+        50%  { opacity:1; }
+        54%  { opacity:0; }
+        100% { opacity:0; }
+      }
+      .a-glowR{ opacity:0; animation:k-glowR var(--T) var(--ease) infinite; }
+      @keyframes k-glowR{
+        0%   { opacity:0; }
+        60%  { opacity:0; }
+        68%  { opacity:1; }
+        88%  { opacity:1; }
+        92%  { opacity:0; }
+        100% { opacity:0; }
+      }
+
+      /* =========================
+         3) Escala + marcador
+         ========================= */
+      .a-scaleDraw{
+        stroke-dasharray:var(--dash);
+        stroke-dashoffset:var(--dash);
+        animation:k-scaleDraw var(--T) var(--ease) infinite;
+      }
+      @keyframes k-scaleDraw{
+        0%   { stroke-dashoffset:var(--dash); }
+        14%  { stroke-dashoffset:0; }
+        100% { stroke-dashoffset:0; }
+      }
+
+      .marker{
+        fill:var(--ink);
+        opacity:0;
+        animation:k-marker var(--T) var(--ease) infinite;
+      }
+      @keyframes k-marker{
+        /* bloco L: fica em 0 */
+        0%   { opacity:0; transform:translate(0px,0px); }
+        24%  { opacity:0; transform:translate(0px,0px); }
+        30%  { opacity:1; transform:translate(0px,0px); }
+        50%  { opacity:1; transform:translate(0px,0px); }
+        /* bloco R: vai para 1 */
+        64%  { opacity:1; transform:translate(560px,0px); } /* (740-180)=560 */
+        88%  { opacity:1; transform:translate(560px,0px); }
+        100% { opacity:0; transform:translate(560px,0px); }
+      }
+
+      /* ==========================================================
+         4) TEXTO — traçado + preenchimento (estilo “Interpretação Clássica”)
+         Regras:
+         - stroke: reverso simétrico
+         - fill: começa a sumir antes do reverso
+         - fill zera exatamente quando o reverso começa
+         ========================================================== */
+      .tStroke{
+        fill:transparent;
+        stroke:var(--ink);
+        stroke-linecap:round;
+        stroke-linejoin:round;
+      }
+
+      /* ---------- BLOCO L: 24→36 (ida), 36→50 (pausa), 50→54 (volta) ---------- */
+      @keyframes k-dashSymL{
+        0%   { opacity:0; stroke-dashoffset:var(--tdash); }
+        23.9%{ opacity:0; stroke-dashoffset:var(--tdash); }
+
+        24%  { opacity:1; stroke-dashoffset:var(--tdash); } /* inicia traço */
+        36%  { opacity:1; stroke-dashoffset:0; }            /* completa */
+
+        50%  { opacity:1; stroke-dashoffset:0; }            /* pausa */
+
+        54%  { opacity:1; stroke-dashoffset:var(--tdash); } /* reverso simétrico */
+
+        54.1%{ opacity:0; stroke-dashoffset:var(--tdash); }
+        100% { opacity:0; stroke-dashoffset:var(--tdash); }
+      }
+
+      @keyframes k-fillOutBeforeReverseL{
+        /* entra durante a ida */
+        0%,27% { opacity:0; }
+        31%    { opacity:0.35; }
+        34%    { opacity:0.80; }
+        36%    { opacity:1; }
+
+        /* pausa cheia */
+        48%    { opacity:1; }
+
+        /* começa a sumir ANTES do reverso */
+        49.2%  { opacity:0.35; }
+        50%    { opacity:0; }     /* zera exatamente quando o reverso começa */
+
+        100%   { opacity:0; }
+      }
+
+      .a-L-stroke{
+        stroke-dasharray:var(--tdash);
+        stroke-dashoffset:var(--tdash);
+        animation:k-dashSymL var(--T) var(--ease) infinite;
+      }
+      .a-L-fill{
+        opacity:0;
+        animation:k-fillOutBeforeReverseL var(--T) linear infinite;
+      }
+
+      /* ---------- BLOCO R: 58→72 (ida), 72→88 (pausa), 88→92 (volta) ---------- */
+      @keyframes k-dashSymR{
+        0%   { opacity:0; stroke-dashoffset:var(--tdash); }
+        57.9%{ opacity:0; stroke-dashoffset:var(--tdash); }
+
+        58%  { opacity:1; stroke-dashoffset:var(--tdash); }
+        72%  { opacity:1; stroke-dashoffset:0; }
+
+        88%  { opacity:1; stroke-dashoffset:0; }
+
+        92%  { opacity:1; stroke-dashoffset:var(--tdash); }
+
+        92.1%{ opacity:0; stroke-dashoffset:var(--tdash); }
+        100% { opacity:0; stroke-dashoffset:var(--tdash); }
+      }
+
+      @keyframes k-fillOutBeforeReverseR{
+        0%,61% { opacity:0; }
+        66%    { opacity:0.35; }
+        70%    { opacity:0.80; }
+        72%    { opacity:1; }
+
+        86%    { opacity:1; }
+        87.2%  { opacity:0.35; }
+        88%    { opacity:0; }   /* zera exatamente quando o reverso começa */
+
+        100%   { opacity:0; }
+      }
+
+      .a-R-stroke{
+        stroke-dasharray:var(--tdash);
+        stroke-dashoffset:var(--tdash);
+        animation:k-dashSymR var(--T) var(--ease) infinite;
+      }
+      .a-R-fill{
+        opacity:0;
+        animation:k-fillOutBeforeReverseR var(--T) linear infinite;
+      }
+
+      /* espessuras do contorno de texto */
+      .swBig{ stroke-width:1.15; }   /* traço de “contorno” fino, elegante */
+      .swEq { stroke-width:1.00; }
+
+      /* “todos os resultados” no cartão certo */
+      .dot{ fill:rgba(17,24,39,0.35); }
+      .dot2{ fill:rgba(17,24,39,0.55); }
+
+      @media (prefers-reduced-motion:reduce){
+        *{ animation:none !important; }
+        .a-L-fill,.a-R-fill{ opacity:1 !important; }
+        .a-L-stroke,.a-R-stroke{ opacity:0 !important; }
+        .marker{ opacity:1 !important; transform:none !important; }
+      }
+    </style>
+  </defs>
+
+  <!-- FUNDO -->
+  <rect x="0" y="0" width="100%" height="100%" class="bg"/>
+
+  <!-- =========================
+       Cartão esquerdo (impossível)
+       ========================= -->
+  <g>
+    <rect x="70" y="50" width="360" height="210" rx="18" ry="18" class="u-stroke"/>
+    <rect x="70" y="50" width="360" height="210" rx="18" ry="18"
+          class="u-stroke a-draw" pathLength="100"/>
+
+    <rect x="78" y="58" width="344" height="194" rx="14" ry="14"
+          fill="rgba(17,24,39,0.04)" class="a-glowL"/>
+
+    <text x="250" y="86" class="u-center u-bold h">Evento impossível</text>
+
+    <rect x="120" y="102" width="260" height="110" rx="14" ry="14" class="u-thin"/>
+    <rect x="120" y="102" width="260" height="110" rx="14" ry="14"
+          class="u-thin a-draw" pathLength="100"/>
+
+    <!-- ∅ (fill + stroke simétrico) -->
+    <g aria-hidden="true">
+      <!-- fill -->
+      <text x="250" y="176" class="u-center big a-L-fill">∅</text>
+      <!-- stroke (simétrico) -->
+      <text x="250" y="176"
+            class="u-center big tStroke a-L-stroke swBig"
+            style="--tdash:var(--dashBig)">∅</text>
+
+      <!-- equação -->
+      <text x="250" y="242" class="u-center eq mono a-L-fill">P(∅) = 0</text>
+      <text x="250" y="242"
+            class="u-center eq mono tStroke a-L-stroke swEq"
+            style="--tdash:var(--dashEq)">P(∅) = 0</text>
+    </g>
+  </g>
+
+  <!-- =========================
+       Cartão direito (certo)
+       ========================= -->
+  <g>
+    <rect x="490" y="50" width="360" height="210" rx="18" ry="18" class="u-stroke"/>
+    <rect x="490" y="50" width="360" height="210" rx="18" ry="18"
+          class="u-stroke a-draw" pathLength="100"/>
+
+    <rect x="498" y="58" width="344" height="194" rx="14" ry="14"
+          fill="rgba(17,24,39,0.04)" class="a-glowR"/>
+
+    <text x="670" y="86" class="u-center u-bold h">Evento certo</text>
+
+    <rect x="540" y="102" width="260" height="110" rx="14" ry="14" class="u-thin"/>
+    <rect x="540" y="102" width="260" height="110" rx="14" ry="14"
+          class="u-thin a-draw" pathLength="100"/>
+
+    <!-- “todos os resultados” (pontos) -->
+    <g aria-hidden="true">
+      <circle cx="565" cy="128" r="3" class="dot2"/><circle cx="600" cy="128" r="3" class="dot"/><circle cx="635" cy="128" r="3" class="dot2"/><circle cx="670" cy="128" r="3" class="dot"/><circle cx="705" cy="128" r="3" class="dot2"/><circle cx="740" cy="128" r="3" class="dot"/><circle cx="775" cy="128" r="3" class="dot2"/>
+      <circle cx="565" cy="150" r="3" class="dot"/><circle cx="600" cy="150" r="3" class="dot2"/><circle cx="635" cy="150" r="3" class="dot"/><circle cx="670" cy="150" r="3" class="dot2"/><circle cx="705" cy="150" r="3" class="dot"/><circle cx="740" cy="150" r="3" class="dot2"/><circle cx="775" cy="150" r="3" class="dot"/>
+      <circle cx="565" cy="172" r="3" class="dot2"/><circle cx="600" cy="172" r="3" class="dot"/><circle cx="635" cy="172" r="3" class="dot2"/><circle cx="670" cy="172" r="3" class="dot"/><circle cx="705" cy="172" r="3" class="dot2"/><circle cx="740" cy="172" r="3" class="dot"/><circle cx="775" cy="172" r="3" class="dot2"/>
+      <circle cx="565" cy="194" r="3" class="dot"/><circle cx="600" cy="194" r="3" class="dot2"/><circle cx="635" cy="194" r="3" class="dot"/><circle cx="670" cy="194" r="3" class="dot2"/><circle cx="705" cy="194" r="3" class="dot"/><circle cx="740" cy="194" r="3" class="dot2"/><circle cx="775" cy="194" r="3" class="dot"/>
+    </g>
+
+    <!-- Ω (fill + stroke simétrico) -->
+    <g aria-hidden="true">
+      <text x="670" y="176" class="u-center big a-R-fill">Ω</text>
+      <text x="670" y="176"
+            class="u-center big tStroke a-R-stroke swBig"
+            style="--tdash:var(--dashBig)">Ω</text>
+
+      <text x="670" y="242" class="u-center eq mono a-R-fill">P(Ω) = 1</text>
+      <text x="670" y="242"
+            class="u-center eq mono tStroke a-R-stroke swEq"
+            style="--tdash:var(--dashEq)">P(Ω) = 1</text>
+    </g>
+  </g>
+
+  <!-- =========================
+       Escala 0 a 1
+       ========================= -->
+  <line x1="180" y1="310" x2="740" y2="310" class="u-thin a-scaleDraw" pathLength="100"/>
+  <line x1="180" y1="302" x2="180" y2="318" class="u-thin"/>
+  <line x1="740" y1="302" x2="740" y2="318" class="u-thin"/>
+
+  <text x="180" y="340" class="u-center k mono">0</text>
+  <text x="740" y="340" class="u-center k mono">1</text>
+  <text x="460" y="340" class="u-center k">escala de probabilidade</text>
+
+  <g class="marker">
+    <circle cx="180" cy="310" r="7"/>
+    <circle cx="180" cy="310" r="12" fill="rgba(17,24,39,0.08)"/>
+  </g>
+
+</svg>

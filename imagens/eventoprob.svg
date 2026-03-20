@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ===========================================
+   INCLUSÃO DE EVENTOS (A ⊆ B) — padrão anti-vazio + retraço final (sem fade-out)
+   Pedidos:
+   - Reverso por retraço (stroke-dashoffset), NÃO fade out
+   - Sem animação do quadro de Ω (formas estáticas)
+   - Com delay longo (pausa antes do retraço final)
+   =========================================== -->
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 520 300"
+     width="570" height="250"
+     role="img"
+     aria-labelledby="title desc"
+     style="background:#ffffff">
+
+  <title id="title">Inclusão de eventos</title>
+  <desc id="desc">
+    Ω contém B e A, com A ⊆ B. O título e o rótulo são desenhados com traçado e preenchimento (anti-vazio),
+    pausam, e no fim desaparecem por retraço (sem fade-out).
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --font:"et-book","ETBook","Georgia",serif;
+
+        --cycle:10.8s;
+        --ease:ease-in-out;
+
+        /* “comprimentos” fictícios para dash do texto — sobra é bom */
+        --dashTitle:900;
+        --dashLbl:650;
+      }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        user-select:none;
+        letter-spacing:.13px;
+      }
+
+      .u-center{ text-anchor:middle; }
+      .u-bold{ font-weight:700; }
+
+      /* formas estáticas */
+      .u-thin{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        stroke-width:1.8px;
+      }
+
+      /* fills (estáticos no desenho, mas com janela temporal; “corte”, não fade) */
+      @keyframes k-softFillCut{
+        0%,10%  { opacity:0; }
+        20%     { opacity:1; }
+        65.99%  { opacity:1; }
+        86%     { opacity:0.5; } /* corte seco ANTES do retraço */
+        100%    { opacity:0; }
+      }
+      .a-softFillCut{
+        opacity:0;
+        animation:k-softFillCut var(--cycle) linear infinite both;
+      }
+      .fillB{ fill:rgba(17,24,39,0.07); }
+      .fillA{ fill:rgba(17,24,39,0.12); }
+
+      /* =========================================
+         TÍTULO — anti-vazio + delay + retraço final
+         - Fill começa antes do fim do traço (anti-vazio)
+         - Stroke some logo depois que fill “assenta”
+         - Delay longo (até 86%)
+         - No fim, stroke reaparece e retraça (sem fade)
+         ========================================= */
+
+      @keyframes k-titleFill{
+        0%,5.5% { opacity:0; }
+        6%      { opacity:0.15; }
+        9.5%    { opacity:0.70; }
+        11.2%   { opacity:0.92; }
+        13%     { opacity:1; }     /* cheio no fim do traço */
+        85.99%  { opacity:1; }     /* DELAY longo */
+        95%     { opacity:0.5; }     /* corte antes do retraço */
+        100%    { opacity:0; }
+      }
+      .a-titleFill{
+        opacity:0;
+        animation:k-titleFill var(--cycle) linear infinite both;
+      }
+
+      @keyframes k-titleStrokeDrawPauseRetract{
+        /* desenha */
+        0%     { stroke-dashoffset:var(--dashTitle); opacity:0; }
+        6%     { opacity:1; }
+        13%    { stroke-dashoffset:0; opacity:1; }
+
+        /* some após o fill “assentar” */
+        28.8%  { stroke-dashoffset:0; opacity:0; }
+
+        /* DELAY (sem stroke visível) */
+        85.99% { stroke-dashoffset:0; opacity:0; }
+
+        /* retraço final (sem fade-out): reaparece e volta o dashoffset */
+        90%    { stroke-dashoffset:0; opacity:1; }
+        100%   { stroke-dashoffset:var(--dashTitle); opacity:1; }
+      }
+      .a-titleStroke{
+        fill:transparent;
+        stroke:var(--ink);
+        stroke-width:.95;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        stroke-dasharray:var(--dashTitle);
+        stroke-dashoffset:var(--dashTitle);
+        animation:k-titleStrokeDrawPauseRetract var(--cycle) var(--ease) infinite both;
+      }
+
+      /* =========================================
+         RÓTULO “A ⊆ B” — anti-vazio + delay + retraço final
+         (entra depois do título)
+         ========================================= */
+
+      @keyframes k-lblFill{
+        0%,26%  { opacity:0; }
+        28%     { opacity:0.15; }
+        31.5%   { opacity:0.70; }
+        33%     { opacity:0.92; }
+        40%     { opacity:1; }
+        85.99%  { opacity:1; }     /* DELAY longo */
+        86%     { opacity:0+5; }     /* corte antes do retraço */
+        100%    { opacity:0; }
+      }
+      .a-lblFill{
+        opacity:0;
+        animation:k-lblFill var(--cycle) linear infinite both;
+      }
+
+      @keyframes k-lblStrokeDrawPauseRetract{
+        /* desenha */
+        0%     { stroke-dashoffset:var(--dashLbl); opacity:0; }
+        28%    { opacity:1; }
+        40%    { stroke-dashoffset:0; opacity:1; }
+
+        /* some após o fill “assentar” */
+        40.8%  { stroke-dashoffset:0; opacity:0; }
+
+        /* DELAY */
+        85.99% { stroke-dashoffset:0; opacity:0; }
+
+        /* retraço final (sem fade-out) */
+        86%    { stroke-dashoffset:0; opacity:1; }
+        100%   { stroke-dashoffset:var(--dashLbl); opacity:1; }
+      }
+      .a-lblStroke{
+        fill:transparent;
+        stroke:var(--ink);
+        stroke-width:.9;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        stroke-dasharray:var(--dashLbl);
+        stroke-dashoffset:var(--dashLbl);
+        animation:k-lblStrokeDrawPauseRetract var(--cycle) var(--ease) infinite both;
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        .a-titleFill,.a-titleStroke,.a-lblFill,.a-lblStroke,.a-softFillCut{ animation:none !important; }
+        .a-titleFill,.a-lblFill,.a-softFillCut{ opacity:1 !important; }
+        .a-titleStroke,.a-lblStroke{ opacity:0 !important; }
+      }
+    </style>
+  </defs>
+
+  <!-- fundo -->
+  <rect x="0" y="0" width="100%" height="100%" fill="#ffffff"/>
+
+  <!-- ===== título (2 camadas) ===== -->
+  <text x="260" y="38" font-size="24" class="u-center u-bold a-titleFill">Inclusão de eventos</text>
+  <text x="260" y="38" font-size="24" class="u-center u-bold a-titleStroke">Inclusão de eventos</text>
+
+  <!-- ===== Ω (estático) ===== -->
+  <rect x="70" y="62" width="380" height="180" rx="16" class="u-thin"/>
+  <text x="88" y="86" font-size="22" class="u-bold">Ω</text>
+
+  <!-- ===== B (estático) ===== -->
+  <circle cx="260" cy="152" r="78" class="u-thin"/>
+  <circle cx="260" cy="152" r="78" class="fillB a-softFillCut"/>
+
+  <!-- ===== A (estático) ===== -->
+  <circle cx="235" cy="168" r="44" class="u-thin"/>
+  <circle cx="235" cy="168" r="44" class="fillA a-softFillCut"/>
+
+  <!-- labels A e B (estáticos; se quiser animar depois, dá pra aplicar o mesmo padrão) -->
+  <text x="338" y="124" font-size="18" class="u-bold">B</text>
+  <text x="210" y="176" font-size="18" class="u-bold">A</text>
+
+  <!-- ===== “A ⊆ B” (2 camadas, com retraço final) ===== -->
+  <text x="260" y="276" font-size="22" class="u-center u-bold a-titleFill">A ⊆ B</text>
+  <text x="260" y="276" font-size="22" class="u-center u-bold a-titleStroke">A ⊆ B</text>
+
+</svg>

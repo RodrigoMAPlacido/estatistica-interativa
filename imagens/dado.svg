@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- =========================================================
+   DADO “3D” (ISOMÉTRICO) — LOOP COM PAUSA EM CADA CICLO
+   - Conteúdo centralizado dentro do viewBox 820×300 (dx = +196)
+   - Pips sempre visíveis (sem animação própria)
+   - Ciclo: 2s parado → rotação 360° + wobble → para → repete
+   ========================================================= -->
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 820 300"
+     preserveAspectRatio="xMidYMid meet"
+     role="img"
+     aria-labelledby="title desc">
+
+  <title id="title">Dado de seis faces em perspectiva com rotação</title>
+  <desc id="desc">
+    Um dado em perspectiva isométrica fica parado por um instante e então gira,
+    repetindo o ciclo em loop, com faces e pontos sempre visíveis.
+  </desc>
+
+  <style>
+    :root{
+      --ink:#111827;
+
+      --top:#f8fafc;
+      --left:#eef2f7;
+      --right:#e2e8f0;
+
+      --shadow:rgba(17,24,39,.16);
+      --pip:#111827;
+    }
+
+    .edge{
+      stroke:var(--ink);
+      stroke-width:6;
+      stroke-linejoin:round;
+      stroke-linecap:round;
+      vector-effect: non-scaling-stroke;
+    }
+
+    .faceTop{ fill:var(--top); }
+    .faceLeft{ fill:var(--left); }
+    .faceRight{ fill:var(--right); }
+
+    .pip{ fill:var(--pip); }
+    .shadow{ fill:var(--shadow); }
+
+    /* duração total do ciclo = 2s (pausa) + 3.8s (giro) = 5.8s */
+    .cube{
+      transform-origin: 431px 160px; /* 235+196 */
+      animation: spinWobblePause 5.8s infinite ease-in-out;
+    }
+
+    .shadowPulse{
+      transform-origin: 406px 272px; /* 210+196 */
+      animation: shadowPulsePause 5.8s infinite ease-in-out;
+    }
+
+    /* Pausa em cada loop:
+       - 0% a 34.4828%: parado (2/5.8)
+       - depois: giro + wobble até 100% */
+    @keyframes spinWobblePause{
+      0%,
+      34.4828% { transform: rotate(0deg) translate(0,0); }
+
+      46.2759% { transform: rotate(85deg)  translate(6px,-5px); }
+      62%      { transform: rotate(195deg) translate(-5px,6px); }
+      79.0345% { transform: rotate(305deg) translate(4px,4px); }
+      100%     { transform: rotate(360deg) translate(0,0); }
+    }
+
+    @keyframes shadowPulsePause{
+      0%,
+      34.4828% { opacity:.55; transform: scale(1); }
+
+      62%      { opacity:.35; transform: scale(.90); }
+      100%     { opacity:.55; transform: scale(1); }
+    }
+  </style>
+
+  <!-- sombra no chão (centralizada) -->
+  <ellipse class="shadow shadowPulse" cx="406" cy="272" rx="102" ry="26"/>
+
+  <g class="cube">
+    <polygon class="faceTop edge"   points="346,90 426,45 516,90 436,140"/>
+    <polygon class="faceLeft edge"  points="346,90 436,140 436,240 346,195"/>
+    <polygon class="faceRight edge" points="436,140 516,90 516,190 436,240"/>
+
+    <line class="edge" x1="436" y1="140" x2="436" y2="240" opacity=".85"/>
+    <line class="edge" x1="346" y1="90"  x2="436" y2="140" opacity=".35"/>
+    <line class="edge" x1="516" y1="90"  x2="436" y2="140" opacity=".35"/>
+
+    <!-- TOP = 1 -->
+    <ellipse class="pip" cx="431" cy="92.5" rx="10.6" ry="7.6"
+             transform="rotate(-26 431 92.5)"/>
+
+    <!-- LEFT = 5 -->
+    <ellipse class="pip" cx="368.5" cy="128.75" rx="10.2" ry="9.0"
+             transform="rotate(26 368.5 128.75)"/>
+    <ellipse class="pip" cx="413.5" cy="153.75" rx="10.2" ry="9.0"
+             transform="rotate(26 413.5 153.75)"/>
+    <ellipse class="pip" cx="391" cy="167.5" rx="10.2" ry="9.0"
+             transform="rotate(26 391 167.5)"/>
+    <ellipse class="pip" cx="368.5" cy="181.25" rx="10.2" ry="9.0"
+             transform="rotate(26 368.5 181.25)"/>
+    <ellipse class="pip" cx="413.5" cy="206.25" rx="10.2" ry="9.0"
+             transform="rotate(26 413.5 206.25)"/>
+
+    <!-- RIGHT = 3 -->
+    <ellipse class="pip" cx="456" cy="152.5" rx="10.2" ry="9.0"
+             transform="rotate(-28 456 152.5)"/>
+    <ellipse class="pip" cx="476" cy="165" rx="10.2" ry="9.0"
+             transform="rotate(-28 476 165)"/>
+    <ellipse class="pip" cx="496" cy="177.5" rx="10.2" ry="9.0"
+             transform="rotate(-28 496 177.5)"/>
+  </g>
+</svg>
