@@ -153,12 +153,9 @@ proximo: /capitulos/cap9-distribuicoes-discretas/
 <h3>2.2 Resultados relevantes sob a condição</h3>
 
 <p>
-  Fixar um evento
-  <span class="formula-inline" data-tts="b">\( B \)</span>
-  como condição implica que a análise passa a ser conduzida apenas entre os resultados que pertencem a esse subconjunto.
-  Nesse enquadramento, resultados que não pertencem a
-  <span class="formula-inline" data-tts="b">\( B \)</span>
-  deixam de ser considerados, pois não são compatíveis com a condição imposta.
+  Uma vez fixada a condição
+  <span class="formula-inline" data-tts="b">\( B \)</span>,
+  os eventos deixam de ser avaliados em relação ao espaço amostral completo e passam a ser interpretados dentro do subconjunto compatível com essa condição.
 </p>
 
 <p>
@@ -188,53 +185,40 @@ proximo: /capitulos/cap9-distribuicoes-discretas/
   <span class="formula-inline" data-tts="a">\( A \)</span>
   sob a condição
   <span class="formula-inline" data-tts="b">\( B \)</span>,
-  o conjunto relevante deixa de ser
-  <span class="formula-inline" data-tts="a">\( A \)</span>
-  isoladamente e passa a ser sua interseção com
-  <span class="formula-inline" data-tts="b">\( B \)</span>.
-  Esse conjunto reúne exatamente os resultados que satisfazem simultaneamente o evento de interesse e a condição imposta.
+  o conjunto relevante passa a ser sua interseção com
+  <span class="formula-inline" data-tts="b">\( B \)</span>,
+  que reúne exatamente as realizações compatíveis com o evento de interesse dentro do espaço restrito.
 </p>
 <h3>2.3 Normalização no espaço restrito</h3>
 
 <p>
-  Ao restringir a análise ao conjunto
+  A restrição do espaço amostral não altera apenas os resultados considerados, mas também a forma de medir probabilidades.
+  Como a análise passa a ser conduzida no subconjunto
   <span class="formula-inline" data-tts="b">\( B \)</span>,
-  esse subconjunto passa a desempenhar o papel de universo de referência. Todos os resultados considerados pertencem a
-  <span class="formula-inline" data-tts="b">\( B \)</span>,
-  de modo que, dentro desse enquadramento, ele deve ser tratado como o evento certo.
+  esse conjunto deve assumir o papel de referência total.
 </p>
 
 <p>
   Retomando o exemplo do dado, sob a condição
   <span class="formula-inline" data-tts="b igual a dois, quatro e seis">\( B = \{2,4,6\} \)</span>,
-  os únicos resultados possíveis passam a ser esses três valores. Assim, qualquer medida de probabilidade construída nesse contexto
-  deve considerar esse conjunto como referência total.
+  os únicos resultados possíveis passam a ser esses três valores. Nesse contexto, é natural que esse conjunto seja tratado como o evento certo.
 </p>
 
 <p>
   No entanto, as probabilidades originalmente definidas em relação ao espaço amostral completo
   <span class="formula-inline" data-tts="ômega maiúsculo">\( \Omega \)</span>
-  não satisfazem essa exigência. No enquadramento original,
+  não satisfazem essa exigência, pois
   <span class="formula-inline" data-tts="p de b">\( P(B) \)</span>
-  representa apenas a fração de resultados favoráveis dentro de
-  <span class="formula-inline" data-tts="ômega maiúsculo">\( \Omega \)</span>,
-  podendo assumir valores menores que
-  <span class="formula-inline" data-tts="um">\( 1 \)</span>.
+  representa apenas uma fração do total de resultados possíveis.
 </p>
 
 <p>
-  Para que o conjunto
-  <span class="formula-inline" data-tts="b">\( B \)</span>
-  passe a desempenhar o papel de universo completo, é necessário ajustar a escala das probabilidades.
-  Intuitivamente, isso corresponde a comparar apenas os resultados que permanecem no espaço restrito.
-</p>
-
-<p>
+  Para obter uma medida consistente no espaço restrito, é necessário ajustar a escala da comparação.
   No caso de um evento
   <span class="formula-inline" data-tts="a">\( A \)</span>,
-  a parte relevante sob a condição é o conjunto
-  <span class="formula-inline" data-tts="a interseção b">\( A \cap B \)</span>,
-  que deve ser avaliado em relação ao total de resultados compatíveis com a condição, representado por
+  isso significa comparar o conjunto relevante
+  <span class="formula-inline" data-tts="a interseção b">\( A \cap B \)</span>
+  com o total de resultados compatíveis com a condição, representado por
   <span class="formula-inline" data-tts="b">\( B \)</span>.
 </p>
 
@@ -247,28 +231,38 @@ proximo: /capitulos/cap9-distribuicoes-discretas/
 </p>
 
 <p>
-  Esse ajuste de escala — ou normalização — permite reinterpretar as probabilidades de modo consistente dentro do espaço restrito
-  e prepara a definição formal de probabilidade condicional.
+  Esse ajuste de escala — ou normalização — estabelece a base para definir probabilidades de forma consistente no espaço restrito.
 </p>
 <hr>
 
 <h2>3. Definição de probabilidade condicional</h2>
 
 <p>
-  As seções anteriores mostraram que, ao fixar um evento
+  As seções anteriores mostraram que, ao impor um evento
   <span class="formula-inline" data-tts="b">\( B \)</span>
-  como condição, a análise passa a ser conduzida em um espaço amostral restrito. Nesse enquadramento, apenas resultados pertencentes a
-  <span class="formula-inline" data-tts="b">\( B \)</span>
-  são relevantes, e eventos devem ser reinterpretados em termos de sua compatibilidade com essa condição.
+  como condição, a análise deixa de ser conduzida em relação ao espaço amostral completo
+  <span class="formula-inline" data-tts="ômega maiúsculo">\( \Omega \)</span>
+  e passa a ser feita no espaço restrito formado pelos resultados compatíveis com essa condição.
 </p>
 
 <p>
-  Para que essa análise seja formalizada de modo consistente, é necessário definir uma medida de probabilidade adequada ao espaço restrito. A probabilidade
-  condicional é introduzida com esse objetivo. Ela fornece uma forma precisa de atribuir probabilidades a eventos quando a comparação é feita tomando
+  Nesse novo enquadramento, o conjunto
   <span class="formula-inline" data-tts="b">\( B \)</span>
-  como referência total.
+  assume o papel de referência total, e os eventos devem ser avaliados a partir de sua ocorrência dentro desse subconjunto.
+  Em particular, ao considerar um evento
+  <span class="formula-inline" data-tts="a">\( A \)</span>,
+  a parte relevante para a análise é o conjunto
+  <span class="formula-inline" data-tts="a interseção b">\( A \cap B \)</span>,
+  que reúne os resultados compatíveis simultaneamente com o evento de interesse e com a condição imposta.
 </p>
 
+<p>
+  Essa mudança de referência exige um ajuste na forma de medir probabilidades. Como o conjunto
+  <span class="formula-inline" data-tts="b">\( B \)</span>
+  passa a desempenhar o papel de universo de comparação, é necessário definir uma medida que atribua a ele probabilidade
+  <span class="formula-inline" data-tts="um">\( 1 \)</span>
+  e que avalie os demais eventos relativamente a esse novo contexto. A probabilidade condicional é introduzida com esse objetivo.
+</p>
 <h3>3.1 Definição formal</h3>
 
 <p>
@@ -287,6 +281,19 @@ proximo: /capitulos/cap9-distribuicoes-discretas/
   e
   <span class="formula-inline" data-tts="b">\( B \)</span>
   com o total de resultados compatíveis com a condição.
+</p>
+
+<p>
+  Retomando o exemplo do lançamento de um dado, considere
+  <span class="formula-inline" data-tts="b igual a dois, quatro e seis">\( B = \{2,4,6\} \)</span>
+  e
+  <span class="formula-inline" data-tts="a igual a quatro, cinco e seis">\( A = \{4,5,6\} \)</span>.
+  Sob a condição de que o resultado é par, o conjunto de referência passa a ser
+  <span class="formula-inline" data-tts="b">\( B \)</span>,
+  e o evento relevante associado a
+  <span class="formula-inline" data-tts="a">\( A \)</span>
+  é dado por
+  <span class="formula-inline" data-tts="a interseção b igual a quatro e seis">\( A \cap B = \{4,6\} \)</span>.
 </p>
 
 <p>
@@ -311,14 +318,27 @@ proximo: /capitulos/cap9-distribuicoes-discretas/
 </p>
 
 <p>
+  No exemplo considerado, tem-se
+  <span class="formula-inline" data-tts="p de b igual a três sobre seis">\( P(B) = \frac{3}{6} \)</span>
+  e
+  <span class="formula-inline" data-tts="p de a interseção b igual a dois sobre seis">\( P(A \cap B) = \frac{2}{6} \)</span>.
+  Assim,
+</p>
+
+<p class="formula" data-tts="p de a dado b igual a dois sobre três">
+  \[
+    P(A \mid B) = \frac{2/6}{3/6} = \frac{2}{3}.
+  \]
+</p>
+
+<p>
   Essa expressão torna explícita a lógica da análise condicionada. O numerador
   <span class="formula-inline" data-tts="p de a interseção b">\( P(A \cap B) \)</span>
-  corresponde ao evento relevante sob a condição, pois reúne as realizações em que a condição é satisfeita e o evento de interesse também ocorre.
-  O denominador
+  corresponde ao evento relevante sob a condição, enquanto o denominador
   <span class="formula-inline" data-tts="p de b">\( P(B) \)</span>
-  fixa o conjunto
+  ajusta a escala de modo que o conjunto
   <span class="formula-inline" data-tts="b">\( B \)</span>
-  como referência total, garantindo que o cálculo seja interpretado como uma probabilidade avaliada no espaço restrito.
+  passe a desempenhar o papel de referência total.
 </p>
 
 <h3>3.2 Interpretação da definição</h3>
@@ -340,24 +360,25 @@ proximo: /capitulos/cap9-distribuicoes-discretas/
   pois ele reúne exatamente as realizações compatíveis simultaneamente com o evento de interesse e com a condição.
   A expressão
   <span class="formula-inline" data-tts="p de a dado b é igual a p de a interseção b sobre p de b">\( P(A \mid B)=\frac{P(A \cap B)}{P(B)} \)</span>
-  traduz essa ideia de forma direta: o numerador mede a probabilidade da parte de
+  traduz essa ideia ao comparar a probabilidade da parte de
   <span class="formula-inline" data-tts="b">\( B \)</span>
   em que
   <span class="formula-inline" data-tts="a">\( A \)</span>
-  também ocorre, enquanto o denominador mede a probabilidade total de
+  também ocorre com a probabilidade total de
   <span class="formula-inline" data-tts="b">\( B \)</span>.
 </p>
 
 <p>
-  Assim, a probabilidade condicional pode ser lida como a proporção de resultados compatíveis com
+  Retomando o exemplo do dado, sob a condição
+  <span class="formula-inline" data-tts="b igual a dois, quatro e seis">\( B = \{2,4,6\} \)</span>,
+  apenas esses resultados são considerados. Dentro desse conjunto, o evento
+  <span class="formula-inline" data-tts="a interseção b igual a quatro e seis">\( A \cap B = \{4,6\} \)</span>
+  representa os casos em que
+  <span class="formula-inline" data-tts="a">\( A \)</span>
+  ocorre. Assim, a probabilidade condicional corresponde à proporção de elementos de
   <span class="formula-inline" data-tts="b">\( B \)</span>
   que pertencem também a
   <span class="formula-inline" data-tts="a">\( A \)</span>.
-  Em termos de conjuntos, trata-se de comparar
-  <span class="formula-inline" data-tts="a interseção b">\( A \cap B \)</span>
-  com
-  <span class="formula-inline" data-tts="b">\( B \)</span>,
-  mantendo o mesmo experimento aleatório e o mesmo espaço amostral original como referência conceitual.
 </p>
 
 <p>
