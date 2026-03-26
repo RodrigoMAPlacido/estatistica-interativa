@@ -682,35 +682,103 @@ proximo: /capitulos/cap9-distribuicoes-discretas/
   Esse resultado constitui a base da contagem em diversos problemas probabilísticos, especialmente quando o espaço amostral pode ser descrito como uma sequência
   de escolhas ou etapas sucessivas.
 </p>
-<h3>5.2 Arranjos</h3>
+<h3>5.2 Permutações</h3>
 
 <p>
-  Em muitos problemas de contagem, deseja-se formar sequências com
-  <span class="formula-inline" data-tts="k">\( k \)</span>
-  elementos escolhidos entre
+  O conceito de permutação está associado à contagem de ordenações completas de um conjunto de elementos distintos.
+  Para tornar essa ideia concreta, suponha que
   <span class="formula-inline" data-tts="n">\( n \)</span>
-  elementos distintos, de modo que a ordem em que eles aparecem seja relevante.
-  Nesse caso, utiliza-se o conceito de <strong>arranjo</strong>.
+  pessoas distintas devam formar uma fila.
+  Nesse caso, deseja-se saber de quantas maneiras diferentes essa fila pode ser organizada.
 </p>
 
 <p>
-  Suponha que se queiram preencher
-  <span class="formula-inline" data-tts="k">\( k \)</span>
-  posições com elementos distintos escolhidos de um conjunto com
-  <span class="formula-inline" data-tts="n">\( n \)</span>
-  elementos.
   Há
   <span class="formula-inline" data-tts="n">\( n \)</span>
-  possibilidades para a primeira posição,
+  possibilidades para a primeira posição da fila.
+  Depois de escolhida a pessoa da primeira posição, restam
   <span class="formula-inline" data-tts="n menos um">\( n-1 \)</span>
-  para a segunda,
+  possibilidades para a segunda.
+  Em seguida, restam
   <span class="formula-inline" data-tts="n menos dois">\( n-2 \)</span>
-  para a terceira, e assim sucessivamente, até a
-  <span class="formula-inline" data-tts="k ésima">\( k \)</span>-ésima posição.
+  possibilidades para a terceira, e assim sucessivamente, até a última posição.
 </p>
 
 <p>
-  Pelo princípio fundamental da contagem, o número total de sequências possíveis é
+  Pelo princípio fundamental da contagem, o número total de filas possíveis é
+</p>
+
+<p class="formula" data-tts="n vezes n menos um vezes n menos dois até um">
+  \[
+    n(n-1)(n-2)\cdots 1 = n!.
+  \]
+</p>
+
+<p>
+  Portanto, o número de <strong>permutações</strong> de
+  <span class="formula-inline" data-tts="n">\( n \)</span>
+  elementos distintos é
+</p>
+
+<p class="formula" data-tts="p n é igual a n fatorial">
+  \[
+    P_n = n!.
+  \]
+</p>
+
+<p>
+  Assim, uma permutação corresponde a uma ordenação completa dos elementos.
+  No exemplo da fila, duas disposições diferentes representam resultados distintos sempre que ao menos uma pessoa ocupa posição diferente.
+</p>
+
+<h3>5.3 Arranjos</h3>
+
+<p>
+  Em muitas situações, porém, não é necessário considerar toda a fila.
+  Pode interessar apenas saber quais elementos ocupam os
+  <span class="formula-inline" data-tts="k">\( k \)</span>
+  primeiros lugares.
+  Nesse contexto, utiliza-se o conceito de <strong>arranjo</strong>.
+</p>
+
+<p>
+  Mantendo o exemplo anterior, suponha que
+  <span class="formula-inline" data-tts="n">\( n \)</span>
+  pessoas possam formar uma fila, mas que o interesse recaia apenas sobre os
+  <span class="formula-inline" data-tts="k">\( k \)</span>
+  primeiros lugares.
+  Nesse caso, importa saber quem ficou em primeiro, quem ficou em segundo, e assim sucessivamente, até o
+  <span class="formula-inline" data-tts="k ésimo">\( k \)</span>-ésimo lugar.
+  Portanto, a ordem continua sendo relevante.
+</p>
+
+<p>
+  De fato, se duas pessoas trocam de posição entre os
+  <span class="formula-inline" data-tts="k">\( k \)</span>
+  primeiros lugares, obtém-se um resultado diferente.
+  Ser o primeiro não é a mesma coisa que ser o segundo, assim como ser o segundo não é a mesma coisa que ser o terceiro.
+  Logo, o arranjo conta seleções ordenadas de
+  <span class="formula-inline" data-tts="k">\( k \)</span>
+  elementos dentre
+  <span class="formula-inline" data-tts="n">\( n \)</span>
+  elementos distintos.
+</p>
+
+<p>
+  Para formar os
+  <span class="formula-inline" data-tts="k">\( k \)</span>
+  primeiros lugares, há
+  <span class="formula-inline" data-tts="n">\( n \)</span>
+  possibilidades para o primeiro,
+  <span class="formula-inline" data-tts="n menos um">\( n-1 \)</span>
+  para o segundo,
+  <span class="formula-inline" data-tts="n menos dois">\( n-2 \)</span>
+  para o terceiro, e assim sucessivamente, até o
+  <span class="formula-inline" data-tts="k ésimo">\( k \)</span>-ésimo lugar.
+</p>
+
+<p>
+  Pelo princípio fundamental da contagem, o número total de arranjos é
 </p>
 
 <p class="formula" data-tts="n vezes n menos um vezes n menos dois até n menos k mais um">
@@ -720,13 +788,13 @@ proximo: /capitulos/cap9-distribuicoes-discretas/
 </p>
 
 <p>
-  Essa quantidade é chamada de número de <strong>arranjos simples</strong> de
+  Essa quantidade é o número de <strong>arranjos simples</strong> de
   <span class="formula-inline" data-tts="n">\( n \)</span>
   elementos tomados
   <span class="formula-inline" data-tts="k a k">\( k \)</span>
   a
   <span class="formula-inline" data-tts="k a k">\( k \)</span>
-  e pode ser escrita na forma
+  e pode ser escrita como
 </p>
 
 <p class="formula" data-tts="a n k é igual a n fatorial sobre n menos k fatorial">
@@ -736,83 +804,57 @@ proximo: /capitulos/cap9-distribuicoes-discretas/
 </p>
 
 <p>
-  Portanto, os arranjos descrevem situações em que importa não apenas quais elementos foram escolhidos, mas também a ordem em que aparecem.
-  Esse é o caso, por exemplo, da formação de senhas, classificações e distribuições ordenadas de posições.
-</p>
-
-<h3>5.3 Permutações</h3>
-
-<p>
-  As <strong>permutações</strong> constituem um caso particular dos arranjos.
-  Elas ocorrem quando todos os
-  <span class="formula-inline" data-tts="n">\( n \)</span>
-  elementos do conjunto são utilizados, de modo que o problema consiste apenas em contar quantas ordenações completas podem ser formadas.
-</p>
-
-<p>
-  Nesse caso, como há
-  <span class="formula-inline" data-tts="n">\( n \)</span>
-  possibilidades para a primeira posição,
-  <span class="formula-inline" data-tts="n menos um">\( n-1 \)</span>
-  para a segunda, e assim sucessivamente até a última, o número total de permutações é
-</p>
-
-<p class="formula" data-tts="p n é igual a n fatorial">
-  \[
-    P_n=n!.
-  \]
-</p>
-
-<p>
-  De fato, isso corresponde exatamente ao caso em que
-  <span class="formula-inline" data-tts="k igual a n">\( k=n \)</span>
-  na fórmula dos arranjos:
-</p>
-
-<p class="formula" data-tts="a n n é igual a n fatorial sobre zero fatorial igual a n fatorial">
-  \[
-    A_{n,n}=\frac{n!}{(n-n)!}=\frac{n!}{0!}=n!.
-  \]
-</p>
-
-<p>
-  Assim, as permutações aparecem quando todos os elementos participam da ordenação, como na disposição de pessoas em uma fila ou na organização de objetos em sequência.
+  Observa-se que a permutação é um caso particular do arranjo, correspondente à situação em que
+  <span class="formula-inline" data-tts="k igual a n">\( k=n \)</span>.
+  Nesse caso, consideram-se todos os lugares da fila.
 </p>
 
 <h3>5.4 Combinações</h3>
 
 <p>
-  Em outros problemas, a ordem dos elementos escolhidos não é relevante.
-  Nesses casos, interessa apenas determinar quais elementos foram selecionados, e não a sequência em que poderiam ser apresentados.
-  Esse é o contexto das <strong>combinações</strong>.
+  Há, por fim, situações em que o interesse não está na ordem dos
+  <span class="formula-inline" data-tts="k">\( k \)</span>
+  primeiros lugares, mas apenas em quais elementos foram selecionados.
+  Nesse caso, utiliza-se o conceito de <strong>combinação</strong>.
 </p>
 
 <p>
-  Para entender a diferença em relação aos arranjos, suponha que se escolham
+  Retomando o exemplo da fila, suponha que o interesse esteja apenas em identificar quais
   <span class="formula-inline" data-tts="k">\( k \)</span>
-  elementos distintos dentre
-  <span class="formula-inline" data-tts="n">\( n \)</span>.
-  Se a ordem importa, cada grupo de
+  pessoas ficaram entre as
   <span class="formula-inline" data-tts="k">\( k \)</span>
-  elementos gera vários resultados diferentes, um para cada maneira possível de ordená-los.
+  primeiras posições, sem distinguir quem ficou em primeiro, em segundo ou em qualquer outra dessas posições.
+  Nesse contexto, diferentes ordenações dos mesmos
+  <span class="formula-inline" data-tts="k">\( k \)</span>
+  elementos representam o mesmo resultado.
+</p>
+
+<p>
+  Por exemplo, se três pessoas distintas
+  <span class="formula-inline" data-tts="a, b e c">\( A \)</span>,
+  <span class="formula-inline" data-tts="b">\( B \)</span>
+  e
+  <span class="formula-inline" data-tts="c">\( C \)</span>
+  ocupam os três primeiros lugares, então as ordens
+  <span class="formula-inline" data-tts="a b c">\( (A,B,C) \)</span>,
+  <span class="formula-inline" data-tts="b a c">\( (B,A,C) \)</span>
+  e
+  <span class="formula-inline" data-tts="c b a">\( (C,B,A) \)</span>,
+  entre outras, correspondem ao mesmo grupo de pessoas selecionadas.
+</p>
+
+<p>
+  Assim, cada grupo de
+  <span class="formula-inline" data-tts="k">\( k \)</span>
+  elementos é contado várias vezes pelos arranjos, uma vez para cada maneira possível de ordenar esses
+  <span class="formula-inline" data-tts="k">\( k \)</span>
+  elementos.
   Como
+  <span class="formula-inline" data-tts="k fatorial">\( k! \)</span>
+  é o número de ordenações possíveis de
   <span class="formula-inline" data-tts="k">\( k \)</span>
-  elementos distintos podem ser ordenados de
-  <span class="formula-inline" data-tts="k fatorial">\( k! \)</span>
-  maneiras, cada combinação corresponde a
-  <span class="formula-inline" data-tts="k fatorial">\( k! \)</span>
-  arranjos distintos.
-</p>
-
-<p>
-  Portanto, o número de combinações de
-  <span class="formula-inline" data-tts="n">\( n \)</span>
-  elementos tomados
-  <span class="formula-inline" data-tts="k a k">\( k \)</span>
-  a
-  <span class="formula-inline" data-tts="k a k">\( k \)</span>
-  é obtido dividindo-se o número de arranjos por
-  <span class="formula-inline" data-tts="k fatorial">\( k! \)</span>:
+  elementos distintos, segue que o número de combinações é obtido dividindo-se o número de arranjos por
+  <span class="formula-inline" data-tts="k fatorial">\( k! \)</span>.
 </p>
 
 <p class="formula" data-tts="combinação de n elementos tomados k a k é igual a a n k sobre k fatorial">
@@ -822,7 +864,7 @@ proximo: /capitulos/cap9-distribuicoes-discretas/
 </p>
 
 <p>
-  Substituindo a fórmula dos arranjos, obtém-se
+  Substituindo a expressão dos arranjos, obtém-se
 </p>
 
 <p class="formula" data-tts="combinação de n elementos tomados k a k é igual a n fatorial sobre k fatorial vezes n menos k fatorial">
@@ -832,7 +874,9 @@ proximo: /capitulos/cap9-distribuicoes-discretas/
 </p>
 
 <p>
-  Assim, as combinações são adequadas para problemas em que importa apenas a seleção dos elementos, como em sorteios, formação de comissões e amostragens sem reposição.
+  Portanto, a combinação conta apenas quais elementos foram escolhidos, sem considerar a ordem em que aparecem entre os
+  <span class="formula-inline" data-tts="k">\( k \)</span>
+  primeiros lugares.
 </p>
 <hr>
 
