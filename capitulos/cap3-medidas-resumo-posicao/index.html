@@ -69,8 +69,8 @@ proximo: /capitulos/cap4-medidas-resumo-posicao-dois/
   típico e característico de uma distribuição. A ideia central é encontrar um ponto em torno do qual as observações se concentram, permitindo resumir o 
   conjunto de dados por meio de um único número com significado estatístico claro. Essa representação é útil tanto para descrever 
   rapidamente o conjunto de valores quanto para comparar diferentes grupos ou avaliar alterações em séries de dados. As três medidas 
-  mais utilizadas — <strong>média</strong>, <strong>mediana</strong> e <strong>moda</strong> — capturam aspectos distintos da 
-  distribuição e respondem de maneira diferente à presença de valores extremos, assimetrias e variações na forma dos dados.
+  mais utilizadas — <strong>média</strong>, <strong>mediana</strong> e <strong>moda</strong> — capturam aspectos distintos do conjunto
+  de dados e respondem de maneira diferente à presença de valores extremos, assimetrias e variações na forma dos dados.
 </p>
 <figure>
   <img src="../../imagens/tendencia-central.svg" alt="media">
@@ -100,10 +100,9 @@ proximo: /capitulos/cap4-medidas-resumo-posicao-dois/
 
 
 <p>
-  Um aspecto importante comum a todas essas médias é que elas utilizam, de algum modo, <strong>todos os valores da distribuição</strong>. 
-  Por essa razão, tendem a ser <strong>sensíveis à presença de valores extremos</strong> — observações muito altas ou muito baixas em 
-  relação ao restante dos dados. A maneira como essa sensibilidade se manifesta, porém, depende do tipo de média: algumas respondem 
-  diretamente a grandes somas, outras às multiplicações sucessivas ou aos inversos dos valores. Nas subseções seguintes, discutiremos, 
+  Um aspecto importante comum a todas essas médias é que elas utilizam, de algum modo, <strong>todos os valores do conjunto de dados</strong>. 
+  Por essa razão, tendem a ser <strong>sensíveis à presença de valores extremos</strong> — ou seja, observações muito altas ou muito baixas em 
+  relação ao restante dos dados. A maneira como essa sensibilidade se manifesta, porém, depende do tipo de média. Nas subseções seguintes, discutiremos, 
   para cada tipo de média, como essa sensibilidade se expressa e em quais contextos ela é desejável ou pode distorcer a representação 
   do <strong>valor típico</strong>.
 </p>
@@ -113,8 +112,10 @@ proximo: /capitulos/cap4-medidas-resumo-posicao-dois/
 
 <p>
   A <strong>média aritmética</strong> é a forma mais simples e amplamente utilizada de média. Ela resume o conjunto de dados por meio de 
-  um valor que corresponde à soma das observações dividida pela quantidade total de elementos — uma interpretação que pode ser vista 
-  como uma redistribuição uniforme dos valores. Para um conjunto de <em>n</em> observações <span class="formula-inline" data-tts=", xis um, xis dois, até xis ene,">\(x_1, x_2, \ldots, x_n\)</span>, sua forma expandida é:
+  um valor que corresponde à soma das observações dividida pela quantidade total de elementos. A média aritmética é adequada para dados quantitativos contínuos e discretos, especialmente quando as observações têm a mesma importância e a distribuição não apresenta caudas pesadas ou valores extremos relevantes.
+</p>
+
+<p>Para um conjunto de <em>n</em> observações <span class="formula-inline" data-tts=", xis um, xis dois, até xis ene,">\(x_1, x_2, \ldots, x_n\)</span>, sua forma expandida é:
 </p>
 
 <p class="formula" data-tts="x barra é igual à soma dos valores dividida por n.">
@@ -264,7 +265,7 @@ proximo: /capitulos/cap4-medidas-resumo-posicao-dois/
 </p>
 
 <p>
-  Do ponto de vista da sensibilidade a valores extremos, a média ponderada apresenta o mesmo comportamento básico da média aritmética,
+  Do ponto de vista da sensibilidade a valores extremos, a média ponderada apresenta a mesma limitação da média aritmética,
   com a diferença de que essa sensibilidade é <strong>amplificada pelos pesos</strong>. Valores muito altos ou muito baixos associados
   a pesos elevados podem deslocar de forma significativa o resultado da média, enquanto observações extremas com pesos reduzidos têm 
   impacto limitado. Assim, a média ponderada continua sendo sensível à presença de <em>outliers</em>, mas o efeito de cada valor extremo depende
@@ -429,7 +430,7 @@ proximo: /capitulos/cap4-medidas-resumo-posicao-dois/
   extremos. Por outro lado, como todos os valores de uma mesma classe são representados pelo mesmo ponto
   médio <span class="formula-inline">\(m_j\)</span>, a influência de observações <em>isoladas</em> muito distantes
   é parcialmente amortecida. Assim, a média agrupada continua sendo sensível à presença de caudas pesadas,
-  mas costuma reagir menos a outliers pontuais do que a média calculada a partir dos dados individuais.
+  mas costuma reagir menos a <em>outliers</em> pontuais do que a média calculada a partir dos dados individuais.
 </p>
 
 <p>
@@ -448,12 +449,10 @@ proximo: /capitulos/cap4-medidas-resumo-posicao-dois/
 
 <p>
   Essa abordagem é especialmente importante nos contextos descritos no início desta subseção, em que os dados já
-  se encontram <strong>consolidados em classes</strong> — por motivos de confidencialidade, limitações de
-  armazenamento ou necessidade de sintetizar grandes volumes de informação em tabelas e histogramas. Nesses casos,
+  se encontram <strong>consolidados em classes</strong>. Nesses casos,
   a média para dados agrupados fornece uma estimativa da média verdadeira a partir dos pontos médios e das
   frequências de cada classe. Como os pontos médios são aproximações dos valores individuais, a média resultante
-  também é aproximada; porém, quando as classes são relativamente estreitas e bem posicionadas, essa média
-  ponderada dos pontos médios tende a reproduzir de forma consistente a tendência geral dos dados, mantendo, em
+  também é aproximada; porém, quando as classes são relativamente estreitas e bem posicionadas, tende a reproduzir de forma consistente a tendência geral dos dados, mantendo, em
   linhas gerais, o mesmo padrão de sensibilidade às caudas observado na média aritmética.
 </p>
 
@@ -594,7 +593,7 @@ G^n = \prod_{i=1}^{n} x_i.
   <span class="formula-inline" data-tts=", um mais erre barra, elevado à potência n,">\((1 + \bar{r})^n\)</span> 
   tem o mesmo efeito acumulado que a sequência 
   <span class="formula-inline" data-tts=", um mais erre um, um mais erre dois, até um mais erre êne">\((1 + r_1), (1 + r_2), \ldots, (1 + r_n)\)</span>. 
-  Assim, ela não é a “média numérica” dos 
+  Assim, ela não é a <strong>média aritmética</strong> dos 
   <span class="formula-inline" data-tts=", erres i,">\(r_i\)</span>, 
   <strong>mas a taxa constante que reproduz o mesmo crescimento total.</strong>
 </p>
@@ -617,14 +616,6 @@ G^n = \prod_{i=1}^{n} x_i.
   ser zero. Valores muito grandes também influenciam o resultado, mas esse efeito é atenuado pelo fato de que, na prática, o cálculo é 
   equivalente a tirar a média aritmética dos logaritmos dos dados. Assim, a média geométrica é <strong>particularmente sensível a valores 
   pequenos</strong> e à presença de zeros, e menos influenciada por valores isolados muito altos do que a média aritmética.
-</p>
-
-<p>
-  A média geométrica é sempre menor ou igual à média aritmética, sendo igual apenas quando todas as observações são idênticas. Ela é 
-  especialmente apropriada em situações em que a ordem das multiplicações altera o resultado — como séries de rentabilidades — e em que 
-  variações percentuais sucessivas devem ser tratadas como fatores multiplicativos, não como incrementos lineares. Nessas aplicações, sua 
-  sensibilidade a valores muito pequenos reflete o fato de que um único período com desempenho ruim pode comprometer de maneira expressiva 
-  o resultado acumulado.
 </p>
 
 <div class="example-frame">
@@ -747,7 +738,7 @@ G^n = \prod_{i=1}^{n} x_i.
 
 <p>
   A <strong>média harmônica</strong> é uma variante da média aritmética que depende da forma como os dados são representados,
-  sendo adequada para dados em forma de taxas quando, na forma da razão adotada no problema, a grandeza de referência é o 
+  sendo adequada para dados em forma de taxas quando a grandeza de referência é o 
   <em>numerador</em>. É o caso, por exemplo, de velocidades medidas em trechos de <strong>igual distância</strong>, produtividades associadas 
   à <strong>mesma quantidade produzida</strong> ou custos unitários observados em compras com o <strong>mesmo valor gasto em cada ocorrência</strong>, 
   situações nas quais o valor de referência deixa de ser o denominador e passa a ser o numerador.

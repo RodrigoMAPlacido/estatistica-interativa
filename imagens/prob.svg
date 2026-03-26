@@ -213,32 +213,32 @@
       */
       @keyframes k-m2{
         0%,32.89% { transform:translate(0px,0px);       opacity:1; }
-        37.56%    { transform:translate(105px,0px);     opacity:1; } /* juntou */
-        53.33%    { transform:translate(105px,0px);     opacity:1; } /* inclui PAUSA 2 */
-        59.56%    { transform:translate(105px,-38px);   opacity:1; } /* subiu */
-        80.06%    { transform:translate(105px,-38px);   opacity:1; } /* imagem ainda visível */
-        81.61%    { transform:translate(105px,-38px);   opacity:0; } /* some com imagem */
-        92.83%    { transform:translate(105px,-38px);   opacity:0; }
+        37.56%    { transform:translate(55px,0px);     opacity:1; } /* juntou */
+        53.33%    { transform:translate(55px,0px);     opacity:1; } /* inclui PAUSA 2 */
+        59.56%    { transform:translate(55px,-45px);   opacity:1; } /* subiu */
+        80.06%    { transform:translate(55px,-45px);   opacity:1; } /* imagem ainda visível */
+        81.61%    { transform:translate(55px,-45px);   opacity:0; } /* some com imagem */
+        92.83%    { transform:translate(55px,-45px);   opacity:0; }
         100%      { transform:translate(0px,0px);       opacity:0; }
       }
       @keyframes k-m4{
         0%,32.89% { transform:translate(0px,0px);       opacity:1; }
-        37.56%    { transform:translate(-20px,0px);     opacity:1; }
-        53.33%    { transform:translate(-20px,0px);     opacity:1; }
-        59.56%    { transform:translate(-20px,-38px);   opacity:1; }
-        80.06%    { transform:translate(-20px,-38px);   opacity:1; }
-        81.61%    { transform:translate(-20px,-38px);   opacity:0; }
-        92.83%    { transform:translate(-20px,-38px);   opacity:0; }
+        37.56%    { transform:translate(-65px,0px);     opacity:1; }
+        53.33%    { transform:translate(-65px,0px);     opacity:1; }
+        59.56%    { transform:translate(-65px,-45px);   opacity:1; }
+        80.06%    { transform:translate(-65px,-45px);   opacity:1; }
+        81.61%    { transform:translate(-65px,-45px);   opacity:0; }
+        92.83%    { transform:translate(-65px,-45px);   opacity:0; }
         100%      { transform:translate(0px,0px);       opacity:0; }
       }
       @keyframes k-m6{
         0%,32.89% { transform:translate(0px,0px);       opacity:1; }
-        37.56%    { transform:translate(-145px,0px);    opacity:1; }
-        53.33%    { transform:translate(-145px,0px);    opacity:1; }
-        59.56%    { transform:translate(-145px,-38px);  opacity:1; }
-        80.06%    { transform:translate(-145px,-38px);  opacity:1; }
-        81.61%    { transform:translate(-145px,-38px);  opacity:0; }
-        92.83%    { transform:translate(-145px,-38px);  opacity:0; }
+        37.56%    { transform:translate(-185px,0px);    opacity:1; }
+        53.33%    { transform:translate(-185px,0px);    opacity:1; }
+        59.56%    { transform:translate(-185px,-45px);  opacity:1; }
+        80.06%    { transform:translate(-185px,-45px);  opacity:1; }
+        81.61%    { transform:translate(-185px,-45px);  opacity:0; }
+        92.83%    { transform:translate(-185px,-45px);  opacity:0; }
         100%      { transform:translate(0px,0px);       opacity:0; }
       }
       .a-m2{ animation:k-m2 var(--t) var(--ease) infinite both; }
@@ -363,7 +363,7 @@
   <!-- =========================
        GRID ORIGINAL (6 faces)
        ========================= -->
-
+<g transform="translate(50,13)">
   <!-- Face 1 (some) -->
   <g class="face a-hide" aria-hidden="true">
     <rect x="140" y="120" width="110" height="88" rx="12" ry="12" class="tileFill"/>
@@ -408,7 +408,7 @@
     <rect x="765" y="120" width="110" height="88" rx="12" ry="12" class="u-hit a-hit"/>
     <text x="820" y="176" class="u-center u-num">6</text>
   </g>
-
+</g>
   <!-- =========================
        TEXTO: Ω
        ========================= -->
@@ -440,7 +440,7 @@
   <!-- =========================
        IMAGEM DA RAZÃO: barra + 6 faces
        ========================= -->
-  <g transform="translate(10,-40)">     
+  <g transform="translate(40,-40)">     
   <path d="M140,230 L875,230" class="u-stroke2 a-bar" aria-hidden="true"/>
 
   <g aria-hidden="true">

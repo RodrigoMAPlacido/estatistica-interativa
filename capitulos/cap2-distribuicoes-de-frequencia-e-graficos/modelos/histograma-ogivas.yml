@@ -50,10 +50,13 @@ layout:
         min: 0
         max: 5
         ticks: 0
+        title: Quantidade de Estudantes
         
       yAxis:
         min: 0
         max: 10.01
+        ticks: 0
+        title: Horas de Estudo
       objects:
         - Line:
             strokeWidth: 0.5
@@ -274,6 +277,7 @@ layout:
         min: 0
         max: 5
         ticks: 0
+        title: Quantidade de Estudantes
       yAxis:
         min: 0
         max: 20.01

@@ -195,10 +195,10 @@
 
   <!-- ===== rodapé (2 camadas, mesma lógica do padrão) ===== -->
   <text x="260" y="276" font-size="18" class="u-center u-bold a-titleFill">
-    A ∩ A<tspan dy="-6" font-size="14">c</tspan><tspan dy="6"></tspan> = ∅  e  A ∪ A<tspan dy="-6" font-size="14">c</tspan><tspan dy="6"></tspan> = Ω
+    A ∩ A<tspan dy="-6" font-size="14">c</tspan><tspan dy="5"> = ∅  </tspan><tspan dy="0" dx="15">  e  </tspan><tspan dy="0" dx="15"> A ∪ A</tspan><tspan dy="-6" font-size="14">c</tspan><tspan dy="6"> = Ω</tspan> 
   </text>
   <text x="260" y="276" font-size="18" class="u-center u-bold a-titleStroke">
-    A ∩ A<tspan dy="-6" font-size="14">c</tspan><tspan dy="6"></tspan> = ∅  e  A ∪ A<tspan dy="-6" font-size="14">c</tspan><tspan dy="6"></tspan> = Ω
+    A ∩ A<tspan dy="-6" font-size="14">c</tspan><tspan dy="5"> = ∅    </tspan><tspan dy="0" dx="15">   e  </tspan><tspan dy="0" dx="15"> A ∪ A</tspan><tspan dy="-6" font-size="14">c</tspan><tspan dy="6"> = Ω</tspan> 
   </text>
 
 </svg>
