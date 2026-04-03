@@ -32,7 +32,7 @@ class TTSController {
   // Velocidade
   // ------------------------------------------
   setRate(v) {
-    const r = Math.max(0.5, Math.min(2.0, v));
+    const r = Math.max(0.5, Math.min(4.0, v));
     this.rate = r;
   }
 

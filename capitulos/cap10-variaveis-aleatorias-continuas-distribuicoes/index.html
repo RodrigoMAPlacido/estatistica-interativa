@@ -1,0 +1,645 @@
+---
+layout: capitulo
+title: Capítulo 10 — Variáveis Aleatórias Contínuas e suas Distribuições
+anterior: /capitulos/cap9-variaveis-aleatorias-discretas-distribuicoes/
+proximo: /capitulos/cap11-intervalos-de-confianca/
+---
+<p class="subtitle">Objetivos de aprendizagem</p>
+<ul>
+  <li>Compreender a <strong>variável aleatória contínua</strong> como uma variável cujos valores possíveis se distribuem ao longo de intervalos do conjunto dos números reais.</li>
+
+  <li>Entender por que, no caso contínuo, a probabilidade de um valor isolado
+    <span class="formula-inline" data-tts="x maiúsculo igual a x minúsculo">\( X=x \)</span>
+    é nula, e por que as probabilidades passam a ser associadas a <strong>intervalos</strong>.
+  </li>
+
+  <li>Construir e interpretar a <strong>função densidade de probabilidade</strong>
+    <span class="formula-inline" data-tts="f de x minúsculo">\( f(x) \)</span>
+    como forma de descrever a distribuição de uma variável aleatória contínua.
+  </li>
+
+  <li>Utilizar a <strong>função de distribuição acumulada</strong>
+    <span class="formula-inline" data-tts="f maiúsculo de x minúsculo igual à probabilidade de x maiúsculo menor ou igual a x minúsculo">\( F(x)=P(X\le x) \)</span>
+    para representar a acumulação de probabilidades.
+  </li>
+
+  <li>Calcular e interpretar medidas numéricas da distribuição, como o <strong>valor esperado</strong>, a <strong>variância</strong> e o <strong>desvio padrão</strong>, no caso contínuo.</li>
+
+  <li>Reconhecer e aplicar distribuições contínuas clássicas — como a <strong>Uniforme</strong>, a <strong>Exponencial</strong> e a <strong>Normal</strong> — como modelos probabilísticos adequados a diferentes fenômenos.</li>
+</ul>
+<hr>
+<h2>1. Introdução</h2>
+
+<p>
+  <span class="newthought">No capítulo anterior</span>, a noção de <strong>variável aleatória</strong> foi introduzida como um instrumento que permite associar valores numéricos aos resultados de um experimento aleatório, tornando possível descrever de forma sistemática não apenas se um evento ocorre ou não, mas também quais quantidades podem ser observadas e com que probabilidades elas se realizam. Nesse contexto, a atenção esteve voltada para variáveis aleatórias <strong>discretas</strong>, isto é, para situações em que o conjunto de valores possíveis pode ser listado, ainda que seja extenso, e em que a distribuição de probabilidade pode ser descrita pela atribuição direta de probabilidades a cada valor assumido.
+</p>
+
+
+
+<p>
+  Há, porém, muitas situações em que a quantidade observada não surge naturalmente como contagem, mas como <strong>medida</strong>. A altura de uma pessoa, o tempo de duração de uma ligação, a temperatura registrada em certo instante, o peso de um objeto ou a distância percorrida por um veículo são grandezas que podem assumir qualquer valor dentro de um intervalo, ao menos em princípio. Nesses casos, já não é adequado pensar a distribuição como uma simples enumeração de valores isolados, pois entre dois valores possíveis sempre existem outros valores igualmente possíveis. A descrição probabilística precisa, então, ser reformulada para lidar com conjuntos contínuos de valores.
+</p>
+
+<p>
+  É justamente desse novo contexto que trata o presente capítulo. O objetivo agora é estender a linguagem das variáveis aleatórias para abranger o caso em que os valores possíveis formam um contínuo, introduzindo os conceitos necessários para descrever como a probabilidade se distribui ao longo da reta real. Essa passagem exige uma mudança importante de perspectiva. Enquanto, no caso discreto, a probabilidade podia ser atribuída diretamente a cada valor possível da variável, no caso contínuo a probabilidade passa a ser associada a <strong>intervalos de valores</strong>, e não a pontos isolados tomados individualmente.
+</p>
+
+<p>
+  Para tornar essa ideia precisa, será necessário introduzir a <strong>função densidade de probabilidade</strong>, que desempenha, no caso contínuo, um papel análogo ao da função massa de probabilidade no caso discreto, embora com significado próprio. A partir dela, será possível definir probabilidades de intervalos, construir a função de distribuição acumulada e recuperar medidas numéricas importantes, como o valor esperado e a variância, agora adaptados ao novo tipo de variável. Desse modo, o capítulo preserva a linha conceitual desenvolvida até aqui, mas amplia o alcance da teoria probabilística, permitindo analisar grandezas cuja natureza exige uma modelagem contínua.
+</p>
+<hr>
+<h2>2. Definição de variável aleatória contínua</h2>
+
+<p>
+  Conforme discutido na introdução, a noção de variável aleatória permanece inalterada no caso contínuo: trata-se de uma função que associa a cada resultado do experimento um número real. Assim, se
+  <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>
+  é definida em um espaço amostral
+  <span class="formula-inline" data-tts="ômega maiúsculo">\( \Omega \)</span>,
+  tem-se
+</p>
+
+<p class="formula" data-tts="x é uma função de ômega em reais">
+  \[
+    X:\Omega \to \mathbb{R}.
+  \]
+</p>
+
+<p>
+  O que distingue o caso contínuo do caso discreto não é, portanto, a definição da variável em si, mas a forma pela qual a probabilidade se organiza em torno dos valores que ela pode assumir. Como já observado, quando a variável descreve uma grandeza mensurável, seus valores possíveis não podem ser enumerados, pois preenchem, em princípio, um intervalo da reta real.
+</p>
+
+<p>
+  Essa característica altera a forma de expressar probabilidades. Em vez de atribuir probabilidades a valores isolados, passa-se a considerar a probabilidade de a variável assumir valores dentro de intervalos. Desse modo, a descrição probabilística passa a ser formulada em termos de expressões do tipo
+  <span class="formula-inline" data-tts="p de a menor ou igual a x menor ou igual a b">\( P(a \leq X \leq b) \)</span>,
+  que representam a probabilidade de a variável assumir valores entre
+  <span class="formula-inline" data-tts="a">\( a \)</span>
+  e
+  <span class="formula-inline" data-tts="b">\( b \)</span>.
+</p>
+
+<p>
+  Uma variável aleatória é dita <strong>contínua</strong> quando sua distribuição pode ser descrita por meio de probabilidades associadas a intervalos da reta real, em vez de probabilidades pontuais associadas a valores isolados. A caracterização precisa dessa distribuição será apresentada na seção seguinte.
+</p>
+
+<hr>
+
+<h2>3. Distribuição de uma variável aleatória contínua</h2>
+
+<p>
+  Uma vez definida a variável aleatória contínua, resta descrever como a probabilidade se organiza ao longo de seus valores possíveis. No caso discreto, essa descrição era feita por meio de uma função que atribuía diretamente probabilidades a cada valor assumido pela variável. No contexto contínuo, contudo, essa abordagem deixa de ser adequada, pois, como discutido anteriormente, os valores possíveis não podem ser enumerados individualmente. Em seu lugar, torna-se necessário adotar uma representação capaz de expressar como a probabilidade se distribui ao longo de intervalos da reta real, preservando a ideia de que a probabilidade total deve permanecer igual a um.
+</p>
+
+<h3>3.1 Função densidade de probabilidade</h3>
+
+<p>
+  Seja
+  <span class="formula-inline">\( X \)</span>
+  uma variável aleatória contínua. Diz-se que sua distribuição pode ser descrita por uma <strong>função densidade de probabilidade</strong>
+  <span class="formula-inline">\( f(x) \)</span>
+  quando a probabilidade de a variável assumir valores em um intervalo qualquer pode ser obtida como a área sob a curva dessa função nesse intervalo. Mais precisamente, para quaisquer números reais
+  <span class="formula-inline">\( a \)</span>
+  e
+  <span class="formula-inline">\( b \)</span>,
+  com
+  <span class="formula-inline">\( a \leq b \)</span>,
+  tem-se
+</p>
+
+<p class="formula">
+  \[
+    P(a \leq X \leq b)=\int_a^b f(x)\,dx.
+  \]
+</p>
+
+<p>
+  Essa expressão traduz de forma compacta a ideia central do modelo contínuo: a probabilidade não se concentra em valores isolados, mas se distribui ao longo da reta real de maneira graduada, sendo capturada pela acumulação de “massa” ao longo de intervalos. A função
+  <span class="formula-inline">\( f(x) \)</span>
+  não fornece probabilidades diretamente, mas determina como elas se acumulam, de modo que sua interpretação está intrinsicamente ligada ao conceito de área.
+</p>
+
+<h3>3.2 Propriedades da densidade</h3>
+
+<p>
+  Para que uma função possa desempenhar esse papel, ela deve satisfazer certas condições que garantem a consistência probabilística do modelo. Em primeiro lugar, como não faz sentido atribuir probabilidades negativas, exige-se que
+  <span class="formula-inline">\( f(x) \geq 0 \)</span>
+  para todo
+  <span class="formula-inline">\( x \in \mathbb{R} \)</span>.
+  Além disso, como a variável necessariamente assume algum valor no seu domínio, a probabilidade total deve ser igual a um, o que se traduz na condição
+</p>
+
+<p class="formula">
+  \[
+    \int_{-\infty}^{\infty} f(x)\,dx=1.
+  \]
+</p>
+
+<p>
+  Uma consequência importante dessa construção é que valores individuais deixam de ter relevância probabilística isoladamente. De fato, como a probabilidade é obtida por integração, qualquer intervalo reduzido a um único ponto possui medida nula, o que implica que
+  <span class="formula-inline">\( P(X=c)=0 \)</span>
+  para todo
+  <span class="formula-inline">\( c \in \mathbb{R} \)</span>.
+  Isso não indica impossibilidade de ocorrência, mas apenas reflete o fato de que, em um modelo contínuo, a probabilidade emerge apenas quando se considera um conjunto de valores com extensão positiva.
+</p>
+
+<h3>3.3 Função de distribuição acumulada</h3>
+
+<p>
+  Assim como no caso discreto, a distribuição pode também ser descrita por meio da função de distribuição acumulada, definida por
+  <span class="formula-inline">\( F(x)=P(X \leq x) \)</span>.
+  Essa função mede a probabilidade total acumulada até o ponto
+  <span class="formula-inline">\( x \)</span>,
+  permitindo reconstruir a distribuição a partir da soma — agora contínua — das contribuições de todos os valores inferiores ou iguais a esse ponto.
+</p>
+
+<p>
+  No contexto contínuo, essa acumulação é expressa por meio de uma integral da densidade, de modo que
+</p>
+
+<p class="formula">
+  \[
+    F(x)=\int_{-\infty}^{x} f(t)\,dt,
+  \]
+</p>
+
+<p>
+  estabelecendo uma relação direta entre as duas formas de representação da distribuição. Sempre que a função acumulada é diferenciável, sua derivada coincide com a densidade, isto é,
+  <span class="formula-inline">\( f(x)=F'(x) \)</span>,
+  o que mostra que ambas contêm exatamente a mesma informação, ainda que organizadas de maneira distinta.
+</p>
+
+<p>
+  A função acumulada permite ainda calcular probabilidades de intervalos por diferença, uma vez que, para quaisquer
+  <span class="formula-inline">\( a \leq b \)</span>,
+  tem-se
+  <span class="formula-inline">\( P(a \leq X \leq b)=F(b)-F(a) \)</span>.
+  Como as probabilidades pontuais são nulas, essa expressão permanece válida independentemente da inclusão ou exclusão dos extremos, reforçando a ideia de que, no caso contínuo, a probabilidade está associada essencialmente a intervalos.
+</p>
+<hr>
+
+<h2>4. Medidas numéricas da distribuição</h2>
+
+<p>
+  A descrição de uma variável aleatória contínua por meio de sua densidade ou de sua função de distribuição acumulada permite compreender como a probabilidade se distribui ao longo da reta real. Em muitas situações, porém, interessa também sintetizar essa distribuição por meio de alguns números capazes de resumir aspectos centrais de seu comportamento. Entre esses aspectos, destacam-se a posição em torno da qual os valores tendem a se concentrar e o grau de dispersão em torno dessa posição. É nesse contexto que se introduzem o <strong>valor esperado</strong>, a <strong>variância</strong> e o <strong>desvio padrão</strong>, que desempenham, para variáveis aleatórias contínuas, papel análogo ao que a média, a variância e o desvio padrão desempenham na estatística descritiva.
+</p>
+
+<p>
+  A passagem ao caso contínuo não altera a lógica conceitual dessas medidas, mas altera sua forma de cálculo. No caso discreto, a distribuição era resumida por somas ponderadas pelas probabilidades associadas a cada valor possível. No caso contínuo, como a probabilidade está distribuída ao longo de intervalos, essas somas são substituídas por integrais ponderadas pela densidade. A ideia subjacente, contudo, permanece a mesma: cada medida numérica procura extrair da distribuição uma informação sintética e interpretável sobre o comportamento aleatório da variável.
+</p>
+
+<h3>4.1 Valor esperado</h3>
+
+<p>
+  O valor esperado de uma variável aleatória contínua corresponde ao seu centro de gravidade probabilístico. Ele não deve ser entendido, em geral, como um valor necessariamente observado em uma realização particular da variável, mas como a média teórica produzida pela distribuição quando se considera o conjunto de todos os valores possíveis ponderados de acordo com sua importância probabilística. Essa interpretação prolonga diretamente a noção de média estudada anteriormente: assim como a média aritmética resume um conjunto de observações por meio de um valor central, o valor esperado resume a distribuição teórica da variável por meio de uma média ponderada pela densidade.
+</p>
+
+<p>
+  Se
+  <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>
+  é uma variável aleatória contínua com densidade
+  <span class="formula-inline" data-tts="f de x">\( f(x) \)</span>,
+  então seu valor esperado, quando existe, é definido por
+</p>
+
+<p class="formula" data-tts="esperança de x igual à integral de menos infinito até infinito de x f de x dê xis">
+  \[
+    E(X)=\int_{-\infty}^{\infty} x\,f(x)\,dx
+  \]
+</p>
+
+<p>
+  Essa expressão pode ser compreendida como uma média contínua. O termo
+  <span class="formula-inline" data-tts="x">\( x \)</span>
+  representa cada valor possível da variável, enquanto
+  <span class="formula-inline" data-tts="f de x">\( f(x) \)</span>
+  indica a intensidade com que a probabilidade se concentra nas proximidades desse valor. A integral reúne, ao longo de todo o suporte da variável, as contribuições de cada região da distribuição. Desse modo, valores situados em regiões de maior densidade exercem maior influência sobre o valor esperado, ao passo que valores situados em regiões de baixa densidade contribuem menos.
+</p>
+
+<p>
+  Convém notar que a existência do valor esperado depende da convergência da integral acima. Nem toda distribuição contínua possui esperança finita. Quando essa integral converge, porém, o valor esperado fornece uma referência central da distribuição e desempenha papel fundamental tanto na interpretação probabilística quanto em resultados posteriores da teoria estatística.
+</p>
+
+<h3>4.2 Variância</h3>
+
+<p>
+  Embora o valor esperado forneça uma medida de posição, ele não informa quão espalhados estão os valores possíveis em torno desse centro. Duas variáveis aleatórias podem ter o mesmo valor esperado e, ainda assim, apresentar comportamentos muito diferentes: uma pode concentrar fortemente sua probabilidade em torno do centro, enquanto outra pode distribuir probabilidade por uma faixa muito mais ampla de valores. Para captar essa dimensão da distribuição, introduz-se a variância.
+</p>
+
+<p>
+  A variância mede a dispersão da variável em torno de seu valor esperado. A ideia é comparar cada valor possível
+  <span class="formula-inline" data-tts="x">\( x \)</span>
+  com o centro da distribuição,
+  <span class="formula-inline" data-tts="esperança de x">\( E(X) \)</span>,
+  calcular o desvio
+  <span class="formula-inline" data-tts="x menos esperança de x">\( x-E(X) \)</span>,
+  elevar esse desvio ao quadrado e, em seguida, obter sua média ponderada pela densidade. O quadrado é necessário porque desvios positivos e negativos, se simplesmente somados, tenderiam a se compensar.
+</p>
+
+<p>
+  Formalmente, a variância de
+  <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>,
+  quando existe, é definida por
+</p>
+
+<p class="formula" data-tts="variância de x igual à esperança de abre parêntese x menos esperança de x fecha parêntese ao quadrado">
+  \[
+    \mathrm{Var}(X)=E\big[(X-E(X))^2\big]
+  \]
+</p>
+
+<p>
+  No caso contínuo, essa definição pode ser escrita como
+</p>
+
+<p class="formula" data-tts="variância de x igual à integral de menos infinito até infinito de abre parêntese x menos esperança de x fecha parêntese ao quadrado f de x dê xis">
+  \[
+    \mathrm{Var}(X)=\int_{-\infty}^{\infty} (x-E(X))^2\,f(x)\,dx
+  \]
+</p>
+
+<p>
+  Essa fórmula explicita o caráter da variância como média ponderada dos desvios quadráticos em relação ao centro da distribuição. Quanto mais concentrados estiverem os valores possíveis em torno de
+  <span class="formula-inline" data-tts="esperança de x">\( E(X) \)</span>,
+  menor tenderá a ser a variância. Quanto mais espalhada for a distribuição, maior tenderá a ser essa medida.
+</p>
+
+<p>
+  Há ainda uma forma algébrica equivalente, frequentemente mais conveniente para o cálculo. Desenvolvendo o quadrado e usando as propriedades da esperança, obtém-se
+</p>
+
+<p class="formula" data-tts="variância de x igual à esperança de x ao quadrado menos abre parêntese esperança de x fecha parêntese ao quadrado">
+  \[
+    \mathrm{Var}(X)=E(X^2)-[E(X)]^2
+  \]
+</p>
+
+<p>
+  em que
+</p>
+
+<p class="formula" data-tts="esperança de x ao quadrado igual à integral de menos infinito até infinito de x ao quadrado f de x dê xis">
+  \[
+    E(X^2)=\int_{-\infty}^{\infty} x^2\,f(x)\,dx
+  \]
+</p>
+
+<p>
+  Essa identidade é especialmente útil porque permite calcular a variância a partir de dois momentos da distribuição: o segundo momento em torno da origem,
+  <span class="formula-inline" data-tts="esperança de x ao quadrado">\( E(X^2) \)</span>,
+  e o quadrado do primeiro momento,
+  <span class="formula-inline" data-tts="abre parêntese esperança de x fecha parêntese ao quadrado">\([E(X)]^2\)</span>.
+  Conceitualmente, porém, é importante preservar a interpretação original: a variância é uma medida de dispersão em torno do valor esperado.
+</p>
+
+<h3>4.3 Desvio padrão</h3>
+
+<p>
+  A variância resume adequadamente a dispersão da distribuição, mas apresenta uma característica que dificulta sua interpretação direta: como os desvios são elevados ao quadrado, sua unidade de medida torna-se o quadrado da unidade original da variável. Se
+  <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>
+  mede tempo em minutos, por exemplo, a variância será expressa em minutos ao quadrado, o que nem sempre possui interpretação intuitiva imediata.
+</p>
+
+<p>
+  Para contornar esse problema, define-se o <strong>desvio padrão</strong> como a raiz quadrada da variância:
+</p>
+
+<p class="formula" data-tts="sigma de x igual à raiz quadrada da variância de x">
+  \[
+    \sigma_X=\sqrt{\mathrm{Var}(X)}
+  \]
+</p>
+
+<p>
+  O desvio padrão herda da variância a função de medir o grau de dispersão da distribuição, mas o faz em uma escala diretamente comparável à da própria variável. Por estar expresso na mesma unidade de
+  <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>,
+  ele oferece uma indicação mais intuitiva da distância típica entre os valores da variável e seu valor esperado. Distribuições mais concentradas em torno do centro apresentam desvio padrão menor; distribuições mais espalhadas apresentam desvio padrão maior.
+</p>
+
+<p>
+  Assim, o valor esperado, a variância e o desvio padrão formam um primeiro conjunto de instrumentos para resumir numericamente uma distribuição contínua. O primeiro informa a posição central da distribuição; os dois últimos informam o grau de dispersão em torno dessa posição. Juntas, essas medidas permitem passar da descrição global da densidade para uma caracterização sintética de propriedades fundamentais da variável aleatória.
+</p>
+<hr>
+
+<h2>5. Distribuições contínuas clássicas</h2>
+
+<p>
+  A noção de variável aleatória contínua torna-se mais concreta quando se examinam algumas distribuições particulares que aparecem com frequência na modelagem de fenômenos reais e no desenvolvimento da teoria estatística. Assim como, no caso discreto, certas distribuições serviam de referência para descrever padrões recorrentes de comportamento probabilístico, no caso contínuo também há famílias de distribuições que ocupam posição central, seja por sua simplicidade formal, seja por sua relevância aplicada. Entre elas, destacam-se a <strong>distribuição uniforme contínua</strong>, a <strong>distribuição exponencial</strong> e a <strong>distribuição normal</strong>.
+</p>
+
+<p>
+  Essas distribuições diferem entre si pela forma como a probabilidade se distribui ao longo da reta real. Na uniforme contínua, a densidade permanece constante em um intervalo, traduzindo a ideia de ausência de preferência entre os valores desse trecho. Na exponencial, a densidade decresce à medida que o valor da variável aumenta, descrevendo situações em que valores pequenos tendem a ser mais prováveis do que valores grandes. Na normal, a densidade assume a forma característica de sino, concentrando maior probabilidade em torno de um valor central e decrescendo simetricamente para ambos os lados. O exame dessas três distribuições permite perceber como diferentes expressões analíticas da densidade correspondem a diferentes estruturas de comportamento aleatório.
+</p>
+
+<h3>5.1 Distribuição uniforme contínua</h3>
+
+<p>
+  A distribuição uniforme contínua constitui o modelo contínuo mais simples. Ela descreve situações em que todos os valores pertencentes a um certo intervalo são tratados de maneira homogênea, sem que haja, dentro desse intervalo, regiões privilegiadas em termos de concentração probabilística. Sua ideia central é a de uma densidade constante: a probabilidade não se acumula mais intensamente em uma parte do intervalo do que em outra, mas se distribui de forma regular por toda a extensão considerada.
+</p>
+
+<p>
+  Diz-se que uma variável aleatória contínua
+  <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>
+  tem distribuição uniforme no intervalo
+  <span class="formula-inline" data-tts="colchete a vírgula b colchete">\( [a,b] \)</span>,
+  com
+  <span class="formula-inline" data-tts="a menor que b">\( a&lt;b \)</span>,
+  quando sua densidade é dada por
+</p>
+
+<p class="formula" data-tts="f de x igual a um sobre b menos a, se a menor ou igual a x menor ou igual a b, e zero caso contrário">
+  \[
+    f(x)=
+    \begin{cases}
+      \dfrac{1}{b-a}, & \text{se } a \leq x \leq b \\[6pt]
+      0, & \text{caso contrário}
+    \end{cases}
+  \]
+</p>
+
+<p>
+  Essa expressão mostra que a altura da densidade é constante em todo o intervalo
+  <span class="formula-inline" data-tts="colchete a vírgula b colchete">\( [a,b] \)</span>.
+  Como a área total sob a curva deve ser igual a
+  <span class="formula-inline" data-tts="um">\( 1 \)</span>,
+  essa altura precisa ser exatamente o inverso do comprimento do intervalo. De fato,
+</p>
+
+<p class="formula" data-tts="integral de a até b de um sobre b menos a dê xis igual a um">
+  \[
+    \int_a^b \frac{1}{b-a}\,dx = 1
+  \]
+</p>
+
+<p>
+  A probabilidade de um subintervalo qualquer depende, portanto, apenas de seu comprimento relativo dentro do intervalo total. Se
+  <span class="formula-inline" data-tts="c">\( c \)</span>
+  e
+  <span class="formula-inline" data-tts="d">\( d \)</span>
+  satisfazem
+  <span class="formula-inline" data-tts="a menor ou igual a c menor ou igual a d menor ou igual a b">\( a \leq c \leq d \leq b \)</span>,
+  então
+</p>
+
+<p class="formula" data-tts="p de c menor ou igual a x menor ou igual a d igual a d menos c sobre b menos a">
+  \[
+    P(c \leq X \leq d)=\int_c^d \frac{1}{b-a}\,dx=\frac{d-c}{b-a}
+  \]
+</p>
+
+<p>
+  A distribuição uniforme contínua possui ainda medidas numéricas particularmente simples. Seu valor esperado é o ponto médio do intervalo,
+</p>
+
+<p class="formula" data-tts="esperança de x igual a a mais b sobre dois">
+  \[
+    E(X)=\frac{a+b}{2}
+  \]
+</p>
+
+<p>
+  e sua variância é dada por
+</p>
+
+<p class="formula" data-tts="variância de x igual a abre parêntese b menos a fecha parêntese ao quadrado sobre doze">
+  \[
+    \mathrm{Var}(X)=\frac{(b-a)^2}{12}
+  \]
+</p>
+
+<p>
+  Esses resultados reforçam a interpretação geométrica da distribuição: o centro coincide com o meio do intervalo, e a dispersão depende apenas de sua amplitude. Quanto maior o intervalo de suporte, maior será a variabilidade da variável. A distribuição uniforme contínua é frequentemente utilizada como modelo básico quando se supõe que um valor pode ocorrer em qualquer ponto de um intervalo sem favorecimento interno, como em simplificações teóricas envolvendo tempos, posições ou proporções desconhecidas dentro de limites fixos.
+</p>
+
+<h3>5.2 Distribuição exponencial</h3>
+
+<p>
+  A distribuição exponencial é usada para modelar tempos de espera até a ocorrência de um evento. Diferentemente da uniforme, em que a densidade é constante no intervalo considerado, a exponencial descreve situações em que valores pequenos são mais prováveis do que valores grandes, de modo que a densidade decresce continuamente à medida que a variável aumenta. Essa forma de distribuição é particularmente adequada para fenômenos em que se observa o tempo até uma chegada, uma falha, um atendimento ou algum outro acontecimento que pode ocorrer a qualquer instante.
+</p>
+
+<p>
+  Diz-se que uma variável aleatória contínua
+  <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>
+  tem distribuição exponencial com parâmetro
+  <span class="formula-inline" data-tts="lambda">\( \lambda \)</span>,
+  com
+  <span class="formula-inline" data-tts="lambda maior que zero">\( \lambda &gt; 0 \)</span>,
+  quando sua densidade é dada por
+</p>
+
+<p class="formula" data-tts="f de x igual a lambda e elevado a menos lambda x, se x maior ou igual a zero, e zero caso contrário">
+  \[
+    f(x)=
+    \begin{cases}
+      \lambda e^{-\lambda x}, & \text{se } x \geq 0 \\[6pt]
+      0, & \text{caso contrário}
+    \end{cases}
+  \]
+</p>
+
+<p>
+  O suporte dessa distribuição é o conjunto dos números reais não negativos, o que está de acordo com sua interpretação como modelo de tempos de espera, já que não faz sentido considerar tempos negativos. A função densidade assume seu maior valor em
+  <span class="formula-inline" data-tts="x igual a zero">\( x=0 \)</span>
+  e decresce monotonicamente à medida que
+  <span class="formula-inline" data-tts="x">\( x \)</span>
+  aumenta. Isso significa que, embora tempos longos permaneçam possíveis, tornam-se progressivamente menos prováveis.
+</p>
+
+<p>
+  Sua função de distribuição acumulada é obtida pela integração da densidade:
+</p>
+
+<p class="formula" data-tts="f maiúsculo de x igual a um menos e elevado a menos lambda x, para x maior ou igual a zero">
+  \[
+    F(x)=P(X\leq x)=1-e^{-\lambda x}, \quad x \geq 0
+  \]
+</p>
+
+<p>
+  Consequentemente, a probabilidade de a variável exceder um certo valor
+  <span class="formula-inline" data-tts="x">\( x \)</span>
+  é dada por
+</p>
+
+<p class="formula" data-tts="p de x maiúsculo maior que x igual a e elevado a menos lambda x">
+  \[
+    P(X&gt;x)=e^{-\lambda x}
+  \]
+</p>
+
+<p>
+  Esse resultado mostra que a cauda da distribuição também decresce exponencialmente. O parâmetro
+  <span class="formula-inline" data-tts="lambda">\( \lambda \)</span>
+  controla a rapidez desse decaimento. Valores maiores de
+  <span class="formula-inline" data-tts="lambda">\( \lambda \)</span>
+  tornam a distribuição mais concentrada próxima de zero, indicando tempos médios menores; valores menores de
+  <span class="formula-inline" data-tts="lambda">\( \lambda \)</span>
+  tornam a distribuição mais espalhada, permitindo tempos de espera mais longos com maior frequência relativa.
+</p>
+
+<p>
+  O valor esperado e a variância da distribuição exponencial são dados, respectivamente, por
+</p>
+
+<p class="formula" data-tts="esperança de x igual a um sobre lambda, e variância de x igual a um sobre lambda ao quadrado">
+  \[
+    E(X)=\frac{1}{\lambda}
+    \qquad \text{e} \qquad
+    \mathrm{Var}(X)=\frac{1}{\lambda^2}
+  \]
+</p>
+
+<p>
+  Entre as propriedades mais importantes dessa distribuição está a chamada <strong>falta de memória</strong>. Ela afirma que, para quaisquer
+  <span class="formula-inline" data-tts="s maior ou igual a zero">\( s \geq 0 \)</span>
+  e
+  <span class="formula-inline" data-tts="t maior ou igual a zero">\( t \geq 0 \)</span>,
+</p>
+
+<p class="formula" data-tts="p de x maior que s mais t dado x maior que s igual a p de x maior que t">
+  \[
+    P(X&gt;s+t \mid X&gt;s)=P(X&gt;t)
+  \]
+</p>
+
+<p>
+  Essa propriedade significa que, uma vez transcorrido um tempo
+  <span class="formula-inline" data-tts="s">\( s \)</span>
+  sem que o evento tenha ocorrido, o tempo adicional de espera continua obedecendo à mesma distribuição que teria no início. Em termos intuitivos, o processo não “acumula idade” no que diz respeito ao tempo restante. Essa característica torna a distribuição exponencial especialmente importante em modelos de filas, confiabilidade e processos de chegada.
+</p>
+
+<h3>5.3 Distribuição normal</h3>
+
+<p>
+  A distribuição normal ocupa uma posição central na teoria da probabilidade e na estatística. Sua importância não decorre apenas da frequência com que aparece como modelo aproximado de fenômenos observados, mas também do papel estrutural que desempenha em resultados gerais, especialmente na teoria amostral. Trata-se de uma distribuição contínua simétrica, unimodal e concentrada em torno de um valor central, cuja densidade apresenta a conhecida forma de sino.
+</p>
+
+<p>
+  Diz-se que uma variável aleatória contínua
+  <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>
+  tem distribuição normal com média
+  <span class="formula-inline" data-tts="mi">\( \mu \)</span>
+  e variância
+  <span class="formula-inline" data-tts="sigma ao quadrado">\( \sigma^2 \)</span>,
+  com
+  <span class="formula-inline" data-tts="sigma maior que zero">\( \sigma &gt; 0 \)</span>,
+  quando sua densidade é dada por
+</p>
+
+<p class="formula" data-tts="f de x igual a um sobre sigma raiz de dois pi, vezes e elevado a menos abre parêntese x menos mi fecha parêntese ao quadrado sobre dois sigma ao quadrado">
+  \[
+    f(x)=\frac{1}{\sigma\sqrt{2\pi}}
+    \exp\left(
+      -\frac{(x-\mu)^2}{2\sigma^2}
+    \right),
+    \qquad -\infty &lt; x &lt; \infty
+  \]
+</p>
+
+<p>
+  Nessa expressão, o parâmetro
+  <span class="formula-inline" data-tts="mi">\( \mu \)</span>
+  determina a posição central da distribuição, enquanto
+  <span class="formula-inline" data-tts="sigma">\( \sigma \)</span>
+  controla seu grau de dispersão. Quanto maior o valor de
+  <span class="formula-inline" data-tts="sigma">\( \sigma \)</span>,
+  mais espalhada e achatada se torna a curva; quanto menor esse valor, mais estreita e concentrada ela se apresenta em torno de
+  <span class="formula-inline" data-tts="mi">\( \mu \)</span>.
+  A simetria da densidade em relação a
+  <span class="formula-inline" data-tts="mi">\( \mu \)</span>
+  implica que valores equidistantes desse centro possuem a mesma densidade.
+</p>
+
+<p>
+  Para a distribuição normal, o valor esperado e a variância coincidem exatamente com os parâmetros que a definem:
+</p>
+
+<p class="formula" data-tts="esperança de x igual a mi, e variância de x igual a sigma ao quadrado">
+  \[
+    E(X)=\mu
+    \qquad \text{e} \qquad
+    \mathrm{Var}(X)=\sigma^2
+  \]
+</p>
+
+<p>
+  A função de distribuição acumulada da normal não possui uma expressão elementar simples em termos de funções algébricas usuais, razão pela qual seu cálculo é frequentemente feito por tabelas, software ou aproximações numéricas. Por isso, é comum trabalhar com a <strong>normal padrão</strong>, isto é, a distribuição normal com média
+  <span class="formula-inline" data-tts="zero">\( 0 \)</span>
+  e variância
+  <span class="formula-inline" data-tts="um">\( 1 \)</span>.
+  Se
+  <span class="formula-inline" data-tts="z">\( Z \)</span>
+  denota uma variável com essa distribuição, escreve-se
+  <span class="formula-inline" data-tts="z segue normal de zero vírgula um">\( Z \sim N(0,1) \)</span>.
+</p>
+
+<p>
+  Qualquer variável normal pode ser transformada em uma normal padrão por meio do processo de padronização. Se
+  <span class="formula-inline" data-tts="x segue normal de mi vírgula sigma ao quadrado">\( X \sim N(\mu,\sigma^2) \)</span>,
+  então a variável
+</p>
+
+<p class="formula" data-tts="z igual a x menos mi sobre sigma">
+  \[
+    Z=\frac{X-\mu}{\sigma}
+  \]
+</p>
+
+<p>
+  segue distribuição normal padrão. Essa transformação é importante porque converte qualquer valor de
+  <span class="formula-inline" data-tts="x">\( x \)</span>
+  em uma medida expressa em número de desvios padrão em relação à média. Em consequência, probabilidades envolvendo uma normal geral podem ser reescritas em termos da normal padrão, o que unifica os cálculos e simplifica a análise.
+</p>
+
+<p>
+  A distribuição normal é amplamente empregada para modelar erros de medição, características biológicas, variações agregadas e diversos outros fenômenos em que muitos fatores pequenos e independentes contribuem conjuntamente para o resultado observado. Sua importância, porém, ultrapassa o campo das aplicações imediatas. Ela será reencontrada mais adiante como distribuição de referência em resultados fundamentais da inferência estatística, o que explica sua posição central entre as distribuições contínuas clássicas.
+</p>
+<hr>
+
+<h2>6. Conclusão</h2>
+
+<p>
+  Neste capítulo, a teoria das variáveis aleatórias foi estendida ao caso em que os valores possíveis da variável não podem ser enumerados ponto a ponto, mas se distribuem continuamente ao longo de intervalos da reta real. Essa passagem exigiu uma mudança importante de perspectiva. No caso discreto, a distribuição podia ser descrita pela atribuição direta de probabilidades a cada valor possível. No caso contínuo, essa descrição deixa de ser adequada, pois a probabilidade já não se concentra em pontos isolados, mas se distribui ao longo de regiões, sendo captada por meio da função densidade e da função de distribuição acumulada.
+</p>
+
+<p>
+  A partir dessa nova estrutura, foram introduzidos os principais instrumentos para descrever distribuições contínuas. Primeiro, mostrou-se que a probabilidade relevante é a probabilidade de intervalos, obtida como área sob a curva da densidade. Em seguida, apresentou-se a função de distribuição acumulada como forma de registrar o acúmulo progressivo de probabilidade até cada ponto da reta real, evidenciando sua relação com a densidade. Depois, foram definidas as medidas numéricas da distribuição, em particular o valor esperado, a variância e o desvio padrão, que permitem resumir, respectivamente, a posição central e a dispersão da variável aleatória contínua.
+</p>
+
+<p>
+  O capítulo também apresentou algumas distribuições contínuas clássicas, cuja importância decorre tanto de sua utilidade prática quanto de seu papel teórico. A distribuição uniforme contínua forneceu o exemplo mais simples de densidade constante em um intervalo; a distribuição exponencial introduziu um modelo para tempos de espera com decaimento monotônico e propriedade de falta de memória; e a distribuição normal mostrou uma forma de distribuição simétrica e centralizada que ocupa posição privilegiada na probabilidade e na estatística.
+</p>
+
+<p>
+  Com isso, completa-se uma etapa importante da construção conceitual iniciada nos capítulos anteriores. A probabilidade, que no início foi formulada como medida associada a eventos, passa agora a ser articulada também com variáveis numéricas capazes de representar quantitativamente resultados aleatórios. Essa ampliação permite descrever não apenas se um evento ocorre ou não, mas também como se distribuem valores, magnitudes e medidas produzidos por fenômenos aleatórios. Sobre essa base, tornam-se possíveis desenvolvimentos posteriores ligados a transformações de variáveis, distribuições amostrais e métodos de inferência estatística.
+</p>
+<hr>
+
+<h2>7. Referências</h2>
+
+<p>
+  FÁVERO, Luiz Paulo; BELFIORE, Patrícia. Manual de análise de dados: estatística e modelagem multivariada com Excel®, SPSS® e Stata®. 1. ed. Rio de Janeiro: Elsevier, 2017.
+</p>
+<p>
+  MAGALHÃES, Marcos Nascimento; LIMA, Antonio Carlos Pedroso de. Noções de Probabilidade e Estatística. 7. ed., 1. reimpr. São Paulo: Editora da Universidade de São Paulo, 2011.
+</p>
+<p>
+  SARTORIS, Alexandre. Estatística e introdução à econometria. 2. ed. São Paulo: Saraiva, 2013.
+</p>
+<p>
+  BUSSAB, Wilton de Oliveira; MORETTIN, Pedro Alberto. <strong>Estatística básica</strong>. 10. ed. São Paulo: SaraivaUni, 2023.
+</p>
+<p>
+  LARSON, Ron; FARBER, Betsy. <strong>Estatística aplicada</strong>. 6. ed. Tradução José Fernando Pereira Gonçalves; Revisão técnica Manoel Henrique Salgado. São Paulo: Pearson Education do Brasil, 2015.
+</p>
+<p>
+  TRIOLA, Mario F. <strong>Introdução à estatística</strong>. 12. ed. Tradução e revisão técnica Ana Maria Lima de Farias, Vera Regina Lima de Farias e Flores. Rio de Janeiro: LTC — Livros Técnicos e Científicos Editora, 2017.
+</p>
+<p>
+  MOOD, Alexander McFarlane; GRAYBILL, Franklin A.; BOES, Duane C. Introduction to the theory of statistics. New York: McGraw-Hill, 1974.
+</p>
+<p>
+  SAVAGE, Leonard J. The Foundations of Statistics. 2. ed. rev. New York: Dover Publications, 1972.
+</p>
+<p>
+  WARE, William B.; FERRON, John M.; MILLER, Barbara M. Introductory Statistics: A Conceptual Approach Using R. New York: Routledge, 2013.
+</p>
+

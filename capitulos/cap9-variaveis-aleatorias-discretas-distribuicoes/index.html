@@ -1,0 +1,1427 @@
+---
+layout: capitulo
+title: Capítulo 9 — Variáveis Aleatórias Discretas e suas Distribuições
+anterior: /capitulos/cap8-probabilidade-condicional-combinatoria/
+proximo: /capitulos/cap10-variaveis-aleatorias-continuas-distribuicoes/
+---
+
+<p class="subtitle">Objetivos de aprendizagem</p>
+<ul>
+  <li>Compreender a <strong>variável aleatória discreta</strong> como uma função que associa valores numéricos aos resultados de um experimento aleatório.</li>
+
+  <li>Identificar a distinção entre <strong>resultado elementar</strong>, <strong>valor da variável</strong> e <strong>evento do tipo <span class="formula-inline" data-tts="x igual a x minúsculo">\( X = x \)</span></strong>.</li>
+
+  <li>Construir e interpretar a <strong>função de probabilidade</strong>
+    <span class="formula-inline" data-tts="p de x minúsculo igual à probabilidade de x maiúsculo igual a x minúsculo">\( p(x)=P(X=x) \)</span>
+    como forma de descrever a distribuição de uma variável aleatória discreta.
+  </li>
+
+  <li>Utilizar a <strong>função de distribuição acumulada</strong>
+    <span class="formula-inline" data-tts="f de x minúsculo igual à probabilidade de x maiúsculo menor ou igual a x minúsculo">\( F(x)=P(X\le x) \)</span>
+    para representar a acumulação das probabilidades ao longo dos valores possíveis da variável.
+  </li>
+
+  <li>Calcular e interpretar medidas numéricas da distribuição, como o <strong>valor esperado</strong>, a <strong>variância</strong> e o <strong>desvio padrão</strong>.</li>
+
+  <li>Reconhecer e aplicar distribuições discretas clássicas — <strong>Bernoulli</strong>, <strong>Binomial</strong>, <strong>Geométrica</strong>, <strong>Binomial Negativa</strong>, <strong>Hipergeométrica</strong> e <strong>Poisson</strong> — como modelos probabilísticos adequados a diferentes situações de contagem.</li>
+</ul>
+
+<hr>
+<h2>1. Introdução</h2>
+
+<p>
+  <span class="newthought">Nos capítulos anteriores</span>, a teoria da probabilidade foi desenvolvida com base na noção de que os <strong>resultados possíveis</strong> de um experimento aleatório podem ser organizados em um <strong>espaço amostral</strong>. Cada subconjunto desse espaço define um <strong>evento</strong>, isto é, um conjunto de resultados considerados favoráveis. Nesse contexto, a probabilidade de um evento é determinada pela proporção entre o número de resultados favoráveis e o total de resultados possíveis.
+
+  Assim, a <strong>probabilidade</strong> é formalmente entendida como uma medida que associa a cada evento um número real pertencente ao intervalo fechado 
+  <span class="formula-inline" data-tts="de zero a um">\( [0,1] \)</span>, 
+  o que permite quantificar, de maneira rigorosa, o grau de plausibilidade de sua ocorrência.
+</p>
+
+<p>
+  Partindo da definição de probabilidade, introduziu-se, no capítulo 8, a <strong>probabilidade condicional</strong>, na qual a ocorrência prévia de um evento passa a restringir o <strong>conjunto de resultados relevantes</strong>. Isso evidencia que o cálculo probabilístico depende do <strong>conjunto de referência</strong> considerado. Esse refinamento conceitual possibilitou estabelecer relações fundamentais, como a <strong>regra do produto</strong>, o <strong>teorema da probabilidade total</strong> e a <strong>fórmula de Bayes</strong>, as quais, em modelos finitos equiprováveis, se articulam diretamente com a <strong>análise combinatória</strong> por meio da contagem de casos possíveis e favoráveis.
+</p>
+
+<p>
+  Embora seja bastante geral, essa forma de organização apresenta uma limitação relevante. Considere o experimento de lançar três moedas e analisar o comportamento do <strong>número de caras</strong> obtido. Esse número pode assumir os valores 0, 1, 2 ou 3 quantidades totais de caras, sendo que cada um deles possui uma probabilidade distinta de ocorrência. Nesse caso, o interesse não está em verificar a ocorrência de um evento específico, mas em descrever como essa quantidade numérica — ou seja, os números possíveis de caras — se distribui entre todos os lançamentos.
+
+  A linguagem de eventos, no entanto, não fornece uma estrutura direta para esse tipo de análise, pois não generaliza a ideia de evento para incluir a descrição de quantidades numéricas associadas aos resultados.
+</p>
+<p>
+  Para superar essa limitação, é necessária a introdução do conceito de <strong>variável aleatória</strong>, definida como uma função que associa a cada resultado do espaço amostral um número real. Essa construção permite reorganizar a informação probabilística em termos dos valores assumidos por essa variável e das probabilidades correspondentes a cada um desses valores.
+
+  Quando o conjunto de valores possíveis é finito ou enumerável, define-se uma <strong>variável aleatória discreta</strong>, cuja caracterização é dada por sua <strong>distribuição de probabilidade</strong>. Neste capítulo, esse conceito é apresentado de forma formal, juntamente com as ferramentas necessárias para a sua análise, possibilitando um tratamento sistemático não apenas de eventos, mas também das quantidades numéricas a eles associadas.
+</p>
+
+<hr>
+
+
+<h2>2. Definição de variável aleatória discreta</h2>
+
+<p>
+  Conforme discutido na introdução, a linguagem de eventos permite descrever a ocorrência de subconjuntos do espaço amostral, mas não organiza diretamente a análise quando o interesse recai sobre <strong>quantidades numéricas associadas aos resultados</strong>. Para tratar esse tipo de problema de forma sistemática, é necessário introduzir um novo objeto que permita representar tais quantidades de forma sistemática: a <strong>variável aleatória</strong>.
+
+  A ideia central consiste em associar a cada resultado do experimento um número real que represente a característica de interesse. Essa associação não altera o espaço amostral, mas reorganiza a informação probabilística a partir dos valores assumidos por essa quantidade.
+</p>
+
+<h3>2.1 Definição formal</h3>
+
+<p>
+  Seja um experimento aleatório com espaço amostral
+  <span class="formula-inline" data-tts="ômega maiúsculo">\( \Omega \)</span>,
+  cujos elementos
+  <span class="formula-inline" data-tts="ômega minúsculo">\( \omega \in \Omega \)</span>
+  representam os resultados elementares possíveis.
+</p>
+
+<p>
+  Uma <strong>variável aleatória</strong> é uma função
+</p>
+
+<p class="formula" data-tts="x é uma função de ômega em reais">
+  \[
+  X:\Omega \to \mathbb{R}
+  \]
+</p>
+
+<p>
+  que associa a cada resultado
+  <span class="formula-inline" data-tts="ômega minúsculo">\( \omega \)</span>
+  um número real
+  <span class="formula-inline" data-tts="x de ômega">\( X(\omega) \)</span>.
+  Dessa forma, a variável aleatória seleciona, de cada resultado, apenas o aspecto quantitativo relevante para a análise.
+</p>
+
+<p>
+  Retomando o exemplo do lançamento de três moedas, resultados distintos como
+  <span class="formula-inline" data-tts="cara cara coroa">\( (C,C,K) \)</span>
+  e
+  <span class="formula-inline" data-tts="cara coroa cara">\( (C,K,C) \)</span>
+  correspondem a elementos diferentes de
+  <span class="formula-inline" data-tts="ômega maiúsculo">\( \Omega \)</span>,
+  mas produzem a mesma quantidade de caras, isto é, ambos resultam em
+  <span class="formula-inline" data-tts="x igual a dois">\( X = 2 \)</span>.
+Desse modo, a variável aleatória permite organizar o cálculo probabilístico em termos das quantidades numéricas de interesse.
+</p>
+
+<p>
+  A partir dessa definição, eventos podem ser descritos em termos de quantidades de ocorrências na variável. Em particular, a expressão
+  <span class="formula-inline" data-tts="x igual a x minúsculo">\( X = x \)</span>
+  representa o conjunto de todos os resultados para os quais a variável <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span> assume o valor
+  <span class="formula-inline" data-tts="x minúsculo">\( x \)</span>, isto é,
+</p>
+
+<p class="formula" data-tts="conjunto dos ômegas em ômega tais que x de ômega é igual a x">
+  \[
+  \{\omega \in \Omega : X(\omega) = x\}.
+  \]
+</p>
+
+<p>
+  Desse modo, a variável aleatória estabelece uma correspondência entre valores numéricos e eventos, permitindo estudar diretamente a probabilidade associada a cada quantidade possível.
+</p>
+
+<p>
+  Quando o conjunto de valores assumidos por
+  <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>
+  é finito ou enumerável, a variável é dita <strong>discreta</strong>. Nesse caso, é possível organizar completamente a informação probabilística por meio das probabilidades associadas a cada valor, o que conduz ao conceito de <strong>distribuição de probabilidade</strong>, a ser desenvolvido na sequência.
+</p>
+<hr>
+
+<h2>3. Distribuição de probabilidade</h2>
+
+<p>
+  Uma vez definida a variável aleatória discreta como uma função que associa a
+  cada resultado elementar um valor numérico, o passo seguinte consiste em
+  descrever como a probabilidade se distribui entre os valores que essa variável
+  pode assumir. Em outras palavras, já não interessa apenas saber quais são os
+  valores possíveis de
+  <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>,
+  mas também com que probabilidade cada um deles ocorre. É precisamente essa
+  organização que constitui a <strong>distribuição de probabilidade</strong> da
+  variável.
+</p>
+
+<p>
+  No caso discreto, essa descrição pode ser feita de duas formas.
+  A primeira consiste em associar diretamente a cada valor possível de
+  <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>
+  a probabilidade de sua ocorrência, por meio da chamada
+  <strong>função de probabilidade</strong>. A segunda consiste em acumular essas
+  probabilidades até um certo valor, dando origem à
+  <strong>função de distribuição acumulada</strong>. Ambas as formas são equivalentes e permitem caracterizar completamente a distribuição de probabilidade da variável — embora enfatizem aspectos diferentes dela — e serão apresentadas a seguir.
+</p>
+
+<h3>3.1 Função de probabilidade</h3>
+
+<p>
+  Seja
+  <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>
+  uma variável aleatória discreta. Para cada valor possível
+  <span class="formula-inline" data-tts="x minúsculo">\( x \)</span>
+  assumido por essa variável, define-se a <strong>função de probabilidade</strong>
+  como a função que associa a esse valor a probabilidade de o evento
+  <span class="formula-inline" data-tts="x maiúsculo igual a x minúsculo">\( X=x \)</span>
+  ocorrer. Em notação,
+</p>
+
+<p class="formula" data-tts="p de x minúsculo é igual à probabilidade de x maiúsculo igual a x minúsculo">
+  \[
+  p(x)=P(X=x).
+  \]
+</p>
+
+<p>
+  Essa expressão deve ser lida com cuidado. O símbolo
+  <span class="formula-inline" data-tts="p de x minúsculo">\( p(x) \)</span>
+  não representa a variável aleatória em si, mas a probabilidade associada ao
+  valor
+  <span class="formula-inline" data-tts="x minúsculo">\( x \)</span>.
+  Assim, enquanto
+  <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>
+  é a função que transforma resultados elementares em números reais,
+  <span class="formula-inline" data-tts="p de x minúsculo">\( p(x) \)</span>
+  descreve como a probabilidade total se reparte entre os diferentes valores que
+  essa variável pode assumir.
+</p>
+
+<p>
+  Suponha, por exemplo, que
+  <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>
+  represente o número de caras obtidas no lançamento de três moedas honestas.
+  Nesse caso, os valores possíveis da variável são
+  <span class="formula-inline" data-tts="zero um dois e três">\( 0,1,2,3 \)</span>.
+  A função de probabilidade informa a chance associada a cada um desses valores:
+  a probabilidade de não ocorrer nenhuma cara, a probabilidade de ocorrer
+  exatamente uma, exatamente duas ou exatamente três caras. Por exemplo, a probabilidade de ocorrer exatamente duas caras é dada por
+</p>  
+
+<p class="formula" data-tts="a probabilidade da quantidade de caras ser igual à dois é igual à probabilidade de x maiúsculo igual a dois">
+  \[
+  p(2)=P(X=2).
+  \]
+</p>
+
+<p>
+  Em vez de trabalhar
+  com todos os resultados elementares do espaço amostral, passa-se a resumir a
+  estrutura probabilística em termos dos valores numericamente relevantes para o
+  problema.
+</p>
+
+<p>
+  Essa mudança de perspectiva é central. A variável aleatória discreta permite
+  agrupar resultados elementares diferentes sempre que eles produzem o mesmo
+  valor numérico, e a função de probabilidade quantifica a importância relativa
+  de cada um desses valores. Por isso, conhecer a função
+  <span class="formula-inline" data-tts="p de x minúsculo">\( p(x) \)</span>
+  significa conhecer a forma como a variável se distribui sobre seu conjunto de
+  valores possíveis.
+</p>
+
+<h3>3.2 Propriedades básicas</h3>
+
+<p>
+  Como a função de probabilidade associa a cada valor possível de uma variável
+  discreta a probabilidade do evento correspondente, ela deve respeitar as
+  propriedades fundamentais da própria noção de probabilidade. A primeira delas é
+  a não negatividade. Para todo valor
+  <span class="formula-inline" data-tts="x minúsculo">\( x \)</span>,
+  deve-se ter
+</p>
+
+<p class="formula" data-tts="p de x minúsculo maior ou igual a zero">
+  \[
+  p(x)\geq 0.
+  \]
+</p>
+
+<p>
+  Isso decorre diretamente do fato de que
+  <span class="formula-inline" data-tts="p de x minúsculo">\( p(x) \)</span>
+  é a probabilidade do evento
+  <span class="formula-inline" data-tts="x maiúsculo igual a x minúsculo">\( X=x \)</span>,
+  e probabilidades não podem assumir valores negativos.
+</p>
+
+<p>
+  A segunda propriedade fundamental é que a soma das probabilidades associadas a
+  todos os valores possíveis da variável deve ser igual a 1. Se
+  <span class="formula-inline" data-tts="x um, x dois, x três até x n">\( x_1,x_2,x_3,\ldots, x_n \)</span>
+  representam os valores assumidos por
+  <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>,
+  então
+</p>
+
+<p class="formula" data-tts="somatório de p de x i igual a um">
+  \[
+  \sum_i p(x_i)=1.
+  \]
+</p>
+
+<p>
+  Essa igualdade exprime a ideia de que a variável necessariamente assume algum
+  de seus valores possíveis. Como os eventos
+  <span class="formula-inline" data-tts="x igual a x um, x igual a x dois e assim por diante">\( X=x_1, X=x_2, \ldots \)</span>
+  são mutuamente exclusivos e esgotam todas as possibilidades da variável, a
+  soma de suas probabilidades deve coincidir com a probabilidade do espaço total.
+</p>
+
+<p>
+  A partir dessas duas propriedades, a função de probabilidade de uma variável
+  discreta fica caracterizada como uma distribuição válida: cada valor recebe uma
+  massa de probabilidade não negativa, e a soma de todas essas massas é igual a
+  1. Por isso, em muitos contextos, a função
+  <span class="formula-inline" data-tts="p de x minúsculo">\( p(x) \)</span>
+  também é chamada de <strong>função massa de probabilidade</strong>, justamente
+  porque a probabilidade total é distribuída em “blocos” ou “massas” associados
+  a pontos específicos do conjunto de valores da variável.
+</p>
+
+<p>
+  Além disso, a função de probabilidade permite calcular a probabilidade de
+  eventos mais amplos envolvendo a variável. Se
+  <span class="formula-inline" data-tts="a">\( A \)</span>
+  for um conjunto de valores possíveis de
+  <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>,
+  então a probabilidade de a variável assumir algum valor pertencente a esse
+  conjunto é obtida pela soma das probabilidades individuais correspondentes:
+</p>
+
+<p class="formula" data-tts="probabilidade de x pertencer a a igual ao somatório de p de x minúsculo para x em a">
+  \[
+  P(X\in A)=\sum_{x\in A} p(x).
+  \]
+</p>
+
+<p>
+  Essa expressão mostra que, no caso discreto, probabilidades de eventos
+  envolvendo a variável podem ser obtidas pela simples agregação das massas
+  atribuídas aos valores compatíveis com o evento considerado. Se quisermos, por
+  exemplo, calcular a probabilidade de
+  <span class="formula-inline" data-tts="x maior ou igual a dois">\( X\geq 2 \)</span>,
+  basta somar as probabilidades de todos os valores possíveis de
+  <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>
+  que satisfaçam essa condição.
+</p>
+
+<h3>3.3 Função de distribuição acumulada</h3>
+
+<p>
+  Embora a função de probabilidade descreva diretamente a chance associada a cada
+  valor isolado da variável, em muitas situações interessa saber a probabilidade
+  de a variável assumir um valor <strong>menor ou igual</strong> a um certo número.
+  Essa necessidade conduz à <strong>função de distribuição acumulada</strong>, que
+  reúne as probabilidades dos valores até um ponto dado.
+</p>
+
+<p>
+  Para uma variável aleatória
+  <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>,
+  define-se a função de distribuição acumulada por
+</p>
+
+<p class="formula" data-tts="f de x minúsculo igual à probabilidade de x maiúsculo menor ou igual a x minúsculo">
+  \[
+  F(x)=P(X\leq x).
+  \]
+</p>
+
+<p>
+  O valor
+  <span class="formula-inline" data-tts="f de x minúsculo">\( F(x) \)</span>
+  representa, portanto, a probabilidade acumulada até o ponto
+  <span class="formula-inline" data-tts="x minúsculo">\( x \)</span>.
+  No caso discreto, isso significa somar as probabilidades de todos os valores
+  possíveis da variável que sejam menores ou iguais a esse número. Assim, se
+  <span class="formula-inline" data-tts="x um até x k">\( x_1,\ldots,x_k \)</span>
+  são os valores possíveis de
+  <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>
+  tais que
+  <span class="formula-inline" data-tts="x i menor ou igual a x">\( x_i\leq x \)</span>,
+  então
+</p>
+
+<p class="formula" data-tts="f de x minúsculo igual ao somatório de p de x i para todos os x i menores ou iguais a x">
+  \[
+  F(x)=\sum_{x_i\leq x} p(x_i).
+  \]
+</p>
+
+<p>
+  A função acumulada não substitui a função de probabilidade; ela oferece uma
+  forma diferente de representar a mesma distribuição. Enquanto
+  <span class="formula-inline" data-tts="p de x minúsculo">\( p(x) \)</span>
+  informa a probabilidade de um valor exato, a função
+  <span class="formula-inline" data-tts="f de x minúsculo">\( F(x) \)</span>
+  informa a probabilidade de a variável não ultrapassar um certo limite.
+  Por essa razão, ela é especialmente útil para calcular probabilidades do tipo
+  <span class="formula-inline" data-tts="a menor que x menor ou igual a b">\( a&lt;X\leq b \)</span>,
+  <span class="formula-inline" data-tts="x menor que ou igual a b">\( X\leq b \)</span>
+  ou
+  <span class="formula-inline" data-tts="x maior que a">\( X&gt;a \)</span>.
+</p>
+
+<p>
+  No caso discreto, a função
+  <span class="formula-inline" data-tts="f de x minúsculo">\( F(x) \)</span>
+  apresenta um comportamento em degraus. Entre dois valores consecutivos
+  assumidos pela variável, a probabilidade acumulada permanece constante, pois
+  não há novos valores possíveis sendo incorporados à soma. Quando se atinge um
+  valor efetivamente assumido por
+  <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>,
+  a função sofre um salto igual à probabilidade associada a esse valor.
+  Em outras palavras, o tamanho do salto de
+  <span class="formula-inline" data-tts="f de x minúsculo">\( F(x) \)</span>
+  em um ponto coincide com a massa de probabilidade concentrada nele.
+</p>
+
+<p>
+  Essa característica permite recuperar a função de probabilidade a partir da
+  acumulada. Se
+  <span class="formula-inline" data-tts="x minúsculo">\( x \)</span>
+  é um valor possível da variável, então a probabilidade de
+  <span class="formula-inline" data-tts="x maiúsculo igual a x minúsculo">\( X=x \)</span>
+  corresponde ao aumento de
+  <span class="formula-inline" data-tts="f de x minúsculo">\( F(x) \)</span>
+  no ponto
+  <span class="formula-inline" data-tts="x minúsculo">\( x \)</span>. Assim,
+</p>
+
+<p class="formula" data-tts="p de x minúsculo igual a f de x minúsculo menos o limite à esquerda de f em x">
+  \[
+  p(x)=F(x)-F(x^-),
+  \]
+</p>
+
+<p>
+  em que
+  <span class="formula-inline" data-tts="f de x menos">\( F(x^-) \)</span>
+  representa o valor da função acumulada imediatamente à esquerda de
+  <span class="formula-inline" data-tts="x minúsculo">\( x \)</span>.
+  Desse modo, a função de probabilidade e a função de distribuição acumulada são
+  duas representações equivalentes da mesma distribuição: a primeira enfatiza as
+  probabilidades pontuais; a segunda, a acumulação progressiva dessas
+  probabilidades ao longo dos valores possíveis da variável.
+</p>
+<hr>
+
+
+<h2>4. Medidas numéricas da distribuição</h2>
+
+<p>
+  A função de probabilidade descreve de forma completa como a probabilidade se
+  distribui entre os valores possíveis de uma variável aleatória discreta. Em
+  muitos contextos, porém, é conveniente resumir essa distribuição por meio de
+  algumas medidas numéricas que expressem, de forma sintética, onde ela se
+  concentra e quão espalhados estão seus valores. Esse movimento retoma, agora
+  no contexto probabilístico, uma ideia já desenvolvida na primeira parte do
+  livro: assim como um conjunto de dados pode ser resumido por medidas de
+  posição e de dispersão, também uma distribuição de probabilidade pode ser
+  sintetizada por quantidades que descrevem seu centro e seu grau de
+  variabilidade.
+</p>
+
+<p>
+  Nesse novo quadro, o papel desempenhado anteriormente pela <strong>média</strong>
+  é assumido pelo <strong>valor esperado</strong>, também chamado de
+  <strong>esperança matemática</strong>. Já a ideia de dispersão em torno desse
+  centro é capturada pela <strong>variância</strong> e pelo
+  <strong>desvio padrão</strong>. A diferença essencial está em que, enquanto na
+  análise descritiva essas medidas são obtidas a partir de valores efetivamente
+  observados em uma amostra ou população, aqui elas são definidas a partir dos
+  valores possíveis da variável e das probabilidades associadas a cada um deles.
+</p>
+
+<h3>4.1 Valor esperado</h3>
+
+<p>
+  Na primeira parte do livro, a média aritmética foi apresentada como uma medida
+  que resume, em um único número, a posição central de um conjunto de dados. Se
+  os valores observados de uma variável são
+  <span class="formula-inline" data-tts="x um x dois até x n">\( x_1,x_2,\ldots,x_n \)</span>,
+  sua média é dada por
+</p>
+
+<p class="formula" data-tts="x barra igual a um sobre n vezes o somatório dos x i">
+  \[
+  \bar{x}=\frac{1}{n}\sum_{i=1}^{n}x_i.
+  \]
+</p>
+
+<p>
+  Quando certos valores se repetem, essa mesma média pode ser reescrita em termos
+  de frequências relativas. Se um valor
+  <span class="formula-inline" data-tts="x i">\( x_i \)</span>
+  aparece com frequência relativa
+  <span class="formula-inline" data-tts="f i sobre n">\( \frac{f_i}{n} \)</span>,
+  então a média pode ser escrita como uma média ponderada:
+</p>
+
+<p class="formula" data-tts="x barra igual ao somatório de x i vezes f i sobre n">
+  \[
+  \bar{x}=\sum_i x_i\,\frac{f_i}{n}.
+  \]
+</p>
+
+<p>
+  Essa forma é especialmente importante porque evidencia a lógica que será agora
+  transportada para o contexto probabilístico. Em uma variável aleatória
+  discreta, os valores possíveis aparecem com
+  <strong>probabilidades</strong>, que pode ser representado justamente pela frequência relativa. Assim, a esperança matemática surge como o
+  análogo probabilístico da média.
+</p>
+
+<p>
+  Seja, portanto,
+  <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>
+  uma variável aleatória discreta que assume os valores
+  <span class="formula-inline" data-tts="x um, x dois, x três até x n">\( x_1,x_2,x_3,\ldots, x_n \)</span>,
+  com probabilidades
+  <span class="formula-inline" data-tts="p de x um, p de x dois, p de x três até p de x n">\( p(x_1),p(x_2),p(x_3),\ldots,p(x_n) \)</span>.
+  Define-se a <strong>esperança matemática</strong> de
+  <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>,
+  denotado por
+  <span class="formula-inline" data-tts="esperança de x">\( E(X) \)</span>,
+  como
+</p>
+
+<p class="formula" data-tts="esperança de x igual ao somatório de x i vezes p de x i">
+  \[
+  E(X)=\sum_i x_i\,p(x_i).
+  \]
+</p>
+
+<p>
+  A semelhança com a média não é acidental. Se um experimento aleatório for
+  repetido muitas vezes, as frequências relativas dos valores observados tenderão
+  a se aproximar de suas probabilidades. Nesse caso, a média dos resultados
+  observados tenderá a assumir a forma
+  <span class="formula-inline" data-tts="somatório de x i vezes p de x i">\( \sum_i x_i\,p(x_i) \)</span>,
+  o que justifica interpretar a esperança como um <strong>valor esperado</strong>
+  da distribuição. Em outras palavras, a média resume dados observados; a
+  esperança resume a distribuição probabilística que governa esses dados.
+</p>
+
+<p>
+  Essa interpretação, entretanto, deve ser feita com cuidado. O valor esperado
+  não representa necessariamente um valor que será efetivamente observado em uma
+  realização isolada do experimento. Sua função é indicar uma média ponderada dos valores
+  possíveis, refletindo a contribuição de cada um deles segundo suas
+  probabilidades. Nesse sentido, pode ser interpretado como o ponto em torno do
+  qual os valores da variável se equilibram quando se considera a distribuição
+  completa de probabilidades.
+</p>
+
+<h3>4.2 Variância e desvio padrão</h3>
+
+<p>
+  Na primeira parte do livro, a <strong>variância</strong> foi introduzida como
+  uma medida de dispersão que quantifica o grau de afastamento dos valores de um
+  conjunto de dados em relação à sua média. A ideia central era que não basta
+  conhecer apenas a posição central dos dados; é igualmente importante saber se
+  eles se distribuem de forma muito concentrada em torno dessa média ou se, ao
+  contrário, se encontram bastante espalhados. Essa mesma lógica será agora
+  retomada no contexto probabilístico.
+</p>
+
+<p>
+  Se, em um conjunto de dados,
+  <span class="formula-inline" data-tts="x um x dois até x n">\( x_1,x_2,\ldots,x_n \)</span>
+  representam os valores observados e
+  <span class="formula-inline" data-tts="x barra">\( \bar{x} \)</span>
+  sua média, então o desvio de cada observação em relação ao centro é dado por
+  <span class="formula-inline" data-tts="x i menos x barra">\( x_i-\bar{x} \)</span>.
+  Como a soma simples desses desvios não serve como medida de dispersão — já que
+  desvios positivos e negativos tendem a se compensar — considera-se o quadrado
+  de cada afastamento. A variância descritiva passa, assim, a ser construída a
+  partir da média dos quadrados dos desvios em relação à média.
+</p>
+
+<p>
+  Essa construção não muda quando se passa da estatística descritiva para a
+  distribuição de probabilidade; o que muda é apenas o modo como os valores são ponderados. Em
+  vez de trabalhar com observações efetivamente registradas, trabalha-se agora
+  com os <strong>valores possíveis</strong> de uma variável aleatória e com as
+  <strong>probabilidades</strong> associadas a cada um deles. De modo análogo ao
+  que ocorreu com a esperança, a variância probabilística surge como uma
+  generalização da variância estudada anteriormente.
+</p>
+
+<p>
+  Seja
+  <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>
+  uma variável aleatória discreta com esperança
+  <span class="formula-inline" data-tts="e de x">\( E(X) \)</span>.
+  Se a esperança representa o centro probabilístico da distribuição, então o
+  desvio de um valor possível
+  <span class="formula-inline" data-tts="x i">\( x_i \)</span>
+  em relação a esse centro é dado por
+  <span class="formula-inline" data-tts="x i menos e de x">\( x_i-E(X) \)</span>.
+  Para medir a dispersão da distribuição, considera-se novamente o quadrado
+  desses desvios e calcula-se sua média probabilística.
+</p>
+
+<p>
+  Define-se, portanto, a <strong>variância</strong> de
+  <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>,
+  denotada por
+  <span class="formula-inline" data-tts="variância de x">\( \mathrm{Var}(X) \)</span>,
+  como a esperança do quadrado do desvio da variável em relação à sua esperança:
+</p>
+
+<p class="formula" data-tts="variância de x igual a e de abre colchete x menos e de x fecha colchete ao quadrado">
+  \[
+  \mathrm{Var}(X)=E\big[(X-E(X))^2\big].
+  \]
+</p>
+
+<p>
+  Essa definição é o análogo probabilístico direto da definição de variância já
+  conhecida. Na estatística descritiva, toma-se a média dos quadrados dos
+  desvios em relação à média; aqui, toma-se a esperança dos quadrados dos
+  desvios em relação à esperança. Em ambos os casos, o objetivo é o mesmo:
+  medir o grau de espalhamento dos valores em torno de um centro.
+</p>
+
+
+
+<p>
+  A partir da própria definição, pode-se deduzir uma forma algébrica equivalente
+  frequentemente mais conveniente para o cálculo. Partindo de
+</p>
+
+<p class="formula" data-tts="variância de x igual a e de abre colchete x menos e de x fecha colchete ao quadrado">
+  \[
+  \mathrm{Var}(X)=E\big[(X-E(X))^2\big],
+  \]
+</p>
+
+<p>
+  desenvolve-se o quadrado no interior da esperança:
+</p>
+
+<p class="formula" data-tts="variância de x igual a e de x ao quadrado menos duas vezes e de x vezes x mais e de x ao quadrado">
+  \[
+  \mathrm{Var}(X)=E\big[X^2-2E(X)\,X+[E(X)]^2\big].
+  \]
+</p>
+
+<p>
+  Pela linearidade do valor esperado, e lembrando que
+  <span class="formula-inline" data-tts="e de x">\( E(X) \)</span>
+  é constante, obtém-se
+</p>
+
+<p class="formula" data-tts="variância de x igual a e de x ao quadrado menos duas vezes e de x vezes e de x mais e de x ao quadrado">
+  \[
+  \mathrm{Var}(X)=E(X^2)-2E(X)\,E(X)+[E(X)]^2.
+  \]
+</p>
+
+<p>
+  Como
+  <span class="formula-inline" data-tts="duas vezes e de x vezes e de x">\( 2E(X)\,E(X)=2[E(X)]^2 \)</span>,
+  segue que
+</p>
+
+<p class="formula" data-tts="variância de x igual a e de x ao quadrado menos e de x tudo ao quadrado">
+  \[
+  \mathrm{Var}(X)=E(X^2)-[E(X)]^2.
+  \]
+</p>
+
+<p>
+  Essa identidade é extremamente útil do ponto de vista operacional, pois permite
+  calcular a variância em duas etapas: primeiro determina-se
+  <span class="formula-inline" data-tts="e de x ao quadrado">\( E(X^2) \)</span>,
+  que é a esperança dos quadrados dos valores possíveis da variável; em seguida,
+  subtrai-se o quadrado da esperança. Ainda assim, é importante não perder de
+  vista a definição conceitual original: a variância continua sendo a medida que
+  expressa o grau de dispersão da distribuição em torno de seu centro.
+</p>
+
+<p>
+  Como a variância envolve quadrados, sua unidade de medida é o quadrado da
+  unidade da variável original. Isso pode tornar sua interpretação menos
+  imediata. Para contornar essa dificuldade, define-se o
+  <strong>desvio padrão</strong> como a raiz quadrada da variância:
+</p>
+
+<p class="formula" data-tts="desvio padrão de x igual à raiz quadrada da variância de x">
+  \[
+  \sigma_X=\sqrt{\mathrm{Var}(X)}.
+  \]
+</p>
+
+<p>
+  O desvio padrão conserva a mesma unidade de medida de
+  <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>
+  e, por isso, costuma ser mais intuitivo. Se a esperança informa onde a
+  distribuição se centra, o desvio padrão informa quão intensamente os valores
+  possíveis tendem a se afastar desse centro. Em conjunto, esperança, variância
+  e desvio padrão resumem a posição e a dispersão de uma distribuição discreta,
+  permitindo passar da descrição completa da função de probabilidade para uma
+  síntese numérica de seus traços mais importantes.
+</p>
+<hr>
+
+<h2>5. Distribuições discretas clássicas</h2>
+
+<p>
+  As seções anteriores mostraram como uma variável aleatória discreta pode ser
+  descrita por sua função de probabilidade e sintetizada por medidas como
+  esperança e variância. Em muitos problemas, porém, não é necessário construir
+  essa distribuição caso a caso a partir do espaço amostral. Em diversas
+  situações, a forma da distribuição já é conhecida de antemão, pois ela decorre
+  de estruturas probabilísticas recorrentes, como a contagem de sucessos em
+  repetições independentes, o número de tentativas necessárias até a ocorrência
+  de um evento, a contagem sem reposição em populações finitas ou o número de
+  ocorrências em um intervalo.
+</p>
+
+<p>
+  Essas situações dão origem às chamadas <strong>distribuições discretas
+  clássicas</strong>. Cada uma delas corresponde a um modelo probabilístico
+  específico, definido por determinadas hipóteses sobre o experimento aleatório e
+  por certos parâmetros que controlam o comportamento da variável. O estudo dessas
+  distribuições é importante porque permite reconhecer rapidamente a estrutura de
+  um problema, identificar a função de probabilidade adequada e obter, de forma
+  sistemática, probabilidades, esperanças e variâncias sem a necessidade de
+  reconstruir toda a distribuição a partir dos resultados elementares.
+</p>
+<h3>5.1 Distribuição uniforme discreta</h3>
+
+<p>
+  A distribuição uniforme discreta descreve experimentos aleatórios em que todos
+  os resultados possíveis são considerados igualmente prováveis. Essa estrutura
+  aparece naturalmente em situações como o lançamento de um dado equilibrado, a
+  seleção aleatória de um elemento em um conjunto finito ou a escolha de um número
+  inteiro dentro de um intervalo previamente fixado, quando não há qualquer razão
+  para privilegiar um resultado em detrimento de outro.
+</p>
+
+<p>
+  Para formalizar essa ideia, define-se uma variável aleatória
+  <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>
+  que assume valores em um conjunto finito de números distintos
+  <span class="formula-inline" data-tts="x um até x n">\( \{x_1, x_2, \dots, x_n\} \)</span>.
+  Se todos esses valores são igualmente prováveis, então a probabilidade associada
+  a cada um deles é dada por
+</p>
+
+<p class="formula" data-tts="probabilidade de x igual a x i é um sobre n">
+  \[
+  P(X = x_i) = \frac{1}{n},
+  \qquad i = 1, 2, \dots, n.
+  \]
+</p>
+
+<p>
+  De forma condensada, a função de probabilidade pode ser escrita como
+</p>
+
+<p class="formula" data-tts="p de x igual a um sobre n para x pertencente ao conjunto de valores possíveis">
+  \[
+  p(x) = \frac{1}{n},
+  \qquad x \in \{x_1, x_2, \dots, x_n\}.
+  \]
+</p>
+
+<p>
+  A esperança dessa variável corresponde à média aritmética dos valores possíveis,
+  uma vez que todos recebem o mesmo peso:
+</p>
+
+<p class="formula" data-tts="esperança de x igual a um sobre n vezes a soma de x i de i igual a um até n">
+  \[
+  \mathbb{E}[X] = \frac{1}{n} \sum_{i=1}^{n} x_i.
+  \]
+</p>
+
+<p>
+  De forma análoga, a variância é dada pela média dos quadrados dos desvios em
+  relação à esperança:
+</p>
+
+<p class="formula" data-tts="variância de x igual a um sobre n vezes a soma de x i menos esperança de x ao quadrado">
+  \[
+  \mathrm{Var}(X) = \frac{1}{n} \sum_{i=1}^{n} (x_i - \mathbb{E}[X])^2.
+  \]
+</p>
+
+<p>
+  Observa-se que essa distribuição formaliza diretamente a ideia de
+  equiprobabilidade utilizada na definição clássica de probabilidade, na qual
+  todos os resultados do espaço amostral são tratados de forma simétrica. Por essa
+  razão, ela constitui o modelo mais elementar entre as distribuições discretas,
+  servindo como referência conceitual para a construção de modelos mais
+  elaborados, nos quais as probabilidades deixam de ser uniformemente distribuídas.
+</p>
+<h3>5.2 Distribuição de Bernoulli</h3>
+
+<p>
+  A distribuição de Bernoulli constitui o modelo discreto mais simples. Ela
+  descreve experimentos aleatórios que possuem apenas dois resultados possíveis,
+  usualmente interpretados como <strong>sucesso</strong> e
+  <strong>fracasso</strong>. Essa estrutura aparece em situações como acertar ou
+  errar uma questão, obter cara ou coroa em um lançamento de moeda, ou verificar
+  se uma peça está ou não defeituosa.
+</p>
+
+<p>
+  Para formalizar essa ideia, define-se uma variável aleatória
+  <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>
+  tal que
+  <span class="formula-inline" data-tts="x igual a um">\( X=1 \)</span>
+  represente sucesso e
+  <span class="formula-inline" data-tts="x igual a zero">\( X=0 \)</span>
+  represente fracasso. Se a probabilidade de sucesso é
+  <span class="formula-inline" data-tts="p">\( p \)</span>, com
+  <span class="formula-inline" data-tts="p entre zero e um">\( 0\leq p\leq 1 \)</span>,
+  então
+</p>
+
+<p class="formula" data-tts="probabilidade de x igual a um é p e probabilidade de x igual a zero é um menos p">
+  \[
+  P(X=1)=p
+  \qquad\text{e}\qquad
+  P(X=0)=1-p.
+  \]
+</p>
+
+<p>
+  De forma condensada, essa distribuição pode ser escrita como
+</p>
+
+<p class="formula" data-tts="p de x igual a p elevado a x vezes um menos p elevado a um menos x, para x igual a zero ou um">
+  \[
+  p(x)=p^x(1-p)^{1-x},
+  \qquad x\in\{0,1\}.
+  \]
+</p>
+
+<p>
+  A partir da definição de esperança como média ponderada dos valores possíveis,
+  obtém-se
+</p>
+
+<p class="formula" data-tts="esperança de x igual a zero vezes um menos p mais um vezes p">
+  \[
+  \mathbb{E}[X] = 0 \cdot (1-p) + 1 \cdot p = p.
+  \]
+</p>
+
+<p>
+  De forma análoga, a variância é dada pela média ponderada dos quadrados dos
+  desvios em relação à esperança:
+</p>
+
+<p class="formula" data-tts="variância de x igual a zero menos p ao quadrado vezes um menos p mais um menos p ao quadrado vezes p">
+  \[
+  \mathrm{Var}(X) = (0 - p)^2(1-p) + (1 - p)^2 p.
+  \]
+</p>
+
+<p>
+  Desenvolvendo a expressão, segue que
+</p>
+
+<p class="formula" data-tts="variância de x igual a p vezes um menos p">
+  \[
+  \mathrm{Var}(X) = p(1-p).
+  \]
+</p>
+
+<p>
+  Observa-se que a esperança coincide com a própria probabilidade de sucesso,
+  refletindo o fato de que a variável assume apenas os valores zero e um.
+  Já a variância atinge seu valor máximo quando
+  <span class="formula-inline" data-tts="p igual a um meio">\( p=\frac{1}{2} \)</span>,
+  situação em que a incerteza é máxima. Por sua simplicidade, a distribuição de
+  Bernoulli serve como bloco básico para a construção de distribuições mais
+  complexas, em particular a distribuição binomial.
+</p>
+<h3>5.3 Distribuição Binomial</h3>
+
+<p>
+  A distribuição binomial surge como uma extensão natural da distribuição de
+  Bernoulli quando o experimento de dois resultados possíveis é repetido várias
+  vezes sob condições idênticas e independentes. Em vez de observar o resultado
+  de uma única tentativa, passa-se a contar
+  <strong>quantos sucessos ocorrem ao longo de várias repetições</strong>.
+</p>
+
+<p>
+  Suponha que sejam realizados
+  <span class="formula-inline" data-tts="n">\( n \)</span>
+  ensaios independentes, cada um descrito por uma variável de Bernoulli com
+  probabilidade de sucesso
+  <span class="formula-inline" data-tts="p">\( p \)</span>.
+  Se
+  <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>
+  representa o número total de sucessos observados, então
+  <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>
+  pode ser interpretado como a soma dessas variáveis:
+</p>
+
+<p class="formula" data-tts="x igual a x um mais x dois até x n">
+  \[
+  X = X_1 + X_2 + \cdots + X_n,
+  \]
+</p>
+
+<p>
+  em que cada
+  <span class="formula-inline" data-tts="x i">\( X_i \)</span>
+  assume valores
+  <span class="formula-inline" data-tts="zero ou um">\( 0 \)</span>
+  ou
+  <span class="formula-inline" data-tts="um">\( 1 \)</span>.
+</p>
+
+<p>
+  Como a variável conta sucessos, seus valores possíveis são
+  <span class="formula-inline" data-tts="zero um até n">\( 0,1,\ldots,n \)</span>.
+  Para que ocorram exatamente
+  <span class="formula-inline" data-tts="x">\( x \)</span>
+  sucessos, é necessário escolher em quais das
+  <span class="formula-inline" data-tts="n">\( n \)</span>
+  posições esses sucessos aparecem e multiplicar isso pela probabilidade de cada
+  configuração correspondente. Desse raciocínio resulta a função de probabilidade
+</p>
+
+<p class="formula" data-tts="probabilidade de x igual a x minúsculo é n escolhe x vezes p elevado a x vezes um menos p elevado a n menos x">
+  \[
+  P(X=x)=\binom{n}{x}p^x(1-p)^{\,n-x},
+  \qquad x=0,1,\ldots,n.
+  \]
+</p>
+
+<p>
+  O coeficiente binomial
+  <span class="formula-inline" data-tts="n escolhe x">\( \binom{n}{x} \)</span>
+  conta o número de maneiras pelas quais os
+  <span class="formula-inline" data-tts="x">\( x \)</span>
+  sucessos podem ser distribuídos entre as
+  <span class="formula-inline" data-tts="n">\( n \)</span>
+  tentativas.
+</p>
+
+<p>
+  A estrutura como soma de variáveis de Bernoulli permite obter diretamente suas
+  principais características. Como cada tentativa tem esperança
+  <span class="formula-inline" data-tts="p">\( p \)</span>,
+  segue que
+</p>
+
+<p class="formula" data-tts="esperança de x igual a n p">
+  \[
+  \mathbb{E}[X] = np.
+  \]
+</p>
+
+<p>
+  De modo análogo, como as tentativas são independentes e cada uma possui
+  variância
+  <span class="formula-inline" data-tts="p vezes um menos p">\( p(1-p) \)</span>,
+  obtém-se
+</p>
+
+<p class="formula" data-tts="variância de x igual a n p vezes um menos p">
+  \[
+  \mathrm{Var}(X)=np(1-p).
+  \]
+</p>
+
+<p>
+  Assim, a distribuição binomial modela de forma natural a contagem de sucessos
+  em repetições independentes de um mesmo experimento, preservando a estrutura
+  básica da distribuição de Bernoulli e ampliando-a para um número arbitrário de
+  tentativas.
+</p>
+
+<h3>5.4 Distribuição Geométrica</h3>
+
+<p>
+  A distribuição geométrica surge quando o foco deixa de ser o número de
+  sucessos em um total fixo de tentativas e passa a ser o <strong>número de
+  tentativas necessárias até a ocorrência do primeiro sucesso</strong>. Nesse
+  caso, o número de repetições já não é fixado previamente, tornando-se a própria
+  variável de interesse.
+</p>
+
+<p>
+  Considere uma sequência de ensaios independentes de Bernoulli, todos com
+  probabilidade de sucesso
+  <span class="formula-inline" data-tts="p">\( p \)</span>.
+  Defina
+  <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>
+  como o número da tentativa em que ocorre o primeiro sucesso. Assim, a variável
+  assume valores
+  <span class="formula-inline" data-tts="um, dois, três, até n ">\( 1,2,3,\ldots, n \)</span>.
+
+  Para que o primeiro sucesso ocorra exatamente na
+  <span class="formula-inline" data-tts="x ésima">\( x \)</span>
+  tentativa, é necessário que as
+  <span class="formula-inline" data-tts="x menos um">\( x-1 \)</span>
+  primeiras sejam fracassos e que a
+  <span class="formula-inline" data-tts="x ésima">\( x \)</span>
+  seja sucesso. Pela independência dos ensaios, obtém-se
+</p>
+
+<p class="formula" data-tts="probabilidade de x igual a x minúsculo é um menos p elevado a x menos um vezes p">
+  \[
+  P(X=x)=(1-p)^{x-1}p,
+  \qquad x=1,2,3,\ldots
+  \]
+</p>
+
+<p>
+  A partir da definição de esperança como média ponderada dos valores possíveis,
+  tem-se
+</p>
+
+<p class="formula" data-tts="esperança de x igual a somatório de x vezes um menos p elevado a x menos um vezes p">
+  \[
+  \mathbb{E}[X] = \sum_{x=1}^{\infty} x(1-p)^{x-1}p = \frac{1}{p}.
+  \]
+</p>
+
+<p>
+  De forma análoga, a variância é dada por
+</p>
+
+<p class="formula" data-tts="variância de x igual a um menos p sobre p ao quadrado">
+  \[
+  \mathrm{Var}(X)=\frac{1-p}{p^2}.
+  \]
+</p>
+
+<p>
+  Observa-se que, quanto menor a probabilidade de sucesso em cada tentativa,
+  maior tende a ser o número esperado de tentativas até sua ocorrência, bem como
+  a dispersão dessa quantidade. Além disso, a distribuição geométrica possui a
+  propriedade de <strong>falta de memória</strong>, segundo a qual o fato de o
+  sucesso ainda não ter ocorrido não altera a distribuição do tempo restante até
+  que ele aconteça.
+</p>
+
+<p>
+  Vale observar que a distribuição geométrica depende de uma convenção. Aqui,
+  adotou-se a definição em que a variável conta o <strong>número de tentativas
+  até o primeiro sucesso</strong>. Em alguns textos, considera-se o número de
+  fracassos antes do primeiro sucesso; as duas versões descrevem o mesmo fenômeno
+  e diferem apenas por uma unidade.
+</p>
+<h3>5.5 Distribuição Binomial Negativa</h3>
+
+<p>
+  A distribuição binomial negativa surge como uma extensão natural da distribuição
+  geométrica. Se, na distribuição geométrica, a variável aleatória mede o número
+  de tentativas necessárias até a ocorrência do <strong>primeiro sucesso</strong>,
+  agora o interesse passa a recair sobre o número de tentativas necessárias até
+  que ocorra o <strong><span class="formula-inline" data-tts="r ésimo">\( r \)</span>-ésimo sucesso</strong>.
+  Continua-se, portanto, no mesmo problema de espera, mas a condição de parada
+  deixa de ser o primeiro sucesso e passa a ser o acúmulo de
+  <span class="formula-inline" data-tts="r">\( r \)</span> sucessos.
+</p>
+
+<p>
+  Considere uma sequência de ensaios independentes de Bernoulli, todos com
+  probabilidade de sucesso
+  <span class="formula-inline" data-tts="p">\( p \)</span>,
+  com
+  <span class="formula-inline" data-tts="p entre zero e um">\( 0&lt;p\leq 1 \)</span>.
+  Fixado um inteiro positivo
+  <span class="formula-inline" data-tts="r">\( r \)</span>,
+  define-se a variável aleatória
+  <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>
+  como o número da tentativa em que ocorre o
+  <span class="formula-inline" data-tts="r ésimo sucesso">\( r \)</span>-ésimo sucesso.
+  Nessas condições,
+  <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>
+  pode assumir os valores
+  <span class="formula-inline" data-tts="r, r mais um, r mais dois e assim por diante">\( r,r+1,r+2,\ldots \)</span>,
+  pois, no mínimo, são necessárias
+  <span class="formula-inline" data-tts="r">\( r \)</span>
+  tentativas para que ocorram
+  <span class="formula-inline" data-tts="r">\( r \)</span>
+  sucessos.
+</p>
+
+<p>
+  Para que o
+  <span class="formula-inline" data-tts="r ésimo sucesso">\( r \)</span>-ésimo sucesso
+  ocorra exatamente na
+  <span class="formula-inline" data-tts="x ésima">\( x \)</span>
+  tentativa, é necessário que essa última tentativa seja um sucesso e que, entre
+  as
+  <span class="formula-inline" data-tts="x menos um">\( x-1 \)</span>
+  tentativas anteriores, tenham ocorrido exatamente
+  <span class="formula-inline" data-tts="r menos um">\( r-1 \)</span>
+  sucessos. Assim, o problema consiste em escolher em quais posições, entre as
+  primeiras
+  <span class="formula-inline" data-tts="x menos um">\( x-1 \)</span>
+  tentativas, esses
+  <span class="formula-inline" data-tts="r menos um">\( r-1 \)</span>
+  sucessos ocorreram.
+</p>
+
+<p>
+  O número de maneiras de fazer essa escolha é dado por
+  <span class="formula-inline" data-tts="x menos um escolhe r menos um">\( \binom{x-1}{r-1} \)</span>.
+  Além disso, cada sequência compatível com essa condição possui
+  <span class="formula-inline" data-tts="r">\( r \)</span>
+  sucessos e
+  <span class="formula-inline" data-tts="x menos r">\( x-r \)</span>
+  fracassos, de modo que sua probabilidade é
+  <span class="formula-inline" data-tts="p elevado a r vezes um menos p elevado a x menos r">\( p^r(1-p)^{x-r} \)</span>.
+  Portanto, a função de probabilidade da distribuição binomial negativa é
+</p>
+
+<p class="formula" data-tts="probabilidade de x igual a x minúsculo é x menos um escolhe r menos um vezes p elevado a r vezes um menos p elevado a x menos r">
+  \[
+  P(X=x)=\binom{x-1}{r-1}p^r(1-p)^{\,x-r},
+  \qquad x=r,r+1,r+2,\ldots
+  \]
+</p>
+
+<p>
+  Assim como na distribuição geométrica, a variável aleatória mede um
+  <strong>tempo de espera</strong>. A diferença é que, em vez de esperar pelo
+  primeiro sucesso, espera-se até que um total de
+  <span class="formula-inline" data-tts="r">\( r \)</span>
+  sucessos tenha sido alcançado.
+</p>
+
+<p>
+  Essa interpretação permite compreender suas principais medidas numéricas.
+  Como a espera até o
+  <span class="formula-inline" data-tts="r ésimo">\( r \)</span>-ésimo sucesso
+  pode ser vista como a soma de
+  <span class="formula-inline" data-tts="r">\( r \)</span>
+  tempos de espera sucessivos até a ocorrência de cada novo sucesso, segue que
+  <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>
+  pode ser interpretado como a soma de
+  <span class="formula-inline" data-tts="r">\( r \)</span>
+  variáveis geométricas independentes, todas com parâmetro
+  <span class="formula-inline" data-tts="p">\( p \)</span>.
+</p>
+
+<p>
+  Dessa forma, sua esperança é dada por
+</p>
+
+<p class="formula" data-tts="esperança de x igual a r sobre p">
+  \[
+  \mathbb{E}[X]=\frac{r}{p}.
+  \]
+</p>
+
+<p>
+  De modo análogo, sua variância é
+</p>
+
+<p class="formula" data-tts="variância de x igual a r vezes um menos p sobre p ao quadrado">
+  \[
+  \mathrm{Var}(X)=\frac{r(1-p)}{p^2}.
+  \]
+</p>
+
+<p>
+  Observa-se, portanto, que, quanto menor a probabilidade de sucesso em cada
+  tentativa, maior tende a ser o número esperado de tentativas até a obtenção dos
+  <span class="formula-inline" data-tts="r">\( r \)</span>
+  sucessos, bem como maior tende a ser a dispersão dessa quantidade. A distribuição
+  geométrica aparece como caso particular quando
+  <span class="formula-inline" data-tts="r igual a um">\( r=1 \)</span>,
+  mostrando que a binomial negativa generaliza diretamente o modelo geométrico.
+</p>
+<h3>5.6 Distribuição Hipergeométrica</h3>
+
+<p>
+  A distribuição hipergeométrica surge quando se realiza uma amostragem em uma
+  população finita <strong>sem reposição</strong>. Nesse tipo de experimento, a
+  retirada de cada elemento altera a composição da população restante, de modo
+  que as probabilidades associadas aos resultados deixam de ser constantes ao
+  longo do processo.
+  Considere uma população com
+  <span class="formula-inline" data-tts="n maiúsculo">\( N \)</span>
+  elementos, dos quais
+  <span class="formula-inline" data-tts="k maiúsculo">\( K \)</span>
+  possuem uma característica de interesse, interpretada como sucesso. Retiram-se,
+  sem reposição,
+  <span class="formula-inline" data-tts="n minúsculo">\( n \)</span>
+  elementos dessa população, formando uma amostra.
+</p>
+
+<p>
+  Define-se a variável aleatória
+  <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>
+  como o número de elementos da amostra que possuem a característica de interesse.
+  Assim, a variável assume valores inteiros entre
+  <span class="formula-inline" data-tts="zero até mínimo de n e k">\( 0 \)</span>
+  e
+  <span class="formula-inline" data-tts="mínimo entre n e k">\( \min(n,K) \)</span>.
+
+  Para que ocorram exatamente
+  <span class="formula-inline" data-tts="x">\( x \)</span>
+  sucessos, é necessário selecionar
+  <span class="formula-inline" data-tts="x">\( x \)</span>
+  elementos dentre os
+  <span class="formula-inline" data-tts="k maiúsculo">\( K \)</span>
+  favoráveis e
+  <span class="formula-inline" data-tts="n menos x">\( n-x \)</span>
+  elementos dentre os
+  <span class="formula-inline" data-tts="n maiúsculo menos k maiúsculo">\( N-K \)</span>
+  não favoráveis. O número de amostras com essa composição é, portanto,
+  <span class="formula-inline" data-tts="k escolhe x vezes n menos k escolhe n menos x">\( \binom{K}{x}\binom{N-K}{n-x} \)</span>.
+</p>
+
+<p>
+  Como o número total de amostras possíveis de tamanho
+  <span class="formula-inline" data-tts="n minúsculo">\( n \)</span>
+  é dado por
+  <span class="formula-inline" data-tts="n maiúsculo escolhe n minúsculo">\( \binom{N}{n} \)</span>,
+  obtém-se a função de probabilidade
+</p>
+
+<p class="formula" data-tts="probabilidade de x igual a x minúsculo é k escolhe x vezes n menos k escolhe n menos x dividido por n escolhe n minúsculo">
+  \[
+  P(X=x)=\frac{\binom{K}{x}\binom{N-K}{\,n-x\,}}{\binom{N}{n}}.
+  \]
+</p>
+
+<p>
+  Diferentemente da distribuição binomial, na qual cada tentativa é independente
+  e a probabilidade de sucesso permanece constante, a ausência de reposição faz
+  com que as tentativas sejam <strong>dependentes</strong>. A cada retirada, a
+  proporção de elementos favoráveis na população se altera, modificando as
+  probabilidades das observações seguintes.
+</p>
+
+<p>
+  A esperança dessa distribuição é dada por
+</p>
+
+<p class="formula" data-tts="esperança de x igual a n vezes k sobre n maiúsculo">
+  \[
+  \mathbb{E}[X]=n\frac{K}{N}.
+  \]
+</p>
+
+<p>
+  De modo análogo, sua variância é
+</p>
+
+<p class="formula" data-tts="variância de x igual a n vezes k sobre n maiúsculo vezes um menos k sobre n maiúsculo vezes n maiúsculo menos n minúsculo sobre n maiúsculo menos um">
+  \[
+  \mathrm{Var}(X)=n\frac{K}{N}\left(1-\frac{K}{N}\right)\frac{N-n}{N-1}.
+  \]
+</p>
+
+<p>
+  Observa-se que a esperança coincide com aquela da distribuição binomial com
+  parâmetro
+  <span class="formula-inline" data-tts="p igual a k sobre n maiúsculo">\( p=\frac{K}{N} \)</span>,
+  refletindo o fato de que a proporção média de sucessos na população é preservada.
+  Entretanto, a variância é menor, pois o fator
+  <span class="formula-inline" data-tts="n maiúsculo menos n minúsculo sobre n maiúsculo menos um">\( \frac{N-n}{N-1} \)</span>
+  capta a redução da incerteza decorrente da amostragem sem reposição.
+</p>
+<h3>5.7 Distribuição de Poisson</h3>
+
+<p>
+  A distribuição de Poisson surge em situações nas quais se deseja modelar a
+  <strong>contagem de ocorrências de um evento em um intervalo contínuo</strong>,
+  como tempo, comprimento, área ou volume. Diferentemente das distribuições
+  anteriores, não há aqui um número fixo de tentativas, mas sim um intervalo no
+  qual eventos podem ocorrer de forma dispersa.
+</p>
+
+<p>
+  Exemplos típicos incluem o número de chamadas recebidas em um minuto, o número
+  de defeitos em um trecho de material ou o número de acidentes em uma região ao
+  longo de um período. Em todos esses casos, o interesse recai sobre quantas vezes
+  um evento ocorre dentro de um intervalo previamente fixado.
+
+  Seja
+  <span class="formula-inline" data-tts="lambda">\( \lambda&gt;0 \)</span>
+  o número médio de ocorrências esperado nesse intervalo, e seja
+  <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>
+  a variável aleatória que conta o número de ocorrências observadas. Assim,
+  <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>
+  assume valores
+  <span class="formula-inline" data-tts="zero um dois e assim por diante">\( 0,1,2,\ldots \)</span>.
+</p>
+
+<p>
+  A característica essencial desse modelo é que as ocorrências são consideradas
+  <strong>raras e aproximadamente independentes</strong> dentro de pequenos
+  subintervalos, de modo que a probabilidade de múltiplas ocorrências em um mesmo
+  subintervalo é desprezível. Sob essas condições, a distribuição de
+  <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>
+  é dada por
+</p>
+
+<p class="formula" data-tts="probabilidade de x igual a x minúsculo é e elevado a menos lambda vezes lambda elevado a x sobre x fatorial">
+  \[
+  P(X=x)=e^{-\lambda}\frac{\lambda^x}{x!},
+  \qquad x=0,1,2,\ldots
+  \]
+</p>
+
+<p>
+  A esperança dessa distribuição é
+</p>
+
+<p class="formula" data-tts="esperança de x igual a lambda">
+  \[
+  \mathbb{E}[X]=\lambda,
+  \]
+</p>
+
+<p>
+  e sua variância é
+</p>
+
+<p class="formula" data-tts="variância de x igual a lambda">
+  \[
+  \mathrm{Var}(X)=\lambda.
+  \]
+</p>
+
+<p>
+  Observa-se que o parâmetro
+  <span class="formula-inline" data-tts="lambda">\( \lambda \)</span>
+  controla simultaneamente a posição e a dispersão da distribuição, refletindo o
+  fato de que ele representa a taxa média de ocorrência dos eventos.
+</p>
+
+<p>
+  A distribuição de Poisson pode ser compreendida como um limite da distribuição
+  binomial. Considere uma variável binomial com
+  <span class="formula-inline" data-tts="n">\( n \)</span>
+  tentativas e probabilidade de sucesso
+  <span class="formula-inline" data-tts="p">\( p \)</span>.
+  Quando
+  <span class="formula-inline" data-tts="n muito grande">\( n \)</span>
+  é grande,
+  <span class="formula-inline" data-tts="p muito pequeno">\( p \)</span>
+  é pequeno,
+  e o produto
+  <span class="formula-inline" data-tts="n p">\( np \)</span>
+  permanece aproximadamente constante, a contagem de sucessos tende a seguir uma
+  distribuição de Poisson com parâmetro
+  <span class="formula-inline" data-tts="lambda igual a n p">\( \lambda=np \)</span>.
+</p>
+
+<p>
+  Essa relação mostra que a distribuição de Poisson modela situações em que há um
+  grande número de oportunidades para a ocorrência de eventos, mas cada uma delas
+  possui uma probabilidade muito pequena de sucesso, resultando em uma contagem
+  de ocorrências raras ao longo de um intervalo contínuo.
+</p>
+
+<hr>
+
+<h2>6. Conclusão</h2>
+
+<p>
+  Ao longo deste capítulo, a análise probabilística foi deslocada de uma
+  descrição centrada exclusivamente em eventos para uma formulação capaz de
+  organizar, de modo sistemático, as <strong>quantidades numéricas</strong>
+  associadas aos resultados de um experimento aleatório. Esse deslocamento foi
+  essencial porque, em muitos problemas, não basta saber se um evento ocorreu ou
+  não; é necessário compreender quais valores uma certa quantidade pode assumir,
+  com que probabilidade cada um deles ocorre e como esses valores se distribuem
+  em conjunto.
+</p>
+
+<p>
+  Foi nesse contexto que se introduziu a noção de <strong>variável aleatória
+  discreta</strong> como uma função definida sobre o espaço amostral, capaz de
+  associar a cada resultado elementar um número real. A partir dessa definição,
+  tornou-se possível formular eventos em termos dos valores assumidos pela
+  variável e reorganizar a informação probabilística de acordo com as quantidades
+  relevantes para a análise. Com isso, a linguagem da probabilidade passou a
+  incorporar não apenas a ocorrência de subconjuntos do espaço amostral, mas
+  também a distribuição dos valores numéricos produzidos pelo experimento.
+</p>
+
+<p>
+  Em seguida, mostrou-se que essa distribuição pode ser descrita por meio da
+  <strong>função de probabilidade</strong>, que atribui a cada valor possível da
+  variável a probabilidade de sua ocorrência, e pela
+  <strong>função de distribuição acumulada</strong>, que expressa a probabilidade
+  acumulada até um dado ponto. Essas duas representações tornaram explícitas duas
+  formas complementares de descrever a mesma estrutura probabilística: uma
+  centrada nas probabilidades pontuais de cada valor, e outra centrada na
+  acumulação progressiva dessas probabilidades ao longo do conjunto de valores
+  possíveis.
+</p>
+
+<p>
+  O capítulo também mostrou que, além da descrição completa da distribuição, é
+  possível sintetizar numericamente seus traços mais importantes por meio de
+  medidas como o <strong>valor esperado</strong>, a <strong>variância</strong> e
+  o <strong>desvio padrão</strong>. Essas quantidades retomam, em contexto
+  probabilístico, ideias já conhecidas da estatística descritiva, como média e
+  dispersão, mas agora definidas não a partir de dados observados, e sim a partir
+  dos valores possíveis da variável e das probabilidades associadas a eles.
+  Assim, a esperança passou a representar o centro probabilístico da
+  distribuição, enquanto a variância e o desvio padrão passaram a expressar seu
+  grau de espalhamento em torno desse centro.
+</p>
+
+<p>
+  Por fim, o estudo das <strong>distribuições discretas clássicas</strong>
+  evidenciou que muitos problemas probabilísticos recorrentes podem ser
+  modelados por famílias específicas de distribuições, como Bernoulli, Binomial,
+  Geométrica, Binomial Negativa, Hipergeométrica e Poisson. Cada uma delas
+  traduz uma estrutura própria de contagem, espera ou ocorrência, permitindo
+  reconhecer padrões probabilísticos e aplicar, de forma organizada, os
+  instrumentos desenvolvidos ao longo do capítulo.
+</p>
+
+<p>
+  Desse modo, este capítulo consolidou uma transição conceitual decisiva: da
+  probabilidade entendida como medida de eventos para a probabilidade entendida
+  também como descrição da distribuição de quantidades aleatórias. Essa passagem
+  amplia consideravelmente o alcance da teoria probabilística e prepara o terreno
+  para o estudo das <strong>variáveis aleatórias contínuas</strong>, nas quais os
+  valores possíveis deixam de ser enumeráveis, exigindo novas formas de
+  representação e análise.
+</p>
+<hr>
+
+<h2>7. Referências</h2>
+
+<p>
+  FÁVERO, Luiz Paulo; BELFIORE, Patrícia. Manual de análise de dados: estatística e modelagem multivariada com Excel®, SPSS® e Stata®. 1. ed. Rio de Janeiro: Elsevier, 2017.
+</p>
+<p>
+  MAGALHÃES, Marcos Nascimento; LIMA, Antonio Carlos Pedroso de. Noções de Probabilidade e Estatística. 7. ed., 1. reimpr. São Paulo: Editora da Universidade de São Paulo, 2011.
+</p>
+<p>
+  SARTORIS, Alexandre. Estatística e introdução à econometria. 2. ed. São Paulo: Saraiva, 2013.
+</p>
+<p>
+  BUSSAB, Wilton de Oliveira; MORETTIN, Pedro Alberto. <strong>Estatística básica</strong>. 10. ed. São Paulo: SaraivaUni, 2023.
+</p>
+<p>
+  LARSON, Ron; FARBER, Betsy. <strong>Estatística aplicada</strong>. 6. ed. Tradução José Fernando Pereira Gonçalves; Revisão técnica Manoel Henrique Salgado. São Paulo: Pearson Education do Brasil, 2015.
+</p>
+<p>
+  TRIOLA, Mario F. <strong>Introdução à estatística</strong>. 12. ed. Tradução e revisão técnica Ana Maria Lima de Farias, Vera Regina Lima de Farias e Flores. Rio de Janeiro: LTC — Livros Técnicos e Científicos Editora, 2017.
+</p>
+<p>
+  MOOD, Alexander McFarlane; GRAYBILL, Franklin A.; BOES, Duane C. Introduction to the theory of statistics. New York: McGraw-Hill, 1974.
+</p>
+<p>
+  SAVAGE, Leonard J. The Foundations of Statistics. 2. ed. rev. New York: Dover Publications, 1972.
+</p>
+<p>
+  WARE, William B.; FERRON, John M.; MILLER, Barbara M. Introductory Statistics: A Conceptual Approach Using R. New York: Routledge, 2013.
+</p>
+

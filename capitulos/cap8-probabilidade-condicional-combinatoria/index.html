@@ -2,12 +2,12 @@
 layout: capitulo
 title: Capítulo 8 — Probabilidade Condicional e Análise Combinatória
 anterior: /capitulos/cap7-probabilidade/
-proximo: /capitulos/cap9-distribuicoes-discretas/
+proximo: /capitulos/cap9-variaveis-aleatorias-discretas-distribuicoes/
 ---
 
 <p class="subtitle">Objetivos de aprendizagem</p>
 <ul>
-  <li>Compreender a <strong>probabilidade condicional</strong> como uma reavaliação de probabilidades a partir da ocorrência de um evento, interpretando a condição como restrição do espaço amostral relevante.</li>
+  <li>Compreender a <strong>probabilidade condicional</strong> como a probabilidade de um evento dado que outro evento ocorreu, interpretando a condição como restrição do espaço amostral relevante.</li>
 
   <li>
     Aplicar a <strong>definição formal</strong>
@@ -29,10 +29,10 @@ proximo: /capitulos/cap9-distribuicoes-discretas/
 <h2>1. Introdução</h2>
 
 <p>
-  <span class="newthought">No capítulo anterior</span>, a probabilidade foi apresentada como uma função definida sobre eventos associados a um experimento aleatório,
-  permitindo atribuir valores numéricos a diferentes ocorrências possíveis dentro de um espaço amostral fixo. Esse enquadramento estabelece uma linguagem formal
-  para descrever a incerteza e para deduzir relações lógicas entre eventos, sempre tomando como referência o conjunto completo de resultados inicialmente
-  considerados possíveis.
+    <span class="newthought">No capítulo anterior</span>, a probabilidade foi apresentada como uma função definida sobre eventos associados a um experimento aleatório,
+    permitindo atribuir valores numéricos a diferentes ocorrências possíveis dentro de um espaço amostral fixo. Com isso, estabelece-se uma linguagem formal
+    para descrever a incerteza e para deduzir relações lógicas entre eventos, sempre tomando como referência o conjunto completo de resultados inicialmente
+    considerados possíveis.
 </p>
 
 <figure>
@@ -42,75 +42,60 @@ proximo: /capitulos/cap9-distribuicoes-discretas/
 
 <p>
   Em muitas situações, entretanto, a probabilidade de um evento não é avaliada de forma isolada, mas condicionada à ocorrência de outro evento no mesmo experimento.
-  Nesses casos, a análise deixa de considerar todos os resultados possíveis e passa a se concentrar apenas naqueles que são compatíveis com a informação disponível.
-  Essa mudança não altera o experimento aleatório nem o conjunto de resultados possíveis, mas modifica o conjunto que serve de referência para o cálculo das probabilidades.
+  Nesses casos, a análise deixa de considerar todos os resultados possíveis e passa a se concentrar apenas naqueles que são compatíveis com a informação disponível,
+  sem que isso altere o experimento aleatório nem o conjunto de resultados concebíveis. A mudança ocorre no conjunto que serve de referência para o cálculo das probabilidades,
+  que passa a ser um subconjunto do espaço amostral original.
 </p>
 
 <p>
-  Além disso, em muitos problemas, especialmente quando todos os resultados do experimento são considerados igualmente possíveis, calcular uma probabilidade exige
-  determinar quantos resultados pertencem ao evento de interesse e quantos resultados compõem o conjunto total de comparação. Nessas situações, o problema probabilístico
-  depende diretamente de uma contagem sistemática de casos, o que torna a análise combinatória um instrumento natural para o cálculo.
+  Essa mudança de referência está diretamente relacionada à forma como probabilidades são calculadas. Antes, considerando que os resultados do experimento são
+  igualmente possíveis, a avaliação de uma probabilidade envolve a comparação entre o número de resultados favoráveis e o número total de elementos do espaço amostral.
+  Por outro lado, quando a análise é condicionada, o conjunto de referência deixa de ser o espaço amostral completo e passa a ser o subconjunto compatível com a condição, de modo que o problema probabilístico
+  envolve simultaneamente a identificação dos resultados relevantes e a contagem dos casos que compõem esse novo universo de comparação.
 </p>
 
 <p>
-  Neste capítulo, esses dois aspectos serão desenvolvidos de forma articulada. Primeiro, discute-se como a anterior ocorrência de um evento pode restringir o espaço amostral
-  relevante e como essa restrição conduz à definição de probabilidade condicional. Em seguida, apresentam-se relações fundamentais entre probabilidades, como a regra
-  do produto, o teorema da probabilidade total e a fórmula de Bayes. Depois, mostra-se como problemas probabilísticos em modelos finitos podem ser reduzidos à contagem
-  de casos, introduzindo os principais instrumentos da análise combinatória. Por fim, define-se a independência entre eventos como um caso particular em que o
-  condicionamento não altera a probabilidade.
+  Nesse contexto, a análise combinatória surge como instrumento natural para a determinação dessas quantidades, permitindo descrever de forma sistemática como os resultados
+  são organizados e como podem ser contados. Ao mesmo tempo, a restrição do espaço amostral conduz à definição de probabilidade condicional, que formaliza a avaliação de eventos
+  dentro de um conjunto de referência reduzido. Esses dois aspectos não são independentes, mas partes de uma mesma estrutura, na qual a forma de contar resultados e a forma de
+  medir probabilidades estão diretamente conectadas.
 </p>
 
+<p>
+  Neste capítulo, esses elementos serão desenvolvidos de forma articulada. Inicialmente, discute-se como a ocorrência de um evento pode restringir o espaço amostral relevante
+  e como essa restrição conduz à definição de probabilidade condicional. Em seguida, apresentam-se relações fundamentais entre probabilidades, como a regra do produto, o teorema
+  da probabilidade total e a fórmula de Bayes. Depois, mostram-se os principais instrumentos da análise combinatória como forma de resolver problemas probabilísticos em modelos
+  finitos. Por fim, define-se a independência entre eventos como um caso particular em que o condicionamento não altera a probabilidade.
+</p>
 <hr>
 
 <h2>2. Restrição do espaço amostral</h2>
 
 <p>
-  Para introduzir corretamente o conceito de <strong>probabilidade condicional</strong>, é necessário compreender antes o significado de restringir o espaço amostral.
-    Até aqui, as probabilidades foram avaliadas tomando como referência o espaço amostral completo
-  <span class="formula-inline" data-tts="ômega maiúsculo">\( \Omega \)</span>,
-  isto é, o conjunto de todos os resultados possíveis do experimento aleatório. Nesse enquadramento, cada evento é interpretado como um subconjunto de
-  <span class="formula-inline" data-tts="ômega maiúsculo">\( \Omega \)</span>,
-  e sua probabilidade mede a parcela do conjunto total associada a esse evento.
+  Ao considerar um evento como condição, a análise deixa de envolver todos os resultados do experimento e passa a se desenvolver apenas dentro do subconjunto que satisfaz essa condição.
+  O experimento aleatório permanece inalterado, assim como o conjunto de resultados concebíveis, mas o conjunto efetivamente considerado na avaliação dos eventos torna-se mais restrito.
 </p>
-<p>[ALGUM GRÁFICO ANIMADO]</p>
-
-
-
-<p>Quando se impõe uma condição, essa referência muda. Em vez de comparar
-  eventos com todo
-  <span class="formula-inline" data-tts="ômega maiúsculo">\( \Omega \)</span>,
-  a comparação passa a ser feita apenas dentro do subconjunto de resultados que satisfaz a condição. Dessa forma, <strong>precisamos calcular a probabilidade da ocorrência de um evento, dada a ocorrência de outro.</strong>
+ <p>
+  A partir desse ponto, é necessário explicitar como esse subconjunto é determinado, quais resultados permanecem relevantes e de que maneira as probabilidades passam a ser avaliadas nesse novo contexto.
 </p>
-<p>[ALGUM GRÁFICO ANIMADO]</p>
 
-<p>
-  Esta seção apresenta essa mudança de referência de forma explícita. Primeiro, discute-se o que significa fixar um evento como condição e como isso redefine
-  quais resultados são relevantes para a análise. Em seguida, examina-se como outros eventos devem ser reinterpretados dentro do espaço restrito, de modo a
-  preservar a coerência do cálculo probabilístico.
-</p>
+
 
 <h3>2.1 Fixação de um evento como condição</h3>
 
 <p>
-  A restrição do espaço amostral torna-se operacional quando um evento passa a ser tratado como condição de análise.
-  Nesse caso, a investigação deixa de considerar indistintamente todos os resultados possíveis e passa a levar em conta
-  apenas aqueles que são compatíveis com a informação imposta.
+  O subconjunto de referência surge ao se fixar um evento como condição.
+  Considere o experimento do lançamento de um dado honesto de seis faces, cujo espaço amostral é
+  <span class="formula-inline" data-tts="um dois três quatro cinco seis">\( \Omega = \{1,2,3,4,5,6\} \)</span>.
+  Ao impor como condição que o resultado seja par, define-se o subconjunto
+  <span class="formula-inline" data-tts="b igual a dois quatro seis">\( B = \{2,4,6\} \)</span>,
+  reunindo os resultados que respeitam a condição imposta e passa a funcionar como novo conjunto de referência — ou seja, restringindo o espaço amostral considerado.
 </p>
 
 <p>
-  Para tornar essa ideia concreta, considere o lançamento de um dado honesto, cujo espaço amostral é dado por
-  <span class="formula-inline" data-tts="um, dois, três, quatro, cinco, seis">\( \Omega = \{1,2,3,4,5,6\} \)</span>.
-  Suponha que se imponha a condição de que o resultado obtido é par. Nesse caso, a análise deixa de considerar todos os
-  resultados possíveis e passa a considerar apenas o subconjunto
-  <span class="formula-inline" data-tts="b igual a dois, quatro e seis">\( B = \{2,4,6\} \)</span>.
-</p>
-
-<p>[ALGUM GRÁFICO ANIMADO]</p>
-
-<p>
-  Em termos formais, o evento
+  Em termos formais, essa condição corresponde a um evento
   <span class="formula-inline" data-tts="b">\( B \)</span>
-  é um subconjunto do espaço amostral original:
+  contido no espaço amostral:
 </p>
 
 <p class="formula" data-tts="b contido em ômega maiúsculo">
@@ -120,51 +105,31 @@ proximo: /capitulos/cap9-distribuicoes-discretas/
 </p>
 
 <p>
-  Cada resultado possível do experimento é representado por
-  <span class="formula-inline" data-tts="ômega minúsculo">\( \omega \)</span>,
-  com
-  <span class="formula-inline" data-tts="ômega minúsculo pertence a ômega maiúsculo">\( \omega \in \Omega \)</span>.
-  No entanto, sob a condição
+  A análise passa, assim, a se desenvolver no interior de
   <span class="formula-inline" data-tts="b">\( B \)</span>,
-  passam a ser considerados apenas os resultados que pertencem a esse subconjunto:
-</p>
-
-<p class="formula" data-tts="ômega minúsculo pertence a b">
-  \[
-    \omega \in B.
-  \]
-</p>
-
-<p>
-  Essa fixação não altera o experimento aleatório nem modifica o conjunto de resultados possíveis. O espaço amostral
-  <span class="formula-inline" data-tts="ômega maiúsculo">\( \Omega \)</span>
-  continua descrevendo todas as realizações concebíveis. A mudança ocorre no conjunto que serve de base para a análise,
-  que passa a ser o subconjunto
-  <span class="formula-inline" data-tts="b">\( B \)</span>.
+  no qual permanecem apenas as realizações compatíveis com a condição considerada.
 </p>
 
 <h3>2.2 Resultados relevantes sob a condição</h3>
 
 <p>
-  Uma vez fixada a condição
-  <span class="formula-inline" data-tts="b">\( B \)</span>,
-  os eventos deixam de ser avaliados em relação ao espaço amostral completo e passam a ser interpretados dentro do subconjunto compatível com essa condição.
+  Uma vez determinado o subconjunto de referência, nem todos os resultados de um evento permanecem relevantes.
+  Considere novamente o lançamento do dado sob a condição
+  <span class="formula-inline" data-tts="b igual a dois quatro seis">\( B = \{2,4,6\} \)</span>
+  e que o evento de interesse seja “números maiores que três”, descrito por
+  <span class="formula-inline" data-tts="a igual a números quatro cinco seis">\( A = \{4,5,6\} \)</span>.
+  Parte das realizações de
+  <span class="formula-inline" data-tts="a">\( A \)</span>
+  deixa de ser considerada, pois não satisfaz a condição imposta pelo evento
+  <span class="formula-inline" data-tts="b">\( B \)</span>.
 </p>
 
 <p>
-  Retomando o exemplo do lançamento de um dado, suponha que se sabe que o resultado obtido é par, isto é,
-  <span class="formula-inline" data-tts="b igual a dois, quatro e seis">\( B = \{2,4,6\} \)</span>.
-  Se o interesse estiver em avaliar a ocorrência do evento
-  <span class="formula-inline" data-tts="a igual a números maiores que três">\( A = \{4,5,6\} \)</span>,
-  apenas os resultados que pertencem simultaneamente a
+  Os resultados que permanecem possíveis são aqueles que pertencem simultaneamente a
   <span class="formula-inline" data-tts="a">\( A \)</span>
   e a
-  <span class="formula-inline" data-tts="b">\( B \)</span>
-  permanecem relevantes.
-</p>
-
-<p>
-  Esses resultados são descritos pelo conjunto interseção
+  <span class="formula-inline" data-tts="b">\( B \)</span>,
+  sendo descritos pela interseção dos conjuntos:
 </p>
 
 <p class="formula" data-tts="a interseção b igual a quatro e seis">
@@ -174,88 +139,73 @@ proximo: /capitulos/cap9-distribuicoes-discretas/
 </p>
 
 <p>
-  Em termos gerais, ao examinar um evento
+  De forma geral, ao considerar um evento
   <span class="formula-inline" data-tts="a">\( A \)</span>
   sob a condição
   <span class="formula-inline" data-tts="b">\( B \)</span>,
-  o conjunto relevante passa a ser sua interseção com
-  <span class="formula-inline" data-tts="b">\( B \)</span>,
-  que reúne exatamente as realizações compatíveis com o evento de interesse dentro do espaço restrito.
+  o conjunto relevante para a análise passa a ser
+  <span class="formula-inline" data-tts="a interseção b">\( A \cap B \)</span>,
+  que reúne exatamente as realizações de
+  <span class="formula-inline" data-tts="a">\( A \)</span>
+  compatíveis com o conjunto de referência adotado.
 </p>
+
 <h3>2.3 Normalização no espaço restrito</h3>
 
 <p>
-  A restrição do espaço amostral não altera apenas os resultados considerados, mas também a forma de medir probabilidades.
-  Como a análise passa a ser conduzida no subconjunto
-  <span class="formula-inline" data-tts="b">\( B \)</span>,
-  esse conjunto deve assumir o papel de referência total.
-</p>
-
-<p>
-  Retomando o exemplo do dado, sob a condição
-  <span class="formula-inline" data-tts="b igual a dois, quatro e seis">\( B = \{2,4,6\} \)</span>,
-  os únicos resultados possíveis passam a ser esses três valores. Nesse contexto, é natural que esse conjunto seja tratado como o evento certo.
-</p>
-
-<p>
-  No entanto, as probabilidades originalmente definidas em relação ao espaço amostral completo
-  <span class="formula-inline" data-tts="ômega maiúsculo">\( \Omega \)</span>
-  não satisfazem essa exigência, pois
-  <span class="formula-inline" data-tts="p de b">\( P(B) \)</span>
-  representa apenas uma fração do total de resultados possíveis.
-</p>
-
-<p>
-  Para obter uma medida consistente no espaço restrito, é necessário ajustar a escala da comparação.
-  No caso de um evento
-  <span class="formula-inline" data-tts="a">\( A \)</span>,
-  isso significa comparar o conjunto relevante
-  <span class="formula-inline" data-tts="a interseção b">\( A \cap B \)</span>
-  com o total de resultados compatíveis com a condição, representado por
+  A mudança do conjunto de referência implica também uma mudança na forma de avaliar probabilidades.
+  Retomando o exemplo, sob a condição
+  <span class="formula-inline" data-tts="b igual a dois quatro seis">\( B = \{2,4,6\} \)</span>,
+  os resultados relevantes para o evento
+  <span class="formula-inline" data-tts="a">\( A \)</span>
+  são aqueles pertencentes a
+  <span class="formula-inline" data-tts="a interseção b igual a quatro e seis">\( A \cap B = \{4,6\} \)</span>.
+  A avaliação da ocorrência de
+  <span class="formula-inline" data-tts="a">\( A \)</span>
+  passa, então, a depender da proporção desses resultados em relação ao conjunto de referência
   <span class="formula-inline" data-tts="b">\( B \)</span>.
 </p>
 
-<p class="formula" data-tts="compara-se a interseção de a com b com o conjunto b">
+<p>
+  Como o conjunto
+  <span class="formula-inline" data-tts="b">\( B \)</span>
+  contém três resultados possíveis, enquanto
+  <span class="formula-inline" data-tts="a interseção b">\( A \cap B \)</span>
+  contém dois, a probabilidade de
+  <span class="formula-inline" data-tts="a">\( A \)</span>
+  sob a condição considerada é dada pela razão entre essas quantidades:
+</p>
+
+<p class="formula" data-tts="a quantidade de elementos da interseção de a e b sobre a quantidade de elementos de b">
   \[
-    \text{evento relevante: } A \cap B
-    \qquad
-    \text{referência total: } B
+    \frac{n(A \cap B)}{n(B)} = \frac{2}{3}.
   \]
 </p>
 
 <p>
-  Esse ajuste de escala — ou normalização — estabelece a base para definir probabilidades de forma consistente no espaço restrito.
+  De forma geral, ao considerar um evento
+  <span class="formula-inline" data-tts="a">\( A \)</span>
+  sob a condição
+  <span class="formula-inline" data-tts="b">\( B \)</span>,
+  a medida de sua ocorrência passa a ser obtida pela comparação entre o conjunto de resultados relevantes
+  <span class="formula-inline" data-tts="a interseção b">\( A \cap B \)</span>
+  e o conjunto de referência
+  <span class="formula-inline" data-tts="b">\( B \)</span>,
+  estabelecendo a base para a definição formal de probabilidade condicional.
 </p>
 <hr>
 
 <h2>3. Definição de probabilidade condicional</h2>
 
 <p>
-  As seções anteriores mostraram que, ao impor um evento
-  <span class="formula-inline" data-tts="b">\( B \)</span>
-  como condição, a análise deixa de ser conduzida em relação ao espaço amostral completo
-  <span class="formula-inline" data-tts="ômega maiúsculo">\( \Omega \)</span>
-  e passa a ser feita no espaço restrito formado pelos resultados compatíveis com essa condição.
+  A seção anterior reuniu os conceitos necessários para a compreensão intuitiva da probabilidade condicional.
+  Ao se fixar um evento como condição para a realização de outro, introduz-se uma informação que modifica o 
+  referencial da análise. O cálculo deixa de ser feito em relação ao espaço amostral completo e passa a tomar como referência um subconjunto específico, que reúne
+   apenas os resultados que respeitam a condição imposta.
+
+   A partir disso, é possível formalizar a definição de probabilidade condicional.
 </p>
 
-<p>
-  Nesse novo enquadramento, o conjunto
-  <span class="formula-inline" data-tts="b">\( B \)</span>
-  assume o papel de referência total, e os eventos devem ser avaliados a partir de sua ocorrência dentro desse subconjunto.
-  Em particular, ao considerar um evento
-  <span class="formula-inline" data-tts="a">\( A \)</span>,
-  a parte relevante para a análise é o conjunto
-  <span class="formula-inline" data-tts="a interseção b">\( A \cap B \)</span>,
-  que reúne os resultados compatíveis simultaneamente com o evento de interesse e com a condição imposta.
-</p>
-
-<p>
-  Essa mudança de referência exige um ajuste na forma de medir probabilidades. Como o conjunto
-  <span class="formula-inline" data-tts="b">\( B \)</span>
-  passa a desempenhar o papel de universo de comparação, é necessário definir uma medida que atribua a ele probabilidade
-  <span class="formula-inline" data-tts="um">\( 1 \)</span>
-  e que avalie os demais eventos relativamente a esse novo contexto. A probabilidade condicional é introduzida com esse objetivo.
-</p>
 <h3>3.1 Definição formal</h3>
 
 <p>
@@ -265,75 +215,52 @@ proximo: /capitulos/cap9-distribuicoes-discretas/
   <span class="formula-inline" data-tts="b">\( B \)</span>
   eventos associados a um mesmo experimento aleatório, com espaço amostral
   <span class="formula-inline" data-tts="ômega maiúsculo">\( \Omega \)</span>.
-  Quando se fixa
-  <span class="formula-inline" data-tts="b">\( B \)</span>
-  como condição, a análise passa a ser conduzida apenas entre as realizações pertencentes a
-  <span class="formula-inline" data-tts="b">\( B \)</span>.
-  A probabilidade condicional é definida de modo a comparar, dentro desse espaço restrito, o conjunto de resultados que satisfazem simultaneamente
-  <span class="formula-inline" data-tts="a">\( A \)</span>
-  e
-  <span class="formula-inline" data-tts="b">\( B \)</span>
-  com o total de resultados compatíveis com a condição.
-</p>
 
-<p>
-  Retomando o exemplo do lançamento de um dado, considere
-  <span class="formula-inline" data-tts="b igual a dois, quatro e seis">\( B = \{2,4,6\} \)</span>
-  e
-  <span class="formula-inline" data-tts="a igual a quatro, cinco e seis">\( A = \{4,5,6\} \)</span>.
-  Sob a condição de que o resultado é par, o conjunto de referência passa a ser
-  <span class="formula-inline" data-tts="b">\( B \)</span>,
-  e o evento relevante associado a
+  Nessas condições, define-se a probabilidade do evento
   <span class="formula-inline" data-tts="a">\( A \)</span>
-  é dado por
-  <span class="formula-inline" data-tts="a interseção b igual a quatro e seis">\( A \cap B = \{4,6\} \)</span>.
-</p>
-
-<p>
-  A definição exige que a condição tenha probabilidade positiva, para que o conjunto de referência não seja vazio do ponto de vista probabilístico.
-  Assim, se
-  <span class="formula-inline" data-tts="p de b maior que zero">\( P(B) &gt; 0 \)</span>,
-  define-se a probabilidade de
-  <span class="formula-inline" data-tts="a">\( A \)</span>
-  dado
+  dado o evento
   <span class="formula-inline" data-tts="b">\( B \)</span>
   como a razão entre
-  <span class="formula-inline" data-tts="p de a interseção b">\( P(A \cap B) \)</span>
+  <span class="formula-inline" data-tts="probabilidade de a interseção b">\( P(A \cap B) \)</span>
   e
-  <span class="formula-inline" data-tts="p de b">\( P(B) \)</span>.
+  <span class="formula-inline" data-tts="probabilidade de b">\( P(B) \)</span>, com
+  <span class="formula-inline" data-tts="probabilidade de b maior que zero">\( P(B) &gt; 0 \)</span>.
 </p>
 
-<p class="formula" data-tts="p de a dado b é igual a p de a interseção b dividido por p de b, para p de b maior que zero">
+<p class="formula" data-tts="probabilidade de a dado b é igual a probabilidade de a interseção b dividido por probabilidade de b para probabilidade de b maior que zero">
   \[
-    P(A \mid B) \;=\; \frac{P(A \cap B)}{P(B)},
+    P(A \mid B) = \frac{P(A \cap B)}{P(B)},
     \quad \text{para } P(B) &gt; 0.
   \]
 </p>
 
 <p>
-  No exemplo considerado, tem-se
-  <span class="formula-inline" data-tts="p de b igual a três sobre seis">\( P(B) = \frac{3}{6} \)</span>
-  e
+  Retomando o experimento de lançamento de um dado, suponha que a condição seja o evento
+  <span class="formula-inline" data-tts="b igual ao conjunto dois quatro e seis">\( B = \{2,4,6\} \)</span>,
+  cuja probabilidade é
+  <span class="formula-inline" data-tts="p de b igual a três sobre seis">\( P(B) = \frac{3}{6} \)</span>,
+  e que o evento de interesse seja
+  <span class="formula-inline" data-tts="a igual ao conjunto quatro cinco e seis">\( A = \{4,5,6\} \)</span>.
+  Como
+  <span class="formula-inline" data-tts="a interseção b igual ao conjunto quatro e seis">\( A \cap B = \{4,6\} \)</span>
+  possui dois elementos, tem-se
   <span class="formula-inline" data-tts="p de a interseção b igual a dois sobre seis">\( P(A \cap B) = \frac{2}{6} \)</span>.
-  Assim,
-</p>
-
-<p class="formula" data-tts="p de a dado b igual a dois sobre três">
-  \[
-    P(A \mid B) = \frac{2/6}{3/6} = \frac{2}{3}.
-  \]
 </p>
 
 <p>
-  Essa expressão torna explícita a lógica da análise condicionada. O numerador
-  <span class="formula-inline" data-tts="p de a interseção b">\( P(A \cap B) \)</span>
-  corresponde ao evento relevante sob a condição, enquanto o denominador
-  <span class="formula-inline" data-tts="p de b">\( P(B) \)</span>
-  ajusta a escala de modo que o conjunto
-  <span class="formula-inline" data-tts="b">\( B \)</span>
-  passe a desempenhar o papel de referência total.
+  Logo, a probabilidade condicional de
+  <span class="formula-inline" data-tts="a dado b">\( A \mid B \)</span>
+  é dada por
 </p>
 
+  <p class="formula" data-tts="probabilidade de a dado b igual a dois sobre três">\[ P(A \mid B) = \frac{P(A \cap B)}{P(B)}= \frac{\frac{2}{6}}{\frac{3}{6}} = \frac{2}{3} \]</p>.
+
+<p>  
+  Essa expressão torna explícita a lógica da análise condicionada, na qual o numerador corresponde ao evento relevante
+  sob a condição, enquanto o denominador ajusta a escala de comparação de modo que o conjunto
+  <span class="formula-inline" data-tts="b">\( B \)</span>
+  passe a desempenhar o papel de referência total, normalizando a razão e permitindo interpretar o resultado como uma probabilidade dentro do universo restrito definido pela condição.
+</p>
 <hr>
 
 <h2>4. Relações fundamentais entre probabilidades</h2>
@@ -416,106 +343,13 @@ proximo: /capitulos/cap9-distribuicoes-discretas/
   Essas duas formas expressam a mesma probabilidade conjunta, mas partem de diferentes escolhas de condicionamento.
 </p>
 
-<h3>4.2 Teorema da probabilidade total</h3>
 
-<p>
-  Em muitos problemas, um mesmo evento pode ocorrer por diferentes caminhos ou sob diferentes situações possíveis.
-  Nesses casos, para calcular sua probabilidade, é útil separar a análise em casos mutuamente exclusivos e depois
-  somar as contribuições de cada um deles.
-</p>
 
-<p>
-  Suponha, por exemplo, que o espaço amostral possa ser dividido em subconjuntos
-  <span class="formula-inline" data-tts="b um, b dois, até b n">\( B_1, B_2, \ldots, B_n \)</span>,
-  de modo que todo resultado possível pertença a exatamente um desses conjuntos.
-  Isso significa que esses eventos são dois a dois disjuntos e que sua união coincide com o espaço amostral.
-  Quando isso ocorre, diz-se que
-  <span class="formula-inline" data-tts="b um, b dois, até b n">\( B_1, B_2, \ldots, B_n \)</span>
-  formam uma <strong>partição</strong> do espaço amostral.
-</p>
-
-<p class="formula" data-tts="b i interseção b j é igual ao conjunto vazio para i diferente de j e união dos b i é igual a ômega">
-  \[
-    B_i \cap B_j = \varnothing \text{ para } i \neq j,
-    \qquad
-    \bigcup_{i=1}^n B_i = \Omega.
-  \]
-</p>
-
-<p>
-  A utilidade dessa ideia está no seguinte ponto: se os eventos
-  <span class="formula-inline" data-tts="b um, b dois, até b n">\( B_1, B_2, \ldots, B_n \)</span>
-  formam uma partição do espaço amostral, então todo resultado possível pertence a exatamente um desses conjuntos.
-  Em particular, qualquer resultado associado ao evento
-  <span class="formula-inline" data-tts="a">\( A \)</span>
-  deve pertencer a um único
-  <span class="formula-inline" data-tts="b i">\( B_i \)</span>.
-</p>
-
-<p>
-  Isso implica que o evento
-  <span class="formula-inline" data-tts="a">\( A \)</span>
-  pode ser decomposto em partes disjuntas:
-</p>
-
-<p class="formula" data-tts="a é a união de a interseção b um, a interseção b dois, até a interseção b n">
-  \[
-    A = (A \cap B_1)\cup(A \cap B_2)\cup\cdots\cup(A \cap B_n).
-  \]
-</p>
-
-<p>
-  Como essas partes são mutuamente exclusivas, a probabilidade de
-  <span class="formula-inline" data-tts="a">\( A \)</span>
-  é a soma das probabilidades de cada uma delas:
-</p>
-
-<p class="formula" data-tts="p de a é igual à soma de i igual a um até n de p de a interseção b i">
-  \[
-    P(A)=\sum_{i=1}^n P(A \cap B_i).
-  \]
-</p>
-
-<p>
-  Agora aplica-se a regra do produto a cada termo da soma. Para cada
-  <span class="formula-inline" data-tts="i">\( i \)</span>,
-  tem-se
-</p>
-
-<p class="formula" data-tts="p de a interseção b i é igual a p de a dado b i vezes p de b i">
-  \[
-    P(A \cap B_i)=P(A \mid B_i)\,P(B_i).
-  \]
-</p>
-
-<p>
-  Substituindo essa expressão na soma anterior, obtém-se o <strong>teorema da probabilidade total</strong>:
-</p>
-
-<p class="formula" data-tts="p de a é igual à soma de i igual a um até n de p de a dado b i vezes p de b i">
-  \[
-    P(A)=\sum_{i=1}^n P(A \mid B_i)\,P(B_i).
-  \]
-</p>
-
-<p>
-  Essa fórmula mostra que a probabilidade de
-  <span class="formula-inline" data-tts="a">\( A \)</span>
-  pode ser calculada como a soma das probabilidades de
-  <span class="formula-inline" data-tts="a">\( A \)</span>
-  em cada caso possível, ponderadas pela probabilidade de cada caso.
-  Em outras palavras, calcula-se a contribuição de
-  <span class="formula-inline" data-tts="a">\( A \)</span>
-  dentro de cada
-  <span class="formula-inline" data-tts="b i">\( B_i \)</span>
-  e, em seguida, somam-se essas contribuições.
-</p>
-
-<h3>4.3 Fórmula de Bayes</h3>
+<h3>4.2 Fórmula de Bayes</h3>
 
 <p>
   A regra do produto mostrou que a probabilidade da interseção de dois eventos pode ser escrita a partir de diferentes escolhas de condicionamento.
-  Quando essas duas formas são igualadas, obtém-se uma relação que permite reescrever uma probabilidade condicional em função da condicional inversa.
+  Quando essas duas formas são igualadas, obtém-se uma relação que permite reescrever uma probabilidade condicional <span class="formula-inline" data-tts="p de a dado b">\( P(A \mid B) \)</span> em função da condicional inversa <span class="formula-inline" data-tts="p de b dado a">\( P(B \mid A) \)</span>.
   Essa relação é conhecida como <strong>fórmula de Bayes</strong>.
 </p>
 
@@ -578,12 +412,110 @@ proximo: /capitulos/cap9-distribuicoes-discretas/
   Do ponto de vista conceitual, essa fórmula é útil porque permite reformular um problema de probabilidade condicional em uma direção que pode ser mais conveniente.
   Em muitos casos, a probabilidade direta
   <span class="formula-inline" data-tts="p de a dado b">\( P(A \mid B) \)</span>
-  é difícil de determinar, mas a probabilidade inversa
+  é difícil de determinar, enquanto a probabilidade inversa
   <span class="formula-inline" data-tts="p de b dado a">\( P(B \mid A) \)</span>
-  e as probabilidades marginais dos eventos são conhecidas ou podem ser calculadas.
+  e as probabilidades dos eventos
+  <span class="formula-inline" data-tts="a">\( A \)</span>
+  e
+  <span class="formula-inline" data-tts="b">\( B \)</span>
+  já são conhecidas ou podem ser calculadas com mais facilidade.
 </p>
 
+<h3>4.3 Teorema da probabilidade total</h3>
 
+<p>
+  Em muitos problemas, um mesmo evento pode ocorrer por diferentes caminhos ou sob diferentes situações possíveis.
+  Nesses casos, para calcular sua probabilidade, é útil separar a análise em casos mutuamente exclusivos e depois
+  somar as contribuições de cada um deles.
+</p>
+
+<p>
+  Suponha, por exemplo, que o espaço amostral <span class="formula-inline" data-tts="ômega">\( \Omega \)</span>
+  possa ser dividido em subconjuntos mutuamente exclusivos
+  <span class="formula-inline" data-tts="b um, b dois, até b n">\( B_1, B_2, \ldots, B_n \)</span>,
+  de modo que todo resultado possível pertença a exatamente um desses conjuntos.
+  Isso significa que esses eventos são dois a dois disjuntos e que sua união coincide com o espaço amostral.
+  Quando isso ocorre, diz-se que
+  <span class="formula-inline" data-tts="b um, b dois, até b n">\( B_1, B_2, \ldots, B_n \)</span>
+  formam uma <strong>partição</strong> do espaço amostral.
+</p>
+
+<p class="formula" data-tts="b i interseção b j é igual ao conjunto vazio para i diferente de j e união dos b i é igual a ômega">
+  \[
+    B_i \cap B_j = \varnothing \text{ para } i \neq j,
+    \qquad
+    \bigcup_{i=1}^n B_i = \Omega.
+  \]
+</p>
+
+<p>
+  A utilidade dessa ideia está no seguinte ponto: se os eventos
+  <span class="formula-inline" data-tts="b um, b dois, até b n">\( B_1, B_2, \ldots, B_n \)</span>
+  formam uma partição do espaço amostral, então todo resultado possível pertence a exatamente um desses conjuntos.
+  Em particular, qualquer resultado associado ao evento
+  <span class="formula-inline" data-tts="a">\( A = \{w_1, w_2, \ldots, w_i\} \)</span>
+  deve pertencer a um único
+  <span class="formula-inline" data-tts="b i">\( B_i \)</span>.
+</p>
+
+<p>
+  Isso implica que o evento
+  <span class="formula-inline" data-tts="a">\( A \)</span>
+  pode ser decomposto em partes disjuntas:
+</p>
+
+<p class="formula" data-tts="a é a união de a interseção b um, a interseção b dois, até a interseção b n">
+  \[
+    A = (A \cap B_1)\cup(A \cap B_2)\cup\cdots\cup(A \cap B_n).
+  \]
+</p>
+
+<p>
+  Como cada partição <span class="formula-inline" data-tts="b i">\( B_i \)</span> é mutuamente exclusiva — ou seja, não há interseção entre elas —, a probabilidade de
+  <span class="formula-inline" data-tts="a">\( A \)</span>
+  é a soma das probabilidades de cada uma dessas partes:
+</p>
+
+<p class="formula" data-tts="p de a é igual à soma de i igual a um até n de p de a interseção b i">
+  \[
+    P(A)=\sum_{i=1}^n P(A \cap B_i).
+  \]
+</p>
+
+<p>
+  Agora aplica-se a regra do produto a cada termo da soma. Para cada
+  <span class="formula-inline" data-tts="i">\( i \)</span>,
+  tem-se
+</p>
+
+<p class="formula" data-tts="p de a interseção b i é igual a p de a dado b i vezes p de b i">
+  \[
+    P(A \cap B_i)=P(A \mid B_i)\,P(B_i).
+  \]
+</p>
+
+<p>
+  Substituindo essa expressão na soma anterior, obtém-se o <strong>teorema da probabilidade total</strong>:
+</p>
+
+<p class="formula" data-tts="p de a é igual à soma de i igual a um até n de p de a dado b i vezes p de b i">
+  \[
+    P(A)=\sum_{i=1}^n P(A \mid B_i)\,P(B_i).
+  \]
+</p>
+
+<p>
+  Essa fórmula mostra que a probabilidade de
+  <span class="formula-inline" data-tts="a">\( A \)</span>
+  pode ser calculada como a soma das probabilidades de
+  <span class="formula-inline" data-tts="a">\( A \)</span>
+  em cada caso possível, ponderadas pela probabilidade de cada caso.
+  Em outras palavras, calcula-se a contribuição de
+  <span class="formula-inline" data-tts="a">\( A \)</span>
+  dentro de cada
+  <span class="formula-inline" data-tts="b i">\( B_i \)</span>
+  e, em seguida, somam-se essas contribuições.
+</p>
 <hr>
 
 <h2>5 Probabilidade e contagem de casos</h2>
@@ -595,92 +527,131 @@ proximo: /capitulos/cap9-distribuicoes-discretas/
 </p>
 
 <p>
-  Em muitos problemas elementares, isso pode ser feito por contagem. Quando o espaço amostral
+  Recorde que, formalmente, uma probabilidade é uma função que, uma vez fixado o espaço amostral
+  <span class="formula-inline" data-tts="ômega maiúsculo">\( \Omega \)</span>,
+  associa a cada evento
+  <span class="formula-inline" data-tts="a">\( A \subseteq \Omega \)</span>
+  um número real
+  <span class="formula-inline" data-tts="p de a">\( P(A) \)</span>
+  no intervalo
+  <span class="formula-inline" data-tts="zero a um">\( [0,1] \)</span>.
+
+  Conforme colocado no capítulo anterior, quando o espaço amostral
   <span class="formula-inline" data-tts="ômega maiúsculo">\( \Omega \)</span>
-  é finito e todos os resultados são equiprováveis, a probabilidade de um evento
-  <span class="formula-inline" data-tts="a">\( A \)</span>
-  pode ser interpretada como a razão entre o número de casos favoráveis e o número total de casos possíveis.
-  Nesse caso,
+  é finito e todos os resultados são equiprováveis, a função probabilidade pode ser construída a partir da proporção de elementos dos conjuntos envolvidos.
+  Nesse caso, para qualquer evento
+  <span class="formula-inline" data-tts="a">\( A \)</span>,
+  tem-se
 </p>
 
 <p class="formula" data-tts="p de a é igual ao número de elementos de a sobre o número de elementos de ômega">
   \[
-    P(A)=\frac{|A|}{|\Omega|}.
+    P(A)=\frac{n(A)}{n(\Omega)}.
   \]
 </p>
 
+
 <p>
-  De modo análogo, se se considera apenas o subconjunto de resultados em que o evento
+  De maneira análoga, ao considerar a probabilidade condicional, o evento
   <span class="formula-inline" data-tts="b">\( B \)</span>
-  ocorreu, então esse conjunto passa a funcionar como novo espaço de referência. Assim, se
-  <span class="formula-inline" data-tts="número de elementos de b maior que zero">\( |B| &gt; 0 \)</span>,
-  a probabilidade condicional de
+  passa a desempenhar o papel de novo espaço de referência.
+  Assim, desde que
+  <span class="formula-inline" data-tts="número de elementos de b seja maior que zero">\( n(B) &gt; 0 \)</span>,
+  a probabilidade do evento
   <span class="formula-inline" data-tts="a">\( A \)</span>
   dado
   <span class="formula-inline" data-tts="b">\( B \)</span>
-  pode ser escrita como
+  pode ser interpretada como a proporção de elementos de
+  <span class="formula-inline" data-tts="a interseção b">\( A \cap B \)</span>
+  dentro do conjunto
+  <span class="formula-inline" data-tts="b">\( B \)</span>,
+  isto é,
 </p>
 
 <p class="formula" data-tts="p de a dado b é igual ao número de elementos de a interseção b sobre o número de elementos de b">
   \[
-    P(A \mid B)=\frac{|A\cap B|}{|B|}.
+    P(A \mid B)=\frac{n(A\cap B)}{n(B)}.
   \]
 </p>
 
 <p>
-  Nessas situações, a dificuldade principal não está na forma das expressões probabilísticas, mas na determinação das quantidades que nelas aparecem.
-  Em outras palavras, uma vez estabelecida a relação probabilística adequada, o problema passa a consistir em contar corretamente os resultados possíveis e os
-  resultados favoráveis.
+  Nessas condições, o problema de calcular probabilidades reduz-se, essencialmente, a determinar corretamente o número de elementos dos conjuntos envolvidos.
+  A dificuldade deixa de ser probabilística no sentido estrutural e passa a ser combinatória.
+  É precisamente nesse ponto que entra a análise combinatória.
 </p>
 
-<p>
-  É precisamente nesse ponto que entra a análise combinatória. Ela fornece métodos sistemáticos para enumerar resultados em conjuntos finitos e, por isso,
-  desempenha papel central no cálculo de probabilidades em contextos equiprováveis.
-</p>
-
-<h3>5.1 Princípios de contagem</h3>
+<h3>5.1 Princípio Fundamental da Contagem</h3>
 
 <p>
   A análise combinatória reúne técnicas voltadas para a contagem de resultados possíveis em experimentos finitos. No contexto da probabilidade, sua utilidade
   decorre do fato de que, em espaços amostrais equiprováveis, calcular uma probabilidade equivale a determinar quantos resultados pertencem a um evento e quantos
   resultados existem no total.
+
+  Para compreender a ideia central da contagem, considere um procedimento realizado em etapas sucessivas.
+  Suponha que, a partir de um ponto inicial
+  <span class="formula-inline" data-tts="a">\( A \)</span>,
+  seja possível chegar a
+  <span class="formula-inline" data-tts="b">\( B \)</span>
+  por dois caminhos distintos e, em seguida, a partir de
+  <span class="formula-inline" data-tts="b">\( B \)</span>,
+  seja possível chegar a
+  <span class="formula-inline" data-tts="c">\( C \)</span>
+  também por dois caminhos distintos.
 </p>
 
 <p>
-  O princípio fundamental da contagem estabelece a regra básica para esse tipo de enumeração. Suponha que um procedimento seja realizado em etapas sucessivas.
-  Se a primeira etapa pode ocorrer de
-  <span class="formula-inline" data-tts="n um">\( n_1 \)</span>
-  maneiras distintas e, para cada uma dessas possibilidades, a segunda etapa pode ocorrer de
-  <span class="formula-inline" data-tts="n dois">\( n_2 \)</span>
-  maneiras, então o número total de resultados possíveis é dado por
-  <span class="formula-inline" data-tts="n um vezes n dois">\( n_1 \cdot n_2 \)</span>.
+  Cada percurso completo de
+  <span class="formula-inline" data-tts="a até c">\( A \to C \)</span>
+  é determinado por uma sequência de escolhas: primeiro escolhe-se um dos caminhos de
+  <span class="formula-inline" data-tts="a até b">\( A \to B \)</span>,
+  e depois um dos caminhos de
+  <span class="formula-inline" data-tts="b até c">\( B \to C \)</span>.
+  Assim, cada resultado possível corresponde a um par ordenado de decisões.
+
+  Como existem duas escolhas possíveis na primeira etapa e, para cada uma delas, duas escolhas possíveis na segunda,
+  o número total de percursos distintos é dado por
+</p>
+
+<p class="formula" data-tts="dois vezes dois igual a quatro">
+  \[
+    2 \cdot 2 = 4.
+  \]
 </p>
 
 <p>
-  A razão desse resultado é simples: a cada uma das
+  Esse raciocínio ilustra o princípio fundamental da contagem, quando um processo é composto por etapas sucessivas,
+  o número total de resultados possíveis é obtido combinando todas as escolhas de cada etapa.
+
+  De forma geral, se a primeira etapa pode ocorrer de
   <span class="formula-inline" data-tts="n um">\( n_1 \)</span>
-  possibilidades da primeira etapa associam-se
+  maneiras e, para cada uma delas, a segunda etapa pode ocorrer de
   <span class="formula-inline" data-tts="n dois">\( n_2 \)</span>
-  possibilidades da segunda. Assim, o total de combinações possíveis é obtido multiplicando-se o número de opções de cada etapa.
+  maneiras, então o número total de resultados possíveis é
+</p>
+
+<p class="formula" data-tts="n um vezes n dois">
+  \[
+    n_1 \cdot n_2.
+  \]
 </p>
 
 <p>
   Esse princípio se generaliza para qualquer número finito de etapas. Se um experimento envolve
   <span class="formula-inline" data-tts="k">\( k \)</span>
   etapas sucessivas, com
-  <span class="formula-inline" data-tts="n um, n dois, até n k">\( n_1, n_2, \ldots, n_k \)</span>
+  <span class="formula-inline" data-tts="n um até n k">\( n_1, n_2, \ldots, n_k \)</span>
   possibilidades em cada uma delas, então o número total de resultados possíveis é
 </p>
 
-<p class="formula" data-tts="n um vezes n dois vezes até n k">
+<p class="formula" data-tts="produto de n um até n k">
   \[
     n_1 \cdot n_2 \cdot \ldots \cdot n_k.
   \]
 </p>
 
 <p>
-  Esse resultado constitui a base da contagem em diversos problemas probabilísticos, especialmente quando o espaço amostral pode ser descrito como uma sequência
-  de escolhas ou etapas sucessivas.
+  Em termos probabilísticos, esse princípio permite construir o espaço amostral em situações em que os resultados podem ser descritos como sequências de escolhas,
+  reduzindo o cálculo de probabilidades a um problema de contagem.
 </p>
 <h3>5.2 Permutações</h3>
 
@@ -690,176 +661,204 @@ proximo: /capitulos/cap9-distribuicoes-discretas/
   <span class="formula-inline" data-tts="n">\( n \)</span>
   pessoas distintas devam formar uma fila.
   Nesse caso, deseja-se saber de quantas maneiras diferentes essa fila pode ser organizada.
+
+  Formar a fila corresponde a tomar uma sequência de decisões: escolher quem ocupa a primeira posição, depois quem ocupa a segunda,
+  e assim sucessivamente, até a última posição.
+  Como cada pessoa só pode ocupar uma posição, as escolhas são feitas sem reposição.
 </p>
 
 <p>
-  Há
+  Para a primeira posição, há
   <span class="formula-inline" data-tts="n">\( n \)</span>
-  possibilidades para a primeira posição da fila.
-  Depois de escolhida a pessoa da primeira posição, restam
-  <span class="formula-inline" data-tts="n menos um">\( n-1 \)</span>
-  possibilidades para a segunda.
-  Em seguida, restam
-  <span class="formula-inline" data-tts="n menos dois">\( n-2 \)</span>
-  possibilidades para a terceira, e assim sucessivamente, até a última posição.
+  possibilidades. Uma vez escolhida essa pessoa, restam
+  <span class="formula-inline" data-tts="n menos um">\( n - 1 \)</span>
+  opções para a segunda posição. Em seguida, restam
+  <span class="formula-inline" data-tts="n menos dois">\( n - 2 \)</span>
+  possibilidades para a terceira, e assim sucessivamente, até que reste apenas uma possibilidade para a última posição.
 </p>
 
 <p>
-  Pelo princípio fundamental da contagem, o número total de filas possíveis é
+  Pelo princípio fundamental da contagem, o número total de filas possíveis é obtido multiplicando o número de escolhas em cada etapa:
 </p>
 
 <p class="formula" data-tts="n vezes n menos um vezes n menos dois até um">
   \[
-    n(n-1)(n-2)\cdots 1 = n!.
+    n(n - 1)(n - 2)\cdots 1.
   \]
 </p>
 
 <p>
-  Portanto, o número de <strong>permutações</strong> de
+  Esse produto representa todas as sequências ordenadas possíveis formadas a partir dos
+  <span class="formula-inline" data-tts="n">\( n \)</span>
+  elementos, considerando que a cada etapa uma escolha é feita dentre os elementos ainda disponíveis.
+</p>
+
+<p>
+  Por conveniência, essa quantidade é denotada por
+  <span class="formula-inline" data-tts="n fatorial">\( n! \)</span>,
+  chamada de fatorial de
+  <span class="formula-inline" data-tts="n">\( n \)</span>.
+  Assim,
+</p>
+
+<p class="formula" data-tts="n fatorial é igual a n vezes n menos um até um">
+  \[
+    n! = n(n - 1)(n - 2)\cdots 1.
+  \]
+</p>
+
+<p>
+  Portanto, o número de permutações de
   <span class="formula-inline" data-tts="n">\( n \)</span>
   elementos distintos é
 </p>
 
-<p class="formula" data-tts="p n é igual a n fatorial">
+<p class="formula" data-tts="p n igual a n fatorial">
   \[
     P_n = n!.
   \]
 </p>
 
 <p>
-  Assim, uma permutação corresponde a uma ordenação completa dos elementos.
-  No exemplo da fila, duas disposições diferentes representam resultados distintos sempre que ao menos uma pessoa ocupa posição diferente.
+  Em termos conceituais, uma permutação corresponde a uma ordenação completa dos elementos.
+  Duas disposições são consideradas distintas sempre que diferem em pelo menos uma posição,
+  isto é, sempre que a sequência de escolhas que as gerou não é a mesma.
 </p>
-
 <h3>5.3 Arranjos</h3>
 
 <p>
-  Em muitas situações, porém, não é necessário considerar toda a fila.
-  Pode interessar apenas saber quais elementos ocupam os
+  Em muitas situações, porém, não é necessário considerar toda a fila, podendo interessar apenas quais elementos ocupam os
   <span class="formula-inline" data-tts="k">\( k \)</span>
-  primeiros lugares.
-  Nesse contexto, utiliza-se o conceito de <strong>arranjo</strong>.
+  primeiros lugares. Nesse caso, cada resultado possível passa a ser descrito apenas pelas
+  <span class="formula-inline" data-tts="k">\( k \)</span>
+  primeiras posições, ignorando-se completamente os elementos que ocupam as posições seguintes. 
+</p>
+
+<p>  
+  Um resultado pode, portanto,
+  ser representado como uma sequência ordenada com
+  <span class="formula-inline" data-tts="k">\( k \)</span>
+  elementos; por exemplo, se
+  <span class="formula-inline" data-tts="k igual a três">\( k = 3 \)</span>,
+  um resultado tem a forma
+</p>
+
+<p class="formula" data-tts="a em primeiro lugar, b em segundo lugar, c em terceiro lugar">
+\[
+(
+\underbrace{A}_{1^\circ\ \text{lugar}},
+\underbrace{B}_{2^\circ\ \text{lugar}},
+\underbrace{C}_{3^\circ\ \text{lugar}}
+)
+\]
 </p>
 
 <p>
-  Mantendo o exemplo anterior, suponha que
-  <span class="formula-inline" data-tts="n">\( n \)</span>
-  pessoas possam formar uma fila, mas que o interesse recaia apenas sobre os
-  <span class="formula-inline" data-tts="k">\( k \)</span>
-  primeiros lugares.
-  Nesse caso, importa saber quem ficou em primeiro, quem ficou em segundo, e assim sucessivamente, até o
-  <span class="formula-inline" data-tts="k ésimo">\( k \)</span>-ésimo lugar.
-  Portanto, a ordem continua sendo relevante.
+  Dois resultados são distintos sempre que diferem em pelo menos uma dessas posições, de modo que a ordem em que os elementos aparecem é essencial para a sua identificação.
+  Assim, trocar a posição de dois elementos gera um novo resultado. Logo, as sequências
 </p>
-
-<p>
-  De fato, se duas pessoas trocam de posição entre os
-  <span class="formula-inline" data-tts="k">\( k \)</span>
-  primeiros lugares, obtém-se um resultado diferente.
-  Ser o primeiro não é a mesma coisa que ser o segundo, assim como ser o segundo não é a mesma coisa que ser o terceiro.
-  Logo, o arranjo conta seleções ordenadas de
-  <span class="formula-inline" data-tts="k">\( k \)</span>
-  elementos dentre
-  <span class="formula-inline" data-tts="n">\( n \)</span>
-  elementos distintos.
-</p>
-
-<p>
-  Para formar os
-  <span class="formula-inline" data-tts="k">\( k \)</span>
-  primeiros lugares, há
-  <span class="formula-inline" data-tts="n">\( n \)</span>
-  possibilidades para o primeiro,
-  <span class="formula-inline" data-tts="n menos um">\( n-1 \)</span>
-  para o segundo,
-  <span class="formula-inline" data-tts="n menos dois">\( n-2 \)</span>
-  para o terceiro, e assim sucessivamente, até o
-  <span class="formula-inline" data-tts="k ésimo">\( k \)</span>-ésimo lugar.
-</p>
-
-<p>
-  Pelo princípio fundamental da contagem, o número total de arranjos é
-</p>
-
-<p class="formula" data-tts="n vezes n menos um vezes n menos dois até n menos k mais um">
+<p class="formula" data-tts="a b c b a c c b a">
   \[
-    n(n-1)(n-2)\cdots(n-k+1).
+    (A,B,C),\ (B,A,C),\ (C,B,A)
+  \]
+</p>
+<p>
+  representam resultados distintos, pois envolvem diferentes ordenações dos mesmos elementos.
+</p>
+
+<p>  
+  Generalizando, para contar o número de sequências ordenadas formadas a partir de
+  <span class="formula-inline" data-tts="n">\( n \)</span>
+  pessoas em uma fila, a construção de um resultado consiste em escolher, sucessivamente, quem ocupa a primeira posição, depois a segunda, e assim por diante,
+  até a
+  <span class="formula-inline" data-tts="k ésima">\( k \)</span>-ésima posição.
+ 
+  Pelo princípio fundamental da contagem,
+  o número total de sequências ordenadas que podem ser formadas dessa maneira é dado por
+</p>
+
+<p class="formula" data-tts="n vezes n menos um até n menos k mais um">
+  \[
+    n(n - 1)(n - 2)\cdots(n - k + 1).
   \]
 </p>
 
 <p>
-  Essa quantidade é o número de <strong>arranjos simples</strong> de
+  Esse produto conta todas as sequências ordenadas de comprimento
+  <span class="formula-inline" data-tts="k">\( k \)</span>
+  formadas a partir dos
   <span class="formula-inline" data-tts="n">\( n \)</span>
-  elementos tomados
-  <span class="formula-inline" data-tts="k a k">\( k \)</span>
-  a
-  <span class="formula-inline" data-tts="k a k">\( k \)</span>
-  e pode ser escrita como
+  elementos, sem repetição. Por conveniência, essa quantidade pode ser escrita na forma
 </p>
 
-<p class="formula" data-tts="a n k é igual a n fatorial sobre n menos k fatorial">
+<p class="formula" data-tts="a n k igual a n fatorial sobre n menos k fatorial">
   \[
     A_{n,k}=\frac{n!}{(n-k)!}.
   \]
 </p>
 
 <p>
-  Observa-se que a permutação é um caso particular do arranjo, correspondente à situação em que
-  <span class="formula-inline" data-tts="k igual a n">\( k=n \)</span>.
-  Nesse caso, consideram-se todos os lugares da fila.
+  A permutação corresponde ao caso particular em que
+  <span class="formula-inline" data-tts="k igual a n">\( k = n \)</span>,
+  isto é, quando todas as posições da fila são consideradas.
 </p>
-
 <h3>5.4 Combinações</h3>
 
 <p>
   Há, por fim, situações em que o interesse não está na ordem dos
   <span class="formula-inline" data-tts="k">\( k \)</span>
-  primeiros lugares, mas apenas em quais elementos foram selecionados.
-  Nesse caso, utiliza-se o conceito de <strong>combinação</strong>.
-</p>
-
-<p>
-  Retomando o exemplo da fila, suponha que o interesse esteja apenas em identificar quais
+  primeiros lugares, mas apenas em quais elementos foram selecionados. Retomando o exemplo da fila, suponha que o interesse esteja apenas em identificar quais
   <span class="formula-inline" data-tts="k">\( k \)</span>
   pessoas ficaram entre as
   <span class="formula-inline" data-tts="k">\( k \)</span>
-  primeiras posições, sem distinguir quem ficou em primeiro, em segundo ou em qualquer outra dessas posições.
-  Nesse contexto, diferentes ordenações dos mesmos
+  primeiras posições, sem distinguir quem ficou em primeiro, segundo ou em qualquer outra dessas posições. Nesse caso,
+  cada resultado pode ser descrito apenas como um conjunto de
   <span class="formula-inline" data-tts="k">\( k \)</span>
-  elementos representam o mesmo resultado.
+  elementos, e não mais como uma sequência ordenada.
 </p>
 
 <p>
-  Por exemplo, se três pessoas distintas
-  <span class="formula-inline" data-tts="a, b e c">\( A \)</span>,
-  <span class="formula-inline" data-tts="b">\( B \)</span>
-  e
-  <span class="formula-inline" data-tts="c">\( C \)</span>
-  ocupam os três primeiros lugares, então as ordens
-  <span class="formula-inline" data-tts="a b c">\( (A,B,C) \)</span>,
-  <span class="formula-inline" data-tts="b a c">\( (B,A,C) \)</span>
-  e
-  <span class="formula-inline" data-tts="c b a">\( (C,B,A) \)</span>,
-  entre outras, correspondem ao mesmo grupo de pessoas selecionadas.
+  Essa mudança implica que diferentes sequências podem corresponder ao mesmo resultado. Por exemplo, se três pessoas distintas
+  <span class="formula-inline" data-tts="a b c">\( A, B, C \)</span>
+  ocupam as três primeiras posições, então as sequências
 </p>
 
-<p>
-  Assim, cada grupo de
-  <span class="formula-inline" data-tts="k">\( k \)</span>
-  elementos é contado várias vezes pelos arranjos, uma vez para cada maneira possível de ordenar esses
-  <span class="formula-inline" data-tts="k">\( k \)</span>
-  elementos.
-  Como
-  <span class="formula-inline" data-tts="k fatorial">\( k! \)</span>
-  é o número de ordenações possíveis de
-  <span class="formula-inline" data-tts="k">\( k \)</span>
-  elementos distintos, segue que o número de combinações é obtido dividindo-se o número de arranjos por
-  <span class="formula-inline" data-tts="k fatorial">\( k! \)</span>.
-</p>
-
-<p class="formula" data-tts="combinação de n elementos tomados k a k é igual a a n k sobre k fatorial">
+<p class="formula" data-tts="a b c b a c c b a">
   \[
-    \binom{n}{k}=\frac{A_{n,k}}{k!}.
+    (A,B,C),\ (B,A,C),\ (C,B,A)
+  \]
+</p>
+
+<p>
+  representam o mesmo resultado, pois envolvem exatamente o mesmo grupo de elementos. Isso mostra que, ao contar arranjos,
+  cada grupo de
+  <span class="formula-inline" data-tts="k">\( k \)</span>
+  elementos é contado várias vezes, uma vez para cada possível ordenação desses elementos. Como há
+  <span class="formula-inline" data-tts="k fatorial">\( k! \)</span>
+  maneiras de ordenar
+  <span class="formula-inline" data-tts="k">\( k \)</span>
+  elementos distintos, cada grupo aparece exatamente
+  <span class="formula-inline" data-tts="k fatorial">\( k! \)</span>
+  vezes na contagem dos arranjos.
+</p>
+
+<p>
+  Para obter o número de combinações, é necessário eliminar essa multiplicidade, tomando apenas um representante de cada grupo.
+  Isso equivale a dividir o número de arranjos pelo número de ordenações possíveis de cada conjunto, isto é,
+  por
+  <span class="formula-inline" data-tts="k fatorial">\( k! \)</span>.
+  Assim, o número de combinações de
+  <span class="formula-inline" data-tts="n">\( n \)</span>
+  elementos tomados
+  <span class="formula-inline" data-tts="k">\( k \)</span>
+  a
+  <span class="formula-inline" data-tts="k">\( k \)</span>
+  é dado por
+</p>
+
+<p class="formula" data-tts="n sobre k igual a arranjos sobre k fatorial">
+  \[
+    \binom{n}{k} = \frac{A_{n,k}}{k!}.
   \]
 </p>
 
@@ -867,48 +866,50 @@ proximo: /capitulos/cap9-distribuicoes-discretas/
   Substituindo a expressão dos arranjos, obtém-se
 </p>
 
-<p class="formula" data-tts="combinação de n elementos tomados k a k é igual a n fatorial sobre k fatorial vezes n menos k fatorial">
+<p class="formula" data-tts="n sobre k igual a n fatorial sobre k fatorial vezes n menos k fatorial">
   \[
-    \binom{n}{k}=\frac{n!}{k!(n-k)!}.
+    \binom{n}{k} = \frac{n!}{k!(n-k)!}.
   \]
 </p>
 
 <p>
-  Portanto, a combinação conta apenas quais elementos foram escolhidos, sem considerar a ordem em que aparecem entre os
-  <span class="formula-inline" data-tts="k">\( k \)</span>
-  primeiros lugares.
+  A combinação conta, portanto, apenas quais elementos foram escolhidos, sem considerar a ordem em que aparecem.
 </p>
 <hr>
-
 <h2>6. Aplicações em probabilidade</h2>
 
 <p>
-  As técnicas de contagem apresentadas permitem calcular probabilidades em modelos nos quais todos os resultados são igualmente prováveis. Nesse caso,
-  a probabilidade de um evento pode ser obtida como a razão entre o número de casos favoráveis e o número total de casos possíveis.
+  As técnicas de contagem apresentadas permitem calcular probabilidades em modelos nos quais todos os resultados são igualmente prováveis.
+  Nesse caso, a probabilidade de um evento pode ser obtida como a razão entre o número de casos favoráveis e o número total de casos possíveis,
+  de modo que o problema probabilístico se reduz à determinação dessas duas quantidades. A análise combinatória fornece, nesse contexto,
+  os instrumentos necessários para descrever e contar sistematicamente os resultados associados a um experimento.
 </p>
 
 <p>
-  Quando o experimento envolve etapas sucessivas, o princípio fundamental da contagem permite determinar a cardinalidade do espaço amostral. Quando a situação
-  envolve seleções ordenadas, os arranjos e as permutações permitem contar os resultados possíveis. Quando apenas o conjunto selecionado importa, sem distinção
-  de ordem, as combinações fornecem a ferramenta adequada.
+  A escolha do instrumento de contagem depende da forma como os resultados são estruturados. Em experimentos compostos por etapas sucessivas,
+  o princípio fundamental da contagem permite determinar a cardinalidade do espaço amostral a partir da multiplicação das possibilidades em cada etapa.
+  Quando os resultados são descritos como sequências ordenadas, em que a posição de cada elemento é relevante, utilizam-se arranjos ou permutações.
+  Por outro lado, quando apenas o conjunto de elementos selecionados importa, sem distinção de ordem, a contagem adequada é fornecida pelas combinações.
 </p>
 
 <p>
-  Suponha, por exemplo, que se deseje calcular a probabilidade de formar uma comissão com determinadas características a partir de um grupo de pessoas.
-  Como a ordem de escolha não altera a comissão formada, o número total de resultados possíveis deve ser contado por combinações. Já em um problema de criação
-  de códigos ou de distribuição de posições, em que sequências diferentes representam resultados distintos, a contagem adequada recai sobre arranjos ou permutações.
+  Essa distinção pode ser observada em diferentes situações. Ao formar uma comissão a partir de um grupo de pessoas, por exemplo, a ordem de escolha não altera
+  o resultado, de modo que o número total de casos possíveis deve ser contado por combinações. Já em problemas de construção de códigos ou de atribuição de posições,
+  em que sequências distintas correspondem a resultados diferentes, a contagem adequada recai sobre arranjos ou permutações. Em cada caso, a estrutura do experimento
+  determina a forma correta de enumerar os resultados possíveis.
 </p>
 
 <p>
-  A mesma lógica pode ser aplicada em problemas de probabilidade condicional. Se os resultados de um experimento são equiprováveis e se uma condição
+  A mesma lógica se aplica ao cálculo de probabilidades condicionais. Se os resultados de um experimento são equiprováveis e se uma condição
   <span class="formula-inline" data-tts="b">\( B \)</span>
   restringe a análise a um subconjunto do espaço amostral, então calcular
   <span class="formula-inline" data-tts="p de a dado b">\( P(A \mid B) \)</span>
-  consiste em contar quantos resultados pertencem a
+  consiste em comparar o número de resultados pertencentes a
   <span class="formula-inline" data-tts="a interseção b">\( A \cap B \)</span>
-  e quantos pertencem a
+  com o número total de resultados compatíveis com a condição, representado por
   <span class="formula-inline" data-tts="b">\( B \)</span>.
-  Desse modo, a análise combinatória se integra diretamente ao cálculo probabilístico sob condicionamento.
+  Desse modo, a análise combinatória se integra diretamente ao cálculo probabilístico sob condicionamento,
+  fornecendo os meios para avaliar probabilidades em espaços restritos.
 </p>
 
 <hr>
@@ -916,17 +917,17 @@ proximo: /capitulos/cap9-distribuicoes-discretas/
 <h2>7. Independência de eventos</h2>
 
 <p>
-  A probabilidade condicional permite descrever como a informação de que um evento ocorreu modifica a avaliação de outro. Em alguns casos, porém, a ocorrência de
-  um evento não altera a probabilidade do outro. Quando isso acontece, diz-se que os eventos são independentes. A independência é, portanto, uma propriedade de
-  pares de eventos definida em termos de ausência de influência probabilística sob condicionamento.
+  A probabilidade condicional permite descrever como a informação de que um evento ocorreu modifica a avaliação de outro.
+  Em alguns casos, porém, a ocorrência de um evento não altera a probabilidade do outro, de modo que a restrição do espaço
+  amostral não produz qualquer mudança na avaliação probabilística. Quando isso acontece, diz-se que os eventos são independentes,
+  caracterizando uma situação em que a informação associada a um evento não exerce influência sobre o outro.
 </p>
 
 <p>
-  Nesta seção, a independência será definida diretamente a partir da probabilidade condicional e, em seguida, será estabelecida uma forma equivalente de
-  caracterizá-la por meio da probabilidade de interseção. As duas formulações são úteis porque conectam, de maneira simples, a ideia de independência ao
-  comportamento das probabilidades conjuntas.
+  A independência pode ser definida diretamente a partir da probabilidade condicional e também caracterizada por meio da
+  probabilidade de interseção. Essas duas formulações são equivalentes e permitem descrever, de maneira simples, o comportamento
+  das probabilidades conjuntas quando não há dependência entre eventos.
 </p>
-
 <h3>7.1 Definição de independência</h3>
 
 <p>
@@ -938,10 +939,18 @@ proximo: /capitulos/cap9-distribuicoes-discretas/
   <span class="formula-inline" data-tts="a">\( A \)</span>
   e
   <span class="formula-inline" data-tts="b">\( B \)</span>
-  são <strong>independentes</strong> quando a ocorrência de
+  são independentes quando a ocorrência de
   <span class="formula-inline" data-tts="b">\( B \)</span>
   não altera a probabilidade de
-  <span class="formula-inline" data-tts="a">\( A \)</span>.
+  <span class="formula-inline" data-tts="a">\( A \)</span>,
+  isto é, quando a avaliação de
+  <span class="formula-inline" data-tts="a">\( A \)</span>
+  permanece inalterada mesmo após a restrição do espaço amostral ao subconjunto em que
+  <span class="formula-inline" data-tts="b">\( B \)</span>
+  ocorre.
+</p>
+
+<p>
   Formalmente, para
   <span class="formula-inline" data-tts="p de b maior que zero">\( P(B) &gt; 0 \)</span>,
   a independência é expressa por
@@ -954,18 +963,17 @@ proximo: /capitulos/cap9-distribuicoes-discretas/
 </p>
 
 <p>
-  Essa igualdade deve ser interpretada como uma condição de invariância. Ao restringir a análise ao conjunto de resultados em que
+  Essa igualdade deve ser interpretada como uma condição de invariância, em que, restringindo a análise ao conjunto de resultados em que
   <span class="formula-inline" data-tts="b">\( B \)</span>
   ocorreu, a probabilidade de
   <span class="formula-inline" data-tts="a">\( A \)</span>
-  permanece a mesma que seria avaliada no espaço amostral completo.
+  permanece a mesma que seria obtida no espaço amostral completo.
 </p>
-
 <h3>7.2 Independência e interseção</h3>
 
 <p>
-  A definição de independência pode ser reescrita em uma forma equivalente que envolve apenas probabilidades de eventos e de interseções. Partindo da regra do
-  produto,
+  A definição de independência pode ser reescrita em uma forma equivalente que envolve apenas probabilidades de eventos e de
+  interseções. Partindo da regra do produto,
   <span class="formula-inline" data-tts="p de a interseção b é igual a p de a dado b vezes p de b">\( P(A \cap B)=P(A \mid B)\,P(B) \)</span>,
   e substituindo a condição de independência
   <span class="formula-inline" data-tts="p de a dado b é igual a p de a">\( P(A \mid B)=P(A) \)</span>,
@@ -979,51 +987,50 @@ proximo: /capitulos/cap9-distribuicoes-discretas/
 </p>
 
 <p>
-  Essa identidade fornece uma caracterização prática da independência, pois relaciona a probabilidade de ocorrência conjunta ao produto das probabilidades
-  individuais. Além disso, como a interseção é simétrica,
+  Essa identidade fornece uma caracterização prática da independência, pois relaciona a probabilidade de ocorrência conjunta
+  ao produto das probabilidades individuais. Como a interseção é simétrica,
   <span class="formula-inline" data-tts="a interseção b é igual a b interseção a">\( A \cap B=B \cap A \)</span>,
-  a condição também pode ser lida de maneira equivalente como
+  a condição pode também ser expressa de forma equivalente como
   <span class="formula-inline" data-tts="p de b dado a é igual a p de b">\( P(B \mid A)=P(B) \)</span>,
   sempre que
   <span class="formula-inline" data-tts="p de a maior que zero">\( P(A) &gt; 0 \)</span>.
-  Assim, quando dois eventos são independentes, nenhum deles altera a probabilidade do outro.
 </p>
 
+<p>  
+  Assim, quando dois eventos são independentes, nenhum deles altera a probabilidade do outro. De outro modo, a probabilidade de ocorrência conjunta é simplesmente o produto das probabilidades individuais, refletindo a ausência de influência entre os eventos.
+</p>
 <hr>
 
 <h2>8. Conclusão</h2>
 
 <p>
   Neste capítulo, a probabilidade condicional foi introduzida como uma forma de avaliar eventos quando se dispõe da informação de que um determinado evento ocorreu.
-  A ideia central foi interpretar essa informação como uma restrição do conjunto de resultados relevantes, de modo que a probabilidade passe a ser considerada
-  dentro de um subconjunto do espaço amostral original, sem alterar o experimento aleatório nem os eventos envolvidos.
+  A ideia central consistiu em interpretar essa informação como uma restrição do conjunto de resultados relevantes, de modo que a probabilidade passe a ser considerada
+  dentro de um subconjunto do espaço amostral original, sem alterar o experimento aleatório nem os eventos envolvidos. Nesse contexto, a definição formal da probabilidade
+  condicional estabeleceu uma relação direta entre o condicionamento e a interseção de eventos, permitindo expressar probabilidades em termos de conjuntos compatíveis
+  com a condição imposta.
 </p>
 
 <p>
-  A definição formal da probabilidade condicional estabeleceu uma relação direta entre o condicionamento e a interseção de eventos. A partir dela, foram obtidas
-  relações fundamentais como a regra do produto, o teorema da probabilidade total e a fórmula de Bayes, que permitem reorganizar expressões probabilísticas e
-  relacionar diferentes formas de condicionamento.
+  A partir dessa estrutura, foram obtidas relações fundamentais como a regra do produto, o teorema da probabilidade total e a fórmula de Bayes, que permitem reorganizar
+  expressões probabilísticas e relacionar diferentes formas de condicionamento. Ao mesmo tempo, mostrou-se que, em modelos finitos equiprováveis, o cálculo de probabilidades
+  pode ser reduzido à contagem de casos favoráveis e de casos possíveis, de modo que a análise combinatória fornece os instrumentos necessários para determinar a cardinalidade
+  do espaço amostral e dos eventos de interesse, conectando diretamente a estrutura probabilística a procedimentos de contagem.
 </p>
 
 <p>
-  Em seguida, mostrou-se que, em modelos finitos equiprováveis, o cálculo de probabilidades pode ser reduzido à contagem de casos favoráveis e de casos possíveis.
-  Nesse contexto, a análise combinatória fornece instrumentos para determinar a cardinalidade do espaço amostral e dos eventos de interesse, permitindo aplicar
-  diretamente a estrutura probabilística a problemas concretos.
-</p>
-
-<p>
-  Por fim, a independência foi definida como um caso particular em que o condicionamento não modifica a probabilidade do evento de interesse. Essa caracterização
-  conecta a ideia intuitiva de ausência de influência probabilística à condição
+  Nesse mesmo quadro conceitual, a independência foi definida como um caso particular em que o condicionamento não modifica a probabilidade do evento de interesse.
+  Essa caracterização formaliza a ideia de ausência de influência probabilística e conduz à condição
   <span class="formula-inline" data-tts="p de a interseção b é igual a p de a vezes p de b">\( P(A \cap B)=P(A)\,P(B) \)</span>,
-  encerrando o capítulo com uma relação simples entre probabilidade condicional, interseção e produto.
+  que relaciona de maneira simples a probabilidade conjunta ao produto das probabilidades individuais, sintetizando a interação entre condicionamento e interseção.
 </p>
 
 <p>
-  Com esses resultados, completa-se uma etapa importante do estudo da probabilidade. Nos capítulos seguintes, essas ideias servirão de base para a introdução
-  das variáveis aleatórias e de suas distribuições, permitindo representar quantitativamente o comportamento de fenômenos aleatórios em contextos discretos
+  Com esses resultados, completa-se uma etapa importante do estudo da probabilidade, na qual a noção de restrição do espaço amostral, a forma de medir probabilidades
+  em contextos condicionados e os instrumentos de contagem passam a compor uma estrutura unificada. Nos capítulos seguintes, essas ideias servirão de base para a
+  introdução das variáveis aleatórias e de suas distribuições, permitindo representar quantitativamente o comportamento de fenômenos aleatórios em contextos discretos
   e contínuos.
 </p>
-
 <hr>
 
 <h2>9. Referências</h2>
@@ -1055,3 +1062,4 @@ proximo: /capitulos/cap9-distribuicoes-discretas/
 <p>
   WARE, William B.; FERRON, John M.; MILLER, Barbara M. Introductory Statistics: A Conceptual Approach Using R. New York: Routledge, 2013.
 </p>
+
