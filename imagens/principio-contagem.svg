@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 900 360"
+     width="900" height="360"
+     role="img"
+     aria-labelledby="title desc"
+     style="background:#ffffff">
+
+  <title id="title">Princípio Fundamental da Contagem</title>
+  <desc id="desc">
+    Dois caminhos de A até B e dois de B até C. Cada percurso é formado
+    por uma escolha em cada etapa, totalizando quatro combinações.
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --text-soft:#4b5563;
+        --font:"et-book","ETBook","Georgia",serif;
+
+        --cycle:16s;
+        --ease:ease-in-out;
+      }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        letter-spacing:.08px;
+        user-select:none;
+      }
+
+      .u-center{ text-anchor:middle; }
+
+      .u-stroke{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        stroke-width:2px;
+      }
+
+      .u-stroke-thick{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        stroke-width:5px;
+      }
+
+      .u-ns{ vector-effect:non-scaling-stroke; }
+
+      .label{
+        font-size:64px;
+        font-style:italic;
+      }
+
+      .formula{
+        font-size:28px;
+      }
+
+      /* SURGIMENTO DAS SETAS */
+      @keyframes k-draw{
+        0%   { stroke-dashoffset:420; opacity:0; }
+        10%  { stroke-dashoffset:0; opacity:1; }
+        100% { stroke-dashoffset:0; opacity:1; }
+      }
+
+      .a-draw{
+        stroke-dasharray:420;
+        stroke-dashoffset:420;
+        animation:k-draw var(--cycle) var(--ease) infinite both;
+      }
+
+      /* COMBINAÇÃO 1: cima-cima */
+      @keyframes k-topTop-AB{
+        0%,12% { opacity:0; }
+        13.5%,21.5% { opacity:1; }
+        23%,100% { opacity:0; }
+      }
+
+      @keyframes k-topTop-BC{
+        0%,16% { opacity:0; }
+        17.5%,25.5% { opacity:1; }
+        27%,100% { opacity:0; }
+      }
+
+      /* COMBINAÇÃO 2: cima-baixo */
+      @keyframes k-topBottom-AB{
+        0%,24% { opacity:0; }
+        25.5%,33.5% { opacity:1; }
+        35%,100% { opacity:0; }
+      }
+
+      @keyframes k-topBottom-BC{
+        0%,28% { opacity:0; }
+        29.5%,37.5% { opacity:1; }
+        39%,100% { opacity:0; }
+      }
+
+      /* COMBINAÇÃO 3: baixo-cima */
+      @keyframes k-bottomTop-AB{
+        0%,38% { opacity:0; }
+        39.5%,47.5% { opacity:1; }
+        49%,100% { opacity:0; }
+      }
+
+      @keyframes k-bottomTop-BC{
+        0%,42% { opacity:0; }
+        43.5%,51.5% { opacity:1; }
+        53%,100% { opacity:0; }
+      }
+
+      /* COMBINAÇÃO 4: baixo-baixo */
+      @keyframes k-bottomBottom-AB{
+        0%,52% { opacity:0; }
+        53.5%,61.5% { opacity:1; }
+        63%,100% { opacity:0; }
+      }
+
+      @keyframes k-bottomBottom-BC{
+        0%,56% { opacity:0; }
+        57.5%,65.5% { opacity:1; }
+        67%,100% { opacity:0; }
+      }
+
+      .a-topTop-AB{ animation:k-topTop-AB var(--cycle) var(--ease) infinite both; }
+      .a-topTop-BC{ animation:k-topTop-BC var(--cycle) var(--ease) infinite both; }
+
+      .a-topBottom-AB{ animation:k-topBottom-AB var(--cycle) var(--ease) infinite both; }
+      .a-topBottom-BC{ animation:k-topBottom-BC var(--cycle) var(--ease) infinite both; }
+
+      .a-bottomTop-AB{ animation:k-bottomTop-AB var(--cycle) var(--ease) infinite both; }
+      .a-bottomTop-BC{ animation:k-bottomTop-BC var(--cycle) var(--ease) infinite both; }
+
+      .a-bottomBottom-AB{ animation:k-bottomBottom-AB var(--cycle) var(--ease) infinite both; }
+      .a-bottomBottom-BC{ animation:k-bottomBottom-BC var(--cycle) var(--ease) infinite both; }
+
+      /* TEXTO FINAL */
+      @keyframes k-final{
+        0%,70% { opacity:0; }
+        78%,100% { opacity:1; }
+      }
+
+      .a-final{
+        opacity:0;
+        animation:k-final var(--cycle) var(--ease) infinite both;
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        *{
+          animation:none !important;
+          opacity:1 !important;
+          stroke-dashoffset:0 !important;
+        }
+      }
+    </style>
+
+    <!-- ponta base -->
+    <marker id="arrow"
+            markerWidth="5"
+            markerHeight="5"
+            refX="4.5"
+            refY="2.5"
+            orient="auto"
+            markerUnits="strokeWidth">
+      <path d="M0,0 L5,2.5 L0,5 Z" fill="#111827"/>
+    </marker>
+
+    <!-- ponta do destaque: menor e mais avançada -->
+    <marker id="arrow-strong"
+            markerWidth="3.8"
+            markerHeight="3.8"
+            refX="2.5"
+            refY="1.9"
+            orient="auto"
+            markerUnits="strokeWidth">
+      <path d="M0,0 L3.8,1.9 L0,3.8 Z" fill="#111827"/>
+    </marker>
+  </defs>
+<g transform="translate(0,-50)">
+  <!-- RÓTULOS -->
+  <text x="110" y="230" class="label u-center">A</text>
+  <text x="450" y="230" class="label u-center">B</text>
+  <text x="820" y="230" class="label u-center">C</text>
+
+
+    <g transform="translate(0,-10)">
+  <!-- CAMINHOS BASE -->
+  <path d="M150 170 Q 300 40 430 170"
+        class="u-stroke u-ns a-draw"
+        marker-end="url(#arrow)"/>
+    </g>
+    <g transform="translate(0,30)">
+
+  <path d="M150 230 Q 300 360 430 230"
+        class="u-stroke u-ns a-draw"
+        marker-end="url(#arrow)"/>
+    </g>
+    <g transform="translate(0,-10)">
+
+  <path d="M470 170 Q 650 40 800 170"
+        class="u-stroke u-ns a-draw"
+        marker-end="url(#arrow)"/>
+    </g>
+    <g transform="translate(0,30)">
+  <path d="M470 230 Q 650 360 800 230"
+        class="u-stroke u-ns a-draw"
+        marker-end="url(#arrow)"/>
+    </g>
+  <!-- DESTAQUES (todas combinações) -->
+    <g transform="translate(0,-10)">
+
+  <!-- 1: cima-cima -->
+  <path d="M150 170 Q 300 40 430 170"
+        class="u-stroke-thick u-ns a-topTop-AB"
+        marker-end="url(#arrow-strong)"/>
+    </g>
+     <g transform="translate(0,-10)">
+  <path d="M470 170 Q 650 40 800 170"
+        class="u-stroke-thick u-ns a-topTop-BC"
+        marker-end="url(#arrow-strong)"/>
+    </g>
+     <g transform="translate(0,-10)">
+  <!-- 2: cima-baixo -->
+  <path d="M150 170 Q 300 40 430 170"
+        class="u-stroke-thick u-ns a-topBottom-AB"
+        marker-end="url(#arrow-strong)"/>
+    </g>
+     <g transform="translate(0,30)">
+  <path d="M470 230 Q 650 360 800 230"
+        class="u-stroke-thick u-ns a-topBottom-BC"
+        marker-end="url(#arrow-strong)"/>
+    </g>
+     <g transform="translate(0,30)">
+  <!-- 3: baixo-cima -->
+  <path d="M150 230 Q 300 360 430 230"
+        class="u-stroke-thick u-ns a-bottomTop-AB"
+        marker-end="url(#arrow-strong)"/>
+        </g>    
+        <g transform="translate(0,-10)">
+  <path d="M470 170 Q 650 40 800 170"
+        class="u-stroke-thick u-ns a-bottomTop-BC"
+        marker-end="url(#arrow-strong)"/>
+        </g>
+         <g transform="translate(0,30)">   
+  <!-- 4: baixo-baixo -->
+  <path d="M150 230 Q 300 360 430 230"
+        class="u-stroke-thick u-ns a-bottomBottom-AB"
+        marker-end="url(#arrow-strong)"/>
+        </g>
+        <g transform="translate(0,30)">
+  <path d="M470 230 Q 650 360 800 230"
+        class="u-stroke-thick u-ns a-bottomBottom-BC"
+        marker-end="url(#arrow-strong)"/>
+        </g>
+</g>
+  <!-- TEXTO FINAL -->
+  <g class="a-final">
+    <text x="450" y="310" class="formula u-center">
+      2 escolhas × 2 escolhas
+    </text>
+    <text x="450" y="340" class="formula u-center">
+      2 · 2 = 4
+    </text>
+  </g>
+
+</svg>

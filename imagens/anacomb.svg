@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 920 300"
+     width="920" height="300"
+     role="img" aria-labelledby="title desc">
+  <title id="title">Análise combinatória — duas escolhas sucessivas geram quatro possibilidades</title>
+  <desc id="desc">Árvore com duas escolhas sucessivas gerando quatro resultados.</desc>
+
+  <!-- FUNDO (cor do site) -->
+  <rect x="0" y="0" width="100%" height="100%" fill="#ffffff"/>
+
+  <style>
+    :root{
+      --ink:#111827;
+      --ink-soft:#6b7280;
+      --font:"et-book","ETBook","Georgia",serif;
+      --cycle:10s;
+      --ease:ease-in-out;
+      --dash:1100;
+      --dashText:800;
+    }
+
+    text{
+      font-family:var(--font);
+      fill:var(--ink);
+      user-select:none;
+      letter-spacing:.13px;
+    }
+
+    .u-center{ text-anchor:middle; }
+    .u-bold{ font-weight:700; }
+
+    .u-stroke{
+      stroke:var(--ink);
+      fill:none;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+
+    .u-thin{ stroke-width:2px; }
+    .u-thick{ stroke-width:2.6px; }
+
+    .u-title{ font-size:30px; }
+    .u-sub{ font-size:18px; fill:var(--ink-soft); }
+    .u-nodeText{ font-size:22px; }
+    .u-count{ font-size:23px; }
+    .u-final{ font-size:22px; fill:var(--ink-soft); }
+
+    .node{
+      fill:#f5f5f4;
+      stroke:var(--ink);
+      stroke-width:2.2px;
+    }
+
+    @keyframes k-drawLine{
+      0%{ stroke-dashoffset:var(--dash); opacity:0;}
+      10%{opacity:1;}
+      42%{stroke-dashoffset:0;opacity:1;}
+      74%{stroke-dashoffset:0;opacity:1;}
+      92%{stroke-dashoffset:var(--dash);opacity:1;}
+      100%{stroke-dashoffset:var(--dash);opacity:0;}
+    }
+
+    .a-draw{
+      stroke-dasharray:var(--dash);
+      stroke-dashoffset:var(--dash);
+      animation:k-drawLine var(--cycle) var(--ease) infinite both;
+      animation-delay:var(--delay,0s);
+    }
+
+    @keyframes k-fade{
+      0%,12%{opacity:0;}
+      24%,78%{opacity:1;}
+      100%{opacity:0;}
+    }
+
+    .a-fade{
+      opacity:0;
+      animation:k-fade var(--cycle) var(--ease) infinite both;
+      animation-delay:var(--delay,0s);
+    }
+
+    @keyframes k-textStroke{
+      0%{stroke-dashoffset:var(--dashText);opacity:0;}
+      10%{opacity:1;}
+      42%{stroke-dashoffset:0;opacity:1;}
+      74%{stroke-dashoffset:0;opacity:1;}
+      92%{stroke-dashoffset:var(--dashText);opacity:1;}
+      100%{stroke-dashoffset:var(--dashText);opacity:0;}
+    }
+
+    @keyframes k-textFill{
+      0%,16%{fill:transparent;}
+      28%,78%{fill:var(--ink);}
+      100%{fill:transparent;}
+    }
+
+    .a-text{
+      fill:transparent;
+      stroke:var(--ink);
+      stroke-width:.9;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+      stroke-dasharray:var(--dashText);
+      stroke-dashoffset:var(--dashText);
+      animation:
+        k-textStroke var(--cycle) var(--ease) infinite both,
+        k-textFill var(--cycle) var(--ease) infinite both;
+      animation-delay:var(--delay,0s),var(--delay,0s);
+    }
+  </style>
+
+
+<g transform="translate(-30,-30)">
+  <!-- camada 1 -->
+  <circle cx="110" cy="160" r="23" class="node a-fade" style="--delay:.2s"/>
+  <text x="110" y="167" class="u-center u-nodeText a-text" style="--delay:.2s">A</text>
+
+  <!-- camada 2 -->
+  <path d="M133 154 C175 140, 205 128, 244 112" class="u-stroke u-thin a-draw" style="--delay:.7s"/>
+  <path d="M133 166 C175 180, 205 192, 244 208" class="u-stroke u-thin a-draw" style="--delay:1.05s"/>
+
+  <circle cx="270" cy="110" r="21" class="node a-fade" style="--delay:1.0s"/>
+  <circle cx="270" cy="210" r="21" class="node a-fade" style="--delay:1.35s"/>
+  <text x="270" y="117" class="u-center u-nodeText a-text" style="--delay:1.0s">1</text>
+  <text x="270" y="217" class="u-center u-nodeText a-text" style="--delay:1.35s">2</text>
+
+  <!-- camada 3 -->
+  <path d="M291 105 C332 93, 365 87, 404 79" class="u-stroke u-thin a-draw" style="--delay:1.8s"/>
+  <path d="M291 115 C332 127, 365 133, 404 141" class="u-stroke u-thin a-draw" style="--delay:2.15s"/>
+  <path d="M291 205 C332 193, 365 187, 404 179" class="u-stroke u-thin a-draw" style="--delay:2.5s"/>
+  <path d="M291 215 C332 227, 365 233, 404 241" class="u-stroke u-thin a-draw" style="--delay:2.85s"/>
+
+  <circle cx="430" cy="75" r="18" class="node a-fade" style="--delay:2.1s"/>
+  <circle cx="430" cy="135" r="18" class="node a-fade" style="--delay:2.45s"/>
+  <circle cx="430" cy="185" r="18" class="node a-fade" style="--delay:2.8s"/>
+  <circle cx="430" cy="245" r="18" class="node a-fade" style="--delay:3.15s"/>
+
+  <text x="430" y="81" class="u-center u-nodeText a-text" style="--delay:2.1s">1</text>
+  <text x="430" y="141" class="u-center u-nodeText a-text" style="--delay:2.45s">2</text>
+  <text x="430" y="191" class="u-center u-nodeText a-text" style="--delay:2.8s">1</text>
+  <text x="430" y="251" class="u-center u-nodeText a-text" style="--delay:3.15s">2</text>
+
+  <!-- resultados (mais afastados) -->
+  <text x="620" y="85" class="u-count a-text" style="--delay:3.7s">A11</text>
+  <text x="620" y="145" class="u-count a-text" style="--delay:4.0s">A12</text>
+  <text x="620" y="195" class="u-count a-text" style="--delay:4.3s">A21</text>
+  <text x="620" y="255" class="u-count a-text" style="--delay:4.6s">A22</text>
+
+  <!-- colchete afastado -->
+  <path d="M585 65
+           C573 65, 573 65, 573 75
+           L573 255
+           C573 265, 573 265, 585 265"
+        class="u-stroke u-thick a-draw" style="--delay:3.35s"/>
+
+  <!-- legenda final mais à direita -->
+  <text x="700" y="170" class="u-final a-text" style="--delay:5.15s">4 possibilidades</text>
+</g>
+</svg>

@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 900 420"
+     width="900" height="420"
+     role="img"
+     aria-labelledby="title desc"
+     style="background:#ffffff">
+
+  <title id="title">Restrição do espaço amostral</title>
+  <desc id="desc">
+    Um espaço amostral retangular contém vários pontos. Um subconjunto em formato de retângulo arredondado
+    é desenhado por traçado. Os pontos desse subconjunto ganham destaque, enquanto o retângulo do espaço
+    amostral e os pontos restantes desaparecem. Em seguida, uma seta curta indica que B passa a ser o novo
+    conjunto de referência.
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --ink-soft:rgba(17,24,39,.20);
+        --ink-mid:rgba(17,24,39,.45);
+        --text-soft:#4b5563;
+        --font:"et-book","ETBook","Georgia",serif;
+        --cycle:12s;
+        --ease:ease-in-out;
+        --dash:1400;
+        --b-dash:120;
+      }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        user-select:none;
+        letter-spacing:.08px;
+      }
+
+      .u-center{ text-anchor:middle; }
+      .u-bold{ font-weight:700; }
+
+      .u-title{ font-size:30px; }
+      .u-sub{ font-size:18px; fill:var(--ink-soft); }
+      .u-label{ font-size:24px; }
+      .u-note{ font-size:22px; fill:var(--text-soft); }
+
+      .u-stroke{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        vector-effect:non-scaling-stroke;
+      }
+
+      .frame{
+        stroke-width:2px;
+        opacity:1;
+        animation:k-frameFade var(--cycle) linear infinite both;
+      }
+
+      .pt-out{
+        fill:var(--ink-soft);
+        opacity:1;
+        animation:k-outFade var(--cycle) linear infinite both;
+      }
+
+      .pt-in-base{
+        fill:var(--ink-mid);
+        opacity:1;
+        animation:k-inBaseFade var(--cycle) linear infinite both;
+      }
+
+      .pt-in-strong{
+        fill:var(--ink);
+        opacity:0;
+        animation:k-inStrong var(--cycle) linear infinite both;
+      }
+
+      .subset-outline{
+        stroke-width:2.4px;
+        stroke-dasharray:var(--dash);
+        stroke-dashoffset:var(--dash);
+        opacity:0;
+        animation:k-drawSubset var(--cycle) var(--ease) infinite both;
+      }
+
+      .arrow-draw{
+        stroke-width:2px;
+        stroke-dasharray:260;
+        stroke-dashoffset:260;
+        opacity:0;
+        animation:k-drawArrow var(--cycle) var(--ease) infinite both;
+      }
+
+      .arrow-head{
+        fill:var(--ink);
+        opacity:0;
+        animation:k-arrowHead var(--cycle) linear infinite both;
+      }
+
+      .a-note{
+        opacity:0;
+        animation:k-noteFade var(--cycle) linear infinite both;
+      }
+
+      .a-b{
+        opacity:0;
+        animation:k-bText var(--cycle) var(--ease) infinite both;
+      }
+
+      @keyframes k-drawSubset{
+        0%,12%  { stroke-dashoffset:var(--dash); opacity:0; }
+        13%     { opacity:1; }
+        30%     { stroke-dashoffset:0; opacity:1; }
+        100%    { stroke-dashoffset:0; opacity:1; }
+      }
+
+      @keyframes k-outFade{
+        0%,30%  { opacity:1; }
+        42%     { opacity:.12; }
+        50%,100%{ opacity:0; }
+      }
+
+      @keyframes k-frameFade{
+        0%,32%  { opacity:1; }
+        44%     { opacity:.14; }
+        50%,100%{ opacity:0; }
+      }
+
+      @keyframes k-inBaseFade{
+        0%,22%  { opacity:1; }
+        30%     { opacity:.85; }
+        42%     { opacity:.18; }
+        50%,100%{ opacity:0; }
+      }
+
+      @keyframes k-inStrong{
+        0%,20%  { opacity:0; }
+        26%     { opacity:.45; }
+        34%,100%{ opacity:1; }
+      }
+
+      @keyframes k-drawArrow{
+        0%,50%  { stroke-dashoffset:260; opacity:0; }
+        51%     { opacity:1; }
+        66%     { stroke-dashoffset:0; opacity:1; }
+        100%    { stroke-dashoffset:0; opacity:1; }
+      }
+
+      @keyframes k-arrowHead{
+        0%,63%  { opacity:0; }
+        66%,100%{ opacity:1; }
+      }
+
+      @keyframes k-noteFade{
+        0%,58%  { opacity:0; }
+        66%     { opacity:1; }
+        100%    { opacity:1; }
+      }
+
+      @keyframes k-bText{
+        0%,64%  { opacity:0; transform:translateY(8px); }
+        75%     { opacity:1; transform:translateY(0); }
+        100%    { opacity:1; transform:translateY(0); }
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        .frame,.pt-out,.pt-in-base{ opacity:0 !important; animation:none !important; }
+        .subset-outline,.pt-in-strong,.arrow-draw,.arrow-head,.a-note,.a-b{
+          opacity:1 !important;
+          animation:none !important;
+        }
+        .subset-outline,.arrow-draw{ stroke-dashoffset:0 !important; }
+      }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="100%" height="100%" fill="#ffffff"/>
+
+  <text x="450" y="52" font-size="30" class="u-center u-bold">Restrição do espaço amostral</text>
+
+  <!-- espaço amostral original -->
+  <rect x="92" y="92" width="420" height="220" rx="24" class="u-stroke frame"/>
+  <text x="116" y="120" font-size="22" class="u-bold frame">Ω</text>
+
+  <!-- pontos fora do subconjunto -->
+  <g>
+    <circle class="pt-out" cx="135" cy="136" r="6"/>
+    <circle class="pt-out" cx="182" cy="136" r="6"/>
+    <circle class="pt-out" cx="322" cy="136" r="6"/>
+    <circle class="pt-out" cx="370" cy="136" r="6"/>
+    <circle class="pt-out" cx="418" cy="136" r="6"/>
+    <circle class="pt-out" cx="466" cy="136" r="6"/>
+
+    <circle class="pt-out" cx="138" cy="184" r="6"/>
+    <circle class="pt-out" cx="318" cy="184" r="6"/>
+    <circle class="pt-out" cx="370" cy="184" r="6"/>
+    <circle class="pt-out" cx="420" cy="184" r="6"/>
+    <circle class="pt-out" cx="468" cy="184" r="6"/>
+
+    <circle class="pt-out" cx="134" cy="232" r="6"/>
+    <circle class="pt-out" cx="318" cy="232" r="6"/>
+    <circle class="pt-out" cx="370" cy="232" r="6"/>
+    <circle class="pt-out" cx="420" cy="232" r="6"/>
+    <circle class="pt-out" cx="468" cy="232" r="6"/>
+
+    <circle class="pt-out" cx="135" cy="280" r="6"/>
+    <circle class="pt-out" cx="182" cy="280" r="6"/>
+    <circle class="pt-out" cx="322" cy="280" r="6"/>
+    <circle class="pt-out" cx="370" cy="280" r="6"/>
+    <circle class="pt-out" cx="418" cy="280" r="6"/>
+    <circle class="pt-out" cx="466" cy="280" r="6"/>
+  </g>
+
+  <!-- pontos do subconjunto -->
+  <g>
+    <circle class="pt-in-base" cx="208" cy="138" r="6.2"/>
+    <circle class="pt-in-base" cx="256" cy="138" r="6.2"/>
+    <circle class="pt-in-base" cx="304" cy="138" r="6.2"/>
+
+    <circle class="pt-in-base" cx="208" cy="186" r="6.2"/>
+    <circle class="pt-in-base" cx="256" cy="186" r="6.2"/>
+    <circle class="pt-in-base" cx="304" cy="186" r="6.2"/>
+
+    <circle class="pt-in-base" cx="208" cy="234" r="6.2"/>
+    <circle class="pt-in-base" cx="256" cy="234" r="6.2"/>
+    <circle class="pt-in-base" cx="304" cy="234" r="6.2"/>
+
+    <circle class="pt-in-strong" cx="208" cy="138" r="6.8"/>
+    <circle class="pt-in-strong" cx="256" cy="138" r="6.8"/>
+    <circle class="pt-in-strong" cx="304" cy="138" r="6.8"/>
+
+    <circle class="pt-in-strong" cx="208" cy="186" r="6.8"/>
+    <circle class="pt-in-strong" cx="256" cy="186" r="6.8"/>
+    <circle class="pt-in-strong" cx="304" cy="186" r="6.8"/>
+
+    <circle class="pt-in-strong" cx="208" cy="234" r="6.8"/>
+    <circle class="pt-in-strong" cx="256" cy="234" r="6.8"/>
+    <circle class="pt-in-strong" cx="304" cy="234" r="6.8"/>
+  </g>
+
+  <!-- subconjunto -->
+  <rect x="166" y="110" width="180" height="152" rx="22" class="u-stroke subset-outline"/>
+
+  <g transform="translate(0,-40)">
+    <path class="u-stroke arrow-draw"
+          d="M 455 208
+             C 430 214, 398 220, 350 224"/>
+    <polygon class="arrow-head" points="348,224 358,219 357,229"/>
+  </g>
+
+  <!-- texto -->
+  <g transform="translate(530, -40)">
+    <text x="0" y="158" class="u-note a-note u-center">novo conjunto</text>
+    <text x="0" y="186" class="u-note a-note u-center">de referência:</text>
+    <text x="0" y="222" class="u-label a-b u-center u-bold">B</text>
+  </g>
+
+</svg>

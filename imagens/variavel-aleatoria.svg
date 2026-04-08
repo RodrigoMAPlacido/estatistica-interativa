@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 1180 520"
+     preserveAspectRatio="xMidYMid meet"
+     role="img"
+     aria-labelledby="title desc">
+
+  <title id="title">Variável aleatória com duas moedas</title>
+  <desc id="desc">
+    Duas moedas são lançadas. Abaixo, aparece o espaço amostral do experimento
+    com os quatro resultados possíveis. Em seguida, os resultados que contêm
+    cara são destacados por retângulos, evidenciando os resultados associados
+    à contagem de caras.
+  </desc>
+
+  <style>
+    :root{
+      --bg:#ffffff;
+      --ink:#1f2937;
+      --line:#374151;
+
+      --face:#eef2f7;
+      --face-side:#9ca3af;
+      --shadow:rgba(31,41,55,.13);
+
+      --accent:rgba(31,41,55,.10);
+      --accent-stroke:#374151;
+
+      --font:"et-book","ETBembo","Georgia","Times New Roman",serif;
+      --font-sans:"Arial","Helvetica",sans-serif;
+
+      --cycle:10s;
+      --ease:ease-in-out;
+    }
+
+    svg{
+      background:var(--bg);
+    }
+
+    text{
+      font-family:var(--font);
+      fill:var(--ink);
+      user-select:none;
+    }
+
+    .u-center{
+      text-anchor:middle;
+      dominant-baseline:middle;
+    }
+
+    .edge{
+      stroke:var(--ink);
+      stroke-width:4.5;
+      stroke-linejoin:round;
+      stroke-linecap:round;
+      vector-effect:non-scaling-stroke;
+    }
+
+    .thin-edge{
+      stroke:var(--line);
+      stroke-width:2.1;
+      stroke-linejoin:round;
+      stroke-linecap:round;
+      vector-effect:non-scaling-stroke;
+    }
+
+    .shadow{
+      fill:var(--shadow);
+    }
+
+    .coinSymbol{
+      font-family:var(--font-sans);
+      font-size:78px;
+      font-weight:700;
+      fill:var(--line);
+      text-anchor:middle;
+      dominant-baseline:middle;
+    }
+
+    .coinFaceSvg{
+      fill:none;
+      stroke:var(--line);
+      stroke-width:1.2;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+      vector-effect:non-scaling-stroke;
+    }
+
+    .coinGroup{
+      transform-box:fill-box;
+      transform-origin:center;
+      animation:coinLaunch var(--cycle) infinite var(--ease);
+    }
+
+    .coinGroup.delay{
+      animation-delay:.18s;
+    }
+
+    .shadowPulse{
+      transform-box:fill-box;
+      transform-origin:center;
+      animation:shadowPulse var(--cycle) infinite var(--ease);
+    }
+
+    .shadowPulse.delay{
+      animation-delay:.18s;
+    }
+
+    .sampleLine{
+      stroke:var(--ink);
+      stroke-width:2.2;
+      fill:none;
+      stroke-linecap:round;
+      vector-effect:non-scaling-stroke;
+      stroke-dasharray:520;
+      stroke-dashoffset:520;
+      animation:drawLine var(--cycle) infinite ease-in-out;
+    }
+
+    .sampleText,
+    .sampleLabel{
+      opacity:0;
+      animation:textFade var(--cycle) infinite linear;
+    }
+
+    .sampleText{
+      font-size:28px;
+      font-weight:500;
+    }
+
+    .sampleLabel{
+      font-size:22px;
+    }
+
+    .highlightBox{
+      fill:var(--accent);
+      stroke:var(--accent-stroke);
+      stroke-width:2.2;
+      rx:12;
+      ry:12;
+      vector-effect:non-scaling-stroke;
+      opacity:0;
+      stroke-dasharray:320;
+      stroke-dashoffset:320;
+    }
+
+    .h1{
+      animation:highlightIn var(--cycle) infinite ease-in-out;
+    }
+
+    .h2{
+      animation:highlightIn var(--cycle) infinite ease-in-out;
+      animation-delay:.28s;
+    }
+
+    .h3{
+      animation:highlightIn var(--cycle) infinite ease-in-out;
+      animation-delay:.56s;
+    }
+
+    .braceNote{
+      font-size:22px;
+      opacity:0;
+      animation:textFadeLate var(--cycle) infinite linear;
+    }
+
+    @keyframes coinLaunch{
+      0%, 8%{
+        transform:translateY(0) rotate(0deg) scaleY(1);
+      }
+      13%{
+        transform:translateY(-24px) rotate(180deg) scaleY(.55);
+      }
+      18%{
+        transform:translateY(-58px) rotate(360deg) scaleY(.18);
+      }
+      23%{
+        transform:translateY(-90px) rotate(540deg) scaleY(.48);
+      }
+      28%{
+        transform:translateY(-118px) rotate(720deg) scaleY(.14);
+      }
+      34%{
+        transform:translateY(-82px) rotate(900deg) scaleY(.46);
+      }
+      40%{
+        transform:translateY(-42px) rotate(1080deg) scaleY(.22);
+      }
+      46%{
+        transform:translateY(-10px) rotate(1260deg) scaleY(.62);
+      }
+      52%,100%{
+        transform:translateY(0) rotate(1440deg) scaleY(1);
+      }
+    }
+
+    @keyframes shadowPulse{
+      0%,8%{
+        opacity:.40;
+        transform:scaleX(1) scaleY(1);
+      }
+      18%{
+        opacity:.22;
+        transform:scaleX(.84) scaleY(.90);
+      }
+      28%{
+        opacity:.10;
+        transform:scaleX(.66) scaleY(.80);
+      }
+      40%{
+        opacity:.22;
+        transform:scaleX(.82) scaleY(.90);
+      }
+      52%,100%{
+        opacity:.40;
+        transform:scaleX(1) scaleY(1);
+      }
+    }
+
+    @keyframes drawLine{
+      0%,50%{
+        opacity:0;
+        stroke-dashoffset:520;
+      }
+      54%{
+        opacity:1;
+      }
+      63%{
+        stroke-dashoffset:0;
+        opacity:1;
+      }
+      100%{
+        stroke-dashoffset:0;
+        opacity:1;
+      }
+    }
+
+    @keyframes textFade{
+      0%,57%{
+        opacity:0;
+      }
+      63%{
+        opacity:1;
+      }
+      100%{
+        opacity:1;
+      }
+    }
+
+    @keyframes textFadeLate{
+      0%,72%{
+        opacity:0;
+      }
+      78%{
+        opacity:1;
+      }
+      100%{
+        opacity:1;
+      }
+    }
+
+    @keyframes highlightIn{
+      0%,66%{
+        opacity:0;
+        stroke-dashoffset:320;
+      }
+      73%{
+        opacity:1;
+      }
+      81%{
+        opacity:1;
+        stroke-dashoffset:0;
+      }
+      100%{
+        opacity:1;
+        stroke-dashoffset:0;
+      }
+    }
+  </style>
+<g transform="translate(0 50)">
+  <!-- MOEDA 1 -->
+  <g transform="translate(175 42)">
+    <ellipse class="shadow shadowPulse" cx="220" cy="188" rx="62" ry="12"/>
+
+    <g class="coinGroup">
+      <ellipse cx="220" cy="90" rx="52" ry="14" fill="var(--face-side)" class="edge"/>
+      <rect x="168" y="82" width="104" height="10" rx="5" fill="var(--face-side)" class="edge"/>
+      <ellipse cx="220" cy="82" rx="72" ry="72" fill="var(--face)" class="edge"/>
+      <ellipse cx="220" cy="82" rx="60" ry="60" fill="none" class="thin-edge" stroke-dasharray="3 5"/>
+
+      <g class="coinFaceSvg" transform="translate(220 82) scale(4) translate(-24 -24)">
+        <path d="M20.9381,35.5a8.3256,8.3256,0,0,1-.8828-5.2227s-3.5308-1.3609-4.1193-2.0965.4414-1.8022.3678-4.0457"/>
+        <path d="M17.444,22.9949c.4781.9808-2.2068,1.3241-2.3907.1471s2.06-2.4275,2.17-3.7515,1.6883-7.5029,8.2754-6.8411c7.687.7724,6.8043,8.6065,6.694,10.0409a2.9114,2.9114,0,0,1-1.5448,4.8182,8.1786,8.1786,0,0,0,.0368,4.6342"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- MOEDA 2 -->
+  <g transform="translate(565 42)">
+    <ellipse class="shadow shadowPulse delay" cx="220" cy="188" rx="62" ry="12"/>
+
+    <g class="coinGroup delay">
+      <ellipse cx="220" cy="90" rx="52" ry="14" fill="var(--face-side)" class="edge"/>
+      <rect x="168" y="82" width="104" height="10" rx="5" fill="var(--face-side)" class="edge"/>
+      <ellipse cx="220" cy="82" rx="72" ry="72" fill="var(--face)" class="edge"/>
+      <ellipse cx="220" cy="82" rx="60" ry="60" fill="none" class="thin-edge" stroke-dasharray="3 5"/>
+      <text x="220" y="89" class="coinSymbol">$</text>
+    </g>
+  </g>
+
+  <!-- LINHA -->
+  <line x1="190" y1="295" x2="990" y2="295" class="sampleLine"/>
+
+  <!-- ESPAÇO AMOSTRAL -->
+  <text x="590" y="342" class="sampleText u-center">
+    Ω = {(H,H); (H,T); (T,H); (T,T)}
+  </text>
+
+  <text x="590" y="388" class="sampleLabel u-center">
+    H : Cara  e  T : Coroa
+  </text>
+
+  <!-- DESTAQUES -->
+  <rect x="352" y="321" width="102" height="40" class="highlightBox h1"/>
+  <rect x="474" y="321" width="102" height="40" class="highlightBox h2"/>
+  <rect x="596" y="321" width="102" height="40" class="highlightBox h3"/>
+
+  <text x="590" y="440" class="braceNote u-center">
+    Resultados com pelo menos uma cara
+  </text>
+  </g>
+</svg>

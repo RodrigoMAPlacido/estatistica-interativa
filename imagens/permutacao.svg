@@ -1,0 +1,749 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 1400 860"
+     role="img"
+     aria-labelledby="title desc">
+
+  <title id="title">Fila inicial para representar permutação</title>
+  <desc id="desc">
+    Quatro bonecos identificados pelas letras A, B, C e D aparecem inicialmente
+    em fila. Em seguida, o conjunto reduz de tamanho e se desloca para a região
+    superior esquerda. Depois, novas linhas surgem abaixo da primeira,
+    representando outras ordenações possíveis. Em uma segunda cena, os primeiros
+    elementos de cada linha recebem um contorno desenhado por traçado. Em uma
+    terceira cena, os bonecos das colunas 2, 3 e 4 percorrem as seis permutações
+    possíveis, enquanto setas e o texto "6 Possibilidades" surgem à direita.
+  </desc>
+
+  <defs>
+<style>
+  :root{
+    --bg:#ffffff;
+    --ink:#111827;
+    --font:"et-book","ETBook","Georgia",serif;
+
+    --cycle:22s;
+    --ease:ease-in-out;
+
+    --boxDash:1400;
+  }
+
+  svg{
+    background:var(--bg);
+  }
+
+  text{
+    fill:var(--ink);
+    font-family:var(--font);
+    user-select:none;
+  }
+
+  .u-center{
+    text-anchor:middle;
+    dominant-baseline:middle;
+  }
+
+  .label{
+    font-size:50px;
+    font-style:italic;
+  }
+
+  .slot{
+    stroke:var(--ink);
+    stroke-width:14;
+    stroke-linecap:square;
+    fill:none;
+  }
+
+  .person{
+    fill:var(--ink);
+    stroke:none;
+  }
+
+  /* =====================================================
+     ESCALA TEMPORAL
+     -----------------------------------------------------
+     ciclo antigo: 15s
+     ciclo novo  : 22s
+     fator       : 15 / 22 = 0.681818...
+
+     Mantém a duração real da animação principal.
+     Tempo extra:
+       - cena final das filas fica parada
+       - fade para a tela final
+       - tela final fica estática
+     ===================================================== */
+
+  /* =====================================================
+     TRANSFORMAÇÕES GLOBAIS
+     ===================================================== */
+
+  @keyframes k-move-to-corner{
+    0%,12.2727%   { transform:translate(700px,600px); }
+    19.1818%,81.8182% { transform:translate(250px,210px); }
+    100%          { transform:translate(250px,210px); }
+  }
+
+  @keyframes k-scale-to-small{
+    0%,12.2727%   { transform:scale(1); }
+    19.1818%,81.8182% { transform:scale(0.44); }
+    100%          { transform:scale(0.44); }
+  }
+
+  .a-move-to-corner{
+    transform:translate(700px,600px);
+    animation:k-move-to-corner var(--cycle) var(--ease) infinite both;
+  }
+
+  .a-scale-to-small{
+    transform:scale(1);
+    transform-origin:0 0;
+    animation:k-scale-to-small var(--cycle) var(--ease) infinite both;
+  }
+
+  /* =====================================================
+     VISIBILIDADE DAS LINHAS
+     ===================================================== */
+
+  @keyframes k-keep-row-1-visible{
+    0%,81.8182%   { opacity:1; }
+    86.3636%,100% { opacity:0; }
+  }
+
+  @keyframes k-show-row-2{
+    0%,20.3636%   { opacity:0; }
+    23.4545%,81.8182% { opacity:1; }
+    86.3636%,100% { opacity:0; }
+  }
+
+  @keyframes k-show-row-3{
+    0%,23.8182%   { opacity:0; }
+    26.9091%,81.8182% { opacity:1; }
+    86.3636%,100% { opacity:0; }
+  }
+
+  @keyframes k-show-row-4{
+    0%,26.2727%   { opacity:0; }
+    30.3636%,81.8182% { opacity:1; }
+    86.3636%,100% { opacity:0; }
+  }
+
+  .a-keep-row-1-visible{
+    opacity:1;
+    animation:k-keep-row-1-visible var(--cycle) linear infinite both;
+  }
+
+  .a-show-row-2{
+    opacity:0;
+    animation:k-show-row-2 var(--cycle) linear infinite both;
+  }
+
+  .a-show-row-3{
+    opacity:0;
+    animation:k-show-row-3 var(--cycle) linear infinite both;
+  }
+
+  .a-show-row-4{
+    opacity:0;
+    animation:k-show-row-4 var(--cycle) linear infinite both;
+  }
+
+  /* =====================================================
+     SEGUNDA CENA — TRAÇADO DOS CONTORNOS
+     ===================================================== */
+
+  @keyframes k-draw-box{
+    0%,30.7273%{
+      opacity:0;
+      stroke-dashoffset:var(--boxDash);
+    }
+    33.0909%{
+      opacity:1;
+    }
+    54.5455%,81.8182%{
+      opacity:1;
+      stroke-dashoffset:0;
+    }
+    86.3636%,100%{
+      opacity:0;
+      stroke-dashoffset:0;
+    }
+  }
+
+  .draw-box{
+    fill:none;
+    stroke:var(--ink);
+    stroke-width:1;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+    vector-effect:non-scaling-stroke;
+
+    stroke-dasharray:var(--boxDash);
+    stroke-dashoffset:var(--boxDash);
+
+    animation:k-draw-box var(--cycle) var(--ease) infinite both;
+  }
+
+  /* =====================================================
+     TERCEIRA CENA — 6 PERMUTAÇÕES + RETORNO AO INÍCIO
+     Faixa correta no ciclo de 22s:
+     54.5455% até 68.1818%
+
+     Ordem visível:
+     1) B C D
+     2) C B D
+     3) C D B
+     4) D C B
+     5) D B C
+     6) B D C
+     retorno) B C D
+     ===================================================== */
+
+  @keyframes k-swap-col-2{
+    0%,44.5455%   { transform:translate(0px,0px); }
+
+    /* 1 -> 2 */
+    46.8182%      { transform:translate(240px,0px); }
+
+    /* 2 -> 3 */
+    49.0909%      { transform:translate(480px,0px); }
+
+    /* 3 -> 4 */
+    51.3636%      { transform:translate(480px,0px); }
+
+    /* 4 -> 5 */
+    53.6364%      { transform:translate(240px,0px); }
+
+    /* 5 -> 6 */
+    55.9091%      { transform:translate(0px,0px); }
+
+    /* 6 -> retorno */
+    58.1818%      { transform:translate(0px,0px); }
+
+    /* pausa antes do fade */
+    78.8182%      { transform:translate(0px,0px); }
+    100%          { transform:translate(0px,0px); }
+  }
+
+  @keyframes k-swap-col-3{
+    0%,44.5455%   { transform:translate(0px,0px); }
+
+    /* 1 -> 2 */
+    46.8182%      { transform:translate(-240px,0px); }
+
+    /* 2 -> 3 */
+    49.0909%      { transform:translate(-240px,0px); }
+
+    /* 3 -> 4 */
+    51.3636%      { transform:translate(0px,0px); }
+
+    /* 4 -> 5 */
+    53.6364%      { transform:translate(240px,0px); }
+
+    /* 5 -> 6 */
+    55.9091%      { transform:translate(240px,0px); }
+
+    /* 6 -> retorno */
+    58.1818%      { transform:translate(0px,0px); }
+
+    /* pausa antes do fade */
+    78.8182%      { transform:translate(0px,0px); }
+    100%          { transform:translate(0px,0px); }
+  }
+
+  @keyframes k-swap-col-4{
+    0%,44.5455%   { transform:translate(0px,0px); }
+
+    /* 1 -> 2 */
+    46.8182%      { transform:translate(0px,0px); }
+
+    /* 2 -> 3 */
+    49.0909%      { transform:translate(-240px,0px); }
+
+    /* 3 -> 4 */
+    51.3636%      { transform:translate(-480px,0px); }
+
+    /* 4 -> 5 */
+    53.6364%      { transform:translate(-480px,0px); }
+
+    /* 5 -> 6 */
+    55.9091%      { transform:translate(-240px,0px); }
+
+    /* 6 -> retorno */
+    58.1818%      { transform:translate(0px,0px); }
+
+    /* pausa antes do fade */
+    78.8182%      { transform:translate(0px,0px); }
+    100%          { transform:translate(0px,0px); }
+  }
+
+  .a-swap-col-2{
+    animation:k-swap-col-2 var(--cycle) var(--ease) infinite both;
+  }
+
+  .a-swap-col-3{
+    animation:k-swap-col-3 var(--cycle) var(--ease) infinite both;
+  }
+
+  .a-swap-col-4{
+    animation:k-swap-col-4 var(--cycle) var(--ease) infinite both;
+  }
+
+  /* =====================================================
+     CALLOUTS — UMA ÚNICA DEFINIÇÃO
+     ===================================================== */
+
+  /* =====================================================
+   CALLOUTS — SURGIMENTO DAS SETAS E DO TEXTO
+   ===================================================== */
+
+.callout-layer{
+  opacity:1;
+}
+
+.callout-arrow{
+  stroke:#000000;
+  stroke-width:8;
+  stroke-linecap:square;
+  fill:none;
+
+  stroke-dasharray:300;
+  stroke-dashoffset:300;
+
+  animation:k-callout-arrow var(--cycle) ease-out infinite both;
+}
+
+.callout-head{
+  fill:#000000;
+  opacity:0;
+
+  animation:k-callout-head var(--cycle) linear infinite both;
+}
+
+.callout-text{
+  fill:var(--ink);
+  font-family:var(--font);
+  font-size:40px;
+  font-weight:800;
+  dominant-baseline:middle;
+
+  opacity:0;
+  transform:translateX(-14px);
+
+  animation:k-callout-text var(--cycle) ease-out infinite both;
+}
+
+@keyframes k-callout-arrow{
+  0%,57.5454%{
+    opacity:0;
+    stroke-dashoffset:300;
+  }
+
+  57.5455%{
+    opacity:1;
+    stroke-dashoffset:300;
+  }
+
+  60.5%,78.8182%{
+    opacity:1;
+    stroke-dashoffset:0;
+  }
+
+  83.3636%,100%{
+    opacity:0;
+    stroke-dashoffset:0;
+  }
+}
+
+@keyframes k-callout-head{
+  0%,59.8%{
+    opacity:0;
+  }
+
+  62%,78.8182%{
+    opacity:1;
+  }
+
+  83.3636%,100%{
+    opacity:0;
+  }
+}
+
+@keyframes k-callout-text{
+  0%,60.2%{
+    opacity:0;
+    transform:translateX(-14px);
+  }
+
+  63%,78.8182%{
+    opacity:1;
+    transform:translateX(0);
+  }
+
+  83.3636%,100%{
+    opacity:0;
+    transform:translateX(0);
+  }
+}
+  /* =====================================================
+     CENA FINAL — TOTAL
+     ===================================================== */
+
+  .final-scene{
+    opacity:0;
+    animation:k-final-scene var(--cycle) linear infinite both;
+  }
+
+  @keyframes k-final-scene{
+    0%,81.8182%   { opacity:0; }
+    86.3636%      { opacity:1; }
+    100%          { opacity:1; }
+  }
+
+  /* =====================================================
+     FADE OUT DA CENA PRINCIPAL
+     Esta classe já inclui o movimento.
+     ===================================================== */
+
+  .main-scene-fade{
+    animation:
+      k-move-to-corner var(--cycle) var(--ease) infinite both,
+      k-main-scene-opacity var(--cycle) linear infinite both;
+  }
+
+  @keyframes k-main-scene-opacity{
+    0%,81.8182%   { opacity:1; }
+    86.3636%      { opacity:0; }
+    100%          { opacity:0; }
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .a-move-to-corner,
+    .a-scale-to-small,
+    .a-keep-row-1-visible,
+    .a-show-row-2,
+    .a-show-row-3,
+    .a-show-row-4,
+    .draw-box,
+    .a-swap-col-2,
+    .a-swap-col-3,
+    .a-swap-col-4,
+    .callout-layer,
+    .final-scene,
+    .main-scene-fade{
+      animation:none !important;
+    }
+
+    .a-move-to-corner,
+    .main-scene-fade{
+      transform:translate(250px,210px) !important;
+      opacity:0 !important;
+    }
+
+    .a-scale-to-small{
+      transform:scale(0.44) !important;
+    }
+
+    .a-keep-row-1-visible,
+    .a-show-row-2,
+    .a-show-row-3,
+    .a-show-row-4{
+      opacity:1 !important;
+    }
+
+    .draw-box{
+      opacity:1 !important;
+      stroke-dashoffset:0 !important;
+    }
+
+    .a-swap-col-2,
+    .a-swap-col-3,
+    .a-swap-col-4{
+      transform:none !important;
+    }
+
+    .callout-layer{
+      opacity:0 !important;
+    }
+
+    .final-scene{
+      opacity:1 !important;
+    }
+  }
+
+  .total-title{
+  fill:var(--ink);
+  font-family:var(--font);
+  font-size:72px;
+  font-weight:700;
+}
+
+.total-formula{
+  fill:#000000;
+  font-family:var(--font);
+  font-size:64px;
+  font-weight:400;
+}
+
+.total-ou{
+  fill:var(--ink);
+  font-family:var(--font);
+  font-size:60px;
+  font-weight:700;
+}
+.callout-item:nth-of-type(1) .callout-arrow,
+.callout-item:nth-of-type(1) .callout-head,
+.callout-item:nth-of-type(1) .callout-text{
+  animation-delay:0s;
+}
+
+.callout-item:nth-of-type(2) .callout-arrow,
+.callout-item:nth-of-type(2) .callout-head,
+.callout-item:nth-of-type(2) .callout-text{
+  animation-delay:.12s;
+}
+
+.callout-item:nth-of-type(3) .callout-arrow,
+.callout-item:nth-of-type(3) .callout-head,
+.callout-item:nth-of-type(3) .callout-text{
+  animation-delay:.24s;
+}
+
+.callout-item:nth-of-type(4) .callout-arrow,
+.callout-item:nth-of-type(4) .callout-head,
+.callout-item:nth-of-type(4) .callout-text{
+  animation-delay:.36s;
+}
+</style>
+    <symbol id="ei-person" viewBox="0 0 640 1280">
+      <path class="person" d="M3027 12784 c-290 -52 -544 -220 -705 -463 -134 -204 -189 -425 -170
+-681 30 -386 296 -743 659 -886 143 -56 212 -68 389 -69 168 0 209 6 340 47
+263 83 515 309 630 562 124 273 129 581 13 856 -73 174 -231 368 -378 465
+-233 154 -520 216 -778 169z
+M1920 10435 c-8 -2 -49 -9 -90 -15 -106 -17 -265 -71 -371 -126 -384
+-198 -649 -562 -725 -994 -18 -100 -19 -195 -19 -1845 l0 -1740 22 -71 c71
+-223 311 -355 546 -300 161 38 267 129 328 281 l24 60 3 1553 2 1552 110 0
+110 0 2 -4152 3 -4153 21 -61 c59 -169 154 -284 295 -353 190 -93 392 -93 586
+0 152 73 269 220 314 394 10 40 14 536 16 2472 l3 2423 105 0 105 0 0 -2407
+c0 -2080 2 -2418 15 -2478 61 -293 341 -494 655 -471 260 18 457 165 538 401
+l27 80 3 4153 2 4153 108 -3 107 -3 5 -1555 c4 -1101 8 -1564 16 -1585 75
+-204 232 -315 447 -315 234 0 413 158 447 395 8 58 10 541 8 1770 -3 1588 -5
+1696 -22 1785 -56 293 -183 542 -380 747 -187 195 -393 313 -666 381 l-105 26
+-1290 2 c-709 1 -1297 1 -1305 -1z"
+            transform="translate(0,1280) scale(0.1,-0.1)"/>
+    </symbol>
+  </defs>
+
+  <g id="scene-position" class="main-scene-fade">
+    <g id="scene-scale" class="a-scale-to-small">
+      <g id="scene-content">
+
+        <!-- row-1 -->
+        <g id="row-1" class="a-keep-row-1-visible" transform="translate(0 0)">
+          <g transform="translate(-360 0)">
+            <rect x="-135" y="-420" width="270" height="450" rx="34" class="draw-box"/>
+            <text x="0" y="-370" class="label u-center">A</text>
+            <line x1="-92" y1="0" x2="92" y2="0" class="slot"/>
+            <use href="#ei-person" x="-80" y="-320" width="168" height="298"/>
+          </g>
+
+          <g transform="translate(-120 0)">
+            <g class="a-swap-col-2">
+              <text x="0" y="-370" class="label u-center">B</text>
+              <line x1="-92" y1="0" x2="92" y2="0" class="slot"/>
+              <use href="#ei-person" x="-80" y="-320" width="168" height="298"/>
+            </g>
+          </g>
+
+          <g transform="translate(120 0)">
+            <g class="a-swap-col-3">
+              <text x="0" y="-370" class="label u-center">C</text>
+              <line x1="-92" y1="0" x2="92" y2="0" class="slot"/>
+              <use href="#ei-person" x="-80" y="-320" width="168" height="298"/>
+            </g>
+          </g>
+
+          <g transform="translate(360 0)">
+            <g class="a-swap-col-4">
+              <text x="0" y="-370" class="label u-center">D</text>
+              <line x1="-92" y1="0" x2="92" y2="0" class="slot"/>
+              <use href="#ei-person" x="-80" y="-320" width="168" height="298"/>
+            </g>
+          </g>
+        </g>
+
+        <!-- row-2 -->
+        <g id="row-2" class="a-show-row-2" transform="translate(0 475)">
+          <g transform="translate(-360 0)">
+            <rect x="-135" y="-420" width="270" height="450" rx="34" class="draw-box"/>
+            <text x="0" y="-370" class="label u-center">B</text>
+            <line x1="-92" y1="0" x2="92" y2="0" class="slot"/>
+            <use href="#ei-person" x="-80" y="-320" width="168" height="298"/>
+          </g>
+
+          <g transform="translate(-120 0)">
+            <g class="a-swap-col-2">
+              <text x="0" y="-370" class="label u-center">A</text>
+              <line x1="-92" y1="0" x2="92" y2="0" class="slot"/>
+              <use href="#ei-person" x="-80" y="-320" width="168" height="298"/>
+            </g>
+          </g>
+
+          <g transform="translate(120 0)">
+            <g class="a-swap-col-3">
+              <text x="0" y="-370" class="label u-center">C</text>
+              <line x1="-92" y1="0" x2="92" y2="0" class="slot"/>
+              <use href="#ei-person" x="-80" y="-320" width="168" height="298"/>
+            </g>
+          </g>
+
+          <g transform="translate(360 0)">
+            <g class="a-swap-col-4">
+              <text x="0" y="-370" class="label u-center">D</text>
+              <line x1="-92" y1="0" x2="92" y2="0" class="slot"/>
+              <use href="#ei-person" x="-80" y="-320" width="168" height="298"/>
+            </g>
+          </g>
+        </g>
+
+        <!-- row-3 -->
+        <g id="row-3" class="a-show-row-3" transform="translate(0 950)">
+          <g transform="translate(-360 0)">
+            <rect x="-135" y="-420" width="270" height="450" rx="34" class="draw-box"/>
+            <text x="0" y="-370" class="label u-center">C</text>
+            <line x1="-92" y1="0" x2="92" y2="0" class="slot"/>
+            <use href="#ei-person" x="-80" y="-320" width="168" height="298"/>
+          </g>
+
+          <g transform="translate(-120 0)">
+            <g class="a-swap-col-2">
+              <text x="0" y="-370" class="label u-center">A</text>
+              <line x1="-92" y1="0" x2="92" y2="0" class="slot"/>
+              <use href="#ei-person" x="-80" y="-320" width="168" height="298"/>
+            </g>
+          </g>
+
+          <g transform="translate(120 0)">
+            <g class="a-swap-col-3">
+              <text x="0" y="-370" class="label u-center">D</text>
+              <line x1="-92" y1="0" x2="92" y2="0" class="slot"/>
+              <use href="#ei-person" x="-80" y="-320" width="168" height="298"/>
+            </g>
+          </g>
+
+          <g transform="translate(360 0)">
+            <g class="a-swap-col-4">
+              <text x="0" y="-370" class="label u-center">B</text>
+              <line x1="-92" y1="0" x2="92" y2="0" class="slot"/>
+              <use href="#ei-person" x="-80" y="-320" width="168" height="298"/>
+            </g>
+          </g>
+        </g>
+
+        <!-- row-4 -->
+        <g id="row-4" class="a-show-row-4" transform="translate(0 1425)">
+          <g transform="translate(-360 0)">
+            <rect x="-135" y="-420" width="270" height="450" rx="34" class="draw-box"/>
+            <text x="0" y="-370" class="label u-center">D</text>
+            <line x1="-92" y1="0" x2="92" y2="0" class="slot"/>
+            <use href="#ei-person" x="-80" y="-320" width="168" height="298"/>
+          </g>
+
+          <g transform="translate(-120 0)">
+            <g class="a-swap-col-2">
+              <text x="0" y="-370" class="label u-center">B</text>
+              <line x1="-92" y1="0" x2="92" y2="0" class="slot"/>
+              <use href="#ei-person" x="-80" y="-320" width="168" height="298"/>
+            </g>
+          </g>
+
+          <g transform="translate(120 0)">
+            <g class="a-swap-col-3">
+              <text x="0" y="-370" class="label u-center">A</text>
+              <line x1="-92" y1="0" x2="92" y2="0" class="slot"/>
+              <use href="#ei-person" x="-80" y="-320" width="168" height="298"/>
+            </g>
+          </g>
+
+          <g transform="translate(360 0)">
+            <g class="a-swap-col-4">
+              <text x="0" y="-370" class="label u-center">C</text>
+              <line x1="-92" y1="0" x2="92" y2="0" class="slot"/>
+              <use href="#ei-person" x="-80" y="-320" width="168" height="298"/>
+            </g>
+          </g>
+        </g>
+
+      </g>
+    </g>
+  </g>
+
+    <!-- CALLOUTS FIXOS À DIREITA -->
+  <!-- CALLOUTS FIXOS À DIREITA -->
+<g id="permutation-callouts" class="callout-layer">
+  <!-- linha 1 -->
+  <g class="callout-item">
+  <g transform="translate(150, 0)">
+    <line x1="450" y1="138" x2="590" y2="138" class="callout-arrow"/>
+    <polygon points="590,120 590,156 645,138" class="callout-head"/>
+    </g>
+    <text x="900" y="138" class="callout-text">6 Possibilidades</text>
+  </g>
+
+  <!-- linha 2 -->
+  <g class="callout-item">
+  <g transform="translate(150, 0)"> 
+    <line x1="450" y1="358" x2="590" y2="358" class="callout-arrow"/>
+    <polygon points="590,340 590,376 645,358" class="callout-head"/>
+    </g>
+    <text x="900" y="358" class="callout-text">6 Possibilidades</text>
+  </g>
+
+  <!-- linha 3 -->
+  <g class="callout-item">
+  <g transform="translate(150, 0)">
+    <line x1="450" y1="578" x2="590" y2="578" class="callout-arrow"/>
+    <polygon points="590,560 590,596 645,578" class="callout-head"/>
+    </g>
+    <text x="900" y="578" class="callout-text">6 Possibilidades</text>
+  </g>
+
+  <!-- linha 4 -->
+  <g class="callout-item">
+  <g transform="translate(150, 0)">
+    <line x1="450" y1="798" x2="590" y2="798" class="callout-arrow"/>
+    <polygon points="590,780 590,816 645,798" class="callout-head"/>
+    </g>
+    <text x="900" y="798" class="callout-text">6 Possibilidades</text>
+  </g>
+</g>
+  <!-- CENA FINAL -->
+  <g id="scene-total" class="final-scene" aria-label="Resumo total das permutações">
+    <rect x="0" y="0" width="1400" height="860" fill="#ffffff"/>
+
+    <text x="700" y="170"
+          text-anchor="middle"
+          class="total-title">
+      TOTAL:
+    </text>
+
+    <text x="700" y="355"
+          text-anchor="middle"
+          font-size="64px"
+          font-weight="800">
+      6 + 6 + 6 + 6 = 24
+    </text>
+
+    <text x="700" y="490"
+          text-anchor="middle"
+          class="total-ou">
+      ou
+    </text>
+
+    <text x="700" y="655"
+          text-anchor="middle"
+          font-size="64px"
+          font-weight="800">
+      4! = 4 · 3 · 2 · 1 = 24
+    </text>
+  </g>
+</svg>

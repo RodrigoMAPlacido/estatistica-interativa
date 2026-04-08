@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 900 420"
+     width="900" height="420"
+     role="img"
+     aria-labelledby="title desc"
+     style="background:#ffffff">
+
+  <title id="title">Transformação de n(A ∩ B) / n(B) em P(A ∩ B) / P(B)</title>
+  <desc id="desc">
+    A animação parte da razão visual n(A ∩ B) / n(B). Em seguida, a letra n
+    desaparece e a letra P surge no mesmo lugar. Ao mesmo tempo, as faces 4 e 6
+    do numerador sobem ligeiramente para abrir espaço para a aparição do espaço
+    amostral em ambas as partes da razão. Depois, o espaço amostral é cortado
+    visualmente, some junto com as barras auxiliares, e as faces do numerador
+    retornam à posição inicial.
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --paper:#ffffff;
+        --text-soft:#4b5563;
+        --font:"et-book","ETBook","Georgia",serif;
+
+        --cycle:18s;
+        --ease:ease-in-out;
+      }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        user-select:none;
+        letter-spacing:.08px;
+      }
+
+      .u-center{ text-anchor:middle; }
+
+      .u-stroke{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        stroke-width:2px;
+      }
+
+      .u-stroke-thick{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        stroke-width:4px;
+      }
+
+      .u-ns{ vector-effect:non-scaling-stroke; }
+
+      .pip{ fill:var(--ink); }
+      .pip-reverse{ fill:#ffffff; }
+
+      .face-fill{ fill:var(--ink); }
+      .face-white{
+        fill:#ffffff;
+        stroke:var(--ink);
+        stroke-width:2px;
+      }
+
+      .formula{
+        font-size:28px;
+      }
+
+      .omega-label{
+        font-size:18px;
+        fill:var(--text-soft);
+      }
+
+      /* troca n -> P */
+      @keyframes k-hideN{
+        0%,20%   { opacity:1; }
+        28%,100% { opacity:0; }
+      }
+
+      .a-hideN{
+        opacity:1;
+        animation:k-hideN var(--cycle) var(--ease) infinite both;
+      }
+
+      @keyframes k-showP{
+        0%,20%   { opacity:0; }
+        28%,100% { opacity:1; }
+      }
+
+      .a-showP{
+        opacity:0;
+        animation:k-showP var(--cycle) var(--ease) infinite both;
+      }
+
+      /* faces do numerador sobem e depois voltam */
+      @keyframes k-liftTopFaces{
+        0%,18%   { transform:translate(0px,0px); }
+        30%,58%  { transform:translate(0px,-40px); }
+        76%,100% { transform:translate(0px,0px); }
+      }
+
+      .a-liftTopFaces{
+        animation:k-liftTopFaces var(--cycle) var(--ease) infinite both;
+      }
+
+      /* elementos auxiliares aparecem e depois somem */
+      @keyframes k-showAux{
+        0%,24%   { opacity:0; }
+        34%,58%  { opacity:1; }
+        70%,100% { opacity:0; }
+      }
+
+      .a-showAux{
+        opacity:0;
+        animation:k-showAux var(--cycle) var(--ease) infinite both;
+      }
+
+      /* traço de cancelamento */
+      @keyframes k-showStrike{
+        0%,35%   { opacity:0; stroke-dasharray:500; stroke-dashoffset:500; }
+        40%,60%  { opacity:1; stroke-dasharray:500; stroke-dashoffset:0; }
+        61%,100% { opacity:0; stroke-dashoffset:0; }
+      }
+
+      .a-showStrike{
+        opacity:0;
+        stroke-dasharray:500;
+        stroke-dashoffset:500;
+        animation:k-showStrike var(--cycle) var(--ease) infinite both;
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        .a-hideN,
+        .a-showP,
+        .a-liftTopFaces,
+        .a-showAux,
+        .a-showStrike{
+          animation:none !important;
+          opacity:1 !important;
+          transform:none !important;
+          stroke-dashoffset:0 !important;
+        }
+      }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="100%" height="100%" fill="#ffffff"/>
+<g transform="translate(0,-15)">
+  <!-- EXPRESSÃO À ESQUERDA -->
+  <g transform="translate(162, 214)">
+    <g transform="translate(-10,0)">
+    <!-- numerador -->
+    <text x="-35" y="-8" class="formula u-center a-hideN">n</text>
+    <text x="-36" y="-8" class="formula u-center a-showP">P</text>
+    <text x="20" y="-8" class="formula u-center">(A ∩ B)</text>
+    </g>
+    <!-- barra -->
+    <line x1="-70" y1="10" x2="70" y2="10" class="u-stroke"/>
+
+    <g transform="translate(-10,0)">
+    <!-- denominador -->
+    <text x="-8" y="46" class="formula u-center a-hideN">n</text>
+    <text x="-9" y="46" class="formula u-center a-showP">P</text>
+    <text x="20" y="46" class="formula u-center">(B)</text>
+    </g>
+    <text x="98" y="20" class="formula">=</text>
+  </g>
+
+  <!-- BARRA PRINCIPAL -->
+  <line x1="330" y1="210" x2="835" y2="210" class="u-stroke-thick"/>
+
+  <!-- NUMERADOR -->
+  <g class="a-liftTopFaces">
+    <!-- FACE 4 -->
+    <g transform="translate(470 70)">
+      <rect x="0" y="0" width="90" height="90" rx="16" class="face-white"/>
+      <circle class="pip" cx="20" cy="20" r="7.8"/>
+      <circle class="pip" cx="70" cy="20" r="7.8"/>
+      <circle class="pip" cx="20" cy="70" r="7.8"/>
+      <circle class="pip" cx="70" cy="70" r="7.8"/>
+    </g>
+
+    <!-- FACE 6 -->
+    <g transform="translate(610 70)">
+      <rect x="0" y="0" width="90" height="90" rx="16" class="face-white"/>
+      <circle class="pip" cx="20" cy="20" r="7.8"/>
+      <circle class="pip" cx="20" cy="45" r="7.8"/>
+      <circle class="pip" cx="20" cy="70" r="7.8"/>
+      <circle class="pip" cx="70" cy="20" r="7.8"/>
+      <circle class="pip" cx="70" cy="45" r="7.8"/>
+      <circle class="pip" cx="70" cy="70" r="7.8"/>
+    </g>
+  </g>
+
+  <!-- DENOMINADOR -->
+  <g transform="translate(360 250)">
+    <rect x="0" y="0" width="90" height="90" rx="16" class="face-fill"/>
+    <circle class="pip-reverse" cx="20" cy="20" r="7.8"/>
+    <circle class="pip-reverse" cx="70" cy="70" r="7.8"/>
+  </g>
+
+  <g transform="translate(530 250)">
+    <rect x="0" y="0" width="90" height="90" rx="16" class="face-fill"/>
+    <circle class="pip-reverse" cx="20" cy="20" r="7.8"/>
+    <circle class="pip-reverse" cx="70" cy="20" r="7.8"/>
+    <circle class="pip-reverse" cx="20" cy="70" r="7.8"/>
+    <circle class="pip-reverse" cx="70" cy="70" r="7.8"/>
+  </g>
+
+  <g transform="translate(700 250)">
+    <rect x="0" y="0" width="90" height="90" rx="16" class="face-fill"/>
+    <circle class="pip-reverse" cx="20" cy="20" r="7.8"/>
+    <circle class="pip-reverse" cx="20" cy="45" r="7.8"/>
+    <circle class="pip-reverse" cx="20" cy="70" r="7.8"/>
+    <circle class="pip-reverse" cx="70" cy="20" r="7.8"/>
+    <circle class="pip-reverse" cx="70" cy="45" r="7.8"/>
+    <circle class="pip-reverse" cx="70" cy="70" r="7.8"/>
+  </g>
+
+  <!-- AUXILIAR DO NUMERADOR -->
+  <g class="a-showAux">
+    <line x1="345" y1="135" x2="820" y2="135" class="u-stroke"/>
+
+    <g transform="translate(400, 150)">
+      <!-- 1 -->
+      <g transform="translate(0 0)">
+        <rect x="0" y="0" width="48" height="48" rx="8" class="face-white"/>
+        <circle class="pip" cx="24" cy="24" r="4"/>
+      </g>
+
+      <!-- 2 -->
+      <g transform="translate(62 0)">
+        <rect x="0" y="0" width="48" height="48" rx="8" class="face-white"/>
+        <circle class="pip" cx="12" cy="10" r="4"/>
+        <circle class="pip" cx="36" cy="38" r="4"/>
+      </g>
+
+      <!-- 3 -->
+      <g transform="translate(124 0)">
+        <rect x="0" y="0" width="48" height="48" rx="8" class="face-white"/>
+        <circle class="pip" cx="12" cy="10" r="4"/>
+        <circle class="pip" cx="24" cy="24" r="4"/>
+        <circle class="pip" cx="36" cy="38" r="4"/>
+      </g>
+
+      <!-- 4 -->
+      <g transform="translate(186 0)">
+        <rect x="0" y="0" width="48" height="48" rx="8" class="face-white"/>
+        <circle class="pip" cx="12" cy="10" r="4"/>
+        <circle class="pip" cx="36" cy="10" r="4"/>
+        <circle class="pip" cx="12" cy="38" r="4"/>
+        <circle class="pip" cx="36" cy="38" r="4"/>
+      </g>
+
+      <!-- 5 -->
+      <g transform="translate(248 0)">
+        <rect x="0" y="0" width="48" height="48" rx="8" class="face-white"/>
+        <circle class="pip" cx="12" cy="10" r="4"/>
+        <circle class="pip" cx="36" cy="10" r="4"/>
+        <circle class="pip" cx="24" cy="24" r="4"/>
+        <circle class="pip" cx="12" cy="38" r="4"/>
+        <circle class="pip" cx="36" cy="38" r="4"/>
+      </g>
+
+      <!-- 6 -->
+      <g transform="translate(310 0)">
+        <rect x="0" y="0" width="48" height="48" rx="8" class="face-white"/>
+        <circle class="pip" cx="12" cy="10" r="4"/>
+        <circle class="pip" cx="12" cy="24" r="4"/>
+        <circle class="pip" cx="12" cy="38" r="4"/>
+        <circle class="pip" cx="36" cy="10" r="4"/>
+        <circle class="pip" cx="36" cy="24" r="4"/>
+        <circle class="pip" cx="36" cy="38" r="4"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- AUXILIAR DO DENOMINADOR -->
+  <g class="a-showAux">
+    <line x1="345" y1="355" x2="820" y2="355" class="u-stroke"/>
+
+    <g transform="translate(400, 371)">
+      <!-- 1 -->
+      <g transform="translate(0 0)">
+        <rect x="0" y="0" width="48" height="48" rx="8" class="face-white"/>
+        <circle class="pip" cx="24" cy="24" r="4"/>
+      </g>
+
+      <!-- 2 -->
+      <g transform="translate(62 0)">
+        <rect x="0" y="0" width="48" height="48" rx="8" class="face-white"/>
+        <circle class="pip" cx="12" cy="10" r="4"/>
+        <circle class="pip" cx="36" cy="38" r="4"/>
+      </g>
+
+      <!-- 3 -->
+      <g transform="translate(124 0)">
+        <rect x="0" y="0" width="48" height="48" rx="8" class="face-white"/>
+        <circle class="pip" cx="12" cy="10" r="4"/>
+        <circle class="pip" cx="24" cy="24" r="4"/>
+        <circle class="pip" cx="36" cy="38" r="4"/>
+      </g>
+
+      <!-- 4 -->
+      <g transform="translate(186 0)">
+        <rect x="0" y="0" width="48" height="48" rx="8" class="face-white"/>
+        <circle class="pip" cx="12" cy="10" r="4"/>
+        <circle class="pip" cx="36" cy="10" r="4"/>
+        <circle class="pip" cx="12" cy="38" r="4"/>
+        <circle class="pip" cx="36" cy="38" r="4"/>
+      </g>
+
+      <!-- 5 -->
+      <g transform="translate(248 0)">
+        <rect x="0" y="0" width="48" height="48" rx="8" class="face-white"/>
+        <circle class="pip" cx="12" cy="10" r="4"/>
+        <circle class="pip" cx="36" cy="10" r="4"/>
+        <circle class="pip" cx="24" cy="24" r="4"/>
+        <circle class="pip" cx="12" cy="38" r="4"/>
+        <circle class="pip" cx="36" cy="38" r="4"/>
+      </g>
+
+      <!-- 6 -->
+      <g transform="translate(310 0)">
+        <rect x="0" y="0" width="48" height="48" rx="8" class="face-white"/>
+        <circle class="pip" cx="12" cy="10" r="4"/>
+        <circle class="pip" cx="12" cy="24" r="4"/>
+        <circle class="pip" cx="12" cy="38" r="4"/>
+        <circle class="pip" cx="36" cy="10" r="4"/>
+        <circle class="pip" cx="36" cy="24" r="4"/>
+        <circle class="pip" cx="36" cy="38" r="4"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- TRAÇOS DE CANCELAMENTO -->
+  <g class="a-showStrike">
+    <line x1="350" y1="200" x2="818" y2="145" class="u-stroke-thick"/>
+    <line x1="350" y1="425" x2="818" y2="370" class="u-stroke-thick"/>
+  </g>
+</g>
+</svg>

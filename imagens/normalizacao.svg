@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 900 420"
+     width="900" height="420"
+     role="img"
+     aria-labelledby="title desc"
+     style="background:#ffffff">
+
+  <title id="title">Razão visual da probabilidade condicional</title>
+  <desc id="desc">
+    A animação parte do estado final da interseção A ∩ B = {4,6}, preservando
+    as posições originais das faces 2, 4 e 6. O texto desaparece primeiro.
+    Depois, as faces 4 e 6 sobem para o numerador e as faces 2, 4 e 6 compõem
+    o denominador, formando a razão n(A ∩ B) / n(B).
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --paper:#ffffff;
+        --text-soft:#4b5563;
+        --font:"et-book","ETBook","Georgia",serif;
+
+        --cycle:16s;
+        --ease:ease-in-out;
+      }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        user-select:none;
+        letter-spacing:.08px;
+      }
+
+      .u-center{ text-anchor:middle; }
+
+      .u-stroke{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        stroke-width:2px;
+      }
+
+      .u-stroke-thick{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        stroke-width:4px;
+      }
+
+      .u-ns{ vector-effect:non-scaling-stroke; }
+
+      .pip{ fill:var(--ink); }
+      .pip-reverse{ fill:#ffffff; }
+
+      .face-fill{ fill:var(--ink); }
+      .face-white{
+        fill:#ffffff;
+        stroke:var(--ink);
+        stroke-width:2px;
+      }
+
+      .note{
+        font-size:22px;
+        fill:var(--text-soft);
+      }
+
+      .note-strong{
+        font-size:28px;
+        fill:var(--ink);
+        font-weight:700;
+      }
+
+      .formula{
+        font-size:28px;
+      }
+
+      /* texto inicial: fica, depois some, depois já permanece invisível */
+@keyframes k-hideInitialText{
+  0%,18%   { opacity:1; }
+  24%,100% { opacity:0; }
+}
+
+.a-hideInitialText{
+  opacity:1;
+  animation:k-hideInitialText var(--cycle) var(--ease) infinite both;
+}
+
+@keyframes k-move2Bottom{
+  0%,28% {
+    transform:translate(185px,88px);
+    opacity:1;
+  }
+    36% {
+     transform:translate(360px,250px);
+     opacity:1;
+      }
+  44%,100% {
+    transform:translate(360px,250px);
+    opacity:1;
+  }
+}
+
+.a-move2Bottom{
+  animation:k-move2Bottom var(--cycle) var(--ease) infinite both;
+}
+
+      /* expressão à esquerda surge só depois do fade do texto */
+      @keyframes k-showFormula{
+        0%,30%   { opacity:0; transform:translateX(-8px); }
+        38%,100% { opacity:1; transform:translateX(0); }
+      }
+
+      .a-showFormula{
+        opacity:0;
+        animation:k-showFormula var(--cycle) var(--ease) infinite both;
+      }
+
+      /* barra da fração */
+      @keyframes k-fracBar{
+        0%,32%   { opacity:0; stroke-dasharray:620; stroke-dashoffset:620; }
+        42%,100% { opacity:1; stroke-dasharray:620; stroke-dashoffset:0; }
+      }
+
+      .a-fracBar{
+        opacity:0;
+        stroke-dasharray:620;
+        stroke-dashoffset:620;
+        animation:k-fracBar var(--cycle) var(--ease) infinite both;
+      }
+
+      /* 4 só começa a mover depois que o texto já sumiu */
+@keyframes k-move4Top{
+  0%,26% {
+    transform:translate(405px,88px);
+    opacity:1;
+  }
+  42%,100% {
+    transform:translate(470px,70px);
+    opacity:1;
+  }
+}
+
+      .a-move4Top{
+        animation:k-move4Top var(--cycle) var(--ease) infinite both;
+      }
+
+      /* 6 só começa a mover depois que o texto já sumiu */
+@keyframes k-move6Top{
+  0%,26% {
+    transform:translate(625px,88px);
+    opacity:1;
+  }
+  42%,100% {
+    transform:translate(610px,70px);
+    opacity:1;
+  }
+}
+
+      .a-move6Top{
+        animation:k-move6Top var(--cycle) var(--ease) infinite both;
+      }
+
+      /* denominador aparece depois */
+      @keyframes k-show2Bottom{
+        0%,34% {
+          transform:translate(185px,88px);
+          opacity:0;
+        }
+        46%,100% {
+          transform:translate(360px,250px);
+          opacity:1;
+        }
+      }
+
+      .a-show2Bottom{
+        opacity:0;
+        animation:k-show2Bottom var(--cycle) var(--ease) infinite both;
+      }
+
+@keyframes k-show4Bottom{
+  0%,28% {
+    transform:translate(405px,88px);
+    opacity:0;
+  }
+
+  36% {
+    transform:translate(530px,250px);
+    opacity:1;
+  }
+  44%,100% {
+    transform:translate(530px,250px);
+    opacity:1;
+  }
+}
+
+      .a-show4Bottom{
+        opacity:0;
+        animation:k-show4Bottom var(--cycle) var(--ease) infinite both;
+      }
+
+@keyframes k-show6Bottom{
+  0%,30% {
+    transform:translate(625px,88px);
+    opacity:0;
+  }
+  36% {
+    transform:translate(700px,250px);
+    opacity:1;
+  }
+  44%,100% {
+    transform:translate(700px,250px);
+    opacity:1;
+  }
+}
+
+      .a-show6Bottom{
+        opacity:0;
+        animation:k-show6Bottom var(--cycle) var(--ease) infinite both;
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        .a-hideInitialText,
+        .a-fadeOld2,
+        .a-showFormula,
+        .a-fracBar,
+        .a-move4Top,
+        .a-move6Top,
+        .a-show2Bottom,
+        .a-show4Bottom,
+        .a-show6Bottom{
+          animation:none !important;
+          opacity:1 !important;
+          transform:none !important;
+          stroke-dashoffset:0 !important;
+        }
+      }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="100%" height="100%" fill="#ffffff"/>
+
+  <!-- TEXTO INICIAL -->
+<g transform="translate(450,238)" class="a-hideInitialText">
+  <text x="0" y="0" class="note u-center">resultados relevantes dada a condição</text>
+  <text x="0" y="36" class="note-strong u-center">A ∩ B = {4,6}</text>
+</g>
+
+  <!-- FACE 2 original -->
+<g class="a-move2Bottom">
+  <rect x="0" y="0" width="90" height="90" rx="16" class="face-fill"/>
+  <circle class="pip-reverse" cx="20" cy="20" r="7.8"/>
+  <circle class="pip-reverse" cx="70" cy="70" r="7.8"/>
+</g>
+
+  <!-- FACE 4 original -->
+  <g class="a-move4Top">
+    <rect x="0" y="0" width="90" height="90" rx="16" class="face-white"/>
+    <circle class="pip" cx="20" cy="20" r="7.8"/>
+    <circle class="pip" cx="70" cy="20" r="7.8"/>
+    <circle class="pip" cx="20" cy="70" r="7.8"/>
+    <circle class="pip" cx="70" cy="70" r="7.8"/>
+  </g>
+
+  <!-- FACE 6 original -->
+  <g class="a-move6Top">
+    <rect x="0" y="0" width="90" height="90" rx="16" class="face-white"/>
+    <circle class="pip" cx="20" cy="20" r="7.8"/>
+    <circle class="pip" cx="20" cy="45" r="7.8"/>
+    <circle class="pip" cx="20" cy="70" r="7.8"/>
+    <circle class="pip" cx="70" cy="20" r="7.8"/>
+    <circle class="pip" cx="70" cy="45" r="7.8"/>
+    <circle class="pip" cx="70" cy="70" r="7.8"/>
+  </g>
+
+  <!-- EXPRESSÃO À ESQUERDA -->
+<g transform="translate(165 214)">
+  <g class="a-showFormula">
+    <text x="0" y="-8" class="formula u-center">n(A ∩ B)</text>
+    <line x1="-70" y1="10" x2="70" y2="10" class="u-stroke"/>
+    <text x="0" y="46" class="formula u-center">n(B)</text>
+    <text x="98" y="20" class="formula">=</text>
+  </g>
+</g>
+
+  <!-- BARRA DA FRAÇÃO -->
+  <line x1="330" y1="210" x2="835" y2="210" class="u-stroke-thick a-fracBar"/>
+
+  <!-- DENOMINADOR: 4 -->
+  <g class="a-show4Bottom">
+    <rect x="0" y="0" width="90" height="90" rx="16" class="face-fill"/>
+    <circle class="pip-reverse" cx="20" cy="20" r="7.8"/>
+    <circle class="pip-reverse" cx="70" cy="20" r="7.8"/>
+    <circle class="pip-reverse" cx="20" cy="70" r="7.8"/>
+    <circle class="pip-reverse" cx="70" cy="70" r="7.8"/>
+  </g>
+
+  <!-- DENOMINADOR: 6 -->
+  <g class="a-show6Bottom">
+    <rect x="0" y="0" width="90" height="90" rx="16" class="face-fill"/>
+    <circle class="pip-reverse" cx="20" cy="20" r="7.8"/>
+    <circle class="pip-reverse" cx="20" cy="45" r="7.8"/>
+    <circle class="pip-reverse" cx="20" cy="70" r="7.8"/>
+    <circle class="pip-reverse" cx="70" cy="20" r="7.8"/>
+    <circle class="pip-reverse" cx="70" cy="45" r="7.8"/>
+    <circle class="pip-reverse" cx="70" cy="70" r="7.8"/>
+  </g>
+</svg>

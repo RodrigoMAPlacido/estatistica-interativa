@@ -1,0 +1,646 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 1400 860"
+     role="img"
+     aria-labelledby="title desc">
+
+  <title id="title">Arranjo com cena final e fórmula do total de possibilidades</title>
+  <desc id="desc">
+    A fila superior reduz de escala e se desloca para cima. Em seguida, surge uma fila
+    idêntica abaixo. Dois retângulos destacados aparecem por traçado em torno de D e E.
+    Na fila inferior, D e E trocam de posição enquanto surge o sinal de igualdade.
+    Depois, os retângulos desaparecem por traçado, a fila inferior e o sinal somem,
+    e a fila superior retorna ao estado inicial. Em seguida, os três primeiros lugares
+    são destacados, os corredores A, B e C permutam mantendo as posições fixas,
+    depois param, e por fim surge abaixo da fila uma conclusão com a fórmula do arranjo.
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --bg:#ffffff;
+        --ink:#000000;
+        --runner:#0f172a;
+        --font:"et-book","ETBook","Georgia",serif;
+        --cycle:26s;
+        --ease:ease-in-out;
+        --boxDash:1400;
+      }
+
+      svg{
+        background:var(--bg);
+      }
+
+      text{
+        fill:var(--ink);
+        font-family:var(--font);
+        user-select:none;
+      }
+
+      .u-center{
+        text-anchor:middle;
+        dominant-baseline:middle;
+      }
+
+      .label-top{
+        font-size:64px;
+        font-style:italic;
+        text-anchor:middle;
+      }
+
+      .label-rank{
+        font-size:46px;
+        text-anchor:middle;
+      }
+
+      .podium-line{
+        stroke:var(--ink);
+        stroke-width:12;
+        stroke-linecap:square;
+        fill:none;
+      }
+
+      .runner{
+        fill:var(--runner);
+        stroke:none;
+      }
+
+      .eq-line{
+        stroke:var(--ink);
+        stroke-width:10;
+        stroke-linecap:round;
+        fill:none;
+      }
+
+      .highlight-box{
+        fill:none;
+        stroke:var(--ink);
+        stroke-width:2;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        vector-effect:non-scaling-stroke;
+        stroke-dasharray:var(--boxDash);
+        stroke-dashoffset:var(--boxDash);
+      }
+
+      /* =====================================================
+         FILA SUPERIOR — CENA PRINCIPAL
+         ===================================================== */
+
+      @keyframes k-top-move{
+        0%,8.62%       { transform:translate(0px,40px); }
+        13.54%,45.54%  { transform:translate(230px,-40px); }
+        51.69%,100%    { transform:translate(0px,40px); }
+      }
+
+      @keyframes k-top-scale{
+        0%,8.62%       { transform:scale(1); }
+        13.54%,45.54%  { transform:scale(0.72); }
+        51.69%,100%    { transform:scale(1); }
+      }
+
+      .a-top-move{
+        transform:translate(0px,40px);
+        animation:k-top-move var(--cycle) var(--ease) infinite both;
+      }
+
+      .a-top-scale{
+        transform:scale(1);
+        transform-origin:0 0;
+        animation:k-top-scale var(--cycle) var(--ease) infinite both;
+      }
+
+      /* =====================================================
+         FILA INFERIOR
+         ===================================================== */
+
+      @keyframes k-show-bottom{
+        0%,14.78%      { opacity:0; }
+        17.20%,41.84%  { opacity:1; }
+        43.21%,100%    { opacity:0; }
+      }
+
+      .a-show-bottom{
+        opacity:0;
+        animation:k-show-bottom var(--cycle) linear infinite both;
+      }
+
+      /* =====================================================
+         SINAL DE IGUAL
+         ===================================================== */
+
+      @keyframes k-show-equal{
+        0%,26.41%      { opacity:0; }
+        27.78%,41.84%  { opacity:1; }
+        43.21%,100%    { opacity:0; }
+      }
+
+      .a-show-equal{
+        opacity:0;
+        animation:k-show-equal var(--cycle) linear infinite both;
+      }
+
+      /* =====================================================
+         RETÂNGULOS D E E
+         ===================================================== */
+
+      @keyframes k-draw-box{
+        0%,18.50%{
+          opacity:0;
+          stroke-dashoffset:var(--boxDash);
+        }
+        20.92%{
+          opacity:1;
+          stroke-dashoffset:var(--boxDash);
+        }
+        24.63%,36.91%{
+          opacity:1;
+          stroke-dashoffset:0;
+        }
+        40.63%{
+          opacity:1;
+          stroke-dashoffset:var(--boxDash);
+        }
+        43.21%,100%{
+          opacity:0;
+          stroke-dashoffset:var(--boxDash);
+        }
+      }
+
+      .a-draw-box{
+        opacity:0;
+        animation:k-draw-box var(--cycle) var(--ease) infinite both;
+      }
+
+      /* =====================================================
+         TROCA D/E NA FILA INFERIOR
+         ===================================================== */
+
+      @keyframes k-swap-d{
+        0%,28.27%      { transform:translateX(0px); }
+        30.77%,46.77%  { transform:translateX(220px); }
+        100%           { transform:translateX(220px); }
+      }
+
+      @keyframes k-swap-e{
+        0%,28.27%      { transform:translateX(0px); }
+        30.77%,46.77%  { transform:translateX(-220px); }
+        100%           { transform:translateX(-220px); }
+      }
+
+      .a-swap-d{
+        animation:k-swap-d var(--cycle) var(--ease) infinite both;
+      }
+
+      .a-swap-e{
+        animation:k-swap-e var(--cycle) var(--ease) infinite both;
+      }
+
+      /* =====================================================
+         CENA FINAL — 3 PRIMEIROS
+         ===================================================== */
+
+      @keyframes k-hide-original-abc{
+        0%,55% { opacity:1; }
+        60%,100% { opacity:0; }
+      }
+
+      .a-hide-original-abc{
+        animation:k-hide-original-abc var(--cycle) linear infinite both;
+      }
+
+      @keyframes k-show-perm-scene{
+        0%,55.5% { opacity:0; }
+        60%,100% { opacity:1; }
+      }
+
+      .a-show-perm-scene{
+        opacity:0;
+        animation:k-show-perm-scene var(--cycle) linear infinite both;
+      }
+
+      @keyframes k-draw-box-abc{
+        0%,56%{
+          opacity:0;
+          stroke-dashoffset:var(--boxDash);
+        }
+        63%{
+          opacity:1;
+          stroke-dashoffset:var(--boxDash);
+        }
+        72.2%,92%{
+          opacity:1;
+          stroke-dashoffset:0;
+          }
+        96%{
+          opacity:1;
+          stroke-dashoffset:var(--boxDash);
+          }
+        99.5%,100%{
+          opacity:0;
+          stroke-dashoffset:var(--boxDash);
+
+        }
+      }
+
+      .a-draw-box-abc{
+        opacity:0;
+        animation:k-draw-box-abc var(--cycle) var(--ease) infinite both;
+      }
+
+      /* =====================================================
+         PERMUTAÇÕES DOS 3 PRIMEIROS
+         Agora terminam antes e ficam em repouso em ABC.
+         ===================================================== */
+
+      @keyframes k-swap-a{
+        0%,72.0%  { transform:translate(0px,0px); }
+        73.0%     { transform:translate(220px,0px); }
+        74.0%     { transform:translate(440px,0px); }
+        75.0%     { transform:translate(440px,0px); }
+        76.0%     { transform:translate(220px,0px); }
+        77.0%     { transform:translate(0px,0px); }
+        78.0%     { transform:translate(0px,0px); }
+        79.0%     { transform:translate(0px,0px); }
+        80.0%     { transform:translate(220px,0px); }
+        81.0%     { transform:translate(440px,0px); }
+        82.0%     { transform:translate(440px,0px); }
+        83.0%     { transform:translate(220px,0px); }
+        84.0%     { transform:translate(0px,0px); }
+        85.0%     { transform:translate(220px,0px); }
+        86.0%     { transform:translate(0px,0px); }
+        87.0%     { transform:translate(0px,0px); }
+        88.0%     { transform:translate(0px,0px); }
+        89.0%     { transform:translate(220px,0px); }
+        90.0%     { transform:translate(0px,0px); }
+        91.0%     { transform:translate(440px,0px); }
+        92.0%     { transform:translate(0px,0px); }
+        100%      { transform:translate(0px,0px); }
+      }
+
+      @keyframes k-swap-b{
+        0%,72.0%  { transform:translate(0px,0px); }
+        73.0%     { transform:translate(-220px,0px); }
+        74.0%     { transform:translate(-220px,0px); }
+        75.0%     { transform:translate(0px,0px); }
+        76.0%     { transform:translate(220px,0px); }
+        77.0%     { transform:translate(220px,0px); }
+        78.0%     { transform:translate(0px,0px); }
+        79.0%     { transform:translate(220px,0px); }
+        80.0%     { transform:translate(220px,0px); }
+        81.0%     { transform:translate(0px,0px); }
+        82.0%     { transform:translate(-220px,0px); }
+        83.0%     { transform:translate(-220px,0px); }
+        84.0%     { transform:translate(0px,0px); }
+        85.0%     { transform:translate(-220px,0px); }
+        86.0%     { transform:translate(0px,0px); }
+        87.0%     { transform:translate(220px,0px); }
+        88.0%     { transform:translate(0px,0px); }
+        89.0%     { transform:translate(220px,0px); }
+        90.0%     { transform:translate(0px,0px); }
+        91.0%     { transform:translate(-220px,0px); }
+        92.0%     { transform:translate(0px,0px); }
+        100%      { transform:translate(0px,0px); }
+      }
+
+      @keyframes k-swap-c{
+        0%,72.0%  { transform:translate(0px,0px); }
+        73.0%     { transform:translate(0px,0px); }
+        74.0%     { transform:translate(-220px,0px); }
+        75.0%     { transform:translate(-440px,0px); }
+        76.0%     { transform:translate(-440px,0px); }
+        77.0%     { transform:translate(-220px,0px); }
+        78.0%     { transform:translate(0px,0px); }
+        79.0%     { transform:translate(-220px,0px); }
+        80.0%     { transform:translate(-440px,0px); }
+        81.0%     { transform:translate(-440px,0px); }
+        82.0%     { transform:translate(-220px,0px); }
+        83.0%     { transform:translate(0px,0px); }
+        84.0%     { transform:translate(0px,0px); }
+        85.0%     { transform:translate(0px,0px); }
+        86.0%     { transform:translate(0px,0px); }
+        87.0%     { transform:translate(-220px,0px); }
+        88.0%     { transform:translate(0px,0px); }
+        89.0%     { transform:translate(-440px,0px); }
+        90.0%     { transform:translate(0px,0px); }
+        91.0%     { transform:translate(-220px,0px); }
+        92.0%     { transform:translate(0px,0px); }
+        100%      { transform:translate(0px,0px); }
+      }
+
+      .a-swap-a{
+        animation:k-swap-a var(--cycle) var(--ease) infinite both;
+      }
+
+      .a-swap-b{
+        animation:k-swap-b var(--cycle) var(--ease) infinite both;
+      }
+
+      .a-swap-c{
+        animation:k-swap-c var(--cycle) var(--ease) infinite both;
+      }
+
+      /* =====================================================
+         BLOCO FINAL DO ARRANJO
+         Agora aparece depois de uma pausa real.
+         ===================================================== */
+
+      .arranjo-summary{
+        opacity:0;
+        animation:k-show-arranjo-summary var(--cycle) ease-out infinite both;
+      }
+
+      .arranjo-title{
+        fill:var(--ink);
+        font-family:var(--font);
+        font-size:44px;
+        font-weight:800;
+        text-anchor:middle;
+        dominant-baseline:middle;
+      }
+
+      .arranjo-formula{
+        fill:var(--ink);
+        font-family:var(--font);
+        font-size:40px;
+        font-style:italic;
+        text-anchor:middle;
+        dominant-baseline:middle;
+      }
+
+      .arranjo-formula.roman,
+      .roman{
+        font-style:normal;
+      }
+
+      .arranjo-frac-line{
+        stroke:var(--ink);
+        stroke-width:2.2;
+        stroke-linecap:round;
+      }
+
+      @keyframes k-show-arranjo-summary{
+        0%,82.2%{
+          opacity:0;
+          transform:translateY(0px);
+        }
+        84.2%,97%{
+          opacity:1;
+          transform:translateY(18px);
+        }
+        97.5%, 100%{
+          opacity:0;
+          transform:translateY(0px);
+        }
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        .a-top-move,
+        .a-top-scale,
+        .a-show-bottom,
+        .a-show-equal,
+        .a-draw-box,
+        .a-swap-d,
+        .a-swap-e,
+        .a-hide-original-abc,
+        .a-show-perm-scene,
+        .a-draw-box-abc,
+        .a-swap-a,
+        .a-swap-b,
+        .a-swap-c,
+        .arranjo-summary{
+          animation:none !important;
+        }
+
+        .a-top-move{
+          transform:translate(0px,40px) !important;
+        }
+
+        .a-top-scale{
+          transform:scale(1) !important;
+        }
+
+        .a-show-bottom,
+        .a-show-equal{
+          opacity:0 !important;
+        }
+
+        .a-show-perm-scene{
+          opacity:1 !important;
+        }
+
+        .a-draw-box-abc{
+          opacity:1 !important;
+          stroke-dashoffset:0 !important;
+        }
+
+        .a-swap-a,
+        .a-swap-b,
+        .a-swap-c{
+          transform:translate(0px,0px) !important;
+        }
+
+        .arranjo-summary{
+          opacity:1 !important;
+          transform:translateY(0px) !important;
+        }
+      }
+    </style>
+
+    <symbol id="runner-mirrored" viewBox="0 0 1167 1280">
+      <g transform="translate(1167,1280) scale(-0.1,-0.1)" class="runner">
+        <path d="M9270 12789 c-229 -29 -473 -124 -657 -256 -272 -194 -468 -494 -539
+-825 -25 -114 -25 -369 -1 -491 94 -472 445 -861 918 -1021 167 -56 260 -70
+459 -70 199 0 292 14 459 70 400 135 727 449 864 829 50 141 70 257 71 425 1
+176 -11 259 -59 406 -165 505 -614 864 -1166 934 -96 12 -254 11 -349 -1z"/>
+        <path d="M5145 10889 c-80 -12 -193 -69 -252 -127 -42 -41 -1667 -2180 -1780
+-2342 -24 -35 -54 -97 -69 -143 -23 -69 -27 -100 -27 -197 -1 -103 2 -124 29
+-200 70 -200 212 -329 394 -362 128 -22 284 28 378 123 27 27 397 512 823
+1078 l774 1030 443 0 443 1 -19 -27 c-11 -16 -769 -1026 -1684 -2246 l-1664
+-2219 -1215 -1 -1214 -2 -68 -27 c-93 -38 -164 -87 -239 -166 -323 -343 -232
+-974 171 -1186 134 -70 29 -66 1631 -66 1549 0 1541 0 1705 51 124 38 264 118
+331 190 18 19 321 405 674 859 354 454 648 831 655 838 10 11 162 -154 768
+-832 417 -465 757 -852 757 -860 0 -9 -140 -728 -311 -1598 -223 -1137 -312
+-1611 -316 -1681 -21 -363 196 -688 508 -762 302 -71 612 129 718 465 11 36
+180 886 376 1890 195 1004 376 1926 401 2049 40 196 45 239 46 355 0 197 -40
+357 -124 486 -27 42 -731 859 -1325 1537 l-55 62 728 968 c400 532 728 969
+729 971 1 1 211 -240 467 -535 256 -296 489 -560 517 -586 63 -59 178 -115
+260 -127 144 -20 301 37 430 156 98 91 1610 1844 1649 1912 57 100 77 181 76
+317 0 87 -5 137 -18 180 -49 163 -154 293 -292 361 -77 39 -79 39 -193 39
+-104 -1 -122 -3 -174 -27 -32 -15 -77 -41 -100 -58 -24 -17 -328 -358 -677
+-760 -349 -401 -638 -728 -641 -727 -4 1 -354 402 -780 891 -440 506 -796 907
+-827 931 -30 24 -80 55 -111 71 -127 62 -38 58 -1401 60 -685 1 -1272 -2
+-1305 -7z"/>
+      </g>
+    </symbol>
+  </defs>
+
+  <!-- FILA SUPERIOR -->
+  <g id="top-scene-position" class="a-top-move">
+    <g id="top-scene-scale" class="a-top-scale">
+      <g id="top-scene-content">
+
+        <!-- A, B, C originais -->
+        <g transform="translate(220 160)" class="a-hide-original-abc">
+          <text x="-50" y="0" class="label-top">A</text>
+          <use href="#runner-mirrored" x="-100" y="40" width="200" height="220"/>
+          <line x1="-100" y1="270" x2="100" y2="270" class="podium-line"/>
+          <text x="0" y="340" class="label-rank">1º</text>
+        </g>
+
+        <g transform="translate(440 160)" class="a-hide-original-abc">
+          <text x="-50" y="0" class="label-top">B</text>
+          <use href="#runner-mirrored" x="-100" y="40" width="200" height="220"/>
+          <line x1="-100" y1="270" x2="100" y2="270" class="podium-line"/>
+          <text x="0" y="340" class="label-rank">2º</text>
+        </g>
+
+        <g transform="translate(660 160)" class="a-hide-original-abc">
+          <text x="-50" y="0" class="label-top">C</text>
+          <use href="#runner-mirrored" x="-100" y="40" width="200" height="220"/>
+          <line x1="-100" y1="270" x2="100" y2="270" class="podium-line"/>
+          <text x="0" y="340" class="label-rank">3º</text>
+        </g>
+
+        <!-- D e E -->
+        <g transform="translate(880 160)">
+          <text x="-50" y="0" class="label-top">D</text>
+          <use href="#runner-mirrored" x="-100" y="40" width="200" height="220"/>
+        </g>
+
+        <g transform="translate(1100 160)">
+          <text x="-50" y="0" class="label-top">E</text>
+          <use href="#runner-mirrored" x="-100" y="40" width="200" height="220"/>
+        </g>
+
+        <!-- destaque D/E -->
+        <rect x="773" y="80" width="440" height="370" rx="18" ry="18"
+              class="highlight-box a-draw-box"/>
+
+        <!-- CENA FINAL -->
+        <g class="a-show-perm-scene">
+          <rect x="108" y="80" width="665" height="440" rx="18" ry="18"
+                class="highlight-box a-draw-box-abc"/>
+
+          <!-- posições fixas -->
+          <g transform="translate(220 160)">
+            <line x1="-100" y1="270" x2="100" y2="270" class="podium-line"/>
+            <text x="0" y="340" class="label-rank">1º</text>
+          </g>
+
+          <g transform="translate(440 160)">
+            <line x1="-100" y1="270" x2="100" y2="270" class="podium-line"/>
+            <text x="0" y="340" class="label-rank">2º</text>
+          </g>
+
+          <g transform="translate(660 160)">
+            <line x1="-100" y1="270" x2="100" y2="270" class="podium-line"/>
+            <text x="0" y="340" class="label-rank">3º</text>
+          </g>
+
+          <!-- A móvel -->
+          <g transform="translate(220 160)">
+            <g class="a-swap-a">
+              <text x="-50" y="0" class="label-top">A</text>
+              <use href="#runner-mirrored" x="-100" y="40" width="200" height="220"/>
+            </g>
+          </g>
+
+          <!-- B móvel -->
+          <g transform="translate(440 160)">
+            <g class="a-swap-b">
+              <text x="-50" y="0" class="label-top">B</text>
+              <use href="#runner-mirrored" x="-100" y="40" width="200" height="220"/>
+            </g>
+          </g>
+
+          <!-- C móvel -->
+          <g transform="translate(660 160)">
+            <g class="a-swap-c">
+              <text x="-50" y="0" class="label-top">C</text>
+              <use href="#runner-mirrored" x="-100" y="40" width="200" height="220"/>
+            </g>
+          </g>
+
+          <!-- conclusão final -->
+          <g class="arranjo-summary">
+            <text x="700" y="575" class="arranjo-title">
+              Total de possibilidades
+            </text>
+
+            <g >
+              <text x="600" y="665" class="arranjo-formula">
+                A<tspan baseline-shift="sub" font-size="70%">5,3</tspan>
+                <tspan class="roman"> = </tspan>
+              </text>
+
+              <g>
+                <text x="740" y="635" class="arranjo-formula roman">5!</text>
+                <line x1="670" y1="670" x2="800" y2="670" class="arranjo-frac-line"/>
+                <text x="740" y="710" class="arranjo-formula roman">(5 − 3)!</text>
+              </g>
+
+              <text x="860" y="665" class="arranjo-formula roman">=  60</text>
+            </g>
+          </g>
+        </g>
+
+      </g>
+    </g>
+  </g>
+
+  <!-- FILA INFERIOR -->
+  <g id="bottom-scene" class="a-show-bottom">
+    <g id="bottom-scene-position" transform="translate(230,440)">
+      <g id="bottom-scene-scale" transform="scale(0.72)">
+        <g id="bottom-scene-content">
+
+          <g transform="translate(220 160)">
+            <text x="-50" y="0" class="label-top">A</text>
+            <use href="#runner-mirrored" x="-100" y="40" width="200" height="220"/>
+            <line x1="-100" y1="270" x2="100" y2="270" class="podium-line"/>
+            <text x="0" y="340" class="label-rank">1º</text>
+          </g>
+
+          <g transform="translate(440 160)">
+            <text x="-50" y="0" class="label-top">B</text>
+            <use href="#runner-mirrored" x="-100" y="40" width="200" height="220"/>
+            <line x1="-100" y1="270" x2="100" y2="270" class="podium-line"/>
+            <text x="0" y="340" class="label-rank">2º</text>
+          </g>
+
+          <g transform="translate(660 160)">
+            <text x="-50" y="0" class="label-top">C</text>
+            <use href="#runner-mirrored" x="-100" y="40" width="200" height="220"/>
+            <line x1="-100" y1="270" x2="100" y2="270" class="podium-line"/>
+            <text x="0" y="340" class="label-rank">3º</text>
+          </g>
+
+          <g transform="translate(880 160)">
+            <g class="a-swap-d">
+              <text x="-50" y="0" class="label-top">D</text>
+              <use href="#runner-mirrored" x="-100" y="40" width="200" height="220"/>
+            </g>
+          </g>
+
+          <g transform="translate(1100 160)">
+            <g class="a-swap-e">
+              <text x="-50" y="0" class="label-top">E</text>
+              <use href="#runner-mirrored" x="-100" y="40" width="200" height="220"/>
+            </g>
+          </g>
+
+          <rect x="773" y="80" width="440" height="370" rx="18" ry="18"
+                class="highlight-box a-draw-box"/>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- SINAL DE IGUAL -->
+  <g transform="translate(0,40)">
+    <g id="equal-sign" class="a-show-equal" aria-label="Sinal de igualdade">
+      <line x1="655" y1="355" x2="745" y2="355" class="eq-line"/>
+      <line x1="655" y1="405" x2="745" y2="405" class="eq-line"/>
+    </g>
+  </g>
+</svg>

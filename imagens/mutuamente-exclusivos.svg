@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ===========================================
+   UNIÃO DE EVENTOS — padrão unificado (limpo)
+   - Mantém apenas o que está EM USO:
+     * animação do título (a-titleFill / a-titleStroke)
+     * animação dos preenchimentos (a-softFillCut)
+   - Remove animações/classes não usadas:
+     * dashLbl, k-lblFill, k-lblStrokeDrawPauseRetract, a-lblFill, a-lblStroke
+   =========================================== -->
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 520 300"
+     width="570" height="250"
+     role="img"
+     aria-labelledby="title desc"
+     style="background:#ffffff">
+
+  <title id="title">União de eventos</title>
+  <desc id="desc">
+    Diagrama de Venn com Ω e dois eventos A e B sobrepostos. A união A ∪ B é representada pelo preenchimento
+    das duas regiões, com a interseção A ∩ B mais escura. Rodapé mostra A ∪ B e a fórmula:
+    P(A ∪ B) = P(A) + P(B) − P(A ∩ B).
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --font:"et-book","ETBook","Georgia",serif;
+
+        --cycle:10.8s;
+        --ease:ease-in-out;
+
+        /* dashes (apenas o que é usado pelo título) */
+        --dashTitle:100;
+        --dashMark:88;
+      }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        user-select:none;
+        letter-spacing:.13px;
+      }
+
+      .u-center{ text-anchor:middle; }
+      .u-bold{ font-weight:700; }
+
+      /* formas estáticas */
+      .u-thin{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        stroke-width:1.5px;
+      }
+
+      /* fills (janela temporal; degraus) */
+      @keyframes k-softFillCut{
+        0%,10%  { opacity:0; }
+        20%     { opacity:1; }
+        75.99%  { opacity:1; }
+        86%     { opacity:0.5; }
+        100%    { opacity:0; }
+      }
+      .a-softFillCut{
+        opacity:0;
+        animation:k-softFillCut var(--cycle) linear infinite both;
+      }
+
+      /* tons EI */
+      .fillA{ fill:rgba(17,24,39,0.18); }    /* A */
+      .fillB{ fill:rgba(17,24,39,0.10); }    /* B */
+      .fillI{ fill:rgba(17,24,39,0.42); }    /* interseção */
+
+      /* =========================================
+         TÍTULO — anti-vazio + delay + retraço final
+         ========================================= */
+      @keyframes k-titleFill{
+        0%,5.5% { opacity:0; }
+        6%      { opacity:0.15; }
+        9.5%    { opacity:0.70; }
+        11.2%   { opacity:0.92; }
+        11.3%   { opacity:1; }
+        85.99%  { opacity:1; }
+        95%     { opacity:0.5; }
+        100%    { opacity:0; }
+      }
+      .a-titleFill{
+        opacity:0;
+        animation:k-titleFill var(--cycle) linear infinite both;
+      }
+
+      @keyframes k-titleStrokeDrawPauseRetract{
+        0%     { stroke-dashoffset:var(--dashTitle); opacity:1; }
+        10%    { stroke-dashoffset:0; opacity:1; }
+
+        /* some após o fill “assentar” */
+        11.8%  { stroke-dashoffset:0; opacity:0; }
+
+        /* DELAY */
+        85.99% { stroke-dashoffset:0; opacity:0; }
+
+        /* retraço final */
+        86%    { stroke-dashoffset:0; opacity:1; }
+        100%   { stroke-dashoffset:var(--dashTitle); opacity:1; }
+      }
+      .a-titleStroke{
+        fill:transparent;
+        stroke:var(--ink);
+        stroke-width:.25;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        stroke-dasharray:var(--dashTitle);
+        stroke-dashoffset:var(--dashTitle);
+        animation:k-titleStrokeDrawPauseRetract var(--cycle) var(--ease) infinite both;
+      }
+
+      /* mesma lógica de animação para o traço diagonal */
+      .a-markFill{
+        opacity:0;
+        animation:k-titleFill var(--cycle) linear infinite both;
+      }
+
+      @keyframes k-markStrokeDrawPauseRetract{
+        0%     { stroke-dashoffset:var(--dashMark); opacity:1; }
+        10%    { stroke-dashoffset:0; opacity:1; }
+        11.8%  { stroke-dashoffset:0; opacity:0; }
+        85.99% { stroke-dashoffset:0; opacity:0; }
+        86%    { stroke-dashoffset:0; opacity:1; }
+        100%   { stroke-dashoffset:var(--dashMark); opacity:1; }
+      }
+      .a-markStroke{
+        fill:none;
+        stroke:var(--ink);
+        stroke-width:1.5px;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        stroke-dasharray:var(--dashMark);
+        stroke-dashoffset:var(--dashMark);
+        animation:k-markStrokeDrawPauseRetract var(--cycle) var(--ease) infinite both;
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        .a-titleFill,.a-titleStroke,.a-softFillCut,.a-markFill,.a-markStroke{ animation:none !important; }
+        .a-titleFill,.a-softFillCut,.a-markFill{ opacity:1 !important; }
+        .a-titleStroke,.a-markStroke{ opacity:0 !important; }
+      }
+    </style>
+  </defs>
+
+  <!-- fundo -->
+  <rect x="0" y="0" width="100%" height="100%" fill="#ffffff"/>
+
+  <!-- ===== título (2 camadas) ===== -->
+  <text x="260" y="44" font-size="26" class="u-center u-bold a-titleFill">União de eventos</text>
+  <text x="260" y="44" font-size="26" class="u-center u-bold a-titleStroke">União de eventos</text>
+
+  <!-- subtítulo acrescentado -->
+  <text x="260" y="64" font-size="14" class="u-center u-bold a-titleFill">(mutuamente exclusivos)</text>
+  <text x="260" y="64" font-size="14" class="u-center u-bold a-titleStroke">(mutuamente exclusivos)</text>
+
+  <!-- ===== Ω (estático) ===== -->
+  <rect x="60" y="78" width="400" height="155" rx="18" class="u-thin"/>
+  <text x="78" y="104" font-size="22" class="u-bold">Ω</text>
+
+  <!-- ===== eventos A e B (formas + preenchimentos) ===== -->
+  <!-- contornos (estáticos) -->
+  <circle cx="185" cy="160" r="70" class="u-thin"/>
+  <circle cx="335" cy="160" r="70" class="u-thin"/>
+
+  <!-- preenchimentos (animados) -->
+  <circle cx="185" cy="160" r="70" class="fillA a-softFillCut"/>
+  <circle cx="335" cy="160" r="70" class="fillB a-softFillCut"/>
+
+  <!-- labels internos (estáticos) -->
+  <text x="155" y="132" font-size="18" class="u-center u-bold">A</text>
+  <text x="360" y="132" font-size="18" class="u-center u-bold">B</text>
+
+  <!-- ===== rodapé (usa a mesma animação do título, 2 camadas) ===== -->
+  <!-- Linha 1: A ∪ B -->
+  <text x="260" y="258" font-size="20" class="u-center u-bold a-titleFill">A ∪ B</text>
+  <text x="260" y="258" font-size="20" class="u-center u-bold a-titleStroke">A ∪ B</text>
+
+  <!-- Linha 2: fórmula -->
+  <text x="260" y="284" font-size="16" class="u-center u-bold a-titleFill">
+    P(A ∪ B) = P(A) + P(B) − P(A ∩ B)
+  </text>
+  <text x="260" y="284" font-size="16" class="u-center u-bold a-titleStroke">
+    P(A ∪ B) = P(A) + P(B) − P(A ∩ B)
+  </text>
+
+  <!-- traço diagonal com a mesma lógica de animação -->
+  <line x1="333" y1="289" x2="400" y2="265" class="u-thin a-markFill"/>
+  <line x1="333" y1="289" x2="400" y2="265" class="a-markStroke"/>
+
+  <!-- = 0 com a mesma animação do título -->
+  <text x="403" y="268" font-size="14" class="u-bold a-titleFill">= 0</text>
+  <text x="403" y="268" font-size="14" class="u-bold a-titleStroke">= 0</text>
+
+</svg>

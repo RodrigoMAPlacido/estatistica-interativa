@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ==========================================================
+   FIXAÇÃO DE UM EVENTO COMO CONDIÇÃO — DADO DE 6 FACES
+   - Baseado no padrão visual de espaco-amostral.svg
+   - 6 faces em linha
+   - Depois da apresentação do espaço amostral, fixa-se a condição:
+     resultado par
+   - Faces 1,3,5 desaparecem; 2,4,6 permanecem em destaque
+   - Mensagem final permanece por 3s antes de reiniciar
+   ========================================================== -->
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 900 300"
+     width="900" height="300"
+     role="img"
+     aria-labelledby="title desc"
+     style="background:#ffffff">
+
+  <title id="title">Fixação de um evento como condição</title>
+  <desc id="desc">
+    Seis faces de dado aparecem em sequência em uma linha, representando o espaço amostral
+    do lançamento de um dado honesto. Em seguida, fixa-se a condição de resultado par:
+    as faces 1, 3 e 5 desaparecem, enquanto as faces 2, 4 e 6 permanecem destacadas,
+    formando o subconjunto B = {2,4,6}.
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --paper:#ffffff;
+        --ink-soft:rgba(17,24,39,.18);
+        --ink-mid:rgba(17,24,39,.42);
+        --text-soft:#4b5563;
+        --font:"et-book","ETBook","Georgia",serif;
+
+        --cycle:12s;
+        --ease:ease-in-out;
+
+        --dash:900;
+
+        --delay-faces:.12s;
+        --step:.28s;
+        --pip-offset:.24s;
+      }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        user-select:none;
+        letter-spacing:.10px;
+      }
+
+      .u-center{ text-anchor:middle; }
+      .u-bold{ font-weight:700; }
+
+      .u-stroke{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        stroke-width:2px;
+      }
+
+      .u-ns{ vector-effect:non-scaling-stroke; }
+
+      .pip{ fill:var(--ink); }
+
+      .note{
+        font-size:22px;
+        fill:var(--text-soft);
+      }
+
+      .note-strong{
+        font-size:28px;
+        fill:var(--ink);
+        font-weight:700;
+      }
+
+      /* contorno das faces */
+      @keyframes k-drawFace{
+        0%   { stroke-dashoffset:var(--dash); opacity:0; }
+        10%  { opacity:1; }
+        32%  { stroke-dashoffset:0; opacity:1; }
+        100% { stroke-dashoffset:0; opacity:1; }
+      }
+
+      .a-faceOutline{
+        stroke-dasharray:var(--dash);
+        stroke-dashoffset:var(--dash);
+        animation:k-drawFace var(--cycle) var(--ease) infinite both;
+        animation-delay:var(--delay,0s);
+      }
+
+      /* pips iniciais */
+      @keyframes k-pip{
+        0%,14% { opacity:0; }
+        28%,100% { opacity:1; }
+      }
+
+      .a-pip{
+        opacity:0;
+        animation:k-pip var(--cycle) var(--ease) infinite both;
+        animation-delay:var(--delay,0s);
+      }
+
+      /* faces ímpares desaparecem quando a condição é fixada */
+      @keyframes k-oddFade{
+        0%,54%   { opacity:1; }
+        64%      { opacity:.10; }
+        72%,100% { opacity:0; }
+      }
+
+      .a-oddFade{
+        animation:k-oddFade var(--cycle) linear infinite both;
+      }
+
+      /* reforço visual das faces pares */
+      @keyframes k-evenStrong{
+        0%,52%   { opacity:0; }
+        62%      { opacity:.45; }
+        72%,100% { opacity:1; }
+      }
+
+      .a-evenStrong{
+        opacity:0;
+        animation:k-evenStrong var(--cycle) linear infinite both;
+      }
+
+      .a-evenStrong .face-fill{
+        fill:var(--ink);
+      }
+
+      .a-evenStrong .pip-reverse{
+        fill:#ffffff;
+      }
+
+      /* rótulos finais */
+      @keyframes k-noteFade{
+        0%,66%   { opacity:0; }
+        74%,100% { opacity:1; }
+      }
+
+      .a-note{
+        opacity:0;
+        animation:k-noteFade var(--cycle) linear infinite both;
+      }
+
+      @keyframes k-bFade{
+        0%,72%   { opacity:0; transform:translateY(8px); }
+        80%,100% { opacity:1; transform:translateY(0); }
+      }
+
+      .a-b{
+        opacity:0;
+        animation:k-bFade var(--cycle) var(--ease) infinite both;
+        transform-box:fill-box;
+        transform-origin:center;
+      }
+  /* exibição do espaço amostral Ω = {1,2,3,4,5,6} */
+  @keyframes k-showOmegaText{
+    0%,24%   { opacity:0; transform:translateY(8px); }
+    28%,50%  { opacity:1; transform:translateY(0); }
+    60%,100% { opacity:0; transform:translateY(0); }
+  }
+
+  .a-showOmegaText{
+    opacity:0;
+    animation:k-showOmegaText var(--cycle) var(--ease) infinite both;
+  }
+      @media (prefers-reduced-motion:reduce){
+        .a-faceOutline,.a-pip,.a-oddFade,.a-evenStrong,.a-note,.a-b{
+          animation:none !important;
+          opacity:1 !important;
+        }
+        .a-faceOutline{ stroke-dashoffset:0 !important; }
+      }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="100%" height="100%" fill="#ffffff"/>
+
+<g transform="translate(0,-20)">
+  <!-- FACE 1 -->
+  <g transform="translate(75 82)" class="a-oddFade">
+    <rect x="0" y="0" width="90" height="90" rx="16"
+          class="u-stroke u-ns a-faceOutline"
+          style="--delay:calc(var(--delay-faces) + 0*var(--step))"/>
+    <g class="a-pip" style="--delay:calc(var(--delay-faces) + 0*var(--step) + var(--pip-offset))">
+      <circle class="pip" cx="45" cy="45" r="7.8"/>
+    </g>
+  </g>
+
+  <!-- FACE 2 -->
+  <g transform="translate(185 82)">
+    <rect x="0" y="0" width="90" height="90" rx="16"
+          class="u-stroke u-ns a-faceOutline"
+          style="--delay:calc(var(--delay-faces) + 1*var(--step))"/>
+    <g class="a-pip" style="--delay:calc(var(--delay-faces) + 1*var(--step) + var(--pip-offset))">
+      <circle class="pip" cx="20" cy="20" r="7.8"/>
+      <circle class="pip" cx="70" cy="70" r="7.8"/>
+    </g>
+  </g>
+
+  <!-- reforço FACE 2 -->
+  <g transform="translate(185 82)" class="a-evenStrong">
+    <rect x="0" y="0" width="90" height="90" rx="16" class="face-fill"/>
+    <circle class="pip-reverse" cx="20" cy="20" r="7.8"/>
+    <circle class="pip-reverse" cx="70" cy="70" r="7.8"/>
+  </g>
+
+  <!-- FACE 3 -->
+  <g transform="translate(295 82)" class="a-oddFade">
+    <rect x="0" y="0" width="90" height="90" rx="16"
+          class="u-stroke u-ns a-faceOutline"
+          style="--delay:calc(var(--delay-faces) + 2*var(--step))"/>
+    <g class="a-pip" style="--delay:calc(var(--delay-faces) + 2*var(--step) + var(--pip-offset))">
+      <circle class="pip" cx="20" cy="20" r="7.8"/>
+      <circle class="pip" cx="45" cy="45" r="7.8"/>
+      <circle class="pip" cx="70" cy="70" r="7.8"/>
+    </g>
+  </g>
+
+  <!-- FACE 4 -->
+  <g transform="translate(405 82)">
+    <rect x="0" y="0" width="90" height="90" rx="16"
+          class="u-stroke u-ns a-faceOutline"
+          style="--delay:calc(var(--delay-faces) + 3*var(--step))"/>
+    <g class="a-pip" style="--delay:calc(var(--delay-faces) + 3*var(--step) + var(--pip-offset))">
+      <circle class="pip" cx="20" cy="20" r="7.8"/>
+      <circle class="pip" cx="70" cy="20" r="7.8"/>
+      <circle class="pip" cx="20" cy="70" r="7.8"/>
+      <circle class="pip" cx="70" cy="70" r="7.8"/>
+    </g>
+  </g>
+
+  <!-- reforço FACE 4 -->
+  <g transform="translate(405 82)" class="a-evenStrong">
+    <rect x="0" y="0" width="90" height="90" rx="16" class="face-fill"/>
+    <circle class="pip-reverse" cx="20" cy="20" r="7.8"/>
+    <circle class="pip-reverse" cx="70" cy="20" r="7.8"/>
+    <circle class="pip-reverse" cx="20" cy="70" r="7.8"/>
+    <circle class="pip-reverse" cx="70" cy="70" r="7.8"/>
+  </g>
+
+  <!-- FACE 5 -->
+  <g transform="translate(515 82)" class="a-oddFade">
+    <rect x="0" y="0" width="90" height="90" rx="16"
+          class="u-stroke u-ns a-faceOutline"
+          style="--delay:calc(var(--delay-faces) + 4*var(--step))"/>
+    <g class="a-pip" style="--delay:calc(var(--delay-faces) + 4*var(--step) + var(--pip-offset))">
+      <circle class="pip" cx="20" cy="20" r="7.8"/>
+      <circle class="pip" cx="70" cy="20" r="7.8"/>
+      <circle class="pip" cx="45" cy="45" r="7.8"/>
+      <circle class="pip" cx="20" cy="70" r="7.8"/>
+      <circle class="pip" cx="70" cy="70" r="7.8"/>
+    </g>
+  </g>
+
+  <!-- FACE 6 -->
+  <g transform="translate(625 82)">
+    <rect x="0" y="0" width="90" height="90" rx="16"
+          class="u-stroke u-ns a-faceOutline"
+          style="--delay:calc(var(--delay-faces) + 5*var(--step))"/>
+    <g class="a-pip" style="--delay:calc(var(--delay-faces) + 5*var(--step) + var(--pip-offset))">
+      <circle class="pip" cx="20" cy="20" r="7.8"/>
+      <circle class="pip" cx="20" cy="45" r="7.8"/>
+      <circle class="pip" cx="20" cy="70" r="7.8"/>
+      <circle class="pip" cx="70" cy="20" r="7.8"/>
+      <circle class="pip" cx="70" cy="45" r="7.8"/>
+      <circle class="pip" cx="70" cy="70" r="7.8"/>
+    </g>
+  </g>
+
+  <!-- reforço FACE 6 -->
+  <g transform="translate(625 82)" class="a-evenStrong">
+    <rect x="0" y="0" width="90" height="90" rx="16" class="face-fill"/>
+    <circle class="pip-reverse" cx="20" cy="20" r="7.8"/>
+    <circle class="pip-reverse" cx="20" cy="45" r="7.8"/>
+    <circle class="pip-reverse" cx="20" cy="70" r="7.8"/>
+    <circle class="pip-reverse" cx="70" cy="20" r="7.8"/>
+    <circle class="pip-reverse" cx="70" cy="45" r="7.8"/>
+    <circle class="pip-reverse" cx="70" cy="70" r="7.8"/>
+  </g>
+    <g transform="translate(450,238)">
+    <text x="0" y="0" class="note-strong a-showOmegaText u-center">Ω = {1,2,3,4,5,6}</text>
+  </g>
+  <!-- texto final -->
+  <g transform="translate(450,232)">
+    <text x="0" y="0" class="note a-note u-center">condição: resultado par</text>
+    <text x="0" y="38" class="note-strong a-b u-center">B = {2,4,6}</text>
+  </g>
+</g>
+</svg>

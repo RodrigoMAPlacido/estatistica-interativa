@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 900 340"
+     width="900" height="340"
+     role="img"
+     aria-labelledby="title desc"
+     style="background:#ffffff">
+
+  <title id="title">Interseção entre A e B no lançamento de um dado</title>
+  <desc id="desc">
+    As seis faces de um dado aparecem em linha. Em seguida, destaca-se o evento
+    A = {4,5,6}. Depois, fixa-se a condição B = {2,4,6}, fazendo desaparecer
+    as faces ímpares. Ao final, as faces 4 e 6 recebem um segundo destaque,
+    representando a interseção A ∩ B = {4,6}.
+  </desc>
+
+  <defs>
+<style>
+  :root{
+    --ink:#111827;
+    --paper:#ffffff;
+    --text-soft:#4b5563;
+    --font:"et-book","ETBook","Georgia",serif;
+
+    --cycle:16s;
+    --ease:ease-in-out;
+    --dash:900;
+  }
+
+  text{
+    font-family:var(--font);
+    fill:var(--ink);
+    user-select:none;
+    letter-spacing:.08px;
+  }
+
+  .u-center{ text-anchor:middle; }
+
+  .u-stroke{
+    stroke:var(--ink);
+    fill:none;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+    stroke-width:2px;
+  }
+
+  .u-ns{ vector-effect:non-scaling-stroke; }
+
+  .pip{ fill:var(--ink); }
+
+  .note{
+    font-size:22px;
+    fill:var(--text-soft);
+  }
+
+  .note-strong{
+    font-size:28px;
+    fill:var(--ink);
+    font-weight:700;
+  }
+
+  /* desenho base das faces */
+  @keyframes k-drawFace{
+    0%   { stroke-dashoffset:var(--dash); opacity:0; }
+    10%  { opacity:1; }
+    26%  { stroke-dashoffset:0; opacity:1; }
+    100% { stroke-dashoffset:0; opacity:1; }
+  }
+
+  .a-face{
+    stroke-dasharray:var(--dash);
+    stroke-dashoffset:var(--dash);
+    animation:k-drawFace var(--cycle) var(--ease) infinite both;
+    animation-delay:var(--delay,0s);
+  }
+
+  @keyframes k-pip{
+    0%,14%   { opacity:0; }
+    24%,100% { opacity:1; }
+  }
+
+  .a-pip{
+    opacity:0;
+    animation:k-pip var(--cycle) var(--ease) infinite both;
+    animation-delay:var(--delay,0s);
+  }
+
+  /* exibição do espaço amostral Ω = {1,2,3,4,5,6} */
+  @keyframes k-showOmegaText{
+    0%,24%   { opacity:0; transform:translateY(8px); }
+    28%,36%  { opacity:1; transform:translateY(0); }
+    40%,100% { opacity:0; transform:translateY(0); }
+  }
+
+  .a-showOmegaText{
+    opacity:0;
+    animation:k-showOmegaText var(--cycle) var(--ease) infinite both;
+  }
+
+  /* destaque de A = {4,5,6} */
+  @keyframes k-Amark{
+    0%,38%   { opacity:0; stroke-dashoffset:1000; }
+    44%      { opacity:1; }
+    52%      { opacity:1; stroke-dashoffset:0; }
+    56%      { opacity:1; stroke-dashoffset:0; }
+    60%,100% { opacity:0; stroke-dashoffset:0; }
+  }
+
+  .a-Amark{
+    opacity:0;
+    stroke-dasharray:1000;
+    stroke-dashoffset:1000;
+    animation:k-Amark var(--cycle) var(--ease) infinite both;
+  }
+
+  @keyframes k-showAtext{
+    0%,40%   { opacity:0; transform:translateY(8px); }
+    44%,52%  { opacity:1; transform:translateY(0); }
+    56%,100% { opacity:0; transform:translateY(0); }
+  }
+
+  .a-showAtext{
+    opacity:0;
+    animation:k-showAtext var(--cycle) var(--ease) infinite both;
+  }
+
+  /* ímpares desaparecem ao fixar B */
+@keyframes k-oddFade{
+  0%,56%   { opacity:1; }
+  62%      { opacity:.10; }
+  66%,100% { opacity:0; }
+}
+
+  .a-oddFade{
+    animation:k-oddFade var(--cycle) linear infinite both;
+  }
+
+  /* destaque de B = {2,4,6} */
+@keyframes k-evenStrong{
+  0%,56%   { opacity:0; }
+  61%      { opacity:.55; }
+  66%,100% { opacity:1; }
+}
+
+  .a-evenStrong{
+    opacity:0;
+    animation:k-evenStrong var(--cycle) linear infinite both;
+  }
+
+  .a-evenStrong .face-fill{ fill:var(--ink); }
+  .a-evenStrong .pip-reverse{ fill:#ffffff; }
+
+@keyframes k-showBtext{
+  0%,58%   { opacity:0; transform:translateY(8px); }
+  62%,70%  { opacity:1; transform:translateY(0); }
+  74%,100% { opacity:0; transform:translateY(0); }
+}
+
+  .a-showBtext{
+    opacity:0;
+    animation:k-showBtext var(--cycle) var(--ease) infinite both;
+  }
+
+  /* destaque final da interseção A∩B = {4,6} */
+  @keyframes k-inter{
+    0%,72%   { opacity:0; stroke-dashoffset:220; }
+    80%      { opacity:1; }
+    88%,100% { opacity:1; stroke-dashoffset:0; }
+  }
+
+  .a-inter{
+    opacity:0;
+    stroke-dasharray:1000;
+    stroke-dashoffset:1000;
+    animation:k-inter var(--cycle) var(--ease) infinite both;
+  }
+
+  @keyframes k-showInterText{
+    0%,72%   { opacity:0; transform:translateY(8px); }
+    76%,100% { opacity:1; transform:translateY(0); }
+  }
+
+  .a-showInterText{
+    opacity:0;
+    animation:k-showInterText var(--cycle) var(--ease) infinite both;
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .a-face,
+    .a-pip,
+    .a-showOmegaText,
+    .a-Amark,
+    .a-showAtext,
+    .a-oddFade,
+    .a-evenStrong,
+    .a-showBtext,
+    .a-inter,
+    .a-showInterText{
+      animation:none !important;
+      opacity:1 !important;
+      transform:none !important;
+      stroke-dashoffset:0 !important;
+    }
+  }
+
+
+/* 4 e 6 ganham destaque final */
+@keyframes k-relevantStrong{
+  0%,74%   { opacity:0; }
+  82%,100% { opacity:1; }
+}
+
+.a-relevantStrong{
+  opacity:0;
+  animation:k-relevantStrong var(--cycle) var(--ease) infinite both;
+}
+
+.a-relevantStrong .face-white{
+  fill:#ffffff;
+  stroke:var(--ink);
+  stroke-width:2px;
+}
+
+.a-relevantStrong .pip-dark{
+  fill:var(--ink);
+}
+</style>
+  </defs>
+
+  <rect x="0" y="0" width="100%" height="100%" fill="#ffffff"/>
+
+  <g transform="translate(0,-12)">
+    <!-- FACE 1 -->
+    <g transform="translate(75 88)" class="a-oddFade">
+      <rect x="0" y="0" width="90" height="90" rx="16"
+            class="u-stroke u-ns a-face"
+            style="--delay:0s"/>
+      <g class="a-pip" style="--delay:.20s">
+        <circle class="pip" cx="45" cy="45" r="7.8"/>
+      </g>
+    </g>
+
+<!-- FACE 2 -->
+<g transform="translate(185 88)">
+  <rect x="0" y="0" width="90" height="90" rx="16"
+        class="u-stroke u-ns a-face"
+        style="--delay:.28s"/>
+  <g class="a-pip" style="--delay:.48s">
+    <circle class="pip" cx="20" cy="20" r="7.8"/>
+    <circle class="pip" cx="70" cy="70" r="7.8"/>
+  </g>
+</g>
+
+<g transform="translate(185 88)" class="a-evenStrong">
+  <rect x="0" y="0" width="90" height="90" rx="16" class="face-fill"/>
+  <circle class="pip-reverse" cx="20" cy="20" r="7.8"/>
+  <circle class="pip-reverse" cx="70" cy="70" r="7.8"/>
+</g>
+
+
+
+    <!-- FACE 3 -->
+    <g transform="translate(295 88)" class="a-oddFade">
+      <rect x="0" y="0" width="90" height="90" rx="16"
+            class="u-stroke u-ns a-face"
+            style="--delay:.56s"/>
+      <g class="a-pip" style="--delay:.76s">
+        <circle class="pip" cx="20" cy="20" r="7.8"/>
+        <circle class="pip" cx="45" cy="45" r="7.8"/>
+        <circle class="pip" cx="70" cy="70" r="7.8"/>
+      </g>
+    </g>
+
+<!-- FACE 4 -->
+<g transform="translate(405 88)">
+  <rect x="0" y="0" width="90" height="90" rx="16"
+        class="u-stroke u-ns a-face"
+        style="--delay:.84s"/>
+  <g class="a-pip" style="--delay:1.04s">
+    <circle class="pip" cx="20" cy="20" r="7.8"/>
+    <circle class="pip" cx="70" cy="20" r="7.8"/>
+    <circle class="pip" cx="20" cy="70" r="7.8"/>
+    <circle class="pip" cx="70" cy="70" r="7.8"/>
+  </g>
+
+  <!-- A ∩ B -->
+  <rect x="10" y="10" width="70" height="70" rx="11"
+        class="u-stroke u-ns a-inter"/>
+</g>
+
+<g transform="translate(405 88)" class="a-evenStrong">
+  <rect x="0" y="0" width="90" height="90" rx="16" class="face-fill"/>
+  <circle class="pip-reverse" cx="20" cy="20" r="7.8"/>
+  <circle class="pip-reverse" cx="70" cy="20" r="7.8"/>
+  <circle class="pip-reverse" cx="20" cy="70" r="7.8"/>
+  <circle class="pip-reverse" cx="70" cy="70" r="7.8"/>
+</g>
+
+<g transform="translate(405 88)" class="a-relevantStrong">
+  <rect x="0" y="0" width="90" height="90" rx="16" class="face-white"/>
+  <circle class="pip-dark" cx="20" cy="20" r="7.8"/>
+  <circle class="pip-dark" cx="70" cy="20" r="7.8"/>
+  <circle class="pip-dark" cx="20" cy="70" r="7.8"/>
+  <circle class="pip-dark" cx="70" cy="70" r="7.8"/>
+</g>
+
+    <!-- FACE 5 -->
+    <g transform="translate(515 88)" class="a-oddFade">
+      <rect x="0" y="0" width="90" height="90" rx="16"
+            class="u-stroke u-ns a-face"
+            style="--delay:1.12s"/>
+      <g class="a-pip" style="--delay:1.32s">
+        <circle class="pip" cx="20" cy="20" r="7.8"/>
+        <circle class="pip" cx="70" cy="20" r="7.8"/>
+        <circle class="pip" cx="45" cy="45" r="7.8"/>
+        <circle class="pip" cx="20" cy="70" r="7.8"/>
+        <circle class="pip" cx="70" cy="70" r="7.8"/>
+      </g>
+
+    </g>
+
+<!-- FACE 6 -->
+<g transform="translate(625 88)">
+  <rect x="0" y="0" width="90" height="90" rx="16"
+        class="u-stroke u-ns a-face"
+        style="--delay:1.40s"/>
+  <g class="a-pip" style="--delay:1.60s">
+    <circle class="pip" cx="20" cy="20" r="7.8"/>
+    <circle class="pip" cx="20" cy="45" r="7.8"/>
+    <circle class="pip" cx="20" cy="70" r="7.8"/>
+    <circle class="pip" cx="70" cy="20" r="7.8"/>
+    <circle class="pip" cx="70" cy="45" r="7.8"/>
+    <circle class="pip" cx="70" cy="70" r="7.8"/>
+  </g>
+
+
+</g>
+
+<g transform="translate(625 88)" class="a-evenStrong">
+  <rect x="0" y="0" width="90" height="90" rx="16" class="face-fill"/>
+  <circle class="pip-reverse" cx="20" cy="20" r="7.8"/>
+  <circle class="pip-reverse" cx="20" cy="45" r="7.8"/>
+  <circle class="pip-reverse" cx="20" cy="70" r="7.8"/>
+  <circle class="pip-reverse" cx="70" cy="20" r="7.8"/>
+  <circle class="pip-reverse" cx="70" cy="45" r="7.8"/>
+  <circle class="pip-reverse" cx="70" cy="70" r="7.8"/>
+</g>
+
+<g transform="translate(625 88)" class="a-relevantStrong">
+  <rect x="0" y="0" width="90" height="90" rx="16" class="face-white"/>
+  <circle class="pip-dark" cx="20" cy="20" r="7.8"/>
+  <circle class="pip-dark" cx="20" cy="45" r="7.8"/>
+  <circle class="pip-dark" cx="20" cy="70" r="7.8"/>
+  <circle class="pip-dark" cx="70" cy="20" r="7.8"/>
+  <circle class="pip-dark" cx="70" cy="45" r="7.8"/>
+  <circle class="pip-dark" cx="70" cy="70" r="7.8"/>
+</g>
+
+    <!-- destaque único de A = {4,5,6} -->
+<rect x="395" y="78" width="330" height="110" rx="18"
+      pathLength="1000"
+      class="u-stroke u-ns a-Amark"/>
+  <!-- A ∩ B -->
+  <rect x="395" y="78" width="330" height="110" rx="18"
+  pathLength="1000"
+        class="u-stroke u-ns a-inter"/>
+  </g>
+
+  <g transform="translate(450,238)">
+    <text x="0" y="0" class="note a-showAtext u-center">evento de interesse</text>
+    <text x="0" y="36" class="note-strong a-showAtext u-center">A = {4,5,6}</text>
+  </g>
+
+  <g transform="translate(450,238)">
+    <text x="0" y="0" class="note a-showBtext u-center">condição: resultado par</text>
+    <text x="0" y="36" class="note-strong a-showBtext u-center">B = {2,4,6}</text>
+  </g>
+
+  <g transform="translate(450,238)">
+        <text x="0" y="0" class="note a-showInterText u-center">resultados relevantes dada a condição</text>
+    <text x="0" y="36" class="note-strong a-showInterText u-center">A ∩ B = {4,6}</text>
+  </g>
+
+    <g transform="translate(450,238)">
+    <text x="0" y="0" class="note-strong a-showOmegaText u-center">Ω = {1,2,3,4,5,6}</text>
+  </g>
+</svg>
