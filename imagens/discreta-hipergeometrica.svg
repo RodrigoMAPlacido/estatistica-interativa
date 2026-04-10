@@ -1,0 +1,337 @@
+<svg viewBox="0 0 1280 620"
+     xmlns="http://www.w3.org/2000/svg"
+     role="img"
+     aria-labelledby="title desc"
+     preserveAspectRatio="xMidYMid meet">
+
+  <title id="title">Distribuição hipergeométrica</title>
+  <desc id="desc">
+    Animação da distribuição hipergeométrica destacando a forma da distribuição,
+    a esperança E(X) e a faixa correspondente a E(X) mais ou menos sigma.
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --bg:#ffffff;
+        --ink:#111827;
+        --ink-soft:#6b7280;
+        --grid:#d1d5db;
+        --shade:rgba(17,24,39,.06);
+        --shade-soft:rgba(17,24,39,.10);
+        --font:"et-book","ETBook","Georgia","Times New Roman",serif;
+        --cycle:10.8s;
+        --ease:ease-in-out;
+      }
+
+      svg{
+        background:var(--bg);
+      }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        user-select:none;
+      }
+
+      .u-stroke{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        vector-effect:none;
+      }
+
+      .panel{
+        stroke-width:2;
+        rx:20;
+        ry:20;
+      }
+
+      .axis{
+        stroke-width:2.2;
+        vector-effect:non-scaling-stroke;
+      }
+
+      .grid line{
+        stroke:var(--grid);
+        stroke-width:1;
+        vector-effect:non-scaling-stroke;
+      }
+
+      .label{
+        font-size:54px;
+        font-weight:600;
+        text-anchor:middle;
+      }
+
+      .small{
+        font-size:24px;
+        text-anchor:middle;
+        fill:var(--ink-soft);
+      }
+
+      .xlab{
+        font-size:22px;
+        text-anchor:middle;
+      }
+
+      .ylab{
+        font-size:22px;
+        text-anchor:middle;
+        fill:var(--ink-soft);
+      }
+
+      .bar{
+        fill:var(--ink);
+        transform-box:fill-box;
+        transform-origin:bottom;
+        animation:growBar var(--cycle) var(--ease) infinite;
+      }
+
+      .probText{
+        font-size:19px;
+        text-anchor:middle;
+        fill:var(--ink-soft);
+        opacity:0;
+        animation:showProbText var(--cycle) var(--ease) infinite;
+      }
+
+      .meanLine{
+        stroke:var(--ink);
+        stroke-width:1.2;
+        opacity:0;
+        vector-effect:non-scaling-stroke;
+        animation:showMeanLine var(--cycle) var(--ease) infinite;
+      }
+
+      .meanText{
+        font-size:24px;
+        text-anchor:middle;
+        opacity:0;
+        animation:showMeanText var(--cycle) var(--ease) infinite;
+      }
+
+      .sigmaBand{
+        fill:var(--shade-soft);
+        opacity:0;
+        animation:showSigmaBand var(--cycle) var(--ease) infinite;
+      }
+
+      .sigmaEdge{
+        stroke:var(--ink);
+        stroke-width:1.7;
+        stroke-dasharray:6 6;
+        opacity:0;
+        vector-effect:non-scaling-stroke;
+        animation:showSigmaEdge var(--cycle) var(--ease) infinite;
+      }
+
+      .sigmaArrow{
+        stroke:var(--ink);
+        stroke-width:1.8;
+        fill:none;
+        opacity:0;
+        vector-effect:non-scaling-stroke;
+        animation:showSigmaArrow var(--cycle) var(--ease) infinite;
+      }
+
+      .sigmaText{
+        font-size:22px;
+        text-anchor:middle;
+        opacity:0;
+        animation:showSigmaText var(--cycle) var(--ease) infinite;
+      }
+
+      @keyframes growBar{
+        0%,14%{
+          transform:scaleY(0);
+          opacity:0;
+        }
+        26%,88%{
+          transform:scaleY(1);
+          opacity:1;
+        }
+        100%{
+          transform:scaleY(0);
+          opacity:0;
+        }
+      }
+
+      @keyframes showProbText{
+        0%,28%{
+          opacity:0;
+        }
+        38%,56%{
+          opacity:1;
+        }
+        64%,100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showMeanLine{
+        0%,52%{
+          opacity:0;
+        }
+        62%,88%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showMeanText{
+        0%,56%{
+          opacity:0;
+        }
+        66%,88%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showSigmaBand{
+        0%,58%{
+          opacity:0;
+        }
+        68%,88%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showSigmaEdge{
+        0%,60%{
+          opacity:0;
+        }
+        70%,88%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showSigmaArrow{
+        0%,64%{
+          opacity:0;
+        }
+        74%,88%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showSigmaText{
+        0%,68%{
+          opacity:0;
+        }
+        78%,88%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        .bar,.probText,.meanLine,.meanText,.sigmaBand,.sigmaEdge,
+        .sigmaArrow,.sigmaText{
+          animation:none;
+          opacity:1;
+          transform:none;
+        }
+      }
+    </style>
+  </defs>
+
+  <g transform="translate(60,35)">
+    <rect x="0" y="0" width="1160" height="550" class="u-stroke panel"/>
+
+    <text x="580" y="52" class="label">Distribuição hipergeométrica</text>
+    <text x="580" y="86" class="small">forma da distribuição e dispersão em torno de E(X)</text>
+
+    <g transform="translate(120,100) scale(1.16,1.16)">
+      <!-- grade -->
+      <g class="grid">
+        <line x1="0" y1="280" x2="780" y2="280"/>
+        <line x1="0" y1="225" x2="780" y2="225"/>
+        <line x1="0" y1="170" x2="780" y2="170"/>
+        <line x1="0" y1="115" x2="780" y2="115"/>
+        <line x1="0" y1="60"  x2="780" y2="60"/>
+      </g>
+
+      <!-- eixos -->
+      <g class="u-stroke axis">
+        <line x1="0" y1="280" x2="780" y2="280"/>
+        <line x1="0" y1="280" x2="0" y2="60"/>
+      </g>
+
+      <text x="-86" y="200" transform="rotate(-90 -86 170)" class="ylab">p(x)</text>
+      <text x="390" y="350" class="ylab">valores possíveis de X</text>
+
+      <!-- faixa E(X) ± σ -->
+      <!-- N = 10, K = 4, n = 4 -->
+      <!-- E(X) = 1,6 ; σ = 0,8 -->
+      <!-- centros: 90, 240, 390, 540, 690 ; passo = 150 -->
+      <!-- média em 90 + 1,6*150 = 330 -->
+      <!-- deslocamento σ = 0,8*150 = 120 -->
+      <rect x="210" y="60" width="240" height="220" class="sigmaBand"/>
+      <line x1="210" y1="60" x2="210" y2="280" class="sigmaEdge"/>
+      <line x1="450" y1="60" x2="450" y2="280" class="sigmaEdge"/>
+
+      <!-- barras -->
+      <!-- probabilidades:
+           x=0: 0,071
+           x=1: 0,381
+           x=2: 0,429
+           x=3: 0,114
+           x=4: 0,005
+      -->
+      <rect x="45"  y="246" width="90" height="34"  class="bar" style="animation-delay:0s"/>
+      <rect x="195" y="97"  width="90" height="183" class="bar" style="animation-delay:.10s"/>
+      <rect x="345" y="74"  width="90" height="206" class="bar" style="animation-delay:.20s"/>
+      <rect x="495" y="225" width="90" height="55"  class="bar" style="animation-delay:.30s"/>
+      <rect x="645" y="274" width="90" height="6"   class="bar" style="animation-delay:.40s"/>
+
+      <!-- média -->
+      <line x1="330" y1="40" x2="330" y2="280" class="meanLine"/>
+      <text x="330" y="30" class="meanText">E(X)</text>
+
+      <!-- seta sigma -->
+      <g transform="translate(0,-20)">
+        <line x1="330" y1="78" x2="450" y2="78" class="sigmaArrow"/>
+        <polyline points="442,73 450,78 442,83" class="sigmaArrow"/>
+      </g>
+      <text x="390" y="50" class="sigmaText">+σ</text>
+
+      <g transform="translate(0,-20) rotate(180 330 78)">
+        <line x1="330" y1="78" x2="450" y2="78" class="sigmaArrow"/>
+        <polyline points="442,73 450,78 442,83" class="sigmaArrow"/>
+      </g>
+      <text x="270" y="50" class="sigmaText">-σ</text>
+
+      <!-- rótulos de probabilidade -->
+      <text x="90"  y="234" class="probText">0,071</text>
+      <text x="240" y="85"  class="probText">0,381</text>
+      <text x="390" y="62"  class="probText">0,429</text>
+      <text x="540" y="213" class="probText">0,114</text>
+      <text x="690" y="262" class="probText">0,005</text>
+
+      <!-- eixo x -->
+      <text x="90"  y="312" class="xlab">0</text>
+      <text x="240" y="312" class="xlab">1</text>
+      <text x="390" y="312" class="xlab">2</text>
+      <text x="540" y="312" class="xlab">3</text>
+      <text x="690" y="312" class="xlab">4</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,382 @@
+<svg viewBox="0 0 1280 620"
+     xmlns="http://www.w3.org/2000/svg"
+     role="img"
+     aria-labelledby="title desc"
+     preserveAspectRatio="xMidYMid meet">
+
+  <title id="title">Distribuição exponencial</title>
+  <desc id="desc">
+    Animação da distribuição exponencial destacando a densidade decrescente,
+    a esperança E(X) e a faixa correspondente a E(X) mais ou menos sigma.
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --bg:#ffffff;
+        --ink:#111827;
+        --ink-soft:#6b7280;
+        --grid:#d1d5db;
+        --shade:rgba(17,24,39,.06);
+        --shade-soft:rgba(17,24,39,.10);
+        --font:"et-book","ETBook","Georgia","Times New Roman",serif;
+        --cycle:10.8s;
+        --ease:ease-in-out;
+      }
+
+      svg{
+        background:var(--bg);
+      }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        user-select:none;
+      }
+
+      .u-stroke{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        vector-effect:none;
+      }
+
+      .panel{
+        stroke-width:2;
+        rx:20;
+        ry:20;
+      }
+
+      .axis{
+        stroke-width:2.2;
+        vector-effect:non-scaling-stroke;
+      }
+
+      .grid line{
+        stroke:var(--grid);
+        stroke-width:1;
+        vector-effect:non-scaling-stroke;
+      }
+
+      .label{
+        font-size:54px;
+        font-weight:600;
+        text-anchor:middle;
+      }
+
+      .small{
+        font-size:24px;
+        text-anchor:middle;
+        fill:var(--ink-soft);
+      }
+
+      .xlab{
+        font-size:22px;
+        text-anchor:middle;
+      }
+
+      .ylab{
+        font-size:22px;
+        text-anchor:middle;
+        fill:var(--ink-soft);
+      }
+
+      .densityArea{
+        fill:var(--shade-soft);
+        opacity:0;
+        animation:showArea var(--cycle) var(--ease) infinite;
+      }
+
+      .densityCurve{
+        stroke:var(--ink);
+        stroke-width:2.2;
+        fill:none;
+        vector-effect:non-scaling-stroke;
+        stroke-dasharray:900;
+        stroke-dashoffset:900;
+        animation:drawCurve var(--cycle) var(--ease) infinite;
+      }
+
+      .densityText{
+        font-size:19px;
+        text-anchor:middle;
+        fill:var(--ink-soft);
+        opacity:0;
+        animation:showDensityText var(--cycle) var(--ease) infinite;
+      }
+
+      .meanLine{
+        stroke:var(--ink);
+        stroke-width:1.2;
+        opacity:0;
+        vector-effect:non-scaling-stroke;
+        animation:showMeanLine var(--cycle) var(--ease) infinite;
+      }
+
+      .meanText{
+        font-size:24px;
+        text-anchor:middle;
+        opacity:0;
+        animation:showMeanText var(--cycle) var(--ease) infinite;
+      }
+
+      .sigmaBand{
+        fill:var(--shade-soft);
+        opacity:0;
+        animation:showSigmaBand var(--cycle) var(--ease) infinite;
+      }
+
+      .sigmaEdge{
+        stroke:var(--ink);
+        stroke-width:1.7;
+        stroke-dasharray:6 6;
+        opacity:0;
+        vector-effect:non-scaling-stroke;
+        animation:showSigmaEdge var(--cycle) var(--ease) infinite;
+      }
+
+      .sigmaArrow{
+        stroke:var(--ink);
+        stroke-width:1.8;
+        fill:none;
+        opacity:0;
+        vector-effect:non-scaling-stroke;
+        animation:showSigmaArrow var(--cycle) var(--ease) infinite;
+      }
+
+      .sigmaText{
+        font-size:22px;
+        text-anchor:middle;
+        opacity:0;
+        animation:showSigmaText var(--cycle) var(--ease) infinite;
+      }
+
+      @keyframes drawCurve{
+        0%,14%{
+          stroke-dashoffset:900;
+          opacity:0;
+        }
+        26%,88%{
+          stroke-dashoffset:0;
+          opacity:1;
+        }
+        100%{
+          stroke-dashoffset:900;
+          opacity:0;
+        }
+      }
+
+      @keyframes showArea{
+        0%,18%{
+          opacity:0;
+        }
+        30%,88%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showDensityText{
+        0%,28%{
+          opacity:0;
+        }
+        38%,56%{
+          opacity:1;
+        }
+        64%,100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showMeanLine{
+        0%,52%{
+          opacity:0;
+        }
+        62%,88%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showMeanText{
+        0%,56%{
+          opacity:0;
+        }
+        66%,88%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showSigmaBand{
+        0%,58%{
+          opacity:0;
+        }
+        68%,88%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showSigmaEdge{
+        0%,60%{
+          opacity:0;
+        }
+        70%,88%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showSigmaArrow{
+        0%,64%{
+          opacity:0;
+        }
+        74%,88%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showSigmaText{
+        0%,68%{
+          opacity:0;
+        }
+        78%,88%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        .densityArea,.densityCurve,.densityText,.meanLine,.meanText,
+        .sigmaBand,.sigmaEdge,.sigmaArrow,.sigmaText{
+          animation:none;
+          opacity:1;
+          transform:none;
+          stroke-dashoffset:0;
+        }
+      }
+    </style>
+  </defs>
+
+  <g transform="translate(60,35)">
+    <rect x="0" y="0" width="1160" height="550" class="u-stroke panel"/>
+
+    <text x="580" y="52" class="label">Distribuição exponencial</text>
+    <text x="580" y="86" class="small">densidade decrescente em um suporte contínuo não negativo</text>
+
+    <g transform="translate(120,100) scale(1.16,1.16)">
+      <!-- grade -->
+      <g class="grid">
+        <line x1="40" y1="280" x2="740" y2="280"/>
+        <line x1="40" y1="230" x2="740" y2="230"/>
+        <line x1="40" y1="180" x2="740" y2="180"/>
+        <line x1="40" y1="130" x2="740" y2="130"/>
+        <line x1="40" y1="80"  x2="740" y2="80"/>
+      </g>
+
+      <!-- eixos -->
+      <g class="u-stroke axis">
+        <line x1="40" y1="280" x2="740" y2="280"/>
+        <line x1="40" y1="280" x2="40" y2="60"/>
+      </g>
+
+      <text x="-86" y="280" transform="rotate(-90 -86 170)" class="ylab">f(x)</text>
+      <text x="390" y="350" class="ylab">valores possíveis de X</text>
+
+      <!-- faixa E(X) ± σ -->
+      <!-- λ = 0,5 => E(X)=2 e σ=2 -->
+      <!-- mapeamento: 1 unidade = 85 px ; eixo de 0 a 8 -->
+      <!-- média em x = 210 ; faixa de 0 até 4 -->
+      <rect x="40" y="60" width="340" height="220" class="sigmaBand"/>
+      <line x1="380" y1="60" x2="380" y2="280" class="sigmaEdge"/>
+
+      <!-- área sob a curva -->
+      <path class="densityArea"
+            d="M40 280
+               L40 80
+               L82.5 124.24
+               L125 158.69
+               L167.5 185.53
+               L210 206.42
+               L252.5 222.70
+               L295 235.37
+               L337.5 245.25
+               L380 252.93
+               L422.5 258.92
+               L465 263.58
+               L507.5 267.21
+               L550 270.04
+               L592.5 272.25
+               L635 273.96
+               L677.5 275.30
+               L720 276.34
+               L720 280 Z"/>
+
+      <!-- curva de densidade -->
+      <path class="densityCurve"
+            d="M40 80
+               L82.5 124.24
+               L125 158.69
+               L167.5 185.53
+               L210 206.42
+               L252.5 222.70
+               L295 235.37
+               L337.5 245.25
+               L380 252.93
+               L422.5 258.92
+               L465 263.58
+               L507.5 267.21
+               L550 270.04
+               L592.5 272.25
+               L635 273.96
+               L677.5 275.30
+               L720 276.34"/>
+
+
+      <!-- média -->
+      <line x1="210" y1="40" x2="210" y2="280" class="meanLine"/>
+      <text x="210" y="30" class="meanText">E(X)</text>
+
+      <!-- seta sigma -->
+      <g transform="translate(0,-20)">
+        <line x1="210" y1="78" x2="380" y2="78" class="sigmaArrow"/>
+        <polyline points="372,73 380,78 372,83" class="sigmaArrow"/>
+      </g>
+      <text x="295" y="78" class="sigmaText">+σ</text>
+
+      <g transform="translate(0,-20)">
+        <line x1="210" y1="78" x2="40" y2="78" class="sigmaArrow"/>
+        <polyline points="48,73 40,78 48,83" class="sigmaArrow"/>
+      </g>
+      <text x="125" y="78" class="sigmaText">-σ</text>
+
+      <!-- eixo x -->
+      <text x="40"  y="312" class="xlab">0</text>
+      <text x="125" y="312" class="xlab">1</text>
+      <text x="210" y="312" class="xlab">2</text>
+      <text x="295" y="312" class="xlab">3</text>
+      <text x="380" y="312" class="xlab">4</text>
+      <text x="465" y="312" class="xlab">5</text>
+      <text x="550" y="312" class="xlab">6</text>
+      <text x="635" y="312" class="xlab">7</text>
+      <text x="720" y="312" class="xlab">8</text>
+    </g>
+  </g>
+</svg>

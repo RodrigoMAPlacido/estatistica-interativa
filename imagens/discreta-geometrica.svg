@@ -1,0 +1,331 @@
+<svg viewBox="0 0 1280 620"
+     xmlns="http://www.w3.org/2000/svg"
+     role="img"
+     aria-labelledby="title desc"
+     preserveAspectRatio="xMidYMid meet">
+
+  <title id="title">Distribuição geométrica</title>
+  <desc id="desc">
+    Animação da distribuição geométrica. O gráfico mostra a função de probabilidade
+    decrescente para a tentativa em que ocorre o primeiro sucesso. A cena destaca
+    que os maiores valores de probabilidade aparecem nas primeiras tentativas.
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --bg:#ffffff;
+        --ink:#111827;
+        --ink-soft:#6b7280;
+        --grid:#d1d5db;
+        --shade:rgba(17,24,39,.06);
+        --shade-soft:rgba(17,24,39,.10);
+        --font:"et-book","ETBook","Georgia","Times New Roman",serif;
+        --cycle:8.8s;
+        --ease:ease-in-out;
+      }
+
+      svg{
+        background:var(--bg);
+      }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        user-select:none;
+      }
+
+      .u-stroke{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        vector-effect:non-scaling-stroke;
+      }
+
+      .panel{
+        stroke-width:2;
+        rx:20;
+        ry:20;
+      }
+
+      .axis{
+        stroke-width:2.2;
+      }
+
+      .grid line{
+        stroke:var(--grid);
+        stroke-width:1;
+        vector-effect:non-scaling-stroke;
+      }
+
+      .label{
+        font-size:54px;
+        font-weight:600;
+        text-anchor:middle;
+      }
+
+      .small{
+        font-size:24px;
+        text-anchor:middle;
+        fill:var(--ink-soft);
+      }
+
+      .xlab{
+        font-size:22px;
+        text-anchor:middle;
+      }
+
+      .ylab{
+        font-size:20px;
+        text-anchor:middle;
+        fill:var(--ink-soft);
+      }
+
+      .bar{
+        fill:var(--ink);
+        transform-box:fill-box;
+        transform-origin:bottom;
+        animation:growBar var(--cycle) var(--ease) infinite;
+      }
+
+      .probText{
+        font-size:20px;
+        text-anchor:middle;
+        fill:var(--ink-soft);
+        opacity:0;
+        animation:showProbText var(--cycle) var(--ease) infinite;
+      }
+
+      .tagBox{
+        fill:var(--shade);
+        stroke:var(--ink);
+        stroke-width:1.4;
+        rx:12;
+        ry:12;
+        vector-effect:non-scaling-stroke;
+        opacity:0;
+        animation:showTagBox var(--cycle) var(--ease) infinite;
+      }
+
+      .tagText{
+        font-size:19px;
+        text-anchor:middle;
+        opacity:0;
+        animation:showTagText var(--cycle) var(--ease) infinite;
+      }
+
+      .formulaBox{
+        fill:var(--shade);
+        stroke:var(--ink);
+        stroke-width:1.5;
+        rx:14;
+        ry:14;
+        vector-effect:non-scaling-stroke;
+        opacity:0;
+        animation:showFormulaBox var(--cycle) var(--ease) infinite;
+      }
+
+      .formula{
+        font-size:25px;
+        text-anchor:middle;
+        opacity:0;
+        animation:showFormula var(--cycle) var(--ease) infinite;
+      }
+
+      .note{
+        font-size:21px;
+        text-anchor:middle;
+        fill:var(--ink-soft);
+        opacity:0;
+        animation:showNote var(--cycle) var(--ease) infinite;
+      }
+
+      @keyframes growBar{
+        0%,14%{
+          transform:scaleY(0);
+          opacity:0;
+        }
+        26%,86%{
+          transform:scaleY(1);
+          opacity:1;
+        }
+        100%{
+          transform:scaleY(0);
+          opacity:0;
+        }
+      }
+
+      @keyframes showProbText{
+        0%,30%{
+          opacity:0;
+        }
+        40%,86%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showTagBox{
+        0%,36%{
+          opacity:0;
+        }
+        46%,86%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showTagText{
+        0%,40%{
+          opacity:0;
+        }
+        50%,86%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showFormulaBox{
+        0%,48%{
+          opacity:0;
+        }
+        58%,86%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showFormula{
+        0%,52%{
+          opacity:0;
+        }
+        62%,86%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showNote{
+        0%,58%{
+          opacity:0;
+        }
+        68%,86%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        .bar,.probText,.tagBox,.tagText,.formulaBox,.formula,.note{
+          animation:none;
+          opacity:1;
+          transform:none;
+        }
+      }
+    </style>
+  </defs>
+
+  <g transform="translate(70,40)">
+    <rect x="0" y="0" width="1160" height="550" class="u-stroke panel"/>
+
+    <text x="530" y="52" class="label">Distribuição Geométrica</text>
+    <text x="530" y="86" class="small">a probabilidade decresce conforme o primeiro sucesso demora a ocorrer</text>
+
+    <g transform="translate(160,30) scale(1.2,1.2)">
+  <!-- grade -->
+  <g class="grid">
+    <line x1="0" y1="260" x2="640" y2="260"/>
+    <line x1="0" y1="190" x2="640" y2="190"/>
+    <line x1="0" y1="120" x2="640" y2="120"/>
+  </g>
+
+  <!-- eixos -->
+  <g class="u-stroke axis">
+    <line x1="0" y1="330" x2="640" y2="330"/>
+    <line x1="0" y1="330" x2="0" y2="90"/>
+  </g>
+
+  <text x="-106" y="245" transform="rotate(-90 -86 185)" class="ylab">p(x)</text>
+  <text x="320" y="400" class="ylab">tentativa do primeiro sucesso</text>
+
+  <!-- barras: p = 0.35 -->
+  <rect x="34"  y="134" width="46" height="196" class="bar" style="animation-delay:0s"/>
+  <rect x="109" y="203" width="46" height="127" class="bar" style="animation-delay:.08s"/>
+  <rect x="184" y="247" width="46" height="83"  class="bar" style="animation-delay:.16s"/>
+  <rect x="259" y="276" width="46" height="54"  class="bar" style="animation-delay:.24s"/>
+  <rect x="334" y="295" width="46" height="35"  class="bar" style="animation-delay:.32s"/>
+  <rect x="409" y="307" width="46" height="23"  class="bar" style="animation-delay:.40s"/>
+  <rect x="484" y="315" width="46" height="15"  class="bar" style="animation-delay:.48s"/>
+  <rect x="559" y="320" width="46" height="10"  class="bar" style="animation-delay:.56s"/>
+
+  <!-- esperança: E(X)=1/p ≈ 2.86 -->
+  <line x1="196" y1="90" x2="196" y2="330"
+        class="u-stroke"
+        style="stroke-width:2.2; opacity:0; animation:showTagBox var(--cycle) var(--ease) infinite;"/>
+  <text x="196" y="80" class="tagText">E(X)</text>
+
+<!-- desvio padrão (região + seta estilo EI) -->
+<g style="opacity:0; animation:showFormulaBox var(--cycle) var(--ease) infinite;">
+
+<!-- região do desvio padrão -->
+<rect x="57" y="90" width="313" height="240"
+      fill="var(--shade-soft)"
+      style="opacity:0; animation:showFormulaBox var(--cycle) var(--ease) infinite;"/>
+
+<!-- seta sigma à direita -->
+<g transform="translate(0,10)" style="opacity:0; animation:showFormulaBox var(--cycle) var(--ease) infinite;">
+  <line x1="196" y1="78" x2="370" y2="78"
+        class="u-stroke"
+        style="stroke-width:1.6;"/>
+  <polyline points="362,73 370,78 362,83"
+            class="u-stroke"
+            style="stroke-width:1.6; fill:none;"/>
+</g>
+<text x="283" y="80" class="tagText" style="font-size:17px;">+σ</text>
+
+<!-- seta sigma à esquerda -->
+<g transform="translate(0,10) rotate(180 196 78)" style="opacity:0; animation:showFormulaBox var(--cycle) var(--ease) infinite;">
+  <line x1="196" y1="78" x2="335" y2="78"
+        class="u-stroke"
+        style="stroke-width:1.6;"/>
+  <polyline points="327,73 335,78 327,83"
+            class="u-stroke"
+            style="stroke-width:1.6; fill:none;"/>
+</g>
+<text x="126" y="80" class="tagText" style="font-size:17px;">−σ</text>
+
+</g>
+  <!-- probabilidades -->
+  <text x="57"  y="116" class="probText">p</text>
+  <text x="132" y="185" class="probText">(1−p)p</text>
+  <text x="207" y="229" class="probText">(1−p)²p</text>
+  <text x="282" y="258" class="probText">(1−p)³p</text>
+  <text x="357" y="277" class="probText">(1−p)⁴p</text>
+  <text x="432" y="287" class="probText">(1−p)⁵p</text>
+  <text x="507" y="295" class="probText">(1−p)⁶p</text>
+  <text x="582" y="300" class="probText">(1−p)⁷p</text>
+
+  <!-- rótulos do eixo x -->
+  <text x="57"  y="365" class="xlab">1</text>
+  <text x="132" y="365" class="xlab">2</text>
+  <text x="207" y="365" class="xlab">3</text>
+  <text x="282" y="365" class="xlab">4</text>
+  <text x="357" y="365" class="xlab">5</text>
+  <text x="432" y="365" class="xlab">6</text>
+  <text x="507" y="365" class="xlab">7</text>
+  <text x="582" y="365" class="xlab">8</text>
+</g>  </g>
+</svg>

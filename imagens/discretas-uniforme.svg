@@ -1,0 +1,425 @@
+<svg viewBox="0 0 1200 700"
+     xmlns="http://www.w3.org/2000/svg"
+     role="img"
+     aria-labelledby="title desc"
+     preserveAspectRatio="xMidYMid meet">
+
+  <title id="title">Distribuição uniforme discreta com introdução do desvio padrão</title>
+  <desc id="desc">
+    Animação em duas etapas. Primeiro, a distribuição uniforme discreta é mostrada
+    por barras de mesma altura e pela fórmula p(x_i)=1/n. Em seguida, aparece a média
+    E(X) e uma faixa simétrica em torno dela, introduzindo o desvio padrão como medida
+    de dispersão em torno do centro da distribuição.
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --bg:#ffffff;
+        --ink:#111827;
+        --ink-soft:#6b7280;
+        --grid:#d1d5db;
+        --shade:rgba(17,24,39,.06);
+        --shade-soft:rgba(17,24,39,.10);
+        --font:"et-book","ETBook","Georgia","Times New Roman",serif;
+        --cycle:10.6s;
+        --ease:ease-in-out;
+      }
+
+      svg{
+        background:var(--bg);
+      }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        user-select:none;
+      }
+
+      .u-stroke{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        vector-effect:non-scaling-stroke;
+      }
+
+      .panel{
+        stroke-width:2;
+        rx:20;
+        ry:20;
+      }
+
+      .axis{
+        stroke-width:2.2;
+      }
+
+      .grid line{
+        stroke:var(--grid);
+        stroke-width:1;
+        vector-effect:non-scaling-stroke;
+      }
+
+      .label{
+        font-size:34px;
+        font-weight:600;
+        text-anchor:middle;
+      }
+
+      .small{
+        font-size:22px;
+        text-anchor:middle;
+        fill:var(--ink-soft);
+      }
+
+      .xlab{
+        font-size:22px;
+        text-anchor:middle;
+      }
+
+      .ylab{
+        font-size:22px;
+        text-anchor:middle;
+        fill:var(--ink-soft);
+      }
+
+      .bar{
+        fill:var(--ink);
+        transform-box:fill-box;
+        transform-origin:bottom;
+        animation:growBar var(--cycle) var(--ease) infinite;
+      }
+
+      .equalLine{
+        stroke:var(--ink-soft);
+        stroke-width:2;
+        stroke-dasharray:7 6;
+        opacity:0;
+        animation:showEqualLine var(--cycle) var(--ease) infinite;
+      }
+
+      .equalText{
+        font-size:22px;
+        text-anchor:middle;
+        fill:var(--ink-soft);
+        opacity:0;
+        animation:showEqualText var(--cycle) var(--ease) infinite;
+      }
+
+      .formulaBox{
+        fill:var(--shade);
+        stroke:var(--ink);
+        stroke-width:1.5;
+        rx:14;
+        ry:14;
+        vector-effect:non-scaling-stroke;
+        opacity:0;
+        animation:showFormulaBox var(--cycle) var(--ease) infinite;
+      }
+
+      .formula{
+        font-size:30px;
+        text-anchor:middle;
+        opacity:0;
+        animation:showFormula var(--cycle) var(--ease) infinite;
+      }
+
+      .note{
+        font-size:21px;
+        text-anchor:middle;
+        fill:var(--ink-soft);
+        opacity:0;
+      }
+
+      .uniformNote{
+        animation:showUniformNote var(--cycle) var(--ease) infinite;
+      }
+
+      .meanLine{
+        stroke:var(--ink);
+        stroke-width:2.2;
+        opacity:0;
+        animation:showMeanLine var(--cycle) var(--ease) infinite;
+      }
+
+      .meanText{
+        font-size:24px;
+        text-anchor:middle;
+        opacity:0;
+        animation:showMeanText var(--cycle) var(--ease) infinite;
+      }
+
+      .sigmaBand{
+        fill:var(--shade-soft);
+        opacity:0;
+        animation:showSigmaBand var(--cycle) var(--ease) infinite;
+      }
+
+      .sigmaEdge{
+        stroke:var(--ink);
+        stroke-width:1.7;
+        stroke-dasharray:6 6;
+        opacity:0;
+        animation:showSigmaEdge var(--cycle) var(--ease) infinite;
+      }
+
+      .sigmaArrow{
+        stroke:var(--ink);
+        stroke-width:1.8;
+        fill:none;
+        opacity:0;
+        animation:showSigmaArrow var(--cycle) var(--ease) infinite;
+      }
+
+      .sigmaText{
+        font-size:22px;
+        text-anchor:middle;
+        opacity:0;
+        animation:showSigmaText var(--cycle) var(--ease) infinite;
+      }
+
+      .dispersionNote{
+        animation:showDispersionNote var(--cycle) var(--ease) infinite;
+      }
+
+      @keyframes growBar{
+        0%,12%{
+          transform:scaleY(0);
+          opacity:0;
+        }
+        22%,88%{
+          transform:scaleY(1);
+          opacity:1;
+        }
+        100%{
+          transform:scaleY(0);
+          opacity:0;
+        }
+      }
+
+      @keyframes showEqualLine{
+        0%,24%{
+          opacity:0;
+        }
+        32%,52%{
+          opacity:1;
+        }
+        60%,100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showEqualText{
+        0%,28%{
+          opacity:0;
+        }
+        36%,52%{
+          opacity:1;
+        }
+        60%,100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showFormulaBox{
+        0%,32%{
+          opacity:0;
+        }
+        40%,54%{
+          opacity:1;
+        }
+        62%,100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showFormula{
+        0%,36%{
+          opacity:0;
+        }
+        44%,54%{
+          opacity:1;
+        }
+        62%,100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showUniformNote{
+        0%,38%{
+          opacity:0;
+        }
+        46%,54%{
+          opacity:1;
+        }
+        62%,100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showMeanLine{
+        0%,56%{
+          opacity:0;
+        }
+        64%,88%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showMeanText{
+        0%,60%{
+          opacity:0;
+        }
+        68%,88%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showSigmaBand{
+        0%,62%{
+          opacity:0;
+        }
+        70%,88%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showSigmaEdge{
+        0%,64%{
+          opacity:0;
+        }
+        72%,88%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showSigmaArrow{
+        0%,68%{
+          opacity:0;
+        }
+        76%,88%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showSigmaText{
+        0%,72%{
+          opacity:0;
+        }
+        80%,88%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showDispersionNote{
+        0%,74%{
+          opacity:0;
+        }
+        82%,88%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        .bar,.equalLine,.equalText,.formulaBox,.formula,.uniformNote,
+        .meanLine,.meanText,.sigmaBand,.sigmaEdge,.sigmaArrow,.sigmaText,.dispersionNote{
+          animation:none;
+          opacity:1;
+          transform:none;
+        }
+      }
+    </style>
+  </defs>
+
+  <g transform="translate(70,40)">
+    <rect x="0" y="0" width="1060" height="570" class="u-stroke panel"/>
+
+    <text x="530" y="52" class="label">Distribuição uniforme discreta</text>
+    <text x="530" y="86" class="small">probabilidades iguais e dispersão em torno da média</text>
+
+    <g transform="translate(120,120)">
+      <g class="grid">
+        <line x1="0" y1="260" x2="760" y2="260"/>
+        <line x1="0" y1="190" x2="760" y2="190"/>
+        <line x1="0" y1="120" x2="760" y2="120"/>
+        <line x1="0" y1="50"  x2="760" y2="50"/>
+      </g>
+
+      <g class="u-stroke axis">
+        <line x1="0" y1="330" x2="760" y2="330"/>
+        <line x1="0" y1="330" x2="0" y2="20"/>
+      </g>
+
+      <text x="-86" y="245" transform="rotate(-90 -86 185)" class="ylab">p(x)</text>
+      <text x="380" y="400" class="ylab">valores possíveis de X</text>
+
+      <!-- barras iguais -->
+      <rect x="50"  y="120" width="68" height="210" class="bar" style="animation-delay:0s"/>
+      <rect x="190" y="120" width="68" height="210" class="bar" style="animation-delay:.08s"/>
+      <rect x="330" y="120" width="68" height="210" class="bar" style="animation-delay:.16s"/>
+      <rect x="470" y="120" width="68" height="210" class="bar" style="animation-delay:.24s"/>
+      <rect x="610" y="120" width="68" height="210" class="bar" style="animation-delay:.32s"/>
+
+      <!-- igualdade -->
+      <line x1="30" y1="120" x2="700" y2="120" class="equalLine"/>
+      <text x="365" y="102" class="equalText">todas as probabilidades são iguais</text>
+
+      <!-- média -->
+      <line x1="364" y1="20" x2="364" y2="330" class="meanLine"/>
+      <text x="364" y="2" class="meanText">E(X)</text>
+
+      <!-- faixa de sigma -->
+      <rect x="252" y="20" width="224" height="310" class="sigmaBand"/>
+      <line x1="252" y1="20" x2="252" y2="330" class="sigmaEdge"/>
+      <line x1="476" y1="20" x2="476" y2="330" class="sigmaEdge"/>
+
+      <!-- seta sigma -->
+      <line x1="364" y1="56" x2="476" y2="56" class="sigmaArrow"/>
+      <polyline points="468,51 476,56 468,61" class="sigmaArrow"/>
+      <text x="420" y="40" class="sigmaText">+σ</text>
+
+      <!-- seta sigma2 -->
+      <g transform="translate(-108,0)">
+      <g transform="rotate(180 418 56)">
+      <line x1="364" y1="56" x2="476" y2="56" class="sigmaArrow"/>
+      <polyline points="468,51 476,56 468,61" class="sigmaArrow"/>
+      </g>
+      <text x="420" y="40" class="sigmaText">-σ</text>
+</g>
+
+      <!-- rótulos x -->
+      <text x="84"  y="362" class="xlab">x₁</text>
+      <text x="224" y="362" class="xlab">x₂</text>
+      <text x="364" y="362" class="xlab">x₃</text>
+      <text x="504" y="362" class="xlab">x₄</text>
+      <text x="644" y="362" class="xlab">x₅</text>
+    </g>
+
+
+    <!-- observações -->
+    <text x="500" y="550" class="note uniformNote">cada valor possível recebe a mesma probabilidade</text>
+
+
+  </g>
+</svg>

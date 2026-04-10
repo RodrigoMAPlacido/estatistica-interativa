@@ -1,0 +1,307 @@
+<svg viewBox="0 0 1000 720"
+     xmlns="http://www.w3.org/2000/svg"
+     role="img"
+     aria-labelledby="title desc"
+     preserveAspectRatio="xMidYMid meet">
+
+  <title id="title">Valor esperado de uma variável aleatória contínua</title>
+  <desc id="desc">
+    Curva de densidade representando uma variável aleatória contínua.
+    A linha vertical indica o valor esperado E(X), e a fórmula mostra
+    a definição integral do valor esperado.
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --ink-soft:#64748b;
+        --grid:#d1d5db;
+        --shade:rgba(17,24,39,.08);
+        --font:"et-book","ETBook","Georgia","Times New Roman",serif;
+        --cycle:7.8s;
+        --ease:ease-in-out;
+      }
+
+      svg{
+        background:#ffffff;
+      }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        user-select:none;
+      }
+
+      .u-stroke{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        vector-effect:non-scaling-stroke;
+      }
+
+      .u-panel{
+        stroke-width:2;
+        rx:22;
+        ry:22;
+      }
+
+      .title{
+        font-size:34px;
+        font-weight:600;
+        text-anchor:middle;
+      }
+
+      .small{
+        font-size:22px;
+        text-anchor:middle;
+        fill:var(--ink-soft);
+      }
+
+      .axis{
+        stroke-width:2;
+      }
+
+      .grid line{
+        stroke:var(--grid);
+        stroke-width:1;
+        vector-effect:non-scaling-stroke;
+      }
+
+      .ticklab{
+        font-size:19px;
+        fill:var(--ink-soft);
+        text-anchor:middle;
+      }
+
+      .xlab{
+        font-size:24px;
+        text-anchor:middle;
+      }
+
+      .ylab{
+        font-size:22px;
+        fill:var(--ink-soft);
+        text-anchor:middle;
+      }
+
+      .densityArea{
+        fill:var(--shade);
+        opacity:0;
+        animation:appearArea var(--cycle) var(--ease) infinite;
+      }
+
+      .bellPath{
+        stroke:var(--ink);
+        stroke-width:3;
+        fill:none;
+        vector-effect:non-scaling-stroke;
+        stroke-dasharray:760;
+        stroke-dashoffset:760;
+        animation:drawCurve var(--cycle) var(--ease) infinite;
+      }
+
+      .meanLine{
+        stroke:var(--ink);
+        stroke-width:2.2;
+        vector-effect:non-scaling-stroke;
+        stroke-dasharray:280;
+        stroke-dashoffset:280;
+        opacity:0;
+        animation:drawMean var(--cycle) var(--ease) infinite;
+      }
+
+      .meanDot{
+        fill:var(--ink);
+        opacity:0;
+        animation:appearMeanText var(--cycle) var(--ease) infinite;
+      }
+
+      .formulaGroup{
+        opacity:0;
+        animation:appearMeanText var(--cycle) var(--ease) infinite;
+      }
+
+      .formulaMain{
+        font-size:24px;
+        text-anchor:start;
+      }
+
+      .integralBig{
+        font-size:42px;
+        text-anchor:middle;
+      }
+
+      .integralLim{
+        font-size:14px;
+        text-anchor:middle;
+      }
+
+      .curveLabel{
+        font-size:20px;
+        text-anchor:middle;
+        fill:var(--ink-soft);
+        opacity:0;
+        animation:appearCurveLabel var(--cycle) var(--ease) infinite;
+      }
+
+      @keyframes drawCurve{
+        0%,16%{
+          stroke-dashoffset:760;
+          opacity:0;
+        }
+        28%,84%{
+          stroke-dashoffset:0;
+          opacity:1;
+        }
+        100%{
+          stroke-dashoffset:760;
+          opacity:0;
+        }
+      }
+
+      @keyframes appearArea{
+        0%,22%{
+          opacity:0;
+        }
+        34%,84%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes drawMean{
+        0%,42%{
+          stroke-dashoffset:280;
+          opacity:0;
+        }
+        54%,84%{
+          stroke-dashoffset:0;
+          opacity:1;
+        }
+        100%{
+          stroke-dashoffset:280;
+          opacity:0;
+        }
+      }
+
+      @keyframes appearMeanText{
+        0%,50%{
+          opacity:0;
+        }
+        60%,84%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes appearCurveLabel{
+        0%,30%{
+          opacity:0;
+        }
+        40%,84%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        .densityArea,.bellPath,.meanLine,.meanDot,.formulaGroup,.curveLabel{
+          animation:none;
+          opacity:1;
+          stroke-dashoffset:0;
+        }
+      }
+    </style>
+  </defs>
+
+  <!-- painel -->
+  <g transform="translate(40,110)">
+    <rect x="0" y="-10" width="840" height="505" class="u-panel u-stroke"/>
+
+    <text x="420" y="28" class="title">Valor esperado</text>
+    <text x="420" y="54" class="small">densidade contínua e posição de E(X)</text>
+
+    <g transform="translate(110,110)">
+      <!-- grade -->
+      <g class="grid">
+        <line x1="0" y1="220" x2="600" y2="220"/>
+        <line x1="0" y1="150" x2="600" y2="150"/>
+        <line x1="0" y1="80"  x2="600" y2="80"/>
+        <line x1="0" y1="10"  x2="600" y2="10"/>
+      </g>
+
+      <!-- eixos -->
+      <g class="u-stroke axis">
+        <line x1="0" y1="290" x2="600" y2="290"/>
+        <line x1="0" y1="290" x2="0" y2="10"/>
+      </g>
+
+      <!-- rótulo do eixo y -->
+      <text x="-58" y="180" class="ylab" transform="rotate(-90 -58 150)">f(x)</text>
+
+      <!-- único rótulo necessário no eixo y -->
+      <text x="-18" y="294" style="font-family:var(--font); font-size:19px; fill:var(--ink-soft); text-anchor:end;">0</text>
+
+      <!-- área sob a curva -->
+      <!-- transformação precisa do path-base:
+           x: [30,270] -> [60,540]
+           y: [20,120] -> [80,290]
+           centro em x = 300 -->
+      <g transform="matrix(2 0 0 2.1 0 38)">
+        <path d="M30,120
+                 C95,120 125,20 150,20
+                 C175,20 205,120 270,120
+                 L270,120
+                 L30,120 Z"
+              class="densityArea"/>
+      </g>
+
+      <!-- curva de sino -->
+      <g transform="matrix(2 0 0 2.1 0 38)">
+        <path d="M30,120
+                 C95,120 125,20 150,20
+                 C175,20 205,120 270,120"
+              class="bellPath"/>
+      </g>
+
+      <!-- linha do valor esperado -->
+      <line x1="300" y1="10" x2="300" y2="290" class="meanLine"/>
+      <circle cx="300" cy="290" r="4.5" class="meanDot"/>
+
+
+      <!-- fórmula do valor esperado contínuo -->
+      <g class="formulaGroup" transform="translate(168,-7)">
+        <text x="0" y="0" class="formulaMain">
+          <tspan font-style="italic">E</tspan>(<tspan font-style="italic">X</tspan>) =
+        </text>
+
+        <text x="97" y="2" class="integralBig">∫</text>
+        <text x="115" y="-25" class="integralLim">∞</text>
+        <text x="110" y="15" class="integralLim">−∞</text>
+
+        <text x="118" y="0" class="formulaMain">
+          <tspan font-style="italic">x f</tspan>(<tspan font-style="italic">x</tspan>) <tspan font-style="italic">dx</tspan>
+        </text>
+      </g>
+
+      <!-- eixo x -->
+      <text x="0"   y="322" class="ticklab">−3</text>
+      <text x="100" y="322" class="ticklab">−2</text>
+      <text x="200" y="322" class="ticklab">−1</text>
+      <text x="300" y="322" class="ticklab">0</text>
+      <text x="400" y="322" class="ticklab">1</text>
+      <text x="500" y="322" class="ticklab">2</text>
+      <text x="600" y="322" class="ticklab">3</text>
+
+      <text x="300" y="362" class="ylab">valores possíveis de X</text>
+    </g>
+  </g>
+</svg>

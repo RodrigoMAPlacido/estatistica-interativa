@@ -1,0 +1,317 @@
+<svg viewBox="0 0 1000 720"
+     xmlns="http://www.w3.org/2000/svg"
+     role="img"
+     aria-labelledby="title desc"
+     preserveAspectRatio="xMidYMid meet">
+
+  <title id="title">Função densidade de probabilidade</title>
+  <desc id="desc">
+    Animação de uma função densidade de probabilidade com destaque para a área
+    sob a curva em um intervalo entre a e b.
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --ink-soft:#64748b;
+        --grid:#d1d5db;
+        --shade:rgba(17,24,39,.06);
+        --shade-soft:rgba(17,24,39,.12);
+        --font:"et-book","ETBook","Georgia","Times New Roman",serif;
+        --cycle:8.4s;
+        --ease:ease-in-out;
+      }
+
+      svg{
+        background:#ffffff;
+      }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        user-select:none;
+      }
+
+      .u-stroke{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        vector-effect:non-scaling-stroke;
+      }
+
+      .u-panel{
+        stroke-width:2;
+        rx:22;
+        ry:22;
+      }
+
+      .title{
+        font-size:34px;
+        font-weight:600;
+        text-anchor:middle;
+      }
+
+      .small{
+        font-size:22px;
+        text-anchor:middle;
+        fill:var(--ink-soft);
+      }
+
+      .axis{
+        stroke-width:2;
+      }
+
+      .grid line{
+        stroke:var(--grid);
+        stroke-width:1;
+        vector-effect:non-scaling-stroke;
+      }
+
+      .ylab{
+        font-size:22px;
+        fill:var(--ink-soft);
+        text-anchor:middle;
+      }
+
+      .ticklab{
+        font-size:20px;
+        fill:var(--ink-soft);
+        text-anchor:middle;
+      }
+
+      .zeroTick{
+        font-size:18px;
+        fill:var(--ink-soft);
+        text-anchor:end;
+      }
+
+      .densityArea{
+        fill:var(--shade);
+        opacity:0;
+        animation:appearBaseArea var(--cycle) var(--ease) infinite;
+      }
+
+      .bellPath{
+        stroke:var(--ink);
+        stroke-width:3;
+        fill:none;
+        vector-effect:non-scaling-stroke;
+        stroke-dasharray:760;
+        stroke-dashoffset:760;
+        animation:drawCurve var(--cycle) var(--ease) infinite;
+      }
+
+      .intervalArea{
+        fill:var(--shade-soft);
+        opacity:0;
+        animation:appearInterval var(--cycle) var(--ease) infinite;
+      }
+
+      .boundLine{
+        stroke:var(--ink);
+        stroke-width:1.8;
+        stroke-dasharray:6 6;
+        vector-effect:non-scaling-stroke;
+        opacity:0;
+        animation:appearBounds var(--cycle) var(--ease) infinite;
+      }
+
+      .curveLabel{
+        font-size:22px;
+        text-anchor:middle;
+        fill:var(--ink-soft);
+        opacity:0;
+        animation:appearCurveLabel var(--cycle) var(--ease) infinite;
+      }
+
+      .intervalLabel{
+        font-size:22px;
+        text-anchor:middle;
+        opacity:0;
+        animation:appearIntervalText var(--cycle) var(--ease) infinite;
+      }
+
+      .formula{
+        font-size:24px;
+        text-anchor:middle;
+        opacity:0;
+        animation:appearFormula var(--cycle) var(--ease) infinite;
+      }
+
+      @keyframes drawCurve{
+        0%,14%{
+          stroke-dashoffset:760;
+          opacity:0;
+        }
+        26%,86%{
+          stroke-dashoffset:0;
+          opacity:1;
+        }
+        100%{
+          stroke-dashoffset:760;
+          opacity:0;
+        }
+      }
+
+      @keyframes appearBaseArea{
+        0%,18%{
+          opacity:0;
+        }
+        30%,86%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes appearCurveLabel{
+        0%,28%{
+          opacity:0;
+        }
+        38%,52%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes appearInterval{
+        0%,42%{
+          opacity:0;
+        }
+        54%,86%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes appearBounds{
+        0%,44%{
+          opacity:0;
+        }
+        56%,86%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes appearIntervalText{
+        0%,48%{
+          opacity:0;
+        }
+        60%,86%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes appearFormula{
+        0%,56%{
+          opacity:0;
+        }
+        68%,86%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        .densityArea,.bellPath,.intervalArea,.boundLine,
+        .curveLabel,.intervalLabel,.formula{
+          animation:none;
+          opacity:1;
+          stroke-dashoffset:0;
+        }
+      }
+    </style>
+  </defs>
+
+  <g transform="translate(40,110)">
+    <rect x="0" y="-10" width="840" height="555" class="u-panel u-stroke"/>
+
+    <text x="420" y="28" class="title">Função densidade de probabilidade</text>
+    <text x="420" y="54" class="small">a probabilidade em um intervalo é dada pela área sob a curva</text>
+
+    <g transform="translate(110,110)">
+      <!-- grade -->
+      <g class="grid">
+        <line x1="0" y1="220" x2="600" y2="220"/>
+        <line x1="0" y1="150" x2="600" y2="150"/>
+        <line x1="0" y1="80"  x2="600" y2="80"/>
+        <line x1="0" y1="10"  x2="600" y2="10"/>
+      </g>
+
+      <!-- eixos -->
+      <g class="u-stroke axis">
+        <line x1="0" y1="290" x2="600" y2="290"/>
+        <line x1="0" y1="290" x2="0" y2="10"/>
+      </g>
+
+      <text x="-58" y="180" class="ylab" transform="rotate(-90 -58 150)">f(x)</text>
+      <text x="-18" y="294" class="zeroTick">0</text>
+
+      <!-- área total suave -->
+      <g transform="matrix(2 0 0 2.1 0 38)">
+        <path d="M30,120
+                 C95,120 125,20 150,20
+                 C175,20 205,120 270,120
+                 L270,120
+                 L30,120 Z"
+              class="densityArea"/>
+      </g>
+
+      <!-- curva -->
+      <g transform="matrix(2 0 0 2.1 0 38)">
+        <path d="M30,120
+                 C95,120 125,20 150,20
+                 C175,20 205,120 270,120"
+              class="bellPath"/>
+      </g>
+
+<g transform="translate(40,0)">
+
+      <!-- área do intervalo [a,b] -->
+      <!-- intervalo escolhido aproximadamente entre -1 e 1 -->
+      <path d="M200 290
+               L200 141.6
+               C221.666 100.1 228.343 103.15 260 80
+               C276.667 81.0 298.333 119.8 320 141.6
+               L320 290 Z"
+            class="intervalArea"/>
+      <!-- linhas de a e b -->
+      <line x1="200" y1="161.6" x2="200" y2="290" class="boundLine"/>
+      <line x1="320" y1="161.6" x2="320" y2="290" class="boundLine"/>
+
+      <!-- rótulos -->
+      <text x="200" y="322" class="intervalLabel">a</text>
+      <text x="320" y="322" class="intervalLabel">b</text>
+</g>
+      <!-- fórmula -->
+      <text x="300" y="414" class="formula">P(a ≤ X ≤ b) = área sob f(x)</text>
+      <text x="300" y="68" class="curveLabel">f(x)</text>
+
+      <!-- eixo x -->
+      <text x="0"   y="322" class="ticklab">−3</text>
+      <text x="100" y="322" class="ticklab">−2</text>
+      <text x="200" y="322" class="ticklab">−1</text>
+      <text x="300" y="322" class="ticklab">0</text>
+      <text x="400" y="322" class="ticklab">1</text>
+      <text x="500" y="322" class="ticklab">2</text>
+      <text x="600" y="322" class="ticklab">3</text>
+
+      <text x="300" y="372" class="ylab">valores possíveis de X</text>
+    </g>
+  </g>
+</svg>

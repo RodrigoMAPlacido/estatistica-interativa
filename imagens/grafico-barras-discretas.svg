@@ -20,7 +20,9 @@
         --cycle:7s;
         --ease:ease-in-out;
       }
-
+    svg{
+      background:#ffffff;
+    }
       text{
         font-family:var(--font);
         fill:var(--ink);

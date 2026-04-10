@@ -2,8 +2,8 @@
    DADOS INTERVALARES — padrão unificado (u-*/a-*)
    =========================================== -->
 <svg viewBox="0 0 1500 750" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
-  <title id="title">Exemplos de Dados Intervalares (animado)</title>
-  <desc id="desc">Caixa e título “INTERVALAR” no topo; linhas/galhos, setas e cartões com rótulos: Temperatura, Ano calendário, Escala de QI, Pontuação de teste. Animação tipo traçado surgindo em ondas.</desc>
+  <title id="title">MEDIA MODA E MEDIANA</title>
+  <desc id="desc">Caixa e título Razão” no topo; linhas/galhos, setas e cartões com rótulos: Peso, Altura, renda, Distância. Animação tipo traçado surgindo em ondas.</desc>
 
   <defs>
     <style>
@@ -16,9 +16,7 @@
         --dash:4000;     /* dash grande evita “risquinho” */
         --dashText:900;  /* comprimento virtual p/ texto */
       }
-      svg{
-        background:#ffffff;
-      }
+
       /* ============ Base/utilitárias (u-*) ============ */
       text{ font-family:var(--font); fill:var(--ink); user-select:none; }
       tspan{ x:0; dy:1.25em; }
@@ -27,7 +25,9 @@
       .u-box{ stroke-width:3; rx:15; }
       .u-center{ text-anchor:middle; }
       .u-head{ fill:var(--ink); }
-
+      svg{
+        background:#ffffff;
+      }
       /* ============ Animações (a-*) ============ */
       /* traçado tipo tronco/ramo */
       @keyframes k-drawLine{
@@ -84,9 +84,11 @@
   <g id="scene" transform="translate(0,0) scale(1)">
 
     <!-- Topo: caixa + título (caixa estática, texto animado) -->
-    <rect x="480" y="67" width="540" height="210" class="u-stroke u-box"/>
+    <rect x="470" y="67" width="560" height="210" class="u-stroke u-box"/>
     <g style="--delay:0s">
-      <text x="750" y="190" font-size="65" font-weight="700" class="a-text u-center">INTERVALAR</text>
+      <text x="750" y="150" font-size="65" font-weight="700" class="a-text u-center">MEDIDAS DA</text>
+      <text x="750" y="230" font-size="65" font-weight="700" class="a-text u-center">DISTRIBUIÇÃO</text>
+
     </g>
 
     <!-- Diagrama em ondas (linhas -> setas -> cartões) -->
@@ -101,52 +103,43 @@
       <!-- Ramos verticais -->
       <g style="--delay:.26s">
         <line x1="250"  y1="410" x2="250"  y2="520" class="u-stroke u-thick a-draw"/>
-        <line x1="580"  y1="410" x2="580"  y2="520" class="u-stroke u-thick a-draw"/>
-        <line x1="920"  y1="410" x2="920"  y2="520" class="u-stroke u-thick a-draw"/>
+        <line x1="750"  y1="410" x2="750"  y2="520" class="u-stroke u-thick a-draw"/>
         <line x1="1250" y1="410" x2="1250" y2="520" class="u-stroke u-thick a-draw"/>
       </g>
 
       <!-- Setas (pontas) -->
       <g style="--delay:.38s">
         <g transform="translate(250,520) rotate(90)"><polygon class="u-head a-fade" points="21,0 0,-8 0,8"/></g>
-        <g transform="translate(580,520) rotate(90)"><polygon class="u-head a-fade" points="21,0 0,-8 0,8"/></g>
-        <g transform="translate(920,520) rotate(90)"><polygon class="u-head a-fade" points="21,0 0,-8 0,8"/></g>
+        <g transform="translate(750,520) rotate(90)"><polygon class="u-head a-fade" points="21,0 0,-8 0,8"/></g>
         <g transform="translate(1250,520) rotate(90)"><polygon class="u-head a-fade" points="21,0 0,-8 0,8"/></g>
       </g>
 
       <!-- Cartões + rótulos -->
-      <!-- Temperatura -->
+      <!-- MÉDIA -->
       <g style="--delay:.52s">
-        <rect x="100" y="550" width="300" height="110" class="u-stroke u-box a-draw"/>
-        <text x="250" y="615" font-size="38" font-weight="500" class="a-text u-center">
-          <tspan x="250" dy="0">TEMPERATURA</tspan>
+        <rect x="100" y="550" width="300" height="135" class="u-stroke u-box a-draw"/>
+        <text x="250" y="615" font-size="40" font-weight="500" class="a-text u-center">
+          <tspan x="250" dy="-10">VALOR</tspan>
+          <tspan x="250" dy="50">ESPERADO</tspan>
+
         </text>
       </g>
 
-      <!-- Ano calendário -->
+      <!-- mediana -->
       <g style="--delay:.66s">
-        <rect x="430" y="550" width="300" height="110" class="u-stroke u-box a-draw"/>
-        <text x="580" y="595" font-size="40" font-weight="500" class="a-text u-center">
-          <tspan x="580" dy="0">ANO</tspan>
-          <tspan x="580" dy="1.3em">CALENDÁRIO</tspan>
+        <rect x="600" y="550" width="300" height="135" class="u-stroke u-box a-draw"/>
+        <text x="750" y="615" font-size="40" font-weight="500" class="a-text u-center">
+          <tspan x="750" dy="18">VARIÂNCIA</tspan>
         </text>
       </g>
 
-      <!-- Escala de QI -->
-      <g style="--delay:.80s">
-        <rect x="770" y="550" width="300" height="110" class="u-stroke u-box a-draw"/>
-        <text x="920" y="595" font-size="40" font-weight="500" class="a-text u-center">
-          <tspan x="920" dy="0">ESCALA</tspan>
-          <tspan x="920" dy="1.3em">DE QI</tspan>
-        </text>
-      </g>
 
-      <!-- Pontuação de teste -->
+      <!-- moda -->
       <g style="--delay:.94s">
-        <rect x="1100" y="550" width="300" height="110" class="u-stroke u-box a-draw"/>
-        <text x="1250" y="595" font-size="40" font-weight="500" class="a-text u-center">
-          <tspan x="1250" dy="0">PONTUAÇÃO</tspan>
-          <tspan x="1250" dy="1.3em">DE TESTE</tspan>
+        <rect x="1100" y="550" width="300" height="135" class="u-stroke u-box a-draw"/>
+        <text x="1250" y="615" font-size="40" font-weight="500" class="a-text u-center">
+          <tspan x="1250" dy="-10">DESVIO</tspan>
+          <tspan x="1250" dy="50">PADRÃO</tspan>
         </text>
       </g>
 

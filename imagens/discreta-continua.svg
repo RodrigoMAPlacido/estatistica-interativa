@@ -17,6 +17,9 @@
         --dashText:900;
       }
 
+      svg{
+        background:#ffffff;
+      }
       /* ============ Base/utilitárias (u-*) ============ */
       text{ font-family:var(--font); fill:var(--ink); user-select:none; }
       .u-center{ text-anchor:middle; }

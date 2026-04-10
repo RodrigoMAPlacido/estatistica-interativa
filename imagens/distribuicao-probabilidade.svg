@@ -1,0 +1,303 @@
+<svg viewBox="0 0 1500 720"
+     xmlns="http://www.w3.org/2000/svg"
+     role="img"
+     aria-labelledby="title desc"
+     preserveAspectRatio="xMidYMid meet">
+
+  <title id="title">Função de probabilidade e função de distribuição acumulada</title>
+  <desc id="desc">
+    Dois quadros comparam a função de probabilidade p(x) e a função de
+    distribuição acumulada F(x) de uma variável aleatória discreta.
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --ink-soft:#64748b;
+        --grid:#e5e7eb;
+        --shade:rgba(17,24,39,.06);
+        --font:"et-book","ETBook","Georgia","Times New Roman",serif;
+        --cycle:8.5s;
+        --ease:ease-in-out;
+      }
+
+      svg{
+        background:#ffffff;
+      }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        user-select:none;
+      }
+
+      .u-stroke{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        vector-effect:non-scaling-stroke;
+      }
+
+      .u-panel{
+        stroke-width:2;
+        rx:22;
+        ry:22;
+      }
+
+      .label{
+        font-size:36px;
+        font-weight:600;
+        text-anchor:middle;
+      }
+
+      .small{
+        font-size:22px;
+        text-anchor:middle;
+        fill:var(--ink-soft);
+      }
+
+      .axis{
+        stroke-width:2;
+      }
+
+      .grid line{
+        stroke:var(--grid);
+        stroke-width:1;
+      }
+
+      .xlab{
+        font-size:22px;
+        text-anchor:middle;
+      }
+
+      .ylab{
+        font-size:22px;
+        fill:var(--ink-soft);
+        text-anchor:middle;
+      }
+
+      .bar{
+        fill:var(--ink);
+        transform-box:fill-box;
+        transform-origin:bottom;
+        animation:growY var(--cycle) var(--ease) infinite;
+      }
+
+      .pmfText{
+        font-size:22px;
+        text-anchor:middle;
+        opacity:0;
+        animation:appearText var(--cycle) var(--ease) infinite;
+      }
+
+      .cdfSeg{
+        stroke:var(--ink);
+        stroke-width:4;
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        opacity:0;
+        animation:drawSeg var(--cycle) var(--ease) infinite both;
+      }
+
+      .cdfDot{
+        fill:var(--ink);
+        opacity:0;
+        animation:appearDot var(--cycle) var(--ease) infinite;
+      }
+
+      .noteBox{
+        fill:var(--shade);
+        stroke:var(--ink);
+        stroke-width:1.5;
+        rx:12;
+        ry:12;
+        vector-effect:non-scaling-stroke;
+      }
+
+      .note{
+        font-size:24px;
+        text-anchor:middle;
+      }
+
+      @keyframes growY{
+        0%,18%{
+          transform:scaleY(0);
+          opacity:0;
+        }
+        28%,82%{
+          transform:scaleY(1);
+          opacity:1;
+        }
+        100%{
+          transform:scaleY(0);
+          opacity:0;
+        }
+      }
+
+      @keyframes appearText{
+        0%,28%{
+          opacity:0;
+        }
+        38%,82%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes drawSeg{
+        0%,22%{
+          opacity:0;
+          stroke-dashoffset:120;
+        }
+        32%,82%{
+          opacity:1;
+          stroke-dashoffset:0;
+        }
+        100%{
+          opacity:0;
+          stroke-dashoffset:0;
+        }
+      }
+
+      @keyframes appearDot{
+        0%,36%{
+          opacity:0;
+          transform:scale(.5);
+        }
+        44%,82%{
+          opacity:1;
+          transform:scale(1);
+        }
+        100%{
+          opacity:0;
+          transform:scale(.5);
+        }
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        .bar,.pmfText,.cdfSeg,.cdfDot{
+          animation:none;
+          opacity:1;
+          transform:none;
+          stroke-dashoffset:0;
+        }
+      }
+    </style>
+  </defs>
+
+  <!-- =========================================================
+       1 — FUNÇÃO DE PROBABILIDADE
+       ========================================================= -->
+  <g transform="translate(40,80)">
+    <rect x="0" y="0" width="680" height="600" class="u-panel u-stroke"/>
+
+    <text x="340" y="55" class="label">Função de Probabilidade</text>
+    <text x="340" y="90" class="small">p(x) = P(X = x)</text>
+
+    <g transform="translate(100,130)">
+      <!-- grade -->
+      <g class="grid">
+        <line x1="0" y1="300" x2="480" y2="300"/>
+        <line x1="0" y1="225" x2="480" y2="225"/>
+        <line x1="0" y1="150" x2="480" y2="150"/>
+        <line x1="0" y1="75"  x2="480" y2="75"/>
+        <line x1="0" y1="0"   x2="480" y2="0"/>
+      </g>
+
+      <!-- eixos -->
+      <g class="u-stroke axis">
+        <line x1="0" y1="360" x2="480" y2="360"/>
+        <line x1="0" y1="360" x2="0" y2="0"/>
+      </g>
+
+      <!-- rótulos -->
+      <text x="-78" y="230" transform="rotate(-90 -78 180)" class="ylab">p(x)</text>
+      <text x="240" y="440" class="ylab">valores possíveis de X</text>
+
+      <!-- barras -->
+      <rect x="35"  y="250" width="58" height="110" class="bar" style="animation-delay:0s"/>
+      <rect x="145" y="150" width="58" height="210" class="bar" style="animation-delay:.12s"/>
+      <rect x="255" y="215" width="58" height="145" class="bar" style="animation-delay:.24s"/>
+      <rect x="365" y="105" width="58" height="255" class="bar" style="animation-delay:.36s"/>
+
+      <!-- rótulos x -->
+      <text x="64"  y="392" class="xlab">x<tspan baseline-shift="sub" font-size="70%">1</tspan></text>
+      <text x="174" y="392" class="xlab">x<tspan baseline-shift="sub" font-size="70%">2</tspan></text>
+      <text x="284" y="392" class="xlab">x<tspan baseline-shift="sub" font-size="70%">3</tspan></text>
+      <text x="394" y="392" class="xlab">x<tspan baseline-shift="sub" font-size="70%">4</tspan></text>
+
+      <!-- rótulos das massas -->
+      <text x="64"  y="232" class="pmfText" style="animation-delay:0s">p(x<tspan baseline-shift="sub" font-size="70%">1</tspan>)</text>
+      <text x="174" y="132" class="pmfText" style="animation-delay:.12s">p(x<tspan baseline-shift="sub" font-size="70%">2</tspan>)</text>
+      <text x="284" y="197" class="pmfText" style="animation-delay:.24s">p(x<tspan baseline-shift="sub" font-size="70%">3</tspan>)</text>
+      <text x="394" y="87"  class="pmfText" style="animation-delay:.36s">p(x<tspan baseline-shift="sub" font-size="70%">4</tspan>)</text>
+    </g>
+  </g>
+
+  <!-- =========================================================
+       2 — FUNÇÃO DE DISTRIBUIÇÃO ACUMULADA
+       ========================================================= -->
+  <g transform="translate(780,80)">
+    <rect x="0" y="0" width="680" height="600" class="u-panel u-stroke"/>
+
+    <text x="340" y="55" class="label">Função de Distribuição Acumulada</text>
+    <text x="340" y="90" class="small">F(x) = P(X ≤ x)</text>
+
+    <g transform="translate(100,130)">
+      <!-- grade -->
+      <g class="grid">
+        <line x1="0" y1="300" x2="480" y2="300"/>
+        <line x1="0" y1="225" x2="480" y2="225"/>
+        <line x1="0" y1="150" x2="480" y2="150"/>
+        <line x1="0" y1="75"  x2="480" y2="75"/>
+        <line x1="0" y1="0"   x2="480" y2="0"/>
+      </g>
+
+      <!-- eixos -->
+      <g class="u-stroke axis">
+        <line x1="0" y1="360" x2="480" y2="360"/>
+        <line x1="0" y1="360" x2="0" y2="0"/>
+      </g>
+
+      <!-- rótulos -->
+      <text x="-78" y="230" transform="rotate(-90 -78 180)" class="ylab">F(x)</text>
+      <text x="240" y="440" class="ylab">valores possíveis de X</text>
+      <text x="-14" y="364" class="ylab" style="font-size:18px">0</text>
+      <text x="-14" y="4"   class="ylab" style="font-size:18px">1</text>
+
+      <!-- rótulos x -->
+      <text x="60"  y="392" class="xlab">x<tspan baseline-shift="sub" font-size="70%">1</tspan></text>
+      <text x="170" y="392" class="xlab">x<tspan baseline-shift="sub" font-size="70%">2</tspan></text>
+      <text x="280" y="392" class="xlab">x<tspan baseline-shift="sub" font-size="70%">3</tspan></text>
+      <text x="390" y="392" class="xlab">x<tspan baseline-shift="sub" font-size="70%">4</tspan></text>
+
+      <!-- degraus -->
+      <line x1="0"   y1="360" x2="60"  y2="360" class="cdfSeg" style="stroke-dasharray:60;animation-delay:0s"/>
+      <line x1="60"  y1="360" x2="60"  y2="300" class="cdfSeg" style="stroke-dasharray:60;animation-delay:0s"/>
+
+      <line x1="60"  y1="300" x2="170" y2="300" class="cdfSeg" style="stroke-dasharray:110;animation-delay:.12s"/>
+      <line x1="170" y1="300" x2="170" y2="190" class="cdfSeg" style="stroke-dasharray:110;animation-delay:.12s"/>
+
+      <line x1="170" y1="190" x2="280" y2="190" class="cdfSeg" style="stroke-dasharray:110;animation-delay:.24s"/>
+      <line x1="280" y1="190" x2="280" y2="120" class="cdfSeg" style="stroke-dasharray:70;animation-delay:.24s"/>
+
+      <line x1="280" y1="120" x2="390" y2="120" class="cdfSeg" style="stroke-dasharray:110;animation-delay:.36s"/>
+      <line x1="390" y1="120" x2="390" y2="20"  class="cdfSeg" style="stroke-dasharray:100;animation-delay:.36s"/>
+
+      <line x1="390" y1="20"  x2="470" y2="20"  class="cdfSeg" style="stroke-dasharray:80;animation-delay:.48s"/>
+
+      <!-- pontos -->
+      <circle cx="60"  cy="300" r="5.5" class="cdfDot" style="animation-delay:.08s"/>
+      <circle cx="170" cy="190" r="5.5" class="cdfDot" style="animation-delay:.20s"/>
+      <circle cx="280" cy="120" r="5.5" class="cdfDot" style="animation-delay:.32s"/>
+      <circle cx="390" cy="20"  r="5.5" class="cdfDot" style="animation-delay:.44s"/>
+    </g>
+  </g>
+
+
+</svg>

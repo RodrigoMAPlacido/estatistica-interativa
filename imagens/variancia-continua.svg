@@ -1,0 +1,357 @@
+<svg viewBox="0 0 1000 720"
+     xmlns="http://www.w3.org/2000/svg"
+     role="img"
+     aria-labelledby="title desc"
+     preserveAspectRatio="xMidYMid meet">
+
+  <title id="title">Variância de uma variável aleatória contínua</title>
+  <desc id="desc">
+    Curva de densidade contínua com destaque para o valor esperado e para os
+    quadrados das distâncias em torno de E(X), representando a ideia de variância.
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --ink-soft:#64748b;
+        --grid:#d1d5db;
+        --shade:rgba(17,24,39,.06);
+        --shade-soft:rgba(17,24,39,.09);
+        --font:"et-book","ETBook","Georgia","Times New Roman",serif;
+        --cycle:8.4s;
+        --ease:ease-in-out;
+      }
+
+      svg{
+        background:#ffffff;
+      }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        user-select:none;
+      }
+
+      .u-stroke{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        vector-effect:non-scaling-stroke;
+      }
+
+      .u-panel{
+        stroke-width:2;
+        rx:22;
+        ry:22;
+      }
+
+      .label{
+        font-size:36px;
+        font-weight:600;
+        text-anchor:middle;
+      }
+
+      .small{
+        font-size:20px;
+        text-anchor:middle;
+        fill:var(--ink-soft);
+      }
+
+      .axis{
+        stroke-width:2;
+      }
+
+      .grid line{
+        stroke:var(--grid);
+        stroke-width:1;
+        vector-effect:non-scaling-stroke;
+      }
+
+      .ylab{
+        font-size:22px;
+        fill:var(--ink-soft);
+        text-anchor:middle;
+      }
+
+      .ticklab{
+        font-size:19px;
+        fill:var(--ink-soft);
+        text-anchor:middle;
+      }
+
+      .zeroTick{
+        font-size:18px;
+        fill:var(--ink-soft);
+        text-anchor:end;
+      }
+
+      .densityArea{
+        fill:var(--shade);
+        opacity:0;
+        animation:appearArea var(--cycle) var(--ease) infinite;
+      }
+
+      .bellPath{
+        stroke:var(--ink);
+        stroke-width:3;
+        fill:none;
+        vector-effect:non-scaling-stroke;
+        stroke-dasharray:760;
+        stroke-dashoffset:760;
+        animation:drawCurve var(--cycle) var(--ease) infinite;
+      }
+
+      .meanLine{
+        stroke:var(--ink);
+        stroke-width:2.2;
+        vector-effect:non-scaling-stroke;
+        stroke-dasharray:280;
+        stroke-dashoffset:280;
+        opacity:0;
+        animation:drawMean var(--cycle) var(--ease) infinite;
+      }
+
+      .meanText{
+        font-size:24px;
+        text-anchor:middle;
+        opacity:0;
+        animation:appearMeanText var(--cycle) var(--ease) infinite;
+      }
+
+      .meanDot{
+        fill:var(--ink);
+        opacity:0;
+        animation:appearMeanText var(--cycle) var(--ease) infinite;
+      }
+
+      .sampleGuide{
+        stroke:var(--ink-soft);
+        stroke-width:1.8;
+        stroke-dasharray:5 5;
+        vector-effect:non-scaling-stroke;
+        opacity:0;
+        animation:appearSamples var(--cycle) var(--ease) infinite;
+      }
+
+      .samplePoint{
+        fill:var(--ink);
+        opacity:0;
+        animation:appearSamples var(--cycle) var(--ease) infinite;
+      }
+
+      .distBracket,
+      .distTick{
+        stroke:var(--ink-soft);
+        stroke-width:2;
+        fill:none;
+        vector-effect:non-scaling-stroke;
+        opacity:0;
+        animation:appearMeasures var(--cycle) var(--ease) infinite;
+      }
+
+      .miniLabel{
+        font-size:19px;
+        text-anchor:center;
+        fill:var(--ink-soft);
+        opacity:0;
+        animation:appearMeasures var(--cycle) var(--ease) infinite;
+      }
+
+      .varSquare{
+        fill:var(--shade-soft);
+        stroke:var(--ink);
+        stroke-width:1.5;
+        vector-effect:non-scaling-stroke;
+        opacity:0;
+        animation:appearSquares var(--cycle) var(--ease) infinite;
+      }
+
+      .squareLabel{
+        font-size:19px;
+        text-anchor:middle;
+        fill:var(--ink-soft);
+        opacity:0;
+        animation:appearSquares var(--cycle) var(--ease) infinite;
+      }
+
+      @keyframes drawCurve{
+        0%,14%{
+          stroke-dashoffset:760;
+          opacity:0;
+        }
+        26%,84%{
+          stroke-dashoffset:0;
+          opacity:1;
+        }
+        100%{
+          stroke-dashoffset:760;
+          opacity:0;
+        }
+      }
+
+      @keyframes appearArea{
+        0%,18%{
+          opacity:0;
+        }
+        30%,84%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes drawMean{
+        0%,34%{
+          stroke-dashoffset:280;
+          opacity:0;
+        }
+        46%,84%{
+          stroke-dashoffset:0;
+          opacity:1;
+        }
+        100%{
+          stroke-dashoffset:280;
+          opacity:0;
+        }
+      }
+
+      @keyframes appearMeanText{
+        0%,38%{
+          opacity:0;
+        }
+        50%,84%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes appearSamples{
+        0%,42%{
+          opacity:0;
+        }
+        54%,84%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes appearMeasures{
+        0%,50%{
+          opacity:0;
+        }
+        62%,84%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes appearSquares{
+        0%,60%{
+          opacity:0;
+        }
+        72%,84%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        .densityArea,.bellPath,.meanLine,.meanText,.meanDot,.sampleGuide,.samplePoint,
+        .distBracket,.distTick,.miniLabel,.varSquare,.squareLabel{
+          animation:none;
+          opacity:1;
+          stroke-dashoffset:0;
+        }
+      }
+    </style>
+  </defs>
+
+  <g transform="translate(120,95)">
+    <rect x="0" y="0" width="680" height="560" class="u-panel u-stroke"/>
+
+    <text x="340" y="54" class="label">Variância</text>
+    <text x="340" y="86" class="small">quadrados das distâncias até E(X)</text>
+
+    <g transform="translate(90,130)">
+      <g class="grid">
+        <line x1="0" y1="220" x2="520" y2="220"/>
+        <line x1="0" y1="150" x2="520" y2="150"/>
+        <line x1="0" y1="80"  x2="520" y2="80"/>
+        <line x1="0" y1="10"  x2="520" y2="10"/>
+      </g>
+
+      <g class="u-stroke axis">
+        <line x1="0" y1="290" x2="520" y2="290"/>
+        <line x1="0" y1="290" x2="0" y2="10"/>
+      </g>
+
+      <text x="-80" y="190" transform="rotate(-90 -80 150)" class="ylab">f(x)</text>
+      <text x="-18" y="294" class="zeroTick">0</text>
+
+      <g transform="matrix(1.833333 0 0 2.2 -15 26)">
+        <path d="M30,120
+                 C95,120 125,20 150,20
+                 C175,20 205,120 270,120
+                 L270,120
+                 L30,120 Z"
+              class="densityArea"/>
+      </g>
+
+      <g transform="matrix(1.833333 0 0 2.2 -15 26)">
+        <path d="M30,120
+                 C95,120 125,20 150,20
+                 C175,20 205,120 270,120"
+              class="bellPath"/>
+      </g>
+
+      <line x1="260" y1="10" x2="260" y2="290" class="meanLine"/>
+      <circle cx="260" cy="290" r="4.2" class="meanDot"/>
+      <text x="260" y="-5" class="meanText">E(X)</text>
+
+      <line x1="86.667"  y1="261.6" x2="86.667"  y2="290" class="sampleGuide"/>
+      <line x1="173.333" y1="163.6" x2="173.333" y2="290" class="sampleGuide"/>
+      <line x1="346.667" y1="163.6" x2="346.667" y2="290" class="sampleGuide"/>
+      <line x1="433.333" y1="261.6" x2="433.333" y2="290" class="sampleGuide"/>
+
+      <circle cx="86.667"  cy="261.6" r="4" class="samplePoint"/>
+      <circle cx="173.333" cy="163.6" r="4" class="samplePoint"/>
+      <circle cx="346.667" cy="163.6" r="4" class="samplePoint"/>
+      <circle cx="433.333" cy="261.6" r="4" class="samplePoint"/>
+
+      <line x1="86.667"  y1="314" x2="260" y2="314" class="distBracket"/>
+      <line x1="86.667"  y1="306" x2="86.667"  y2="322" class="distTick"/>
+      <line x1="260"     y1="306" x2="260"     y2="322" class="distTick"/>
+
+      <line x1="173.333" y1="314" x2="260" y2="314" class="distBracket"/>
+      <line x1="173.333" y1="306" x2="173.333" y2="322" class="distTick"/>
+      <line x1="260"     y1="306" x2="260"     y2="322" class="distTick"/>
+
+      <line x1="260" y1="314" x2="346.667" y2="314" class="distBracket"/>
+      <line x1="260" y1="306" x2="260"     y2="322" class="distTick"/>
+      <line x1="346.667" y1="306" x2="346.667" y2="322" class="distTick"/>
+
+      <line x1="260" y1="314" x2="433.333" y2="314" class="distBracket"/>
+      <line x1="260" y1="306" x2="260"     y2="322" class="distTick"/>
+      <line x1="433.333" y1="306" x2="433.333" y2="322" class="distTick"/>
+
+<g transform="translate(0,-20)">
+      <rect x="68.667"   y="358" width="36" height="36" class="varSquare"/>
+      <rect x="164.333"  y="376" width="18" height="18" class="varSquare"/>
+      <rect x="337.667"  y="376" width="18" height="18" class="varSquare"/>
+      <rect x="415.333"  y="358" width="36" height="36" class="varSquare"/>
+</g>
+      <text x="260" y="400" class="squareLabel">quadrados das distâncias</text>
+    </g>
+  </g>
+</svg>

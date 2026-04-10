@@ -1,0 +1,350 @@
+<svg viewBox="0 0 1000 720"
+     xmlns="http://www.w3.org/2000/svg"
+     role="img"
+     aria-labelledby="title desc"
+     preserveAspectRatio="xMidYMid meet">
+
+  <title id="title">Desvio padrão de uma variável aleatória contínua</title>
+  <desc id="desc">
+    Curva de densidade contínua com destaque para o valor esperado e para a faixa
+    de um desvio padrão em torno da média.
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --ink-soft:#64748b;
+        --grid:#d1d5db;
+        --shade:rgba(17,24,39,.06);
+        --shade-soft:rgba(17,24,39,.09);
+        --font:"et-book","ETBook","Georgia","Times New Roman",serif;
+        --cycle:8.4s;
+        --ease:ease-in-out;
+      }
+
+      svg{
+        background:#ffffff;
+      }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        user-select:none;
+      }
+
+      .u-stroke{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        vector-effect:non-scaling-stroke;
+      }
+
+      .u-panel{
+        stroke-width:2;
+        rx:22;
+        ry:22;
+      }
+
+      .label{
+        font-size:36px;
+        font-weight:600;
+        text-anchor:middle;
+      }
+
+      .small{
+        font-size:20px;
+        text-anchor:middle;
+        fill:var(--ink-soft);
+      }
+
+      .axis{
+        stroke-width:2;
+      }
+
+      .grid line{
+        stroke:var(--grid);
+        stroke-width:1;
+        vector-effect:non-scaling-stroke;
+      }
+
+      .ylab{
+        font-size:22px;
+        fill:var(--ink-soft);
+        text-anchor:middle;
+      }
+
+      .ticklab{
+        font-size:19px;
+        fill:var(--ink-soft);
+        text-anchor:middle;
+      }
+
+      .zeroTick{
+        font-size:18px;
+        fill:var(--ink-soft);
+        text-anchor:end;
+      }
+
+      .densityArea{
+        fill:var(--shade);
+        opacity:0;
+        animation:appearArea var(--cycle) var(--ease) infinite;
+      }
+
+      .bellPath{
+        stroke:var(--ink);
+        stroke-width:3;
+        fill:none;
+        vector-effect:non-scaling-stroke;
+        stroke-dasharray:760;
+        stroke-dashoffset:760;
+        animation:drawCurve var(--cycle) var(--ease) infinite;
+      }
+
+      .meanLine{
+        stroke:var(--ink);
+        stroke-width:2.2;
+        vector-effect:non-scaling-stroke;
+        stroke-dasharray:280;
+        stroke-dashoffset:280;
+        opacity:0;
+        animation:drawMean var(--cycle) var(--ease) infinite;
+      }
+
+      .meanText{
+        font-size:24px;
+        text-anchor:middle;
+        opacity:0;
+        animation:appearMeanText var(--cycle) var(--ease) infinite;
+      }
+
+      .meanDot{
+        fill:var(--ink);
+        opacity:0;
+        animation:appearMeanText var(--cycle) var(--ease) infinite;
+      }
+
+      .sigmaBand{
+        fill:var(--shade-soft);
+        opacity:0;
+        animation:appearSigmaBand var(--cycle) var(--ease) infinite;
+      }
+
+      .sigmaEdge{
+        stroke:var(--ink);
+        stroke-width:1.8;
+        stroke-dasharray:6 6;
+        opacity:0;
+        vector-effect:non-scaling-stroke;
+        animation:appearSigmaEdge var(--cycle) var(--ease) infinite;
+      }
+
+      .sigmaArrow{
+        stroke:var(--ink);
+        stroke-width:1.8;
+        fill:none;
+        opacity:0;
+        vector-effect:non-scaling-stroke;
+        animation:appearSigmaArrow var(--cycle) var(--ease) infinite;
+      }
+
+      .sigmaText{
+        font-size:22px;
+        text-anchor:middle;
+        opacity:0;
+        animation:appearSigmaText var(--cycle) var(--ease) infinite;
+      }
+
+      .bottomNote{
+        font-size:20px;
+        text-anchor:middle;
+        fill:var(--ink-soft);
+        opacity:0;
+        animation:appearSigmaText var(--cycle) var(--ease) infinite;
+      }
+
+      @keyframes drawCurve{
+        0%,14%{
+          stroke-dashoffset:760;
+          opacity:0;
+        }
+        26%,84%{
+          stroke-dashoffset:0;
+          opacity:1;
+        }
+        100%{
+          stroke-dashoffset:760;
+          opacity:0;
+        }
+      }
+
+      @keyframes appearArea{
+        0%,18%{
+          opacity:0;
+        }
+        30%,84%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes drawMean{
+        0%,34%{
+          stroke-dashoffset:280;
+          opacity:0;
+        }
+        46%,84%{
+          stroke-dashoffset:0;
+          opacity:1;
+        }
+        100%{
+          stroke-dashoffset:280;
+          opacity:0;
+        }
+      }
+
+      @keyframes appearMeanText{
+        0%,38%{
+          opacity:0;
+        }
+        50%,84%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes appearSigmaBand{
+        0%,44%{
+          opacity:0;
+        }
+        56%,84%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes appearSigmaEdge{
+        0%,46%{
+          opacity:0;
+        }
+        58%,84%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes appearSigmaArrow{
+        0%,52%{
+          opacity:0;
+        }
+        64%,84%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes appearSigmaText{
+        0%,56%{
+          opacity:0;
+        }
+        68%,84%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        .densityArea,.bellPath,.meanLine,.meanText,.meanDot,
+        .sigmaBand,.sigmaEdge,.sigmaArrow,.sigmaText,.bottomNote{
+          animation:none;
+          opacity:1;
+          stroke-dashoffset:0;
+        }
+      }
+    </style>
+  </defs>
+
+  <g transform="translate(120,95)">
+    <rect x="0" y="0" width="680" height="560" class="u-panel u-stroke"/>
+
+    <text x="340" y="54" class="label">Desvio padrão</text>
+    <text x="340" y="86" class="small">faixa típica em torno de E(X)</text>
+
+    <g transform="translate(90,125)">
+      <g class="grid">
+        <line x1="0" y1="220" x2="520" y2="220"/>
+        <line x1="0" y1="150" x2="520" y2="150"/>
+        <line x1="0" y1="80"  x2="520" y2="80"/>
+        <line x1="0" y1="10"  x2="520" y2="10"/>
+      </g>
+
+      <g class="u-stroke axis">
+        <line x1="0" y1="290" x2="520" y2="290"/>
+        <line x1="0" y1="290" x2="0" y2="10"/>
+      </g>
+
+      <text x="-80" y="190" transform="rotate(-90 -80 150)" class="ylab">f(x)</text>
+      <text x="-18" y="294" class="zeroTick">0</text>
+
+      <rect x="173.333" y="10" width="173.334" height="280" class="sigmaBand"/>
+      <line x1="173.333" y1="10" x2="173.333" y2="290" class="sigmaEdge"/>
+      <line x1="346.667" y1="10" x2="346.667" y2="290" class="sigmaEdge"/>
+
+      <g transform="matrix(1.833333 0 0 2.2 -15 26)">
+        <path d="M30,120
+                 C95,120 125,20 150,20
+                 C175,20 205,120 270,120
+                 L270,120
+                 L30,120 Z"
+              class="densityArea"/>
+      </g>
+
+      <g transform="matrix(1.833333 0 0 2.2 -15 26)">
+        <path d="M30,120
+                 C95,120 125,20 150,20
+                 C175,20 205,120 270,120"
+              class="bellPath"/>
+      </g>
+
+      <line x1="260" y1="10" x2="260" y2="290" class="meanLine"/>
+      <circle cx="260" cy="290" r="4.2" class="meanDot"/>
+      <text x="260" y="-14" class="meanText">E(X)</text>
+
+      <g transform="translate(0,-2)">
+        <line x1="260" y1="46" x2="346.667" y2="46" class="sigmaArrow"/>
+        <polyline points="338.667,41 346.667,46 338.667,51" class="sigmaArrow"/>
+      </g>
+      <text x="303.333" y="68" class="sigmaText">+σ</text>
+
+      <g transform="translate(0,-2) rotate(180 260 46)">
+        <line x1="260" y1="46" x2="346.667" y2="46" class="sigmaArrow"/>
+        <polyline points="338.667,41 346.667,46 338.667,51" class="sigmaArrow"/>
+      </g>
+      <text x="216.667" y="68" class="sigmaText">−σ</text>
+
+      <text x="0"       y="322" class="ticklab">−3</text>
+      <text x="86.667"  y="322" class="ticklab">−2</text>
+      <text x="173.333" y="322" class="ticklab">−1</text>
+      <text x="260"     y="322" class="ticklab">0</text>
+      <text x="346.667" y="322" class="ticklab">1</text>
+      <text x="433.333" y="322" class="ticklab">2</text>
+      <text x="520"     y="322" class="ticklab">3</text>
+
+      <text x="260" y="408" class="bottomNote">σ na mesma escala de X</text>
+    </g>
+  </g>
+</svg>

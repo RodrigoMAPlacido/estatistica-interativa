@@ -1,0 +1,415 @@
+<svg viewBox="0 0 1300 720"
+     xmlns="http://www.w3.org/2000/svg"
+     role="img"
+     aria-labelledby="title desc"
+     preserveAspectRatio="xMidYMid meet">
+
+  <title id="title">Variável aleatória discreta e contínua</title>
+  <desc id="desc">
+    Animação em árvore distinguindo variável aleatória discreta e contínua.
+    À esquerda, a variável discreta é representada por massas de probabilidade em pontos isolados.
+    À direita, a variável contínua é representada por uma densidade definida ao longo de um intervalo.
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --ink-soft:#64748b;
+        --grid:#d1d5db;
+        --shade:rgba(17,24,39,.06);
+        --shade-soft:rgba(17,24,39,.11);
+        --font:"et-book","ETBook","Georgia","Times New Roman",serif;
+        --cycle:8.6s;
+        --ease:ease-in-out;
+        --dashLine:2200;
+        --dashText:900;
+      }
+
+      svg{ background:#ffffff; }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        user-select:none;
+      }
+
+      .u-stroke{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        vector-effect:non-scaling-stroke;
+      }
+
+      .u-center{ text-anchor:middle; }
+
+      .titleBox{
+        stroke-width:2.2;
+        rx:18;
+        ry:18;
+      }
+
+      .branchBox{
+        stroke-width:2.1;
+        rx:16;
+        ry:16;
+      }
+
+      .mainTitle{
+        font-size:52px;
+        font-weight:600;
+        text-anchor:middle;
+      }
+
+      .branchTitle{
+        font-size:40px;
+        font-weight:500;
+        text-anchor:middle;
+      }
+
+      .subLabel{
+        font-size:24px;
+        text-anchor:middle;
+        fill:var(--ink-soft);
+      }
+
+      .example{
+        font-size:28px;
+        text-anchor:middle;
+        fill:var(--ink-soft);
+      }
+
+      .axis{
+        stroke-width:2.2;
+      }
+
+      .tick{
+        stroke-width:1.9;
+      }
+
+      .tickLab{
+        font-size:22px;
+        text-anchor:middle;
+        fill:var(--ink-soft);
+      }
+
+      .yLab{
+        font-size:22px;
+        text-anchor:middle;
+        fill:var(--ink-soft);
+      }
+
+      .branchLine{
+        stroke-width:2.4;
+        stroke-dasharray:var(--dashLine);
+        stroke-dashoffset:var(--dashLine);
+        animation:k-drawLine var(--cycle) var(--ease) infinite both;
+        animation-delay:var(--delay,0s);
+      }
+
+      .titleText{
+        stroke:var(--ink);
+        stroke-width:.8;
+        fill:transparent;
+        stroke-dasharray:var(--dashText);
+        stroke-dashoffset:var(--dashText);
+        animation:
+          k-textStroke var(--cycle) var(--ease) infinite both,
+          k-textFill   var(--cycle) var(--ease) infinite both;
+        animation-delay:var(--delay,0s), var(--delay,0s);
+      }
+
+      .pmfStem{
+        stroke:var(--ink);
+        stroke-width:2.2;
+        stroke-dasharray:120;
+        stroke-dashoffset:120;
+        opacity:0;
+        animation:k-drawStem 2.4s var(--ease) infinite both;
+        animation-delay:var(--delay,0s);
+      }
+
+      .pmfDot{
+        fill:var(--ink);
+        opacity:0;
+        transform-box:fill-box;
+        transform-origin:center;
+        animation:k-pop 2.4s var(--ease) infinite both;
+        animation-delay:var(--delay,0s);
+      }
+
+      .densityArea{
+        fill:var(--shade);
+        opacity:0;
+        animation:k-showArea var(--cycle) var(--ease) infinite both;
+        animation-delay:.52s;
+      }
+
+      .densityCurve{
+        stroke:var(--ink);
+        stroke-width:2.5;
+        fill:none;
+        vector-effect:non-scaling-stroke;
+        stroke-dasharray:900;
+        stroke-dashoffset:900;
+        animation:k-drawCurve var(--cycle) var(--ease) infinite both;
+        animation-delay:.42s;
+      }
+
+      .movingGuide{
+        stroke:var(--ink-soft);
+        stroke-width:1.8;
+        stroke-dasharray:5 5;
+        vector-effect:non-scaling-stroke;
+        opacity:0;
+        animation:k-showGuide var(--cycle) var(--ease) infinite both;
+        animation-delay:.74s;
+      }
+
+      .movingPoint{
+        fill:var(--ink);
+        opacity:0;
+        animation:k-showGuide var(--cycle) var(--ease) infinite both;
+        animation-delay:.74s;
+      }
+
+      @keyframes k-drawLine{
+        0%   { stroke-dashoffset:var(--dashLine); opacity:0; }
+        10%  { opacity:1; }
+        40%  { stroke-dashoffset:0; opacity:1; }
+        62%  { stroke-dashoffset:0; opacity:1; }
+        90%  { stroke-dashoffset:var(--dashLine); opacity:1; }
+        100% { stroke-dashoffset:var(--dashLine); opacity:0; }
+      }
+
+      @keyframes k-textStroke{
+        0%   { stroke-dashoffset:var(--dashText); opacity:0; }
+        10%  { opacity:1; }
+        42%  { stroke-dashoffset:0; opacity:1; }
+        64%  { stroke-dashoffset:0; opacity:1; }
+        92%  { stroke-dashoffset:var(--dashText); opacity:1; }
+        100% { stroke-dashoffset:var(--dashText); opacity:0; }
+      }
+
+      @keyframes k-textFill{
+        0%,18%   { fill:transparent; }
+        34%,68%  { fill:var(--ink); }
+        94%,100% { fill:transparent; }
+      }
+
+      @keyframes k-drawStem{
+        0%,18%{
+          stroke-dashoffset:120;
+          opacity:0;
+        }
+        30%,80%{
+          stroke-dashoffset:0;
+          opacity:1;
+        }
+        100%{
+          stroke-dashoffset:120;
+          opacity:0;
+        }
+      }
+
+      @keyframes k-pop{
+        0%,22%{
+          opacity:0;
+          transform:scale(.55);
+        }
+        34%,80%{
+          opacity:1;
+          transform:scale(1);
+        }
+        100%{
+          opacity:0;
+          transform:scale(.55);
+        }
+      }
+
+      @keyframes k-showArea{
+        0%,22%{
+          opacity:0;
+        }
+        34%,82%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes k-drawCurve{
+        0%,18%{
+          stroke-dashoffset:900;
+          opacity:0;
+        }
+        30%,82%{
+          stroke-dashoffset:0;
+          opacity:1;
+        }
+        100%{
+          stroke-dashoffset:900;
+          opacity:0;
+        }
+      }
+
+      @keyframes k-showGuide{
+        0%,28%{
+          opacity:0;
+        }
+        40%,82%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        .branchLine,.titleText,.pmfStem,.pmfDot,.densityArea,.densityCurve,.movingGuide,.movingPoint{
+          animation:none;
+          opacity:1;
+          stroke-dashoffset:0;
+          transform:none;
+        }
+        .titleText{ fill:var(--ink); }
+      }
+    </style>
+  </defs>
+<g transform="translate(-80,-10)">
+  <!-- caixa do título -->
+  <rect x="415" y="48" width="670" height="110" class="u-stroke titleBox"/>
+  <text x="750" y="118" class="mainTitle titleText">VARIÁVEL ALEATÓRIA</text>
+
+  <!-- tronco -->
+  <line x1="750" y1="158" x2="750" y2="238" class="u-stroke branchLine" style="--delay:.02s"/>
+  <line x1="250" y1="238" x2="1250" y2="238" class="u-stroke branchLine" style="--delay:.12s"/>
+
+  <!-- ramos -->
+  <line x1="390" y1="238" x2="390" y2="320" class="u-stroke branchLine" style="--delay:.22s"/>
+  <line x1="1110" y1="238" x2="1110" y2="320" class="u-stroke branchLine" style="--delay:.22s"/>
+
+  <!-- caixas -->
+  <rect x="230" y="320" width="320" height="110" class="u-stroke branchBox"/>
+  <rect x="950" y="320" width="320" height="110" class="u-stroke branchBox"/>
+
+  <text x="390" y="382" class="branchTitle titleText" style="--delay:.22s">DISCRETA</text>
+  <text x="390" y="418" class="subLabel">massa em pontos isolados</text>
+
+  <text x="1110" y="382" class="branchTitle titleText" style="--delay:.22s">CONTÍNUA</text>
+  <text x="1110" y="418" class="subLabel">densidade sobre intervalos</text>
+
+  <!-- ======================= -->
+  <!-- gráfico discreto -->
+  <!-- ======================= -->
+  <g transform="translate(130,500)">
+    <line x1="30" y1="120" x2="470" y2="120" class="u-stroke axis"/>
+    <line x1="30" y1="120" x2="30" y2="10" class="u-stroke axis"/>
+
+    <text x="-20" y="102" class="yLab" transform="rotate(-90 -20 72)">p(x)</text>
+
+    <line x1="80"  y1="112" x2="80"  y2="128" class="u-stroke tick"/>
+    <line x1="165" y1="112" x2="165" y2="128" class="u-stroke tick"/>
+    <line x1="250" y1="112" x2="250" y2="128" class="u-stroke tick"/>
+    <line x1="335" y1="112" x2="335" y2="128" class="u-stroke tick"/>
+    <line x1="420" y1="112" x2="420" y2="128" class="u-stroke tick"/>
+
+    <text x="80"  y="162" class="tickLab">0</text>
+    <text x="165" y="162" class="tickLab">1</text>
+    <text x="250" y="162" class="tickLab">2</text>
+    <text x="335" y="162" class="tickLab">3</text>
+    <text x="420" y="162" class="tickLab">4</text>
+
+    <!-- massas de probabilidade -->
+    <line x1="80"  y1="120" x2="80"  y2="82" class="pmfStem" style="--delay:.56s"/>
+    <line x1="165" y1="120" x2="165" y2="42" class="pmfStem" style="--delay:.78s"/>
+    <line x1="250" y1="120" x2="250" y2="25" class="pmfStem" style="--delay:1.00s"/>
+    <line x1="335" y1="120" x2="335" y2="56" class="pmfStem" style="--delay:1.22s"/>
+    <line x1="420" y1="120" x2="420" y2="90" class="pmfStem" style="--delay:1.44s"/>
+
+    <circle cx="80"  cy="82" r="8.5" class="pmfDot" style="--delay:.56s"/>
+    <circle cx="165" cy="42" r="8.5" class="pmfDot" style="--delay:.78s"/>
+    <circle cx="250" cy="25" r="8.5" class="pmfDot" style="--delay:1.00s"/>
+    <circle cx="335" cy="56" r="8.5" class="pmfDot" style="--delay:1.22s"/>
+    <circle cx="420" cy="90" r="8.5" class="pmfDot" style="--delay:1.44s"/>
+  </g>
+
+
+
+  <!-- ======================= -->
+  <!-- gráfico contínuo -->
+  <!-- ======================= -->
+  <g transform="translate(850,485)">
+    <line x1="30" y1="135" x2="490" y2="135" class="u-stroke axis"/>
+    <line x1="30" y1="135" x2="30" y2="15" class="u-stroke axis"/>
+
+    <text x="-20" y="113" class="yLab" transform="rotate(-90 -20 80)">f(x)</text>
+
+    <!-- área e curva -->
+    <path d="M60,135
+             C155,135 205,45 260,45
+             C315,45 365,135 460,135
+             L460,135
+             L60,135 Z"
+          class="densityArea"/>
+
+    <path d="M60,135
+             C155,135 205,45 260,45
+             C315,45 365,135 460,135"
+          class="densityCurve"/>
+
+    <!-- marcações -->
+    <line x1="80"  y1="127" x2="80"  y2="143" class="u-stroke tick"/>
+    <line x1="170" y1="127" x2="170" y2="143" class="u-stroke tick"/>
+    <line x1="260" y1="127" x2="260" y2="143" class="u-stroke tick"/>
+    <line x1="350" y1="127" x2="350" y2="143" class="u-stroke tick"/>
+    <line x1="440" y1="127" x2="440" y2="143" class="u-stroke tick"/>
+
+    <text x="80"  y="177" class="tickLab">0</text>
+    <text x="170" y="177" class="tickLab">1</text>
+    <text x="260" y="177" class="tickLab">2</text>
+    <text x="350" y="177" class="tickLab">3</text>
+    <text x="440" y="177" class="tickLab">4</text>
+
+    <!-- ponto contínuo deslizando -->
+<line x1="60" y1="135" x2="60" y2="135" class="movingGuide">
+  <animate attributeName="x1"
+           values="60;77.297;93.613;109.021;123.594;137.405;150.527;163.035;175;186.497;197.598;208.376;218.906;229.26;239.512;249.734;260;270.266;280.488;290.74;301.094;311.624;322.402;333.503;345;356.965;369.473;382.595;396.406;410.979;426.387;442.703;460"
+           keyTimes="0;0.03125;0.0625;0.09375;0.125;0.15625;0.1875;0.21875;0.25;0.28125;0.3125;0.34375;0.375;0.40625;0.4375;0.46875;0.5;0.53125;0.5625;0.59375;0.625;0.65625;0.6875;0.71875;0.75;0.78125;0.8125;0.84375;0.875;0.90625;0.9375;0.96875;1"
+           dur="4.2s"
+           calcMode="linear"
+           repeatCount="indefinite"/>
+  <animate attributeName="x2"
+           values="60;77.297;93.613;109.021;123.594;137.405;150.527;163.035;175;186.497;197.598;208.376;218.906;229.26;239.512;249.734;260;270.266;280.488;290.74;301.094;311.624;322.402;333.503;345;356.965;369.473;382.595;396.406;410.979;426.387;442.703;460"
+           keyTimes="0;0.03125;0.0625;0.09375;0.125;0.15625;0.1875;0.21875;0.25;0.28125;0.3125;0.34375;0.375;0.40625;0.4375;0.46875;0.5;0.53125;0.5625;0.59375;0.625;0.65625;0.6875;0.71875;0.75;0.78125;0.8125;0.84375;0.875;0.90625;0.9375;0.96875;1"
+           dur="4.2s"
+           calcMode="linear"
+           repeatCount="indefinite"/>
+  <animate attributeName="y2"
+           values="135;133.989;131.133;126.694;120.938;114.126;106.523;98.394;90;81.606;73.477;65.874;59.062;53.306;48.867;46.011;45;46.011;48.867;53.306;59.062;65.874;73.477;81.606;90;98.394;106.523;114.126;120.938;126.694;131.133;133.989;135"
+           keyTimes="0;0.03125;0.0625;0.09375;0.125;0.15625;0.1875;0.21875;0.25;0.28125;0.3125;0.34375;0.375;0.40625;0.4375;0.46875;0.5;0.53125;0.5625;0.59375;0.625;0.65625;0.6875;0.71875;0.75;0.78125;0.8125;0.84375;0.875;0.90625;0.9375;0.96875;1"
+           dur="4.2s"
+           calcMode="linear"
+           repeatCount="indefinite"/>
+</line>
+
+<circle cx="60" cy="135" r="8.5" class="movingPoint">
+  <animate attributeName="cx"
+           values="60;77.297;93.613;109.021;123.594;137.405;150.527;163.035;175;186.497;197.598;208.376;218.906;229.26;239.512;249.734;260;270.266;280.488;290.74;301.094;311.624;322.402;333.503;345;356.965;369.473;382.595;396.406;410.979;426.387;442.703;460"
+           keyTimes="0;0.03125;0.0625;0.09375;0.125;0.15625;0.1875;0.21875;0.25;0.28125;0.3125;0.34375;0.375;0.40625;0.4375;0.46875;0.5;0.53125;0.5625;0.59375;0.625;0.65625;0.6875;0.71875;0.75;0.78125;0.8125;0.84375;0.875;0.90625;0.9375;0.96875;1"
+           dur="4.2s"
+           calcMode="linear"
+           repeatCount="indefinite"/>
+  <animate attributeName="cy"
+           values="135;133.989;131.133;126.694;120.938;114.126;106.523;98.394;90;81.606;73.477;65.874;59.062;53.306;48.867;46.011;45;46.011;48.867;53.306;59.062;65.874;73.477;81.606;90;98.394;106.523;114.126;120.938;126.694;131.133;133.989;135"
+           keyTimes="0;0.03125;0.0625;0.09375;0.125;0.15625;0.1875;0.21875;0.25;0.28125;0.3125;0.34375;0.375;0.40625;0.4375;0.46875;0.5;0.53125;0.5625;0.59375;0.625;0.65625;0.6875;0.71875;0.75;0.78125;0.8125;0.84375;0.875;0.90625;0.9375;0.96875;1"
+           dur="4.2s"
+           calcMode="linear"
+           repeatCount="indefinite"/>
+</circle>
+  </g>
+</g>
+
+</svg>

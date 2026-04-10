@@ -25,7 +25,9 @@
       .u-box{ stroke-width:3; rx:15; }
       .u-center{ text-anchor:middle; }
       .u-head{ fill:var(--ink); }
-
+      svg{
+        background:#ffffff;
+      }
       /* ============ Animações (a-*) ============ */
       /* traçado tipo tronco/ramo */
       @keyframes k-drawLine{

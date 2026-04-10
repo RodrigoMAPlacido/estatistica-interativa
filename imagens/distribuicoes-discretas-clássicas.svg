@@ -1,0 +1,253 @@
+<svg viewBox="0 0 1500 780" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc" preserveAspectRatio="xMidYMid meet">
+  <title id="title">Distribuições discretas clássicas</title>
+  <desc id="desc">
+    Animação de abertura para distribuições discretas clássicas. Uma caixa superior com o título
+    “Distribuições discretas” conecta-se por um tronco central a sete cartões inferiores:
+    Uniforme, Bernoulli, Binomial, Geométrica, Binomial Negativa, Hipergeométrica e Poisson.
+    Os elementos surgem com animação de traçado em ondas.
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --font:"et-book","ETBook","Georgia",serif;
+        --cycle:9.4s;
+        --ease:ease-in-out;
+        --dash:4000;
+        --dashText:900;
+      }
+
+      svg{
+        background:#ffffff;
+      }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        user-select:none;
+      }
+
+      tspan{
+        x:0;
+        dy:1.25em;
+      }
+
+      .u-stroke{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        vector-effect:non-scaling-stroke;
+      }
+
+      .u-thick{
+        stroke-width:2;
+      }
+
+      .u-box{
+        stroke-width:2;
+        rx:15;
+      }
+
+      .u-center{
+        text-anchor:middle;
+      }
+
+      .u-head{
+        fill:var(--ink);
+      }
+
+      @keyframes k-drawLine{
+        0%   { stroke-dashoffset:var(--dash); opacity:0; }
+        10%  { opacity:1; }
+        42%  { stroke-dashoffset:0; opacity:1; }
+        58%  { stroke-dashoffset:0; opacity:1; }
+        90%  { stroke-dashoffset:var(--dash); opacity:1; }
+        100% { stroke-dashoffset:var(--dash); opacity:0; }
+      }
+
+      .a-draw{
+        stroke-dasharray:var(--dash);
+        stroke-dashoffset:var(--dash);
+        animation:k-drawLine var(--cycle) var(--ease) infinite both;
+        animation-delay:var(--delay,0s);
+      }
+
+      @keyframes k-textStroke{
+        0%   { stroke-dashoffset:var(--dashText); opacity:0; }
+        10%  { opacity:1; }
+        45%  { stroke-dashoffset:0; opacity:1; }
+        55%  { stroke-dashoffset:0; opacity:1; }
+        90%  { stroke-dashoffset:var(--dashText); opacity:1; }
+        100% { stroke-dashoffset:var(--dashText); opacity:0; }
+      }
+
+      @keyframes k-textFill{
+        0%,13%   { fill:transparent; }
+        36%,64%  { fill:var(--ink); }
+        80%,100% { fill:transparent; }
+      }
+
+      .a-text{
+        stroke:var(--ink);
+        stroke-width:.95;
+        fill:transparent;
+        stroke-dasharray:var(--dashText);
+        stroke-dashoffset:var(--dashText);
+        animation:
+          k-textStroke var(--cycle) var(--ease) infinite both,
+          k-textFill   var(--cycle) var(--ease) infinite both;
+        animation-delay:var(--delay,0s), var(--delay,0s);
+      }
+
+      @keyframes k-fadeSeq{
+        0%,15%{opacity:0}
+        35%,85%{opacity:1}
+        100%{opacity:0}
+      }
+
+      .a-fade{
+        animation:k-fadeSeq var(--cycle) var(--ease) infinite both;
+        animation-delay:var(--delay,0s);
+      }
+
+      .title-main{
+        font-size:56px;
+        font-weight:700;
+      }
+
+      .card-text{
+        font-size:30px;
+        font-weight:500;
+      }
+
+      .card-text-sm{
+        font-size:27px;
+        font-weight:500;
+      }
+
+      .card-text-xs{
+        font-size:24px;
+        font-weight:500;
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        .a-draw,.a-text,.a-fade{
+          animation:none;
+          opacity:1;
+          stroke-dashoffset:0;
+        }
+        .a-text{
+          fill:var(--ink);
+        }
+      }
+    </style>
+  </defs>
+
+  <g id="scene">
+
+    <!-- Caixa superior -->
+    <rect x="450" y="68" width="600" height="210" class="u-stroke u-box"/>
+
+    <g style="--delay:0s">
+      <text x="750" y="158" class="a-text u-center title-main">
+        <tspan x="750" dy="0">DISTRIBUIÇÕES</tspan>
+        <tspan x="750" dy="1.18em">DISCRETAS</tspan>
+      </text>
+    </g>
+
+    <!-- Estrutura -->
+    <g id="diagram">
+
+      <!-- tronco central + barra -->
+      <g style="--delay:.12s">
+        <line x1="750" y1="278" x2="750" y2="392" class="u-stroke u-thick a-draw"/>
+        <line x1="150" y1="392" x2="1350" y2="392" class="u-stroke u-thick a-draw"/>
+      </g>
+
+      <!-- ramos -->
+      <g style="--delay:.26s">
+        <line x1="150"  y1="392" x2="150"  y2="500" class="u-stroke u-thick a-draw"/>
+        <line x1="350"  y1="392" x2="350"  y2="500" class="u-stroke u-thick a-draw"/>
+        <line x1="550"  y1="392" x2="550"  y2="500" class="u-stroke u-thick a-draw"/>
+        <line x1="750"  y1="392" x2="750"  y2="500" class="u-stroke u-thick a-draw"/>
+        <line x1="950"  y1="392" x2="950"  y2="500" class="u-stroke u-thick a-draw"/>
+        <line x1="1150" y1="392" x2="1150" y2="500" class="u-stroke u-thick a-draw"/>
+        <line x1="1350" y1="392" x2="1350" y2="500" class="u-stroke u-thick a-draw"/>
+      </g>
+
+      <!-- setas -->
+      <g style="--delay:.38s">
+        <g transform="translate(150,500) rotate(90)"><polygon class="u-head a-fade" points="21,0 0,-8 0,8"/></g>
+        <g transform="translate(350,500) rotate(90)"><polygon class="u-head a-fade" points="21,0 0,-8 0,8"/></g>
+        <g transform="translate(550,500) rotate(90)"><polygon class="u-head a-fade" points="21,0 0,-8 0,8"/></g>
+        <g transform="translate(750,500) rotate(90)"><polygon class="u-head a-fade" points="21,0 0,-8 0,8"/></g>
+        <g transform="translate(950,500) rotate(90)"><polygon class="u-head a-fade" points="21,0 0,-8 0,8"/></g>
+        <g transform="translate(1150,500) rotate(90)"><polygon class="u-head a-fade" points="21,0 0,-8 0,8"/></g>
+        <g transform="translate(1350,500) rotate(90)"><polygon class="u-head a-fade" points="21,0 0,-8 0,8"/></g>
+      </g>
+
+      <!-- cartões -->
+
+      <!-- Uniforme -->
+      <g style="--delay:.52s">
+        <rect x="60" y="530" width="180" height="120" class="u-stroke u-box a-draw"/>
+        <text x="150" y="603" class="a-text u-center card-text">
+          <tspan x="150" dy="0">UNIFORME</tspan>
+        </text>
+      </g>
+
+      <!-- Bernoulli -->
+      <g style="--delay:.64s">
+        <rect x="260" y="530" width="180" height="120" class="u-stroke u-box a-draw"/>
+        <text x="350" y="603" class="a-text u-center card-text" style="font-size:28px">
+          <tspan x="350" dy="0">BERNOULLI</tspan>
+        </text>
+      </g>
+
+      <!-- Binomial -->
+      <g style="--delay:.76s">
+        <rect x="460" y="530" width="180" height="120" class="u-stroke u-box a-draw"/>
+        <text x="550" y="603" class="a-text u-center card-text">
+          <tspan x="550" dy="0">BINOMIAL</tspan>
+        </text>
+      </g>
+
+      <!-- Geométrica -->
+      <g style="--delay:.88s">
+        <rect x="660" y="530" width="180" height="120" class="u-stroke u-box a-draw"/>
+        <text x="750" y="603" class="a-text u-center card-text-sm" style="font-size:25px">
+          <tspan x="750" dy="0">GEOMÉTRICA</tspan>
+        </text>
+      </g>
+
+      <!-- Binomial negativa -->
+      <g style="--delay:1.00s">
+        <rect x="860" y="530" width="180" height="120" class="u-stroke u-box a-draw"/>
+        <text x="950" y="584" class="a-text u-center card-text-sm">
+          <tspan x="950" dy="0">BINOMIAL</tspan>
+          <tspan x="950" dy="1.22em">NEGATIVA</tspan>
+        </text>
+      </g>
+
+      <!-- Hipergeométrica -->
+      <g style="--delay:1.12s">
+        <rect x="1060" y="530" width="180" height="120" class="u-stroke u-box a-draw"/>
+        <text x="1150" y="584" class="a-text u-center card-text-xs" style="font-size:24px">
+          <tspan x="1150" dy="0">HIPER-</tspan>
+          <tspan x="1150" dy="1.22em">GEOMÉTRICA</tspan>
+        </text>
+      </g>
+
+      <!-- Poisson -->
+      <g style="--delay:1.24s">
+        <rect x="1260" y="530" width="180" height="120" class="u-stroke u-box a-draw"/>
+        <text x="1350" y="603" class="a-text u-center card-text">
+          <tspan x="1350" dy="0">POISSON</tspan>
+        </text>
+      </g>
+
+    </g>
+  </g>
+</svg>

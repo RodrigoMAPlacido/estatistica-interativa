@@ -1,0 +1,261 @@
+<svg viewBox="0 0 1000 360"
+     xmlns="http://www.w3.org/2000/svg"
+     role="img"
+     aria-labelledby="title desc"
+     preserveAspectRatio="xMidYMid meet">
+
+  <title id="title">Entre dois valores possíveis existem outros</title>
+  <desc id="desc">
+    A animação mostra a passagem de valores isolados para um intervalo contínuo:
+    entre dois extremos a e b surgem sucessivamente novos pontos intermediários,
+    até que o conjunto seja percebido como contínuo.
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --ink-soft:#64748b;
+        --grid:#d1d5db;
+        --shade:rgba(17,24,39,.08);
+        --font:"et-book","ETBook","Georgia","Times New Roman",serif;
+        --cycle:8.4s;
+        --ease:ease-in-out;
+      }
+
+      svg{
+        background:#ffffff;
+      }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        user-select:none;
+      }
+
+      .u-stroke{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        vector-effect:non-scaling-stroke;
+      }
+
+      .panel{
+        stroke-width:2;
+        rx:22;
+        ry:22;
+      }
+
+      .title{
+        font-size:34px;
+        font-weight:600;
+        text-anchor:middle;
+      }
+
+      .small{
+        font-size:21px;
+        text-anchor:middle;
+        fill:var(--ink-soft);
+      }
+
+      .axis{
+        stroke-width:2.2;
+      }
+
+      .tick{
+        stroke-width:2;
+      }
+
+      .tickLab{
+        font-size:22px;
+        text-anchor:middle;
+        fill:var(--ink-soft);
+      }
+
+      .dot{
+        fill:var(--ink);
+        opacity:0;
+        transform-box:fill-box;
+        transform-origin:center;
+      }
+
+      .micro{
+        fill:var(--ink-soft);
+        opacity:0;
+      }
+
+      .band{
+        stroke:var(--ink);
+        stroke-width:8;
+        stroke-linecap:round;
+        opacity:0;
+      }
+
+      .movingPoint{
+        fill:var(--ink);
+        opacity:0;
+      }
+
+      .phaseText{
+        font-size:22px;
+        text-anchor:middle;
+        fill:var(--ink-soft);
+        opacity:0;
+      }
+
+      .endpointTick{
+        stroke:var(--ink);
+        stroke-width:2.2;
+      }
+
+      .endpointGuide{
+        stroke:var(--ink-soft);
+        stroke-width:1.6;
+        stroke-dasharray:5 5;
+        opacity:0;
+      }
+
+      @keyframes showEndpoints{
+        0%,8%{ opacity:0; transform:scale(.6); }
+        14%,86%{ opacity:1; transform:scale(1); }
+        100%{ opacity:0; transform:scale(.6); }
+      }
+
+      @keyframes showMid{
+        0%,16%{ opacity:0; transform:scale(.6); }
+        24%,86%{ opacity:1; transform:scale(1); }
+        100%{ opacity:0; transform:scale(.6); }
+      }
+
+      @keyframes showQuarter{
+        0%,26%{ opacity:0; transform:scale(.6); }
+        34%,86%{ opacity:1; transform:scale(1); }
+        100%{ opacity:0; transform:scale(.6); }
+      }
+
+      @keyframes showMicro{
+        0%,38%{ opacity:0; }
+        48%,60%{ opacity:1; }
+        72%,100%{ opacity:0; }
+      }
+
+      @keyframes showBand{
+        0%,48%{ opacity:0; }
+        58%,86%{ opacity:1; }
+        100%{ opacity:0; }
+      }
+
+      @keyframes showMoving{
+        0%,56%{ opacity:0; }
+        64%,86%{ opacity:1; }
+        100%{ opacity:0; }
+      }
+
+      @keyframes showEarlyText{
+        0%,10%{ opacity:0; }
+        20%,40%{ opacity:1; }
+        50%,100%{ opacity:0; }
+      }
+
+      @keyframes showLateText{
+        0%,52%{ opacity:0; }
+        62%,86%{ opacity:1; }
+        100%{ opacity:0; }
+      }
+
+      @keyframes showGuide{
+        0%,56%{ opacity:0; }
+        64%,86%{ opacity:1; }
+        100%{ opacity:0; }
+      }
+
+      .endpointA,.endpointB{ animation:showEndpoints var(--cycle) var(--ease) infinite; }
+      .midpoint{ animation:showMid var(--cycle) var(--ease) infinite; }
+      .quarter{ animation:showQuarter var(--cycle) var(--ease) infinite; }
+      .micro{ animation:showMicro var(--cycle) var(--ease) infinite; }
+      .band{ animation:showBand var(--cycle) var(--ease) infinite; }
+      .movingPoint{ animation:showMoving var(--cycle) var(--ease) infinite; }
+      .earlyText{ animation:showEarlyText var(--cycle) var(--ease) infinite; }
+      .lateText{ animation:showLateText var(--cycle) var(--ease) infinite; }
+      .endpointGuide{ animation:showGuide var(--cycle) var(--ease) infinite; }
+
+      @media (prefers-reduced-motion:reduce){
+        .endpointA,.endpointB,.midpoint,.quarter,.micro,.band,.movingPoint,.earlyText,.lateText,.endpointGuide{
+          animation:none;
+          opacity:1;
+          transform:none;
+        }
+      }
+    </style>
+  </defs>
+
+  <g transform="translate(30,30)">
+    <rect x="0" y="0" width="940" height="300" class="u-stroke panel"/>
+
+    <text x="470" y="40" class="title">Entre dois valores possíveis</text>
+    <text x="470" y="70" class="small">sempre podem existir outros valores igualmente possíveis</text>
+
+    <g transform="translate(90,95)">
+      <!-- eixo -->
+      <line x1="80" y1="120" x2="720" y2="120" class="u-stroke axis"/>
+
+      <!-- extremos do intervalo -->
+      <line x1="180" y1="108" x2="180" y2="132" class="u-stroke endpointTick"/>
+      <line x1="620" y1="108" x2="620" y2="132" class="u-stroke endpointTick"/>
+
+      <text x="180" y="165" class="tickLab">a</text>
+      <text x="620" y="165" class="tickLab">b</text>
+
+      <!-- guias leves -->
+      <line x1="180" y1="120" x2="180" y2="40" class="endpointGuide"/>
+      <line x1="620" y1="120" x2="620" y2="40" class="endpointGuide"/>
+
+      <!-- pontos iniciais -->
+      <circle cx="180" cy="120" r="9" class="dot endpointA"/>
+      <circle cx="620" cy="120" r="9" class="dot endpointB"/>
+
+      <!-- ponto médio -->
+      <circle cx="400" cy="120" r="8" class="dot midpoint"/>
+
+      <!-- quartis/intermediários -->
+      <circle cx="290" cy="120" r="7" class="dot quarter"/>
+      <circle cx="510" cy="120" r="7" class="dot quarter"/>
+
+      <!-- muitos intermediários -->
+      <circle cx="207.5" cy="120" r="3.2" class="micro"/>
+      <circle cx="235"   cy="120" r="3.2" class="micro"/>
+      <circle cx="262.5" cy="120" r="3.2" class="micro"/>
+      <circle cx="317.5" cy="120" r="3.2" class="micro"/>
+      <circle cx="345"   cy="120" r="3.2" class="micro"/>
+      <circle cx="372.5" cy="120" r="3.2" class="micro"/>
+      <circle cx="427.5" cy="120" r="3.2" class="micro"/>
+      <circle cx="455"   cy="120" r="3.2" class="micro"/>
+      <circle cx="482.5" cy="120" r="3.2" class="micro"/>
+      <circle cx="537.5" cy="120" r="3.2" class="micro"/>
+      <circle cx="565"   cy="120" r="3.2" class="micro"/>
+      <circle cx="592.5" cy="120" r="3.2" class="micro"/>
+
+      <!-- intervalo contínuo -->
+      <line x1="180" y1="120" x2="620" y2="120" class="band"/>
+
+      <!-- ponto que desliza -->
+      <circle cx="180" cy="120" r="8.5" class="movingPoint">
+        <animate attributeName="cx"
+                 values="180;180;180;620;180"
+                 keyTimes="0;0.56;0.64;0.86;1"
+                 dur="8.4s"
+                 calcMode="spline"
+                 keySplines="0.42 0 0.58 1;
+                             0.42 0 0.58 1;
+                             0.42 0 0.58 1;
+                             0.42 0 0.58 1"
+                 repeatCount="indefinite"/>
+      </circle>
+
+      <!-- textos de fase -->
+      <text x="400" y="28" class="phaseText earlyText">valores isolados já não bastam</text>
+      <text x="400" y="28" class="phaseText lateText">qualquer valor do intervalo pode ocorrer</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,285 @@
+<svg viewBox="0 0 1000 720"
+     xmlns="http://www.w3.org/2000/svg"
+     role="img"
+     aria-labelledby="title desc"
+     preserveAspectRatio="xMidYMid meet">
+
+  <title id="title">Valor esperado de uma variável aleatória discreta</title>
+  <desc id="desc">
+    Gráfico de barras representando as probabilidades associadas aos valores possíveis
+    de uma variável aleatória discreta. A linha vertical indica o valor esperado E(X).
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --ink:#111827;
+        --ink-soft:#64748b;
+        --grid:#d1d5db;
+        --shade:rgba(17,24,39,.06);
+        --font:"et-book","ETBook","Georgia","Times New Roman",serif;
+        --cycle:7.8s;
+        --ease:ease-in-out;
+      }
+
+      svg{
+        background:#ffffff;
+      }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        user-select:none;
+      }
+
+      .u-stroke{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        vector-effect:non-scaling-stroke;
+      }
+
+      .u-panel{
+        stroke-width:2;
+        rx:22;
+        ry:22;
+      }
+
+      .title{
+        font-size:34px;
+        font-weight:600;
+        text-anchor:middle;
+      }
+
+      .small{
+        font-size:22px;
+        text-anchor:middle;
+        fill:var(--ink-soft);
+      }
+
+      .axis{
+        stroke-width:2;
+      }
+
+      .grid line{
+        stroke:var(--grid);
+        stroke-width:1;
+      }
+
+      .xlab{
+        font-size:24px;
+        text-anchor:middle;
+      }
+
+      .ylab{
+        font-size:22px;
+        fill:var(--ink-soft);
+        text-anchor:middle;
+      }
+
+      .ticklab{
+        font-size:19px;
+        fill:var(--ink-soft);
+        text-anchor:end;
+      }
+
+      .bar{
+        fill:var(--ink);
+        transform-box:fill-box;
+        transform-origin:bottom;
+        animation:growY var(--cycle) var(--ease) infinite;
+      }
+
+      .probText{
+        font-size:22px;
+        text-anchor:middle;
+        opacity:0;
+        animation:appearText var(--cycle) var(--ease) infinite;
+      }
+
+      .meanLine{
+        stroke:var(--ink);
+        stroke-width:2.2;
+        opacity:0;
+        animation:appearMean var(--cycle) var(--ease) infinite;
+      }
+
+      .meanText{
+        font-size:24px;
+        text-anchor:middle;
+        opacity:0;
+        animation:appearMeanText var(--cycle) var(--ease) infinite;
+      }
+
+      .noteBox{
+        fill:var(--shade);
+        stroke:var(--ink);
+        stroke-width:1.5;
+        rx:12;
+        ry:12;
+        vector-effect:non-scaling-stroke;
+      }
+
+      .note{
+        font-size:21px;
+        text-anchor:middle;
+      }
+
+      @keyframes growY{
+        0%,18%{
+          transform:scaleY(0);
+          opacity:0;
+        }
+        30%,84%{
+          transform:scaleY(1);
+          opacity:1;
+        }
+        100%{
+          transform:scaleY(0);
+          opacity:0;
+        }
+      }
+
+      @keyframes appearText{
+        0%,30%{
+          opacity:0;
+        }
+        40%,84%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes appearMean{
+        0%,42%{
+          opacity:0;
+        }
+        52%,84%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes appearMeanText{
+        0%,48%{
+          opacity:0;
+        }
+        58%,84%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        .bar,.probText,.meanLine,.meanText{
+          animation:none;
+          opacity:1;
+          transform:none;
+        }
+      }
+    </style>
+  </defs>
+
+  <!-- painel -->
+  <g transform="translate(40,110)">
+    <rect x="0" y="-10" width="840" height="505" class="u-panel u-stroke"/>
+
+    <text x="420" y="28" class="title">Valor esperado</text>
+    <text x="420" y="54" class="small">probabilidades por valor e posição de E(X)</text>
+
+    <g transform="translate(110,110)">
+      <!-- grade -->
+      <g class="grid">
+        <line x1="0" y1="220" x2="600" y2="220"/>
+        <line x1="0" y1="150" x2="600" y2="150"/>
+        <line x1="0" y1="80"  x2="600" y2="80"/>
+        <line x1="0" y1="10"  x2="600" y2="10"/>
+      </g>
+
+      <!-- eixos -->
+      <g class="u-stroke axis">
+        <line x1="0" y1="290" x2="600" y2="290"/>
+        <line x1="0" y1="290" x2="0" y2="10"/>
+      </g>
+
+      <!-- rótulos do eixo y -->
+      <text x="-18" y="294" class="ticklab">0</text>
+      <text x="-18" y="224" class="ticklab">p₁</text>
+      <text x="-18" y="154" class="ticklab">p₂</text>
+      <text x="-18" y="84"  class="ticklab">p₃</text>
+
+      <!-- barras -->
+      <rect x="38"  y="220" width="72" height="70"  class="bar" style="animation-delay:0s"/>
+      <rect x="148" y="150" width="72" height="140" class="bar" style="animation-delay:.10s"/>
+      <rect x="258" y="95"  width="72" height="195" class="bar" style="animation-delay:.20s"/>
+      <rect x="368" y="170" width="72" height="120" class="bar" style="animation-delay:.30s"/>
+      <rect x="478" y="235" width="72" height="55"  class="bar" style="animation-delay:.40s"/>
+
+<!-- linha do valor esperado -->
+<line x1="285" y1="10" x2="285" y2="290" class="meanLine"/>
+
+<!-- fórmula do valor esperado -->
+<g style="opacity:0; animation:appearMeanText var(--cycle) var(--ease) infinite;">
+  <text x="220" y="-4" class="meanText" style="text-anchor:start;">
+    <tspan font-style="italic">E</tspan>(<tspan font-style="italic">X</tspan>) =
+  </text>
+  <!-- somatório -->
+  <g transform="translate(-8,0)">
+  <text x="316" y="-2" style="font-family:var(--font); font-size:34px; fill:var(--ink); text-anchor:middle;">∑</text>
+  <text x="316" y="18" style="font-family:var(--font); font-size:14px; fill:var(--ink); text-anchor:middle;">
+    <tspan font-style="italic">i = 1</tspan>
+  </text>
+  <text x="316" y="-30" style="font-family:var(--font); font-size:14px; fill:var(--ink); text-anchor:middle;">
+    <tspan font-style="italic">n</tspan>
+  </text>
+  
+  <!-- x_i -->
+  <text x="338" y="-4" class="meanText" style="text-anchor:start;">
+    <tspan font-style="italic">x</tspan>
+  </text>
+  <text x="351" y="2" style="font-family:var(--font); font-size:14px; fill:var(--ink);">
+    <tspan font-style="italic">i</tspan>
+  </text>
+
+  <!-- p(x_i) -->
+  <text x="362" y="-4" class="meanText" style="text-anchor:start;">
+    <tspan font-style="italic">p</tspan>(<tspan font-style="italic">x</tspan>
+  </text>
+  <text x="400" y="2" style="font-family:var(--font); font-size:14px; fill:var(--ink);">
+    <tspan font-style="italic">i</tspan>
+  </text>
+  <text x="405" y="-4" class="meanText" style="text-anchor:start;">)</text>
+  </g>
+</g>
+
+      <!-- rótulos das probabilidades -->
+      <text x="74"  y="205" class="probText" style="animation-delay:0s">p(x₁)</text>
+      <text x="184" y="135" class="probText" style="animation-delay:.10s">p(x₂)</text>
+<g style="animation-delay:.20s">
+  <rect x="258" y="58" width="72" height="28" rx="6" ry="6"
+        fill="#ffffff"
+        style="opacity:0; animation:appearText var(--cycle) var(--ease) infinite; animation-delay:.20s;"/>
+  <text x="294" y="80" class="probText" style="animation-delay:.20s">p(x₃)</text>
+</g>      <text x="404" y="155" class="probText" style="animation-delay:.30s">p(x₄)</text>
+      <text x="514" y="220" class="probText" style="animation-delay:.40s">p(x₅)</text>
+
+      <!-- rótulos do eixo x -->
+      <text x="74"  y="322" class="xlab">x₁</text>
+      <text x="184" y="322" class="xlab">x₂</text>
+      <text x="294" y="322" class="xlab">x₃</text>
+      <text x="404" y="322" class="xlab">x₄</text>
+      <text x="514" y="322" class="xlab">x₅</text>
+
+      <text x="300" y="362" class="ylab">valores possíveis de X</text>
+    </g>
+
+
+  </g>
+</svg>

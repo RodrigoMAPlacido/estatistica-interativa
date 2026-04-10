@@ -1,0 +1,396 @@
+<svg viewBox="0 0 1280 620"
+     xmlns="http://www.w3.org/2000/svg"
+     role="img"
+     aria-labelledby="title desc"
+     preserveAspectRatio="xMidYMid meet">
+
+  <title id="title">Distribuição binomial e desvio padrão</title>
+  <desc id="desc">
+    Animação da distribuição binomial com sete barras correspondentes aos valores possíveis
+    de X entre 0 e 6. Após o surgimento da distribuição, aparece a linha da média E(X)=np
+    e uma faixa simétrica indicando E(X) mais ou menos sigma. A cena introduz o desvio padrão
+    como medida de dispersão em torno da média.
+  </desc>
+
+  <defs>
+    <style>
+      :root{
+        --bg:#ffffff;
+        --ink:#111827;
+        --ink-soft:#6b7280;
+        --grid:#d1d5db;
+        --shade:rgba(17,24,39,.06);
+        --shade-soft:rgba(17,24,39,.10);
+        --font:"et-book","ETBook","Georgia","Times New Roman",serif;
+        --cycle:10.8s;
+        --ease:ease-in-out;
+      }
+
+      svg{
+        background:var(--bg);
+      }
+
+      text{
+        font-family:var(--font);
+        fill:var(--ink);
+        user-select:none;
+      }
+
+      .u-stroke{
+        stroke:var(--ink);
+        fill:none;
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        vector-effect:none;
+      }
+
+      .panel{
+        stroke-width:2;
+        rx:20;
+        ry:20;
+      }
+
+      .axis{
+        stroke-width:2.2;
+        vector-effect:non-scaling-stroke;
+      }
+
+      .grid line{
+        stroke:var(--grid);
+        stroke-width:1;
+        vector-effect:non-scaling-stroke;
+      }
+
+      .label{
+        font-size:54px;
+        font-weight:600;
+        text-anchor:middle;
+      }
+
+      .small{
+        font-size:24px;
+        text-anchor:middle;
+        fill:var(--ink-soft);
+      }
+
+      .xlab{
+        font-size:22px;
+        text-anchor:middle;
+      }
+
+      .ylab{
+        font-size:22px;
+        text-anchor:middle;
+        fill:var(--ink-soft);
+      }
+
+      .bar{
+        fill:var(--ink);
+        transform-box:fill-box;
+        transform-origin:bottom;
+        animation:growBar var(--cycle) var(--ease) infinite;
+      }
+
+      .probText{
+        font-size:19px;
+        text-anchor:middle;
+        fill:var(--ink-soft);
+        opacity:0;
+        animation:showProbText var(--cycle) var(--ease) infinite;
+      }
+
+      .meanLine{
+        stroke:var(--ink);
+        stroke-width:1.2;
+        opacity:0;
+        vector-effect:non-scaling-stroke;
+        animation:showMeanLine var(--cycle) var(--ease) infinite;
+      }
+
+      .meanText{
+        font-size:24px;
+        text-anchor:middle;
+        opacity:0;
+        animation:showMeanText var(--cycle) var(--ease) infinite;
+      }
+
+      .sigmaBand{
+        fill:var(--shade-soft);
+        opacity:0;
+        animation:showSigmaBand var(--cycle) var(--ease) infinite;
+      }
+
+      .sigmaEdge{
+        stroke:var(--ink);
+        stroke-width:1.7;
+        stroke-dasharray:6 6;
+        opacity:0;
+        vector-effect:non-scaling-stroke;
+        animation:showSigmaEdge var(--cycle) var(--ease) infinite;
+      }
+
+      .sigmaArrow{
+        stroke:var(--ink);
+        stroke-width:1.8;
+        fill:none;
+        opacity:0;
+        vector-effect:non-scaling-stroke;
+        animation:showSigmaArrow var(--cycle) var(--ease) infinite;
+      }
+
+      .sigmaText{
+        font-size:22px;
+        text-anchor:middle;
+        opacity:0;
+        animation:showSigmaText var(--cycle) var(--ease) infinite;
+      }
+
+      .formulaBox{
+        fill:var(--shade);
+        stroke:var(--ink);
+        stroke-width:1.5;
+        rx:14;
+        ry:14;
+        vector-effect:non-scaling-stroke;
+        opacity:0;
+        animation:showFormulaBox var(--cycle) var(--ease) infinite;
+      }
+
+      .formula{
+        font-size:28px;
+        text-anchor:middle;
+        opacity:0;
+        animation:showFormula var(--cycle) var(--ease) infinite;
+      }
+
+      .note{
+        font-size:21px;
+        text-anchor:middle;
+        fill:var(--ink-soft);
+        opacity:0;
+        animation:showNote var(--cycle) var(--ease) infinite;
+      }
+
+      @keyframes growBar{
+        0%,14%{
+          transform:scaleY(0);
+          opacity:0;
+        }
+        26%,88%{
+          transform:scaleY(1);
+          opacity:1;
+        }
+        100%{
+          transform:scaleY(0);
+          opacity:0;
+        }
+      }
+
+      @keyframes showProbText{
+        0%,28%{
+          opacity:0;
+        }
+        38%,56%{
+          opacity:1;
+        }
+        64%,100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showMeanLine{
+        0%,52%{
+          opacity:0;
+        }
+        62%,88%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showMeanText{
+        0%,56%{
+          opacity:0;
+        }
+        66%,88%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showSigmaBand{
+        0%,58%{
+          opacity:0;
+        }
+        68%,88%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showSigmaEdge{
+        0%,60%{
+          opacity:0;
+        }
+        70%,88%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showSigmaArrow{
+        0%,64%{
+          opacity:0;
+        }
+        74%,88%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showSigmaText{
+        0%,68%{
+          opacity:0;
+        }
+        78%,88%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showFormulaBox{
+        0%,70%{
+          opacity:0;
+        }
+        80%,88%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showFormula{
+        0%,74%{
+          opacity:0;
+        }
+        84%,88%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @keyframes showNote{
+        0%,72%{
+          opacity:0;
+        }
+        82%,88%{
+          opacity:1;
+        }
+        100%{
+          opacity:0;
+        }
+      }
+
+      @media (prefers-reduced-motion:reduce){
+        .bar,.probText,.meanLine,.meanText,.sigmaBand,.sigmaEdge,
+        .sigmaArrow,.sigmaText,.formulaBox,.formula,.note{
+          animation:none;
+          opacity:1;
+          transform:none;
+        }
+      }
+    </style>
+  </defs>
+
+  <g transform="translate(60,35)">
+    <rect x="0" y="0" width="1160" height="550" class="u-stroke panel"/>
+
+    <text x="580" y="52" class="label">Distribuição Binomial</text>
+    <text x="580" y="86" class="small">forma da distribuição e dispersão em torno de E(X)</text>
+
+    <g transform="translate(130,100) scale(1.2,1.2)">
+  <!-- grade -->
+  <g class="grid">
+    <line x1="0" y1="280" x2="720" y2="280"/>
+    <line x1="0" y1="225" x2="720" y2="225"/>
+    <line x1="0" y1="170" x2="720" y2="170"/>
+    <line x1="0" y1="115" x2="720" y2="115"/>
+    <line x1="0" y1="60"  x2="720" y2="60"/>
+  </g>
+
+  <!-- eixos -->
+  <g class="u-stroke axis">
+    <line x1="0" y1="280" x2="720" y2="280"/>
+    <line x1="0" y1="280" x2="0" y2="60"/>
+  </g>
+
+  <text x="-86" y="230" transform="rotate(-90 -86 170)" class="ylab">p(x)</text>
+  <text x="360" y="350" class="ylab">valores possíveis de X</text>
+
+  <!-- faixa E(X) ± σ -->
+  <rect x="247.5" y="60" width="245" height="220" class="sigmaBand"/>
+  <line x1="247.5" y1="60" x2="247.5" y2="280" class="sigmaEdge"/>
+  <line x1="492.5" y1="60" x2="492.5" y2="280" class="sigmaEdge"/>
+
+  <!-- barras: Bin(6,0.5), escala visual recalibrada -->
+  <rect x="40"  y="269" width="60" height="11"  class="bar" style="animation-delay:0s"/>
+  <rect x="140" y="221" width="60" height="59"  class="bar" style="animation-delay:.08s"/>
+  <rect x="240" y="133" width="60" height="147" class="bar" style="animation-delay:.16s"/>
+  <rect x="340" y="84"  width="60" height="196" class="bar" style="animation-delay:.24s"/>
+  <rect x="440" y="133" width="60" height="147" class="bar" style="animation-delay:.32s"/>
+  <rect x="540" y="221" width="60" height="59"  class="bar" style="animation-delay:.40s"/>
+  <rect x="640" y="269" width="60" height="11"  class="bar" style="animation-delay:.48s"/>
+
+  <!-- média -->
+  <line x1="370" y1="40" x2="370" y2="280" class="meanLine"/>
+  <text x="370" y="30" class="meanText">E(X)</text>
+
+  <!-- seta sigma -->
+  <g transform="translate(0,-20)">
+  <line x1="370" y1="78" x2="492.5" y2="78" class="sigmaArrow"/>
+  <polyline points="484.5,73 492.5,78 484.5,83" class="sigmaArrow"/>
+  </g>
+  <text x="431" y="80" class="sigmaText">+σ</text>
+
+  <g transform="translate(0,-20) rotate(180 370 78)">
+  <line x1="370" y1="78" x2="492.5" y2="78" class="sigmaArrow"/>
+  <polyline points="484.5,73 492.5,78 484.5,83" class="sigmaArrow"/>
+  </g>
+  <text x="315" y="80" class="sigmaText">-σ</text>
+
+  <!-- rótulos de probabilidade -->
+  <text x="70"  y="258" class="probText">1/64</text>
+  <text x="170" y="210" class="probText">6/64</text>
+  <text x="270" y="122" class="probText">15/64</text>
+  <text x="370" y="73"  class="probText">20/64</text>
+  <text x="470" y="122" class="probText">15/64</text>
+  <text x="570" y="210" class="probText">6/64</text>
+  <text x="670" y="258" class="probText">1/64</text>
+
+  <!-- eixo x -->
+  <text x="70"  y="312" class="xlab">0</text>
+  <text x="170" y="312" class="xlab">1</text>
+  <text x="270" y="312" class="xlab">2</text>
+  <text x="370" y="312" class="xlab">3</text>
+  <text x="470" y="312" class="xlab">4</text>
+  <text x="570" y="312" class="xlab">5</text>
+  <text x="670" y="312" class="xlab">6</text>
+</g>
+
+  </g>
+</svg>
