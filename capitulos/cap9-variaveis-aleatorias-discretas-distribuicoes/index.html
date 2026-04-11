@@ -47,7 +47,7 @@ proximo: /capitulos/cap10-variaveis-aleatorias-continuas-distribuicoes/
 
 
 <p>
-  Embora essa forma de organização seja bastante geral, ela apresenta uma limitação quando o interesse recai sobre <strong>quantidades numéricas associadas aos resultados</strong>. Considere o experimento de lançar duas moedas e analisar o <strong>número de caras</strong> obtido. Esse número pode assumir os valores 0, 1 ou 2, sendo que cada um deles possui uma probabilidade distinta de ocorrência. Nesse caso, o interesse não está em verificar a ocorrência de um evento específico, mas em descrever como essa quantidade numérica — isto é, o número de caras — se distribui entre todos os resultados possíveis do experimento.
+  Apesar da abrangência da análise baseada em eventos, ela apresenta uma limitação quando o interesse recai sobre <strong>quantidades numéricas associadas aos resultados</strong>. Considere o experimento de lançar duas moedas e analisar o <strong>número de caras</strong> obtido. Esse número pode assumir os valores 0, 1 ou 2, sendo que cada um deles possui uma probabilidade distinta de ocorrência. Nesse caso, o interesse não está em verificar a ocorrência de um evento específico, mas em descrever como essa quantidade numérica — isto é, o número de caras — se distribui entre todos os resultados possíveis do experimento.
   
   A linguagem de eventos permite tratar esse problema, mas de forma indireta, exigindo a construção de um evento para cada valor possível dessa quantidade. Isso indica a necessidade de uma estrutura mais adequada, que organize diretamente essas informações numéricas.
 </p>
@@ -86,7 +86,7 @@ proximo: /capitulos/cap10-variaveis-aleatorias-continuas-distribuicoes/
   Seja um experimento aleatório com espaço amostral
   <span class="formula-inline" data-tts="ômega maiúsculo">\( \Omega \)</span>,
   cujos elementos
-  <span class="formula-inline" data-tts="ômega minúsculo">\( \omega \in \Omega \)</span>
+  <span class="formula-inline" data-tts="ômega minúsculo pertencentes ao espaço amostral">\( \omega \in \Omega \)</span>
   representam os resultados elementares possíveis.
 </p>
 
@@ -115,7 +115,7 @@ proximo: /capitulos/cap10-variaveis-aleatorias-continuas-distribuicoes/
 <p>
   Retomando o experimento do lançamento de duas moedas, o espaço amostral pode ser descrito por
   <span class="formula-inline" data-tts="ômega igual a h h h t t h t t">\( \Omega = \{(H,H),(H,T),(T,H),(T,T)\} \)</span>.
-  Definindo a variável aleatória \( X \) como o <strong>número de caras</strong> obtido, tem-se:
+  Definindo a variável aleatória <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span> como o <strong>número de caras</strong> obtido, tem-se:
 </p>
 
 <p class="formula" data-tts="x de h h igual a dois, x de h t igual a um, x de t h igual a um, x de t t igual a zero">
@@ -133,7 +133,7 @@ proximo: /capitulos/cap10-variaveis-aleatorias-continuas-distribuicoes/
   <span class="formula-inline" data-tts="ômega">\( \Omega \)</span>,
   mas ambos correspondem ao valor
   <span class="formula-inline" data-tts="x igual a um">\( X=1 \)</span>.
-  Desse modo, a variável aleatória reorganiza os resultados em termos das quantidades numéricas de interesse.
+  Desse modo, <strong>a variável aleatória reorganiza os resultados em termos das quantidades numéricas de interesse. </strong>
 </p>
 
 <p>
@@ -165,7 +165,7 @@ proximo: /capitulos/cap10-variaveis-aleatorias-continuas-distribuicoes/
 
 <p>
   Uma vez definida a variável aleatória discreta como uma função que associa a
-  cada resultado elementar um valor numérico, o passo seguinte consiste em
+  cada resultado elementar um valor numérico que representa uma quantidade de interesse, o passo seguinte consiste em
   descrever como a probabilidade se distribui entre os valores que essa variável
   pode assumir. Em outras palavras, já não interessa apenas saber quais são os
   valores possíveis de
@@ -228,7 +228,7 @@ proximo: /capitulos/cap10-variaveis-aleatorias-continuas-distribuicoes/
   Retomando o experimento do lançamento de duas moedas, no qual
   <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>
   representa o número de caras obtidas, os valores possíveis da variável são
-  <span class="formula-inline" data-tts="zero um e dois">\( 0,1,2 \)</span>.
+  <span class="formula-inline" data-tts="zero, um e dois">\( 0,1 \ e \ 2 \)</span>.
   Cada um desses valores corresponde a um conjunto de resultados do espaço amostral,
   e a função de probabilidade atribui a cada um deles a sua respectiva probabilidade.
 </p>
@@ -259,9 +259,9 @@ proximo: /capitulos/cap10-variaveis-aleatorias-continuas-distribuicoes/
 </p>
 
 <p>
-  Essa mudança de perspectiva é central. A variável aleatória discreta permite
+  Essa mudança de perspectiva é central. A <strong>variável aleatória discreta</strong> permite
   agrupar resultados elementares distintos sempre que eles produzem o mesmo
-  valor numérico, e a função de probabilidade quantifica a importância relativa
+  valor numérico, e a <strong>função de probabilidade</strong> quantifica a importância relativa
   de cada um desses valores. Por isso, conhecer a função
   <span class="formula-inline" data-tts="p de x">\( p(x) \)</span>
   equivale a conhecer completamente a forma como a variável se distribui sobre
@@ -273,7 +273,11 @@ proximo: /capitulos/cap10-variaveis-aleatorias-continuas-distribuicoes/
   Como a função de probabilidade associa a cada valor possível de uma variável
   discreta a probabilidade do evento correspondente, ela deve respeitar as
   propriedades fundamentais da própria noção de probabilidade. A primeira delas é
-  a não negatividade. Para todo valor
+  a não negatividade; isto é, a probabilidade associada a cada valor deve ser maior ou igual a zero. 
+</p>  
+<p>
+  
+  Assim, para todo
   <span class="formula-inline" data-tts="x minúsculo">\( x \)</span>,
   deve-se ter
 </p>
@@ -301,9 +305,9 @@ proximo: /capitulos/cap10-variaveis-aleatorias-continuas-distribuicoes/
   então
 </p>
 
-<p class="formula" data-tts="somatório de p de x i igual a um">
+<p class="formula" data-tts="somatório de i igual a um até n de p de x i igual a um">
   \[
-  \sum_i p(x_i)=1.
+  \sum_{i=1}^n p(x_i)=1.
   \]
 </p>
 
@@ -810,7 +814,26 @@ proximo: /capitulos/cap10-variaveis-aleatorias-continuas-distribuicoes/
 <p>
   Observa-se que essa distribuição formaliza diretamente a ideia de
   equiprobabilidade utilizada na definição clássica de probabilidade, na qual
-  todos os resultados do espaço amostral são tratados de forma simétrica. Por essa
+  todos os resultados do espaço amostral são tratados de forma simétrica. 
+</p>
+
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para desktop -->
+  <div class="kg-wrapper kg-desktop">
+    <div class="kg-container  kg--sidebar-centered" src="modelos/uniforme-discreta.yml"></div>
+  </div>
+</figure>
+
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para mobile -->
+  <div class="kg-wrapper kg-mobile-sidebar">
+    <div class="kg-container  kg--sidebar-centered" src="modelos/uniforme-discreta-mobile.yml"></div>
+  </div>
+</figure>
+
+<p> 
+  
+  Por essa
   razão, ela constitui o modelo mais elementar entre as distribuições discretas,
   servindo como referência conceitual para a construção de modelos mais
   elaborados, nos quais as probabilidades deixam de ser uniformemente distribuídas.
@@ -898,7 +921,26 @@ proximo: /capitulos/cap10-variaveis-aleatorias-continuas-distribuicoes/
   refletindo o fato de que a variável assume apenas os valores zero e um.
   Já a variância atinge seu valor máximo quando
   <span class="formula-inline" data-tts="p igual a um meio">\( p=\frac{1}{2} \)</span>,
-  situação em que a incerteza é máxima. Por sua simplicidade, a distribuição de
+  situação em que a incerteza é máxima. 
+</p>
+
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para desktop -->
+  <div class="kg-wrapper kg-desktop">
+    <div class="kg-container  kg--sidebar-centered" src="modelos/bernoulli.yml"></div>
+  </div>
+</figure>
+
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para mobile -->
+  <div class="kg-wrapper kg-mobile-sidebar">
+    <div class="kg-container  kg--sidebar-centered" src="modelos/bernoulli-mobile.yml"></div>
+  </div>
+</figure>
+
+<p>
+
+  Por sua simplicidade, a distribuição de
   Bernoulli serve como bloco básico para a construção de distribuições mais
   complexas, em particular a distribuição binomial.
 </p>
@@ -1000,7 +1042,19 @@ proximo: /capitulos/cap10-variaveis-aleatorias-continuas-distribuicoes/
   <span class="formula-inline" data-tts="p elevado a x vezes um menos p elevado a n menos x">\( p^x(1-p)^{n-x} \)</span>
   fornece a probabilidade de cada uma dessas sequências.
 </p>
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para desktop -->
+  <div class="kg-wrapper kg-desktop">
+    <div class="kg-container  kg--sidebar-centered" src="modelos/binomial.yml"></div>
+  </div>
+</figure>
 
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para mobile -->
+  <div class="kg-wrapper kg-mobile-sidebar">
+    <div class="kg-container  kg--sidebar-centered" src="modelos/binomial-mobile.yml"></div>
+  </div>
+</figure>
 <p>
   Como
   <span class="formula-inline" data-tts="x maiúsculo">\( X \)</span>
@@ -1065,6 +1119,19 @@ proximo: /capitulos/cap10-variaveis-aleatorias-continuas-distribuicoes/
   <span class="formula-inline" data-tts="x ésima">\( x \)</span>
   tentativa resultou em sucesso.
 </p>
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para desktop -->
+  <div class="kg-wrapper kg-desktop">
+    <div class="kg-container  kg--sidebar-centered" src="modelos/geometrica.yml"></div>
+  </div>
+</figure>
+
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para mobile -->
+  <div class="kg-wrapper kg-mobile-sidebar">
+    <div class="kg-container  kg--sidebar-centered" src="modelos/geometrica-mobile.yml"></div>
+  </div>
+</figure>
 
 <p>
   Assim, o evento
@@ -1207,7 +1274,19 @@ proximo: /capitulos/cap10-variaveis-aleatorias-continuas-distribuicoes/
   <span class="formula-inline" data-tts="r menos um">\( r-1 \)</span>
   sucessos ocorreram.
 </p>
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para desktop -->
+  <div class="kg-wrapper kg-desktop">
+    <div class="kg-container  kg--sidebar-centered" src="modelos/binomial-negativa.yml"></div>
+  </div>
+</figure>
 
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para mobile -->
+  <div class="kg-wrapper kg-mobile-sidebar">
+    <div class="kg-container  kg--sidebar-centered" src="modelos/binomial-negativa-mobile.yml"></div>
+  </div>
+</figure>
 <p>
   O número de maneiras de fazer essa escolha é dado por
   <span class="formula-inline" data-tts="x menos um escolhe r menos um">\( \binom{x-1}{r-1} \)</span>.
@@ -1383,7 +1462,19 @@ proximo: /capitulos/cap10-variaveis-aleatorias-continuas-distribuicoes/
   restante se modifique a cada retirada, alterando as probabilidades das
   observações seguintes.
 </p>
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para desktop -->
+  <div class="kg-wrapper kg-desktop">
+    <div class="kg-container  kg--sidebar-centered" src="modelos/hipergeometrica.yml"></div>
+  </div>
+</figure>
 
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para mobile -->
+  <div class="kg-wrapper kg-mobile-sidebar">
+    <div class="kg-container  kg--sidebar-centered" src="modelos/hipergeometrica-mobile.yml"></div>
+  </div>
+</figure>
 <p>
   A esperança dessa distribuição é dada por
 </p>
@@ -1495,7 +1586,19 @@ proximo: /capitulos/cap10-variaveis-aleatorias-continuas-distribuicoes/
   for o número médio esperado de ocorrências no intervalo, mais à direita tende a
   se concentrar a distribuição e maior tende a ser também sua variabilidade.
 </p>
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para desktop -->
+  <div class="kg-wrapper kg-desktop">
+    <div class="kg-container  kg--sidebar-centered" src="modelos/poisson.yml"></div>
+  </div>
+</figure>
 
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para mobile -->
+  <div class="kg-wrapper kg-mobile-sidebar">
+    <div class="kg-container  kg--sidebar-centered" src="modelos/poisson-mobile.yml"></div>
+  </div>
+</figure>
 <p>
   A distribuição de Poisson também pode ser compreendida como um limite da
   distribuição binomial. Se houver um grande número de oportunidades de

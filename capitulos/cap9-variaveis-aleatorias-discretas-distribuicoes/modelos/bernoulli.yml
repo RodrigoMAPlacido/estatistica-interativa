@@ -1,0 +1,222 @@
+schema: EconSchema
+aspectRatio: 1.55
+
+params:
+  - name: p
+    value: 0.5
+    min: 0.01
+    max: 0.99
+    round: 0.001
+
+calcs:
+  # =========================
+  # Medidas-resumo
+  # =========================
+  p0: "(1 - params.p)"
+  p1: "(params.p)"
+  media: "(params.p)"
+  variancia: "(params.p * (1 - params.p))"
+  sigma: "((calcs.variancia)^0.5)"
+  somaProb: "(calcs.p0 + calcs.p1)"
+
+colors:
+  ink: "'#111827'"
+  soft: "'#64748b'"
+  grid: "'#d1d5db'"
+  bg: "'#ffffff'"
+
+layout:
+  OneGraphPlusSidebar:
+    graph:
+      xAxis:
+        min: -0.8
+        max: 1.8
+        ticks: 0
+      yAxis:
+        min: 0
+        max: 1
+        ticks: 6
+        show: false
+        title: "P(X=x)"
+
+      objects:
+
+
+        # =========================
+        # Barras da distribuição
+        # =========================
+        - Rectangle:
+            x1: -0.35
+            x2: 0.35
+            y1: 0
+            y2: calcs.p0
+            fill: colors.ink
+            opacity: 1
+
+        - Rectangle:
+            x1: 0.65
+            x2: 1.35
+            y1: 0
+            y2: calcs.p1
+            fill: colors.ink
+            opacity: 1
+
+        # =========================
+        # Linha da média
+        # =========================
+        - Segment:
+            a: [calcs.media, 0]
+            b: [calcs.media, 1.0]
+            color: colors.ink
+            strokeWidth: 1
+
+        - Label:
+            coordinates: [calcs.media, 0.96]
+            text: "`\\\\mathbf{E[X]} = ${calcs.media.toFixed(2)}`"
+            bgcolor: colors.bg
+            color: colors.ink
+            fontSize: 10
+            position: b
+
+        # =========================
+        # Segmento de 1 desvio padrão
+        # =========================
+        - Arrow:
+            begin: [calcs.media, 0.90]
+            end: [calcs.media + calcs.sigma, 0.90]
+            color: colors.soft
+            strokeWidth: 2
+            label:
+              text: "`+ ${calcs.sigma.toFixed(2)}`"
+              position: t
+              fontSize: 9
+
+        - Arrow:
+            begin: [calcs.media, 0.90]
+            end: [calcs.media - calcs.sigma, 0.90]
+            color: colors.soft
+            strokeWidth: 2
+            label:
+              text: "`- ${calcs.sigma.toFixed(2)}`"
+              position: t
+              fontSize: 9
+
+        # =========================
+        # Labels do eixo x
+        # =========================
+        - Label:
+            coordinates: [0, 0]
+            text: "'0'"
+            bgcolor: colors.bg
+            color: colors.ink
+            fontSize: 9
+            position: t
+
+        - Label:
+            coordinates: [1, 0]
+            text: "'1'"
+            bgcolor: colors.bg
+            color: colors.ink
+            fontSize: 9
+            position: t
+
+        # =========================
+        # Labels sobre as barras
+        # =========================
+        - Label:
+            coordinates: [0, calcs.p0 + 0.03]
+            text: "`${calcs.p0.toFixed(3)}`"
+            bgcolor: colors.bg
+            color: colors.ink
+            fontSize: 9
+
+        - Label:
+            coordinates: [1, calcs.p1 + 0.03]
+            text: "`${calcs.p1.toFixed(3)}`"
+            bgcolor: colors.bg
+            color: colors.ink
+            fontSize: 9
+
+    sidebar:
+      triggerWidth: 9999
+      controls:
+        - title:
+          sliders:
+            - param: p
+              label: "p"
+
+          divs:
+            # ---------------------------
+            # 1) DADOS
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Dados:</b></div>"
+
+            - html: "`$$\\\\small
+                      X\\\\sim Bernoulli(p)
+                      $$`"
+
+            - html: "`$$\\\\small
+                      p=${params.p.toFixed(3)}
+                      $$`"
+
+            # ---------------------------
+            # 2) FUNÇÃO DE PROBABILIDADE
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Função de probabilidade:</b></div>"
+
+            - html: "`$$\\\\small
+                      P(X=0)=1-p,\\\\qquad P(X=1)=p
+                      $$`"
+
+            - html: "`$$\\\\small
+                      P(X=0)=${calcs.p0.toFixed(3)},\\\\qquad
+                      P(X=1)=${calcs.p1.toFixed(3)}
+                      $$`"
+
+            # ---------------------------
+            # 3) MÉDIA
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Média:</b></div>"
+
+            - html: "`$$\\\\small
+                      E[X]=p
+                      $$`"
+
+            - html: "`$$\\\\small
+                      E[X]=${calcs.media.toFixed(3)}
+                      $$`"
+
+            # ---------------------------
+            # 4) VARIÂNCIA
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Variância:</b></div>"
+
+            - html: "`$$\\\\small
+                      Var(X)=p(1-p)
+                      $$`"
+
+            - html: "`$$\\\\small
+                      Var(X)=${calcs.variancia.toFixed(3)}
+                      $$`"
+
+            # ---------------------------
+            # 5) DESVIO PADRÃO
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Desvio padrão:</b></div>"
+
+            - html: "`$$\\\\small
+                      \\\\sigma=\\\\sqrt{p(1-p)}
+                      $$`"
+
+            - html: "`$$\\\\small
+                      \\\\sigma=${calcs.sigma.toFixed(3)}
+                      $$`"
+
+            # ---------------------------
+            # 6) CHECAGEM
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Checagem:</b></div>"
+
+            - html: "`$$\\\\small
+                      P(X=0)+P(X=1)=${calcs.somaProb.toFixed(3)}
+                      $$`"

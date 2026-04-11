@@ -1,0 +1,515 @@
+schema: EconSchema
+aspectRatio: 1.55
+
+params:
+  - name: N
+    value: 20
+    min: 15
+    max: 25
+    round: 1
+
+  - name: K
+    value: 10
+    min: 5
+    max: 15
+    round: 1
+
+  - name: n
+    value: 10
+    min: 1
+    max: 20
+    round: 1
+
+calcs:
+  # =========================
+  # Coerção numérica
+  # =========================
+  NN: "(1*params.N)"
+  KK: "(1*params.K)"
+  nn: "(1*params.n)"
+  MM: "(calcs.NN - calcs.KK)"
+
+  # =========================
+  # Validade sem operadores lógicos compostos
+  # =========================
+  okN: "(calcs.NN >= 1 ? 1 : 0)"
+  okK: "(calcs.KK <= calcs.NN ? 1 : 0)"
+  okn: "(calcs.nn <= calcs.NN ? 1 : 0)"
+  ok20: "(calcs.nn <= 20 ? 1 : 0)"
+  valido: "(calcs.okN * calcs.okK * calcs.okn * calcs.ok20)"
+
+  # =========================
+  # Suporte
+  # xmin = max(0, n-(N-K))
+  # xmax = min(n,K)
+  # =========================
+  tmin: "(calcs.nn - calcs.MM)"
+  xmin: "(calcs.tmin > 0 ? calcs.tmin : 0)"
+  xmax: "(calcs.nn < calcs.KK ? calcs.nn : calcs.KK)"
+
+
+  media: "((calcs.nn * calcs.KK) / calcs.NN)"
+  variancia: "(calcs.nn * (calcs.KK / calcs.NN) * (1 - calcs.KK / calcs.NN) * ((calcs.NN - calcs.nn) / (calcs.NN - 1)))"
+  sigma: "((calcs.variancia) ^ 0.5)"
+
+
+  # =========================
+  # Indicadores de n = 0,...,20
+  # =========================
+  n0:  "(calcs.nn < 0.5 ? 1 : 0)"
+  n1:  "(calcs.nn >= 0.5 ? (calcs.nn < 1.5 ? 1 : 0) : 0)"
+  n2:  "(calcs.nn >= 1.5 ? (calcs.nn < 2.5 ? 1 : 0) : 0)"
+  n3:  "(calcs.nn >= 2.5 ? (calcs.nn < 3.5 ? 1 : 0) : 0)"
+  n4:  "(calcs.nn >= 3.5 ? (calcs.nn < 4.5 ? 1 : 0) : 0)"
+  n5:  "(calcs.nn >= 4.5 ? (calcs.nn < 5.5 ? 1 : 0) : 0)"
+  n6:  "(calcs.nn >= 5.5 ? (calcs.nn < 6.5 ? 1 : 0) : 0)"
+  n7:  "(calcs.nn >= 6.5 ? (calcs.nn < 7.5 ? 1 : 0) : 0)"
+  n8:  "(calcs.nn >= 7.5 ? (calcs.nn < 8.5 ? 1 : 0) : 0)"
+  n9:  "(calcs.nn >= 8.5 ? (calcs.nn < 9.5 ? 1 : 0) : 0)"
+  n10: "(calcs.nn >= 9.5 ? (calcs.nn < 10.5 ? 1 : 0) : 0)"
+  n11: "(calcs.nn >= 10.5 ? (calcs.nn < 11.5 ? 1 : 0) : 0)"
+  n12: "(calcs.nn >= 11.5 ? (calcs.nn < 12.5 ? 1 : 0) : 0)"
+  n13: "(calcs.nn >= 12.5 ? (calcs.nn < 13.5 ? 1 : 0) : 0)"
+  n14: "(calcs.nn >= 13.5 ? (calcs.nn < 14.5 ? 1 : 0) : 0)"
+  n15: "(calcs.nn >= 14.5 ? (calcs.nn < 15.5 ? 1 : 0) : 0)"
+  n16: "(calcs.nn >= 15.5 ? (calcs.nn < 16.5 ? 1 : 0) : 0)"
+  n17: "(calcs.nn >= 16.5 ? (calcs.nn < 17.5 ? 1 : 0) : 0)"
+  n18: "(calcs.nn >= 17.5 ? (calcs.nn < 18.5 ? 1 : 0) : 0)"
+  n19: "(calcs.nn >= 18.5 ? (calcs.nn < 19.5 ? 1 : 0) : 0)"
+  n20: "(calcs.nn >= 19.5 ? 1 : 0)"
+
+  # =========================
+  # C(N,n) até ordem 20
+  # =========================
+  CN0: "1"
+  CN1: "(calcs.NN)"
+  CN2: "((calcs.NN * (calcs.NN - 1)) / 2)"
+  CN3: "((calcs.NN * (calcs.NN - 1) * (calcs.NN - 2)) / 6)"
+  CN4: "((calcs.NN * (calcs.NN - 1) * (calcs.NN - 2) * (calcs.NN - 3)) / 24)"
+  CN5: "((calcs.NN * (calcs.NN - 1) * (calcs.NN - 2) * (calcs.NN - 3) * (calcs.NN - 4)) / 120)"
+  CN6: "((calcs.NN * (calcs.NN - 1) * (calcs.NN - 2) * (calcs.NN - 3) * (calcs.NN - 4) * (calcs.NN - 5)) / 720)"
+  CN7: "((calcs.NN * (calcs.NN - 1) * (calcs.NN - 2) * (calcs.NN - 3) * (calcs.NN - 4) * (calcs.NN - 5) * (calcs.NN - 6)) / 5040)"
+  CN8: "((calcs.NN * (calcs.NN - 1) * (calcs.NN - 2) * (calcs.NN - 3) * (calcs.NN - 4) * (calcs.NN - 5) * (calcs.NN - 6) * (calcs.NN - 7)) / 40320)"
+  CN9: "((calcs.NN * (calcs.NN - 1) * (calcs.NN - 2) * (calcs.NN - 3) * (calcs.NN - 4) * (calcs.NN - 5) * (calcs.NN - 6) * (calcs.NN - 7) * (calcs.NN - 8)) / 362880)"
+  CN10: "((calcs.NN * (calcs.NN - 1) * (calcs.NN - 2) * (calcs.NN - 3) * (calcs.NN - 4) * (calcs.NN - 5) * (calcs.NN - 6) * (calcs.NN - 7) * (calcs.NN - 8) * (calcs.NN - 9)) / 3628800)"
+  CN11: "((calcs.NN * (calcs.NN - 1) * (calcs.NN - 2) * (calcs.NN - 3) * (calcs.NN - 4) * (calcs.NN - 5) * (calcs.NN - 6) * (calcs.NN - 7) * (calcs.NN - 8) * (calcs.NN - 9) * (calcs.NN - 10)) / 39916800)"
+  CN12: "((calcs.NN * (calcs.NN - 1) * (calcs.NN - 2) * (calcs.NN - 3) * (calcs.NN - 4) * (calcs.NN - 5) * (calcs.NN - 6) * (calcs.NN - 7) * (calcs.NN - 8) * (calcs.NN - 9) * (calcs.NN - 10) * (calcs.NN - 11)) / 479001600)"
+  CN13: "((calcs.NN * (calcs.NN - 1) * (calcs.NN - 2) * (calcs.NN - 3) * (calcs.NN - 4) * (calcs.NN - 5) * (calcs.NN - 6) * (calcs.NN - 7) * (calcs.NN - 8) * (calcs.NN - 9) * (calcs.NN - 10) * (calcs.NN - 11) * (calcs.NN - 12)) / 6227020800)"
+  CN14: "((calcs.NN * (calcs.NN - 1) * (calcs.NN - 2) * (calcs.NN - 3) * (calcs.NN - 4) * (calcs.NN - 5) * (calcs.NN - 6) * (calcs.NN - 7) * (calcs.NN - 8) * (calcs.NN - 9) * (calcs.NN - 10) * (calcs.NN - 11) * (calcs.NN - 12) * (calcs.NN - 13)) / 87178291200)"
+  CN15: "((calcs.NN * (calcs.NN - 1) * (calcs.NN - 2) * (calcs.NN - 3) * (calcs.NN - 4) * (calcs.NN - 5) * (calcs.NN - 6) * (calcs.NN - 7) * (calcs.NN - 8) * (calcs.NN - 9) * (calcs.NN - 10) * (calcs.NN - 11) * (calcs.NN - 12) * (calcs.NN - 13) * (calcs.NN - 14)) / 1307674368000)"
+  CN16: "((calcs.NN * (calcs.NN - 1) * (calcs.NN - 2) * (calcs.NN - 3) * (calcs.NN - 4) * (calcs.NN - 5) * (calcs.NN - 6) * (calcs.NN - 7) * (calcs.NN - 8) * (calcs.NN - 9) * (calcs.NN - 10) * (calcs.NN - 11) * (calcs.NN - 12) * (calcs.NN - 13) * (calcs.NN - 14) * (calcs.NN - 15)) / 20922789888000)"
+  CN17: "((calcs.NN * (calcs.NN - 1) * (calcs.NN - 2) * (calcs.NN - 3) * (calcs.NN - 4) * (calcs.NN - 5) * (calcs.NN - 6) * (calcs.NN - 7) * (calcs.NN - 8) * (calcs.NN - 9) * (calcs.NN - 10) * (calcs.NN - 11) * (calcs.NN - 12) * (calcs.NN - 13) * (calcs.NN - 14) * (calcs.NN - 15) * (calcs.NN - 16)) / 355687428096000)"
+  CN18: "((calcs.NN * (calcs.NN - 1) * (calcs.NN - 2) * (calcs.NN - 3) * (calcs.NN - 4) * (calcs.NN - 5) * (calcs.NN - 6) * (calcs.NN - 7) * (calcs.NN - 8) * (calcs.NN - 9) * (calcs.NN - 10) * (calcs.NN - 11) * (calcs.NN - 12) * (calcs.NN - 13) * (calcs.NN - 14) * (calcs.NN - 15) * (calcs.NN - 16) * (calcs.NN - 17)) / 6402373705728000)"
+  CN19: "((calcs.NN * (calcs.NN - 1) * (calcs.NN - 2) * (calcs.NN - 3) * (calcs.NN - 4) * (calcs.NN - 5) * (calcs.NN - 6) * (calcs.NN - 7) * (calcs.NN - 8) * (calcs.NN - 9) * (calcs.NN - 10) * (calcs.NN - 11) * (calcs.NN - 12) * (calcs.NN - 13) * (calcs.NN - 14) * (calcs.NN - 15) * (calcs.NN - 16) * (calcs.NN - 17) * (calcs.NN - 18)) / 121645100408832000)"
+  CN20: "((calcs.NN * (calcs.NN - 1) * (calcs.NN - 2) * (calcs.NN - 3) * (calcs.NN - 4) * (calcs.NN - 5) * (calcs.NN - 6) * (calcs.NN - 7) * (calcs.NN - 8) * (calcs.NN - 9) * (calcs.NN - 10) * (calcs.NN - 11) * (calcs.NN - 12) * (calcs.NN - 13) * (calcs.NN - 14) * (calcs.NN - 15) * (calcs.NN - 16) * (calcs.NN - 17) * (calcs.NN - 18) * (calcs.NN - 19)) / 2432902008176640000)"
+
+  den: "(calcs.n0*calcs.CN0 + calcs.n1*calcs.CN1 + calcs.n2*calcs.CN2 + calcs.n3*calcs.CN3 + calcs.n4*calcs.CN4 + calcs.n5*calcs.CN5 + calcs.n6*calcs.CN6 + calcs.n7*calcs.CN7 + calcs.n8*calcs.CN8 + calcs.n9*calcs.CN9 + calcs.n10*calcs.CN10 + calcs.n11*calcs.CN11 + calcs.n12*calcs.CN12 + calcs.n13*calcs.CN13 + calcs.n14*calcs.CN14 + calcs.n15*calcs.CN15 + calcs.n16*calcs.CN16 + calcs.n17*calcs.CN17 + calcs.n18*calcs.CN18 + calcs.n19*calcs.CN19 + calcs.n20*calcs.CN20)"
+
+  # =========================
+  # C(K,k) fixos para k = 0,...,20
+  # =========================
+  CK0: "1"
+  CK1: "(calcs.KK)"
+  CK2: "((calcs.KK * (calcs.KK - 1)) / 2)"
+  CK3: "((calcs.KK * (calcs.KK - 1) * (calcs.KK - 2)) / 6)"
+  CK4: "((calcs.KK * (calcs.KK - 1) * (calcs.KK - 2) * (calcs.KK - 3)) / 24)"
+  CK5: "((calcs.KK * (calcs.KK - 1) * (calcs.KK - 2) * (calcs.KK - 3) * (calcs.KK - 4)) / 120)"
+  CK6: "((calcs.KK * (calcs.KK - 1) * (calcs.KK - 2) * (calcs.KK - 3) * (calcs.KK - 4) * (calcs.KK - 5)) / 720)"
+  CK7: "((calcs.KK * (calcs.KK - 1) * (calcs.KK - 2) * (calcs.KK - 3) * (calcs.KK - 4) * (calcs.KK - 5) * (calcs.KK - 6)) / 5040)"
+  CK8: "((calcs.KK * (calcs.KK - 1) * (calcs.KK - 2) * (calcs.KK - 3) * (calcs.KK - 4) * (calcs.KK - 5) * (calcs.KK - 6) * (calcs.KK - 7)) / 40320)"
+  CK9: "((calcs.KK * (calcs.KK - 1) * (calcs.KK - 2) * (calcs.KK - 3) * (calcs.KK - 4) * (calcs.KK - 5) * (calcs.KK - 6) * (calcs.KK - 7) * (calcs.KK - 8)) / 362880)"
+  CK10: "((calcs.KK * (calcs.KK - 1) * (calcs.KK - 2) * (calcs.KK - 3) * (calcs.KK - 4) * (calcs.KK - 5) * (calcs.KK - 6) * (calcs.KK - 7) * (calcs.KK - 8) * (calcs.KK - 9)) / 3628800)"
+  CK11: "((calcs.KK * (calcs.KK - 1) * (calcs.KK - 2) * (calcs.KK - 3) * (calcs.KK - 4) * (calcs.KK - 5) * (calcs.KK - 6) * (calcs.KK - 7) * (calcs.KK - 8) * (calcs.KK - 9) * (calcs.KK - 10)) / 39916800)"
+  CK12: "((calcs.KK * (calcs.KK - 1) * (calcs.KK - 2) * (calcs.KK - 3) * (calcs.KK - 4) * (calcs.KK - 5) * (calcs.KK - 6) * (calcs.KK - 7) * (calcs.KK - 8) * (calcs.KK - 9) * (calcs.KK - 10) * (calcs.KK - 11)) / 479001600)"
+  CK13: "((calcs.KK * (calcs.KK - 1) * (calcs.KK - 2) * (calcs.KK - 3) * (calcs.KK - 4) * (calcs.KK - 5) * (calcs.KK - 6) * (calcs.KK - 7) * (calcs.KK - 8) * (calcs.KK - 9) * (calcs.KK - 10) * (calcs.KK - 11) * (calcs.KK - 12)) / 6227020800)"
+  CK14: "((calcs.KK * (calcs.KK - 1) * (calcs.KK - 2) * (calcs.KK - 3) * (calcs.KK - 4) * (calcs.KK - 5) * (calcs.KK - 6) * (calcs.KK - 7) * (calcs.KK - 8) * (calcs.KK - 9) * (calcs.KK - 10) * (calcs.KK - 11) * (calcs.KK - 12) * (calcs.KK - 13)) / 87178291200)"
+  CK15: "((calcs.KK * (calcs.KK - 1) * (calcs.KK - 2) * (calcs.KK - 3) * (calcs.KK - 4) * (calcs.KK - 5) * (calcs.KK - 6) * (calcs.KK - 7) * (calcs.KK - 8) * (calcs.KK - 9) * (calcs.KK - 10) * (calcs.KK - 11) * (calcs.KK - 12) * (calcs.KK - 13) * (calcs.KK - 14)) / 1307674368000)"
+  CK16: "((calcs.KK * (calcs.KK - 1) * (calcs.KK - 2) * (calcs.KK - 3) * (calcs.KK - 4) * (calcs.KK - 5) * (calcs.KK - 6) * (calcs.KK - 7) * (calcs.KK - 8) * (calcs.KK - 9) * (calcs.KK - 10) * (calcs.KK - 11) * (calcs.KK - 12) * (calcs.KK - 13) * (calcs.KK - 14) * (calcs.KK - 15)) / 20922789888000)"
+  CK17: "((calcs.KK * (calcs.KK - 1) * (calcs.KK - 2) * (calcs.KK - 3) * (calcs.KK - 4) * (calcs.KK - 5) * (calcs.KK - 6) * (calcs.KK - 7) * (calcs.KK - 8) * (calcs.KK - 9) * (calcs.KK - 10) * (calcs.KK - 11) * (calcs.KK - 12) * (calcs.KK - 13) * (calcs.KK - 14) * (calcs.KK - 15) * (calcs.KK - 16)) / 355687428096000)"
+  CK18: "((calcs.KK * (calcs.KK - 1) * (calcs.KK - 2) * (calcs.KK - 3) * (calcs.KK - 4) * (calcs.KK - 5) * (calcs.KK - 6) * (calcs.KK - 7) * (calcs.KK - 8) * (calcs.KK - 9) * (calcs.KK - 10) * (calcs.KK - 11) * (calcs.KK - 12) * (calcs.KK - 13) * (calcs.KK - 14) * (calcs.KK - 15) * (calcs.KK - 16) * (calcs.KK - 17)) / 6402373705728000)"
+  CK19: "((calcs.KK * (calcs.KK - 1) * (calcs.KK - 2) * (calcs.KK - 3) * (calcs.KK - 4) * (calcs.KK - 5) * (calcs.KK - 6) * (calcs.KK - 7) * (calcs.KK - 8) * (calcs.KK - 9) * (calcs.KK - 10) * (calcs.KK - 11) * (calcs.KK - 12) * (calcs.KK - 13) * (calcs.KK - 14) * (calcs.KK - 15) * (calcs.KK - 16) * (calcs.KK - 17) * (calcs.KK - 18)) / 121645100408832000)"
+  CK20: "((calcs.KK * (calcs.KK - 1) * (calcs.KK - 2) * (calcs.KK - 3) * (calcs.KK - 4) * (calcs.KK - 5) * (calcs.KK - 6) * (calcs.KK - 7) * (calcs.KK - 8) * (calcs.KK - 9) * (calcs.KK - 10) * (calcs.KK - 11) * (calcs.KK - 12) * (calcs.KK - 13) * (calcs.KK - 14) * (calcs.KK - 15) * (calcs.KK - 16) * (calcs.KK - 17) * (calcs.KK - 18) * (calcs.KK - 19)) / 2432902008176640000)"
+
+  # =========================
+  # C(M,m) fixos para m = 0,...,20
+  # =========================
+  CM0: "1"
+  CM1: "(calcs.MM)"
+  CM2: "((calcs.MM * (calcs.MM - 1)) / 2)"
+  CM3: "((calcs.MM * (calcs.MM - 1) * (calcs.MM - 2)) / 6)"
+  CM4: "((calcs.MM * (calcs.MM - 1) * (calcs.MM - 2) * (calcs.MM - 3)) / 24)"
+  CM5: "((calcs.MM * (calcs.MM - 1) * (calcs.MM - 2) * (calcs.MM - 3) * (calcs.MM - 4)) / 120)"
+  CM6: "((calcs.MM * (calcs.MM - 1) * (calcs.MM - 2) * (calcs.MM - 3) * (calcs.MM - 4) * (calcs.MM - 5)) / 720)"
+  CM7: "((calcs.MM * (calcs.MM - 1) * (calcs.MM - 2) * (calcs.MM - 3) * (calcs.MM - 4) * (calcs.MM - 5) * (calcs.MM - 6)) / 5040)"
+  CM8: "((calcs.MM * (calcs.MM - 1) * (calcs.MM - 2) * (calcs.MM - 3) * (calcs.MM - 4) * (calcs.MM - 5) * (calcs.MM - 6) * (calcs.MM - 7)) / 40320)"
+  CM9: "((calcs.MM * (calcs.MM - 1) * (calcs.MM - 2) * (calcs.MM - 3) * (calcs.MM - 4) * (calcs.MM - 5) * (calcs.MM - 6) * (calcs.MM - 7) * (calcs.MM - 8)) / 362880)"
+  CM10: "((calcs.MM * (calcs.MM - 1) * (calcs.MM - 2) * (calcs.MM - 3) * (calcs.MM - 4) * (calcs.MM - 5) * (calcs.MM - 6) * (calcs.MM - 7) * (calcs.MM - 8) * (calcs.MM - 9)) / 3628800)"
+  CM11: "((calcs.MM * (calcs.MM - 1) * (calcs.MM - 2) * (calcs.MM - 3) * (calcs.MM - 4) * (calcs.MM - 5) * (calcs.MM - 6) * (calcs.MM - 7) * (calcs.MM - 8) * (calcs.MM - 9) * (calcs.MM - 10)) / 39916800)"
+  CM12: "((calcs.MM * (calcs.MM - 1) * (calcs.MM - 2) * (calcs.MM - 3) * (calcs.MM - 4) * (calcs.MM - 5) * (calcs.MM - 6) * (calcs.MM - 7) * (calcs.MM - 8) * (calcs.MM - 9) * (calcs.MM - 10) * (calcs.MM - 11)) / 479001600)"
+  CM13: "((calcs.MM * (calcs.MM - 1) * (calcs.MM - 2) * (calcs.MM - 3) * (calcs.MM - 4) * (calcs.MM - 5) * (calcs.MM - 6) * (calcs.MM - 7) * (calcs.MM - 8) * (calcs.MM - 9) * (calcs.MM - 10) * (calcs.MM - 11) * (calcs.MM - 12)) / 6227020800)"
+  CM14: "((calcs.MM * (calcs.MM - 1) * (calcs.MM - 2) * (calcs.MM - 3) * (calcs.MM - 4) * (calcs.MM - 5) * (calcs.MM - 6) * (calcs.MM - 7) * (calcs.MM - 8) * (calcs.MM - 9) * (calcs.MM - 10) * (calcs.MM - 11) * (calcs.MM - 12) * (calcs.MM - 13)) / 87178291200)"
+  CM15: "((calcs.MM * (calcs.MM - 1) * (calcs.MM - 2) * (calcs.MM - 3) * (calcs.MM - 4) * (calcs.MM - 5) * (calcs.MM - 6) * (calcs.MM - 7) * (calcs.MM - 8) * (calcs.MM - 9) * (calcs.MM - 10) * (calcs.MM - 11) * (calcs.MM - 12) * (calcs.MM - 13) * (calcs.MM - 14)) / 1307674368000)"
+  CM16: "((calcs.MM * (calcs.MM - 1) * (calcs.MM - 2) * (calcs.MM - 3) * (calcs.MM - 4) * (calcs.MM - 5) * (calcs.MM - 6) * (calcs.MM - 7) * (calcs.MM - 8) * (calcs.MM - 9) * (calcs.MM - 10) * (calcs.MM - 11) * (calcs.MM - 12) * (calcs.MM - 13) * (calcs.MM - 14) * (calcs.MM - 15)) / 20922789888000)"
+  CM17: "((calcs.MM * (calcs.MM - 1) * (calcs.MM - 2) * (calcs.MM - 3) * (calcs.MM - 4) * (calcs.MM - 5) * (calcs.MM - 6) * (calcs.MM - 7) * (calcs.MM - 8) * (calcs.MM - 9) * (calcs.MM - 10) * (calcs.MM - 11) * (calcs.MM - 12) * (calcs.MM - 13) * (calcs.MM - 14) * (calcs.MM - 15) * (calcs.MM - 16)) / 355687428096000)"
+  CM18: "((calcs.MM * (calcs.MM - 1) * (calcs.MM - 2) * (calcs.MM - 3) * (calcs.MM - 4) * (calcs.MM - 5) * (calcs.MM - 6) * (calcs.MM - 7) * (calcs.MM - 8) * (calcs.MM - 9) * (calcs.MM - 10) * (calcs.MM - 11) * (calcs.MM - 12) * (calcs.MM - 13) * (calcs.MM - 14) * (calcs.MM - 15) * (calcs.MM - 16) * (calcs.MM - 17)) / 6402373705728000)"
+  CM19: "((calcs.MM * (calcs.MM - 1) * (calcs.MM - 2) * (calcs.MM - 3) * (calcs.MM - 4) * (calcs.MM - 5) * (calcs.MM - 6) * (calcs.MM - 7) * (calcs.MM - 8) * (calcs.MM - 9) * (calcs.MM - 10) * (calcs.MM - 11) * (calcs.MM - 12) * (calcs.MM - 13) * (calcs.MM - 14) * (calcs.MM - 15) * (calcs.MM - 16) * (calcs.MM - 17) * (calcs.MM - 18)) / 121645100408832000)"
+  CM20: "((calcs.MM * (calcs.MM - 1) * (calcs.MM - 2) * (calcs.MM - 3) * (calcs.MM - 4) * (calcs.MM - 5) * (calcs.MM - 6) * (calcs.MM - 7) * (calcs.MM - 8) * (calcs.MM - 9) * (calcs.MM - 10) * (calcs.MM - 11) * (calcs.MM - 12) * (calcs.MM - 13) * (calcs.MM - 14) * (calcs.MM - 15) * (calcs.MM - 16) * (calcs.MM - 17) * (calcs.MM - 18) * (calcs.MM - 19)) / 2432902008176640000)"
+
+  # =========================
+  # Rk = C(M, n-k), tudo manual
+  # =========================
+  R0:  "(calcs.n0*calcs.CM0 + calcs.n1*calcs.CM1 + calcs.n2*calcs.CM2 + calcs.n3*calcs.CM3 + calcs.n4*calcs.CM4 + calcs.n5*calcs.CM5 + calcs.n6*calcs.CM6 + calcs.n7*calcs.CM7 + calcs.n8*calcs.CM8 + calcs.n9*calcs.CM9 + calcs.n10*calcs.CM10 + calcs.n11*calcs.CM11 + calcs.n12*calcs.CM12 + calcs.n13*calcs.CM13 + calcs.n14*calcs.CM14 + calcs.n15*calcs.CM15 + calcs.n16*calcs.CM16 + calcs.n17*calcs.CM17 + calcs.n18*calcs.CM18 + calcs.n19*calcs.CM19 + calcs.n20*calcs.CM20)"
+  R1:  "(calcs.n0*0 + calcs.n1*calcs.CM0 + calcs.n2*calcs.CM1 + calcs.n3*calcs.CM2 + calcs.n4*calcs.CM3 + calcs.n5*calcs.CM4 + calcs.n6*calcs.CM5 + calcs.n7*calcs.CM6 + calcs.n8*calcs.CM7 + calcs.n9*calcs.CM8 + calcs.n10*calcs.CM9 + calcs.n11*calcs.CM10 + calcs.n12*calcs.CM11 + calcs.n13*calcs.CM12 + calcs.n14*calcs.CM13 + calcs.n15*calcs.CM14 + calcs.n16*calcs.CM15 + calcs.n17*calcs.CM16 + calcs.n18*calcs.CM17 + calcs.n19*calcs.CM18 + calcs.n20*calcs.CM19)"
+  R2:  "(calcs.n0*0 + calcs.n1*0 + calcs.n2*calcs.CM0 + calcs.n3*calcs.CM1 + calcs.n4*calcs.CM2 + calcs.n5*calcs.CM3 + calcs.n6*calcs.CM4 + calcs.n7*calcs.CM5 + calcs.n8*calcs.CM6 + calcs.n9*calcs.CM7 + calcs.n10*calcs.CM8 + calcs.n11*calcs.CM9 + calcs.n12*calcs.CM10 + calcs.n13*calcs.CM11 + calcs.n14*calcs.CM12 + calcs.n15*calcs.CM13 + calcs.n16*calcs.CM14 + calcs.n17*calcs.CM15 + calcs.n18*calcs.CM16 + calcs.n19*calcs.CM17 + calcs.n20*calcs.CM18)"
+  R3:  "(calcs.n0*0 + calcs.n1*0 + calcs.n2*0 + calcs.n3*calcs.CM0 + calcs.n4*calcs.CM1 + calcs.n5*calcs.CM2 + calcs.n6*calcs.CM3 + calcs.n7*calcs.CM4 + calcs.n8*calcs.CM5 + calcs.n9*calcs.CM6 + calcs.n10*calcs.CM7 + calcs.n11*calcs.CM8 + calcs.n12*calcs.CM9 + calcs.n13*calcs.CM10 + calcs.n14*calcs.CM11 + calcs.n15*calcs.CM12 + calcs.n16*calcs.CM13 + calcs.n17*calcs.CM14 + calcs.n18*calcs.CM15 + calcs.n19*calcs.CM16 + calcs.n20*calcs.CM17)"
+  R4:  "(calcs.n0*0 + calcs.n1*0 + calcs.n2*0 + calcs.n3*0 + calcs.n4*calcs.CM0 + calcs.n5*calcs.CM1 + calcs.n6*calcs.CM2 + calcs.n7*calcs.CM3 + calcs.n8*calcs.CM4 + calcs.n9*calcs.CM5 + calcs.n10*calcs.CM6 + calcs.n11*calcs.CM7 + calcs.n12*calcs.CM8 + calcs.n13*calcs.CM9 + calcs.n14*calcs.CM10 + calcs.n15*calcs.CM11 + calcs.n16*calcs.CM12 + calcs.n17*calcs.CM13 + calcs.n18*calcs.CM14 + calcs.n19*calcs.CM15 + calcs.n20*calcs.CM16)"
+  R5:  "(calcs.n0*0 + calcs.n1*0 + calcs.n2*0 + calcs.n3*0 + calcs.n4*0 + calcs.n5*calcs.CM0 + calcs.n6*calcs.CM1 + calcs.n7*calcs.CM2 + calcs.n8*calcs.CM3 + calcs.n9*calcs.CM4 + calcs.n10*calcs.CM5 + calcs.n11*calcs.CM6 + calcs.n12*calcs.CM7 + calcs.n13*calcs.CM8 + calcs.n14*calcs.CM9 + calcs.n15*calcs.CM10 + calcs.n16*calcs.CM11 + calcs.n17*calcs.CM12 + calcs.n18*calcs.CM13 + calcs.n19*calcs.CM14 + calcs.n20*calcs.CM15)"
+  R6:  "(calcs.n0*0 + calcs.n1*0 + calcs.n2*0 + calcs.n3*0 + calcs.n4*0 + calcs.n5*0 + calcs.n6*calcs.CM0 + calcs.n7*calcs.CM1 + calcs.n8*calcs.CM2 + calcs.n9*calcs.CM3 + calcs.n10*calcs.CM4 + calcs.n11*calcs.CM5 + calcs.n12*calcs.CM6 + calcs.n13*calcs.CM7 + calcs.n14*calcs.CM8 + calcs.n15*calcs.CM9 + calcs.n16*calcs.CM10 + calcs.n17*calcs.CM11 + calcs.n18*calcs.CM12 + calcs.n19*calcs.CM13 + calcs.n20*calcs.CM14)"
+  R7:  "(calcs.n0*0 + calcs.n1*0 + calcs.n2*0 + calcs.n3*0 + calcs.n4*0 + calcs.n5*0 + calcs.n6*0 + calcs.n7*calcs.CM0 + calcs.n8*calcs.CM1 + calcs.n9*calcs.CM2 + calcs.n10*calcs.CM3 + calcs.n11*calcs.CM4 + calcs.n12*calcs.CM5 + calcs.n13*calcs.CM6 + calcs.n14*calcs.CM7 + calcs.n15*calcs.CM8 + calcs.n16*calcs.CM9 + calcs.n17*calcs.CM10 + calcs.n18*calcs.CM11 + calcs.n19*calcs.CM12 + calcs.n20*calcs.CM13)"
+  R8:  "(calcs.n0*0 + calcs.n1*0 + calcs.n2*0 + calcs.n3*0 + calcs.n4*0 + calcs.n5*0 + calcs.n6*0 + calcs.n7*0 + calcs.n8*calcs.CM0 + calcs.n9*calcs.CM1 + calcs.n10*calcs.CM2 + calcs.n11*calcs.CM3 + calcs.n12*calcs.CM4 + calcs.n13*calcs.CM5 + calcs.n14*calcs.CM6 + calcs.n15*calcs.CM7 + calcs.n16*calcs.CM8 + calcs.n17*calcs.CM9 + calcs.n18*calcs.CM10 + calcs.n19*calcs.CM11 + calcs.n20*calcs.CM12)"
+  R9:  "(calcs.n0*0 + calcs.n1*0 + calcs.n2*0 + calcs.n3*0 + calcs.n4*0 + calcs.n5*0 + calcs.n6*0 + calcs.n7*0 + calcs.n8*0 + calcs.n9*calcs.CM0 + calcs.n10*calcs.CM1 + calcs.n11*calcs.CM2 + calcs.n12*calcs.CM3 + calcs.n13*calcs.CM4 + calcs.n14*calcs.CM5 + calcs.n15*calcs.CM6 + calcs.n16*calcs.CM7 + calcs.n17*calcs.CM8 + calcs.n18*calcs.CM9 + calcs.n19*calcs.CM10 + calcs.n20*calcs.CM11)"
+  R10: "(calcs.n0*0 + calcs.n1*0 + calcs.n2*0 + calcs.n3*0 + calcs.n4*0 + calcs.n5*0 + calcs.n6*0 + calcs.n7*0 + calcs.n8*0 + calcs.n9*0 + calcs.n10*calcs.CM0 + calcs.n11*calcs.CM1 + calcs.n12*calcs.CM2 + calcs.n13*calcs.CM3 + calcs.n14*calcs.CM4 + calcs.n15*calcs.CM5 + calcs.n16*calcs.CM6 + calcs.n17*calcs.CM7 + calcs.n18*calcs.CM8 + calcs.n19*calcs.CM9 + calcs.n20*calcs.CM10)"
+  R11: "(calcs.n0*0 + calcs.n1*0 + calcs.n2*0 + calcs.n3*0 + calcs.n4*0 + calcs.n5*0 + calcs.n6*0 + calcs.n7*0 + calcs.n8*0 + calcs.n9*0 + calcs.n10*0 + calcs.n11*calcs.CM0 + calcs.n12*calcs.CM1 + calcs.n13*calcs.CM2 + calcs.n14*calcs.CM3 + calcs.n15*calcs.CM4 + calcs.n16*calcs.CM5 + calcs.n17*calcs.CM6 + calcs.n18*calcs.CM7 + calcs.n19*calcs.CM8 + calcs.n20*calcs.CM9)"
+  R12: "(calcs.n0*0 + calcs.n1*0 + calcs.n2*0 + calcs.n3*0 + calcs.n4*0 + calcs.n5*0 + calcs.n6*0 + calcs.n7*0 + calcs.n8*0 + calcs.n9*0 + calcs.n10*0 + calcs.n11*0 + calcs.n12*calcs.CM0 + calcs.n13*calcs.CM1 + calcs.n14*calcs.CM2 + calcs.n15*calcs.CM3 + calcs.n16*calcs.CM4 + calcs.n17*calcs.CM5 + calcs.n18*calcs.CM6 + calcs.n19*calcs.CM7 + calcs.n20*calcs.CM8)"
+  R13: "(calcs.n0*0 + calcs.n1*0 + calcs.n2*0 + calcs.n3*0 + calcs.n4*0 + calcs.n5*0 + calcs.n6*0 + calcs.n7*0 + calcs.n8*0 + calcs.n9*0 + calcs.n10*0 + calcs.n11*0 + calcs.n12*0 + calcs.n13*calcs.CM0 + calcs.n14*calcs.CM1 + calcs.n15*calcs.CM2 + calcs.n16*calcs.CM3 + calcs.n17*calcs.CM4 + calcs.n18*calcs.CM5 + calcs.n19*calcs.CM6 + calcs.n20*calcs.CM7)"
+  R14: "(calcs.n0*0 + calcs.n1*0 + calcs.n2*0 + calcs.n3*0 + calcs.n4*0 + calcs.n5*0 + calcs.n6*0 + calcs.n7*0 + calcs.n8*0 + calcs.n9*0 + calcs.n10*0 + calcs.n11*0 + calcs.n12*0 + calcs.n13*0 + calcs.n14*calcs.CM0 + calcs.n15*calcs.CM1 + calcs.n16*calcs.CM2 + calcs.n17*calcs.CM3 + calcs.n18*calcs.CM4 + calcs.n19*calcs.CM5 + calcs.n20*calcs.CM6)"
+  R15: "(calcs.n0*0 + calcs.n1*0 + calcs.n2*0 + calcs.n3*0 + calcs.n4*0 + calcs.n5*0 + calcs.n6*0 + calcs.n7*0 + calcs.n8*0 + calcs.n9*0 + calcs.n10*0 + calcs.n11*0 + calcs.n12*0 + calcs.n13*0 + calcs.n14*0 + calcs.n15*calcs.CM0 + calcs.n16*calcs.CM1 + calcs.n17*calcs.CM2 + calcs.n18*calcs.CM3 + calcs.n19*calcs.CM4 + calcs.n20*calcs.CM5)"
+  R16: "(calcs.n0*0 + calcs.n1*0 + calcs.n2*0 + calcs.n3*0 + calcs.n4*0 + calcs.n5*0 + calcs.n6*0 + calcs.n7*0 + calcs.n8*0 + calcs.n9*0 + calcs.n10*0 + calcs.n11*0 + calcs.n12*0 + calcs.n13*0 + calcs.n14*0 + calcs.n15*0 + calcs.n16*calcs.CM0 + calcs.n17*calcs.CM1 + calcs.n18*calcs.CM2 + calcs.n19*calcs.CM3 + calcs.n20*calcs.CM4)"
+  R17: "(calcs.n0*0 + calcs.n1*0 + calcs.n2*0 + calcs.n3*0 + calcs.n4*0 + calcs.n5*0 + calcs.n6*0 + calcs.n7*0 + calcs.n8*0 + calcs.n9*0 + calcs.n10*0 + calcs.n11*0 + calcs.n12*0 + calcs.n13*0 + calcs.n14*0 + calcs.n15*0 + calcs.n16*0 + calcs.n17*calcs.CM0 + calcs.n18*calcs.CM1 + calcs.n19*calcs.CM2 + calcs.n20*calcs.CM3)"
+  R18: "(calcs.n0*0 + calcs.n1*0 + calcs.n2*0 + calcs.n3*0 + calcs.n4*0 + calcs.n5*0 + calcs.n6*0 + calcs.n7*0 + calcs.n8*0 + calcs.n9*0 + calcs.n10*0 + calcs.n11*0 + calcs.n12*0 + calcs.n13*0 + calcs.n14*0 + calcs.n15*0 + calcs.n16*0 + calcs.n17*0 + calcs.n18*calcs.CM0 + calcs.n19*calcs.CM1 + calcs.n20*calcs.CM2)"
+  R19: "(calcs.n0*0 + calcs.n1*0 + calcs.n2*0 + calcs.n3*0 + calcs.n4*0 + calcs.n5*0 + calcs.n6*0 + calcs.n7*0 + calcs.n8*0 + calcs.n9*0 + calcs.n10*0 + calcs.n11*0 + calcs.n12*0 + calcs.n13*0 + calcs.n14*0 + calcs.n15*0 + calcs.n16*0 + calcs.n17*0 + calcs.n18*0 + calcs.n19*calcs.CM0 + calcs.n20*calcs.CM1)"
+  R20: "(calcs.n0*0 + calcs.n1*0 + calcs.n2*0 + calcs.n3*0 + calcs.n4*0 + calcs.n5*0 + calcs.n6*0 + calcs.n7*0 + calcs.n8*0 + calcs.n9*0 + calcs.n10*0 + calcs.n11*0 + calcs.n12*0 + calcs.n13*0 + calcs.n14*0 + calcs.n15*0 + calcs.n16*0 + calcs.n17*0 + calcs.n18*0 + calcs.n19*0 + calcs.n20*calcs.CM0)"
+
+  # =========================
+  # Indicadores de suporte para x = 0,...,20
+  # =========================
+  in0a:  "(0 >= calcs.xmin ? 1 : 0)"
+  in0b:  "(0 <= calcs.xmax ? 1 : 0)"
+  in0:   "(calcs.in0a * calcs.in0b)"
+
+  in1a:  "(1 >= calcs.xmin ? 1 : 0)"
+  in1b:  "(1 <= calcs.xmax ? 1 : 0)"
+  in1:   "(calcs.in1a * calcs.in1b)"
+
+  in2a:  "(2 >= calcs.xmin ? 1 : 0)"
+  in2b:  "(2 <= calcs.xmax ? 1 : 0)"
+  in2:   "(calcs.in2a * calcs.in2b)"
+
+  in3a:  "(3 >= calcs.xmin ? 1 : 0)"
+  in3b:  "(3 <= calcs.xmax ? 1 : 0)"
+  in3:   "(calcs.in3a * calcs.in3b)"
+
+  in4a:  "(4 >= calcs.xmin ? 1 : 0)"
+  in4b:  "(4 <= calcs.xmax ? 1 : 0)"
+  in4:   "(calcs.in4a * calcs.in4b)"
+
+  in5a:  "(5 >= calcs.xmin ? 1 : 0)"
+  in5b:  "(5 <= calcs.xmax ? 1 : 0)"
+  in5:   "(calcs.in5a * calcs.in5b)"
+
+  in6a:  "(6 >= calcs.xmin ? 1 : 0)"
+  in6b:  "(6 <= calcs.xmax ? 1 : 0)"
+  in6:   "(calcs.in6a * calcs.in6b)"
+
+  in7a:  "(7 >= calcs.xmin ? 1 : 0)"
+  in7b:  "(7 <= calcs.xmax ? 1 : 0)"
+  in7:   "(calcs.in7a * calcs.in7b)"
+
+  in8a:  "(8 >= calcs.xmin ? 1 : 0)"
+  in8b:  "(8 <= calcs.xmax ? 1 : 0)"
+  in8:   "(calcs.in8a * calcs.in8b)"
+
+  in9a:  "(9 >= calcs.xmin ? 1 : 0)"
+  in9b:  "(9 <= calcs.xmax ? 1 : 0)"
+  in9:   "(calcs.in9a * calcs.in9b)"
+
+  in10a: "(10 >= calcs.xmin ? 1 : 0)"
+  in10b: "(10 <= calcs.xmax ? 1 : 0)"
+  in10:  "(calcs.in10a * calcs.in10b)"
+
+  in11a: "(11 >= calcs.xmin ? 1 : 0)"
+  in11b: "(11 <= calcs.xmax ? 1 : 0)"
+  in11:  "(calcs.in11a * calcs.in11b)"
+
+  in12a: "(12 >= calcs.xmin ? 1 : 0)"
+  in12b: "(12 <= calcs.xmax ? 1 : 0)"
+  in12:  "(calcs.in12a * calcs.in12b)"
+
+  in13a: "(13 >= calcs.xmin ? 1 : 0)"
+  in13b: "(13 <= calcs.xmax ? 1 : 0)"
+  in13:  "(calcs.in13a * calcs.in13b)"
+
+  in14a: "(14 >= calcs.xmin ? 1 : 0)"
+  in14b: "(14 <= calcs.xmax ? 1 : 0)"
+  in14:  "(calcs.in14a * calcs.in14b)"
+
+  in15a: "(15 >= calcs.xmin ? 1 : 0)"
+  in15b: "(15 <= calcs.xmax ? 1 : 0)"
+  in15:  "(calcs.in15a * calcs.in15b)"
+
+  in16a: "(16 >= calcs.xmin ? 1 : 0)"
+  in16b: "(16 <= calcs.xmax ? 1 : 0)"
+  in16:  "(calcs.in16a * calcs.in16b)"
+
+  in17a: "(17 >= calcs.xmin ? 1 : 0)"
+  in17b: "(17 <= calcs.xmax ? 1 : 0)"
+  in17:  "(calcs.in17a * calcs.in17b)"
+
+  in18a: "(18 >= calcs.xmin ? 1 : 0)"
+  in18b: "(18 <= calcs.xmax ? 1 : 0)"
+  in18:  "(calcs.in18a * calcs.in18b)"
+
+  in19a: "(19 >= calcs.xmin ? 1 : 0)"
+  in19b: "(19 <= calcs.xmax ? 1 : 0)"
+  in19:  "(calcs.in19a * calcs.in19b)"
+
+  in20a: "(20 >= calcs.xmin ? 1 : 0)"
+  in20b: "(20 <= calcs.xmax ? 1 : 0)"
+  in20:  "(calcs.in20a * calcs.in20b)"
+
+  # =========================
+  # Probabilidades
+  # =========================
+  px0:  "((calcs.valido * calcs.in0  * calcs.CK0  * calcs.R0 ) / calcs.den)"
+  px1:  "((calcs.valido * calcs.in1  * calcs.CK1  * calcs.R1 ) / calcs.den)"
+  px2:  "((calcs.valido * calcs.in2  * calcs.CK2  * calcs.R2 ) / calcs.den)"
+  px3:  "((calcs.valido * calcs.in3  * calcs.CK3  * calcs.R3 ) / calcs.den)"
+  px4:  "((calcs.valido * calcs.in4  * calcs.CK4  * calcs.R4 ) / calcs.den)"
+  px5:  "((calcs.valido * calcs.in5  * calcs.CK5  * calcs.R5 ) / calcs.den)"
+  px6:  "((calcs.valido * calcs.in6  * calcs.CK6  * calcs.R6 ) / calcs.den)"
+  px7:  "((calcs.valido * calcs.in7  * calcs.CK7  * calcs.R7 ) / calcs.den)"
+  px8:  "((calcs.valido * calcs.in8  * calcs.CK8  * calcs.R8 ) / calcs.den)"
+  px9:  "((calcs.valido * calcs.in9  * calcs.CK9  * calcs.R9 ) / calcs.den)"
+  px10: "((calcs.valido * calcs.in10 * calcs.CK10 * calcs.R10) / calcs.den)"
+  px11: "((calcs.valido * calcs.in11 * calcs.CK11 * calcs.R11) / calcs.den)"
+  px12: "((calcs.valido * calcs.in12 * calcs.CK12 * calcs.R12) / calcs.den)"
+  px13: "((calcs.valido * calcs.in13 * calcs.CK13 * calcs.R13) / calcs.den)"
+  px14: "((calcs.valido * calcs.in14 * calcs.CK14 * calcs.R14) / calcs.den)"
+  px15: "((calcs.valido * calcs.in15 * calcs.CK15 * calcs.R15) / calcs.den)"
+  px16: "((calcs.valido * calcs.in16 * calcs.CK16 * calcs.R16) / calcs.den)"
+  px17: "((calcs.valido * calcs.in17 * calcs.CK17 * calcs.R17) / calcs.den)"
+  px18: "((calcs.valido * calcs.in18 * calcs.CK18 * calcs.R18) / calcs.den)"
+  px19: "((calcs.valido * calcs.in19 * calcs.CK19 * calcs.R19) / calcs.den)"
+  px20: "((calcs.valido * calcs.in20 * calcs.CK20 * calcs.R20) / calcs.den)"
+
+  somaProb: "(calcs.px0 + calcs.px1 + calcs.px2 + calcs.px3 + calcs.px4 + calcs.px5 + calcs.px6 + calcs.px7 + calcs.px8 + calcs.px9 + calcs.px10 + calcs.px11 + calcs.px12 + calcs.px13 + calcs.px14 + calcs.px15 + calcs.px16 + calcs.px17 + calcs.px18 + calcs.px19 + calcs.px20)"
+
+colors:
+  ink: "'#111827'"
+  grid: "'#d1d5db'"
+  bg: "'#ffffff'"
+  soft: "'#64748b'"
+
+layout:
+  OneGraphPlusSidebar:
+    graph:
+      xAxis:
+        min: 0
+        max: 11.5
+        ticks: 0
+      yAxis:
+        min: 0
+        max: 0.4
+        ticks: 6
+        title: Probabilidades
+
+      objects:
+        - Segment: { a: [-0.5, 0.2], b: [20.8, 0.2], color: colors.grid, strokeWidth: 0.5, lineStyle: dashed }
+        - Segment: { a: [-0.5, 0.4], b: [20.8, 0.4], color: colors.grid, strokeWidth: 0.5, lineStyle: dashed }
+        - Segment: { a: [-0.5, 0.6], b: [20.8, 0.6], color: colors.grid, strokeWidth: 0.5, lineStyle: dashed }
+        - Segment: { a: [-0.5, 0.8], b: [20.8, 0.8], color: colors.grid, strokeWidth: 0.5, lineStyle: dashed }
+
+        - Rectangle: { x1: -0.40, x2: 0.40,  y1: 0, y2: calcs.px0,  fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 0.60,  x2: 1.40,  y1: 0, y2: calcs.px1,  fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 1.60,  x2: 2.40,  y1: 0, y2: calcs.px2,  fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 2.60,  x2: 3.40,  y1: 0, y2: calcs.px3,  fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 3.60,  x2: 4.40,  y1: 0, y2: calcs.px4,  fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 4.60,  x2: 5.40,  y1: 0, y2: calcs.px5,  fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 5.60,  x2: 6.40,  y1: 0, y2: calcs.px6,  fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 6.60,  x2: 7.40,  y1: 0, y2: calcs.px7,  fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 7.60,  x2: 8.40,  y1: 0, y2: calcs.px8,  fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 8.60,  x2: 9.40,  y1: 0, y2: calcs.px9,  fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 9.60,  x2: 10.40, y1: 0, y2: calcs.px10, fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 10.60, x2: 11.40, y1: 0, y2: calcs.px11, fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 11.60, x2: 12.40, y1: 0, y2: calcs.px12, fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 12.60, x2: 13.40, y1: 0, y2: calcs.px13, fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 13.60, x2: 14.40, y1: 0, y2: calcs.px14, fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 14.60, x2: 15.40, y1: 0, y2: calcs.px15, fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 15.60, x2: 16.40, y1: 0, y2: calcs.px16, fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 16.60, x2: 17.40, y1: 0, y2: calcs.px17, fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 17.60, x2: 18.40, y1: 0, y2: calcs.px18, fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 18.60, x2: 19.40, y1: 0, y2: calcs.px19, fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 19.60, x2: 20.40, y1: 0, y2: calcs.px20, fill: colors.ink, opacity: 1 }
+
+        # =========================
+        # Linha da média
+        # =========================
+        - Segment:
+            a: [calcs.media, 0]
+            b: [calcs.media, 1]
+            color: colors.ink
+            strokeWidth: 1
+
+        - Label:
+            coordinates: [calcs.media, 0.4]
+            text: "`\\\\mathbf{E[X]} = ${calcs.media.toFixed(2)}`"
+            bgcolor: colors.bg
+            color: colors.ink
+            fontSize: 9
+            position: b
+
+        # =========================
+        # Segmentos de 1 desvio padrão
+        # =========================
+        - Arrow:
+            begin: [calcs.media, 0.39]
+            end: [calcs.media + calcs.sigma, 0.39]
+            color: colors.soft
+            strokeWidth: 1.5
+            label:
+              text: "`+ ${calcs.sigma.toFixed(2)}`"
+              position: t
+              fontSize: 7
+
+        - Arrow:
+            begin: [calcs.media, 0.39]
+            end: [calcs.media - calcs.sigma, 0.39]
+            color: colors.soft
+            strokeWidth: 1.5
+            label:
+              text: "`- ${calcs.sigma.toFixed(2)}`"
+              position: t
+              fontSize: 7
+
+        - Label: { coordinates: [0, 0],  text: "'0'",  bgcolor: colors.bg, color: colors.ink, fontSize: 6, position: t }
+        - Label: { coordinates: [1, 0],  text: "'1'",  bgcolor: colors.bg, color: colors.ink, fontSize: 6, position: t }
+        - Label: { coordinates: [2, 0],  text: "'2'",  bgcolor: colors.bg, color: colors.ink, fontSize: 6, position: t }
+        - Label: { coordinates: [3, 0],  text: "'3'",  bgcolor: colors.bg, color: colors.ink, fontSize: 6, position: t }
+        - Label: { coordinates: [4, 0],  text: "'4'",  bgcolor: colors.bg, color: colors.ink, fontSize: 6, position: t }
+        - Label: { coordinates: [5, 0],  text: "'5'",  bgcolor: colors.bg, color: colors.ink, fontSize: 6, position: t }
+        - Label: { coordinates: [6, 0],  text: "'6'",  bgcolor: colors.bg, color: colors.ink, fontSize: 6, position: t }
+        - Label: { coordinates: [7, 0],  text: "'7'",  bgcolor: colors.bg, color: colors.ink, fontSize: 6, position: t }
+        - Label: { coordinates: [8, 0],  text: "'8'",  bgcolor: colors.bg, color: colors.ink, fontSize: 6, position: t }
+        - Label: { coordinates: [9, 0],  text: "'9'",  bgcolor: colors.bg, color: colors.ink, fontSize: 6, position: t }
+        - Label: { coordinates: [10, 0], text: "'10'", bgcolor: colors.bg, color: colors.ink, fontSize: 6, position: t }
+        - Label: { coordinates: [11, 0], text: "'11'", bgcolor: colors.bg, color: colors.ink, fontSize: 6, position: t }
+        - Label: { coordinates: [12, 0], text: "'12'", bgcolor: colors.bg, color: colors.ink, fontSize: 6, position: t }
+        - Label: { coordinates: [13, 0], text: "'13'", bgcolor: colors.bg, color: colors.ink, fontSize: 6, position: t }
+        - Label: { coordinates: [14, 0], text: "'14'", bgcolor: colors.bg, color: colors.ink, fontSize: 6, position: t }
+        - Label: { coordinates: [15, 0], text: "'15'", bgcolor: colors.bg, color: colors.ink, fontSize: 6, position: t }
+        - Label: { coordinates: [16, 0], text: "'16'", bgcolor: colors.bg, color: colors.ink, fontSize: 6, position: t }
+        - Label: { coordinates: [17, 0], text: "'17'", bgcolor: colors.bg, color: colors.ink, fontSize: 6, position: t }
+        - Label: { coordinates: [18, 0], text: "'18'", bgcolor: colors.bg, color: colors.ink, fontSize: 6, position: t }
+        - Label: { coordinates: [19, 0], text: "'19'", bgcolor: colors.bg, color: colors.ink, fontSize: 6, position: t }
+        - Label: { coordinates: [20, 0], text: "'20'", bgcolor: colors.bg, color: colors.ink, fontSize: 6, position：t }
+
+        - Label: { coordinates: [0,  calcs.px0  + 0.01], text: "`${(calcs.px0  > 0.0005) ? calcs.px0.toFixed(3)  : ''}`",  bgcolor: colors.bg, color: colors.ink, fontSize: 6 }
+        - Label: { coordinates: [1,  calcs.px1  + 0.01], text: "`${(calcs.px1  > 0.0005) ? calcs.px1.toFixed(3)  : ''}`",  bgcolor: colors.bg, color: colors.ink, fontSize: 6 }
+        - Label: { coordinates: [2,  calcs.px2  + 0.01], text: "`${(calcs.px2  > 0.0005) ? calcs.px2.toFixed(3)  : ''}`",  bgcolor: colors.bg, color: colors.ink, fontSize: 6 }
+        - Label: { coordinates: [3,  calcs.px3  + 0.01], text: "`${(calcs.px3  > 0.0005) ? calcs.px3.toFixed(3)  : ''}`",  bgcolor: colors.bg, color: colors.ink, fontSize: 6 }
+        - Label: { coordinates: [4,  calcs.px4  + 0.01], text: "`${(calcs.px4  > 0.0005) ? calcs.px4.toFixed(3)  : ''}`",  bgcolor: colors.bg, color: colors.ink, fontSize: 6 }
+        - Label: { coordinates: [5,  calcs.px5  + 0.01], text: "`${(calcs.px5  > 0.0005) ? calcs.px5.toFixed(3)  : ''}`",  bgcolor: colors.bg, color: colors.ink, fontSize: 6 }
+        - Label: { coordinates: [6,  calcs.px6  + 0.01], text: "`${(calcs.px6  > 0.0005) ? calcs.px6.toFixed(3)  : ''}`",  bgcolor: colors.bg, color: colors.ink, fontSize: 6 }
+        - Label: { coordinates: [7,  calcs.px7  + 0.01], text: "`${(calcs.px7  > 0.0005) ? calcs.px7.toFixed(3)  : ''}`",  bgcolor: colors.bg, color: colors.ink, fontSize: 6 }
+        - Label: { coordinates: [8,  calcs.px8  + 0.01], text: "`${(calcs.px8  > 0.0005) ? calcs.px8.toFixed(3)  : ''}`",  bgcolor: colors.bg, color: colors.ink, fontSize: 6 }
+        - Label: { coordinates: [9,  calcs.px9  + 0.01], text: "`${(calcs.px9  > 0.0005) ? calcs.px9.toFixed(3)  : ''}`",  bgcolor: colors.bg, color: colors.ink, fontSize: 6 }
+        - Label: { coordinates: [10, calcs.px10 + 0.01], text: "`${(calcs.px10 > 0.0005) ? calcs.px10.toFixed(3) : ''}`", bgcolor: colors.bg, color: colors.ink, fontSize: 6 }
+        - Label: { coordinates: [11, calcs.px11 + 0.01], text: "`${(calcs.px11 > 0.0005) ? calcs.px11.toFixed(3) : ''}`", bgcolor: colors.bg, color: colors.ink, fontSize: 6 }
+        - Label: { coordinates: [12, calcs.px12 + 0.01], text: "`${(calcs.px12 > 0.0005) ? calcs.px12.toFixed(3) : ''}`", bgcolor: colors.bg, color: colors.ink, fontSize: 6 }
+        - Label: { coordinates: [13, calcs.px13 + 0.01], text: "`${(calcs.px13 > 0.0005) ? calcs.px13.toFixed(3) : ''}`", bgcolor: colors.bg, color: colors.ink, fontSize: 6 }
+        - Label: { coordinates: [14, calcs.px14 + 0.01], text: "`${(calcs.px14 > 0.0005) ? calcs.px14.toFixed(3) : ''}`", bgcolor: colors.bg, color: colors.ink, fontSize: 6 }
+        - Label: { coordinates: [15, calcs.px15 + 0.01], text: "`${(calcs.px15 > 0.0005) ? calcs.px15.toFixed(3) : ''}`", bgcolor: colors.bg, color: colors.ink, fontSize: 6 }
+        - Label: { coordinates: [16, calcs.px16 + 0.01], text: "`${(calcs.px16 > 0.0005) ? calcs.px16.toFixed(3) : ''}`", bgcolor: colors.bg, color: colors.ink, fontSize: 6 }
+        - Label: { coordinates: [17, calcs.px17 + 0.01], text: "`${(calcs.px17 > 0.0005) ? calcs.px17.toFixed(3) : ''}`", bgcolor: colors.bg, color: colors.ink, fontSize: 6 }
+        - Label: { coordinates: [18, calcs.px18 + 0.01], text: "`${(calcs.px18 > 0.0005) ? calcs.px18.toFixed(3) : ''}`", bgcolor: colors.bg, color: colors.ink, fontSize: 6 }
+        - Label: { coordinates: [19, calcs.px19 + 0.01], text: "`${(calcs.px19 > 0.0005) ? calcs.px19.toFixed(3) : ''}`", bgcolor: colors.bg, color: colors.ink, fontSize: 6 }
+        - Label: { coordinates: [20, calcs.px20 + 0.01], text: "`${(calcs.px20 > 0.0005) ? calcs.px20.toFixed(3) : ''}`", bgcolor: colors.bg, color: colors.ink, fontSize: 6 }
+
+    sidebar:
+      triggerWidth: 9999
+      controls:
+        - title:
+          sliders:
+            - param: N
+              label: "N"
+            - param: K
+              label: "K"
+            - param: n
+              label: "n"
+
+          divs:
+            # ---------------------------
+            # 1) DADOS
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:11px; margin:14px 0 10px 0;'><b>Dados:</b></div>"
+
+            - html: "`$$\\\\tiny
+                      X\\\\sim H(N,K,n)
+                      $$`"
+
+            - html: "`$$\\\\tiny
+                      N=${params.N.toFixed(0)},\\\\qquad
+                      K=${params.K.toFixed(0)},\\\\qquad
+                      n=${params.n.toFixed(0)}
+                      $$`"
+
+            # ---------------------------
+            # 2) FUNÇÃO DE PROBABILIDADE
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:11px; margin:14px 0 10px 0;'><b>Função de probabilidade:</b></div>"
+
+            - html: "`$$\\\\tiny
+                      P(X=x)=\\\\frac{\\\\binom{K}{x}\\\\binom{N-K}{n-x}}{\\\\binom{N}{n}}
+                      $$`"
+
+            - html: "`$$\\\\tiny
+                      x=${calcs.xmin.toFixed(0)},${(calcs.xmin+1).toFixed(0)},\\\\dots,${calcs.xmax.toFixed(0)}
+                      $$`"
+
+            # ---------------------------
+            # 3) MÉDIA
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:11px; margin:14px 0 10px 0;'><b>Média:</b></div>"
+
+            - html: "`$$\\\\tiny
+                      E[X]=n\\\\frac{K}{N}
+                      $$`"
+
+            - html: "`$$\\\\tiny
+                      E[X]=${params.n.toFixed(0)}\\\\cdot\\\\frac{${params.K.toFixed(0)}}{${params.N.toFixed(0)}}=${calcs.media.toFixed(2)}
+                      $$`"
+
+            # ---------------------------
+            # 4) VARIÂNCIA
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:11px; margin:14px 0 10px 0;'><b>Variância:</b></div>"
+
+            - html: "`$$\\\\tiny
+                      Var(X)=n\\\\frac{K}{N}\\\\left(1-\\\\frac{K}{N}\\\\right)\\\\frac{N-n}{N-1}
+                      $$`"
+
+            - html: "`$$\\\\tiny
+                      Var(X)=${calcs.variancia.toFixed(3)}
+                      $$`"
+
+            # ---------------------------
+            # 5) DESVIO PADRÃO
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:11px; margin:14px 0 10px 0;'><b>Desvio padrão:</b></div>"
+
+            - html: "`$$\\\\tiny
+                      \\\\sigma=\\\\sqrt{n\\\\frac{K}{N}\\\\left(1-\\\\frac{K}{N}\\\\right)\\\\frac{N-n}{N-1}}
+                      $$`"
+
+            - html: "`$$\\\\tiny
+                      \\\\sigma=${calcs.sigma.toFixed(2)}
+                      $$`"
+
+            # ---------------------------
+            # 6) CHECAGEM
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:11px; margin:14px 0 10px 0;'><b>Checagem:</b></div>"
+
+            - html: "`$$\\\\tiny
+                      \\\\sum_{x=0}^{20}P(X=x)\\\\approx ${calcs.somaProb.toFixed(3)}
+                      $$`"

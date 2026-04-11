@@ -1,0 +1,279 @@
+schema: EconSchema
+aspectRatio: 1.55
+
+params:
+  - name: n
+    value: 11
+    min: 1
+    max: 20
+    round: 1
+
+  - name: p
+    value: 0.5
+    min: 0.01
+    max: 0.99
+    round: 0.001
+
+calcs:
+  # =========================
+  # Medidas-resumo
+  # =========================
+  media: "(params.n * params.p)"
+  variancia: "(params.n * params.p * (1 - params.p))"
+  sigma: "((calcs.variancia)^0.5)"
+
+  # =========================
+  # Probabilidades binomiais
+  # Suporte exibido: k = 0,...,20
+  # Fora do suporte real (k > n), a barra zera.
+  # =========================
+
+  px0: "((0 <= params.n) ? ((1 - params.p)^(params.n)) : 0)"
+  px1: "((1 <= params.n) ? (params.n * params.p * (1 - params.p)^(params.n - 1)) : 0)"
+  px2: "((2 <= params.n) ? ((params.n * (params.n - 1) / 2) * (params.p^2) * ((1 - params.p)^(params.n - 2))) : 0)"
+  px3: "((3 <= params.n) ? ((params.n * (params.n - 1) * (params.n - 2) / 6) * (params.p^3) * ((1 - params.p)^(params.n - 3))) : 0)"
+  px4: "((4 <= params.n) ? ((params.n * (params.n - 1) * (params.n - 2) * (params.n - 3) / 24) * (params.p^4) * ((1 - params.p)^(params.n - 4))) : 0)"
+  px5: "((5 <= params.n) ? ((params.n * (params.n - 1) * (params.n - 2) * (params.n - 3) * (params.n - 4) / 120) * (params.p^5) * ((1 - params.p)^(params.n - 5))) : 0)"
+  px6: "((6 <= params.n) ? ((params.n * (params.n - 1) * (params.n - 2) * (params.n - 3) * (params.n - 4) * (params.n - 5) / 720) * (params.p^6) * ((1 - params.p)^(params.n - 6))) : 0)"
+  px7: "((7 <= params.n) ? ((params.n * (params.n - 1) * (params.n - 2) * (params.n - 3) * (params.n - 4) * (params.n - 5) * (params.n - 6) / 5040) * (params.p^7) * ((1 - params.p)^(params.n - 7))) : 0)"
+  px8: "((8 <= params.n) ? ((params.n * (params.n - 1) * (params.n - 2) * (params.n - 3) * (params.n - 4) * (params.n - 5) * (params.n - 6) * (params.n - 7) / 40320) * (params.p^8) * ((1 - params.p)^(params.n - 8))) : 0)"
+  px9: "((9 <= params.n) ? ((params.n * (params.n - 1) * (params.n - 2) * (params.n - 3) * (params.n - 4) * (params.n - 5) * (params.n - 6) * (params.n - 7) * (params.n - 8) / 362880) * (params.p^9) * ((1 - params.p)^(params.n - 9))) : 0)"
+  px10: "((10 <= params.n) ? ((params.n * (params.n - 1) * (params.n - 2) * (params.n - 3) * (params.n - 4) * (params.n - 5) * (params.n - 6) * (params.n - 7) * (params.n - 8) * (params.n - 9) / 3628800) * (params.p^10) * ((1 - params.p)^(params.n - 10))) : 0)"
+  px11: "((11 <= params.n) ? ((params.n * (params.n - 1) * (params.n - 2) * (params.n - 3) * (params.n - 4) * (params.n - 5) * (params.n - 6) * (params.n - 7) * (params.n - 8) * (params.n - 9) * (params.n - 10) / 39916800) * (params.p^11) * ((1 - params.p)^(params.n - 11))) : 0)"
+  px12: "((12 <= params.n) ? ((params.n * (params.n - 1) * (params.n - 2) * (params.n - 3) * (params.n - 4) * (params.n - 5) * (params.n - 6) * (params.n - 7) * (params.n - 8) * (params.n - 9) * (params.n - 10) * (params.n - 11) / 479001600) * (params.p^12) * ((1 - params.p)^(params.n - 12))) : 0)"
+  px13: "((13 <= params.n) ? ((params.n * (params.n - 1) * (params.n - 2) * (params.n - 3) * (params.n - 4) * (params.n - 5) * (params.n - 6) * (params.n - 7) * (params.n - 8) * (params.n - 9) * (params.n - 10) * (params.n - 11) * (params.n - 12) / 6227020800) * (params.p^13) * ((1 - params.p)^(params.n - 13))) : 0)"
+  px14: "((14 <= params.n) ? ((params.n * (params.n - 1) * (params.n - 2) * (params.n - 3) * (params.n - 4) * (params.n - 5) * (params.n - 6) * (params.n - 7) * (params.n - 8) * (params.n - 9) * (params.n - 10) * (params.n - 11) * (params.n - 12) * (params.n - 13) / 87178291200) * (params.p^14) * ((1 - params.p)^(params.n - 14))) : 0)"
+  px15: "((15 <= params.n) ? ((params.n * (params.n - 1) * (params.n - 2) * (params.n - 3) * (params.n - 4) * (params.n - 5) * (params.n - 6) * (params.n - 7) * (params.n - 8) * (params.n - 9) * (params.n - 10) * (params.n - 11) * (params.n - 12) * (params.n - 13) * (params.n - 14) / 1307674368000) * (params.p^15) * ((1 - params.p)^(params.n - 15))) : 0)"
+  px16: "((16 <= params.n) ? ((params.n * (params.n - 1) * (params.n - 2) * (params.n - 3) * (params.n - 4) * (params.n - 5) * (params.n - 6) * (params.n - 7) * (params.n - 8) * (params.n - 9) * (params.n - 10) * (params.n - 11) * (params.n - 12) * (params.n - 13) * (params.n - 14) * (params.n - 15) / 20922789888000) * (params.p^16) * ((1 - params.p)^(params.n - 16))) : 0)"
+  px17: "((17 <= params.n) ? ((params.n * (params.n - 1) * (params.n - 2) * (params.n - 3) * (params.n - 4) * (params.n - 5) * (params.n - 6) * (params.n - 7) * (params.n - 8) * (params.n - 9) * (params.n - 10) * (params.n - 11) * (params.n - 12) * (params.n - 13) * (params.n - 14) * (params.n - 15) * (params.n - 16) / 355687428096000) * (params.p^17) * ((1 - params.p)^(params.n - 17))) : 0)"
+  px18: "((18 <= params.n) ? ((params.n * (params.n - 1) * (params.n - 2) * (params.n - 3) * (params.n - 4) * (params.n - 5) * (params.n - 6) * (params.n - 7) * (params.n - 8) * (params.n - 9) * (params.n - 10) * (params.n - 11) * (params.n - 12) * (params.n - 13) * (params.n - 14) * (params.n - 15) * (params.n - 16) * (params.n - 17) / 6402373705728000) * (params.p^18) * ((1 - params.p)^(params.n - 18))) : 0)"
+  px19: "((19 <= params.n) ? ((params.n * (params.n - 1) * (params.n - 2) * (params.n - 3) * (params.n - 4) * (params.n - 5) * (params.n - 6) * (params.n - 7) * (params.n - 8) * (params.n - 9) * (params.n - 10) * (params.n - 11) * (params.n - 12) * (params.n - 13) * (params.n - 14) * (params.n - 15) * (params.n - 16) * (params.n - 17) * (params.n - 18) / 121645100408832000) * (params.p^19) * ((1 - params.p)^(params.n - 19))) : 0)"
+  px20: "((20 <= params.n) ? ((params.n * (params.n - 1) * (params.n - 2) * (params.n - 3) * (params.n - 4) * (params.n - 5) * (params.n - 6) * (params.n - 7) * (params.n - 8) * (params.n - 9) * (params.n - 10) * (params.n - 11) * (params.n - 12) * (params.n - 13) * (params.n - 14) * (params.n - 15) * (params.n - 16) * (params.n - 17) * (params.n - 18) * (params.n - 19) / 2432902008176640000) * (params.p^20) * ((1 - params.p)^(params.n - 20))) : 0)"
+
+  somaProb: "(calcs.px0 + calcs.px1 + calcs.px2 + calcs.px3 + calcs.px4 + calcs.px5 + calcs.px6 + calcs.px7 + calcs.px8 + calcs.px9 + calcs.px10 + calcs.px11 + calcs.px12 + calcs.px13 + calcs.px14 + calcs.px15 + calcs.px16 + calcs.px17 + calcs.px18 + calcs.px19 + calcs.px20)"
+
+colors:
+  ink: "'#111827'"
+  soft: "'#64748b'"
+  grid: "'#d1d5db'"
+  bg: "'#ffffff'"
+
+layout:
+  OneGraphPlusSidebar:
+    graph:
+      xAxis:
+        min: 0
+        max: (10  + (params.n*0.1)^3)
+        ticks: 0
+      yAxis:
+        min: 0
+        max: 0.3
+        ticks: 6
+        title: Probabilidades
+
+      objects:
+        # =========================
+        # Grade horizontal
+        # =========================
+        - Segment: { a: [-0.5, 0.1], b: [20.8, 0.1], color: colors.grid, strokeWidth: 0.5, lineStyle: dashed }
+        - Segment: { a: [-0.5, 0.2], b: [20.8, 0.2], color: colors.grid, strokeWidth: 0.5, lineStyle: dashed }
+        - Segment: { a: [-0.5, 0.3], b: [20.8, 0.3], color: colors.grid, strokeWidth: 0.5, lineStyle: dashed }
+        - Segment: { a: [-0.5, 0.4], b: [20.8, 0.4], color: colors.grid, strokeWidth: 0.5, lineStyle: dashed }
+        - Segment: { a: [-0.5, 0.5], b: [20.8, 0.5], color: colors.grid, strokeWidth: 0.5, lineStyle: dashed }
+
+        # =========================
+        # Barras da distribuição (largura = 0.80)
+        # =========================
+        - Rectangle: { x1: -0.40, x2: 0.40,  y1: 0, y2: calcs.px0,  fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 0.60,  x2: 1.40,  y1: 0, y2: calcs.px1,  fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 1.60,  x2: 2.40,  y1: 0, y2: calcs.px2,  fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 2.60,  x2: 3.40,  y1: 0, y2: calcs.px3,  fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 3.60,  x2: 4.40,  y1: 0, y2: calcs.px4,  fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 4.60,  x2: 5.40,  y1: 0, y2: calcs.px5,  fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 5.60,  x2: 6.40,  y1: 0, y2: calcs.px6,  fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 6.60,  x2: 7.40,  y1: 0, y2: calcs.px7,  fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 7.60,  x2: 8.40,  y1: 0, y2: calcs.px8,  fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 8.60,  x2: 9.40,  y1: 0, y2: calcs.px9,  fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 9.60,  x2: 10.40, y1: 0, y2: calcs.px10, fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 10.60, x2: 11.40, y1: 0, y2: calcs.px11, fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 11.60, x2: 12.40, y1: 0, y2: calcs.px12, fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 12.60, x2: 13.40, y1: 0, y2: calcs.px13, fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 13.60, x2: 14.40, y1: 0, y2: calcs.px14, fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 14.60, x2: 15.40, y1: 0, y2: calcs.px15, fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 15.60, x2: 16.40, y1: 0, y2: calcs.px16, fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 16.60, x2: 17.40, y1: 0, y2: calcs.px17, fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 17.60, x2: 18.40, y1: 0, y2: calcs.px18, fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 18.60, x2: 19.40, y1: 0, y2: calcs.px19, fill: colors.ink, opacity: 1 }
+        - Rectangle: { x1: 19.60, x2: 20.40, y1: 0, y2: calcs.px20, fill: colors.ink, opacity: 1 }
+
+        # =========================
+        # Linha da média
+        # =========================
+        - Segment:
+            a: [calcs.media, 0]
+            b: [calcs.media, 0.55]
+            color: colors.ink
+            strokeWidth: 1
+
+        - Label:
+            coordinates: [calcs.media, 0.30]
+            text: "`\\\\mathbf{E[X]} = ${calcs.media.toFixed(2)}`"
+            bgcolor: colors.bg
+            color: colors.ink
+            fontSize: 11
+            position: b
+
+        # =========================
+        # Segmento de 1 desvio padrão
+        # =========================
+
+        - Arrow:
+            begin: [calcs.media, 0.29]
+            end: [calcs.media + calcs.sigma, 0.29]
+            color: colors.ink
+            strokeWidth: 2
+            label:
+              text: "`+ ${calcs.sigma.toFixed(2)}`"
+              position: t 
+              fontSize: 9
+
+        - Arrow:
+            begin: [calcs.media, 0.29]
+            end: [calcs.media - calcs.sigma, 0.29]
+            color: colors.ink
+            strokeWidth: 2
+            label:
+              text: "` - ${calcs.sigma.toFixed(2)}`"
+              position: t 
+              fontSize: 9
+        # =========================
+        # Labels do eixo x
+        # =========================
+        - Label: { coordinates: [0, 0],  text: "'0'",  bgcolor: colors.bg, color: colors.ink, fontSize: 8, position: t }
+        - Label: { coordinates: [1, 0],  text: "'1'",  bgcolor: colors.bg, color: colors.ink, fontSize: 8, position: t }
+        - Label: { coordinates: [2, 0],  text: "'2'",  bgcolor: colors.bg, color: colors.ink, fontSize: 8, position: t }
+        - Label: { coordinates: [3, 0],  text: "'3'",  bgcolor: colors.bg, color: colors.ink, fontSize: 8, position: t }
+        - Label: { coordinates: [4, 0],  text: "'4'",  bgcolor: colors.bg, color: colors.ink, fontSize: 8, position: t }
+        - Label: { coordinates: [5, 0],  text: "'5'",  bgcolor: colors.bg, color: colors.ink, fontSize: 8, position: t }
+        - Label: { coordinates: [6, 0],  text: "'6'",  bgcolor: colors.bg, color: colors.ink, fontSize: 8, position: t }
+        - Label: { coordinates: [7, 0],  text: "'7'",  bgcolor: colors.bg, color: colors.ink, fontSize: 8, position: t }
+        - Label: { coordinates: [8, 0],  text: "'8'",  bgcolor: colors.bg, color: colors.ink, fontSize: 8, position: t }
+        - Label: { coordinates: [9, 0],  text: "'9'",  bgcolor: colors.bg, color: colors.ink, fontSize: 8, position: t }
+        - Label: { coordinates: [10, 0], text: "'10'", bgcolor: colors.bg, color: colors.ink, fontSize: 8, position: t }
+        - Label: { coordinates: [11, 0], text: "'11'", bgcolor: colors.bg, color: colors.ink, fontSize: 8, position: t }
+        - Label: { coordinates: [12, 0], text: "'12'", bgcolor: colors.bg, color: colors.ink, fontSize: 8, position: t }
+        - Label: { coordinates: [13, 0], text: "'13'", bgcolor: colors.bg, color: colors.ink, fontSize: 8, position: t }
+        - Label: { coordinates: [14, 0], text: "'14'", bgcolor: colors.bg, color: colors.ink, fontSize: 8, position: t }
+        - Label: { coordinates: [15, 0], text: "'15'", bgcolor: colors.bg, color: colors.ink, fontSize: 8, position: t }
+        - Label: { coordinates: [16, 0], text: "'16'", bgcolor: colors.bg, color: colors.ink, fontSize: 8, position: t }
+        - Label: { coordinates: [17, 0], text: "'17'", bgcolor: colors.bg, color: colors.ink, fontSize: 8, position: t }
+        - Label: { coordinates: [18, 0], text: "'18'", bgcolor: colors.bg, color: colors.ink, fontSize: 8, position: t }
+        - Label: { coordinates: [19, 0], text: "'19'", bgcolor: colors.bg, color: colors.ink, fontSize: 8, position: t }
+        - Label: { coordinates: [20, 0], text: "'20'", bgcolor: colors.bg, color: colors.ink, fontSize: 8, position: t }
+
+        # =========================
+        # Labels sobre as barras
+        # =========================
+        - Label: { coordinates: [0,  calcs.px0  + 0.01], text: "`${calcs.px0.toFixed(3)}`",  bgcolor: colors.bg, color: colors.ink, fontSize: 8 }
+        - Label: { coordinates: [1,  calcs.px1  + 0.01], text: "`${calcs.px1.toFixed(3)}`",  bgcolor: colors.bg, color: colors.ink, fontSize: 8 }
+        - Label: { coordinates: [2,  calcs.px2  + 0.01], text: "`${calcs.px2.toFixed(3)}`",  bgcolor: colors.bg, color: colors.ink, fontSize: 8 }
+        - Label: { coordinates: [3,  calcs.px3  + 0.01], text: "`${calcs.px3.toFixed(3)}`",  bgcolor: colors.bg, color: colors.ink, fontSize: 8 }
+        - Label: { coordinates: [4,  calcs.px4  + 0.01], text: "`${calcs.px4.toFixed(3)}`",  bgcolor: colors.bg, color: colors.ink, fontSize: 8 }
+        - Label: { coordinates: [5,  calcs.px5  + 0.01], text: "`${calcs.px5.toFixed(3)}`",  bgcolor: colors.bg, color: colors.ink, fontSize: 8 }
+        - Label: { coordinates: [6,  calcs.px6  + 0.01], text: "`${calcs.px6.toFixed(3)}`",  bgcolor: colors.bg, color: colors.ink, fontSize: 8 }
+        - Label: { coordinates: [7,  calcs.px7  + 0.01], text: "`${calcs.px7.toFixed(3)}`",  bgcolor: colors.bg, color: colors.ink, fontSize: 8 }
+        - Label: { coordinates: [8,  calcs.px8  + 0.01], text: "`${calcs.px8.toFixed(3)}`",  bgcolor: colors.bg, color: colors.ink, fontSize: 8 }
+        - Label: { coordinates: [9,  calcs.px9  + 0.01], text: "`${calcs.px9.toFixed(3)}`",  bgcolor: colors.bg, color: colors.ink, fontSize: 8 }
+        - Label: { coordinates: [10, calcs.px10 + 0.01], text: "`${calcs.px10.toFixed(3)}`", bgcolor: colors.bg, color: colors.ink, fontSize: 8 }
+        - Label: { coordinates: [11, calcs.px11 + 0.01], text: "`${calcs.px11.toFixed(3)}`", bgcolor: colors.bg, color: colors.ink, fontSize: 8 }
+        - Label: { coordinates: [12, calcs.px12 + 0.01], text: "`${calcs.px12.toFixed(3)}`", bgcolor: colors.bg, color: colors.ink, fontSize: 8 }
+        - Label: { coordinates: [13, calcs.px13 + 0.01], text: "`${calcs.px13.toFixed(3)}`", bgcolor: colors.bg, color: colors.ink, fontSize: 8 }
+        - Label: { coordinates: [14, calcs.px14 + 0.01], text: "`${calcs.px14.toFixed(3)}`", bgcolor: colors.bg, color: colors.ink, fontSize: 8 }
+        - Label: { coordinates: [15, calcs.px15 + 0.01], text: "`${calcs.px15.toFixed(3)}`", bgcolor: colors.bg, color: colors.ink, fontSize: 8 }
+        - Label: { coordinates: [16, calcs.px16 + 0.01], text: "`${calcs.px16.toFixed(3)}`", bgcolor: colors.bg, color: colors.ink, fontSize: 8 }
+        - Label: { coordinates: [17, calcs.px17 + 0.01], text: "`${calcs.px17.toFixed(3)}`", bgcolor: colors.bg, color: colors.ink, fontSize: 8 }
+        - Label: { coordinates: [18, calcs.px18 + 0.01], text: "`${calcs.px18.toFixed(3)}`", bgcolor: colors.bg, color: colors.ink, fontSize: 8 }
+        - Label: { coordinates: [19, calcs.px19 + 0.01], text: "`${calcs.px19.toFixed(3)}`", bgcolor: colors.bg, color: colors.ink, fontSize: 8 }
+        - Label: { coordinates: [20, calcs.px20 + 0.01], text: "`${calcs.px20.toFixed(3)}`", bgcolor: colors.bg, color: colors.ink, fontSize: 8 }
+
+    sidebar:
+      triggerWidth: 9999
+      controls:
+        - title:
+          sliders:
+            - param: n
+              label: "n"
+            - param: p
+              label: "p"
+
+          divs:
+            # ---------------------------
+            # 1) DADOS
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Dados:</b></div>"
+
+            - html: "`$$\\\\small
+                      X\\\\sim Bin(n,p)
+                      $$`"
+
+            - html: "`$$\\\\small
+                      n=${params.n.toFixed(0)},\\\\qquad
+                      p=${params.p.toFixed(3)}
+                      $$`"
+
+            # ---------------------------
+            # 2) FUNÇÃO DE PROBABILIDADE
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Função de probabilidade:</b></div>"
+
+            - html: "`$$\\\\small
+                      P(X=k)=\\\\binom{n}{k}p^k(1-p)^{n-k},\\\\qquad k=0,1,\\\\dots,n
+                      $$`"
+
+            # ---------------------------
+            # 3) MÉDIA
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Média:</b></div>"
+
+            - html: "`$$\\\\small
+                      E[X]=np
+                      $$`"
+
+            - html: "`$$\\\\small
+                      E[X]=${params.n.toFixed(0)}\\\\cdot ${params.p.toFixed(3)}=${calcs.media.toFixed(2)}
+                      $$`"
+
+            # ---------------------------
+            # 4) VARIÂNCIA
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Variância:</b></div>"
+
+            - html: "`$$\\\\small
+                      Var(X)=np(1-p)
+                      $$`"
+
+            - html: "`$$\\\\small
+                      Var(X)=${params.n.toFixed(0)}\\\\cdot ${params.p.toFixed(3)}\\\\cdot (1-${params.p.toFixed(3)})=${calcs.variancia.toFixed(3)}
+                      $$`"
+
+            # ---------------------------
+            # 5) DESVIO PADRÃO
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Desvio padrão:</b></div>"
+
+            - html: "`$$\\\\small
+                      \\\\sigma=\\\\sqrt{np(1-p)}
+                      $$`"
+
+            - html: "`$$\\\\small
+                      \\\\sigma=\\\\sqrt{${calcs.variancia.toFixed(3)}}=${calcs.sigma.toFixed(2)}
+                      $$`"
+
+            # ---------------------------
+            # 6) CHECAGEM
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Checagem:</b></div>"
+
+            - html: "`$$\\\\small
+                      \\\\sum_{k=0}^{${params.n.toFixed(0)}}P(X=k)\\\\approx ${calcs.somaProb.toFixed(3)}
+                      $$`"

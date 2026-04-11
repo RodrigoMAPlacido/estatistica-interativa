@@ -9,7 +9,7 @@
   <desc id="desc">
     Duas moedas são lançadas. Abaixo, aparece o espaço amostral do experimento
     com os quatro resultados possíveis. Em seguida, os resultados que contêm
-    cara são destacados por retângulos.
+    cara são destacados por sublinhados.
   </desc>
 
   <style>
@@ -30,9 +30,7 @@
 
       --dash:1600;
       --dashText:900;
-
-      --boxFill:rgba(31,41,55,.08);
-      --boxStroke:#374151;
+      --dashUnderline:90;
     }
 
     svg{
@@ -154,28 +152,27 @@
       animation:k-textStrokeLate var(--cycle) ease-in-out infinite both;
     }
 
-    .highlightBox{
-      fill:var(--boxFill);
-      stroke:var(--boxStroke);
-      stroke-width:1.2;
-      rx:10;
-      ry:10;
+    .underlineHighlight{
+      stroke:var(--line);
+      stroke-width:2.1;
+      stroke-linecap:round;
+      fill:none;
       vector-effect:non-scaling-stroke;
       opacity:0;
-      stroke-dasharray:220;
-      stroke-dashoffset:220;
+      stroke-dasharray:var(--dashUnderline);
+      stroke-dashoffset:var(--dashUnderline);
     }
 
-    .h1{
-      animation:k-boxIn1 var(--cycle) ease-in-out infinite both;
+    .u1{
+      animation:k-underline1 var(--cycle) ease-in-out infinite both;
     }
 
-    .h2{
-      animation:k-boxIn2 var(--cycle) ease-in-out infinite both;
+    .u2{
+      animation:k-underline2 var(--cycle) ease-in-out infinite both;
     }
 
-    .h3{
-      animation:k-boxIn3 var(--cycle) ease-in-out infinite both;
+    .u3{
+      animation:k-underline3 var(--cycle) ease-in-out infinite both;
     }
 
     @keyframes coinLaunchEI{
@@ -273,31 +270,31 @@
       100%        { opacity:0; stroke-dashoffset:0; }
     }
 
-    @keyframes k-boxIn1{
-      0%,62%   { opacity:0; stroke-dashoffset:220; }
+    @keyframes k-underline1{
+      0%,62%   { opacity:0; stroke-dashoffset:var(--dashUnderline); }
       68%      { opacity:1; }
-      75%      { opacity:1; stroke-dashoffset:0; }
+      75%      { stroke-dashoffset:0; }
       100%     { opacity:1; stroke-dashoffset:0; }
     }
 
-    @keyframes k-boxIn2{
-      0%,66%   { opacity:0; stroke-dashoffset:220; }
+    @keyframes k-underline2{
+      0%,66%   { opacity:0; stroke-dashoffset:var(--dashUnderline); }
       72%      { opacity:1; }
-      79%      { opacity:1; stroke-dashoffset:0; }
+      79%      { stroke-dashoffset:0; }
       100%     { opacity:1; stroke-dashoffset:0; }
     }
 
-    @keyframes k-boxIn3{
-      0%,70%   { opacity:0; stroke-dashoffset:220; }
+    @keyframes k-underline3{
+      0%,70%   { opacity:0; stroke-dashoffset:var(--dashUnderline); }
       76%      { opacity:1; }
-      83%      { opacity:1; stroke-dashoffset:0; }
+      83%      { stroke-dashoffset:0; }
       100%     { opacity:1; stroke-dashoffset:0; }
     }
   </style>
 
   <g class="sceneGroup">
 
-    <!-- MOEDA 1: posição original preservada -->
+    <!-- MOEDA 1 -->
     <g transform="translate(175 72)">
       <ellipse class="shadow shadowPulse" cx="220" cy="248" rx="62" ry="12"/>
 
@@ -314,7 +311,7 @@
       </g>
     </g>
 
-    <!-- MOEDA 2: posição original preservada -->
+    <!-- MOEDA 2 -->
     <g transform="translate(565 72)">
       <ellipse class="shadow shadowPulse" cx="220" cy="248" rx="62" ry="12"/>
 
@@ -327,17 +324,17 @@
       </g>
     </g>
 
-    <!-- LINHA: mantida na altura original -->
+    <!-- LINHA -->
     <line x1="190" y1="366" x2="990" y2="366" class="u-stroke sampleLine"/>
 
     <!-- ESPAÇO AMOSTRAL -->
     <text x="590" y="406" class="mathStroke u-center">Ω = {(H,H); (H,T); (T,H); (T,T)}</text>
     <text x="590" y="406" class="mathFill u-center">Ω = {(H,H); (H,T); (T,H); (T,T)}</text>
 
-    <!-- DESTAQUES -->
-    <rect x="446" y="386" width="80" height="40" class="highlightBox h1"/>
-    <rect x="538" y="386" width="80" height="40" class="highlightBox h2"/>
-    <rect x="628" y="386" width="80" height="40" class="highlightBox h3"/>
+    <!-- SUBLINHADOS DOS CASOS FAVORÁVEIS -->
+    <line x1="448" y1="424" x2="517" y2="424" class="underlineHighlight u1"/>
+    <line x1="540" y1="424" x2="609" y2="424" class="underlineHighlight u2"/>
+    <line x1="629" y1="424" x2="698" y2="424" class="underlineHighlight u3"/>
 
     <!-- LEGENDA -->
     <text x="590" y="468" class="noteStroke u-center">Resultados com pelo menos uma cara</text>
