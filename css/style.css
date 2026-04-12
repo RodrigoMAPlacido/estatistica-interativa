@@ -257,6 +257,15 @@ figure.figure.table figcaption {
   right: auto !important;
   margin:0rem 0 0rem 0;
 }
+.kg-container.kg--sidebar-centered-vertical-graph{
+  position: relative; /* referência do absolute */
+}
+
+.kg-container.kg--sidebar-centered-vertical-graph .sidebar{
+  left: 21% !important;
+  right: auto !important;
+  margin: 3rem 0 0 0;  /* <-- só isso muda */
+}
 .kg-container canvas,
 .kg-container img {
   max-width:100%;

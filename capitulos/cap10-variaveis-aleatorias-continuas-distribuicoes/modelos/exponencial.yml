@@ -1,0 +1,197 @@
+schema: EconSchema
+aspectRatio: 1.55
+
+params:
+  - name: lambda
+    value: 1
+    min: 0.4
+    max: 1.5
+    round: 0.001
+
+calcs:
+  # =========================
+  # Medidas-resumo
+  # =========================
+  media: "(1/params.lambda)"
+  variancia: "(1/(params.lambda^2))"
+  sigma: "(1/params.lambda)"
+
+
+
+  # =========================
+  # Apoio visual
+  # =========================
+  yFormula: "((params.lambda*exp(-params.lambda*1.1))+0.12)"
+  yAreaLabel: "0.18"
+
+colors:
+  ink: "'#111827'"
+  soft: "'#64748b'"
+  grid: "'#d1d5db'"
+  bg: "'#ffffff'"
+
+layout:
+  OneGraphPlusSidebar:
+    graph:
+      xAxis:
+        min: 0
+        max: 5
+        ticks: 0
+
+      yAxis:
+        min: 0
+        max: 1.5
+        ticks: 6
+        title: Densidade
+
+      objects:
+        # =========================
+        # Grade horizontal
+        # =========================
+        - Segment: { a: [0, 0.5], b: [8, 0.5], color: colors.grid, strokeWidth: 0.5, lineStyle: dashed }
+        - Segment: { a: [0, 1.0], b: [8, 1.0], color: colors.grid, strokeWidth: 0.5, lineStyle: dashed }
+        - Segment: { a: [0, 1.5], b: [8, 1.5], color: colors.grid, strokeWidth: 0.5, lineStyle: dashed }
+        - Segment: { a: [0, 2.0], b: [8, 2.0], color: colors.grid, strokeWidth: 0.5, lineStyle: dashed }
+
+
+
+
+        # =========================
+        # Curva da densidade
+        # =========================
+        - Curve:
+            fn: "(params.lambda*exp(-params.lambda*(x)))"
+            ind: x
+            min: 0
+            max: 8
+            color: colors.ink
+            areaBelow: 
+              fill: colors.ink
+              opacity: 0.12
+            strokeWidth: 2.4
+            samplePoints: 400
+            label:
+              text: "`f(x)=\\\\lambda e^{-\\\\lambda x}`"
+              x: 0.5
+              fontSize: 8
+
+        # =========================
+        # Linha da média
+        # =========================
+        - Segment:
+            a: [calcs.media, 0]
+            b: [calcs.media, 2.2]
+            color: colors.ink
+            strokeWidth: 1
+
+        - Label:
+            coordinates: [calcs.media, 1.5]
+            text: "`\\\\mathbf{E[X]} = ${calcs.media.toFixed(2)}`"
+            bgcolor: colors.bg
+            color: colors.ink
+            fontSize: 10
+            position: b
+
+        # =========================
+        # Segmento de 1 desvio padrão
+        # Na exponencial, sigma = 1/lambda = media
+        # então media - sigma = 0
+        # =========================
+        - Arrow:
+            begin: [calcs.media, 1.4]
+            end: [calcs.media + calcs.sigma, 1.4]
+            color: colors.soft
+            strokeWidth: 2
+            label:
+              text: "`+ ${calcs.sigma.toFixed(2)}`"
+              position: t
+              fontSize: 9
+
+        - Arrow:
+            begin: [calcs.media, 1.4]
+            end: [0, 1.4]
+            color: colors.soft
+            strokeWidth: 2
+            label:
+              text: "`- ${calcs.sigma.toFixed(2)}`"
+              position: t
+              fontSize: 9
+
+
+
+
+
+    sidebar:
+      triggerWidth: 9999
+      controls:
+        - title:
+          sliders:
+            - param: lambda
+              label: "`\\\\lambda`"
+
+          divs:
+            # ---------------------------
+            # 1) DADOS
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Dados:</b></div>"
+
+            - html: "`$$\\\\small
+                      X\\\\sim Exp(\\\\lambda)
+                      $$`"
+
+            - html: "`$$\\\\small
+                      \\\\lambda=${params.lambda.toFixed(3)}
+                      $$`"
+
+            # ---------------------------
+            # 2) FUNÇÃO DENSIDADE
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Função densidade:</b></div>"
+
+            - html: "`$$\\\\small
+                      f(x)=\\\\lambda e^{-\\\\lambda x},\\\\qquad x\\\\ge 0
+                      $$`"
+
+            - html: "`$$\\\\small
+                      f(x)=${params.lambda.toFixed(3)}e^{-${params.lambda.toFixed(3)}x}
+                      $$`"
+
+            # ---------------------------
+            # 3) MÉDIA
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Média:</b></div>"
+
+            - html: "`$$\\\\small
+                      E[X]=\\\\frac{1}{\\\\lambda}
+                      $$`"
+
+            - html: "`$$\\\\small
+                      E[X]=\\\\frac{1}{${params.lambda.toFixed(3)}}=${calcs.media.toFixed(3)}
+                      $$`"
+
+            # ---------------------------
+            # 4) VARIÂNCIA
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Variância:</b></div>"
+
+            - html: "`$$\\\\small
+                      Var(X)=\\\\frac{1}{\\\\lambda^2}
+                      $$`"
+
+            - html: "`$$\\\\small
+                      Var(X)=\\\\frac{1}{(${params.lambda.toFixed(3)})^2}=${calcs.variancia.toFixed(3)}
+                      $$`"
+
+            # ---------------------------
+            # 5) DESVIO PADRÃO
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Desvio padrão:</b></div>"
+
+            - html: "`$$\\\\small
+                      \\\\sigma=\\\\frac{1}{\\\\lambda}
+                      $$`"
+
+            - html: "`$$\\\\small
+                      \\\\sigma=\\\\frac{1}{${params.lambda.toFixed(3)}}=${calcs.sigma.toFixed(3)}
+                      $$`"
+

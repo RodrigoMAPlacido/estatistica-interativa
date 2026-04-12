@@ -1,0 +1,450 @@
+schema: EconSchema
+aspectRatio: 1
+
+params:
+  - name: mu
+    value: 4
+    min: 1
+    max: 7
+    round: 0.001
+
+  - name: sigma
+    value: 1
+    min: 1
+    max: 2.0
+    round: 0.001
+
+  - name: xRef
+    value: 5.5
+    min: -7
+    max: 15
+    round: 0.01
+
+calcs:
+  # =========================
+  # Constante da normal
+  # =========================
+  raiz2pi: "sqrt(6.283185307179586)"
+
+  # =========================
+  # Parâmetros centrais
+  # =========================
+  media: "(params.mu)"
+  variancia: "(params.sigma^2)"
+  desvio: "(params.sigma)"
+
+  # =========================
+  # Janela padrão em z
+  # =========================
+  zMin: "-4"
+  zMax: "4"
+
+  # =========================
+  # Janela correspondente em x
+  # x = mu + sigma z
+  # =========================
+  xMinGeral: "(params.mu + params.sigma*calcs.zMin)"
+  xMaxGeral: "(params.mu + params.sigma*calcs.zMax)"
+
+  # =========================
+  # Alturas máximas das densidades
+  # =========================
+  picoGeral: "(1/(params.sigma*calcs.raiz2pi))"
+  picoPadrao: "(1/calcs.raiz2pi)"
+
+  # =========================
+  # Faixas verticais dos painéis
+  # =========================
+  yMaxTop: "(calcs.picoGeral*1.22)"
+  yMaxBottom: "(calcs.picoPadrao*1.22)"
+
+  yArrowTop: "(calcs.yMaxTop*0.90)"
+  yArrowBottom: "(calcs.yMaxBottom*0.9)"
+  yTitleTop: "(calcs.yMaxTop*0.97)"
+  yTitleBottom: "(calcs.yMaxBottom*0.97)"
+
+  # =========================
+  # Marcas relevantes no gráfico superior
+  # =========================
+  xm1: "(params.mu - params.sigma)"
+  xp1: "(params.mu + params.sigma)"
+
+  # =========================
+  # Ponto de correspondência
+  # Escolhemos x0 e calculamos z0 = (x0 - mu)/sigma
+  # =========================
+  zRef: "((params.xRef - params.mu)/params.sigma)"
+
+  fxRefTop: "((1/(params.sigma*calcs.raiz2pi))*exp(-(((params.xRef)-params.mu)^2)/(2*(params.sigma^2))))"
+  fzRefBottom: "((1/calcs.raiz2pi)*exp(-((calcs.zRef)^2)/2))"
+
+  # =========================
+  # Alturas auxiliares de rótulo
+  # =========================
+  yLabelTop: "(calcs.fxRefTop + calcs.yMaxTop*0.06)"
+  yLabelBottom: "(calcs.fzRefBottom + calcs.yMaxBottom*0.07)"
+
+colors:
+  ink: "'#111827'"
+  soft: "'#64748b'"
+  grid: "'#d1d5db'"
+  bg: "'#ffffff'"
+
+layout:
+  TwoVerticalGraphsPlusSidebar2:
+
+    topGraph:
+      xAxis:
+        min: calcs.xMinGeral
+        max: calcs.xMaxGeral
+        ticks: 0
+      yAxis:
+        min: 0
+        max: 0.5
+        ticks: 0
+        title: Não Padronizada
+        show: false
+
+      objects:
+        # =========================
+        # Grade horizontal
+        # =========================
+        - Segment: { a: [calcs.xMinGeral, calcs.yMaxTop*0.2], b: [calcs.xMaxGeral, calcs.yMaxTop*0.2], color: colors.grid, strokeWidth: 0.5, lineStyle: dashed }
+        - Segment: { a: [calcs.xMinGeral, calcs.yMaxTop*0.4], b: [calcs.xMaxGeral, calcs.yMaxTop*0.4], color: colors.grid, strokeWidth: 0.5, lineStyle: dashed }
+        - Segment: { a: [calcs.xMinGeral, calcs.yMaxTop*0.6], b: [calcs.xMaxGeral, calcs.yMaxTop*0.6], color: colors.grid, strokeWidth: 0.5, lineStyle: dashed }
+        - Segment: { a: [calcs.xMinGeral, calcs.yMaxTop*0.8], b: [calcs.xMaxGeral, calcs.yMaxTop*0.8], color: colors.grid, strokeWidth: 0.5, lineStyle: dashed }
+
+        # =========================
+        # Curva da normal geral
+        # =========================
+        - Curve:
+            fn: "((1/(params.sigma*calcs.raiz2pi))*exp(-(((x)-params.mu)^2)/(2*(params.sigma^2))))"
+            ind: x
+            min: calcs.xMinGeral
+            max: calcs.xMaxGeral
+            color: colors.ink
+            strokeWidth: 2.4
+            samplePoints: 600
+            areaBelow:
+              fill: colors.ink
+              opacity: 0.10
+
+        # =========================
+        # Linhas principais
+        # =========================
+        - Segment:
+            a: [calcs.media, 0]
+            b: [calcs.media, calcs.yMaxTop]
+            color: colors.ink
+            strokeWidth: 1
+
+        - Segment:
+            a: [calcs.xm1, 0]
+            b: [calcs.xm1, calcs.yMaxTop*0.88]
+            color: colors.soft
+            strokeWidth: 0.8
+            lineStyle: dashed
+
+        - Segment:
+            a: [calcs.xp1, 0]
+            b: [calcs.xp1, calcs.yMaxTop*0.88]
+            color: colors.soft
+            strokeWidth: 0.8
+            lineStyle: dashed
+
+        # =========================
+        # Título do painel superior
+        # =========================
+        - Label:
+            coordinates: [calcs.media, calcs.yTitleTop]
+            text: "`\\\\mathbf{E[X]} = ${calcs.media.toFixed(2)}`"
+            bgcolor: colors.bg
+            color: colors.ink
+            fontSize: 9
+            position: b
+
+        # =========================
+        # Segmento de 1 desvio padrão
+        # =========================
+        - Arrow:
+            begin: [calcs.media, calcs.yArrowTop]
+            end: [calcs.media + calcs.desvio, calcs.yArrowTop]
+            color: colors.soft
+            strokeWidth: 2
+            label:
+              text: "`+${params.sigma.toFixed(2)}`"
+              position: t
+              fontSize: 8
+
+        - Arrow:
+            begin: [calcs.media, calcs.yArrowTop]
+            end: [calcs.media - calcs.desvio, calcs.yArrowTop]
+            color: colors.soft
+            strokeWidth: 2
+            label:
+              text: "`-${params.sigma.toFixed(2)}`"
+              position: t
+              fontSize: 8
+
+        # =========================
+        # Marcas essenciais
+        # =========================
+        - Label:
+            coordinates: [calcs.xm1, 0]
+            text: "`\\\\mu-\\\\sigma`"
+            bgcolor: colors.bg
+            color: colors.soft
+            fontSize: 7
+            position: t
+
+        - Label:
+            coordinates: [calcs.media, 0]
+            text: "`\\\\mu`"
+            bgcolor: colors.bg
+            color: colors.ink
+            fontSize: 7
+            position: t
+
+        - Label:
+            coordinates: [calcs.xp1, 0]
+            text: "`\\\\mu+\\\\sigma`"
+            bgcolor: colors.bg
+            color: colors.soft
+            fontSize: 7
+            position: t
+
+        # =========================
+        # Ponto correspondente x0
+        # =========================
+        - Segment:
+            a: [params.xRef, 0]
+            b: [params.xRef, calcs.fxRefTop]
+            color: colors.soft
+            strokeWidth: 2
+            lineStyle: solid
+
+        - Point:
+            coordinates: [params.xRef, calcs.fxRefTop]
+            color: colors.ink
+
+        - Label:
+            coordinates: [params.xRef, calcs.yLabelTop]
+            text: "`x_0=${params.xRef.toFixed(2)}`"
+            bgcolor: colors.bg
+            color: colors.ink
+            fontSize: 8
+            position: b
+
+    bottomGraph:
+      xAxis:
+        min: -4
+        max: 4
+        ticks: 0
+      yAxis:
+        min: 0
+        max: 0.5
+        ticks: 0
+        title: Padronizada
+        show: false
+
+      objects:
+        # =========================
+        # Grade horizontal
+        # =========================
+        - Segment: { a: [-4, calcs.yMaxBottom*0.2], b: [4, calcs.yMaxBottom*0.2], color: colors.grid, strokeWidth: 0.5, lineStyle: dashed }
+        - Segment: { a: [-4, calcs.yMaxBottom*0.4], b: [4, calcs.yMaxBottom*0.4], color: colors.grid, strokeWidth: 0.5, lineStyle: dashed }
+        - Segment: { a: [-4, calcs.yMaxBottom*0.6], b: [4, calcs.yMaxBottom*0.6], color: colors.grid, strokeWidth: 0.5, lineStyle: dashed }
+        - Segment: { a: [-4, calcs.yMaxBottom*0.8], b: [4, calcs.yMaxBottom*0.8], color: colors.grid, strokeWidth: 0.5, lineStyle: dashed }
+
+        # =========================
+        # Curva da normal padrão
+        # =========================
+        - Curve:
+            fn: "((1/calcs.raiz2pi)*exp(-(x^2)/2))"
+            ind: x
+            min: -4
+            max: 4
+            color: colors.ink
+            strokeWidth: 2.4
+            samplePoints: 600
+            areaBelow:
+              fill: colors.ink
+              opacity: 0.10
+
+        # =========================
+        # Linhas principais
+        # =========================
+        - Segment:
+            a: [0, 0]
+            b: [0, calcs.yMaxBottom]
+            color: colors.ink
+            strokeWidth: 1
+
+        - Segment:
+            a: [-1, 0]
+            b: [-1, calcs.yMaxBottom*0.88]
+            color: colors.soft
+            strokeWidth: 0.8
+            lineStyle: dashed
+
+        - Segment:
+            a: [1, 0]
+            b: [1, calcs.yMaxBottom*0.88]
+            color: colors.soft
+            strokeWidth: 0.8
+            lineStyle: dashed
+
+        # =========================
+        # Título do painel inferior
+        # =========================
+        - Label:
+            coordinates: [0, calcs.yTitleBottom]
+            text: "`\\\\mathbf{E[Z]} = 0.00`"
+            bgcolor: colors.bg
+            color: colors.ink
+            fontSize: 9
+            position: b
+
+        # =========================
+        # Segmento de 1 desvio padrão
+        # =========================
+        - Arrow:
+            begin: [0, calcs.yArrowBottom]
+            end: [1, calcs.yArrowBottom]
+            color: colors.soft
+            strokeWidth: 2
+            label:
+              text: "`+1.00`"
+              position: t
+              fontSize: 8
+
+        - Arrow:
+            begin: [0, calcs.yArrowBottom]
+            end: [-1, calcs.yArrowBottom]
+            color: colors.soft
+            strokeWidth: 2
+            label:
+              text: "`-1.00`"
+              position: t
+              fontSize: 8
+
+        # =========================
+        # Marcas essenciais
+        # =========================
+        - Label:
+            coordinates: [-1, 0]
+            text: "'-1'"
+            bgcolor: colors.bg
+            color: colors.soft
+            fontSize: 7
+            position: t
+
+        - Label:
+            coordinates: [0, 0]
+            text: "'0'"
+            bgcolor: colors.bg
+            color: colors.ink
+            fontSize: 7
+            position: t
+
+        - Label:
+            coordinates: [1, 0]
+            text: "'1'"
+            bgcolor: colors.bg
+            color: colors.soft
+            fontSize: 7
+            position: t
+
+
+
+        # =========================
+        # Ponto correspondente z0
+        # =========================
+        - Segment:
+            a: [calcs.zRef, 0]
+            b: [calcs.zRef, 1]
+            color: colors.soft
+            strokeWidth: 2
+            lineStyle: solid
+
+        - Point:
+            coordinates: [calcs.zRef, calcs.fzRefBottom]
+            color: colors.ink
+
+        - Label:
+            coordinates: [calcs.zRef, calcs.yLabelBottom]
+            text: "`z_0= \\\\frac{x_0-\\\\mu}{\\\\sigma} = ${calcs.zRef.toFixed(2)}`"
+            bgcolor: colors.bg
+            color: colors.ink
+            fontSize: 8
+            position: l
+
+    sidebar:
+      triggerWidth: 9999
+      controls:
+        - title:
+          sliders:
+            - param: mu
+              label: "`\\\\mu`"
+            - param: sigma
+              label: "`\\\\sigma`"
+            - param: xRef
+              label: "`x_0`"
+
+          divs:
+            # ---------------------------
+            # 1) NORMAL GERAL
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Normal geral</b></div>"
+
+            - html: "`$$\\\\small
+                      X\\\\sim N(\\\\mu,\\\\sigma^2)
+                      $$`"
+
+            - html: "`$$\\\\small
+                      \\\\mu=${params.mu.toFixed(2)},\\\\qquad
+                      \\\\sigma=${params.sigma.toFixed(2)}
+                      $$`"
+
+            # ---------------------------
+            # 2) PADRONIZAÇÃO
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Padronização</b></div>"
+
+            - html: "`$$\\\\small
+                      Z=\\\\frac{X-\\\\mu}{\\\\sigma}
+                      $$`"
+
+            - html: "`$$\\\\small
+                      Z\\\\sim N(0,1)
+                      $$`"
+
+            # ---------------------------
+            # 3) PONTO CORRESPONDENTE
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Ponto correspondente</b></div>"
+
+            - html: "`$$\\\\small
+                      x_0=${params.xRef.toFixed(2)}
+                      $$`"
+
+            - html: "`$$\\\\small
+                      z_0=\\\\frac{x_0-\\\\mu}{\\\\sigma}=${calcs.zRef.toFixed(2)}
+                      $$`"
+
+            # ---------------------------
+            # 4) CORRESPONDÊNCIAS ESSENCIAIS
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:18px; margin:14px 0 10px 0;'><b>Correspondências</b></div>"
+
+            - html: "`$$\\\\small
+                      \\\\mu \\\\leftrightarrow 0
+                      $$`"
+
+            - html: "`$$\\\\small
+                      \\\\mu-\\\\sigma \\\\leftrightarrow -1
+                      $$`"
+
+            - html: "`$$\\\\small
+                      \\\\mu+\\\\sigma \\\\leftrightarrow 1
+                      $$`"

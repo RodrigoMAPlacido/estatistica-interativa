@@ -487,8 +487,25 @@ proximo: /capitulos/cap11-intervalos-de-confianca/
 </p>
 
 <p>
-  Esses resultados reforçam a interpretação geométrica da distribuição: o centro coincide com o meio do intervalo, e a dispersão depende apenas de sua amplitude. Quanto maior o intervalo de suporte, maior será a variabilidade da variável. A distribuição uniforme contínua é frequentemente utilizada como modelo básico quando se supõe que um valor pode ocorrer em qualquer ponto de um intervalo sem favorecimento interno, como em simplificações teóricas envolvendo tempos, posições ou proporções desconhecidas dentro de limites fixos.
+  Esses resultados reforçam a interpretação geométrica da distribuição: o centro coincide com o meio do intervalo, e a dispersão depende apenas de sua amplitude. Quanto maior o intervalo de suporte, maior será a variabilidade da variável.   A distribuição uniforme contínua é frequentemente utilizada como modelo básico quando se supõe que um valor pode ocorrer em qualquer ponto de um intervalo sem favorecimento interno, como em simplificações teóricas envolvendo tempos, posições ou proporções desconhecidas dentro de limites fixos.
+
 </p>
+
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para desktop -->
+  <div class="kg-wrapper kg-desktop">
+    <div class="kg-container  kg--sidebar-centered" src="modelos/uniforme-continua.yml"></div>
+  </div>
+</figure>
+
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para mobile -->
+  <div class="kg-wrapper kg-mobile-sidebar">
+    <div class="kg-container  kg--sidebar-centered" src="modelos/uniforme-continua-mobile.yml"></div>
+  </div>
+</figure>
+
+
 
 <h3>5.2 Distribuição exponencial</h3>
 
@@ -591,7 +608,19 @@ proximo: /capitulos/cap11-intervalos-de-confianca/
   <span class="formula-inline" data-tts="s">\( s \)</span>
   sem que o evento tenha ocorrido, o tempo adicional de espera continua obedecendo à mesma distribuição que teria no início. Em termos intuitivos, o processo não “acumula idade” no que diz respeito ao tempo restante. Essa característica torna a distribuição exponencial especialmente importante em modelos de filas, confiabilidade e processos de chegada.
 </p>
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para desktop -->
+  <div class="kg-wrapper kg-desktop">
+    <div class="kg-container  kg--sidebar-centered" src="modelos/exponencial.yml"></div>
+  </div>
+</figure>
 
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para mobile -->
+  <div class="kg-wrapper kg-mobile-sidebar">
+    <div class="kg-container  kg--sidebar-centered" src="modelos/exponencial-mobile.yml"></div>
+  </div>
+</figure>
 <h3>5.3 Distribuição normal</h3>
 
 <p>
@@ -672,24 +701,81 @@ proximo: /capitulos/cap11-intervalos-de-confianca/
 <p>
   A distribuição normal é amplamente empregada para modelar erros de medição, características biológicas, variações agregadas e diversos outros fenômenos em que muitos fatores pequenos e independentes contribuem conjuntamente para o resultado observado. Sua importância, porém, ultrapassa o campo das aplicações imediatas. Ela será reencontrada mais adiante como distribuição de referência em resultados fundamentais da inferência estatística, o que explica sua posição central entre as distribuições contínuas clássicas.
 </p>
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para desktop -->
+  <div class="kg-wrapper kg-desktop">
+    <div class="kg-container  kg--sidebar-centered" src="modelos/normal.yml"></div>
+  </div>
+</figure>
 
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para mobile -->
+  <div class="kg-wrapper kg-mobile-sidebar">
+    <div class="kg-container  kg--sidebar-centered" src="modelos/normal-mobile.yml"></div>
+  </div>
+</figure>
 <h3>5.4 Distribuição normal padrão</h3>
 
 <p>
-  A <strong>distribuição normal padrão</strong> corresponde ao caso particular da distribuição normal em que
-  <span class="formula-inline" data-tts="mi igual a zero">\( \mu=0 \)</span>
+  A distribuição normal apresentada na subseção anterior depende de dois parâmetros,
+  <span class="formula-inline" data-tts="mi">\( \mu \)</span>
   e
-  <span class="formula-inline" data-tts="sigma ao quadrado igual a um">\( \sigma^2=1 \)</span>.
-  Trata-se, portanto, de uma distribuição contínua simétrica e unimodal, centrada na origem e com dispersão unitária, cuja densidade preserva a forma de sino característica da família normal, mas agora em uma escala padronizada.
+  <span class="formula-inline" data-tts="sigma">\( \sigma \)</span>,
+  que determinam, respectivamente, a posição central e o grau de dispersão da curva.
+  Como consequência, diferentes variáveis normais podem apresentar a mesma forma geral,
+  mas estar centradas em pontos distintos e espalhadas de maneira mais ou menos intensa ao longo da reta real.
+  Essa variabilidade de escala e localização levanta uma questão natural: como comparar valores observados
+  em distribuições normais diferentes de forma consistente?
 </p>
 
+<p>
+  Para responder a essa questão, é necessário construir uma transformação que elimine essas diferenças
+  de posição e de escala, sem alterar a estrutura essencial da distribuição.
+  A ideia consiste em medir cada valor observado não em termos absolutos, mas em relação ao centro da distribuição
+  e à sua dispersão. Para isso, considera-se o afastamento do valor em relação à média e, em seguida,
+  expressa-se esse afastamento em unidades de desvio padrão.
+</p>
 <figure>
   <img src="../../imagens/distribuicao-normal-padrao.svg"
        alt="distribuição normal padrão">
 </figure>
+<p>
+  Se
+  <span class="formula-inline" data-tts="x segue normal de mi vírgula sigma ao quadrado">\( X \sim N(\mu,\sigma^2) \)</span>,
+  define-se a variável padronizada
+</p>
+
+<p class="formula" data-tts="z igual a x menos mi sobre sigma">
+  \[
+    Z=\frac{X-\mu}{\sigma}.
+  \]
+</p>
 
 <p>
-  Diz-se que uma variável aleatória contínua
+  Essa transformação possui uma interpretação direta. O numerador
+  <span class="formula-inline" data-tts="x menos mi">\( X-\mu \)</span>
+  mede o desvio de
+  <span class="formula-inline" data-tts="x">\( X \)</span>
+  em relação ao centro da distribuição, enquanto a divisão por
+  <span class="formula-inline" data-tts="sigma">\( \sigma \)</span>
+  converte esse desvio em uma medida relativa à variabilidade da própria variável.
+  Assim, a variável
+  <span class="formula-inline" data-tts="z">\( Z \)</span>
+  indica quantos desvios padrão um valor observado se encontra acima ou abaixo da média.
+</p>
+
+<p>
+  O resultado fundamental é que essa transformação preserva a forma da distribuição normal,
+  mas elimina seus parâmetros de posição e escala. Em particular, a variável
+  <span class="formula-inline" data-tts="z">\( Z \)</span>
+  segue uma distribuição normal com média zero e variância igual a um.
+  Essa distribuição recebe o nome de <strong>distribuição normal padrão</strong>.
+</p>
+
+
+
+<p>
+  Diz-se, portanto, que uma variável aleatória contínua
   <span class="formula-inline" data-tts="z maiúsculo">\( Z \)</span>
   segue distribuição normal padrão quando sua densidade é dada por
 </p>
@@ -705,39 +791,50 @@ proximo: /capitulos/cap11-intervalos-de-confianca/
 </p>
 
 <p>
-  Nessa forma particular, não há parâmetros livres: a posição da distribuição está fixada na origem e sua dispersão corresponde exatamente a uma unidade de desvio padrão. Como consequência, valores assumidos por
+  Nessa forma, não há parâmetros livres. A distribuição está fixada na origem e sua dispersão corresponde
+  exatamente a uma unidade de desvio padrão. Por esse motivo, valores assumidos por
   <span class="formula-inline" data-tts="z">\( Z \)</span>
-  podem ser interpretados diretamente como distâncias, medidas em desvios padrão, em relação ao centro da distribuição. Essa interpretação confere à normal padrão um papel especial como referência para comparação entre variáveis originalmente expressas em escalas distintas.
+  podem ser interpretados diretamente como distâncias padronizadas em relação ao centro da distribuição,
+  o que fornece uma escala comum para a análise de variáveis originalmente expressas em unidades diferentes.
 </p>
 
 <p>
-  Assim como no caso geral, a função de distribuição acumulada da normal padrão não admite expressão elementar simples. Denotando-a por
+  Assim como no caso geral, a função de distribuição acumulada da normal padrão não admite expressão elementar simples.
+  Denotando-a por
   <span class="formula-inline" data-tts="fi de z">\( \Phi(z) \)</span>,
   tem-se
 </p>
 
-<p class="formula" data-tts="fi de z igual à probabilidade de z maiúsculo menor ou igual a z minúsculo">
+<p class="formula" data-tts="fi de z igual à probabilidade de z menor ou igual a z">
   \[
     \Phi(z)=P(Z \le z).
   \]
 </p>
 
 <p>
-  O uso da normal padrão permite reescrever probabilidades envolvendo qualquer variável normal em termos dessa função acumulada única. Com efeito, se
+  O papel operacional da padronização torna-se claro ao reescrever probabilidades envolvendo uma normal qualquer
+  em termos da normal padrão. Se
   <span class="formula-inline" data-tts="x segue normal de mi vírgula sigma ao quadrado">\( X \sim N(\mu,\sigma^2) \)</span>,
   então, para qualquer valor
   <span class="formula-inline" data-tts="x">\( x \)</span>,
-  vale a transformação
+  vale
 </p>
 
-<p class="formula" data-tts="probabilidade de x menor ou igual a x minúsculo é igual à probabilidade de z menor ou igual a fração x menos mi sobre sigma">
+<p class="formula" data-tts="probabilidade de x menor ou igual a x é igual à probabilidade de z menor ou igual a x menos mi sobre sigma">
   \[
     P(X \le x)=P\!\left(Z \le \frac{x-\mu}{\sigma}\right)=\Phi\!\left(\frac{x-\mu}{\sigma}\right).
   \]
 </p>
 
 <p>
-  Esse resultado sintetiza o papel operacional da padronização: qualquer cálculo de probabilidade para uma normal geral pode ser reduzido ao cálculo correspondente para a normal padrão. Dessa forma, tabelas, algoritmos e rotinas computacionais podem ser construídos uma única vez, sendo aplicáveis a toda a família de distribuições normais por meio de uma simples transformação linear.
+  Esse resultado mostra que o estudo de toda a família de distribuições normais pode ser reduzido ao estudo
+  de uma única função acumulada. Em vez de construir tabelas ou algoritmos distintos para cada escolha de
+  <span class="formula-inline" data-tts="mi">\( \mu \)</span>
+  e
+  <span class="formula-inline" data-tts="sigma">\( \sigma \)</span>,
+  basta trabalhar com a normal padrão e aplicar a transformação de padronização.
+  Dessa forma, a normal padrão não é apenas um caso particular, mas a forma canônica que unifica a análise
+  de todas as distribuições normais.
 </p>
 
 <p>
@@ -753,8 +850,23 @@ proximo: /capitulos/cap11-intervalos-de-confianca/
 </p>
 
 <p>
-  A centralidade dessa distribuição não se limita à conveniência de cálculo. Ela fornece uma escala comum para a análise de desvios, erros e variações, permitindo interpretar resultados em termos relativos à dispersão. Por essa razão, a normal padrão aparece de forma recorrente em procedimentos inferenciais, testes estatísticos e aproximações assintóticas, constituindo uma referência fundamental na teoria e na prática da estatística.
+  A centralidade dessa distribuição decorre, portanto, de seu papel como referência comum.
+  Ao expressar valores em unidades de desvio padrão, a padronização permite comparar observações provenientes
+  de contextos distintos e fornece a base para procedimentos inferenciais que serão desenvolvidos nos capítulos seguintes.
 </p>
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para desktop -->
+  <div class="kg-wrapper kg-desktop">
+    <div class="kg-container  kg--sidebar-centered-vertical-graph" src="modelos/normal-padrao.yml"></div>
+  </div>
+</figure>
+
+<figure class="figure fullwidth" style="page-break-inside: avoid;">
+  <!-- Versão para mobile -->
+  <div class="kg-wrapper kg-mobile-sidebar">
+    <div class="kg-container  kg--sidebar-centered-vertical-graph" src="modelos/normal-padrao-mobile.yml"></div>
+  </div>
+</figure>
 <hr>
 <h2>6. Conclusão</h2>
 

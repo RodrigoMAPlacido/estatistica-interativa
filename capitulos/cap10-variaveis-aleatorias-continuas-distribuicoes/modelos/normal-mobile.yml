@@ -1,0 +1,202 @@
+schema: EconSchema
+aspectRatio: 1.55
+
+params:
+  - name: mu
+    value: 4
+    min: 1
+    max: 7
+    round: 0.001
+
+  - name: sigma
+    value: 1
+    min: 0.6
+    max: 2.0
+    round: 0.001
+
+calcs:
+  # =========================
+  # Medidas-resumo
+  # =========================
+  media: "(params.mu)"
+  variancia: "(params.sigma^2)"
+  desvio: "(params.sigma)"
+
+  # =========================
+  # Pico da densidade normal
+  # =========================
+  ymax: "(1/(params.sigma*sqrt(6.283185307179586)))"
+
+  # =========================
+  # Apoio visual
+  # =========================
+  yTop: "(calcs.ymax + 0.14)"
+  yArrow: "(calcs.ymax + 0.08)"
+  yMeanLabel: "(calcs.ymax + 0.12)"
+
+colors:
+  ink: "'#111827'"
+  soft: "'#64748b'"
+  grid: "'#d1d5db'"
+  bg: "'#ffffff'"
+
+layout:
+  OneGraphPlusSidebar:
+    graph:
+      xAxis:
+        min: 0
+        max: 8
+        ticks: 0
+
+      yAxis:
+        min: 0
+        max: 0.6
+        ticks: 6
+        title: Densidade
+
+      objects:
+        # =========================
+        # Grade horizontal
+        # =========================
+        - Segment: { a: [0, 0.1], b: [8, 0.1], color: colors.grid, strokeWidth: 0.5, lineStyle: dashed }
+        - Segment: { a: [0, 0.2], b: [8, 0.2], color: colors.grid, strokeWidth: 0.5, lineStyle: dashed }
+        - Segment: { a: [0, 0.3], b: [8, 0.3], color: colors.grid, strokeWidth: 0.5, lineStyle: dashed }
+        - Segment: { a: [0, 0.4], b: [8, 0.4], color: colors.grid, strokeWidth: 0.5, lineStyle: dashed }
+        - Segment: { a: [0, 0.5], b: [8, 0.5], color: colors.grid, strokeWidth: 0.5, lineStyle: dashed }
+
+        # =========================
+        # Curva da densidade normal
+        # =========================
+        - Curve:
+            fn: "((1/(params.sigma*sqrt(6.283185307179586)))*exp(-(((x)-params.mu)^2)/(2*(params.sigma^2))))"
+            ind: x
+            min: 0
+            max: 8
+            color: colors.ink
+            strokeWidth: 1.8
+            samplePoints: 350
+            areaBelow:
+              fill: colors.ink
+              opacity: 0.12
+
+        # =========================
+        # Linha da média
+        # =========================
+        - Segment:
+            a: [calcs.media, 0]
+            b: [calcs.media, calcs.yTop]
+            color: colors.ink
+            strokeWidth: 1
+
+        - Label:
+            coordinates: [calcs.media, calcs.yMeanLabel]
+            text: "`\\\\mathbf{E[X]} = ${calcs.media.toFixed(2)}`"
+            bgcolor: colors.bg
+            color: colors.ink
+            fontSize: 7
+            position: b
+
+        # =========================
+        # Segmento de 1 desvio padrão
+        # =========================
+        - Arrow:
+            begin: [calcs.media, calcs.yArrow]
+            end: [calcs.media + calcs.desvio, calcs.yArrow]
+            color: colors.ink
+            strokeWidth: 1.5
+            label:
+              text: "`+ ${calcs.desvio.toFixed(2)}`"
+              position: t
+              fontSize: 6
+
+        - Arrow:
+            begin: [calcs.media, calcs.yArrow]
+            end: [calcs.media - calcs.desvio, calcs.yArrow]
+            color: colors.ink
+            strokeWidth: 1.5
+            label:
+              text: "`- ${calcs.desvio.toFixed(2)}`"
+              position: t
+              fontSize: 6
+
+    sidebar:
+      triggerWidth: 9999
+      controls:
+        - title:
+          sliders:
+            - param: mu
+              label: "`\\\\mu`"
+            - param: sigma
+              label: "`\\\\sigma`"
+
+          divs:
+            # ---------------------------
+            # 1) DADOS
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Dados:</b></div>"
+
+            - html: "`$$\\\\tiny
+                      X\\\\sim N(\\\\mu,\\\\sigma^2)
+                      $$`"
+
+            - html: "`$$\\\\tiny
+                      \\\\mu=${params.mu.toFixed(2)},\\\\qquad
+                      \\\\sigma=${params.sigma.toFixed(2)}
+                      $$`"
+
+            - html: "`$$\\\\tiny
+                      \\\\sigma^2=${calcs.variancia.toFixed(3)}
+                      $$`"
+
+            # ---------------------------
+            # 2) FUNÇÃO DENSIDADE
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Função densidade:</b></div>"
+
+            - html: "`$$\\\\tiny
+                      f(x)=\\\\frac{1}{\\\\sigma\\\\sqrt{2\\\\pi}}e^{-\\\\frac{(x-\\\\mu)^2}{2\\\\sigma^2}}
+                      $$`"
+
+            - html: "`$$\\\\tiny
+                      f(x)=\\\\frac{1}{${params.sigma.toFixed(2)}\\\\sqrt{2\\\\pi}}e^{-\\\\frac{(x-${params.mu.toFixed(2)})^2}{2(${params.sigma.toFixed(2)})^2}}
+                      $$`"
+
+            # ---------------------------
+            # 3) MÉDIA
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Média:</b></div>"
+
+            - html: "`$$\\\\tiny
+                      E[X]=\\\\mu
+                      $$`"
+
+            - html: "`$$\\\\tiny
+                      E[X]=${calcs.media.toFixed(2)}
+                      $$`"
+
+            # ---------------------------
+            # 4) VARIÂNCIA
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Variância:</b></div>"
+
+            - html: "`$$\\\\tiny
+                      Var(X)=\\\\sigma^2
+                      $$`"
+
+            - html: "`$$\\\\tiny
+                      Var(X)=(${params.sigma.toFixed(2)})^2=${calcs.variancia.toFixed(3)}
+                      $$`"
+
+            # ---------------------------
+            # 5) DESVIO PADRÃO
+            # ---------------------------
+            - html: "<div style='text-align:left; font-size:11px; margin:15px 0 15px 0;'><b>Desvio padrão:</b></div>"
+
+            - html: "`$$\\\\tiny
+                      \\\\sigma=${params.sigma.toFixed(2)}
+                      $$`"
+
+            - html: "`$$\\\\tiny
+                      \\\\mu-\\\\sigma=${(params.mu-params.sigma).toFixed(2)},\\\\qquad
+                      \\\\mu+\\\\sigma=${(params.mu+params.sigma).toFixed(2)}
+                      $$`"

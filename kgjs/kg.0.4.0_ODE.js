@@ -63137,6 +63137,37 @@ var KGAuthor;
         return TwoVerticalGraphsPlusSidebar;
     }(KGAuthor.SquareLayout));
     KGAuthor.TwoVerticalGraphsPlusSidebar = TwoVerticalGraphsPlusSidebar;
+
+    var TwoVerticalGraphsPlusSidebar2 = /** @class */ (function (_super) {
+        __extends(TwoVerticalGraphsPlusSidebar2, _super);
+        function TwoVerticalGraphsPlusSidebar2(def) {
+            var _this = _super.call(this, def) || this;
+            var l = _this;
+            var topGraphDef = def['topGraph'], bottomGraphDef = def['bottomGraph'], sidebarDef = def['sidebar'];
+            topGraphDef.position = {
+                "x": 0.25,
+                "y": 0.025,
+                "width": 0.9,
+                "height": 0.5
+            };
+            bottomGraphDef.position = {
+                "x": 0.25,
+                "y": 0.6,
+                "width": 0.9,
+                "height": 0.5
+            };
+            var topGraph = new KGAuthor.Graph(topGraphDef), bottomGraph = new KGAuthor.Graph(bottomGraphDef), sidebar = new KGAuthor.Sidebar(sidebarDef);
+            topGraph.subObjects.forEach(function (obj) { obj.addSecondGraph(bottomGraph); });
+            bottomGraph.subObjects.forEach(function (obj) { obj.addSecondGraph(topGraph); });
+            l.subObjects.push(topGraph);
+            l.subObjects.push(bottomGraph);
+            l.subObjects.push(sidebar);
+            return _this;
+        }
+        return TwoVerticalGraphsPlusSidebar2;
+    }(KGAuthor.SquareLayout));
+    KGAuthor.TwoVerticalGraphsPlusSidebar2 = TwoVerticalGraphsPlusSidebar2;
+
     var TwoVerticalGraphsRoom200 = /** @class */ (function (_super) {
         __extends(TwoVerticalGraphsRoom200, _super);
         function TwoVerticalGraphsRoom200(def) {
