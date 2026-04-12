@@ -59,7 +59,7 @@
       .u-box{
         fill:#ffffff;
         stroke:var(--ink);
-        stroke-width:2.2;
+        stroke-width:1.5;
         rx:18;
         ry:18;
         vector-effect:non-scaling-stroke;

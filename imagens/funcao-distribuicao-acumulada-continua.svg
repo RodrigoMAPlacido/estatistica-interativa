@@ -42,7 +42,7 @@
       }
 
       .u-panel{
-        stroke-width:2;
+        stroke-width:1.2;
         rx:22;
         ry:22;
       }
@@ -108,7 +108,7 @@
 
       .curve{
         stroke:var(--ink);
-        stroke-width:2.5;
+        stroke-width:1.5;
         fill:none;
         vector-effect:non-scaling-stroke;
         stroke-dasharray:760;
@@ -118,7 +118,7 @@
 
       .markerLine{
         stroke:var(--ink);
-        stroke-width:1.8;
+        stroke-width:.8;
         stroke-dasharray:6 6;
         vector-effect:non-scaling-stroke;
         opacity:0;

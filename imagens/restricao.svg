@@ -23,6 +23,8 @@
         --text-soft:#4b5563;
         --font:"et-book","ETBook","Georgia",serif;
         --cycle:12s;
+        --stroke:2.25;
+
         --ease:ease-in-out;
         --dash:1400;
         --b-dash:120;
@@ -47,6 +49,7 @@
         stroke:var(--ink);
         fill:none;
         stroke-linecap:round;
+        stroke-width:var(--stroke);
         stroke-linejoin:round;
         vector-effect:non-scaling-stroke;
       }

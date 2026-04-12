@@ -50,7 +50,7 @@
       }
 
       .axis{
-        stroke-width:2.2;
+        stroke-width:1.2;
         vector-effect:non-scaling-stroke;
       }
 
@@ -86,7 +86,7 @@
       .densityArea{
         fill:var(--shade-soft);
         stroke:var(--ink);
-        stroke-width:2;
+        stroke-width:1.2;
         vector-effect:non-scaling-stroke;
         transform-box:fill-box;
         transform-origin:left center;
@@ -124,7 +124,7 @@
 
       .sigmaEdge{
         stroke:var(--ink);
-        stroke-width:1.7;
+        stroke-width:.7;
         stroke-dasharray:6 6;
         opacity:0;
         vector-effect:non-scaling-stroke;
@@ -133,7 +133,7 @@
 
       .sigmaArrow{
         stroke:var(--ink);
-        stroke-width:1.8;
+        stroke-width:.8;
         fill:none;
         opacity:0;
         vector-effect:non-scaling-stroke;

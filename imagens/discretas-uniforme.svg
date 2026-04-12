@@ -45,7 +45,7 @@
       }
 
       .panel{
-        stroke-width:2;
+        stroke-width:1.2;
         rx:20;
         ry:20;
       }

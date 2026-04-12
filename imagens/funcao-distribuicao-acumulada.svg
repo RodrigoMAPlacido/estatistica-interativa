@@ -42,7 +42,7 @@
       }
 
       .u-panel{
-        stroke-width:2;
+        stroke-width:1.2;
         rx:22;
         ry:22;
       }

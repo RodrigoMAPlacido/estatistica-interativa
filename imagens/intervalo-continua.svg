@@ -42,7 +42,7 @@
       }
 
       .panel{
-        stroke-width:2;
+        stroke-width:1.2;
         rx:22;
         ry:22;
       }
@@ -60,11 +60,11 @@
       }
 
       .axis{
-        stroke-width:2.2;
+        stroke-width:1.2;
       }
 
       .tick{
-        stroke-width:2;
+        stroke-width:1;
       }
 
       .tickLab{
@@ -87,7 +87,7 @@
 
       .band{
         stroke:var(--ink);
-        stroke-width:8;
+        stroke-width:3;
         stroke-linecap:round;
         opacity:0;
       }

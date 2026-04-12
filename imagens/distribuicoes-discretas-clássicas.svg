@@ -42,11 +42,11 @@
       }
 
       .u-thick{
-        stroke-width:2;
+        stroke-width:1.2;
       }
 
       .u-box{
-        stroke-width:2;
+        stroke-width:1.2;
         rx:15;
       }
 
