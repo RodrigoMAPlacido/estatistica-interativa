@@ -85,7 +85,7 @@ layout:
             strokeWidth: 1
 
         - Label:
-            coordinates: [calcs.media, 2.00]
+            coordinates: [calcs.media, 1.5]
             text: "`\\\\mathbf{E[X]} = ${calcs.media.toFixed(2)}`"
             bgcolor: colors.bg
             color: colors.ink
@@ -97,8 +97,8 @@ layout:
         # Na exponencial: sigma = 1/lambda = media
         # =========================
         - Arrow:
-            begin: [calcs.media, 1.78]
-            end: [calcs.media + calcs.sigma, 1.78]
+            begin: [calcs.media, 1.48]
+            end: [calcs.media + calcs.sigma, 1.48]
             color: colors.soft
             strokeWidth: 1.5
             label:
@@ -107,8 +107,8 @@ layout:
               fontSize: 6
 
         - Arrow:
-            begin: [calcs.media, 1.78]
-            end: [0, 1.78]
+            begin: [calcs.media, 1.48]
+            end: [0, 1.48]
             color: colors.soft
             strokeWidth: 1.5
             label:
